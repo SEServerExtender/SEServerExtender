@@ -1755,8 +1755,11 @@ namespace SEServerExtender
 				if (PluginManager.Instance.Plugins.Count == LST_Plugins.Items.Count)
 					return;
 
-				LST_Plugins.BeginUpdate();
-				int selectedIndex = LST_Plugins.SelectedIndex;
+                int selectedIndex = LST_Plugins.SelectedIndex;
+                if (selectedIndex >= PluginManager.Instance.Plugins.Count)
+                    return;
+
+				LST_Plugins.BeginUpdate();			
 				LST_Plugins.Items.Clear();
 				foreach (var key in PluginManager.Instance.Plugins.Keys)
 				{
@@ -1774,6 +1777,9 @@ namespace SEServerExtender
 				return;
 
 			int selectedIndex = LST_Plugins.SelectedIndex;
+            if (selectedIndex >= PluginManager.Instance.Plugins.Count)
+                return;
+
 			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
 			Object plugin = PluginManager.Instance.Plugins[selectedItem];
 
@@ -1798,6 +1804,9 @@ namespace SEServerExtender
 				return;
 
 			int selectedIndex = LST_Plugins.SelectedIndex;
+            if (selectedIndex >= PluginManager.Instance.Plugins.Count)
+                return;
+
 			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
 			PluginManager.Instance.UnloadPlugin(selectedItem);
 		}
@@ -1808,6 +1817,9 @@ namespace SEServerExtender
 				return;
 
 			int selectedIndex = LST_Plugins.SelectedIndex;
+            if (selectedIndex >= PluginManager.Instance.Plugins.Count)
+                return;
+
 			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
 			PluginManager.Instance.InitPlugin(selectedItem);
 		}
