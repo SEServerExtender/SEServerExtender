@@ -92,6 +92,11 @@ namespace SEModAPIInternal.API.Common
 			Register(typeof(MyObjectBuilder_CubeBlock), typeof(CubeBlockEntity), structural);
 			Register(typeof(MyObjectBuilder_TerminalBlock), typeof(TerminalBlockEntity), misc);
 			Register(typeof(MyObjectBuilder_FunctionalBlock), typeof(FunctionalBlockEntity), misc);
+			Register(typeof(MyObjectBuilder_ProductionBlock), typeof(ProductionBlockEntity), production);
+			Register(typeof(MyObjectBuilder_ShipController), typeof(ShipControllerEntity), utility);
+			Register(typeof(MyObjectBuilder_TurretBase), typeof(TurretBaseEntity), weapons);
+			Register(typeof(MyObjectBuilder_ShipToolBase), typeof(ShipToolBaseEntity), tools);
+			Register(typeof(MyObjectBuilder_LightingBlock), typeof(LightEntity), lights);
 		}
 
 		#endregion
