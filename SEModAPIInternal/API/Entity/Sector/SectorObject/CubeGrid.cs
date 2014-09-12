@@ -433,6 +433,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			//Dispose the cube grid by disposing all of the blocks
 			//This may be slow but it's reliable ... so far
+            /*
 			List<CubeBlockEntity> blocks = CubeBlocks;
 			int blockCount = blocks.Count;
 			foreach (CubeBlockEntity cubeBlock in blocks)
@@ -442,7 +443,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			if (SandboxGameAssemblyWrapper.IsDebugging)
 				LogManager.APILog.WriteLine("Disposed " + blockCount.ToString() + " blocks on CubeGridEntity '" + Name + "'");
-
+            */
 			//Broadcast the removal to the clients just to save processing time for the clients
 			BaseNetworkManager.RemoveEntity();
 

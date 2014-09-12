@@ -186,6 +186,11 @@ namespace SEModAPIExtensions.API
 			kickCommand.callback = Command_Kick;
 			kickCommand.requiresAdmin = true;
 
+            ChatCommand onCommand = new ChatCommand();
+            offCommand.command = "on";
+            offCommand.callback = Command_On;
+            offCommand.requiresAdmin = true;
+
 			ChatCommand banCommand = new ChatCommand();
 			banCommand.command = "ban";
 			banCommand.callback = Command_Ban;
@@ -1399,11 +1404,67 @@ namespace SEModAPIExtensions.API
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
+                    if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is TurretBaseEntity))
+                    {
+                        functionalBlock.Enabled = false;
+                        poweredOffCount++;
+                    }
 				}
 			}
 
 			SendPrivateChatMessage(remoteUserId, "Cleared the production queue of " + poweredOffCount.ToString() + " blocks");
 		}
+
+        protected void Command_On(ChatEvent chatEvent)
+        {
+            ulong remoteUserId = chatEvent.remoteUserId;
+            string[] commandParts = chatEvent.message.Split(' ');
+            int paramCount = commandParts.Length - 1;
+
+            if (paramCount != 1)
+                return;
+
+            List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
+            int poweredOffCount = 0;
+            foreach (var cubeGrid in cubeGrids)
+            {
+                foreach (CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks)
+                {
+                    if (!(cubeBlock is FunctionalBlockEntity))
+                        continue;
+
+                    FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
+
+                    if (commandParts[1].ToLower().Equals("all"))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("production") && cubeBlock is ProductionBlockEntity)
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is BeaconEntity)
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is TurretBaseEntity))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                }
+            }
+
+            SendPrivateChatMessage(remoteUserId, "Turned on " + poweredOffCount.ToString() + " blocks");
+        }
 
 		protected void Command_Kick(ChatEvent chatEvent)
 		{

@@ -26,10 +26,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string FunctionalBlockNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
 		public static string FunctionalBlockClass = "7085736D64DCC58ED5DCA05FFEEA9664";
 
-		public static string FunctionalBlockGetEnabledMethod = "89B34B01DCC6C8596E80023078BB9541";
+		//public static string FunctionalBlockGetEnabledMethod = "89B34B01DCC6C8596E80023078BB9541";
+        public static string FunctionalBlockGetEnabledMethod = "get_Enabled";
 		public static string FunctionalBlockSetEnabledMethod = "97EC0047E8B562F4590B905BD8571F51";
-		public static string FunctionalBlockBroadcastEnabledMethod = "D979DB9AA474782929587EC7DE5E53AA";
+		//public static string FunctionalBlockBroadcastEnabledMethod = "D979DB9AA474782929587EC7DE5E53AA";
+        public static string FunctionalBlockBroadcastEnabledMethod = "RequestEnable";
 		public static string FunctionalBlockGetPowerReceiverMethod = "get_PowerReceiver";
+        public static string FunctionalBlockCheckIsWorkingMethod = "CheckIsWorking";
 
 		#endregion
 
@@ -146,6 +149,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= HasMethod(type, FunctionalBlockGetEnabledMethod);
 				result &= HasMethod(type, FunctionalBlockSetEnabledMethod);
 				result &= HasMethod(type, FunctionalBlockBroadcastEnabledMethod);
+                result &= HasMethod(type, FunctionalBlockCheckIsWorkingMethod);
 				//result &= HasMethod(type, FunctionalBlockGetPowerReceiverMethod);
 
 				return result;
@@ -188,6 +192,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 			return InvokeEntityMethod(ActualObject, FunctionalBlockGetPowerReceiverMethod);
 		}
+
+        public bool CheckIsWorking()
+        {
+            object rawResult = InvokeEntityMethod(ActualObject, FunctionalBlockCheckIsWorkingMethod);
+            if (rawResult == null)
+                return false;
+            return (bool)rawResult;
+        }
 
 		#endregion
 	}

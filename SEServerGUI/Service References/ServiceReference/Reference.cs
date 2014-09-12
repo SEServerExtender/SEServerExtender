@@ -1617,8 +1617,9 @@ namespace SEServerGUI.ServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Gui.MyObjectBuilder_GuiScreen))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Audio.MyObjectBuilder_CueDefinition))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Audio.MyObjectBuilder_CueDefinitions))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeContent))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeMaterial))]
+//    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeContent))]
+//    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeMaterial))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_EntityBase))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_AngleGrinder))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_AutomaticRifle))]
@@ -1630,6 +1631,7 @@ namespace SEServerGUI.ServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Welder))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Character))]
+    
     public partial class MeteorProxy : SEServerGUI.ServiceReference.BaseEntityProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1928,8 +1930,9 @@ namespace SEServerGUI.ServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Gui.MyObjectBuilder_GuiScreen))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Audio.MyObjectBuilder_CueDefinition))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Audio.MyObjectBuilder_CueDefinitions))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeContent))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeMaterial))]
+    //[System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeContent))]
+    //[System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap_MergeMaterial))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.Voxels.MyObjectBuilder_VoxelMap))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_EntityBase))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_AngleGrinder))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Sandbox.Common.ObjectBuilders.MyObjectBuilder_AutomaticRifle))]

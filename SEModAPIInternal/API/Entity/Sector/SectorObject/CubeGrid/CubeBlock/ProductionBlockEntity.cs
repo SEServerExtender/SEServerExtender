@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,10 +9,12 @@ using System.Text;
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
+using Sandbox.Definitions;
 
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.Support;
+
 
 using VRage;
 
@@ -71,6 +74,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string ProductionBlockTriggerQueueChangedCallbackMethod = "443FB7A455126FFCAD9B22C5B4480376";
 
 		public static string ProductionBlockQueueField = "EBACD061EEA690B3C34E39E516F4EDCF";
+
+        public static string ProductionBlockQueueItemStruct = "FECA2D3F1C3B34741FC4F66023C62661";
 
 		#endregion
 
@@ -140,6 +145,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
+        public object QueueTest
+        {
+            get
+            {
+                object raw = InvokeEntityMethod(ActualObject, ProductionBlockGetQueueMethod);
+                return raw;
+            }
+        }
+
+        [IgnoreDataMember]
+        [Category("Production Block")]
+        [Browsable(false)]
+        public int QueueCount
+        {
+            get
+            {
+                object raw = InvokeEntityMethod(ActualObject, ProductionBlockGetQueueMethod);
+                if (raw == null)
+                    return 0;
+
+                return ((IList)raw).Count;
+            }
+        }
+
 		[IgnoreDataMember]
 		[Category("Production Block")]
 		[Browsable(false)]
@@ -148,9 +177,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			get
 			{
 				List<ProductionQueueItem> list = new List<ProductionQueueItem>();
-				foreach (var item in ObjectBuilder.Queue)
-					list.Add(item);
+                if (ObjectBuilder.Queue != null)
+                {
+                    foreach (var item in ObjectBuilder.Queue)
+                        list.Add(item);
+                }
+
 				return list;
+
+                //return (List<ProductionQueueItem>)InvokeEntityMethod(ActualObject, ProductionBlockGetQueueMethod);
 			}
 			set
 			{

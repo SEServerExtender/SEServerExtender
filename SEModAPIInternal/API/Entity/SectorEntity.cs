@@ -306,6 +306,18 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
+        public static bool QueueFull
+        {
+            get
+            {
+                if (m_addEntityQueue.Count >= 5)
+                    return true;
+
+                return false;
+            }
+        }
+
+
 		#endregion
 
 		#region "Methods"

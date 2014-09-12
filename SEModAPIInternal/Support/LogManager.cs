@@ -167,12 +167,15 @@ namespace SEModAPIInternal.Support
 
 			WriteLine(msg);
 
-			m_stringBuilder.Clear();
-			AppendDateAndTime(m_stringBuilder);
-			m_stringBuilder.Append(" - ");
-			m_stringBuilder.Append(msg);
-			Console.WriteLine(m_stringBuilder.ToString());
-			m_stringBuilder.Clear();
+            lock (_logLock)
+            {
+                m_stringBuilder.Clear();
+                AppendDateAndTime(m_stringBuilder);
+                m_stringBuilder.Append(" - ");
+                m_stringBuilder.Append(msg);
+                Console.WriteLine(m_stringBuilder.ToString());
+                m_stringBuilder.Clear();
+            }
 		}
 
 		private int GetThreadId()

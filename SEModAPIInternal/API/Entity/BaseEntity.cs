@@ -543,7 +543,7 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		public override void Export(FileInfo fileInfo)
-		{
+		{                        
 			BaseObjectManager.SaveContentFile<MyObjectBuilder_EntityBase, MyObjectBuilder_EntityBaseSerializer>(ObjectBuilder, fileInfo);
 		}
 
@@ -659,7 +659,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static MyObjectBuilder_EntityBase GetObjectBuilder(Object entity)
+		public static MyObjectBuilder_EntityBase GetObjectBuilder(Object entity)
 		{
 			MyObjectBuilder_EntityBase objectBuilder = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod(entity, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[] { Type.Missing });
 			return objectBuilder;
@@ -838,8 +838,9 @@ namespace SEModAPIInternal.API.Entity
 		public static string BaseEntityNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string BaseEntityNetworkManagerClass = "48D79F8E3C8922F14D85F6D98237314C";
 
-		public static string BaseEntityBroadcastRemovalMethod = "5406C6C55A74A4B403158C17FAEE13AD";
-		
+        //public static string BaseEntityBroadcastRemovalMethod = "70ED7CE650C61018FB30DBB0720365EF";
+        public static string BaseEntityBroadcastRemovalMethod = "77EC5133C74C6B0BE22E9CECB0715AAE";
+
 		//Packets
 		//10 - ??
 		//11 - ??

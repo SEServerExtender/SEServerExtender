@@ -23,9 +23,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		#region "Attributes"
 
 		private bool m_weaponStatus;
+        private CharacterEntity m_pilot;
 
 		public static string CockpitEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string CockpitEntityClass = "0A875207E28B2C7707366CDD300684DF";
+
+        //public static string ShipControllerEntityGetPilotEntityMethod = "6DF6AE137CABD37D44B48CDD8802E82A";
+        //public static string ShipControllerEntitySetPilotEntityMethod = "AC280CA879823319A66F3C71D6478297";
+        public static string CockpitGetPilotEntityMethod = "4CF83F8EEB6686DB93B2206A3F9C093A";
+        public static string CockpitSetPilotEntityMethod = "1BB7956FA537A66315E07C562677018A"; // Maybe?
+
 
 		#endregion
 
@@ -66,6 +73,66 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
+        [IgnoreDataMember]
+        [Category("Cockpit")]
+        [Browsable(false)]
+        public CharacterEntity PilotEntity
+        {
+            get
+            {
+
+                if (BackingObject == null || ActualObject == null)
+                    return null;
+
+                Object backingPilot = GetPilotEntity();
+                if (backingPilot == null)
+                    return null;
+
+                if (m_pilot == null)
+                {
+                    try
+                    {
+                        MyObjectBuilder_Character objectBuilder = (MyObjectBuilder_Character)BaseEntity.GetObjectBuilder(backingPilot);
+                        m_pilot = new CharacterEntity(objectBuilder, backingPilot);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogManager.ErrorLog.WriteLine(ex);
+                    }
+                }
+
+                if (m_pilot != null)
+                {
+                    try
+                    {
+                        if (m_pilot.BackingObject != backingPilot)
+                        {
+                            MyObjectBuilder_Character objectBuilder = (MyObjectBuilder_Character)BaseEntity.GetObjectBuilder(backingPilot);
+                            m_pilot.BackingObject = backingPilot;
+                            m_pilot.ObjectBuilder = objectBuilder;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogManager.ErrorLog.WriteLine(ex);
+                    }
+                }
+
+                return m_pilot;
+            }
+            set
+            {
+                m_pilot = value;
+                Changed = true;
+
+                if (BackingObject != null && ActualObject != null)
+                {
+                    Action action = InternalUpdatePilotEntity;
+                    SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+                }
+            }
+        }
+
 		#endregion
 
 		#region "Methods"
@@ -79,6 +146,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if (type == null)
 					throw new Exception("Could not find type for CockpitEntity");
 
+                result &= BaseEntity.HasMethod(type, CockpitGetPilotEntityMethod);
+                result &= BaseEntity.HasMethod(type, CockpitSetPilotEntityMethod);
+
 				return result;
 			}
 			catch (Exception ex)
@@ -87,6 +157,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				return false;
 			}
 		}
+
+        protected Object GetPilotEntity()
+        {
+            Object result = InvokeEntityMethod(ActualObject, CockpitGetPilotEntityMethod);
+            return result;
+        }
+
+        protected void InternalUpdatePilotEntity()
+        {
+            if (m_pilot == null || m_pilot.BackingObject == null)
+                return;
+
+            BaseObject.InvokeEntityMethod(ActualObject, CockpitSetPilotEntityMethod, new object[] { m_pilot.BackingObject, Type.Missing, Type.Missing });
+        }
 
 		public void FireWeapons()
 		{

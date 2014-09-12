@@ -11,6 +11,7 @@ using System.Xml;
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
+using Sandbox.Common.ObjectBuilders.Serializer;
 
 using SEModAPI.API;
 
@@ -1389,8 +1390,7 @@ namespace SEModAPIInternal.API.Entity
 		public T NewEntry<T>() where T : BaseObject
 		{
 			if (!IsMutable) return default(T);
-
-			MyObjectBuilder_Base newBase = MyObjectBuilder_Base.CreateNewObject(typeof(MyObjectBuilder_EntityBase));
+            MyObjectBuilder_Base newBase = MyObjectBuilderSerializer.CreateNewObject(typeof(MyObjectBuilder_EntityBase));
 			var newEntry = (T)Activator.CreateInstance(typeof(T), new object[] { newBase });
 			GetInternalData().Add(m_definitions.Count, newEntry);
 			m_changed = true;
