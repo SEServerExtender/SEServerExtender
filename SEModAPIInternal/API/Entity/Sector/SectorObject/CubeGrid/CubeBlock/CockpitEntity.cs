@@ -30,7 +30,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
         //public static string ShipControllerEntityGetPilotEntityMethod = "6DF6AE137CABD37D44B48CDD8802E82A";
         //public static string ShipControllerEntitySetPilotEntityMethod = "AC280CA879823319A66F3C71D6478297";
-        public static string CockpitGetPilotEntityMethod = "4CF83F8EEB6686DB93B2206A3F9C093A";
+        //public static string CockpitGetPilotEntityMethod = "4CF83F8EEB6686DB93B2206A3F9C093A";
+        public static string CockpitGetPilotEntityMethod = "7B47C9D59A1CEE8DA64A258449704EF8";
         public static string CockpitSetPilotEntityMethod = "1BB7956FA537A66315E07C562677018A"; // Maybe?
 
 
