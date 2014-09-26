@@ -390,9 +390,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//15871 - SemiautoEnabled On/Off
 
 		public static string BatteryBlockNetManagerCurrentStoredPowerPacketClass = "59DE66D2ECADE0929A1C776D7FA907E2";
-
-        //public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "1D2BF2A5E90C8E01FF5B937ECAB52BFE";
-        public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "4E5FB782782D9D0A3F1B2D984232F9D0";
+        
+        //public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "1F9E08A887AB3F787DBCBF71FB682E64";
+        public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "14E8F302B6AF18AD4844D51E62502A15";
 
 		public static string BatteryBlockNetManagerCurrentStoredPowerPacketValueField = "ADC3AB91A03B31875821D57B8B718AF5";
 

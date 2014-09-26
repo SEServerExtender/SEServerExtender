@@ -124,7 +124,12 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly(true)]
 		public uint NextItemId
 		{
-			get { return ObjectBuilder.nextItemId; }
+			get {
+                MyObjectBuilder_Inventory inventory = (MyObjectBuilder_Inventory)InvokeEntityMethod(BackingObject, InventoryGetObjectBuilderMethod);
+                ObjectBuilder = inventory;
+                Console.WriteLine("NextItemId: {0}", ObjectBuilder.nextItemId);
+                return ObjectBuilder.nextItemId; 
+            }
 			set
 			{
 				if (ObjectBuilder.nextItemId == value) return;
@@ -219,6 +224,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			m_itemManager.AddEntry<InventoryItemEntity>(NextItemId, source);
 
+            NextItemId = NextItemId + 1;
 			//TODO - Figure out the right way to add new items
 			//Just updating an item amount doesn't seem to work right
 			UpdateItemAmount(source, source.Amount * 2);

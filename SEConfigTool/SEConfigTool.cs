@@ -2325,8 +2325,8 @@ namespace SEConfigTool
 			SerializableDefinitionId selectedItem = new SerializableDefinitionId(new MyObjectBuilderType(typeof(MyObjectBuilder_Ore)), "Stone");
 			MyObjectBuilder_BlueprintDefinition temp = new MyObjectBuilder_BlueprintDefinition();
 			temp.BaseProductionTimeInSeconds = 1;
-			temp.Prerequisites = new MyObjectBuilder_BlueprintDefinition.Item[1];
-			temp.Prerequisites[0] = new MyObjectBuilder_BlueprintDefinition.Item();
+			//temp.Prerequisites = new MyObjectBuilder_BlueprintDefinition.Item[1];
+			//temp.Prerequisites[0] = new MyObjectBuilder_BlueprintDefinition.Item();
 			temp.Prerequisites[0].TypeId = selectedItem.TypeId.ToString();
 			temp.Prerequisites[0].SubtypeId = selectedItem.SubtypeName;
 			temp.Prerequisites[0].Amount = "1";
@@ -2380,7 +2380,7 @@ namespace SEConfigTool
 			int prereqIndex = LST_BlueprintConfig_Details_Prerequisites.SelectedIndex;
 
 			BlueprintsDefinition blueprint = m_blueprintsDefinitionsManager.DefinitionOf(blueprintIndex);
-			BlueprintItemDefinition prereq = blueprint.Prerequisites[prereqIndex];
+			//BlueprintItemDefinition prereq = blueprint.Prerequisites[prereqIndex];
 
 			SerializableDefinitionId selectedItem = new SerializableDefinitionId(MyObjectBuilderType.Parse(prereq.TypeId), prereq.SubTypeId);
 			CMB_BlueprintConfig_Details_Prerequisites_TypeId.SelectedItem = selectedItem;
@@ -2396,7 +2396,7 @@ namespace SEConfigTool
 			int prereqIndex = LST_BlueprintConfig_Details_Prerequisites.SelectedIndex;
 
 			BlueprintsDefinition blueprint = m_blueprintsDefinitionsManager.DefinitionOf(blueprintIndex);
-			BlueprintItemDefinition prereq = blueprint.Prerequisites[prereqIndex];
+			//BlueprintItemDefinition prereq = blueprint.Prerequisites[prereqIndex];
 
 			SerializableDefinitionId selectedItem = (SerializableDefinitionId)CMB_BlueprintConfig_Details_Prerequisites_TypeId.SelectedItem;
 			prereq.TypeId = selectedItem.TypeId.ToString();
@@ -2432,7 +2432,7 @@ namespace SEConfigTool
 		private void BTN_BlueprintConfig_Details_Prerequisites_New_Click(object sender, EventArgs e)
 		{
 			BlueprintsDefinition blueprint = m_blueprintsDefinitionsManager.DefinitionOf(LST_BlueprintConfig.SelectedIndex);
-			BlueprintItemDefinition blueprintItem = blueprint.NewEntry();
+			//BlueprintItemDefinition blueprintItem = blueprint.NewEntry();
 			if (blueprintItem == null)
 			{
 				MessageBox.Show(this, "Failed to create new entry");
@@ -2458,7 +2458,7 @@ namespace SEConfigTool
 			}
 
 			BlueprintsDefinition blueprint = m_blueprintsDefinitionsManager.DefinitionOf(LST_BlueprintConfig.SelectedIndex);
-			BlueprintItemDefinition blueprintItem = blueprint.Prerequisites[LST_BlueprintConfig_Details_Prerequisites.SelectedIndex];
+			//BlueprintItemDefinition blueprintItem = blueprint.Prerequisites[LST_BlueprintConfig_Details_Prerequisites.SelectedIndex];
 
 			bool deleteResult = blueprint.DeleteEntry(blueprintItem);
 			if (!deleteResult)

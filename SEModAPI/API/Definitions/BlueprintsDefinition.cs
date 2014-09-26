@@ -6,6 +6,7 @@ namespace SEModAPI.API.Definitions
 {
 	public class BlueprintsDefinition : OverLayerDefinition<MyObjectBuilder_BlueprintDefinition>
 	{
+        /*
 		#region "Attributes"
 
 		BlueprintItemsManager m_prerequisitesManager;
@@ -14,10 +15,11 @@ namespace SEModAPI.API.Definitions
 		#endregion
 
 		#region "Constructors and Initializers"
-
+        */
 		public BlueprintsDefinition(MyObjectBuilder_BlueprintDefinition definition)
 			: base(definition)
 		{
+            /*
 			m_prerequisitesManager = new BlueprintItemsManager();
 
 			if(definition.Result != null)
@@ -25,8 +27,9 @@ namespace SEModAPI.API.Definitions
 
 			if (definition.Prerequisites != null)
 				m_prerequisitesManager.Load(definition.Prerequisites);
+             */ 
 		}
-
+        /*
 		#endregion
 
 		#region "Properties"
@@ -85,12 +88,12 @@ namespace SEModAPI.API.Definitions
 		#endregion
 
 		#region "Methods"
-
+        */
 		protected override string GetNameFrom(MyObjectBuilder_BlueprintDefinition definition)
 		{
 			return m_baseDefinition.Result.SubtypeId;
 		}
-
+        /*
 		public BlueprintItemDefinition NewEntry()
 		{
 			return m_prerequisitesManager.NewEntry();
@@ -102,8 +105,10 @@ namespace SEModAPI.API.Definitions
 		}
 
 		#endregion
+         */ 
 	}
 
+    /*
 	public class BlueprintItemDefinition : OverLayerDefinition<MyObjectBuilder_BlueprintDefinition.Item>
 	{
 		#region "Constructors and Initializers"
@@ -160,7 +165,7 @@ namespace SEModAPI.API.Definitions
 
 		#endregion
 	}
-
+     */ 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,7 +182,9 @@ namespace SEModAPI.API.Definitions
 		#endregion
 	}
 
+    /*
 	public class BlueprintItemsManager : SerializableDefinitionsManager<MyObjectBuilder_BlueprintDefinition.Item, BlueprintItemDefinition>
 	{
 	}
+     */ 
 }

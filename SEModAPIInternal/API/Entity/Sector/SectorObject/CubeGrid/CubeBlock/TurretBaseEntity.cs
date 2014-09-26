@@ -38,13 +38,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string TurretSearchingRangeField = "m_searchingRange";
 		public static string TurretInventoryField = "m_ammoInventory";
-		public static string TurretNetworkManagerField = "SyncObject";
 
 		public static string TurretTargetProperty = "Target";
 		public static string TurretShootingRangeProperty = "ShootingRange";
 		public static string TurretTargetMeteorsProperty = "TargetMeteors";
 		public static string TurretTargetMissilesProperty = "TargetMissiles";
 		public static string TurretTargetMovingProperty = "TargetMoving";
+        public static string TurretNetworkManagerProperty = "SyncObject";
 
 		#endregion
 
@@ -309,13 +309,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				result &= HasField(type, TurretSearchingRangeField);
 				result &= HasField(type, TurretInventoryField);
-				result &= HasField(type, TurretNetworkManagerField);
 
 				result &= HasProperty(type, TurretTargetProperty);
 				result &= HasProperty(type, TurretShootingRangeProperty);
 				result &= HasProperty(type, TurretTargetMeteorsProperty);
 				result &= HasProperty(type, TurretTargetMissilesProperty);
 				result &= HasProperty(type, TurretTargetMovingProperty);
+                result &= HasProperty(type, TurretNetworkManagerProperty);
 
 				return result;
 			}
@@ -376,8 +376,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected Object GetNetworkManager()
 		{
-			Object result = GetEntityFieldValue(ActualObject, TurretNetworkManagerField);
-			return result;
+			//Object result = GetEntityFieldValue(ActualObject, TurretNetworkManagerField);
+            Object result = GetEntityProperty(ActualObject, TurretNetworkManagerProperty);
+            return result;
 		}
 
 		protected Object GetNearestVisibleTarget()

@@ -838,8 +838,8 @@ namespace SEModAPIInternal.API.Entity
 		public static string BaseEntityNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string BaseEntityNetworkManagerClass = "48D79F8E3C8922F14D85F6D98237314C";
 
-        //public static string BaseEntityBroadcastRemovalMethod = "77EC5133C74C6B0BE22E9CECB0715AAE";
-        public static string BaseEntityBroadcastRemovalMethod = "37605E21446C66A02114219BC7F64197";
+        //public static string BaseEntityBroadcastRemovalMethod = "03B089499E16F7C65D282A752CE58A7F";
+        public static string BaseEntityBroadcastRemovalMethod = "882C902E24414C4DEBD94A32A0DF8628";
 
 		//Packets
 		//10 - ??
