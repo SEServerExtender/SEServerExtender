@@ -224,7 +224,11 @@ namespace SEModAPIExtensions.API
                             // Load assembly from file into memory, so we can hotswap it if we want
                             byte[] b = File.ReadAllBytes(file);
                             Assembly pluginAssembly = Assembly.Load(b);
-
+							if (IsOldPlugin(pluginAssembly))
+							{
+								pluginAssembly = Assembly.UnsafeLoadFrom(file);
+							}
+							
                             //Get the assembly GUID
                             GuidAttribute guid = (GuidAttribute)pluginAssembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
                             Guid guidValue = new Guid(guid.Value);
@@ -289,6 +293,25 @@ namespace SEModAPIExtensions.API
 
             Console.WriteLine("Finished loading plugins");
         }
+
+		public bool IsOldPlugin(Assembly assembly)
+		{
+			Type[] types = assembly.GetExportedTypes();
+
+			foreach (Type type in types)
+			{
+				if (type.BaseType == null)
+					continue;
+
+				if(type.BaseType.GetInterface(typeof(IPlugin).FullName) != null)
+				{
+					if (type.GetMethod("InitWithPath") != null)
+						return false;
+				}
+			}
+
+			return true;
+		}
 
         public void Init()
         {
@@ -552,7 +575,7 @@ namespace SEModAPIExtensions.API
             if (!m_plugins.ContainsKey(key))
                 return;
 
-            //Skip if the pluing is already unloaded
+            //Skip if the plugin is already unloaded
             if (!m_pluginState.ContainsKey(key))
                 return;
 

@@ -8,7 +8,7 @@ namespace SEModAPIExtensions.API.Plugin
 	public interface IPlugin
 	{
 		void Init();
-        void InitWithPath(String modPath);
+//        void InitWithPath(String modPath);
 		void Update();
 		void Shutdown();
 		Guid Id

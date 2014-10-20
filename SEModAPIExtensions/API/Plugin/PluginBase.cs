@@ -53,7 +53,10 @@ namespace SEModAPIExtensions.API.Plugin
 		#region "Methods"
 
 		public abstract void Init();
-        public abstract void InitWithPath(String modPath);
+		//public void InitWithPath(String modPath)
+		//{
+		//}
+
 		public abstract void Update();
 		public abstract void Shutdown();
 

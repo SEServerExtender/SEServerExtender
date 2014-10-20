@@ -633,7 +633,6 @@ namespace SEModAPIInternal.API.Entity
 
 		protected override void LoadDynamic()
 		{
-			/*
 			try
 			{
 				List<Object> rawEntities = GetBackingDataList();
@@ -696,7 +695,6 @@ namespace SEModAPIInternal.API.Entity
 			{
 				LogManager.ErrorLog.WriteLine(ex);
 			}
-			 */ 
 		}
 
 		#endregion

@@ -634,8 +634,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 		protected long GetBlockOwner()
 		{
-			if (GetFactionData() == null)
-				return 0;
+			try
+			{
+				if (GetFactionData() == null)
+					return 0;
+			}
+			catch {}
+
 			Object rawResult = InvokeEntityMethod(ActualObject, ActualCubeBlockGetOwnerMethod);
 			if (rawResult == null)
 				return 0;
@@ -645,7 +650,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 		protected MyOwnershipShareModeEnum GetBlockShareMode()
 		{
-			Object factionData = GetFactionData();
+
+			Object factionData = null;
+			try
+			{
+				factionData = GetFactionData();
+			}
+			catch {}
+
 			if (factionData == null)
 				return MyOwnershipShareModeEnum.None;
 
