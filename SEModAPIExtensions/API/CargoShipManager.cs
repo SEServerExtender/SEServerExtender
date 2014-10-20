@@ -166,7 +166,8 @@ namespace SEModAPIExtensions.API
 
 						//Set the owner of every block
 						//TODO - Find out if setting to an arbitrary non-zero works for this
-						cubeBlock.Owner = PlayerMap.Instance.GetServerVirtualPlayerId();
+						//cubeBlock.Owner = PlayerMap.Instance.GetServerVirtualPlayerId();
+                        cubeBlock.Owner = 0;
 						cubeBlock.ShareMode = MyOwnershipShareModeEnum.Faction;
 					}
 

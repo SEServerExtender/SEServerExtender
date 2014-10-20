@@ -41,11 +41,13 @@ namespace SEModAPIInternal.API.Entity
 		//Methods
 		public static string BaseEntityGetObjectBuilderMethod = "GetObjectBuilder";
 		public static string BaseEntityGetPhysicsManagerMethod = "691FA4830C80511C934826203A251981";
+        //public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
 		public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
 		public static string BaseEntityCombineOnClosedEventMethod = "C1704F26C9D5D7EBE19DC78AB8923F4E";
 		public static string BaseEntityGetIsDisposedMethod = "6D8F627C1C0F9F166031C3B600FEDA60";
 		public static string BaseEntityGetOrientationMatrixMethod = "FD50436D896ACC794550210055349FE0";
-		public static string BaseEntityGetNetManagerMethod = "F4456F82186EC3AE6C73294FA6C0A11D";
+		//public static string BaseEntityGetNetManagerMethod = "F4456F82186EC3AE6C73294FA6C0A11D";
+        public static string BaseEntityGetNetManagerMethod = "get_SyncObject";
 		public static string BaseEntitySetEntityIdMethod = "D3D6702587D6336FEE37725E8D2C52CD";
 		public static string BaseEntityGetDisplayNameMethod = "DB913685BC5152DC19A4796E9E8CF659";
 		public static string BaseEntitySetDisplayNameMethod = "DFF609C956C433D5F03DAA6AA8814223";
@@ -788,9 +790,9 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				Action<Object> action = InternalEntityMovedEvent;
+				//Action<Object> action = InternalEntityMovedEvent;
 
-				InvokeEntityMethod(BackingObject, BaseEntityCombineOnMovedEventMethod, new object[] { action });
+				//InvokeEntityMethod(BackingObject, BaseEntityCombineOnMovedEventMethod, new object[] { action });
 			}
 			catch (Exception ex)
 			{
@@ -805,12 +807,14 @@ namespace SEModAPIInternal.API.Entity
 				if (IsDisposed)
 					return;
 
+				/*
 				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
 				newEvent.type = EntityEventManager.EntityEventType.OnBaseEntityMoved;
 				newEvent.timestamp = DateTime.Now;
 				newEvent.entity = this;
 				newEvent.priority = 10;
 				EntityEventManager.Instance.AddEvent(newEvent);
+				 */ 
 			}
 			catch (Exception ex)
 			{
@@ -838,8 +842,8 @@ namespace SEModAPIInternal.API.Entity
 		public static string BaseEntityNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string BaseEntityNetworkManagerClass = "48D79F8E3C8922F14D85F6D98237314C";
 
-        //public static string BaseEntityBroadcastRemovalMethod = "03B089499E16F7C65D282A752CE58A7F";
-        public static string BaseEntityBroadcastRemovalMethod = "882C902E24414C4DEBD94A32A0DF8628";
+        //public static string BaseEntityBroadcastRemovalMethod = "5EBE421019EACEA0F25718E2585CF3D2";
+        public static string BaseEntityBroadcastRemovalMethod = "SendCloseRequest";
 
 		//Packets
 		//10 - ??

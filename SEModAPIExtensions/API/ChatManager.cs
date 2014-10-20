@@ -826,6 +826,7 @@ namespace SEModAPIExtensions.API
 			}
 
 			//Prunes defunct player entries in the faction data
+            /*
 			if (paramCount > 1 && commandParts[1].ToLower().Equals("player"))
 			{
 				List<MyObjectBuilder_Checkpoint.PlayerItem> playersToRemove = new List<MyObjectBuilder_Checkpoint.PlayerItem>();
@@ -882,7 +883,7 @@ namespace SEModAPIExtensions.API
 
 				SendPrivateChatMessage(remoteUserId, "Deleted " + playersRemovedCount.ToString() + " player entries");
 			}
-
+            */
 			//Prunes defunct faction entries in the faction data
 			if (paramCount > 1 && commandParts[1].ToLower().Equals("faction"))
 			{

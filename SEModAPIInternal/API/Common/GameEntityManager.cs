@@ -98,7 +98,7 @@ namespace SEModAPIInternal.API.Common
 			//m_resourceLock.ReleaseExclusive();
 		}
 
-		internal static Object GetGameEntity(long entityId, Type entityType)
+		public static Object GetGameEntity(long entityId, Type entityType)
 		{
 			try
 			{
