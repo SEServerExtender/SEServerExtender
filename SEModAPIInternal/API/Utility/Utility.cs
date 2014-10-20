@@ -13,6 +13,7 @@ using SEModAPIInternal.Support;
 
 using VRage.Common.Utils;
 using VRageMath;
+using VRage;
 
 namespace SEModAPIInternal.API.Utility
 {
@@ -22,9 +23,7 @@ namespace SEModAPIInternal.API.Utility
 
 		public static string UtilityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string UtilityClass = "226D9974B43A7269CDD3E322CC8110D5";
-
 		public static string UtilityGenerateEntityIdMethod = "3B4924802BEBD1AE13B29920376CE914";
-
 		#endregion
 
 		#region "Methods"
@@ -242,11 +241,16 @@ namespace SEModAPIInternal.API.Utility
 		{
 			try
 			{
+				/*
 				Type utilityType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(UtilityNamespace, UtilityClass);
 				MethodInfo generateIdMethod = utilityType.GetMethod(UtilityGenerateEntityIdMethod, BindingFlags.Public | BindingFlags.Static);
 				long entityId = (long)generateIdMethod.Invoke(null, new object[] { Type.Missing });
+				 */
 
-				return entityId;
+				ulong num = 1;
+				return (long)(MyRandom.Instance.NextLong() & 281474976710655L);
+
+				//return entityId;
 			}
 			catch (Exception ex)
 			{
@@ -274,6 +278,7 @@ namespace SEModAPIInternal.API.Utility
 				if (typeof(MyObjectBuilder_Base).IsAssignableFrom(type))
 					types.Add(type);
 			}
+
 			return types;
 		}
 

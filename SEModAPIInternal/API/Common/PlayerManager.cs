@@ -221,12 +221,18 @@ namespace SEModAPIInternal.API.Common
 
         public ulong GetSteamId(long playerEntityId)
         {
+			if (BackingObject == null)
+				return 0;
+
+			if(!(BackingObject is IMyPlayerCollection))
+				return 0;
+
             IMyPlayerCollection collection = (IMyPlayerCollection)BackingObject;
 
             List<IMyPlayer> players = new List<IMyPlayer>();
-            collection.GetPlayers(players, x => x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
-
-            if (players.Count > 0)
+            //collection.GetPlayers(players, x => x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
+			collection.GetPlayers(players, x => x.Controller != null && x.Controller.ControlledEntity != null && x.Controller.ControlledEntity.Entity != null && x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
+            if (players != null && players.Count > 0)
             {
                 return players.First().SteamUserId;
             }
