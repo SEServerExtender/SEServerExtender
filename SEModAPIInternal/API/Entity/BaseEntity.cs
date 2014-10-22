@@ -17,6 +17,8 @@ using SEModAPIInternal.Support;
 
 using VRageMath;
 
+using Sandbox.Common.Components;
+
 namespace SEModAPIInternal.API.Entity
 {
 	[DataContract(Name = "BaseEntityProxy")]
@@ -42,7 +44,6 @@ namespace SEModAPIInternal.API.Entity
 		public static string BaseEntityGetObjectBuilderMethod = "GetObjectBuilder";
 		public static string BaseEntityGetPhysicsManagerMethod = "691FA4830C80511C934826203A251981";
         //public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
-		public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
 		public static string BaseEntityCombineOnClosedEventMethod = "C1704F26C9D5D7EBE19DC78AB8923F4E";
 		public static string BaseEntityGetIsDisposedMethod = "6D8F627C1C0F9F166031C3B600FEDA60";
 		public static string BaseEntityGetOrientationMatrixMethod = "FD50436D896ACC794550210055349FE0";
@@ -52,13 +53,15 @@ namespace SEModAPIInternal.API.Entity
 		public static string BaseEntityGetDisplayNameMethod = "DB913685BC5152DC19A4796E9E8CF659";
 		public static string BaseEntitySetDisplayNameMethod = "DFF609C956C433D5F03DAA6AA8814223";
 
+		public static string BaseEntityGetPositionManagerMethod = "get_PositionComp";
+		//public static string BaseEntityCombineOnMovedEventMethod = "";
+
 		public static string BaseEntityEntityIdField = "F7E51DBA5F2FD0CCF8BBE66E3573BEAC";
 
 		//////////////////////////////////////////////////////////
 
 		public static string PhysicsManagerNamespace = "D1B6432AAEEF40F9D99F69835A7B23F5";
 		public static string PhysicsManagerClass = "5BAA908D4615EC702E28985E09DBEF8F";
-
 		public static string PhysicsManagerGetRigidBodyMethod = "634E5EC534E45874230868BD089055B1";
 
 		#endregion
@@ -564,7 +567,8 @@ namespace SEModAPIInternal.API.Entity
 				bool result = true;
 				result &= HasMethod(type, BaseEntityGetObjectBuilderMethod);
 				result &= HasMethod(type, BaseEntityGetPhysicsManagerMethod);
-				result &= HasMethod(type, BaseEntityCombineOnMovedEventMethod);
+				result &= HasMethod(type, BaseEntityGetPositionManagerMethod);
+				//result &= HasMethod(type, BaseEntityCombineOnMovedEventMethod);
 				result &= HasMethod(type, BaseEntityCombineOnClosedEventMethod);
 				result &= HasMethod(type, BaseEntityGetIsDisposedMethod);
 				result &= HasMethod(type, BaseEntityGetOrientationMatrixMethod);
@@ -786,13 +790,31 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
+		private static Object GetEntityPositionObject(Object entity)
+		{
+			try
+			{
+				Object positionObject = InvokeEntityMethod(entity, BaseEntityGetPositionManagerMethod);
+				return positionObject;
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+				return null;
+			}
+		}
+
 		protected void InternalRegisterEntityMovedEvent()
 		{
 			try
 			{
-				//Action<Object> action = InternalEntityMovedEvent;
+				MyPositionComponentBase positionComponent = (MyPositionComponentBase)GetEntityPositionObject(BackingObject);
+				if (positionComponent == null)
+					return;
 
-				//InvokeEntityMethod(BackingObject, BaseEntityCombineOnMovedEventMethod, new object[] { action });
+				Action<MyPositionComponentBase> action = InternalEntityMovedEvent;
+				positionComponent.OnPositionChanged -= action;
+				positionComponent.OnPositionChanged += action;
 			}
 			catch (Exception ex)
 			{
@@ -807,14 +829,12 @@ namespace SEModAPIInternal.API.Entity
 				if (IsDisposed)
 					return;
 
-				/*
 				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
 				newEvent.type = EntityEventManager.EntityEventType.OnBaseEntityMoved;
 				newEvent.timestamp = DateTime.Now;
 				newEvent.entity = this;
 				newEvent.priority = 10;
 				EntityEventManager.Instance.AddEvent(newEvent);
-				 */ 
 			}
 			catch (Exception ex)
 			{
