@@ -451,6 +451,12 @@ namespace SEModAPIExtensions.API
 			set { m_commandLineArgs.path = value; }
 		}
 
+		[IgnoreDataMember]
+		public Thread ServerThread
+		{
+			get { return m_runServerThread; }
+		}
+
 		#endregion
 
 		#region "Methods"
@@ -620,6 +626,7 @@ namespace SEModAPIExtensions.API
 				m_isServerRunning = true;
 
 				m_runServerThread = new Thread(new ThreadStart(this.RunServer));
+				m_runServerThread.IsBackground = true;
 				m_runServerThread.Start();
 			}
 			catch (Exception ex)
@@ -631,12 +638,16 @@ namespace SEModAPIExtensions.API
 
 		public void StopServer()
 		{
+			LogManager.APILog.WriteLine("StopServer()");
+			SandboxGameAssemblyWrapper.Instance.ExitGame();
+
 			m_pluginMainLoop.Stop();
 			m_autosaveTimer.Stop();
-
 			m_pluginManager.Shutdown();
 
+			//m_runServerThread.Interrupt();
 			//m_serverWrapper.StopServer();
+			//m_runServerThread.Abort();
 			m_runServerThread.Interrupt();
 
 			m_isServerRunning = false;

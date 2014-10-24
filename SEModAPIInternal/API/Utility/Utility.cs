@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 
 using Sandbox.Common.ObjectBuilders;
+using Sandbox.Game.Entities;
 
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
@@ -241,16 +242,7 @@ namespace SEModAPIInternal.API.Utility
 		{
 			try
 			{
-				/*
-				Type utilityType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(UtilityNamespace, UtilityClass);
-				MethodInfo generateIdMethod = utilityType.GetMethod(UtilityGenerateEntityIdMethod, BindingFlags.Public | BindingFlags.Static);
-				long entityId = (long)generateIdMethod.Invoke(null, new object[] { Type.Missing });
-				 */
-
-				ulong num = 1;
-				return (long)(MyRandom.Instance.NextLong() & 281474976710655L);
-
-				//return entityId;
+				return MyEntityIdentifier.AllocateId();
 			}
 			catch (Exception ex)
 			{

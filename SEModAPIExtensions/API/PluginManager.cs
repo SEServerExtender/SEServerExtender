@@ -529,12 +529,13 @@ namespace SEModAPIExtensions.API
         }
 
         public void Shutdown()
-        {
-            foreach (var key in m_plugins.Keys)
-            {
-                UnloadPlugin(key);
-            }
-        }
+		{
+			for (int r = m_plugins.Count - 1; r >= 0; r--)
+			{
+				var key = m_plugins.ElementAt(r).Key;
+				UnloadPlugin(key);
+			}
+		}
 
         public void InitPlugin(Guid key)
         {

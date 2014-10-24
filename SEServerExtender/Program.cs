@@ -38,7 +38,7 @@ namespace SEServerExtender
 
 			protected override void OnStop()
 			{
-				LogManager.APILog.WriteLine("Stopping SEServerExtender Service ...");
+				LogManager.APILog.WriteLine("Stopping SEServerExtender Service...");
 
 				Program.Stop();
 			}
@@ -255,6 +255,11 @@ namespace SEServerExtender
 				m_server.StopServer();
 			if (m_serverExtenderForm != null && m_serverExtenderForm.Visible == true)
 				m_serverExtenderForm.Close();
+
+			if (m_server.ServerThread != null)
+			{
+				m_server.ServerThread.Join(20000);
+			}
 		}
 
 		static void Application_ThreadException(Object sender, ThreadExceptionEventArgs e)

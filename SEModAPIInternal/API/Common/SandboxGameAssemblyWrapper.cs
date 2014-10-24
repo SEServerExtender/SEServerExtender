@@ -36,6 +36,8 @@ namespace SEModAPIInternal.API.Common
 
 		public static string MainGameEnqueueActionMethod = "0172226C0BA7DAE0B1FCE0AF8BC7F735";
 		public static string MainGameGetTimeMillisMethod = "676C50EDDF93A0D8452B6BAFE7A33F32";
+		public static string MainGameExitMethod = "0541388EA6888847A38CC5AC82559144";
+		public static string MainGameDisposeMethod = "Dispose";
 
 		public static string MainGameInstanceField = "392503BDB6F8C1E34A232489E2A0C6D4";
 		public static string MainGameConfigContainerField = "4895ADD02F2C27ED00C63E7E506EE808";
@@ -306,6 +308,8 @@ namespace SEModAPIInternal.API.Common
 				bool result = true;
 				result &= BaseObject.HasMethod(type, MainGameEnqueueActionMethod);
 				result &= BaseObject.HasMethod(type, MainGameGetTimeMillisMethod);
+				result &= BaseObject.HasMethod(type, MainGameExitMethod);
+				result &= BaseObject.HasMethod(type, MainGameDisposeMethod);
 				result &= BaseObject.HasField(type, MainGameInstanceField);
 				result &= BaseObject.HasField(type, MainGameConfigContainerField);
 				result &= BaseObject.HasField(type, MainGameIsLoadedField);
@@ -394,6 +398,34 @@ namespace SEModAPIInternal.API.Common
 			{
 				LogManager.ErrorLog.WriteLine(ex);
 				return false;
+			}
+		}
+
+		public void ExitGame()
+		{
+			try
+			{
+				LogManager.APILog.WriteLine("Exiting");
+				System.Threading.AutoResetEvent e = new System.Threading.AutoResetEvent(false);
+				EnqueueMainGameAction(new Action(delegate()
+				{
+					//BaseObject.InvokeEntityMethod(MainGame, MainGameExitMethod);
+					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
+					e.Set();
+				}));
+				e.WaitOne();
+				/*
+				EnqueueMainGameAction(new Action(delegate()
+				{
+					Object b = null;
+					b.ToString();
+//					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
+				}));
+				 */ 
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
 			}
 		}
 
