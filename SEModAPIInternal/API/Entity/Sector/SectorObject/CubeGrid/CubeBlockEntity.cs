@@ -617,6 +617,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		{
 			try
 			{
+				if (ActualObject == null)
+					return null;
+
 				Object factionData = InvokeEntityMethod(ActualObject, ActualCubeBlockGetFactionsObjectMethod);
 				return factionData;
 			}
