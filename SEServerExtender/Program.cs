@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Web;
 using System.ServiceProcess;
+using System.Linq;
 
 using SEModAPI.Support;
 
@@ -88,6 +89,9 @@ namespace SEServerExtender
 			extenderArgs.autosave = 0;
 			extenderArgs.wcfPort = 0;
 			extenderArgs.path = "";
+			extenderArgs.closeOnCrash = false;
+			extenderArgs.restartOnCrash = false;
+			extenderArgs.args = string.Join(" ", args.Select(x => "\"" + x + "\""));
 
 			//Process the args
 			foreach (string arg in args)
@@ -166,6 +170,18 @@ namespace SEServerExtender
 					if (arg.ToLower().Equals("nowcf"))
 					{
 						extenderArgs.noWCF = true;
+					}
+					if (arg.ToLower().Equals("closeoncrash"))
+					{
+						extenderArgs.closeOnCrash = true;
+					}
+					if (arg.ToLower().Equals("initgateway"))
+					{
+						extenderArgs.initGateway = true;
+					}
+					if (arg.ToLower().Equals("restartoncrash"))
+					{
+						extenderArgs.restartOnCrash = true;
 					}
 				}
 			}

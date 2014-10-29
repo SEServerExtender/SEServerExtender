@@ -15,12 +15,17 @@ using System.Threading;
 using Sandbox.Input;
 
 using SysUtils.Utils;
+using Sandbox.Audio;
 
 using VRage.Common.Utils;
+using VRage.Common.Noise;
+using VRage.Common.Plugins;
 
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.Support;
+
+using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Server
 {
@@ -30,6 +35,7 @@ namespace SEModAPIInternal.API.Server
 
 		private static ServerAssemblyWrapper m_instance;
 		private static Assembly m_assembly;
+		private static AppDomain m_domain;
 
 		public static string DedicatedServerNamespace = "83BCBFA49B3A2A6EC1BC99583DA2D399";
 		public static string DedicatedServerClass = "49BCFF86BA276A9C7C0D269C2924DE2D";
@@ -47,12 +53,27 @@ namespace SEModAPIInternal.API.Server
 			string assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineersDedicated.exe");
 			m_assembly = Assembly.UnsafeLoadFrom(assemblyPath);
 
+			/*
+			byte[] b = File.ReadAllBytes(assemblyPath);
+			Assembly rawServerAssembly = Assembly.Load(b);
+			m_domain = AppDomain.CreateDomain("Server Domain");
+			m_assembly = m_domain.Load(rawServerAssembly.GetName());
+			*/
+
 			Console.WriteLine("Finished loading ServerAssemblyWrapper");
 		}
 
 		#endregion
 
 		#region "Properties"
+
+		public static AppDomain ServerDomain
+		{
+			get
+			{
+				return m_domain; 
+			}
+		}
 
 		public static ServerAssemblyWrapper Instance
 		{
@@ -70,7 +91,10 @@ namespace SEModAPIInternal.API.Server
 			get
 			{
 				if(m_assembly == null)
-					m_assembly = Assembly.UnsafeLoadFrom("SpaceEngineersDedicated.exe");
+				{
+					byte[] b = File.ReadAllBytes("SpaceEngineersDedicated.exe");
+					m_assembly = Assembly.Load(b);
+				}
 
 				Type dedicatedServerType = m_assembly.GetType(DedicatedServerNamespace + "." + DedicatedServerClass);
 				return dedicatedServerType;
@@ -143,6 +167,8 @@ namespace SEModAPIInternal.API.Server
 			{
 				//TODO - Find out the proper way to get Havok to clean everything up so we don't get pointer errors on the next start
 				//HkBaseSystem.Quit();
+				HkBaseSystem.Quit();
+
 			}
 			catch (Exception)
 			{
@@ -154,6 +180,24 @@ namespace SEModAPIInternal.API.Server
 		{
 			SteamReset();
 
+			/*
+			if (MyAPIGateway.Session != null)
+			{
+				MyAPIGateway.Session.UnloadDataComponents();
+				MyAPIGateway.Session.UnloadMultiplayer();
+				MyAPIGateway.Session.Unload();
+			}
+			*/
+
+			try
+			{
+				MyPlugins.Unload();
+			}
+			catch {}
+
+
+			MyAudio.Static.UnloadData();
+			MyAudio.UnloadData();
 			MyFileSystem.Reset();
 
 			InputReset();
@@ -169,7 +213,7 @@ namespace SEModAPIInternal.API.Server
 				if (MyLog.Default != null)
 					MyLog.Default.Close();
 
-				SandboxGameAssemblyWrapper.Instance.SetNullRender(true);
+				SandboxGameAssemblyWrapper.Instance.SetNullRender(true);	
 				MyFileSystem.Reset();
 
 				//Prepare the parameters
@@ -234,6 +278,20 @@ namespace SEModAPIInternal.API.Server
 
 				return false;
 			}
+				/*
+			finally
+			{
+				m_instance = null;
+				Reset();
+				if (m_domain != null)
+				{
+					AppDomain.Unload(m_domain);
+				}
+
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
+			}
+				 */ 
 		}
 
 		public void StopServer()
@@ -252,7 +310,11 @@ namespace SEModAPIInternal.API.Server
 				Object mainGame = SandboxGameAssemblyWrapper.MainGame;
 				BaseObject.InvokeEntityMethod(mainGame, "Dispose");
 
-				//Reset();
+				/*
+				Reset();
+				AppDomain.Unload(m_domain);
+				m_domain = null;
+				 */ 
 			}
 			catch (Exception ex)
 			{

@@ -10,6 +10,8 @@ using SEModAPIInternal.Support;
 using VRage.Common.Utils;
 using SEModAPIInternal.API.Entity;
 
+using System.Threading;
+
 namespace SEModAPIInternal.API.Common
 {
 	public class SandboxGameAssemblyWrapper
@@ -22,6 +24,7 @@ namespace SEModAPIInternal.API.Common
 		protected static bool m_isDebugging;
 		protected static bool m_isUsingCommonProgramData;
 		protected static bool m_isInSafeMode;
+		protected static bool m_gatewayInitialzed;
 
 		protected bool m_isGameLoaded;
 
@@ -78,8 +81,13 @@ namespace SEModAPIInternal.API.Common
 
 		public static string EntityBaseObjectFactoryNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string EntityBaseObjectFactoryClass = "E825333D6467D99DD83FB850C600395C";
-
 		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "85DD00A89AFE64DF0A1B3FD4A5139A04";
+
+		////////////////////////////////////////////////////////////////////////////////
+		private static string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
+		private static string MyAPIGatewayClass = "4C1ED56341F07A7D73298D03926F04DE";
+		private static string MyAPIGatewayInitMethod = "0DE98737B4717615E252D27A4F3A2B44";
+
 
 		#endregion
 
@@ -91,6 +99,7 @@ namespace SEModAPIInternal.API.Common
 			m_isDebugging = false;
 			m_isUsingCommonProgramData = false;
 			m_isInSafeMode = false;
+			m_gatewayInitialzed = false;
 
 			string assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll");
 			m_assembly = Assembly.UnsafeLoadFrom(assemblyPath);
@@ -230,6 +239,32 @@ namespace SEModAPIInternal.API.Common
 					LogManager.ErrorLog.WriteLine(ex);
 					return null;
 				}
+			}
+		}
+
+		public static Type APIGatewayType
+		{
+			get
+			{
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MyAPIGatewayNamespace, MyAPIGatewayClass);
+				return type;
+			}
+		}
+
+		public static void InitAPIGateway()
+		{
+			try
+			{
+				if (m_gatewayInitialzed)
+					return;
+
+				BaseObject.InvokeStaticMethod(APIGatewayType, MyAPIGatewayInitMethod);
+				LogManager.APILog.WriteLineAndConsole("MyAPIGateway Initialized");
+				m_gatewayInitialzed = true;
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
 			}
 		}
 
@@ -378,18 +413,7 @@ namespace SEModAPIInternal.API.Common
 
 				if (SandboxGameAssemblyWrapper.IsDebugging)
 				{
-					m_countQueuedActions++;
-
-					TimeSpan timeSinceLastProfilingOutput = DateTime.Now - m_lastProfilingOutput;
-					if (timeSinceLastProfilingOutput.TotalSeconds > 60)
-					{
-						m_averageQueuedActions = m_countQueuedActions / timeSinceLastProfilingOutput.TotalSeconds;
-
-						LogManager.APILog.WriteLine("Average actions queued per second: " + Math.Round(m_averageQueuedActions, 2).ToString());
-
-						m_countQueuedActions = 0;
-						m_lastProfilingOutput = DateTime.Now;
-					}
+					UpdateProfile();
 				}
 
 				return true;
@@ -401,25 +425,81 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
+		private void UpdateProfile()
+		{
+			m_countQueuedActions++;
+
+			TimeSpan timeSinceLastProfilingOutput = DateTime.Now - m_lastProfilingOutput;
+			if (timeSinceLastProfilingOutput.TotalSeconds > 60)
+			{
+				m_averageQueuedActions = m_countQueuedActions / timeSinceLastProfilingOutput.TotalSeconds;
+
+				LogManager.APILog.WriteLine("Average actions queued per second: " + Math.Round(m_averageQueuedActions, 2).ToString());
+
+				m_countQueuedActions = 0;
+				m_lastProfilingOutput = DateTime.Now;
+			}
+		}
+
+		public delegate void GameActionCallback(Object state);
+		public bool BeginGameAction(Action action, GameActionCallback callback, Object state)
+		{
+			try
+			{
+				ThreadPool.QueueUserWorkItem(new WaitCallback(delegate(Object arg)
+				{
+					AutoResetEvent e = new AutoResetEvent(false);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
+					{
+						action();
+						e.Set();
+					}));
+					e.WaitOne();
+
+					if (callback != null)
+						callback(state);
+				}));
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+				return false;
+			}
+		}
+
+		public bool GameAction(Action action)
+		{
+			try
+			{
+				AutoResetEvent e = new AutoResetEvent(false);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
+					{
+						action();
+						e.Set();
+					}));
+				e.WaitOne();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+				return false;
+
+			}
+		}
+
 		public void ExitGame()
 		{
 			try
 			{
 				LogManager.APILog.WriteLine("Exiting");
 				System.Threading.AutoResetEvent e = new System.Threading.AutoResetEvent(false);
-				EnqueueMainGameAction(new Action(delegate()
-				{
-					//BaseObject.InvokeEntityMethod(MainGame, MainGameExitMethod);
-					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
-					e.Set();
-				}));
-				e.WaitOne();
 				/*
-				EnqueueMainGameAction(new Action(delegate()
+				GameAction(new Action(delegate()
 				{
-					Object b = null;
-					b.ToString();
-//					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
+					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
 				}));
 				 */ 
 			}

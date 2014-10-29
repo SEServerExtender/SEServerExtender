@@ -133,6 +133,10 @@
     <Reference Include="HavokWrapper">
       <HintPath>..\GameLibraries\HavokWrapper.dll</HintPath>
     </Reference>
+    <Reference Include="Sandbox.Audio, Version=0.1.5410.26916, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\Sandbox.Audio.dll</HintPath>
+    </Reference>
     <Reference Include="Sandbox.Common">
       <HintPath>..\GameLibraries\Sandbox.Common.dll</HintPath>
     </Reference>

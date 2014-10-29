@@ -454,7 +454,7 @@ namespace SEModAPIExtensions.API
 
 				//Send a loopback chat event for server-sent messages
 				ChatEvent selfChatEvent = new ChatEvent();
-				selfChatEvent.type = ChatEventType.OnChatSent;
+				selfChatEvent.type = ChatEventType.OnChatReceived;
 				selfChatEvent.timestamp = DateTime.Now;
 				selfChatEvent.sourceUserId = 0;
 				selfChatEvent.remoteUserId = 0;

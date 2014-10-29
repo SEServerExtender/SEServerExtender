@@ -8,7 +8,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
 using System.Threading;
-using System.Timers;
+using System.Windows.Forms;
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
@@ -47,6 +47,10 @@ namespace SEModAPIExtensions.API
 		public ushort wcfPort;
 		public int autosave;
 		public string path;
+		public bool closeOnCrash;
+		public bool initGateway;
+		public bool restartOnCrash;
+		public string args;
 	}
 
 	[ServiceContract]
@@ -303,9 +307,21 @@ namespace SEModAPIExtensions.API
 				{
 					Console.WriteLine("Autosave interval: " + m_commandLineArgs.autosave.ToString());
 				}
+				if (m_commandLineArgs.closeOnCrash)
+				{
+					Console.WriteLine("Close On Crash: Enabled");
+				}
+				if (m_commandLineArgs.initGateway)
+				{
+					Console.WriteLine("MyAPIGateway Init: Enabled");
+				}
 				if (m_commandLineArgs.path.Length != 0)
 				{
 					Console.WriteLine("Full path pre-selected: '" + m_commandLineArgs.path + "'");
+				}
+				if (m_commandLineArgs.restartOnCrash)
+				{
+					Console.WriteLine("Restart On Crash: Enabled");
 				}
 			}
 			catch (Exception ex)
@@ -538,6 +554,9 @@ namespace SEModAPIExtensions.API
 			{
 				if (SandboxGameAssemblyWrapper.Instance.IsGameStarted)
 				{
+					if(m_commandLineArgs.initGateway)
+						SandboxGameAssemblyWrapper.InitAPIGateway();
+
 					m_pluginManager.LoadPlugins();
 					m_pluginManager.Init();
 				}
@@ -572,6 +591,7 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
+				m_serverWrapper = ServerAssemblyWrapper.Instance;
 				bool result = m_serverWrapper.StartServer(m_commandLineArgs.instanceName, m_commandLineArgs.path, !m_commandLineArgs.noConsole);
 
 				m_isServerRunning = false;
@@ -582,6 +602,26 @@ namespace SEModAPIExtensions.API
 				m_pluginManager.Shutdown();
 
 				Console.WriteLine("Server has stopped running");
+
+				if (!result && m_commandLineArgs.closeOnCrash)
+				{
+					Thread.Sleep(5000);
+					Environment.Exit(1);
+				}
+
+				if (!result && m_commandLineArgs.restartOnCrash)
+				{
+					Thread.Sleep(5000);
+
+					String restartText = "timeout /t 20\r\n";
+					restartText += String.Format("cd \\d \"{0}\"\r\n", System.IO.Path.GetDirectoryName(Application.ExecutablePath));
+					restartText += System.IO.Path.GetFileName(Application.ExecutablePath) + " " + m_commandLineArgs.args + "\r\n";
+
+					File.WriteAllText("RestartApp.bat", restartText);
+					System.Diagnostics.Process.Start("RestartApp.bat");
+					Environment.Exit(1);
+				}
+
 				/*
 				if (!result)
 				{
@@ -602,9 +642,13 @@ namespace SEModAPIExtensions.API
 					m_runServerThread.Start();
 				}*/
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
+			}
+			finally
+			{
+				m_serverWrapper = null;
 			}
 		}
 
