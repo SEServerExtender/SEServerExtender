@@ -48,6 +48,11 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Constructors and Initializers"
 
+		public BaseObject()
+		{
+
+		}
+
 		public BaseObject(MyObjectBuilder_Base baseEntity)
 		{
 			m_objectBuilder = baseEntity;

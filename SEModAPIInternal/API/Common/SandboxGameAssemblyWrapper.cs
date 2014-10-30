@@ -25,6 +25,7 @@ namespace SEModAPIInternal.API.Common
 		protected static bool m_isUsingCommonProgramData;
 		protected static bool m_isInSafeMode;
 		protected static bool m_gatewayInitialzed;
+		protected static Thread m_gameThread;
 
 		protected bool m_isGameLoaded;
 
@@ -100,6 +101,7 @@ namespace SEModAPIInternal.API.Common
 			m_isUsingCommonProgramData = false;
 			m_isInSafeMode = false;
 			m_gatewayInitialzed = false;
+			m_gameThread = null;
 
 			string assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll");
 			m_assembly = Assembly.UnsafeLoadFrom(assemblyPath);
@@ -409,6 +411,12 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
+				if (Thread.CurrentThread == m_gameThread)
+				{
+					action();
+					return true;
+				}
+
 				BaseObject.InvokeEntityMethod(MainGame, MainGameEnqueueActionMethod, new object[] { action });
 
 				if (SandboxGameAssemblyWrapper.IsDebugging)
@@ -451,6 +459,9 @@ namespace SEModAPIInternal.API.Common
 					AutoResetEvent e = new AutoResetEvent(false);
 					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
 					{
+						if (m_gameThread == null)
+							m_gameThread = Thread.CurrentThread;
+
 						action();
 						e.Set();
 					}));
@@ -476,6 +487,9 @@ namespace SEModAPIInternal.API.Common
 				AutoResetEvent e = new AutoResetEvent(false);
 				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
 					{
+						if (m_gameThread == null)
+							m_gameThread = Thread.CurrentThread;
+
 						action();
 						e.Set();
 					}));

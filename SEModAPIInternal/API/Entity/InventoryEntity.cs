@@ -15,6 +15,7 @@ using SEModAPIInternal.Support;
 
 using VRage;
 using Sandbox.Definitions;
+using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Entity
 {
@@ -25,6 +26,7 @@ namespace SEModAPIInternal.API.Entity
 		public float newAmount;
 	}
 
+	// IMyInventory
 	[DataContract(Name = "InventoryEntityProxy")]
 	[KnownType(typeof(InventoryItemEntity))]
 	public class InventoryEntity : BaseObject
@@ -54,6 +56,7 @@ namespace SEModAPIInternal.API.Entity
 		public InventoryEntity(MyObjectBuilder_Inventory definition)
 			: base(definition)
 		{
+			/*
 			m_itemManager = new InventoryItemManager(this);
 
 			List<InventoryItemEntity> itemList = new List<InventoryItemEntity>();
@@ -64,14 +67,15 @@ namespace SEModAPIInternal.API.Entity
 				itemList.Add(newItem);
 			}
 			m_itemManager.Load(itemList);
+			 */ 
 			m_itemDeltaQueue = new Queue<InventoryDelta>();
 		}
 
 		public InventoryEntity(MyObjectBuilder_Inventory definition, Object backingObject)
 			: base(definition, backingObject)
 		{
-			m_itemManager = new InventoryItemManager(this, backingObject, InventoryGetItemListMethod);
-			m_itemManager.Refresh();
+			//m_itemManager = new InventoryItemManager(this, backingObject, InventoryGetItemListMethod);
+			//m_itemManager.Refresh();
 			m_itemDeltaQueue = new Queue<InventoryDelta>();
 		}
 
@@ -124,18 +128,25 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly(true)]
 		public uint NextItemId
 		{
-			get {
+			get 
+			{
+				uint result = 0;
+				if (BackingObject != null)
+				{
+					SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+					{
+						IMyInventory inventory = (IMyInventory)BackingObject;
+						result = (uint)inventory.GetItems().Count;
+					}));
+				}
+
+				return result;
+				/*
                 MyObjectBuilder_Inventory inventory = (MyObjectBuilder_Inventory)InvokeEntityMethod(BackingObject, InventoryGetObjectBuilderMethod);
                 ObjectBuilder = inventory;
-                Console.WriteLine("NextItemId: {0}", ObjectBuilder.nextItemId);
                 return ObjectBuilder.nextItemId; 
+				 */ 
             }
-			set
-			{
-				if (ObjectBuilder.nextItemId == value) return;
-				ObjectBuilder.nextItemId = value;
-				Changed = true;
-			}
 		}
 
 		[IgnoreDataMember]
@@ -148,8 +159,27 @@ namespace SEModAPIInternal.API.Entity
 			{
 				try
 				{
+					List<InventoryItemEntity> newList = new List<InventoryItemEntity>();
+
+					SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+						{
+							if (BackingObject != null)
+							{
+								IMyInventory myInventory = (IMyInventory)BackingObject;
+								foreach (IMyInventoryItem item in myInventory.GetItems())
+								{
+									InventoryItemEntity newItem = new InventoryItemEntity(item, this);
+									newList.Add(newItem);
+								}
+							}
+						}));
+
+					return newList;
+
+					/*
 					List<InventoryItemEntity> newList = m_itemManager.GetTypedInternalData<InventoryItemEntity>();
 					return newList;
+					 */ 
 				}
 				catch (Exception ex)
 				{
@@ -201,6 +231,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public InventoryItemEntity NewEntry()
 		{
+			/*
 			MyObjectBuilder_InventoryItem defaults = new MyObjectBuilder_InventoryItem();
 			SerializableDefinitionId itemTypeId = new SerializableDefinitionId(typeof(MyObjectBuilder_Ore), "Stone");
 
@@ -218,10 +249,14 @@ namespace SEModAPIInternal.API.Entity
 			RefreshInventory();
 
 			return newItem;
+			 */
+
+			return null;
 		}
 
 		public bool NewEntry(InventoryItemEntity source)
 		{
+			/*
 			m_itemManager.AddEntry<InventoryItemEntity>(NextItemId, source);
 
             NextItemId = NextItemId + 1;
@@ -230,23 +265,45 @@ namespace SEModAPIInternal.API.Entity
 			UpdateItemAmount(source, source.Amount * 2);
 
 			RefreshInventory();
+			*/
+
+			if (BackingObject != null)
+			{
+				SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+					{
+						IMyInventory inventory = (IMyInventory)BackingObject;
+						inventory.AddItems((MyFixedPoint)source.Amount, source.PhysicalContent);
+					}));
+			}
 
 			return true;
 		}
 
 		public bool DeleteEntry(InventoryItemEntity source)
 		{
+			if (BackingObject != null)
+			{
+				SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+				{
+					IMyInventory myInventory = (IMyInventory)BackingObject;
+					myInventory.RemoveItems(source.ItemId);
+				}));
+			}
+
+			return true;
+
+			/*
 			bool result = m_itemManager.DeleteEntry(source);
-
 			RefreshInventory();
-
 			return result;
+			 */ 
 		}
 
 		public void RefreshInventory()
 		{
 			try
 			{
+				/*
 				if (BackingObject != null)
 				{
 					//Update the base entity
@@ -266,6 +323,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 					m_itemManager.Load(itemList);
 				}
+				 */ 
 			}
 			catch (Exception ex)
 			{
@@ -281,6 +339,21 @@ namespace SEModAPIInternal.API.Entity
 
 		public void UpdateItemAmount(InventoryItemEntity item, float newAmount)
 		{
+			if (BackingObject != null)
+			{
+				SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+				{
+					IMyInventory myInventory = (IMyInventory)BackingObject;
+					if (newAmount == 0)
+						myInventory.RemoveItems(item.ItemId);
+					else if (newAmount > item.Amount)
+						myInventory.AddItems((MyFixedPoint)(newAmount - item.Amount), item.PhysicalContent, (int)item.ItemId);
+					else if (newAmount < item.Amount)
+						myInventory.RemoveItemsAt((int)item.ItemId, (MyFixedPoint)(item.Amount - newAmount), true);
+				}));
+			}
+
+			/*
 			InventoryDelta delta = new InventoryDelta();
 			delta.item = item;
 			delta.oldAmount = item.Amount;
@@ -290,6 +363,7 @@ namespace SEModAPIInternal.API.Entity
 
 			Action action = InternalUpdateItemAmount;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			 */ 
 		}
 
 		#region "Internal"
@@ -298,6 +372,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
+				/*
 				if (m_itemDeltaQueue.Count == 0)
 					return;
 
@@ -332,6 +407,7 @@ namespace SEModAPIInternal.API.Entity
 
 					InvokeEntityMethod(BackingObject, InventoryRemoveItemAmountMethod, parameters, argTypes);
 				}
+				 */ 
 			}
 			catch (Exception ex)
 			{
@@ -344,6 +420,7 @@ namespace SEModAPIInternal.API.Entity
 		#endregion
 	}
 
+	// IMyInventoryItem
 	[DataContract(Name = "InventoryItemEntityProxy")]
 	public class InventoryItemEntity : BaseObject
 	{
@@ -376,9 +453,52 @@ namespace SEModAPIInternal.API.Entity
 			m_definitionId = m_definition.Id;
 		}
 
+		public InventoryItemEntity(Object backingObject, InventoryEntity parent)
+		{
+			m_backingObject = backingObject;
+			m_parentContainer = parent;
+
+			IMyInventoryItem item = (IMyInventoryItem)backingObject;
+			MyObjectBuilder_InventoryItem newItem = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>();
+			newItem.Amount = item.Amount;
+			newItem.Content = item.Content;
+			newItem.ItemId = item.ItemId;
+			m_objectBuilder = newItem;
+
+			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition(item.Content.GetId());
+			m_definitionId = m_definition.Id;
+		}
+
 		#endregion
 
 		#region "Properties"
+
+		[IgnoreDataMember]
+		internal IMyInventoryItem InventoryInterface
+		{
+			get
+			{
+				IMyInventoryItem item = null;
+				if (BackingObject == null)
+				{
+					if (m_parentContainer != null)
+					{
+						SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+						{
+							IMyInventory inventory = (IMyInventory)m_parentContainer.BackingObject;
+							item = inventory.GetItemByID(ObjectBuilder.ItemId);
+							BackingObject = item;
+						}));
+					}
+				}
+				else
+				{
+					item = (IMyInventoryItem)BackingObject;
+				}
+
+				return item;
+			}
+		}
 
 		[IgnoreDataMember]
 		[Browsable(false)]
@@ -398,7 +518,7 @@ namespace SEModAPIInternal.API.Entity
 		public override string Name
 		{
 			get
-			{
+			{				
 				MyPhysicalItemDefinition def = Definition;
 				if (def == null)
 					return base.Name;
@@ -412,6 +532,7 @@ namespace SEModAPIInternal.API.Entity
 		[Browsable(false)]
 		[ReadOnly(true)]
 		internal new MyObjectBuilder_InventoryItem ObjectBuilder
+		//internal MyObjectBuilder_PhysicalObject ObjectBuilder
 		{
 			get
 			{
@@ -448,22 +569,39 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly(true)]
 		public uint ItemId
 		{
-			get { return ObjectBuilder.ItemId; }
-			set
+			get 			
+			{
+				if (InventoryInterface != null)
+					return InventoryInterface.ItemId;
+
+				return ObjectBuilder.ItemId; 
+			}
+			/*set
 			{
 				if (ObjectBuilder.ItemId == value) return;
 				ObjectBuilder.ItemId = value;
 				Changed = true;
-			}
+			}*/
 		}
 
 		[DataMember]
 		[Category("Container Item")]
 		public float Amount
 		{
-			get { return (float)ObjectBuilder.Amount; }
+			get 
+			{
+				if (InventoryInterface != null)
+					return (float)InventoryInterface.Amount;
+
+				return (float)ObjectBuilder.Amount; 
+			}
 			set
 			{
+				if (Container != null)
+					Container.UpdateItemAmount(this, value);
+
+				m_backingObject = null;
+				/*
 				var baseEntity = ObjectBuilder;
 				if ((float)baseEntity.Amount == value) return;
 
@@ -472,6 +610,7 @@ namespace SEModAPIInternal.API.Entity
 
 				baseEntity.Amount = (MyFixedPoint)value;
 				Changed = true;
+				 */ 
 			}
 		}
 
@@ -481,13 +620,20 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly(true)]
 		public MyObjectBuilder_PhysicalObject PhysicalContent
 		{
-			get { return ObjectBuilder.PhysicalContent; }
-			set
+			get 			
+			{
+				if (InventoryInterface != null)
+					return InventoryInterface.Content;
+
+				return ObjectBuilder.PhysicalContent; 
+			}
+
+			/*set
 			{
 				if (ObjectBuilder.PhysicalContent == value) return;
 				ObjectBuilder.PhysicalContent = value;
 				Changed = true;
-			}
+			}*/
 		}
 
 		[IgnoreDataMember]
@@ -497,6 +643,9 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
+				if (InventoryInterface != null)
+					return (float)InventoryInterface.Amount * Mass;
+
 				return (float)ObjectBuilder.Amount * Mass;
 			}
 		}
@@ -506,7 +655,13 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly(true)]
 		public float TotalVolume
 		{
-			get { return (float)ObjectBuilder.Amount * Volume; }
+			get 
+			{
+				if (InventoryInterface != null)
+					return (float)InventoryInterface.Amount * Volume;
+
+				return (float)ObjectBuilder.Amount * Volume; 
+			}
 		}
 
 		[DataMember]
@@ -518,6 +673,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				if (Definition == null)
 					return 0;
+
 				return Definition.Mass;
 			}
 			private set
@@ -535,6 +691,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				if (Definition == null)
 					return 0;
+
 				return Definition.Volume;
 			}
 			private set
@@ -570,10 +727,11 @@ namespace SEModAPIInternal.API.Entity
 		public static uint GetInventoryItemId(object item)
 		{
 			try
-			{
+			{				
 				uint result = (uint)GetEntityFieldValue(item, InventoryItemItemIdField);
 				return result;
-			} catch(Exception ex)
+			} 			
+			catch(Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
 				return 0;
@@ -583,13 +741,13 @@ namespace SEModAPIInternal.API.Entity
 		public override void Dispose()
 		{
 			Amount = 0;
-
 			base.Dispose();
 		}
 
 		#endregion
 	}
 
+	//IMyInventoryOwner
 	public class InventoryItemManager : BaseObjectManager
 	{
 		#region "Attributes"
@@ -635,6 +793,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
+				/*
 				List<Object> rawEntities = GetBackingDataList();
 				Dictionary<long, BaseObject> internalDataCopy = new Dictionary<long, BaseObject>(GetInternalData());
 
@@ -690,6 +849,7 @@ namespace SEModAPIInternal.API.Entity
 						LogManager.ErrorLog.WriteLine(ex);
 					}
 				}
+				 */ 
 			}
 			catch (Exception ex)
 			{

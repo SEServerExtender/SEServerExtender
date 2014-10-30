@@ -1405,6 +1405,10 @@ namespace SEServerExtender
 					InventoryItemDialog newItemDialog = new InventoryItemDialog();
 					newItemDialog.InventoryContainer = (InventoryEntity)linkedObject;
 					newItemDialog.ShowDialog(this);
+
+					TreeViewEventArgs newEvent = new TreeViewEventArgs(selectedNode);
+					TRV_Entities_AfterSelect(sender, newEvent);
+
 					return;
 				}
 
@@ -1413,6 +1417,10 @@ namespace SEServerExtender
 					InventoryItemDialog newItemDialog = new InventoryItemDialog();
 					newItemDialog.InventoryContainer = ((InventoryItemEntity)linkedObject).Container;
 					newItemDialog.ShowDialog(this);
+
+					TreeViewEventArgs newEvent = new TreeViewEventArgs(parentNode);
+					TRV_Entities_AfterSelect(sender, newEvent);
+
 					return;
 				}
 
