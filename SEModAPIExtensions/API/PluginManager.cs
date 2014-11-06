@@ -251,10 +251,11 @@ namespace SEModAPIExtensions.API
                                 if (m_plugins.ContainsKey(guidValue))
                                     break;
 
-                                if (type.BaseType == null)
-                                    continue;
+                                //if (type.BaseType == null)
+//                                    continue;
 
-                                Type[] filteredTypes = type.BaseType.GetInterfaces();
+                                //Type[] filteredTypes = type.BaseType.GetInterfaces();
+								Type[] filteredTypes = type.GetInterfaces();
                                 foreach (Type interfaceType in filteredTypes)
                                 {
                                     if (interfaceType.FullName == typeof(IPlugin).FullName)
@@ -300,6 +301,12 @@ namespace SEModAPIExtensions.API
 
 			foreach (Type type in types)
 			{
+				if (type.GetInterface(typeof(IPlugin).FullName) != null)
+				{
+					if (type.GetMethod("InitWithPath") != null)
+						return false;
+				}
+
 				if (type.BaseType == null)
 					continue;
 

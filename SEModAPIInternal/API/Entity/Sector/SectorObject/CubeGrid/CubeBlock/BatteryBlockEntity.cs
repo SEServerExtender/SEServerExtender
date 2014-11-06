@@ -389,11 +389,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//15870 - ProducerEnabled On/Off
 		//15871 - SemiautoEnabled On/Off
 
+		//public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "51A61638797B78AFB769F9256F929138";
+		public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "612022BAA65F12CA83170A64ED538E42";
+
 		public static string BatteryBlockNetManagerCurrentStoredPowerPacketClass = "59DE66D2ECADE0929A1C776D7FA907E2";
-
-		//public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "5AB82F727AA696135ED11C70C542CCE8";
-		public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "51A61638797B78AFB769F9256F929138";
-
 		public static string BatteryBlockNetManagerCurrentStoredPowerPacketValueField = "ADC3AB91A03B31875821D57B8B718AF5";
 
 		#endregion
@@ -447,6 +446,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type packetType = InternalType.GetNestedType(BatteryBlockNetManagerCurrentStoredPowerPacketClass, BindingFlags.Public | BindingFlags.NonPublic);
 				result &= BaseObject.HasMethod(packetType, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod);
 				result &= BaseObject.HasField(packetType, BatteryBlockNetManagerCurrentStoredPowerPacketValueField);
+//				result &= BaseObject.HasField(packetType, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdField);
 
 				Type refPacketType = packetType.MakeByRefType();
 
@@ -500,6 +500,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			try
 			{
 				object result = BaseObject.InvokeEntityMethod(packet, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod);
+				//object result = BaseObject.GetEntityFieldValue(packet, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdField);
 				if (result == null)
 					return;
 				long entityId = (long)result;

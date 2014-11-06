@@ -614,7 +614,7 @@ namespace SEModAPIExtensions.API
 					Thread.Sleep(5000);
 
 					String restartText = "timeout /t 20\r\n";
-					restartText += String.Format("cd \\d \"{0}\"\r\n", System.IO.Path.GetDirectoryName(Application.ExecutablePath));
+					restartText += String.Format("cd /d \"{0}\"\r\n", System.IO.Path.GetDirectoryName(Application.ExecutablePath));
 					restartText += System.IO.Path.GetFileName(Application.ExecutablePath) + " " + m_commandLineArgs.args + "\r\n";
 
 					File.WriteAllText("RestartApp.bat", restartText);

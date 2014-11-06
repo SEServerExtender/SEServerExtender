@@ -1042,7 +1042,7 @@ namespace SEModAPIInternal.API.Entity
 			m_staticRefreshCount++;
 
 			//Adjust the refresh interval based on percentage of total refreshes for this type
-			m_refreshInterval = (typeRefreshCount / m_staticRefreshCount) * 850 + 150;
+			m_refreshInterval = (typeRefreshCount / m_staticRefreshCount) * 850 + 250;
 		}
 
 		private void RefreshData()

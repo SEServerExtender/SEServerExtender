@@ -28,8 +28,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string CockpitEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string CockpitEntityClass = "0A875207E28B2C7707366CDD300684DF";
 		//public static string CockpitGetPilotEntityMethod = "C9A8295457C46F4DF5FC4DDBC7276287";
-		public static string CockpitGetPilotEntityMethod = "B0B4C9DD7231024CD14A50DB178582C8";
+		//public static string CockpitGetPilotEntityMethod = "B0B4C9DD7231024CD14A50DB178582C8";
 		public static string CockpitSetPilotEntityMethod = "1BB7956FA537A66315E07C562677018A";
+
+		public static string CockpitGetPilotEntityField = "F4C4B7D4ED8271A773587195358DF435";
 
 
 		#endregion
@@ -144,8 +146,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if (type == null)
 					throw new Exception("Could not find type for CockpitEntity");
 
-                result &= BaseEntity.HasMethod(type, CockpitGetPilotEntityMethod);
+                //result &= BaseEntity.HasMethod(type, CockpitGetPilotEntityMethod);
+
                 result &= BaseEntity.HasMethod(type, CockpitSetPilotEntityMethod);
+				result &= BaseEntity.HasField(type, CockpitGetPilotEntityField);
 
 				return result;
 			}
@@ -158,7 +162,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
         protected Object GetPilotEntity()
         {
-            Object result = InvokeEntityMethod(ActualObject, CockpitGetPilotEntityMethod);
+            //Object result = InvokeEntityMethod(ActualObject, CockpitGetPilotEntityMethod);
+			Object result = GetEntityPropertyValue(ActualObject, CockpitGetPilotEntityField);
             return result;
         }
 

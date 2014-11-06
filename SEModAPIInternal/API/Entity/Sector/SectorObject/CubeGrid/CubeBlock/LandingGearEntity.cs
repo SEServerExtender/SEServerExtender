@@ -28,13 +28,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string LandingGearClass = "5C73AAF1736F3AA9956574C6D9A2EEBE";
 
 		//public static string LandingGearGetAutoLockMethod = "71F8F86678091875138C01C64F0C2F01";
-		public static string LandingGearGetAutoLockMethod = "3ECDCF46AB6230B4998CE81E37A36F34";
+		//public static string LandingGearGetAutoLockMethod = "3ECDCF46AB6230B4998CE81E37A36F34";
 		public static string LandingGearSetAutoLockMethod = "F542ACDC0D61EB46F733A5527CFFBE14";
 		public static string LandingGearGetBrakeForceMethod = "A84CC3FC7B1C4CA0A631E34D2F024163";
 		public static string LandingGearSetBrakeForceMethod = "013F45FD594F8A80D5952A7AC22A931E";
 
 		public static string LandingGearIsLockedField = "00F45118D3A7F21253C28F4B11D1F70E";
 		public static string LandingGearNetManagerField = "4D9CE737B011256C0232620C5234AAD4";
+		public static string LandingGearGetAutoLockField = "B7C2D3F7EF52B638640C0DDB419A1DB4";
 
 		#endregion
 
@@ -189,11 +190,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if (type == null)
 					throw new Exception("Could not find internal type for LandingGearEntity");
 
-				result &= HasMethod(type, LandingGearGetAutoLockMethod);
+				//result &= HasMethod(type, LandingGearGetAutoLockMethod);
 				result &= HasMethod(type, LandingGearSetAutoLockMethod);
 				result &= HasMethod(type, LandingGearGetBrakeForceMethod);
 				result &= HasMethod(type, LandingGearSetBrakeForceMethod);
 
+				result &= HasField(type, LandingGearGetAutoLockField);
 				result &= HasField(type, LandingGearIsLockedField);
 				result &= HasField(type, LandingGearNetManagerField);
 
@@ -230,7 +232,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
-				bool result = (bool)InvokeEntityMethod(ActualObject, LandingGearGetAutoLockMethod);
+				//bool result = (bool)InvokeEntityMethod(ActualObject, LandingGearGetAutoLockMethod);
+				bool result = (bool)GetEntityFieldValue(ActualObject, LandingGearGetAutoLockField);
 				return result;
 			}
 			catch (Exception ex)
