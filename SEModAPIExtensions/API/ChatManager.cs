@@ -24,6 +24,8 @@ using VRage;
 using VRage.Common.Utils;
 using VRageMath;
 
+using Sandbox.ModAPI;
+
 namespace SEModAPIExtensions.API
 {
 	[ServiceContract]
@@ -431,7 +433,7 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
-				if (!commandParsed)
+				if (!commandParsed && message[0] != '/')
 				{
 					Object chatMessageStruct = CreateChatMessageStruct(message);
 					List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
@@ -692,14 +694,36 @@ namespace SEModAPIExtensions.API
 				}
 				else if (commandParts[2].ToLower().Equals("floatingobjects"))	//All floating objects
 				{
+					/*
 					List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
 					int floatingObjectCount = entities.Count;
 					foreach (FloatingObject entity in entities)
 					{
 						entity.Dispose();
 					}
+					 */
 
-					SendPrivateChatMessage(remoteUserId, floatingObjectCount.ToString() + " floating objects have been removed");
+					int count = 0;
+					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+					{
+						HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
+						MyAPIGateway.Entities.GetEntities(entities, x => x.GetObjectBuilder() is MyObjectBuilder_FloatingObject);
+						List<IMyEntity> entitiesToRemove = new List<IMyEntity>();
+
+						foreach (IMyEntity entity in entities)
+						{
+							entitiesToRemove.Add(entity);
+						}
+
+						for (int r = entitiesToRemove.Count - 1; r >= 0; r--)
+						{
+							IMyEntity entity = entitiesToRemove[r];
+							MyAPIGateway.Entities.RemoveEntity(entity);
+							count++;
+						}
+					});
+
+					SendPrivateChatMessage(remoteUserId, count.ToString() + " floating objects have been removed");
 				}
 				else
 				{

@@ -36,6 +36,8 @@ using VRage.Common.Utils;
 using VRageMath;
 using Sandbox.Definitions;
 
+using Sandbox.ModAPI;
+
 namespace SEServerExtender
 {
 	public partial class SEServerExtender : Form
@@ -1846,17 +1848,28 @@ namespace SEServerExtender
 		{
 			try
 			{
-				Console.WriteLine("[{0}] Clearing floating objects...", DateTime.Now.ToString());
-				BTN_Utilities_ClearFloatingObjectsNow.Enabled = false;
+				//BTN_Utilities_ClearFloatingObjectsNow.Enabled = false;
 
-				m_floatingObjectEntities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
-				foreach (FloatingObject sectorObject in m_floatingObjectEntities)
+				LogManager.APILog.WriteLineAndConsole("Clearing floating objects...");
+				int count = 0;
+				if (MyAPIGateway.Entities != null)		
 				{
-					sectorObject.Dispose();
+					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+					{
+						HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
+						MyAPIGateway.Entities.GetEntities(entities, x => x.GetObjectBuilder() is MyObjectBuilder_FloatingObject);
+						List<IMyEntity> entitiesToRemove = new List<IMyEntity>();
+
+						foreach (IMyEntity entity in entities)		
+						{
+							MyAPIGateway.Entities.RemoveEntity(entity);
+							count++;
+						}
+					});
 				}
 
-				BTN_Utilities_ClearFloatingObjectsNow.Enabled = true;
-				Console.WriteLine("[{0}] Floating objects cleared!", DateTime.Now.ToString());
+				//BTN_Utilities_ClearFloatingObjectsNow.Enabled = true;
+				LogManager.APILog.WriteLineAndConsole(string.Format("Cleared {0} floating objects ...", count));
 			}
 			catch (Exception ex)
 			{

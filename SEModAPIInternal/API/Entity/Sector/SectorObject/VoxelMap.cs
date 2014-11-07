@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using Sandbox.Definitions;
 using VRage;
 
+using Sandbox.ModAPI;
+using VRage.Voxels;
+
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	[DataContract(Name = "VoxelMapProxy")]
@@ -21,6 +24,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private static Type m_internalType;
 
 		private VoxelMapMaterialManager m_materialManager;
+		private MyStorageDataCache m_cache;
+		private Dictionary<MyVoxelMaterialDefinition, float> m_materialTotals;
 
 		public static string VoxelMapNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string VoxelMapClass = "6EC806B54BA319767DA878841A56ECD8";
@@ -42,7 +47,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public VoxelMap(MyObjectBuilder_VoxelMap definition, Object backingObject)
 			: base(definition, backingObject)
 		{
-			m_materialManager = new VoxelMapMaterialManager(this, GetMaterialManager());
+			//m_materialManager = new VoxelMapMaterialManager(this, GetMaterialManager());
+			m_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>();
+			//RefreshCache();
 		}
 
 		#endregion
@@ -93,7 +100,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly(true)]
 		public string Filename
 		{
-			get { return ObjectBuilder.Filename; }
+			get { return ObjectBuilder.StorageName; }
 			private set
 			{
 				//Do nothing!
@@ -126,10 +133,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				if (BackingObject == null)
+				if (m_cache == null)
 					return 0;
 
-				return MaterialManager.VoxelCount;
+				return m_cache.Data.Length;
 			}
 			private set
 			{
@@ -150,7 +157,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				//Mass is estimated based on default ratio of 1kg = 0.37 cubic meters of ore
 				//Note: This is not a realistic mass as this volume of silicate would be ~135kg
-				return MaterialManager.VoxelCount * 19.727f;
+				return Volume * 19.727f;
 			}
 			private set
 			{
@@ -164,7 +171,18 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly(true)]
 		public Dictionary<MyVoxelMaterialDefinition, float> Materials
 		{
-			get { return MaterialManager.Materials; }
+			get 
+			{
+				if (BackingObject == null)
+					return null;
+
+				if (m_cache == null)
+				{
+					RefreshCache();
+				}
+
+				return m_materialTotals;
+			}
 		}
 
 		[IgnoreDataMember]
@@ -237,6 +255,38 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				return null;
 			MyVoxelMaterialDefinition result = (MyVoxelMaterialDefinition)rawResult;
 			return result;
+		}
+
+		protected void RefreshCache()
+		{
+			IMyVoxelMap voxelMap = (IMyVoxelMap)BackingObject;
+			m_cache = new MyStorageDataCache();
+			Vector3I size = voxelMap.Storage.Size;
+			m_cache.Resize(size);
+
+			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+			{
+				voxelMap.Storage.ReadRange(m_cache, MyStorageDataTypeFlags.Material, VRageRender.MyLodTypeEnum.LOD0, Vector3I.Zero, size - 1); 
+			});
+
+			foreach (byte materialIndex in m_cache.Data)
+			{
+				try
+				{
+					MyVoxelMaterialDefinition material = MyDefinitionManager.Static.GetVoxelMaterialDefinition(materialIndex);
+					if (material == null)
+						continue;
+
+					if (!m_materialTotals.ContainsKey(material))
+						m_materialTotals.Add(material, 1);
+					else
+						m_materialTotals[material]++;
+				}
+				catch (Exception ex)
+				{
+					LogManager.ErrorLog.WriteLine(ex);
+				}
+			}
 		}
 
 		#endregion
@@ -316,7 +366,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 						if (rawIndex == null)
 							continue;
 						byte materialIndex = (byte)rawIndex;
-
 						MyVoxelMaterialDefinition material = MyDefinitionManager.Static.GetVoxelMaterialDefinition(materialIndex);
 						if (material == null)
 							continue;
@@ -324,6 +373,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 							m_materialTotals.Add(material, 1);
 						else
 							m_materialTotals[material]++;
+						
 					}
 					catch (Exception ex)
 					{
@@ -351,7 +401,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				bool result = true;
-
+				/*
 				Type type = InternalType;
 				if (type == null)
 					throw new Exception("Could not find internal type for VoxelMapMaterialManager");
@@ -359,7 +409,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				result &= BaseObject.HasMethod(type, VoxelMapMaterialManagerGetVoxelsDictionaryMethod);
 
 				result &= BaseObject.HasField(type, VoxelMapMaterialManagerVoxelsField);
-
+				*/
 				return result;
 			}
 			catch (Exception ex)

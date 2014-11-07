@@ -26,7 +26,7 @@ namespace SEServerExtender
 			{
 				this.ServiceName = "SEServerExtender";
 				this.CanPauseAndContinue = false;
-				this.CanStop = true;
+				this.CanStop = true;	
 				this.AutoLog = true;
 			}
 
