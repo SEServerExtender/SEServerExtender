@@ -1585,6 +1585,17 @@ namespace SEServerExtender
 			}
 		}
 
+		private void BTN_Chat_KickSelected_Click(object sender, EventArgs e)
+		{
+			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
+				ChatManager.Instance.SendPublicChatMessage("/kick " + LST_Chat_ConnectedPlayers.SelectedItem);
+		}
+
+		private void BTN_Chat_BanSelected_Click(object sender, EventArgs e)
+		{
+			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
+				ChatManager.Instance.SendPublicChatMessage("/ban " + LST_Chat_ConnectedPlayers.SelectedItem);
+		}
 		#endregion
 
 		#region "Factions"
@@ -1843,40 +1854,6 @@ namespace SEServerExtender
 
 		#region "Utilities"
 
-		// Get all floating objects and dispose of them.
-		private void BeginClearObjects()
-		{
-			try
-			{
-				//BTN_Utilities_ClearFloatingObjectsNow.Enabled = false;
-
-				LogManager.APILog.WriteLineAndConsole("Clearing floating objects...");
-				int count = 0;
-				if (MyAPIGateway.Entities != null)		
-				{
-					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
-					{
-						HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
-						MyAPIGateway.Entities.GetEntities(entities, x => x.GetObjectBuilder() is MyObjectBuilder_FloatingObject);
-						List<IMyEntity> entitiesToRemove = new List<IMyEntity>();
-
-						foreach (IMyEntity entity in entities)		
-						{
-							MyAPIGateway.Entities.RemoveEntity(entity);
-							count++;
-						}
-					});
-				}
-
-				//BTN_Utilities_ClearFloatingObjectsNow.Enabled = true;
-				LogManager.APILog.WriteLineAndConsole(string.Format("Cleared {0} floating objects ...", count));
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(this, ex.ToString());
-			}
-		}
-
 		// Start the Auto Clean timer if user checks the auto clean checkbox.
 		private void CHK_Utilities_FloatingObjectAutoClean_CheckedChanged(object sender, EventArgs e)
 		{
@@ -1900,19 +1877,19 @@ namespace SEServerExtender
 		{
 			if (m_floatingObjectsCount > TXT_Utilities_FloatingObjectAmount.IntValue)
 			{
-				BTN_Utilities_ClearFloatingObjectsNow_Click(null, null);
+				ChatManager.Instance.SendPublicChatMessage("/delete all floatingobjects");
 			}
 		}
 
 		// Delete all floating objects now
 		private void BTN_Utilities_ClearFloatingObjectsNow_Click(object sender, EventArgs e)
 		{
-			// Start the floating object cleaner on a seperate thread to avoid hanging the UI.
-			System.Threading.Tasks.Task.Factory.StartNew(() => BeginClearObjects());
+			ChatManager.Instance.SendPublicChatMessage("/delete all floatingobjects");
 		}
 
 		#endregion
 
 		#endregion
+
 	}
 }
