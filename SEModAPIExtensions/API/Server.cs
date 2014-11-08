@@ -144,6 +144,7 @@ namespace SEModAPIExtensions.API
 		private LogManager m_logManager;
 		private EntityEventManager m_entityEventManager;
 		private ChatManager m_chatManager;
+		private SessionManager m_sessionManager;
 
 		//Timers
 		private System.Timers.Timer m_pluginMainLoop;
@@ -270,6 +271,7 @@ namespace SEModAPIExtensions.API
 			m_logManager = LogManager.Instance;
 			m_entityEventManager = EntityEventManager.Instance;
 			m_chatManager = ChatManager.Instance;
+			m_sessionManager = SessionManager.Instance;
 
 			return true;
 		}
@@ -664,6 +666,8 @@ namespace SEModAPIExtensions.API
 				if (m_dedicatedConfigDefinition == null)
 					LoadServerConfig();
 
+				m_sessionManager.UpdateSessionSettings();
+
 				m_pluginMainLoop.Start();
 				m_autosaveTimer.Start();
 
@@ -699,14 +703,17 @@ namespace SEModAPIExtensions.API
 			Console.WriteLine("Server has been stopped");
 		}
 
-		public void LoadServerConfig()
+		public MyConfigDedicatedData LoadServerConfig()
 		{
 			FileInfo fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg");
 			if (fileInfo.Exists)
 			{
 				MyConfigDedicatedData config = DedicatedConfigDefinition.Load(fileInfo);
 				m_dedicatedConfigDefinition = new DedicatedConfigDefinition(config);
+				return config;
 			}
+			else
+				return null;	
 		}
 
 		public void SaveServerConfig()
