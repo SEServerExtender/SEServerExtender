@@ -1840,7 +1840,6 @@ namespace SEServerExtender
 
 					value.Dock = DockStyle.Fill;
 					value.Visible = true;
-					return;
 				}
 				else
 				{
