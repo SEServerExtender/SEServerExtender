@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.TAB_MainTabs = new System.Windows.Forms.TabControl();
 			this.TAB_Control_Page = new System.Windows.Forms.TabPage();
@@ -58,9 +59,9 @@
 			this.LST_Chat_Messages = new System.Windows.Forms.ListBox();
 			this.splitContainer13 = new System.Windows.Forms.SplitContainer();
 			this.LST_Chat_ConnectedPlayers = new System.Windows.Forms.ListBox();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.BTN_Chat_BanSelected = new System.Windows.Forms.Button();
-			this.BTN_Chat_KickSelected = new System.Windows.Forms.Button();
+			this.CMS_Chat = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.TSM_Kick = new System.Windows.Forms.ToolStripMenuItem();
+			this.TSM_Ban = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainer7 = new System.Windows.Forms.SplitContainer();
 			this.TXT_Chat_Message = new System.Windows.Forms.TextBox();
 			this.BTN_Chat_Send = new System.Windows.Forms.Button();
@@ -85,10 +86,11 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.BTN_Utilities_ClearFloatingObjectsNow = new System.Windows.Forms.Button();
 			this.CHK_Utilities_FloatingObjectAutoClean = new System.Windows.Forms.CheckBox();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.BTN_Chat_BanSelected = new System.Windows.Forms.Button();
+			this.BTN_Chat_KickSelected = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.TAB_MainTabs.SuspendLayout();
 			this.TAB_Control_Page.SuspendLayout();
@@ -119,7 +121,7 @@
 			this.splitContainer13.Panel1.SuspendLayout();
 			this.splitContainer13.Panel2.SuspendLayout();
 			this.splitContainer13.SuspendLayout();
-			this.panel1.SuspendLayout();
+			this.CMS_Chat.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).BeginInit();
 			this.splitContainer7.Panel1.SuspendLayout();
 			this.splitContainer7.Panel2.SuspendLayout();
@@ -147,6 +149,7 @@
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -160,10 +163,6 @@
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.TAB_MainTabs);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
 			this.splitContainer1.Size = new System.Drawing.Size(951, 598);
 			this.splitContainer1.SplitterDistance = 569;
 			this.splitContainer1.TabIndex = 0;
@@ -531,6 +530,7 @@
 			// 
 			// LST_Chat_ConnectedPlayers
 			// 
+			this.LST_Chat_ConnectedPlayers.ContextMenuStrip = this.CMS_Chat;
 			this.LST_Chat_ConnectedPlayers.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.LST_Chat_ConnectedPlayers.FormattingEnabled = true;
 			this.LST_Chat_ConnectedPlayers.Location = new System.Drawing.Point(0, 0);
@@ -538,35 +538,27 @@
 			this.LST_Chat_ConnectedPlayers.Size = new System.Drawing.Size(183, 443);
 			this.LST_Chat_ConnectedPlayers.TabIndex = 1;
 			// 
-			// panel1
+			// CMS_Chat
 			// 
-			this.panel1.Controls.Add(this.BTN_Chat_BanSelected);
-			this.panel1.Controls.Add(this.BTN_Chat_KickSelected);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(183, 57);
-			this.panel1.TabIndex = 0;
+			this.CMS_Chat.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSM_Kick,
+            this.TSM_Ban});
+			this.CMS_Chat.Name = "ChatMenuStrip";
+			this.CMS_Chat.Size = new System.Drawing.Size(97, 48);
 			// 
-			// BTN_Chat_BanSelected
+			// TSM_Kick
 			// 
-			this.BTN_Chat_BanSelected.Location = new System.Drawing.Point(3, 31);
-			this.BTN_Chat_BanSelected.Name = "BTN_Chat_BanSelected";
-			this.BTN_Chat_BanSelected.Size = new System.Drawing.Size(175, 23);
-			this.BTN_Chat_BanSelected.TabIndex = 1;
-			this.BTN_Chat_BanSelected.Text = "Ban Selected";
-			this.BTN_Chat_BanSelected.UseVisualStyleBackColor = true;
-			this.BTN_Chat_BanSelected.Click += new System.EventHandler(this.BTN_Chat_BanSelected_Click);
+			this.TSM_Kick.Name = "TSM_Kick";
+			this.TSM_Kick.Size = new System.Drawing.Size(96, 22);
+			this.TSM_Kick.Text = "Kick";
+			this.TSM_Kick.Click += new System.EventHandler(this.TSM_Kick_Click);
 			// 
-			// BTN_Chat_KickSelected
+			// TSM_Ban
 			// 
-			this.BTN_Chat_KickSelected.Location = new System.Drawing.Point(3, 2);
-			this.BTN_Chat_KickSelected.Name = "BTN_Chat_KickSelected";
-			this.BTN_Chat_KickSelected.Size = new System.Drawing.Size(177, 23);
-			this.BTN_Chat_KickSelected.TabIndex = 0;
-			this.BTN_Chat_KickSelected.Text = "Kick Selected";
-			this.BTN_Chat_KickSelected.UseVisualStyleBackColor = true;
-			this.BTN_Chat_KickSelected.Click += new System.EventHandler(this.BTN_Chat_KickSelected_Click);
+			this.TSM_Ban.Name = "TSM_Ban";
+			this.TSM_Ban.Size = new System.Drawing.Size(96, 22);
+			this.TSM_Ban.Text = "Ban";
+			this.TSM_Ban.Click += new System.EventHandler(this.TSM_Ban_Click);
 			// 
 			// splitContainer7
 			// 
@@ -856,13 +848,35 @@
 			this.CHK_Utilities_FloatingObjectAutoClean.UseVisualStyleBackColor = true;
 			this.CHK_Utilities_FloatingObjectAutoClean.CheckedChanged += new System.EventHandler(this.CHK_Utilities_FloatingObjectAutoClean_CheckedChanged);
 			// 
-			// statusStrip1
+			// panel1
 			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 3);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(951, 22);
-			this.statusStrip1.TabIndex = 0;
-			this.statusStrip1.Text = "statusStrip1";
+			this.panel1.Controls.Add(this.BTN_Chat_BanSelected);
+			this.panel1.Controls.Add(this.BTN_Chat_KickSelected);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(0, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(183, 57);
+			this.panel1.TabIndex = 0;
+			// 
+			// BTN_Chat_BanSelected
+			// 
+			this.BTN_Chat_BanSelected.Location = new System.Drawing.Point(3, 31);
+			this.BTN_Chat_BanSelected.Name = "BTN_Chat_BanSelected";
+			this.BTN_Chat_BanSelected.Size = new System.Drawing.Size(175, 23);
+			this.BTN_Chat_BanSelected.TabIndex = 1;
+			this.BTN_Chat_BanSelected.Text = "Ban Selected";
+			this.BTN_Chat_BanSelected.UseVisualStyleBackColor = true;
+			this.BTN_Chat_BanSelected.Click += new System.EventHandler(this.BTN_Chat_BanSelected_Click);
+			// 
+			// BTN_Chat_KickSelected
+			// 
+			this.BTN_Chat_KickSelected.Location = new System.Drawing.Point(3, 2);
+			this.BTN_Chat_KickSelected.Name = "BTN_Chat_KickSelected";
+			this.BTN_Chat_KickSelected.Size = new System.Drawing.Size(177, 23);
+			this.BTN_Chat_KickSelected.TabIndex = 0;
+			this.BTN_Chat_KickSelected.Text = "Kick Selected";
+			this.BTN_Chat_KickSelected.UseVisualStyleBackColor = true;
+			this.BTN_Chat_KickSelected.Click += new System.EventHandler(this.BTN_Chat_KickSelected_Click);
 			// 
 			// SEServerExtender
 			// 
@@ -873,8 +887,6 @@
 			this.Name = "SEServerExtender";
 			this.Text = "SEServerExtender";
 			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.TAB_MainTabs.ResumeLayout(false);
@@ -907,7 +919,7 @@
 			this.splitContainer13.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer13)).EndInit();
 			this.splitContainer13.ResumeLayout(false);
-			this.panel1.ResumeLayout(false);
+			this.CMS_Chat.ResumeLayout(false);
 			this.splitContainer7.Panel1.ResumeLayout(false);
 			this.splitContainer7.Panel1.PerformLayout();
 			this.splitContainer7.Panel2.ResumeLayout(false);
@@ -937,6 +949,7 @@
 			this.splitContainer4.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -948,7 +961,6 @@
 		private System.Windows.Forms.TabPage TAB_Control_Page;
 		private System.Windows.Forms.Button BTN_ServerControl_Start;
 		private System.Windows.Forms.TabPage TAB_Entities_Page;
-		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private System.Windows.Forms.PropertyGrid PG_Entities_Details;
 		private System.Windows.Forms.Button BTN_ServerControl_Stop;
@@ -998,8 +1010,11 @@
 		private System.Windows.Forms.ComboBox CMB_Control_AutosaveInterval;
 		private System.Windows.Forms.SplitContainer splitContainer13;
 		private System.Windows.Forms.ListBox LST_Chat_ConnectedPlayers;
+		private System.Windows.Forms.ContextMenuStrip CMS_Chat;
+		private System.Windows.Forms.ToolStripMenuItem TSM_Kick;
+		private System.Windows.Forms.ToolStripMenuItem TSM_Ban;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button BTN_Chat_KickSelected;
 		private System.Windows.Forms.Button BTN_Chat_BanSelected;
+		private System.Windows.Forms.Button BTN_Chat_KickSelected;
 	}
 }

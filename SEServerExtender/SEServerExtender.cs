@@ -1804,7 +1804,35 @@ namespace SEServerExtender
 			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
 			Object plugin = PluginManager.Instance.Plugins[selectedItem];
 
-			PG_Plugins.SelectedObject = plugin;
+			foreach (var type in Assembly.GetAssembly(plugin.GetType()).GetTypes())
+			{
+				PropertyInfo info = plugin.GetType().GetProperty("PluginControlForm");
+				if (info != null)
+				{
+					PG_Plugins.Visible = false;
+					Form value = (Form)info.GetValue(plugin, null);
+
+					foreach (Control control in splitContainer11.Panel2.Controls)
+					{
+						control.Visible = false;
+					}
+
+					if (!splitContainer11.Panel2.Controls.Contains(value))
+					{
+						value.TopLevel = false;
+						splitContainer11.Panel2.Controls.Add(value);
+					}
+
+					value.Dock = DockStyle.Fill;
+					value.Visible = true;
+					return;
+				}
+				else
+				{
+					PG_Plugins.Visible = true;
+					PG_Plugins.SelectedObject = plugin;
+				}
+			}
 
 			bool pluginState = PluginManager.Instance.GetPluginState(selectedItem);
 			if (pluginState)
@@ -1889,7 +1917,19 @@ namespace SEServerExtender
 
 		#endregion
 
+		private void TSM_Kick_Click(object sender, EventArgs e)
+		{
+			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
+				ChatManager.Instance.SendPublicChatMessage("/kick " + LST_Chat_ConnectedPlayers.SelectedItem);
+		}
+
 		#endregion
+
+		private void TSM_Ban_Click(object sender, EventArgs e)
+		{
+			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
+				ChatManager.Instance.SendPublicChatMessage("/ban " + LST_Chat_ConnectedPlayers.SelectedItem);
+		}
 
 	}
 }
