@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Xml;
 
 using Sandbox.Common.ObjectBuilders;
+using System.Linq;
 
 namespace SEModAPI.API.Definitions
 {
@@ -99,6 +100,44 @@ namespace SEModAPI.API.Definitions
 				if (m_definition.SessionSettings.GameMode == value) return;
 				m_definition.SessionSettings.GameMode = value;
 				return;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("Get or set the grinder speed multiplier")]
+		[Category("Global Settings")]
+		/// <summary>
+		/// Get or set the inventory size multiplier
+		/// </summary>
+		public float GrinderSpeedMultiplier
+		{
+			get { return m_definition.SessionSettings.GrinderSpeedMultiplier; }
+			set
+			{
+				if (m_definition.SessionSettings.GrinderSpeedMultiplier == value) return;
+				m_definition.SessionSettings.GrinderSpeedMultiplier = value;
+				Changed = true;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("Get or set the welder speed multiplier")]
+		[Category("Global Settings")]
+		/// <summary>
+		/// Get or set the welder speed multiplier
+		/// </summary>
+		public float WelderSpeedMultiplier
+		{
+			get { return m_definition.SessionSettings.WelderSpeedMultiplier; }
+			set
+			{
+				if (m_definition.SessionSettings.WelderSpeedMultiplier == value) return;
+				m_definition.SessionSettings.WelderSpeedMultiplier = value;
+				Changed = true;
 			}
 		}
 
@@ -333,6 +372,25 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable(true)]
 		[ReadOnly(false)]
+		[Description("Get or set the minutes between autosaving the sector")]
+		[Category("Server Settings")]
+		/// <summary>
+		/// Get or set the minutes between autosaving the world
+		/// </summary>
+		public uint AutoSaveInMinutes
+		{
+			get { return m_definition.SessionSettings.AutoSaveInMinutes; }
+			set
+			{
+				if (m_definition.SessionSettings.AutoSaveInMinutes == value) return;
+				m_definition.SessionSettings.AutoSaveInMinutes = value;
+				Changed = true;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
 		[Description("Determine whether the weapons are functional")]
 		[Category("Global Settings")]
 		/// <summary>
@@ -542,6 +600,26 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable(true)]
 		[ReadOnly(false)]
+		[Description("Get or set how long people have to wait to spawn in a respawn ship")]
+		[Category("Global Settings")]
+		/// <summary>
+		/// Get or set how long people have to wait to spawn in a respawn ship
+		/// </summary>
+		public float RespawnShipSpawnTimeMuliplier
+		{
+			get { return m_definition.SessionSettings.SpawnShipTimeMultiplier; }
+			set
+			{
+				if (m_definition.SessionSettings.SpawnShipTimeMultiplier == value) return;
+				m_definition.SessionSettings.SpawnShipTimeMultiplier = value;
+				Changed = true;
+			}
+		}
+
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
 		[Description("Determine whether the server should reset the ships ownership")]
 		[Category("World Settings")]
 		/// <summary>
@@ -681,13 +759,15 @@ namespace SEModAPI.API.Definitions
 		/// <summary>
 		/// Get or set the list of administrators of the server
 		/// </summary>
-		public List<string> Administrators
+		public BindingList<string> Administrators
 		{
-			get { return m_definition.Administrators; }
+			get
+			{
+				return new BindingList<string>(m_definition.Administrators);
+			}
 			set
 			{
-				if (m_definition.Administrators == value) return;
-				m_definition.Administrators = value;
+				m_definition.Administrators = value.ToList();
 				Changed = true;
 			}
 		}
@@ -714,9 +794,85 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable(true)]
 		[ReadOnly(false)]
+		[Description("Get or set the list of Steam workshop mods")]
+		[Category("Server Settings")]
+		/// <summary>
+		/// Get or set the list of Steam workshop mods
+		/// </summary>
+		public List<ulong> Mods
+		{
+			get { return m_definition.Mods; }
+			set
+			{
+				if (m_definition.Mods == value) return;
+				m_definition.Mods = value;
+				Changed = true;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("Get or set if the server should pause the game if there is no players online")]
+		[Category("World Settings")]
+		/// <summary>
+		/// Get or set if the server should pause the game if there is no players online
+		/// </summary>
+		public bool PauseGameWhenEmpty
+		{
+			get { return m_definition.PauseGameWhenEmpty; }
+			set
+			{
+				if (m_definition.PauseGameWhenEmpty == value) return;
+				m_definition.PauseGameWhenEmpty = value;
+				Changed = true;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("Get or set if the last session should be ignored")]
+		[Category("World Settings")]
+		/// <summary>
+		/// Get or set if the last session should be ignored
+		/// </summary>
+		public bool IgnoreLastSession
+		{
+			get { return m_definition.IgnoreLastSession; }
+			set
+			{
+				if (m_definition.IgnoreLastSession == value) return;
+				m_definition.IgnoreLastSession = value;
+				Changed = true;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("Get or set the name of the world(map)")]
+		[Category("Server Settings")]
+		/// <summary>
+		/// Get or set the name of the world(map)
+		/// </summary>
+		public string WorldName
+		{
+			get { return m_definition.WorldName; }
+			set
+			{
+				if (m_definition.WorldName == value) return;
+				m_definition.WorldName = value;
+				Changed = true;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
 		[Description("Get or set the GroupId of the server.\n" +
-					"Only member of this group will be able to join the server.\n" +
-					"Set to 0 to open the server to everyone")]
+	"Only member of this group will be able to join the server.\n" +
+	"Set to 0 to open the server to everyone")]
 		[Category("Server Settings")]
 		/// <summary>
 		/// Get or set the GroupId of the server. 
