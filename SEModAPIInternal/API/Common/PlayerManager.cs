@@ -270,7 +270,7 @@ namespace SEModAPIInternal.API.Common
 
             ulong steamId = 0;
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
-            steamId = steamDictionary.FirstOrDefault(x => x.Value.name == playerName).Key;
+            steamId = steamDictionary.FirstOrDefault(x => x.Value.name == playerName && x.Value.steamId != 0).Key;
 
             if (steamId == 0)
             {

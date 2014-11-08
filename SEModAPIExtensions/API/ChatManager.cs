@@ -215,7 +215,9 @@ namespace SEModAPIExtensions.API
 			RegisterChatCommand(clearCommand);
 			RegisterChatCommand(listCommand);
 			RegisterChatCommand(offCommand);
-			RegisterChatCommand(kickCommand);
+			RegisterChatCommand(kickCommand);	
+			RegisterChatCommand(banCommand);
+			RegisterChatCommand(unbanCommand);
 
 			SetupWCFService();
 
@@ -707,12 +709,23 @@ namespace SEModAPIExtensions.API
 					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
 					{
 						HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
-						MyAPIGateway.Entities.GetEntities(entities, x => x.GetObjectBuilder() is MyObjectBuilder_FloatingObject);
+						MyAPIGateway.Entities.GetEntities(entities, null);
 						List<IMyEntity> entitiesToRemove = new List<IMyEntity>();
 
 						foreach (IMyEntity entity in entities)
 						{
-							entitiesToRemove.Add(entity);
+							MyObjectBuilder_Base objectBuilder;
+							try
+							{
+								objectBuilder = entity.GetObjectBuilder();
+							}
+							catch
+							{
+								continue;
+							}
+
+							if(objectBuilder is MyObjectBuilder_FloatingObject)
+								entitiesToRemove.Add(entity);
 						}
 
 						for (int r = entitiesToRemove.Count - 1; r >= 0; r--)

@@ -1551,13 +1551,22 @@ namespace SEServerExtender
 			List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
 			if (connectedPlayers.Count != LST_Chat_ConnectedPlayers.Items.Count)
 			{
+				LST_Chat_ConnectedPlayers.DataSource = null;
 				LST_Chat_ConnectedPlayers.Items.Clear();
+				List<ChatUserItem> connectedPlayerList = new List<ChatUserItem>();
 				foreach (ulong remoteUserId in connectedPlayers)
 				{
+					ChatUserItem item = new ChatUserItem();
 					string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(remoteUserId);
 
-					LST_Chat_ConnectedPlayers.Items.Add(playerName);
+					item.Username = playerName;
+					item.SteamId = remoteUserId;
+					connectedPlayerList.Add(item);
 				}
+
+				LST_Chat_ConnectedPlayers.DataSource = connectedPlayerList;
+				LST_Chat_ConnectedPlayers.DisplayMember = "Username";
+
 			}
 			LST_Chat_ConnectedPlayers.EndUpdate();
 		}
@@ -1588,13 +1597,19 @@ namespace SEServerExtender
 		private void BTN_Chat_KickSelected_Click(object sender, EventArgs e)
 		{
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
-				ChatManager.Instance.SendPublicChatMessage("/kick " + LST_Chat_ConnectedPlayers.SelectedItem);
+			{
+				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
+				ChatManager.Instance.SendPublicChatMessage("/kick " + item.SteamId);
+			}
 		}
 
 		private void BTN_Chat_BanSelected_Click(object sender, EventArgs e)
 		{
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
-				ChatManager.Instance.SendPublicChatMessage("/ban " + LST_Chat_ConnectedPlayers.SelectedItem);
+			{
+				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
+				ChatManager.Instance.SendPublicChatMessage("/ban " + item.SteamId);
+			}
 		}
 		#endregion
 
@@ -1920,7 +1935,10 @@ namespace SEServerExtender
 		private void TSM_Kick_Click(object sender, EventArgs e)
 		{
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
-				ChatManager.Instance.SendPublicChatMessage("/kick " + LST_Chat_ConnectedPlayers.SelectedItem);
+			{
+				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
+				ChatManager.Instance.SendPublicChatMessage("/kick " + item.SteamId);
+			}
 		}
 
 		#endregion
@@ -1928,8 +1946,21 @@ namespace SEServerExtender
 		private void TSM_Ban_Click(object sender, EventArgs e)
 		{
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
-				ChatManager.Instance.SendPublicChatMessage("/ban " + LST_Chat_ConnectedPlayers.SelectedItem);
+			{
+				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
+				ChatManager.Instance.SendPublicChatMessage("/ban " + item.SteamId);
+			}
 		}
 
+	}
+
+	public class ChatUserItem
+	{
+		public ulong SteamId;
+		public string Username;
+		public override string ToString()
+		{
+			return string.Format("{0} ({1})", Username, SteamId);
+		}
 	}
 }
