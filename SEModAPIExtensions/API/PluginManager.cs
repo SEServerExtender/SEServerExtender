@@ -226,7 +226,10 @@ namespace SEModAPIExtensions.API
                             Assembly pluginAssembly = Assembly.Load(b);
 							if (IsOldPlugin(pluginAssembly))
 							{
-								pluginAssembly = Assembly.UnsafeLoadFrom(file);
+								if (IsValidPlugin(pluginAssembly))
+									pluginAssembly = Assembly.UnsafeLoadFrom(file);
+								else
+									continue;
 							}
 							
                             //Get the assembly GUID
@@ -318,6 +321,21 @@ namespace SEModAPIExtensions.API
 			}
 
 			return true;
+		}
+
+		public bool IsValidPlugin(Assembly assembly)
+		{
+			Type[] types = assembly.GetExportedTypes();
+
+			foreach (Type type in types)
+			{
+				if (type.GetInterface(typeof(IPlugin).FullName) != null)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
         public void Init()
