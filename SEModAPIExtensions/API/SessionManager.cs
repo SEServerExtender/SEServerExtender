@@ -21,7 +21,7 @@ namespace SEModAPIExtensions.API
 
 		public static SessionManager Instance
 		{
-			get 
+			get
 			{
 				if (m_instance == null)
 					m_instance = new SessionManager();
@@ -35,7 +35,9 @@ namespace SEModAPIExtensions.API
 			fileSize = 0UL;
 			string path = Path.Combine(savePath, "Sandbox.sbc");
 
-			if (!File.Exists(path))
+			var sandboxFile = new FileInfo(path);
+
+			if (!sandboxFile.Exists || sandboxFile.Length == 0)
 				return (MyObjectBuilder_Checkpoint)null;
 
 			MyObjectBuilder_Checkpoint objectBuilder = (MyObjectBuilder_Checkpoint)null;
@@ -51,7 +53,7 @@ namespace SEModAPIExtensions.API
 		private bool SaveSandbox(MyObjectBuilder_Checkpoint objectBuilder, string savePath, out ulong fileSize)
 		{
 			string path = Path.Combine(savePath, "Sandbox.sbc");
-			return MyObjectBuilderSerializer.SerializeXML(path, false, (MyObjectBuilder_Base)objectBuilder, out fileSize, (Type)null);	
+			return MyObjectBuilderSerializer.SerializeXML(path, false, (MyObjectBuilder_Base)objectBuilder, out fileSize, (Type)null);
 		}
 
 		public void UpdateSessionSettings()
@@ -69,14 +71,16 @@ namespace SEModAPIExtensions.API
 
 				if (m_checkPoint == null)
 					return;
-				
+
 				m_checkPoint.Settings = config.SessionSettings;
 				m_checkPoint.Scenario = config.Scenario;
 
 				m_checkPoint.Mods.Clear();
 				foreach (ulong modid in config.Mods)
 					m_checkPoint.Mods.Add(new MyObjectBuilder_Checkpoint.ModItem(modid));
-	
+
+				File.Copy(worldPath + "\\Sandbox.sbc", worldPath + "\\Sandbox.sbc.bak", true);
+
 				SaveSandbox(m_checkPoint, worldPath, out fileSize);
 
 				Console.WriteLine(Environment.NewLine + "Max Players: " + m_checkPoint.Settings.MaxPlayers);
