@@ -198,6 +198,8 @@ namespace SEModAPIExtensions.API
                 return;
 
             Console.WriteLine("Loading plugins ...");
+			//AppDomain.CurrentDomain.ResourceResolve -= CurrentDomain_ResourceResolve;
+			//AppDomain.CurrentDomain.ResourceResolve += CurrentDomain_ResourceResolve;
 
             try
             {
@@ -210,6 +212,25 @@ namespace SEModAPIExtensions.API
                     return;
 
                 string[] subDirectories = Directory.GetDirectories(modsPath);
+				foreach (string path in subDirectories)
+				{
+					string[] files = Directory.GetFiles(path);
+					AppDomain.CurrentDomain.AppendPrivatePath(path);
+					foreach (string file in files)
+					{
+						FileInfo fileInfo = new FileInfo(file);
+						if (!fileInfo.Extension.ToLower().Equals(".dll"))
+							continue;
+
+						byte[] b = File.ReadAllBytes(file);
+						Assembly pluginAssembly = Assembly.Load(b);
+					}
+				}
+
+                Console.WriteLine(String.Format("Scanning: {0}", modsPath));
+                if (!Directory.Exists(modsPath))
+                    return;
+
                 foreach (string path in subDirectories)
                 {
                     string[] files = Directory.GetFiles(path);
@@ -297,6 +318,34 @@ namespace SEModAPIExtensions.API
 
             Console.WriteLine("Finished loading plugins");
         }
+
+		private Assembly CurrentDomain_ResourceResolve(object sender, ResolveEventArgs args)
+		{
+			string modsPath = Path.Combine(Server.Instance.Path, "Mods");
+			string[] subDirectories = Directory.GetDirectories(modsPath);
+			foreach (string path in subDirectories)
+			{
+				string[] files = Directory.GetFiles(path);
+				foreach (string file in files)
+				{
+					try
+					{
+						FileInfo fileInfo = new FileInfo(file);
+						if (!fileInfo.Name.ToLower().Equals(args.Name.ToLower()))
+							continue;
+
+						byte[] b = File.ReadAllBytes(file);
+						return Assembly.Load(b);					
+					}
+					catch (Exception ex)
+					{
+
+					}
+				}
+			}
+
+			return null;
+		}
 
 		public bool IsOldPlugin(Assembly assembly)
 		{

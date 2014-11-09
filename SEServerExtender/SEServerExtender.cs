@@ -1815,6 +1815,9 @@ namespace SEServerExtender
 			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
 			Object plugin = PluginManager.Instance.Plugins[selectedItem];
 
+			AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
 			foreach (var type in Assembly.GetAssembly(plugin.GetType()).GetTypes())
 			{
 				PropertyInfo info = plugin.GetType().GetProperty("PluginControlForm");
@@ -1839,6 +1842,11 @@ namespace SEServerExtender
 				}
 				else
 				{
+					foreach (Control ctl in splitContainer11.Panel2.Controls)
+					{
+						ctl.Visible = false;
+					}
+
 					PG_Plugins.Visible = true;
 					PG_Plugins.SelectedObject = plugin;
 				}
@@ -1855,6 +1863,31 @@ namespace SEServerExtender
 				BTN_Plugins_Load.Enabled = true;
 				BTN_Plugins_Unload.Enabled = false;
 			}
+		}
+
+		private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		{
+			string modsPath = Path.Combine(Server.Instance.Path, "Mods");
+			string[] subDirectories = Directory.GetDirectories(modsPath);
+			foreach (string path in subDirectories)
+			{
+				string[] files = Directory.GetFiles(path);
+				foreach (string file in files)
+				{
+					FileInfo fileInfo = new FileInfo(file);
+					if (!fileInfo.Extension.ToLower().Equals(".dll"))
+						continue;
+
+					string[] names = args.Name.Split(new char[] {','});
+					if (!fileInfo.Name.ToLower().Equals(names[0].ToLower().Trim() + ".dll"))
+						continue;
+
+					byte[] b = File.ReadAllBytes(file);
+					return Assembly.Load(b);
+				}
+			}
+
+			return null;
 		}
 
 		private void BTN_Plugins_Unload_Click(object sender, EventArgs e)
