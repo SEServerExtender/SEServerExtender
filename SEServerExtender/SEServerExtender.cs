@@ -1815,6 +1815,8 @@ namespace SEServerExtender
 			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
 			Object plugin = PluginManager.Instance.Plugins[selectedItem];
 
+			// This section allows plugins to have a customized settings form inside the settings
+			// panel of a plugin.  
 			AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
@@ -1826,23 +1828,23 @@ namespace SEServerExtender
 					PG_Plugins.Visible = false;
 					Form value = (Form)info.GetValue(plugin, null);
 
-					foreach (Control control in splitContainer11.Panel2.Controls)
+					foreach (Control control in SC_Plugins.Panel2.Controls)
 					{
 						control.Visible = false;
 					}
 
-					if (!splitContainer11.Panel2.Controls.Contains(value))
+					if (!SC_Plugins.Panel2.Controls.Contains(value))
 					{
 						value.TopLevel = false;
-						splitContainer11.Panel2.Controls.Add(value);
+						SC_Plugins.Panel2.Controls.Add(value);
 					}
 
 					value.Dock = DockStyle.Fill;
 					value.Visible = true;
 				}
-				else
+				else // Default PropertyGrid view
 				{
-					foreach (Control ctl in splitContainer11.Panel2.Controls)
+					foreach (Control ctl in SC_Plugins.Panel2.Controls)
 					{
 						ctl.Visible = false;
 					}
@@ -1852,6 +1854,7 @@ namespace SEServerExtender
 				}
 			}
 
+			// Set state
 			bool pluginState = PluginManager.Instance.GetPluginState(selectedItem);
 			if (pluginState)
 			{
@@ -1865,6 +1868,14 @@ namespace SEServerExtender
 			}
 		}
 
+		/// <summary>
+		/// If a plugin uses reference .dlls and puts them in their plugin dir, the appdomain won't
+		/// know where to find those dlls as the path won't be resolvable.  So we can just scan here
+		/// and return the assembly if we have it
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		/// <returns></returns>
 		private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
 		{
 			string modsPath = Path.Combine(Server.Instance.Path, "Mods");

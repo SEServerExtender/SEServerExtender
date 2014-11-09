@@ -75,7 +75,7 @@
 			this.BTN_Factions_Delete = new System.Windows.Forms.Button();
 			this.PG_Factions = new System.Windows.Forms.PropertyGrid();
 			this.TAB_Plugins_Page = new System.Windows.Forms.TabPage();
-			this.splitContainer11 = new System.Windows.Forms.SplitContainer();
+			this.SC_Plugins = new System.Windows.Forms.SplitContainer();
 			this.splitContainer12 = new System.Windows.Forms.SplitContainer();
 			this.LST_Plugins = new System.Windows.Forms.ListBox();
 			this.BTN_Plugins_Refresh = new System.Windows.Forms.Button();
@@ -137,10 +137,10 @@
 			this.splitContainer10.Panel2.SuspendLayout();
 			this.splitContainer10.SuspendLayout();
 			this.TAB_Plugins_Page.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer11)).BeginInit();
-			this.splitContainer11.Panel1.SuspendLayout();
-			this.splitContainer11.Panel2.SuspendLayout();
-			this.splitContainer11.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SC_Plugins)).BeginInit();
+			this.SC_Plugins.Panel1.SuspendLayout();
+			this.SC_Plugins.Panel2.SuspendLayout();
+			this.SC_Plugins.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).BeginInit();
 			this.splitContainer12.Panel1.SuspendLayout();
 			this.splitContainer12.Panel2.SuspendLayout();
@@ -706,7 +706,7 @@
 			// 
 			// TAB_Plugins_Page
 			// 
-			this.TAB_Plugins_Page.Controls.Add(this.splitContainer11);
+			this.TAB_Plugins_Page.Controls.Add(this.SC_Plugins);
 			this.TAB_Plugins_Page.Location = new System.Drawing.Point(4, 22);
 			this.TAB_Plugins_Page.Name = "TAB_Plugins_Page";
 			this.TAB_Plugins_Page.Padding = new System.Windows.Forms.Padding(3);
@@ -717,22 +717,22 @@
 			// 
 			// splitContainer11
 			// 
-			this.splitContainer11.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer11.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer11.Location = new System.Drawing.Point(3, 3);
-			this.splitContainer11.Name = "splitContainer11";
+			this.SC_Plugins.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.SC_Plugins.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.SC_Plugins.Location = new System.Drawing.Point(3, 3);
+			this.SC_Plugins.Name = "splitContainer11";
 			// 
 			// splitContainer11.Panel1
 			// 
-			this.splitContainer11.Panel1.Controls.Add(this.splitContainer12);
-			this.splitContainer11.Panel1MinSize = 300;
+			this.SC_Plugins.Panel1.Controls.Add(this.splitContainer12);
+			this.SC_Plugins.Panel1MinSize = 300;
 			// 
 			// splitContainer11.Panel2
 			// 
-			this.splitContainer11.Panel2.Controls.Add(this.PG_Plugins);
-			this.splitContainer11.Size = new System.Drawing.Size(937, 537);
-			this.splitContainer11.SplitterDistance = 300;
-			this.splitContainer11.TabIndex = 0;
+			this.SC_Plugins.Panel2.Controls.Add(this.PG_Plugins);
+			this.SC_Plugins.Size = new System.Drawing.Size(937, 537);
+			this.SC_Plugins.SplitterDistance = 300;
+			this.SC_Plugins.TabIndex = 0;
 			// 
 			// splitContainer12
 			// 
@@ -936,10 +936,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).EndInit();
 			this.splitContainer10.ResumeLayout(false);
 			this.TAB_Plugins_Page.ResumeLayout(false);
-			this.splitContainer11.Panel1.ResumeLayout(false);
-			this.splitContainer11.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer11)).EndInit();
-			this.splitContainer11.ResumeLayout(false);
+			this.SC_Plugins.Panel1.ResumeLayout(false);
+			this.SC_Plugins.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.SC_Plugins)).EndInit();
+			this.SC_Plugins.ResumeLayout(false);
 			this.splitContainer12.Panel1.ResumeLayout(false);
 			this.splitContainer12.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).EndInit();
@@ -983,7 +983,7 @@
 		private System.Windows.Forms.SplitContainer splitContainer10;
 		private System.Windows.Forms.TreeView TRV_Factions;
 		private System.Windows.Forms.TabPage TAB_Plugins_Page;
-		private System.Windows.Forms.SplitContainer splitContainer11;
+		private System.Windows.Forms.SplitContainer SC_Plugins;
 		private System.Windows.Forms.SplitContainer splitContainer12;
 		private System.Windows.Forms.ListBox LST_Plugins;
 		private System.Windows.Forms.PropertyGrid PG_Factions;
