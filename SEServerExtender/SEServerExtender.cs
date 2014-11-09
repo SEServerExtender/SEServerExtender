@@ -204,7 +204,7 @@ namespace SEServerExtender
 			if (m_server.IsRunning)
 				return;
 
-			if (m_server.Config != null && m_server.Config.Changed)
+			if (m_server.Config != null )
 				m_server.SaveServerConfig();
 
 			m_server.StartServer();
@@ -331,7 +331,6 @@ namespace SEServerExtender
 			PG_Entities_Details.Enabled = m_server.IsRunning;
 			PG_Factions.Enabled = m_server.IsRunning;
 			PG_Plugins.Enabled = m_server.IsRunning;
-			PG_Control_Server_Properties.Enabled = !m_server.IsRunning;
 
 			if (m_server.Config != null)
 			{
@@ -339,9 +338,6 @@ namespace SEServerExtender
 					CHK_Control_CommonDataPath.Enabled = !m_server.IsRunning;
 				else
 					CHK_Control_CommonDataPath.Enabled = false;
-
-				BTN_Control_Server_Save.Enabled = m_server.Config.Changed;
-				BTN_Control_Server_Reset.Enabled = m_server.Config.Changed;
 			}
 			else
 			{

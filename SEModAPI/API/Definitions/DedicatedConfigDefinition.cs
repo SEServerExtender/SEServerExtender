@@ -26,25 +26,11 @@ namespace SEModAPI.API.Definitions
 		public DedicatedConfigDefinition(MyConfigDedicatedData definition)
 		{
 			m_definition = definition;
-			Changed = false;
 		}
 
 		#endregion
 
 		#region "Properties"
-
-		[IgnoreDataMember]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("Determine if the configuration has changed since it has been loaded or saved")]
-		/// <summary>
-		/// Determine if the configuration has changed since it has been loaded or saved
-		/// </summary>
-		public bool Changed
-		{
-			get;
-			private set;
-		}
 
 		[DataMember]
 		[Browsable(true)]
@@ -61,7 +47,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.ServerName == value) return;
 				m_definition.ServerName = value;
-				Changed = true;
 			}
 		}
 
@@ -80,7 +65,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.ServerPort == value) return;
 				m_definition.ServerPort = value;
-				Changed = true;
 			}
 		}
 
@@ -118,7 +102,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.GrinderSpeedMultiplier == value) return;
 				m_definition.SessionSettings.GrinderSpeedMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -137,7 +120,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.WelderSpeedMultiplier == value) return;
 				m_definition.SessionSettings.WelderSpeedMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -156,7 +138,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.InventorySizeMultiplier == value) return;
 				m_definition.SessionSettings.InventorySizeMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -175,7 +156,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.AssemblerSpeedMultiplier == value) return;
 				m_definition.SessionSettings.AssemblerSpeedMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -194,7 +174,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.AssemblerEfficiencyMultiplier == value) return;
 				m_definition.SessionSettings.AssemblerEfficiencyMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -213,7 +192,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.RefinerySpeedMultiplier == value) return;
 				m_definition.SessionSettings.RefinerySpeedMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -232,7 +210,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.HackSpeedMultiplier == value) return;
 				m_definition.SessionSettings.HackSpeedMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -251,7 +228,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.OnlineMode == value) return;
 				m_definition.SessionSettings.OnlineMode = value;
-				Changed = true;
 			}
 		}
 
@@ -270,7 +246,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.MaxPlayers == value) return;
 				m_definition.SessionSettings.MaxPlayers = value;
-				Changed = true;
 			}
 		}
 
@@ -289,7 +264,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.MaxFloatingObjects == value) return;
 				m_definition.SessionSettings.MaxFloatingObjects = value;
-				Changed = true;
 			}
 		}
 
@@ -308,7 +282,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.EnvironmentHostility == value) return;
 				m_definition.SessionSettings.EnvironmentHostility = value;
-				Changed = true;
 			}
 		}
 
@@ -327,7 +300,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.AutoHealing == value) return;
 				m_definition.SessionSettings.AutoHealing = value;
-				Changed = true;
 			}
 		}
 
@@ -346,7 +318,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.EnableCopyPaste == value) return;
 				m_definition.SessionSettings.EnableCopyPaste = value;
-				Changed = true;
 			}
 		}
 
@@ -365,7 +336,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.AutoSave == value) return;
 				m_definition.SessionSettings.AutoSave = value;
-				Changed = true;
 			}
 		}
 
@@ -384,7 +354,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.AutoSaveInMinutes == value) return;
 				m_definition.SessionSettings.AutoSaveInMinutes = value;
-				Changed = true;
 			}
 		}
 
@@ -403,7 +372,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.WeaponsEnabled == value) return;
 				m_definition.SessionSettings.WeaponsEnabled = value;
-				Changed = true;
 			}
 		}
 
@@ -422,7 +390,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.ShowPlayerNamesOnHud == value) return;
 				m_definition.SessionSettings.ShowPlayerNamesOnHud = value;
-				Changed = true;
 			}
 		}
 
@@ -441,7 +408,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.ThrusterDamage == value) return;
 				m_definition.SessionSettings.ThrusterDamage = value;
-				Changed = true;
 			}
 		}
 
@@ -460,7 +426,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.CargoShipsEnabled == value) return;
 				m_definition.SessionSettings.CargoShipsEnabled = value;
-				Changed = true;
 			}
 		}
 
@@ -479,7 +444,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.RealisticSound == value) return;
 				m_definition.SessionSettings.RealisticSound = value;
-				Changed = true;
 			}
 		}
 
@@ -498,7 +462,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.PermanentDeath.GetValueOrDefault(true) == value) return;
 				m_definition.SessionSettings.PermanentDeath = value;
-				Changed = true;
 			}
 		}
 
@@ -517,7 +480,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.ClientCanSave == value) return;
 				m_definition.SessionSettings.ClientCanSave = value;
-				Changed = true;
 			}
 		}
 
@@ -536,7 +498,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.EnableSpectator == value) return;
 				m_definition.SessionSettings.EnableSpectator = value;
-				Changed = true;
 			}
 		}
 
@@ -555,7 +516,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.RemoveTrash == value) return;
 				m_definition.SessionSettings.RemoveTrash = value;
-				Changed = true;
 			}
 		}
 
@@ -574,7 +534,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.WorldSizeKm == value) return;
 				m_definition.SessionSettings.WorldSizeKm = value;
-				Changed = true;
 			}
 		}
 
@@ -593,7 +552,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.RespawnShipDelete == value) return;
 				m_definition.SessionSettings.RespawnShipDelete = value;
-				Changed = true;
 			}
 		}
 
@@ -612,7 +570,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.SpawnShipTimeMultiplier == value) return;
 				m_definition.SessionSettings.SpawnShipTimeMultiplier = value;
-				Changed = true;
 			}
 		}
 
@@ -632,7 +589,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SessionSettings.ResetOwnership == value) return;
 				m_definition.SessionSettings.ResetOwnership = value;
-				Changed = true;
 			}
 		}
 
@@ -651,7 +607,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.Scenario.TypeId == value) return;
 				m_definition.Scenario.TypeId = value;
-				Changed = true;
 			}
 		}
 
@@ -670,7 +625,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.Scenario.SubtypeId == value) return;
 				m_definition.Scenario.SubtypeId = value;
-				Changed = true;
 			}
 		}
 
@@ -690,7 +644,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.LoadWorld == value) return;
 				m_definition.LoadWorld = value;
-				Changed = true;
 			}
 		}
 
@@ -709,7 +662,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.IP == value) return;
 				m_definition.IP = value;
-				Changed = true;
 			}
 		}
 
@@ -728,7 +680,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.SteamPort == value) return;
 				m_definition.SteamPort = value;
-				Changed = true;
 			}
 		}
 
@@ -747,7 +698,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.AsteroidAmount == value) return;
 				m_definition.AsteroidAmount = value;
-				Changed = true;
 			}
 		}
 
@@ -768,7 +718,6 @@ namespace SEModAPI.API.Definitions
 			set
 			{
 				m_definition.Administrators = value.ToList();
-				Changed = true;
 			}
 		}
 
@@ -780,14 +729,14 @@ namespace SEModAPI.API.Definitions
 		/// <summary>
 		/// Get or set the list of banned players
 		/// </summary>
-		public List<ulong> Banned
+		public string[] Banned
 		{
-			get { return m_definition.Banned; }
+			get { return m_definition.Banned.ConvertAll(x => x.ToString()).ToArray(); }
 			set
 			{
-				if (m_definition.Banned == value) return;
-				m_definition.Banned = value;
-				Changed = true;
+				var banned = value.ToList().ConvertAll(x => ulong.Parse(x));
+				if (m_definition.Banned == banned) return;
+				m_definition.Banned = banned;
 			}
 		}
 
@@ -799,14 +748,15 @@ namespace SEModAPI.API.Definitions
 		/// <summary>
 		/// Get or set the list of Steam workshop mods
 		/// </summary>
-		public List<ulong> Mods
+		public string[] Mods
 		{
-			get { return m_definition.Mods; }
+			get { return m_definition.Mods.ConvertAll(x => x.ToString()).ToArray(); }
 			set
 			{
-				if (m_definition.Mods == value) return;
-				m_definition.Mods = value;
-				Changed = true;
+				var mods = value.ToList().ConvertAll(x => ulong.Parse(x));
+				if (m_definition.Mods == mods) return;
+				m_definition.Mods = mods;
+
 			}
 		}
 
@@ -825,7 +775,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.PauseGameWhenEmpty == value) return;
 				m_definition.PauseGameWhenEmpty = value;
-				Changed = true;
 			}
 		}
 
@@ -844,7 +793,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.IgnoreLastSession == value) return;
 				m_definition.IgnoreLastSession = value;
-				Changed = true;
 			}
 		}
 
@@ -863,7 +811,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.WorldName == value) return;
 				m_definition.WorldName = value;
-				Changed = true;
 			}
 		}
 
@@ -886,7 +833,6 @@ namespace SEModAPI.API.Definitions
 			{
 				if (m_definition.GroupID == value) return;
 				m_definition.GroupID = value;
-				Changed = true;
 			}
 		}
 
@@ -939,7 +885,6 @@ namespace SEModAPI.API.Definitions
 
 		public bool Save(FileInfo fileInfo)
 		{
-			if (!this.Changed) return false;
 			if (fileInfo == null) return false;
 
 			//Save the definitions container out to the file
@@ -963,8 +908,6 @@ namespace SEModAPI.API.Definitions
 			{
 				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileEmpty, fileInfo.FullName);
 			}
-
-			Changed = false;
 
 			return true;
 		}
