@@ -887,6 +887,8 @@ namespace SEModAPI.API.Definitions
 		{
 			if (fileInfo == null) return false;
 
+			File.Copy(fileInfo.FullName, fileInfo.FullName + ".bak", true);
+
 			//Save the definitions container out to the file
 			try
 			{
