@@ -1515,13 +1515,38 @@ namespace SEModAPIExtensions.API
 
 			//Get the steam id of the player
 			string rawSteamId = commandParts[1];
-			ulong steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
-			if (steamId == 0)
-				return;
+			ulong steamId = 0;
+
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
+
+			if (playerItems.Count == 0)
+			{
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
+				if (steamId == 0)
+					return;
+			}
+			else
+			{
+				if (playerItems.Count > 1)
+				{
+					SendPrivateChatMessage(remoteUserId, "There is more than one player with the specified name;");
+
+					string playersString = "";
+					foreach (var playeritem in playerItems)
+						playersString += playeritem.name + " ";
+
+					SendPrivateChatMessage(remoteUserId, playersString);
+					return;
+				}
+
+				steamId = playerItems[0].steamId;
+				if(steamId == 0)
+					return;
+			}
 
 			PlayerManager.Instance.KickPlayer(steamId);
 
-			SendPrivateChatMessage(remoteUserId, "Kicked '" + rawSteamId + "' off of the server");
+			SendPrivateChatMessage(remoteUserId, "Kicked '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' off of the server");
 		}
 
 		protected void Command_Ban(ChatEvent chatEvent)
@@ -1535,13 +1560,38 @@ namespace SEModAPIExtensions.API
 
 			//Get the steam id of the player
 			string rawSteamId = commandParts[1];
-			ulong steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
-			if (steamId == 0)
-				return;
+			ulong steamId = 0;
+
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
+
+			if (playerItems.Count == 0)
+			{
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
+				if (steamId == 0)
+					return;
+			}
+			else
+			{
+				if (playerItems.Count > 1)
+				{
+					SendPrivateChatMessage(remoteUserId, "There is more than one player with the specified name;");
+
+					string playersString = "";
+					foreach (var playeritem in playerItems)
+						playersString += playeritem.name + " ";
+
+					SendPrivateChatMessage(remoteUserId, playersString);
+					return;
+				}
+
+				steamId = playerItems[0].steamId;
+				if (steamId == 0)
+					return;
+			}
 
 			PlayerManager.Instance.BanPlayer(steamId);
 
-			SendPrivateChatMessage(remoteUserId, "Banned '" + rawSteamId + "' and kicked them off of the server");
+			SendPrivateChatMessage(remoteUserId, "Banned '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' and kicked them off of the server");
 		}
 
 		protected void Command_Unban(ChatEvent chatEvent)
@@ -1555,13 +1605,38 @@ namespace SEModAPIExtensions.API
 
 			//Get the steam id of the player
 			string rawSteamId = commandParts[1];
-			ulong steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
-			if (steamId == 0)
-				return;
+			ulong steamId = 0;
+
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
+
+			if (playerItems.Count == 0)
+			{
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
+				if (steamId == 0)
+					return;
+			}
+			else
+			{
+				if (playerItems.Count > 1)
+				{
+					SendPrivateChatMessage(remoteUserId, "There is more than one player with the specified name;");
+
+					string playersString = "";
+					foreach (var playeritem in playerItems)
+						playersString += playeritem.name + " ";
+
+					SendPrivateChatMessage(remoteUserId, playersString);
+					return;
+				}
+
+				steamId = playerItems[0].steamId;
+				if (steamId == 0)
+					return;
+			}
 
 			PlayerManager.Instance.UnBanPlayer(steamId);
 
-			SendPrivateChatMessage(remoteUserId, "Unbanned '" + rawSteamId + "'");
+			SendPrivateChatMessage(remoteUserId, "Unbanned '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "'");
 		}
 
 		#endregion
