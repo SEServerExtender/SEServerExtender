@@ -240,6 +240,17 @@ namespace SEModAPIInternal.API.Common
             return 0;
         }
 
+		/// <summary>
+		/// Gets a List of InternalPlayerItems matching a players name
+		/// Can be partial or full name
+		/// </summary>
+		/// <param name="playerName"> the name of the player</param>
+		/// <returns>returns a list of matches</returns>
+		public List<InternalPlayerItem> GetPlayerItemsFromPlayerName(string playerName)
+		{
+			return InternalGetSteamDictionary().Where(x => x.Value.name.ToLower().Contains(playerName.ToLower())).Select(x => x.Value).ToList();
+		}
+
         public MyObjectBuilder_Checkpoint.PlayerItem GetPlayerItemFromPlayerId(long playerId)
         {            
             MyObjectBuilder_Checkpoint.PlayerItem playerItem = new MyObjectBuilder_Checkpoint.PlayerItem();
