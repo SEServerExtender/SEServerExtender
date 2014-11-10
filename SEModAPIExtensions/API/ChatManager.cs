@@ -1520,6 +1520,13 @@ namespace SEModAPIExtensions.API
 
 			//Get the steam id of the player
 			string rawSteamId = commandParts[1];
+
+			if (rawSteamId.Length < 3)
+			{
+				SendPrivateChatMessage(remoteUserId, "3 or more characters required to kick.");
+				return;
+			}
+				
 			ulong steamId = 0;
 
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
@@ -1565,6 +1572,13 @@ namespace SEModAPIExtensions.API
 
 			//Get the steam id of the player
 			string rawSteamId = commandParts[1];
+
+			if (rawSteamId.Length < 3)
+			{
+				SendPrivateChatMessage(remoteUserId, "3 or more characters required to ban.");
+				return;
+			}
+
 			ulong steamId = 0;
 
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
@@ -1610,6 +1624,13 @@ namespace SEModAPIExtensions.API
 
 			//Get the steam id of the player
 			string rawSteamId = commandParts[1];
+
+			if (rawSteamId.Length < 3)
+			{
+				SendPrivateChatMessage(remoteUserId, "3 or more characters required to unban.");
+				return;
+			}
+
 			ulong steamId = 0;
 
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
