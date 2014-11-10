@@ -1545,7 +1545,8 @@ namespace SEServerExtender
 			//Refresh the connected players list
 			LST_Chat_ConnectedPlayers.BeginUpdate();
 			List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
-			if (connectedPlayers.Count != LST_Chat_ConnectedPlayers.Items.Count)
+			
+			if (connectedPlayers.Count != LST_Chat_ConnectedPlayers.Items.Count || CheckRequireNameUpdate())
 			{
 				LST_Chat_ConnectedPlayers.DataSource = null;
 				LST_Chat_ConnectedPlayers.Items.Clear();
@@ -1565,6 +1566,19 @@ namespace SEServerExtender
 
 			}
 			LST_Chat_ConnectedPlayers.EndUpdate();
+		}
+
+		private bool CheckRequireNameUpdate()
+		{
+			foreach (object item in LST_Chat_ConnectedPlayers.Items)
+			{
+				ChatUserItem chatItem = (ChatUserItem)item;
+
+				if (chatItem.SteamId.ToString() == chatItem.Username)
+					return true;
+			}
+
+			return false;
 		}
 
 		private void BTN_Chat_Send_Click(object sender, EventArgs e)
