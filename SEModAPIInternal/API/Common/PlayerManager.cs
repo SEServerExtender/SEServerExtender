@@ -257,7 +257,7 @@ namespace SEModAPIInternal.API.Common
 				if (playerItem.name.ToLower().Contains(lowerName))
 				{
 					// if the playeritem occurs more than once, replace it.
-					if (playerItemstoReturn.Exists(x => x.name.ToLower() == lowerName))
+					if (playerItemstoReturn.Exists(x => x.name.ToLower() == playerItem.name.ToLower()))
 					{
 						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItem)] = playerItem;
 					}
