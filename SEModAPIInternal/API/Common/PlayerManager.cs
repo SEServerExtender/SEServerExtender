@@ -259,7 +259,7 @@ namespace SEModAPIInternal.API.Common
 					// if the playeritem occurs more than once, replace it.
 					if (playerItemstoReturn.Exists(x => x.name.ToLower() == playerItem.name.ToLower()))
 					{
-						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItem)] = playerItem;
+						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItemstoReturn.First(x => x.name.ToLower() == playerItem.name.ToLower()))] = playerItem;
 					}
 					else
 						playerItemstoReturn.Add(playerItem);
@@ -293,12 +293,15 @@ namespace SEModAPIInternal.API.Common
             return playerItem;
         }
 
-        public ulong GetSteamIdFromPlayerName(string playerName)
+        public ulong GetSteamIdFromPlayerName(string playerName, bool partial = false)
         {
 
             ulong steamId = 0;
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
-            steamId = steamDictionary.FirstOrDefault(x => x.Value.name == playerName && x.Value.steamId != 0).Key;
+			if(!partial)
+				steamId = steamDictionary.FirstOrDefault(x => x.Value.name == playerName && x.Value.steamId != 0).Key;
+			else
+				steamId = steamDictionary.FirstOrDefault(x => x.Value.name.ToLower().Contains(playerName.ToLower()) && x.Value.steamId != 0).Key;
 
             if (steamId == 0)
             {

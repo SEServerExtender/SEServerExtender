@@ -1527,8 +1527,7 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 				
-			ulong steamId = 0;
-
+			/*
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
 
 			if (playerItems.Count == 0)
@@ -1555,10 +1554,15 @@ namespace SEModAPIExtensions.API
 				if(steamId == 0)
 					return;
 			}
+			*/
 
-			PlayerManager.Instance.KickPlayer(steamId);
-
-			SendPrivateChatMessage(remoteUserId, "Kicked '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' off of the server");
+			ulong steamId = PlayerMap.Instance.GetSteamIdFromPlayerName(rawSteamId, true);
+			if (steamId > 0)
+			{
+				string name = PlayerMap.Instance.GetPlayerNameFromSteamId(steamId);
+				PlayerManager.Instance.KickPlayer(steamId);
+				SendPrivateChatMessage(remoteUserId, "Kicked '" + name + "' off of the server");
+			}
 		}
 
 		protected void Command_Ban(ChatEvent chatEvent)
