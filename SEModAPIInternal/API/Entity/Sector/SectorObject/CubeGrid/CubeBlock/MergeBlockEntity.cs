@@ -153,6 +153,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			return result;
 		}
 
+		public static Object GetConnectedBlock(object ActualObject)
+		{
+			Object result = GetEntityFieldValue(ActualObject, MergeBlockConnectedMergeBlockField);
+			return result;
+		}
+
 		#endregion
 	}
 }

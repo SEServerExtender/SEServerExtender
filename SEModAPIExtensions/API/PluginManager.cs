@@ -205,8 +205,6 @@ namespace SEModAPIExtensions.API
                 return;
 
             Console.WriteLine("Loading plugins ...");
-			//AppDomain.CurrentDomain.ResourceResolve -= CurrentDomain_ResourceResolve;
-			//AppDomain.CurrentDomain.ResourceResolve += CurrentDomain_ResourceResolve;
 
             try
             {
@@ -307,35 +305,7 @@ namespace SEModAPIExtensions.API
             Console.WriteLine("Finished loading plugins");
         }
 
-		private Assembly CurrentDomain_ResourceResolve(object sender, ResolveEventArgs args)
-		{
-			string modsPath = Path.Combine(Server.Instance.Path, "Mods");
-			string[] subDirectories = Directory.GetDirectories(modsPath);
-			foreach (string path in subDirectories)
-			{
-				string[] files = Directory.GetFiles(path);
-				foreach (string file in files)
-				{
-					try
-					{
-						FileInfo fileInfo = new FileInfo(file);
-						if (!fileInfo.Name.ToLower().Equals(args.Name.ToLower()))
-							continue;
-
-						byte[] b = File.ReadAllBytes(file);
-						return Assembly.Load(b);					
-					}
-					catch (Exception ex)
-					{
-
-					}
-				}
-			}
-
-			return null;
-		}
-
-		public bool IsOldPlugin(Assembly assembly)
+		private bool IsOldPlugin(Assembly assembly)
 		{
 			Type[] types = assembly.GetExportedTypes();
 
@@ -360,7 +330,7 @@ namespace SEModAPIExtensions.API
 			return true;
 		}
 
-		public bool IsValidPlugin(Assembly assembly)
+		private bool IsValidPlugin(Assembly assembly)
 		{
 			Type[] types = assembly.GetExportedTypes();
 
