@@ -248,7 +248,24 @@ namespace SEModAPIInternal.API.Common
 		/// <returns>returns a list of matches</returns>
 		public List<InternalPlayerItem> GetPlayerItemsFromPlayerName(string playerName)
 		{
-			return InternalGetSteamDictionary().Where(x => x.Value.name.ToLower().Contains(playerName.ToLower())).Select(x => x.Value).ToList();
+			string lowerName = playerName.ToLower();
+
+			var playerItemstoReturn = new List<InternalPlayerItem>();
+
+			foreach (var playerItem in InternalGetSteamDictionary().Values)
+			{
+				if (playerItem.name.ToLower().Contains(lowerName))
+				{
+					// if the playeritem occurs more than once, replace it.
+					if (playerItemstoReturn.Exists(x => x.name.ToLower() == lowerName))
+					{
+						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItem)] = playerItem;
+					}
+					else
+						playerItemstoReturn.Add(playerItem);
+				}
+			}
+			return playerItemstoReturn;
 		}
 
         public MyObjectBuilder_Checkpoint.PlayerItem GetPlayerItemFromPlayerId(long playerId)
