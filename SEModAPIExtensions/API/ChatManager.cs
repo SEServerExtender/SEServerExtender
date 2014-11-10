@@ -512,7 +512,12 @@ namespace SEModAPIExtensions.API
 							chatEvent.remoteUserId = remoteUserId;
 							chatEvent.timestamp = DateTime.Now;
 
-							chatCommand.callback(chatEvent);
+
+							bool discard = false;
+							PluginManager.HookChatMessage(null, PluginManager.Instance.Plugins, PluginManager.Instance.PluginStates, chatEvent, out discard);
+
+							if(!discard)
+								chatCommand.callback(chatEvent);
 
 							foundMatch = true;
 							break;

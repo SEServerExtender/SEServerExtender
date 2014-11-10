@@ -1840,6 +1840,7 @@ namespace SEServerExtender
 					}
 
 					value.Dock = DockStyle.Fill;
+					value.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 					value.Visible = true;
 				}
 				else // Default PropertyGrid view

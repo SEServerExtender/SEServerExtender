@@ -30,6 +30,8 @@ namespace SEModAPIExtensions.API
     {
         public Object plugin;
         public Guid key;
+		public Dictionary<Guid, Object> plugins;
+		public Dictionary<Guid, bool> pluginState;
         public List<EntityEventManager.EntityEvent> events;
         public List<ChatManager.ChatEvent> chatEvents;
     }
@@ -180,6 +182,11 @@ namespace SEModAPIExtensions.API
             get { return m_plugins; }
         }
 
+		public Dictionary<Guid, bool> PluginStates
+		{
+			get { return m_pluginState; }
+		}
+
         #endregion
 
         #region "Methods"
@@ -212,25 +219,6 @@ namespace SEModAPIExtensions.API
                     return;
 
                 string[] subDirectories = Directory.GetDirectories(modsPath);
-				foreach (string path in subDirectories)
-				{
-					string[] files = Directory.GetFiles(path);
-					AppDomain.CurrentDomain.AppendPrivatePath(path);
-					foreach (string file in files)
-					{
-						FileInfo fileInfo = new FileInfo(file);
-						if (!fileInfo.Extension.ToLower().Equals(".dll"))
-							continue;
-
-						byte[] b = File.ReadAllBytes(file);
-						Assembly pluginAssembly = Assembly.Load(b);
-					}
-				}
-
-                Console.WriteLine(String.Format("Scanning: {0}", modsPath));
-                if (!Directory.Exists(modsPath))
-                    return;
-
                 foreach (string path in subDirectories)
                 {
                     string[] files = Directory.GetFiles(path);
@@ -468,6 +456,8 @@ namespace SEModAPIExtensions.API
                 PluginManagerThreadParams parameters = new PluginManagerThreadParams();
                 parameters.plugin = plugin;
                 parameters.key = key;
+				parameters.plugins = m_plugins;
+				parameters.pluginState = m_pluginState;
                 parameters.events = new List<EntityEventManager.EntityEvent>(events);
                 parameters.chatEvents = new List<ChatManager.ChatEvent>(chatEvents);
 
@@ -509,6 +499,8 @@ namespace SEModAPIExtensions.API
             List<EntityEventManager.EntityEvent> events = parameters.events;
             List<ChatManager.ChatEvent> chatEvents = parameters.chatEvents;
             Object plugin = parameters.plugin;
+			Dictionary<Guid, Object> plugins = parameters.plugins;
+			Dictionary<Guid, bool> pluginState = parameters.pluginState;
 
             //Run entity events
             foreach (EntityEventManager.EntityEvent entityEvent in events)
@@ -579,6 +571,12 @@ namespace SEModAPIExtensions.API
             {
                 try
                 {
+					bool discard = false;
+					HookChatMessage(plugin, plugins, pluginState, chatEvent, out discard);
+
+					if (discard)
+						continue;
+
                     string methodName = chatEvent.type.ToString();
                     MethodInfo updateMethod = plugin.GetType().GetMethod(methodName);
                     if (updateMethod != null)
@@ -601,6 +599,28 @@ namespace SEModAPIExtensions.API
                 LogManager.ErrorLog.WriteLine(ex);
             }
         }
+
+		public static void HookChatMessage(Object plugin, Dictionary<Guid, Object> plugins, Dictionary<Guid, bool> pluginState, ChatManager.ChatEvent chatEvent, out bool discard)
+		{
+			discard = false;
+
+			foreach (var key in plugins.Keys)
+			{
+				var hookPlugin = plugins[key];
+				if (!pluginState.ContainsKey(key))
+					continue;
+
+				MethodInfo hookMethod = hookPlugin.GetType().GetMethod("OnChatHook");
+				if (hookMethod != null)
+				{
+					bool hookDiscard = false;
+					object[] args = new object[] { chatEvent, plugin, hookDiscard };
+					hookMethod.Invoke(hookPlugin, args);
+					discard = (bool)args[2];
+				}
+			}
+		}
+
 
         public void Shutdown()
 		{
