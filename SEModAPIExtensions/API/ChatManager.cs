@@ -1526,10 +1526,9 @@ namespace SEModAPIExtensions.API
 				SendPrivateChatMessage(remoteUserId, "3 or more characters required to kick.");
 				return;
 			}
-				
-			/*
-			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
 
+			ulong steamId = 0;
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
 			if (playerItems.Count == 0)
 			{
 				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
@@ -1553,15 +1552,6 @@ namespace SEModAPIExtensions.API
 				steamId = playerItems[0].steamId;
 				if(steamId == 0)
 					return;
-			}
-			*/
-
-			ulong steamId = PlayerMap.Instance.GetSteamIdFromPlayerName(rawSteamId, true);
-			if (steamId > 0)
-			{
-				string name = PlayerMap.Instance.GetPlayerNameFromSteamId(steamId);
-				PlayerManager.Instance.KickPlayer(steamId);
-				SendPrivateChatMessage(remoteUserId, "Kicked '" + name + "' off of the server");
 			}
 		}
 
