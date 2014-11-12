@@ -125,6 +125,7 @@ namespace SEModAPIExtensions.API
 		private static bool m_isInitialized;
 		private static Thread m_runServerThread;
 		private static bool m_isServerRunning;
+		private static bool m_serverRan;
 		private static DateTime m_lastRestart;
 		private static int m_restartLimit;
 		private static bool m_isWCFEnabled;
@@ -372,10 +373,7 @@ namespace SEModAPIExtensions.API
 		public DedicatedConfigDefinition Config
 		{
 			get { return m_dedicatedConfigDefinition; }
-			private set
-			{
-				//Do nothing!
-			}
+			set { m_dedicatedConfigDefinition = value; }		
 		}
 
 		[DataMember]
@@ -672,6 +670,7 @@ namespace SEModAPIExtensions.API
 				m_autosaveTimer.Start();
 
 				m_isServerRunning = true;
+				m_serverRan = true;
 
 				m_runServerThread = new Thread(new ThreadStart(this.RunServer));
 				m_runServerThread.IsBackground = true;
@@ -705,10 +704,20 @@ namespace SEModAPIExtensions.API
 
 		public MyConfigDedicatedData LoadServerConfig()
 		{
+
 			FileInfo fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg");
 			if (fileInfo.Exists)
 			{
+				if (!File.Exists(Path + @"\SpaceEngineers-Dedicated.cfg.restart"))
+					File.Copy(Path + @"\SpaceEngineers-Dedicated.cfg", Path + @"\SpaceEngineers-Dedicated.cfg.restart");
+
 				MyConfigDedicatedData config = DedicatedConfigDefinition.Load(fileInfo);
+
+				FileInfo restartFileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart");
+				
+				if (restartFileInfo.Exists)				
+					config = DedicatedConfigDefinition.Load(restartFileInfo);
+	
 				m_dedicatedConfigDefinition = new DedicatedConfigDefinition(config);
 				return config;
 			}
@@ -719,6 +728,10 @@ namespace SEModAPIExtensions.API
 		public void SaveServerConfig()
 		{
 			FileInfo fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg");
+
+			if (m_serverRan)
+				fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart");
+			
 			if (m_dedicatedConfigDefinition != null)
 				m_dedicatedConfigDefinition.Save(fileInfo);
 		}
