@@ -363,6 +363,13 @@ namespace SEModAPIExtensions.API
 		}
 
 		[DataMember]
+		public bool ServerHasRan
+		{
+			get { return m_serverRan; }
+			set { m_serverRan = value;}
+		}
+
+		[DataMember]
 		public CommandLineArgs CommandLineArgs
 		{
 			get { return m_commandLineArgs; }
@@ -534,6 +541,7 @@ namespace SEModAPIExtensions.API
 			}
 
 			m_isInitialized = true;
+			m_serverRan = false;
 		}
 
 		private void PluginManagerMain(object sender, EventArgs e)

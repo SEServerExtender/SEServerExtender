@@ -252,7 +252,7 @@ namespace SEServerExtender
 
 		private void BTN_Control_Server_Save_Click(object sender, EventArgs e)
 		{
-			if (m_server.IsRunning)
+			if (m_server.ServerHasRan)
 				m_server.Config = (DedicatedConfigDefinition)PG_Control_Server_Properties.SelectedObject;
 
 			//Save the loaded config
