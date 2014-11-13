@@ -178,20 +178,20 @@ namespace SEModAPIExtensions.API
 			listCommand.callback = Command_List;
 			listCommand.requiresAdmin = true;
 
-			ChatCommand offCommand = new ChatCommand();
-			offCommand.command = "off";
-			offCommand.callback = Command_Off;
-			offCommand.requiresAdmin = true;
-
 			ChatCommand kickCommand = new ChatCommand();
 			kickCommand.command = "kick";
 			kickCommand.callback = Command_Kick;
 			kickCommand.requiresAdmin = true;
 
             ChatCommand onCommand = new ChatCommand();
-            offCommand.command = "on";
-            offCommand.callback = Command_On;
-            offCommand.requiresAdmin = true;
+            onCommand.command = "on";
+            onCommand.callback = Command_On;
+            onCommand.requiresAdmin = true;
+
+			ChatCommand offCommand = new ChatCommand();
+			offCommand.command = "off";
+			offCommand.callback = Command_Off;
+			offCommand.requiresAdmin = true;
 
 			ChatCommand banCommand = new ChatCommand();
 			banCommand.command = "ban";
@@ -203,6 +203,8 @@ namespace SEModAPIExtensions.API
 			unbanCommand.callback = Command_Unban;
 			unbanCommand.requiresAdmin = true;
 
+			RegisterChatCommand(offCommand);
+			RegisterChatCommand(onCommand);
 			RegisterChatCommand(deleteCommand);
 			RegisterChatCommand(tpCommand);
 			RegisterChatCommand(stopCommand);
@@ -214,7 +216,6 @@ namespace SEModAPIExtensions.API
 			RegisterChatCommand(spawnCommand);
 			RegisterChatCommand(clearCommand);
 			RegisterChatCommand(listCommand);
-			RegisterChatCommand(offCommand);
 			RegisterChatCommand(kickCommand);	
 			RegisterChatCommand(banCommand);
 			RegisterChatCommand(unbanCommand);
@@ -1440,6 +1441,8 @@ namespace SEModAPIExtensions.API
 					if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is BeaconEntity)
 					{
 						functionalBlock.Enabled = false;
+						BeaconEntity beacon = (BeaconEntity)cubeBlock;
+						beacon.BroadcastRadius = 1;
 						poweredOffCount++;
 					}
 					if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity))

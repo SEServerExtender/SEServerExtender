@@ -346,8 +346,8 @@ namespace SEServerExtender
 			{
 				CHK_Control_CommonDataPath.Checked = true;
 
-				BTN_Control_Server_Save.Enabled = false;
-				BTN_Control_Server_Reset.Enabled = false;
+//				BTN_Control_Server_Save.Enabled = false;
+//				BTN_Control_Server_Reset.Enabled = false;
 			}
 
 			if (!m_server.IsRunning)

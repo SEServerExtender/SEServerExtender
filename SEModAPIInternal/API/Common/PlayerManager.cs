@@ -56,6 +56,12 @@ namespace SEModAPIInternal.API.Common
                 SerialId = (int)BaseObject.GetEntityFieldValue(source, "BC639949E46A6E11FEBEDF9BD08068A9");
             }
 
+			public InternalClientItem(IMyPlayer player)
+			{
+				SteamId = player.SteamUserId;
+				SerialId = 0;
+			}
+
             public int CompareTo(InternalClientItem item)
             {
                 if (SteamId < item.SteamId)
@@ -507,6 +513,36 @@ namespace SEModAPIInternal.API.Common
 
         private void InternalGetReferenceLists(out Dictionary<long, InternalClientItem> allSteamList, out Dictionary<long, InternalIdentityItem> allPlayerList)
         {
+			if (MyAPIGateway.Players == null)
+			{
+				allSteamList = new Dictionary<long, InternalClientItem>();
+				allPlayerList = new Dictionary<long, InternalIdentityItem>();
+				return;
+			}
+
+			List<IMyPlayer> players = new List<IMyPlayer>();
+			List<IMyIdentity> identities = new List<IMyIdentity>();
+			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+			{
+				MyAPIGateway.Players.GetPlayers(players);
+				MyAPIGateway.Players.GetAllIdentites(identities);
+			});
+
+			allSteamList = new Dictionary<long, InternalClientItem>();
+			foreach (IMyPlayer player in players)
+			{
+				InternalClientItem item = new InternalClientItem(player);
+				allSteamList.Add(player.PlayerID, item);
+			}
+
+			allPlayerList = new Dictionary<long, InternalIdentityItem>();
+			foreach (IMyIdentity identity in identities)
+			{
+				InternalIdentityItem item = new InternalIdentityItem(identity);
+				allPlayerList.Add(identity.PlayerId, item);
+			}
+
+			/*
             Dictionary<object, long> steamList = InternalGetSteamIdMapping();
             allSteamList = new Dictionary<long, InternalClientItem>();
             foreach (KeyValuePair<object, long> p in steamList)
@@ -514,7 +550,7 @@ namespace SEModAPIInternal.API.Common
                 InternalClientItem item = new InternalClientItem(p.Key);
                 allSteamList.Add(p.Value, item);
             }
-
+			
             Dictionary<long, Object> playerList = InternalGetPlayerItemMapping();
             allPlayerList = new Dictionary<long, InternalIdentityItem>();
             foreach (KeyValuePair<long, object> p in playerList)
@@ -522,6 +558,7 @@ namespace SEModAPIInternal.API.Common
                 InternalIdentityItem item = new InternalIdentityItem(p.Value);
                 allPlayerList.Add(p.Key, item);
             }
+			 */ 
         }
 
         /*
