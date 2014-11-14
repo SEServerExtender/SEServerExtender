@@ -54,6 +54,8 @@ namespace SEServerExtender
 		private List<FloatingObject> m_floatingObjectEntities;
 		private List<Meteor> m_meteorEntities;
 
+		private int m_chatLineCount = 0;
+
 		//Timers
 		private System.Windows.Forms.Timer m_entityTreeRefreshTimer;
 		private System.Windows.Forms.Timer m_chatViewRefreshTimer;
@@ -1524,26 +1526,28 @@ namespace SEServerExtender
 		private void ChatViewRefresh(object sender, EventArgs e)
 		{
 			//Refresh the chat history
-			LST_Chat_Messages.BeginUpdate();
 			List<ChatManager.ChatEvent> chatHistory = ChatManager.Instance.ChatHistory;
-			if (chatHistory.Count != LST_Chat_Messages.Items.Count)
+			if (chatHistory.Count != m_chatLineCount)
 			{
-				LST_Chat_Messages.Items.Clear();
+				int pos = 0;
 				foreach (var entry in chatHistory)
 				{
-					string timestamp = entry.timestamp.ToLongTimeString();
-					string playerName = "Server";
-					if(entry.sourceUserId != 0)
-						playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(entry.sourceUserId);
-					string formattedMessage = timestamp + " - " + playerName + " - " + entry.message;
-					LST_Chat_Messages.Items.Add(formattedMessage);
+					if (pos >= m_chatLineCount)
+					{
+
+						string timestamp = entry.timestamp.ToLongTimeString();
+						string playerName = "Server";
+						if (entry.sourceUserId != 0)
+							playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(entry.sourceUserId);
+						string formattedMessage = timestamp + " - " + playerName + " - " + entry.message + "\r\n";
+						RTB_Chat_Messages.AppendText(formattedMessage);
+					}
+
+					pos++;
 				}
 
-				//Auto-scroll to the bottom of the list
-				LST_Chat_Messages.SelectedIndex = LST_Chat_Messages.Items.Count - 1;
-				LST_Chat_Messages.SelectedIndex = -1;
+				m_chatLineCount = chatHistory.Count;
 			}
-			LST_Chat_Messages.EndUpdate();
 
 			//Refresh the connected players list
 			LST_Chat_ConnectedPlayers.BeginUpdate();
@@ -1551,6 +1555,7 @@ namespace SEServerExtender
 			
 			if (connectedPlayers.Count != LST_Chat_ConnectedPlayers.Items.Count || CheckRequireNameUpdate())
 			{
+				int selected = LST_Chat_ConnectedPlayers.SelectedIndex;
 				LST_Chat_ConnectedPlayers.DataSource = null;
 				LST_Chat_ConnectedPlayers.Items.Clear();
 				List<ChatUserItem> connectedPlayerList = new List<ChatUserItem>();
@@ -1566,6 +1571,11 @@ namespace SEServerExtender
 
 				LST_Chat_ConnectedPlayers.DataSource = connectedPlayerList;
 				LST_Chat_ConnectedPlayers.DisplayMember = "Username";
+
+				if (selected >= connectedPlayerList.Count && connectedPlayerList.Count > 0)
+					LST_Chat_ConnectedPlayers.SelectedIndex = 0;
+				else
+					LST_Chat_ConnectedPlayers.SelectedIndex = selected;
 
 			}
 			LST_Chat_ConnectedPlayers.EndUpdate();

@@ -1557,6 +1557,15 @@ namespace SEModAPIExtensions.API
 				if(steamId == 0)
 					return;
 			}
+
+			if (steamId.ToString().StartsWith("9009"))
+			{
+				SendPrivateChatMessage(remoteUserId, string.Format("Unable to kick player '{0}'.  This player is the server.", steamId));
+				return;
+			}
+
+			PlayerManager.Instance.KickPlayer(steamId);
+			SendPrivateChatMessage(remoteUserId, "Kicked player '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' off of the server");
 		}
 
 		protected void Command_Ban(ChatEvent chatEvent)
@@ -1604,6 +1613,12 @@ namespace SEModAPIExtensions.API
 				steamId = playerItems[0].steamId;
 				if (steamId == 0)
 					return;
+			}
+
+			if (steamId.ToString().StartsWith("9009"))
+			{
+				SendPrivateChatMessage(remoteUserId, string.Format("Unable to ban player '{0}'.  This player is the server.", steamId));
+				return;
 			}
 
 			PlayerManager.Instance.BanPlayer(steamId);

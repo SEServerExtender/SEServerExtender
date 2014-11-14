@@ -278,7 +278,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalBroadcastRadius()
 		{
-			BaseObject.InvokeEntityMethod(BackingObject, RadioManagerNetManagerBroadcastRadiusMethod, new object[] { m_parent.BroadcastRadius });
+			BaseObject.InvokeEntityMethod(BackingObject, RadioManagerNetManagerBroadcastRadiusMethod, new object[] { m_parent.BroadcastRadius, true });
 		}
 
 		protected void InternalBroadcastEnabled()

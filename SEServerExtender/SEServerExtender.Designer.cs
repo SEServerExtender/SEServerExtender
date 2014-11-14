@@ -56,7 +56,7 @@
 			this.TAB_Chat_Page = new System.Windows.Forms.TabPage();
 			this.splitContainer6 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer8 = new System.Windows.Forms.SplitContainer();
-			this.LST_Chat_Messages = new System.Windows.Forms.ListBox();
+			this.RTB_Chat_Messages = new System.Windows.Forms.RichTextBox();
 			this.splitContainer13 = new System.Windows.Forms.SplitContainer();
 			this.LST_Chat_ConnectedPlayers = new System.Windows.Forms.ListBox();
 			this.CMS_Chat = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -491,7 +491,7 @@
 			// 
 			// splitContainer8.Panel1
 			// 
-			this.splitContainer8.Panel1.Controls.Add(this.LST_Chat_Messages);
+			this.splitContainer8.Panel1.Controls.Add(this.RTB_Chat_Messages);
 			// 
 			// splitContainer8.Panel2
 			// 
@@ -500,15 +500,19 @@
 			this.splitContainer8.SplitterDistance = 750;
 			this.splitContainer8.TabIndex = 4;
 			// 
-			// LST_Chat_Messages
+			// RTB_Chat_Messages
 			// 
-			this.LST_Chat_Messages.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.LST_Chat_Messages.FormattingEnabled = true;
-			this.LST_Chat_Messages.Location = new System.Drawing.Point(0, 0);
-			this.LST_Chat_Messages.Name = "LST_Chat_Messages";
-			this.LST_Chat_Messages.ScrollAlwaysVisible = true;
-			this.LST_Chat_Messages.Size = new System.Drawing.Size(750, 504);
-			this.LST_Chat_Messages.TabIndex = 3;
+			this.RTB_Chat_Messages.BackColor = System.Drawing.SystemColors.Window;
+			this.RTB_Chat_Messages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.RTB_Chat_Messages.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.RTB_Chat_Messages.HideSelection = false;
+			this.RTB_Chat_Messages.Location = new System.Drawing.Point(0, 0);
+			this.RTB_Chat_Messages.Name = "RTB_Chat_Messages";
+			this.RTB_Chat_Messages.ReadOnly = true;
+			this.RTB_Chat_Messages.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.RTB_Chat_Messages.Size = new System.Drawing.Size(750, 504);
+			this.RTB_Chat_Messages.TabIndex = 0;
+			this.RTB_Chat_Messages.Text = "";
 			// 
 			// splitContainer13
 			// 
@@ -715,19 +719,19 @@
 			this.TAB_Plugins_Page.Text = "Plugins";
 			this.TAB_Plugins_Page.UseVisualStyleBackColor = true;
 			// 
-			// splitContainer11
+			// SC_Plugins
 			// 
 			this.SC_Plugins.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.SC_Plugins.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.SC_Plugins.Location = new System.Drawing.Point(3, 3);
-			this.SC_Plugins.Name = "splitContainer11";
+			this.SC_Plugins.Name = "SC_Plugins";
 			// 
-			// splitContainer11.Panel1
+			// SC_Plugins.Panel1
 			// 
 			this.SC_Plugins.Panel1.Controls.Add(this.splitContainer12);
 			this.SC_Plugins.Panel1MinSize = 300;
 			// 
-			// splitContainer11.Panel2
+			// SC_Plugins.Panel2
 			// 
 			this.SC_Plugins.Panel2.Controls.Add(this.PG_Plugins);
 			this.SC_Plugins.Size = new System.Drawing.Size(937, 537);
@@ -880,6 +884,7 @@
 			// 
 			// SEServerExtender
 			// 
+			this.AcceptButton = this.BTN_Chat_Send;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(951, 598);
@@ -973,7 +978,6 @@
 		private System.Windows.Forms.Button BTN_Entities_Export;
 		private System.Windows.Forms.TabPage TAB_Chat_Page;
 		private System.Windows.Forms.SplitContainer splitContainer6;
-		private System.Windows.Forms.ListBox LST_Chat_Messages;
 		private System.Windows.Forms.SplitContainer splitContainer7;
 		private System.Windows.Forms.TextBox TXT_Chat_Message;
 		private System.Windows.Forms.Button BTN_Chat_Send;
@@ -1016,5 +1020,6 @@
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button BTN_Chat_BanSelected;
 		private System.Windows.Forms.Button BTN_Chat_KickSelected;
+		private System.Windows.Forms.RichTextBox RTB_Chat_Messages;
 	}
 }

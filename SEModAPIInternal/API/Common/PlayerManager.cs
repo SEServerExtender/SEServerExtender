@@ -217,6 +217,9 @@ namespace SEModAPIInternal.API.Common
 
         public string GetPlayerNameFromSteamId(ulong steamId)
         {
+			if (steamId.ToString().StartsWith("9009"))
+				return "Server";
+
             string playerName = steamId.ToString();
 
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
