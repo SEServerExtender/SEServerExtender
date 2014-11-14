@@ -442,7 +442,8 @@ namespace SEModAPIExtensions.API
 					List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
 					foreach (ulong remoteUserId in connectedPlayers)
 					{
-						ServerNetworkManager.Instance.SendStruct(remoteUserId, chatMessageStruct, chatMessageStruct.GetType());
+						if(!remoteUserId.ToString().StartsWith("9009"))
+							ServerNetworkManager.Instance.SendStruct(remoteUserId, chatMessageStruct, chatMessageStruct.GetType());
 
 						ChatEvent chatEvent = new ChatEvent();
 						chatEvent.type = ChatEventType.OnChatSent;
