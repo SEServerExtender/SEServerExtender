@@ -13,6 +13,7 @@ using VRage.Serialization;
 
 using Sandbox.ModAPI;
 using System.Reflection;
+using SteamSDK;
 
 namespace SEModAPIInternal.API.Common
 {
@@ -513,6 +514,7 @@ namespace SEModAPIInternal.API.Common
 
         private void InternalGetReferenceLists(out Dictionary<long, InternalClientItem> allSteamList, out Dictionary<long, InternalIdentityItem> allPlayerList)
         {
+			
 			if (MyAPIGateway.Players == null)
 			{
 				allSteamList = new Dictionary<long, InternalClientItem>();
@@ -522,11 +524,11 @@ namespace SEModAPIInternal.API.Common
 
 			List<IMyPlayer> players = new List<IMyPlayer>();
 			List<IMyIdentity> identities = new List<IMyIdentity>();
-			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
-			{
+//			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+//			{
 				MyAPIGateway.Players.GetPlayers(players);
 				MyAPIGateway.Players.GetAllIdentites(identities);
-			});
+//			});
 
 			allSteamList = new Dictionary<long, InternalClientItem>();
 			foreach (IMyPlayer player in players)
@@ -541,7 +543,6 @@ namespace SEModAPIInternal.API.Common
 				InternalIdentityItem item = new InternalIdentityItem(identity);
 				allPlayerList.Add(identity.PlayerId, item);
 			}
-
 			/*
             Dictionary<object, long> steamList = InternalGetSteamIdMapping();
             allSteamList = new Dictionary<long, InternalClientItem>();
@@ -558,7 +559,7 @@ namespace SEModAPIInternal.API.Common
                 InternalIdentityItem item = new InternalIdentityItem(p.Value);
                 allPlayerList.Add(p.Key, item);
             }
-			 */ 
+			*/
         }
 
         /*
