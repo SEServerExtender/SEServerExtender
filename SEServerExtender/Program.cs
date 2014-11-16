@@ -175,9 +175,9 @@ namespace SEServerExtender
 					{
 						extenderArgs.closeOnCrash = true;
 					}
-					if (arg.ToLower().Equals("autosavesync"))
+					if (arg.ToLower().Equals("autosaveasync"))
 					{
-						extenderArgs.autoSaveSync = true;
+						extenderArgs.autoSaveSync = false;
 					}
 					if (arg.ToLower().Equals("restartoncrash"))
 					{
