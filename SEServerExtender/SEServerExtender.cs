@@ -189,6 +189,9 @@ namespace SEServerExtender
 					m_factionRefreshTimer.Start();
 				if (!m_pluginManagerRefreshTimer.Enabled)
 					m_pluginManagerRefreshTimer.Start();
+
+				if (PG_Control_Server_Properties.SelectedObject != m_server.Config)
+					PG_Control_Server_Properties.SelectedObject = m_server.Config;
 			}
 		}
 

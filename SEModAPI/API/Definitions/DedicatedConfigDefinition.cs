@@ -822,7 +822,7 @@ namespace SEModAPI.API.Definitions
 	"Set to 0 to open the server to everyone")]
 		[Category("Server Settings")]
 		/// <summary>
-		/// Get or set the GroupId of the server. 
+/// Get or set the GroupId of the server. 
 		/// Only member of this group will be able to join the server.
 		/// Set to 0 to open the server to everyone
 		/// </summary>
@@ -886,8 +886,6 @@ namespace SEModAPI.API.Definitions
 		public bool Save(FileInfo fileInfo)
 		{
 			if (fileInfo == null) return false;
-
-			File.Copy(fileInfo.FullName, fileInfo.FullName + ".bak", true);
 
 			//Save the definitions container out to the file
 			try
