@@ -25,6 +25,9 @@ using VRage.Common.Utils;
 using VRageMath;
 
 using Sandbox.ModAPI;
+using Sandbox.Definitions;
+using System.Collections;
+using System.Linq;
 
 namespace SEModAPIExtensions.API
 {
@@ -203,6 +206,11 @@ namespace SEModAPIExtensions.API
 			unbanCommand.callback = Command_Unban;
 			unbanCommand.requiresAdmin = true;
 
+			ChatCommand asyncSaveCommand = new ChatCommand();
+			asyncSaveCommand.command = "savesync";
+			asyncSaveCommand.callback = Command_SyncSave;
+			asyncSaveCommand.requiresAdmin = true;
+
 			RegisterChatCommand(offCommand);
 			RegisterChatCommand(onCommand);
 			RegisterChatCommand(deleteCommand);
@@ -219,6 +227,7 @@ namespace SEModAPIExtensions.API
 			RegisterChatCommand(kickCommand);	
 			RegisterChatCommand(banCommand);
 			RegisterChatCommand(unbanCommand);
+			RegisterChatCommand(asyncSaveCommand);
 
 			SetupWCFService();
 
@@ -1143,6 +1152,16 @@ namespace SEModAPIExtensions.API
 			string[] commandParts = chatEvent.message.Split(' ');
 			int paramCount = commandParts.Length - 1;
 
+			WorldManager.Instance.AsynchronousSaveWorld();
+			SendPrivateChatMessage(remoteUserId, "Performing an asynchronous save.");
+		}
+
+		protected void Command_SyncSave(ChatEvent chatEvent)
+		{
+			ulong remoteUserId = chatEvent.remoteUserId;
+			string[] commandParts = chatEvent.message.Split(' ');
+			int paramCount = commandParts.Length - 1;
+
 			WorldManager.Instance.SaveWorld();
 
 			SendPrivateChatMessage(remoteUserId, "World has been saved!");
@@ -1456,10 +1475,17 @@ namespace SEModAPIExtensions.API
                         functionalBlock.Enabled = false;
                         poweredOffCount++;
                     }
+
+					if (commandParts[1].ToLower().Equals(cubeBlock.Id.SubtypeName.ToLower()))
+					{
+						functionalBlock.Enabled = false;
+						poweredOffCount++;
+					}					
+				
 				}
 			}
 
-			SendPrivateChatMessage(remoteUserId, "Cleared the production queue of " + poweredOffCount.ToString() + " blocks");
+			SendPrivateChatMessage(remoteUserId, "Turned off " + poweredOffCount.ToString() + " blocks");
 		}
 
         protected void Command_On(ChatEvent chatEvent)
@@ -1507,6 +1533,12 @@ namespace SEModAPIExtensions.API
                         functionalBlock.Enabled = true;
                         poweredOffCount++;
                     }
+
+					if (commandParts[1].ToLower().Equals(cubeBlock.Id.SubtypeName.ToLower()))
+					{
+						functionalBlock.Enabled = true;
+						poweredOffCount++;
+					}
                 }
             }
 
@@ -1620,7 +1652,7 @@ namespace SEModAPIExtensions.API
 				SendPrivateChatMessage(remoteUserId, string.Format("Unable to ban player '{0}'.  This player is the server.", steamId));
 				return;
 			}
-
+			
 			PlayerManager.Instance.BanPlayer(steamId);
 
 			SendPrivateChatMessage(remoteUserId, "Banned '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' and kicked them off of the server");

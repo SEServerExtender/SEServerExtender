@@ -48,7 +48,7 @@ namespace SEModAPIExtensions.API
 		public int autosave;
 		public string path;
 		public bool closeOnCrash;
-		public bool initGateway;
+		public bool autoSaveSync;
 		public bool restartOnCrash;
 		public string args;
 	}
@@ -129,6 +129,7 @@ namespace SEModAPIExtensions.API
 		private static DateTime m_lastRestart;
 		private static int m_restartLimit;
 		private static bool m_isWCFEnabled;
+		private static FileSystemWatcher m_cfgWatch;
 
 		private CommandLineArgs m_commandLineArgs;
 		private DedicatedConfigDefinition m_dedicatedConfigDefinition;
@@ -314,9 +315,9 @@ namespace SEModAPIExtensions.API
 				{
 					Console.WriteLine("Close On Crash: Enabled");
 				}
-				if (m_commandLineArgs.initGateway)
+				if (m_commandLineArgs.autoSaveSync)
 				{
-					Console.WriteLine("MyAPIGateway Init: Enabled");
+					Console.WriteLine("Synchronous Save: Enabled");
 				}
 				if (m_commandLineArgs.path.Length != 0)
 				{
@@ -562,9 +563,7 @@ namespace SEModAPIExtensions.API
 			{
 				if (SandboxGameAssemblyWrapper.Instance.IsGameStarted)
 				{
-					if(m_commandLineArgs.initGateway)
-						SandboxGameAssemblyWrapper.InitAPIGateway();
-
+					SandboxGameAssemblyWrapper.InitAPIGateway();
 					m_pluginManager.LoadPlugins();
 					m_pluginManager.Init();
 				}
@@ -587,7 +586,10 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 
-			WorldManager.Instance.SaveWorld();
+			if (CommandLineArgs.autoSaveSync)
+				WorldManager.Instance.SaveWorld();
+			else
+				WorldManager.Instance.AsynchronousSaveWorld();
 		}
 
 		private void RunServer()
@@ -599,6 +601,7 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
+				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
 				m_serverWrapper = ServerAssemblyWrapper.Instance;
 				bool result = m_serverWrapper.StartServer(m_commandLineArgs.instanceName, m_commandLineArgs.path, !m_commandLineArgs.noConsole);
 
@@ -673,7 +676,6 @@ namespace SEModAPIExtensions.API
 					LoadServerConfig();
 
 				m_sessionManager.UpdateSessionSettings();
-
 				m_pluginMainLoop.Start();
 				m_autosaveTimer.Start();
 
@@ -712,7 +714,29 @@ namespace SEModAPIExtensions.API
 
 		public MyConfigDedicatedData LoadServerConfig()
 		{
+			FileInfo fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart");
+			if (fileInfo.Exists)
+			{
+				File.Copy(Path + @"\SpaceEngineers-Dedicated.cfg.restart", Path + @"\SpaceEngineers-Dedicated.cfg", true);
+				File.Delete(Path + @"\SpaceEngineers-Dedicated.cfg.restart");
+			}
 
+			fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg");
+			if (fileInfo.Exists)
+			{
+				MyConfigDedicatedData config = DedicatedConfigDefinition.Load(fileInfo);
+				m_dedicatedConfigDefinition = new DedicatedConfigDefinition(config);
+				m_cfgWatch = new FileSystemWatcher(Path, "*.cfg");
+				m_cfgWatch.Changed += Config_Changed;
+				m_cfgWatch.NotifyFilter = NotifyFilters.Size;
+				m_cfgWatch.EnableRaisingEvents = true;
+				return config;
+			}
+			else
+				return null;
+
+
+			/*
 			FileInfo fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg");
 			if (fileInfo.Exists)
 			{
@@ -731,6 +755,41 @@ namespace SEModAPIExtensions.API
 			}
 			else
 				return null;	
+			 */ 
+		}
+
+		private void Config_Changed(object sender, FileSystemEventArgs e)
+		{
+			if (!e.Name.Contains("SpaceEngineers-Dedicated.cfg"))
+				return;
+
+			if (!m_serverRan)
+				return;
+
+			if (e.ChangeType == WatcherChangeTypes.Changed)
+			{
+				if (!File.Exists(Path + @"\SpaceEngineers-Dedicated.cfg.restart"))
+				{
+					LogManager.APILog.WriteLineAndConsole(string.Format("SpaceEngineers-Dedicated.cfg has changed updating configuration settings."));
+
+					MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load(new FileInfo(e.FullPath));
+					Config = new DedicatedConfigDefinition(changedConfig);
+				}
+				else
+				{
+					LogManager.APILog.WriteLineAndConsole(string.Format("SpaceEngineers-Dedicated.cfg has changed with existing restart file."));
+
+					MyConfigDedicatedData restartConfig = DedicatedConfigDefinition.Load(new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart"));
+					MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load(new FileInfo(e.FullPath));
+
+					restartConfig.Mods = restartConfig.Mods.Union(changedConfig.Mods).ToList();
+					restartConfig.Banned = changedConfig.Banned.Union(changedConfig.Banned).ToList();
+					restartConfig.Administrators = changedConfig.Administrators.Union(changedConfig.Administrators).ToList();
+					DedicatedConfigDefinition config = new DedicatedConfigDefinition(restartConfig);
+					config.Save(new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart"));
+					Config = config;
+				}
+			}
 		}
 
 		public void SaveServerConfig()

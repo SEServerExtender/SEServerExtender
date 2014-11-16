@@ -26,6 +26,7 @@ namespace SEModAPIInternal.API.Common
 		protected static bool m_isInSafeMode;
 		protected static bool m_gatewayInitialzed;
 		protected static Thread m_gameThread;
+		protected static string m_instanceName;
 
 		protected bool m_isGameLoaded;
 
@@ -300,6 +301,12 @@ namespace SEModAPIInternal.API.Common
 					return false;
 				}
 			}
+		}
+
+		public static string InstanceName
+		{
+			get { return m_instanceName; }
+			set { m_instanceName = value; }
 		}
 
 		#endregion
@@ -631,6 +638,8 @@ namespace SEModAPIInternal.API.Common
 
 			string debugContentPath = MyFileSystem.ContentPath;
 			string debugUserDataPath = MyFileSystem.UserDataPath;
+
+			m_instanceName = instanceName;
 		}
 
 		public List<string> GetCommonInstanceList()
