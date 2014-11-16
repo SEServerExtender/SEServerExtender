@@ -7,8 +7,6 @@ using SEModAPIInternal.Support;
 
 using VRage;
 
-using System.Threading;
-
 namespace SEModAPIInternal.API.Common
 {
 	public class WorldManager
@@ -30,8 +28,6 @@ namespace SEModAPIInternal.API.Common
 		public static string WorldManagerInstanceField = "AE8262481750DAB9C8D416E4DBB9BA04";
 		public static string WorldManagerFactionManagerField = "0A481A0F72FB8D956A8E00BB2563E605";
 		public static string WorldManagerSessionSettingsField = "3D4D3F0E4E3582FF30FD014D9BB1E504";
-
-		public static string WorldManagerSaveSnapshot = "C0CFAF4B58402DABBB39F4A4694795D0";
 
 		////////////////////////////////////////////////////////////////////
 
@@ -188,88 +184,8 @@ namespace SEModAPIInternal.API.Common
 
 		public void SaveWorld()
 		{
-			if (m_isSaving)
-				return;
-
-			m_isSaving = true;
 			Action action = InternalSaveWorld;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
-		}
-
-		public void AsynchronousSaveWorld()
-		{
-			if (m_isSaving)
-				return;
-
-			m_isSaving = true;
-
-			try
-			{
-				DateTime saveStartTime = DateTime.Now;
-
-				// It looks like keen as an overloaded save function that returns the WorldResourceManager after setting up a save, and then 
-				// allows you to write to disk from a separate thread?  Why aren't they using this on normal saves?!
-				bool result = false;
-				String arg0 = null;
-				Object[] parameters =
-				{
-					null,
-					arg0,
-				};
-
-				Type[] paramTypes =
-				{
-					SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldResourceManagerNamespace, WorldResourceManagerClass).MakeByRefType(),
-					typeof(string),
-				};
-
-				// Run overloaded save function with extra an out parameter that is set to a WorldResourceManagerClass
-				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
-				{
-					result = (bool)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerSaveWorldMethod, parameters, paramTypes);
-				});
-
-				// Write to disk on a different thread using the WorldResourceManagerClass in the parameter
-				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
-				{
-					if (result)
-					{
-						LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Setup Time: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
-						saveStartTime = DateTime.Now;
-						result = (bool)BaseObject.InvokeEntityMethod(parameters[0], WorldManagerSaveSnapshot);
-					}
-					else
-					{
-						LogManager.ErrorLog.WriteLine("Failed to save world (1)");
-						return;
-					}
-
-					if (result)
-					{
-						LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Successful: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
-					}
-					else
-					{
-						LogManager.ErrorLog.WriteLine("Failed to save world (2)");
-						return;
-					}
-
-					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
-					newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
-					newEvent.timestamp = DateTime.Now;
-					newEvent.entity = null;
-					newEvent.priority = 0;
-					EntityEventManager.Instance.AddEvent(newEvent);
-				}));
-			}
-			catch (Exception ex)
-			{
-				LogManager.ErrorLog.WriteLine(ex);
-			}
-			finally
-			{
-				m_isSaving = false;
-			}
 		}
 
 		internal Object InternalGetFactionManager()
@@ -337,15 +253,12 @@ namespace SEModAPIInternal.API.Common
 				else
 				{
 					LogManager.APILog.WriteLineAndConsole("Save failed!");
+					m_isSaving = false;
 				}
 			}
 			catch (Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
-			}
-			finally
-			{
-				m_isSaving = false;
 			}
 		}
 

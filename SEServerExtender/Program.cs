@@ -175,9 +175,9 @@ namespace SEServerExtender
 					{
 						extenderArgs.closeOnCrash = true;
 					}
-					if (arg.ToLower().Equals("autosavesync"))
+					if (arg.ToLower().Equals("initgateway"))
 					{
-						extenderArgs.autoSaveSync = true;
+						extenderArgs.initGateway = true;
 					}
 					if (arg.ToLower().Equals("restartoncrash"))
 					{
