@@ -305,7 +305,6 @@ namespace SEModAPIInternal.API.Common
 
         public ulong GetSteamIdFromPlayerName(string playerName, bool partial = false)
         {
-
             ulong steamId = 0;
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
 			if(!partial)
@@ -327,6 +326,15 @@ namespace SEModAPIInternal.API.Common
 
             return steamId;
         }
+
+		public ulong GetSteamIdFromPlayerId(long playerId)
+		{
+			Dictionary<long, InternalPlayerItem> allPlayers = InternalGetPlayerDictionary();
+			if (allPlayers.ContainsKey(playerId))
+				return allPlayers[playerId].steamId;
+
+			return 0;
+		}
 
         public long GetPlayerEntityId(ulong steamId)
         {

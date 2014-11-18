@@ -35,6 +35,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
         public static string VoxelMapGetVoxelMaterialManagerMethod = "61D7D905B19D162AF69D27DD9B2ADC58";
         public static string VoxelMapGetMaterialAtPositionMethod = "5F7E3213E519961F42617BC410B19346";
 
+		/*
+		 * Storage recompute for asteroids? CC67DA892A0C9277CC606E1B4C97A4F1.6922E99EC72C10627AA239B8167BF7DC.95CFB363D0BF8BBC6CBFC7248263FD6A 
+		 * Add a new voxel? 5BCAC68007431E61367F5B2CF24E2D6F.6EC806B54BA319767DA878841A56ECD8.01774E4E0A0FC967FD0C28D949278314
+		 * Add a new voxel static? AAC05F537A6F0F6775339593FBDFC564.3F0C9546C1796109CAF2EB98B70C8049.40A5DC2FA0E0E2380A9DAB38B4953D0C
+		 * Add a new voxel static by enum? AAC05F537A6F0F6775339593FBDFC564.3F0C9546C1796109CAF2EB98B70C8049.48D3319B987E8C194FDFEB0EFC41E8DF(MyMwcVoxelFilesEnum asteroidType, Vector3 position, string name, bool unknown)
+		 * Generate voxel materials? 6B85614235D7D81095FD26C72DC7E1D1
+		 * Possible creative voxel creation? 688215302A767A55ECDA0D653CFEED6F
+		 * When user selects a roid in creative shift-f10 menu: 41312BD862D355BC5C4023FC22286611
+		 * 
+		 */
+
 		#endregion
 
 		#region "Constructors and Initializers"

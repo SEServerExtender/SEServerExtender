@@ -219,18 +219,6 @@
     <None Include="Service References\ServiceReference\item9.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference\SEServerGUI.ServiceReference.BaseEntityProxy.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceReference\SEServerGUI.ServiceReference.CubeBlockEntityProxy.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceReference\SEServerGUI.ServiceReference.CubeGridEntityProxy.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceReference\SEServerGUI.ServiceReference.InventoryItemEntityProxy.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
