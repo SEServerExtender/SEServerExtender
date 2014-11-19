@@ -357,13 +357,15 @@ namespace SEServerExtender
 
 			if (!m_server.IsRunning)
 			{
-				BTN_Plugins_Refresh.Enabled = false;
-				BTN_Plugins_Load.Enabled = false;
-				BTN_Plugins_Unload.Enabled = false;
+				//BTN_Plugins_Refresh.Enabled = false;
+				//BTN_Plugins_Load.Enabled = false;
+				//BTN_Plugins_Unload.Enabled = false;
+				BTN_Plugins_Reload.Enabled = false;
 			}
 			else
 			{
-				BTN_Plugins_Refresh.Enabled = true;
+				//BTN_Plugins_Refresh.Enabled = true;
+				BTN_Plugins_Reload.Enabled = true;
 			}
 
 			if (!CMB_Control_AutosaveInterval.ContainsFocus)
@@ -1850,52 +1852,58 @@ namespace SEServerExtender
 			AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-			foreach (var type in Assembly.GetAssembly(plugin.GetType()).GetTypes())
+			//foreach (var type in Assembly.GetAssembly(plugin.GetType()).GetTypes()) //??
+			//{
+			PropertyInfo info = plugin.GetType().GetProperty("PluginControlForm");
+			if (info != null)
 			{
-				PropertyInfo info = plugin.GetType().GetProperty("PluginControlForm");
-				if (info != null)
-				{
-					PG_Plugins.Visible = false;
-					Form value = (Form)info.GetValue(plugin, null);
+				PG_Plugins.Visible = false;
+				Form value = (Form)info.GetValue(plugin, null);
 
-					foreach (Control control in SC_Plugins.Panel2.Controls)
-					{
+				foreach (Control control in SC_Plugins.Panel2.Controls)
+				{
+					if(control.Visible)
 						control.Visible = false;
-					}
-
-					if (!SC_Plugins.Panel2.Controls.Contains(value))
-					{
-						value.TopLevel = false;
-						SC_Plugins.Panel2.Controls.Add(value);
-					}
-
-					value.Dock = DockStyle.Fill;
-					value.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-					value.Visible = true;
 				}
-				else // Default PropertyGrid view
+
+				if (!SC_Plugins.Panel2.Controls.Contains(value))
 				{
-					foreach (Control ctl in SC_Plugins.Panel2.Controls)
+					value.TopLevel = false;
+					SC_Plugins.Panel2.Controls.Add(value);
+				}
+
+				value.Dock = DockStyle.Fill;
+				value.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				value.Visible = true;
+			}
+			else // Default PropertyGrid view
+			{
+				foreach (Control ctl in SC_Plugins.Panel2.Controls)
+				{
+					if (ctl.Visible)
 					{
 						ctl.Visible = false;
 					}
-
-					PG_Plugins.Visible = true;
-					PG_Plugins.SelectedObject = plugin;
 				}
+
+				PG_Plugins.Visible = true;
+				PG_Plugins.SelectedObject = plugin;
 			}
+			//}
 
 			// Set state
 			bool pluginState = PluginManager.Instance.GetPluginState(selectedItem);
 			if (pluginState)
 			{
-				BTN_Plugins_Load.Enabled = false;
-				BTN_Plugins_Unload.Enabled = true;
+				BTN_Plugins_Reload.Enabled = true;
+				//BTN_Plugins_Load.Enabled = false;
+				//BTN_Plugins_Unload.Enabled = true;
 			}
 			else
 			{
-				BTN_Plugins_Load.Enabled = true;
-				BTN_Plugins_Unload.Enabled = false;
+				BTN_Plugins_Reload.Enabled = false;
+				//BTN_Plugins_Load.Enabled = true;
+				//BTN_Plugins_Unload.Enabled = false;
 			}
 		}
 
@@ -1930,6 +1938,22 @@ namespace SEServerExtender
 			}
 
 			return null;
+		}
+
+		private void BTN_Plugins_Reload_Click(object sender, EventArgs e)
+		{
+			if (LST_Plugins.SelectedItem == null)
+				return;
+
+			int selectedIndex = LST_Plugins.SelectedIndex;
+			if (selectedIndex >= PluginManager.Instance.Plugins.Count)
+				return;
+
+			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
+			PluginManager.Instance.UnloadPlugin(selectedItem);
+			PluginManager.Instance.LoadPlugins(true);
+			PluginManager.Instance.InitPlugin(selectedItem);
+			LST_Plugins_SelectedIndexChanged(this, EventArgs.Empty);
 		}
 
 		private void BTN_Plugins_Unload_Click(object sender, EventArgs e)

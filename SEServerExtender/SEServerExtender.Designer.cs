@@ -78,9 +78,7 @@
 			this.SC_Plugins = new System.Windows.Forms.SplitContainer();
 			this.splitContainer12 = new System.Windows.Forms.SplitContainer();
 			this.LST_Plugins = new System.Windows.Forms.ListBox();
-			this.BTN_Plugins_Refresh = new System.Windows.Forms.Button();
-			this.BTN_Plugins_Load = new System.Windows.Forms.Button();
-			this.BTN_Plugins_Unload = new System.Windows.Forms.Button();
+			this.BTN_Plugins_Reload = new System.Windows.Forms.Button();
 			this.PG_Plugins = new System.Windows.Forms.PropertyGrid();
 			this.TAB_Utilities_Page = new System.Windows.Forms.TabPage();
 			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -752,9 +750,7 @@
 			// 
 			// splitContainer12.Panel2
 			// 
-			this.splitContainer12.Panel2.Controls.Add(this.BTN_Plugins_Refresh);
-			this.splitContainer12.Panel2.Controls.Add(this.BTN_Plugins_Load);
-			this.splitContainer12.Panel2.Controls.Add(this.BTN_Plugins_Unload);
+			this.splitContainer12.Panel2.Controls.Add(this.BTN_Plugins_Reload);
 			this.splitContainer12.Size = new System.Drawing.Size(300, 537);
 			this.splitContainer12.SplitterDistance = 502;
 			this.splitContainer12.TabIndex = 0;
@@ -769,35 +765,15 @@
 			this.LST_Plugins.TabIndex = 0;
 			this.LST_Plugins.SelectedIndexChanged += new System.EventHandler(this.LST_Plugins_SelectedIndexChanged);
 			// 
-			// BTN_Plugins_Refresh
+			// BTN_Plugins_Reload
 			// 
-			this.BTN_Plugins_Refresh.Location = new System.Drawing.Point(3, 3);
-			this.BTN_Plugins_Refresh.Name = "BTN_Plugins_Refresh";
-			this.BTN_Plugins_Refresh.Size = new System.Drawing.Size(75, 23);
-			this.BTN_Plugins_Refresh.TabIndex = 2;
-			this.BTN_Plugins_Refresh.Text = "Refresh";
-			this.BTN_Plugins_Refresh.UseVisualStyleBackColor = true;
-			this.BTN_Plugins_Refresh.Click += new System.EventHandler(this.BTN_Plugins_Refresh_Click);
-			// 
-			// BTN_Plugins_Load
-			// 
-			this.BTN_Plugins_Load.Location = new System.Drawing.Point(141, 3);
-			this.BTN_Plugins_Load.Name = "BTN_Plugins_Load";
-			this.BTN_Plugins_Load.Size = new System.Drawing.Size(75, 23);
-			this.BTN_Plugins_Load.TabIndex = 1;
-			this.BTN_Plugins_Load.Text = "Load";
-			this.BTN_Plugins_Load.UseVisualStyleBackColor = true;
-			this.BTN_Plugins_Load.Click += new System.EventHandler(this.BTN_Plugins_Load_Click);
-			// 
-			// BTN_Plugins_Unload
-			// 
-			this.BTN_Plugins_Unload.Location = new System.Drawing.Point(222, 3);
-			this.BTN_Plugins_Unload.Name = "BTN_Plugins_Unload";
-			this.BTN_Plugins_Unload.Size = new System.Drawing.Size(75, 23);
-			this.BTN_Plugins_Unload.TabIndex = 0;
-			this.BTN_Plugins_Unload.Text = "Unload";
-			this.BTN_Plugins_Unload.UseVisualStyleBackColor = true;
-			this.BTN_Plugins_Unload.Click += new System.EventHandler(this.BTN_Plugins_Unload_Click);
+			this.BTN_Plugins_Reload.Location = new System.Drawing.Point(222, 3);
+			this.BTN_Plugins_Reload.Name = "BTN_Plugins_Reload";
+			this.BTN_Plugins_Reload.Size = new System.Drawing.Size(75, 23);
+			this.BTN_Plugins_Reload.TabIndex = 0;
+			this.BTN_Plugins_Reload.Text = "Reload";
+			this.BTN_Plugins_Reload.UseVisualStyleBackColor = true;
+			this.BTN_Plugins_Reload.Click += new System.EventHandler(this.BTN_Plugins_Reload_Click);
 			// 
 			// PG_Plugins
 			// 
@@ -1006,9 +982,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button BTN_Utilities_ClearFloatingObjectsNow;
 		private System.Windows.Forms.CheckBox CHK_Utilities_FloatingObjectAutoClean;
-		private System.Windows.Forms.Button BTN_Plugins_Unload;
-		private System.Windows.Forms.Button BTN_Plugins_Refresh;
-		private System.Windows.Forms.Button BTN_Plugins_Load;
 		private System.Windows.Forms.Button BTN_Factions_Delete;
 		private System.Windows.Forms.Label LBL_Control_AutosaveInterval;
 		private System.Windows.Forms.ComboBox CMB_Control_AutosaveInterval;
@@ -1021,5 +994,6 @@
 		private System.Windows.Forms.Button BTN_Chat_BanSelected;
 		private System.Windows.Forms.Button BTN_Chat_KickSelected;
 		private System.Windows.Forms.RichTextBox RTB_Chat_Messages;
+		private System.Windows.Forms.Button BTN_Plugins_Reload;
 	}
 }
