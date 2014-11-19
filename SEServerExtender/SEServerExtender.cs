@@ -55,6 +55,7 @@ namespace SEServerExtender
 		private List<Meteor> m_meteorEntities;
 
 		private int m_chatLineCount = 0;
+		private int m_sortBy = 0;
 
 		//Timers
 		private System.Windows.Forms.Timer m_entityTreeRefreshTimer;
@@ -82,7 +83,7 @@ namespace SEServerExtender
 			m_floatingObjectEntities = new List<FloatingObject>();
 			m_meteorEntities = new List<Meteor>();
 
-			//Run init functions
+			//Run init functionsS
 			InitializeComponent();
 			if (!SetupTimers())
 				Close();
@@ -142,6 +143,8 @@ namespace SEServerExtender
 						CMB_Control_CommonInstanceList.SelectedIndex = 0;
 					CMB_Control_CommonInstanceList.EndUpdate();
 				}
+
+				CB_Entity_Sort.SelectedIndex = 0;
 
 				CMB_Control_AutosaveInterval.BeginUpdate();
 				CMB_Control_AutosaveInterval.Items.Add(1);
@@ -361,11 +364,13 @@ namespace SEServerExtender
 				//BTN_Plugins_Load.Enabled = false;
 				//BTN_Plugins_Unload.Enabled = false;
 				BTN_Plugins_Reload.Enabled = false;
+				BTN_Plugins_Enable.Enabled = false;
 			}
 			else
 			{
 				//BTN_Plugins_Refresh.Enabled = true;
 				BTN_Plugins_Reload.Enabled = true;
+				BTN_Plugins_Enable.Enabled = true;
 			}
 
 			if (!CMB_Control_AutosaveInterval.ContainsFocus)
@@ -511,16 +516,8 @@ namespace SEServerExtender
 				return;
 
 			//Get cube grids
-			List<CubeGridEntity> list = m_cubeGridEntities;
-
-			//Sort the list of cube grids
-			list.Sort(delegate(CubeGridEntity x, CubeGridEntity y)
-			{
-				if (x.Name == null && y.Name == null) return 0;
-				else if (x.Name == null) return -1;
-				else if (y.Name == null) return 1;
-				else return x.Name.CompareTo(y.Name);
-			});
+			List<CubeGridEntity> list = m_cubeGridEntities;			
+			SortCubeGrids(list);
 
 			//Cleanup and update the existing nodes
 			foreach (TreeNode node in rootNode.Nodes)
@@ -542,12 +539,8 @@ namespace SEServerExtender
 						if (listItem.EntityId == item.EntityId)
 						{
 							foundMatch = true;
-
-							Vector3 rawPosition = item.Position;
-							double distance = Math.Round(rawPosition.Length(), 0);
-							string newNodeText = item.Name + " | Mass: " + Math.Floor(item.Mass).ToString() + "kg | Dist: " + distance.ToString() + "m";
+							string newNodeText = GenerateCubeNodeText(item);
 							node.Text = newNodeText;
-
 							list.Remove(listItem);
 
 							break;
@@ -580,7 +573,7 @@ namespace SEServerExtender
 					Type sectorObjectType = item.GetType();
 					string nodeKey = item.EntityId.ToString();
 
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Mass: " + Math.Floor(item.Mass).ToString() + "kg | Dist: " + distance.ToString() + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, GenerateCubeNodeText(item));
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -592,6 +585,66 @@ namespace SEServerExtender
 
 			//Update node text
 			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count.ToString() + ")";
+		}
+
+		private string GenerateCubeNodeText(CubeGridEntity item)
+		{
+			string text = item.DisplayName;
+
+			int sortBy = CB_Entity_Sort.SelectedIndex;
+			if (sortBy == 0)
+			{
+				text += " | " + item.Name;
+			}
+			else if (sortBy == 1)
+			{
+				text += " | ID: " + item.EntityId;
+			}
+			else if (sortBy == 4)
+			{
+				text += " | Mass: " + Math.Floor(item.Mass).ToString() + " kg";
+			}
+			
+			text += " | Dist: " + Math.Round(((Vector3)item.Position).Length(), 0) + "m";
+
+			return text;
+		}
+
+		public void SortCubeGrids(List<CubeGridEntity> list)
+		{
+			int sortBy = CB_Entity_Sort.SelectedIndex;
+
+			if (sortBy == 0) // Name
+			{
+				list.Sort(delegate(CubeGridEntity x, CubeGridEntity y)
+				{
+					if (x.Name == null && y.Name == null) return 0;
+					else if (x.Name == null) return -1;
+					else if (y.Name == null) return 1;
+					else return x.Name.CompareTo(y.Name);
+				});
+			}
+			else if (sortBy == 1) // Entity ID
+			{
+				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
+					{
+						return x.EntityId.CompareTo(y.EntityId);
+					});
+			}
+			else if (sortBy == 2) // Distance From Center
+			{
+				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
+					{
+						return Vector3.Distance(x.Position, Vector3.Zero).CompareTo(Vector3.Distance(y.Position, Vector3.Zero));
+					});
+			}
+			else if(sortBy == 3) // Display Name
+			{
+				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
+					{
+						return x.DisplayName.CompareTo(y.DisplayName);
+					});
+			}
 		}
 
 		private void RenderCharacterNodes(TreeNode rootNode)
@@ -1524,6 +1577,19 @@ namespace SEServerExtender
 			}
 		}
 
+		private void CB_Entity_Sort_SelectionChangeCommitted(object sender, EventArgs e)
+		{
+			TreeNode cubeNode = TRV_Entities.Nodes.Find("Cube Grids", true).FirstOrDefault();
+			if(cubeNode == null)
+				return;
+
+			m_sortBy = CB_Entity_Sort.SelectedIndex;
+			cubeNode.Nodes.Clear();
+			TreeViewEventArgs newEvent = new TreeViewEventArgs(cubeNode);
+			TRV_Entities_AfterSelect(sender, newEvent);			
+
+		}
+
 		#endregion
 
 		#region "Chat"
@@ -1896,14 +1962,12 @@ namespace SEServerExtender
 			if (pluginState)
 			{
 				BTN_Plugins_Reload.Enabled = true;
-				//BTN_Plugins_Load.Enabled = false;
-				//BTN_Plugins_Unload.Enabled = true;
+				BTN_Plugins_Enable.Text = "Disable";
 			}
 			else
 			{
 				BTN_Plugins_Reload.Enabled = false;
-				//BTN_Plugins_Load.Enabled = true;
-				//BTN_Plugins_Unload.Enabled = false;
+				BTN_Plugins_Enable.Text = "Enable";
 			}
 		}
 
@@ -1953,6 +2017,30 @@ namespace SEServerExtender
 			PluginManager.Instance.UnloadPlugin(selectedItem);
 			PluginManager.Instance.LoadPlugins(true);
 			PluginManager.Instance.InitPlugin(selectedItem);
+			LST_Plugins_SelectedIndexChanged(this, EventArgs.Empty);
+		}
+
+		private void BTN_Plugins_Enable_Click(object sender, EventArgs e)
+		{
+			if (LST_Plugins.SelectedItem == null)
+				return;
+
+			int selectedIndex = LST_Plugins.SelectedIndex;
+			if (selectedIndex >= PluginManager.Instance.Plugins.Count)
+				return;
+
+			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt(selectedIndex);
+			bool pluginState = PluginManager.Instance.GetPluginState(selectedItem);
+			if (pluginState)
+			{
+				PluginManager.Instance.UnloadPlugin(selectedItem);
+			}
+			else
+			{
+				PluginManager.Instance.LoadPlugins(true);
+				PluginManager.Instance.InitPlugin(selectedItem);
+			}
+
 			LST_Plugins_SelectedIndexChanged(this, EventArgs.Empty);
 		}
 
@@ -2045,7 +2133,6 @@ namespace SEServerExtender
 				ChatManager.Instance.SendPublicChatMessage("/ban " + item.SteamId);
 			}
 		}
-
 	}
 
 	public class ChatUserItem

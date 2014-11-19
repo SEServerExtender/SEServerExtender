@@ -48,6 +48,7 @@
 			this.TAB_Entities_Page = new System.Windows.Forms.TabPage();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+			this.CB_Entity_Sort = new System.Windows.Forms.ComboBox();
 			this.TRV_Entities = new System.Windows.Forms.TreeView();
 			this.BTN_Entities_Export = new System.Windows.Forms.Button();
 			this.BTN_Entities_New = new System.Windows.Forms.Button();
@@ -78,6 +79,7 @@
 			this.SC_Plugins = new System.Windows.Forms.SplitContainer();
 			this.splitContainer12 = new System.Windows.Forms.SplitContainer();
 			this.LST_Plugins = new System.Windows.Forms.ListBox();
+			this.BTN_Plugins_Enable = new System.Windows.Forms.Button();
 			this.BTN_Plugins_Reload = new System.Windows.Forms.Button();
 			this.PG_Plugins = new System.Windows.Forms.PropertyGrid();
 			this.TAB_Utilities_Page = new System.Windows.Forms.TabPage();
@@ -385,6 +387,7 @@
 			// 
 			// splitContainer5.Panel1
 			// 
+			this.splitContainer5.Panel1.Controls.Add(this.CB_Entity_Sort);
 			this.splitContainer5.Panel1.Controls.Add(this.TRV_Entities);
 			// 
 			// splitContainer5.Panel2
@@ -395,6 +398,23 @@
 			this.splitContainer5.Size = new System.Drawing.Size(300, 537);
 			this.splitContainer5.SplitterDistance = 502;
 			this.splitContainer5.TabIndex = 0;
+			// 
+			// CB_Entity_Sort
+			// 
+			this.CB_Entity_Sort.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.CB_Entity_Sort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.CB_Entity_Sort.FormattingEnabled = true;
+			this.CB_Entity_Sort.Items.AddRange(new object[] {
+            "Name",
+            "Entity ID",
+            "Distance From Center",
+            "Display Name",
+            "Weight"});
+			this.CB_Entity_Sort.Location = new System.Drawing.Point(0, 481);
+			this.CB_Entity_Sort.Name = "CB_Entity_Sort";
+			this.CB_Entity_Sort.Size = new System.Drawing.Size(300, 21);
+			this.CB_Entity_Sort.TabIndex = 1;
+			this.CB_Entity_Sort.SelectionChangeCommitted += new System.EventHandler(this.CB_Entity_Sort_SelectionChangeCommitted);
 			// 
 			// TRV_Entities
 			// 
@@ -420,7 +440,7 @@
 			// BTN_Entities_New
 			// 
 			this.BTN_Entities_New.Enabled = false;
-			this.BTN_Entities_New.Location = new System.Drawing.Point(91, 5);
+			this.BTN_Entities_New.Location = new System.Drawing.Point(141, 5);
 			this.BTN_Entities_New.Name = "BTN_Entities_New";
 			this.BTN_Entities_New.Size = new System.Drawing.Size(75, 23);
 			this.BTN_Entities_New.TabIndex = 1;
@@ -431,7 +451,7 @@
 			// BTN_Entities_Delete
 			// 
 			this.BTN_Entities_Delete.Enabled = false;
-			this.BTN_Entities_Delete.Location = new System.Drawing.Point(172, 5);
+			this.BTN_Entities_Delete.Location = new System.Drawing.Point(222, 5);
 			this.BTN_Entities_Delete.Name = "BTN_Entities_Delete";
 			this.BTN_Entities_Delete.Size = new System.Drawing.Size(75, 23);
 			this.BTN_Entities_Delete.TabIndex = 0;
@@ -750,6 +770,7 @@
 			// 
 			// splitContainer12.Panel2
 			// 
+			this.splitContainer12.Panel2.Controls.Add(this.BTN_Plugins_Enable);
 			this.splitContainer12.Panel2.Controls.Add(this.BTN_Plugins_Reload);
 			this.splitContainer12.Size = new System.Drawing.Size(300, 537);
 			this.splitContainer12.SplitterDistance = 502;
@@ -764,6 +785,16 @@
 			this.LST_Plugins.Size = new System.Drawing.Size(300, 502);
 			this.LST_Plugins.TabIndex = 0;
 			this.LST_Plugins.SelectedIndexChanged += new System.EventHandler(this.LST_Plugins_SelectedIndexChanged);
+			// 
+			// BTN_Plugins_Enable
+			// 
+			this.BTN_Plugins_Enable.Location = new System.Drawing.Point(5, 5);
+			this.BTN_Plugins_Enable.Name = "BTN_Plugins_Enable";
+			this.BTN_Plugins_Enable.Size = new System.Drawing.Size(75, 23);
+			this.BTN_Plugins_Enable.TabIndex = 1;
+			this.BTN_Plugins_Enable.Text = "Disable";
+			this.BTN_Plugins_Enable.UseVisualStyleBackColor = true;
+			this.BTN_Plugins_Enable.Click += new System.EventHandler(this.BTN_Plugins_Enable_Click);
 			// 
 			// BTN_Plugins_Reload
 			// 
@@ -995,5 +1026,7 @@
 		private System.Windows.Forms.Button BTN_Chat_KickSelected;
 		private System.Windows.Forms.RichTextBox RTB_Chat_Messages;
 		private System.Windows.Forms.Button BTN_Plugins_Reload;
+		private System.Windows.Forms.ComboBox CB_Entity_Sort;
+		private System.Windows.Forms.Button BTN_Plugins_Enable;
 	}
 }
