@@ -33,6 +33,10 @@ namespace SEModAPIInternal.API.Common
 
 		public static string WorldManagerSaveSnapshot = "C0CFAF4B58402DABBB39F4A4694795D0";
 
+		public static string WorldSnapshotNamespace = "6D7C9F7F9CFF9877B430DBAFB54F1802";
+		public static string WorldSnapshotStaticClass = "8DEBD6C63930F8C065956AC979F27488";
+		public static string WorldSnapshotSaveMethod = "0E05B81B936D03329E9F49031001FE33";
+
 		////////////////////////////////////////////////////////////////////
 
 		public static string WorldResourceManagerNamespace = "AAC05F537A6F0F6775339593FBDFC564";
@@ -177,6 +181,11 @@ namespace SEModAPIInternal.API.Common
 					throw new Exception("Could not find world resource manager type for WorldManager");
 				result &= BaseObject.HasField(type2, WorldResourceManagerResourceLockField);
 
+				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldSnapshotNamespace, WorldSnapshotStaticClass);
+				if (type3 == null)
+					throw new Exception("Could not find world snapshot type for WorldManager");
+				result &= BaseObject.HasMethod(type3, WorldSnapshotSaveMethod);
+
 				return result;
 			}
 			catch (Exception ex)
@@ -207,6 +216,60 @@ namespace SEModAPIInternal.API.Common
 			{
 				DateTime saveStartTime = DateTime.Now;
 
+				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
+					{
+						SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+							{
+								Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldSnapshotNamespace, WorldSnapshotStaticClass);
+								BaseObject.InvokeStaticMethod(type, WorldSnapshotSaveMethod, new object[] { new Action(() =>
+									{
+										LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Setup Started: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
+									}) 
+								});
+							});
+
+						// Ugly
+						DateTime start = DateTime.Now;
+						FastResourceLock saveLock = InternalGetResourceLock();
+						while (!saveLock.Owned)
+						{
+							if(DateTime.Now - start > TimeSpan.FromMilliseconds(20000))
+								return;
+
+							Thread.Sleep(0);
+						}
+
+						while (saveLock.Owned)
+						{
+							if (DateTime.Now - start > TimeSpan.FromMilliseconds(60000))
+								return;
+
+							Thread.Sleep(0);
+						}
+
+						LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Completed: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
+						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+						newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
+						newEvent.timestamp = DateTime.Now;
+						newEvent.entity = null;
+						newEvent.priority = 0;
+						EntityEventManager.Instance.AddEvent(newEvent);						
+					}));
+			}
+			catch (Exception ex)
+			{
+			}
+			finally
+			{
+				m_isSaving = false;
+			}
+
+
+			/*
+			try
+			{
+				DateTime saveStartTime = DateTime.Now;
+
 				// It looks like keen as an overloaded save function that returns the WorldResourceManager after setting up a save, and then 
 				// allows you to write to disk from a separate thread?  Why aren't they using this on normal saves?!
 				bool result = false;
@@ -229,6 +292,7 @@ namespace SEModAPIInternal.API.Common
 					result = (bool)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerSaveWorldMethod, parameters, paramTypes);
 				});
 
+			 * 
 				// Write to disk on a different thread using the WorldResourceManagerClass in the parameter
 				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
 				{
@@ -270,6 +334,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				m_isSaving = false;
 			}
+			 */ 
 		}
 
 		internal Object InternalGetFactionManager()
