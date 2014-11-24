@@ -236,7 +236,7 @@ namespace SEModAPIInternal.API.Common
 							if(DateTime.Now - start > TimeSpan.FromMilliseconds(20000))
 								return;
 
-							Thread.Sleep(0);
+							Thread.Sleep(1);
 						}
 
 						while (saveLock.Owned)
@@ -244,7 +244,7 @@ namespace SEModAPIInternal.API.Common
 							if (DateTime.Now - start > TimeSpan.FromMilliseconds(60000))
 								return;
 
-							Thread.Sleep(0);
+							Thread.Sleep(1);
 						}
 
 						LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Completed: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));

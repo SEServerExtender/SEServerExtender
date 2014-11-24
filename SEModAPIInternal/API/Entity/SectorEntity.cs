@@ -310,7 +310,7 @@ namespace SEModAPIInternal.API.Entity
         {
             get
             {
-                if (m_addEntityQueue.Count >= 5)
+                if (m_addEntityQueue.Count >= 25)
                     return true;
 
                 return false;
@@ -507,7 +507,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if (m_addEntityQueue.Count >= 5)
+				if (m_addEntityQueue.Count >= 25)
 				{
 					throw new Exception("AddEntity queue is full. Cannot add more entities yet");
 				}
