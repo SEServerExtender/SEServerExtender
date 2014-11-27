@@ -47,7 +47,8 @@
 			// 
 			// BTN_InventoryItem_Add
 			// 
-			this.BTN_InventoryItem_Add.Location = new System.Drawing.Point(260, 2);
+			this.BTN_InventoryItem_Add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.BTN_InventoryItem_Add.Location = new System.Drawing.Point(254, 2);
 			this.BTN_InventoryItem_Add.Name = "BTN_InventoryItem_Add";
 			this.BTN_InventoryItem_Add.Size = new System.Drawing.Size(75, 23);
 			this.BTN_InventoryItem_Add.TabIndex = 0;
@@ -70,8 +71,8 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.BTN_InventoryItem_Add);
-			this.splitContainer1.Size = new System.Drawing.Size(347, 200);
-			this.splitContainer1.SplitterDistance = 166;
+			this.splitContainer1.Size = new System.Drawing.Size(341, 207);
+			this.splitContainer1.SplitterDistance = 173;
 			this.splitContainer1.TabIndex = 1;
 			// 
 			// splitContainer2
@@ -91,7 +92,7 @@
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.TXT_ItemAmount);
 			this.splitContainer2.Panel2.Controls.Add(this.CMB_ItemType);
-			this.splitContainer2.Size = new System.Drawing.Size(347, 166);
+			this.splitContainer2.Size = new System.Drawing.Size(341, 173);
 			this.splitContainer2.SplitterDistance = 100;
 			this.splitContainer2.TabIndex = 0;
 			// 
@@ -122,17 +123,19 @@
 			// 
 			// CMB_ItemType
 			// 
+			this.CMB_ItemType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.CMB_ItemType.FormattingEnabled = true;
 			this.CMB_ItemType.Location = new System.Drawing.Point(3, 12);
 			this.CMB_ItemType.Name = "CMB_ItemType";
-			this.CMB_ItemType.Size = new System.Drawing.Size(200, 21);
+			this.CMB_ItemType.Size = new System.Drawing.Size(222, 21);
 			this.CMB_ItemType.TabIndex = 0;
 			// 
 			// InventoryItemDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(347, 200);
+			this.ClientSize = new System.Drawing.Size(341, 207);
 			this.Controls.Add(this.splitContainer1);
 			this.Name = "InventoryItemDialog";
 			this.Text = "InventoryItemDialog";

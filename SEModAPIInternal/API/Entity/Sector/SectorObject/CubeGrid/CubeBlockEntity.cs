@@ -47,6 +47,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
         public static string CubeBlockGetMaxIntegrityValueMethod = "4D4887346D2D13A2C6B46A258BAD29DD";
 		public static string CubeBlockUpdateWeldProgressMethod = "A8DDA0AEB3B67EA1E62B927C9D831279";
 
+		public static string CubeBlockGetBoneDamageMethod = "0133DE6F3C7E10433DD405288A17FAC9";
+		public static string CubeBlockFixBonesMethod = "320790A7F5562D764C088072B8F0BD44";
+
         public static string CubeBlockParentCubeGridField = "BE23838832C47BC79393E02214912184";
 		public static string CubeBlockColorMaskHSVField = "80392678992D8667596D700F61290E02";
 		public static string CubeBlockConstructionManagerField = "C7EFFDDD3AD38830FE93363F3327C724";
@@ -446,6 +449,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			}
 		}
 
+		[DataMember(Order = 2)]
+		[Category("Cube Block")]
+		public float BoneDamage
+		{
+			get
+			{
+				if (BackingObject == null)
+					return 0f;
+
+				return GetBoneDamage();
+			}
+		}
+
 		[IgnoreDataMember]
 		[Category("Cube Block")]
 		[Browsable(false)]
@@ -467,6 +483,21 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		#endregion
 
 		#region "Methods"
+
+		public void FixBones(float a, float b)
+		{
+			try
+			{
+				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+				{
+					InvokeEntityMethod(BackingObject, CubeBlockFixBonesMethod, new object[] { a, b });
+				});
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+			}
+		}
 
 		public static List<Type> KnownTypes()
 		{
@@ -735,6 +766,27 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		protected void InternalUpdateColorMaskHSV()
 		{
 			SetEntityFieldValue(BackingObject, CubeBlockColorMaskHSVField, (Vector3)ColorMaskHSV);
+		}
+
+		protected float GetBoneDamage()
+		{
+			try
+			{
+				float result = (float)InvokeEntityMethod(BackingObject, CubeBlockGetBoneDamageMethod);
+				/*
+				string[] tests = { "11620D1C6426CB344B0DD78ADF9EC3BB", "278F91C771BA03629452128AAE1AC664", "3428AE206AA2F1029A41E0F24E713E38", "395AB719201A51C1C996DD23C80FDFA6", "3FB17DDDBA665C7C9D0CE9B67035ADD1", "46EDBF0DFEDFF49317AAE84F57472900", "7B82337EA7B2A6E6235BCB3CE83637D7", "839E79BB8BB23F2E198F2A0DAC2879B8", "9D5160CA65260AA35F3A7BC05A3654C5", "B5542810B1CC8457237B84762E940376", "C34FB7180795FA9932ADDD56A2847B8E", "C9C483CA3A05722C7E7F6C2C4B923DF1", "CEB4DF66A408BFBAA83D67529BC51C1A", "DF1BBD9BF3FEB7C83E44B3E81E605CD2", "EA9F743FEE7624F7A56F8974B3769689" };
+				foreach (string test in tests)
+				{
+					Console.WriteLine("Test: {0} - {1}", test, (float)InvokeEntityMethod(BackingObject, test));
+				}
+				*/
+				return result;
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+				return 0f;
+			}
 		}
 
 		#endregion

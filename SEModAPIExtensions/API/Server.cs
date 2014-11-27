@@ -760,7 +760,7 @@ namespace SEModAPIExtensions.API
 
 		private void Config_Changed(object sender, FileSystemEventArgs e)
 		{
-			if (!e.Name.Contains("SpaceEngineers-Dedicated.cfg"))
+			if (!e.Name.Contains("SpaceEngineers-Dedicated.cfg") || e.Name.Contains("SpaceEngineers-Dedicated.cfg.restart"))
 				return;
 
 			if (!m_serverRan)

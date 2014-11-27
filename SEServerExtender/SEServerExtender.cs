@@ -1076,7 +1076,11 @@ namespace SEServerExtender
 				}
 				else if (cubeBlock is ShipDrillEntity)
 				{
-					toolBlocksNode.Nodes.Add(newNode);
+					toolBlocksNode.Nodes.Add(newNode);	
+				}
+				else if (cubeBlock is InteriorTurretEntity)
+				{
+					weaponBlocksNode.Nodes.Add(newNode);
 				}
 				else
 				{
@@ -2034,6 +2038,7 @@ namespace SEServerExtender
 			if (pluginState)
 			{
 				PluginManager.Instance.UnloadPlugin(selectedItem);
+				PluginManager.Instance.LoadPlugins(true);
 			}
 			else
 			{

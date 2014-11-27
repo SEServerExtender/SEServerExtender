@@ -228,7 +228,7 @@ namespace SEModAPIInternal.API.Common
 								});
 							});
 
-						// Ugly
+						// Ugly -- Get rid of this?
 						DateTime start = DateTime.Now;
 						FastResourceLock saveLock = InternalGetResourceLock();
 						while (!saveLock.Owned)
