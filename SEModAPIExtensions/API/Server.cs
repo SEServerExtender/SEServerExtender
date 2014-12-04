@@ -768,26 +768,34 @@ namespace SEModAPIExtensions.API
 
 			if (e.ChangeType == WatcherChangeTypes.Changed)
 			{
-				if (!File.Exists(Path + @"\SpaceEngineers-Dedicated.cfg.restart"))
+				try
 				{
-					LogManager.APILog.WriteLineAndConsole(string.Format("SpaceEngineers-Dedicated.cfg has changed updating configuration settings."));
 
-					MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load(new FileInfo(e.FullPath));
-					Config = new DedicatedConfigDefinition(changedConfig);
+					if (!File.Exists(Path + @"\SpaceEngineers-Dedicated.cfg.restart"))
+					{
+						LogManager.APILog.WriteLineAndConsole(string.Format("SpaceEngineers-Dedicated.cfg has changed updating configuration settings."));
+
+						MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load(new FileInfo(e.FullPath));
+						Config = new DedicatedConfigDefinition(changedConfig);
+					}
+					else
+					{
+						LogManager.APILog.WriteLineAndConsole(string.Format("SpaceEngineers-Dedicated.cfg has changed with existing restart file."));
+
+						MyConfigDedicatedData restartConfig = DedicatedConfigDefinition.Load(new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart"));
+						MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load(new FileInfo(e.FullPath));
+
+						restartConfig.Mods = restartConfig.Mods.Union(changedConfig.Mods).ToList();
+						restartConfig.Banned = changedConfig.Banned.Union(changedConfig.Banned).ToList();
+						restartConfig.Administrators = changedConfig.Administrators.Union(changedConfig.Administrators).ToList();
+						DedicatedConfigDefinition config = new DedicatedConfigDefinition(restartConfig);
+						config.Save(new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart"));
+						Config = config;
+					}
 				}
-				else
+				catch (Exception ex)
 				{
-					LogManager.APILog.WriteLineAndConsole(string.Format("SpaceEngineers-Dedicated.cfg has changed with existing restart file."));
-
-					MyConfigDedicatedData restartConfig = DedicatedConfigDefinition.Load(new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart"));
-					MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load(new FileInfo(e.FullPath));
-
-					restartConfig.Mods = restartConfig.Mods.Union(changedConfig.Mods).ToList();
-					restartConfig.Banned = changedConfig.Banned.Union(changedConfig.Banned).ToList();
-					restartConfig.Administrators = changedConfig.Administrators.Union(changedConfig.Administrators).ToList();
-					DedicatedConfigDefinition config = new DedicatedConfigDefinition(restartConfig);
-					config.Save(new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart"));
-					Config = config;
+					LogManager.APILog.WriteLineAndConsole(string.Format("Error on configuration change ({1}): {0}", e.FullPath, ex.ToString()));
 				}
 			}
 		}

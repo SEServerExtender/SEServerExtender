@@ -19,6 +19,8 @@ using VRageMath;
 
 using Sandbox.Common.Components;
 
+using Sandbox.ModAPI;
+
 namespace SEModAPIInternal.API.Entity
 {
 	[DataContract(Name = "BaseEntityProxy")]
@@ -893,6 +895,18 @@ namespace SEModAPIInternal.API.Entity
 
 				return type;
 			}
+		}
+
+		public static void BroadcastRemoveEntity(IMyEntity entity)
+		{
+			Object result = BaseEntity.InvokeEntityMethod(entity, BaseEntity.BaseEntityGetNetManagerMethod);
+			if(result == null)
+				return;
+
+			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+			{
+				BaseEntity.InvokeEntityMethod(result, BaseEntityBroadcastRemovalMethod);
+			});
 		}
 
 		public Object NetworkManager
