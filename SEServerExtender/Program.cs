@@ -232,6 +232,8 @@ namespace SEServerExtender
 					uiThread.SetApartmentState(ApartmentState.STA);
 					uiThread.Start();
 				}
+				else if(Environment.UserInteractive)
+					Console.ReadLine();
 			}
 			catch (AutoException eEx)
 			{
