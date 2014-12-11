@@ -268,17 +268,23 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
+				/*
 				if (BackingObject == null)
 					return m_positionOrientation;
 
 				HkRigidBody body = PhysicsBody;
 				if (body == null || body.IsDisposed)
 					return m_positionOrientation;
-
 				Matrix orientationMatrix = Matrix.CreateFromQuaternion(body.Rotation);
 				MyPositionAndOrientation positionOrientation = new MyPositionAndOrientation(orientationMatrix);
-				positionOrientation.Position = (Vector3D)body.Position;
+				positionOrientation.Position = body.Position;
+				 */
 
+				IMyEntity entity = Entity;
+				if (entity == null)
+					return m_positionOrientation;
+
+				MyPositionAndOrientation positionOrientation = new MyPositionAndOrientation(entity.Physics.GetWorldMatrix());				
 				return positionOrientation;
 			}
 			set
@@ -298,13 +304,13 @@ namespace SEModAPIInternal.API.Entity
 
 		[DataMember]
 		[Category("Entity")]
-		[TypeConverter(typeof(Vector3TypeConverter))]
-		public Vector3Wrapper Position
+		[TypeConverter(typeof(Vector3DTypeConverter))]
+		public Vector3DWrapper Position
 		{
-			get { return (Vector3)((Vector3D)PositionAndOrientation.Position); }
+			get { return PositionAndOrientation.Position; }
 			set
 			{
-				m_positionOrientation.Position = (Vector3D)((Vector3)value);
+				m_positionOrientation.Position = value;
 				Changed = true;
 
 				if (BackingObject != null)
@@ -490,13 +496,29 @@ namespace SEModAPIInternal.API.Entity
 		internal HkRigidBody PhysicsBody
 		{
 			get
-			{
+			{				
 				if (BackingObject == null)
 					return null;
 
 				return BaseEntity.GetRigidBody(BackingObject);
 			}
 		}
+
+		[IgnoreDataMember]
+		[Category("Entity")]
+		[Browsable(false)]
+		[ReadOnly(true)]
+		internal IMyEntity Entity
+		{
+			get
+			{
+				if (BackingObject == null)
+					return null;
+
+				return (IMyEntity)BackingObject;
+			}
+		}
+
 
 		[IgnoreDataMember]
 		[Category("Entity")]
@@ -680,6 +702,7 @@ namespace SEModAPIInternal.API.Entity
 				HkRigidBody havokBody = PhysicsBody;
 				if (havokBody == null)
 					return;
+
 				havokBody.MaxLinearVelocity = m_maxLinearVelocity;
 			}
 			catch (Exception ex)
@@ -697,11 +720,12 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
+				/*
 				HkRigidBody havokBody = PhysicsBody;
 				if (havokBody == null)
 					return;
 
-				Vector3D newPosition = (Vector3D)m_positionOrientation.Position;
+				Vector3D newPosition = m_positionOrientation.Position;
 
 				if (SandboxGameAssemblyWrapper.IsDebugging)
 				{
@@ -709,6 +733,19 @@ namespace SEModAPIInternal.API.Entity
 				}
 
 				havokBody.Position = newPosition;
+				 */
+
+				IMyEntity entity = Entity;
+				if (entity == null)
+					return;
+
+				Vector3D newPosition = m_positionOrientation.Position;
+				if (SandboxGameAssemblyWrapper.IsDebugging)
+				{
+					LogManager.APILog.WriteLine(this.GetType().Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition().ToString() + "' to '" + newPosition.ToString() + "'");
+				}
+
+				entity.SetPosition(newPosition);
 			}
 			catch (Exception ex)
 			{
@@ -727,6 +764,7 @@ namespace SEModAPIInternal.API.Entity
 				Matrix orientationMatrix = m_positionOrientation.GetMatrix().GetOrientation();
 				Quaternion orientation = Quaternion.CreateFromRotationMatrix(orientationMatrix);
 				havokBody.Rotation = orientation;
+
 			}
 			catch (Exception ex)
 			{

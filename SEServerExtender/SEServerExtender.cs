@@ -577,7 +577,7 @@ namespace SEServerExtender
 					if (item == null)
 						continue;
 
-					Vector3 rawPosition = item.Position;
+					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
 					Type sectorObjectType = item.GetType();
@@ -615,7 +615,7 @@ namespace SEServerExtender
 				text += " | Mass: " + Math.Floor(item.Mass).ToString() + " kg";
 			}
 			
-			text += " | Dist: " + Math.Round(((Vector3)item.Position).Length(), 0) + "m";
+			text += " | Dist: " + Math.Round(((Vector3D)item.Position).Length(), 0) + "m";
 
 			return text;
 		}
@@ -645,7 +645,7 @@ namespace SEServerExtender
 			{
 				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
 					{
-						return Vector3.Distance(x.Position, Vector3.Zero).CompareTo(Vector3.Distance(y.Position, Vector3.Zero));
+						return Vector3D.Distance(x.Position, Vector3D.Zero).CompareTo(Vector3D.Distance(y.Position, Vector3D.Zero));
 					});
 			}
 			else if(sortBy == 3) // Display Name
@@ -679,7 +679,7 @@ namespace SEServerExtender
 
 						if (!item.IsDisposed)
 						{
-							Vector3 rawPosition = item.Position;
+							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
 							string newNodeText = item.Name + " | Dist: " + distance.ToString() + "m";
 							node.Text = newNodeText;
@@ -705,7 +705,7 @@ namespace SEServerExtender
 					if (item == null)
 						continue;
 
-					Vector3 rawPosition = item.Position;
+					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
 					Type sectorObjectType = item.GetType();
@@ -747,7 +747,7 @@ namespace SEServerExtender
 
 						if (!item.IsDisposed)
 						{
-							Vector3 rawPosition = item.Position;
+							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
 							string newNodeText = item.Name + " | Dist: " + distance.ToString() + "m";
 							node.Text = newNodeText;
@@ -773,7 +773,7 @@ namespace SEServerExtender
 					if (item == null)
 						continue;
 
-					Vector3 rawPosition = item.Position;
+					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
 					Type sectorObjectType = item.GetType();
@@ -815,7 +815,7 @@ namespace SEServerExtender
 
 						if (!item.IsDisposed && item.Item != null)
 						{
-							Vector3 rawPosition = item.Position;
+							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
 							string newNodeText = item.Name + " | Amount: " + item.Item.Amount.ToString() + " | Dist: " + distance.ToString() + "m";
 							node.Text = newNodeText;
@@ -845,7 +845,7 @@ namespace SEServerExtender
 					if (item.Item == null)
 						continue;
 
-					Vector3 rawPosition = item.Position;
+					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
 					Type sectorObjectType = item.GetType();
@@ -890,7 +890,7 @@ namespace SEServerExtender
 
 						if (!item.IsDisposed)
 						{
-							Vector3 rawPosition = item.Position;
+							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
 							string newNodeText = item.Name + " | Dist: " + distance.ToString() + "m";
 							node.Text = newNodeText;
@@ -916,7 +916,7 @@ namespace SEServerExtender
 					if (item == null)
 						continue;
 
-					Vector3 rawPosition = item.Position;
+					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
 					string nodeKey = item.EntityId.ToString();

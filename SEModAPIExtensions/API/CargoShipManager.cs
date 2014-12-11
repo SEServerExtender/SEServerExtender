@@ -53,17 +53,17 @@ namespace SEModAPIExtensions.API
 
 		public void SpawnCargoShipGroup(bool spawnAtAsteroids = true, ulong remoteUserId = 0)
 		{
-			float worldSize = SandboxGameAssemblyWrapper.Instance.GetServerConfig().SessionSettings.WorldSizeKm * 1000.0f;
-			float spawnSize = 0.25f * worldSize;
-			float destinationSize = 0.02f * spawnSize;
+			double worldSize = SandboxGameAssemblyWrapper.Instance.GetServerConfig().SessionSettings.WorldSizeKm * 1000.0f;
+			double spawnSize = 0.25f * worldSize;
+			double destinationSize = 0.02f * spawnSize;
 
 			if (spawnAtAsteroids)
 			{
-				float farthestAsteroidDistance = 0;
-				float nearestAsteroidDistance = 999999;
+				double farthestAsteroidDistance = 0;
+				double nearestAsteroidDistance = 999999;
 				foreach (VoxelMap voxelMap in SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>())
 				{
-					Vector3 asteroidPositon = voxelMap.Position;
+					Vector3D asteroidPositon = voxelMap.Position;
 					if (asteroidPositon.Length() > farthestAsteroidDistance)
 						farthestAsteroidDistance = asteroidPositon.Length();
 					if (asteroidPositon.Length() < nearestAsteroidDistance)
@@ -74,8 +74,8 @@ namespace SEModAPIExtensions.API
 				destinationSize = nearestAsteroidDistance * 2 + 2000;
 			}
 
-			Vector3 groupPosition = UtilityFunctions.GenerateRandomBorderPosition(new Vector3(-spawnSize, -spawnSize, -spawnSize), new Vector3(spawnSize, spawnSize, spawnSize));
-			Vector3 destinationPosition = UtilityFunctions.GenerateRandomBorderPosition(new Vector3(-destinationSize, -destinationSize, -destinationSize), new Vector3(destinationSize, destinationSize, destinationSize));
+			Vector3D groupPosition = UtilityFunctions.GenerateRandomBorderPosition(new Vector3D(-spawnSize, -spawnSize, -spawnSize), new Vector3D(spawnSize, spawnSize, spawnSize));
+			Vector3D destinationPosition = UtilityFunctions.GenerateRandomBorderPosition(new Vector3D(-destinationSize, -destinationSize, -destinationSize), new Vector3D(destinationSize, destinationSize, destinationSize));
 
 			SpawnCargoShipGroup(groupPosition, destinationPosition, remoteUserId);
 		}

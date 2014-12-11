@@ -78,6 +78,81 @@ namespace SEModAPI.API
 		}
 	}
 
+	public struct Vector3DWrapper
+	{
+		private Vector3D vector;
+
+		public Vector3DWrapper(double x, double y, double z)
+		{
+			vector.X = x;
+			vector.Y = y;
+			vector.Z = z;
+		}
+		public Vector3DWrapper(SerializableVector3D v)
+		{
+			vector = v;
+		}
+		public Vector3DWrapper(Vector3D v)
+		{
+			vector = v;
+		}
+
+		public double X
+		{
+			get { return vector.X; }
+			set { vector.X = value; }
+		}
+		public double Y
+		{
+			get { return vector.Y; }
+			set { vector.Y = value; }
+		}
+		public double Z
+		{
+			get { return vector.Z; }
+			set { vector.Z = value; }
+		}
+
+		public static implicit operator Vector3DWrapper(SerializableVector3D v)
+		{
+			return new Vector3DWrapper(v);
+		}
+
+		public static implicit operator Vector3DWrapper(Vector3 v)
+		{
+			return new Vector3DWrapper(v);
+		}
+
+		public static implicit operator SerializableVector3D(Vector3DWrapper v)
+		{
+			return new SerializableVector3D(v.X, v.Y, v.Z);
+		}
+
+		public static implicit operator Vector3D(Vector3DWrapper v)
+		{
+			return new Vector3D(v.X, v.Y, v.Z);
+		}
+
+		public override string ToString()
+		{
+			return vector.ToString();
+		}
+	}
+
+	public class Vector3DTypeConverter : ExpandableObjectConverter
+	{
+		public override bool GetCreateInstanceSupported(ITypeDescriptorContext context)
+		{
+			return true;
+		}
+
+		public override object CreateInstance(ITypeDescriptorContext context, System.Collections.IDictionary propertyValues)
+		{
+			return new Vector3DWrapper((double)propertyValues["X"], (double)propertyValues["Y"], (double)propertyValues["Z"]);
+		}
+	}
+
+
 	public class Vector3TypeConverter : ExpandableObjectConverter
 	{
 		public override bool GetCreateInstanceSupported(ITypeDescriptorContext context)
