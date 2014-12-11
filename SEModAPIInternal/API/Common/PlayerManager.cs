@@ -139,6 +139,7 @@ namespace SEModAPIInternal.API.Common
 
         public static string PlayerMapGetPlayerItemMappingField = "A343C8C883753AA13761B57BF93642B5";
         public static string PlayerMapGetSteamItemMappingField = "F8D0682ABF3074A0515A99D0E537D2E1";
+		public static string PlayerMapGetFastPlayerIdFromSteamIdMethod = "664B2E5CBB958C38E24656118771D345";
 
         // SteamIdToPlayerId? public long 664B2E5CBB958C38E24656118771D345(ulong u00336ADF4D8C43635669729322024D2AD33, int u0032FA8049E153F637DEA99600B785ECCA0 = 0)
 
@@ -199,6 +200,7 @@ namespace SEModAPIInternal.API.Common
 				bool result = true;
                 result &= BaseObject.HasField(type1, PlayerMapGetPlayerItemMappingField);
                 result &= BaseObject.HasField(type1, PlayerMapGetSteamItemMappingField);
+				result &= BaseObject.HasMethod(type1, PlayerMapGetFastPlayerIdFromSteamIdMethod);
 
 				/*
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapEntryNamespace, PlayerMapEntryClass);
@@ -396,6 +398,13 @@ namespace SEModAPIInternal.API.Common
         {
             return InternalGetPlayerList().Select(x => x.playerId).ToList();
         }
+
+		public long GetFastPlayerIdFromSteamId(ulong steamId)
+		{
+			int num = 0;
+			long result = (long)BaseObject.InvokeEntityMethod(BackingObject, PlayerMapGetFastPlayerIdFromSteamIdMethod, new object[] {steamId, num });
+			return result;
+		}
 
         // --
         protected Dictionary<long, Object> InternalGetPlayerItemMapping()

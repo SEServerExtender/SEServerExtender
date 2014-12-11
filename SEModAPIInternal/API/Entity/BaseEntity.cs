@@ -83,7 +83,7 @@ namespace SEModAPIInternal.API.Entity
 				else
 				{
 					m_positionOrientation = new MyPositionAndOrientation();
-					m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition(new Vector3(-500000, -500000, -500000), new Vector3(500000, 500000, 500000));
+					m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition(new Vector3D(-500000, -500000, -500000), new Vector3D(500000, 500000, 500000));
 					m_positionOrientation.Forward = new Vector3(0, 0, 1);
 					m_positionOrientation.Up = new Vector3(0, 1, 0);
 				}
@@ -277,7 +277,7 @@ namespace SEModAPIInternal.API.Entity
 
 				Matrix orientationMatrix = Matrix.CreateFromQuaternion(body.Rotation);
 				MyPositionAndOrientation positionOrientation = new MyPositionAndOrientation(orientationMatrix);
-				positionOrientation.Position = body.Position;
+				positionOrientation.Position = (Vector3D)body.Position;
 
 				return positionOrientation;
 			}
@@ -301,10 +301,10 @@ namespace SEModAPIInternal.API.Entity
 		[TypeConverter(typeof(Vector3TypeConverter))]
 		public Vector3Wrapper Position
 		{
-			get { return PositionAndOrientation.Position; }
+			get { return (Vector3)((Vector3D)PositionAndOrientation.Position); }
 			set
 			{
-				m_positionOrientation.Position = value;
+				m_positionOrientation.Position = (Vector3D)((Vector3)value);
 				Changed = true;
 
 				if (BackingObject != null)
@@ -701,7 +701,7 @@ namespace SEModAPIInternal.API.Entity
 				if (havokBody == null)
 					return;
 
-				Vector3 newPosition = m_positionOrientation.Position;
+				Vector3D newPosition = (Vector3D)m_positionOrientation.Position;
 
 				if (SandboxGameAssemblyWrapper.IsDebugging)
 				{

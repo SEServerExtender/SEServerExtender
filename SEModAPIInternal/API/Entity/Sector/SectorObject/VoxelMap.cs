@@ -12,7 +12,7 @@ using Sandbox.Definitions;
 using VRage;
 
 using Sandbox.ModAPI;
-using VRage.Voxels;
+using VRage.Common.Voxels;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
@@ -277,7 +277,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
 			{
-				voxelMap.Storage.ReadRange(m_cache, MyStorageDataTypeFlags.Material, VRageRender.MyLodTypeEnum.LOD0, Vector3I.Zero, size - 1); 
+				voxelMap.Storage.ReadRange(m_cache, MyStorageDataTypeFlags.Material, 0, Vector3I.Zero, size - 1);
+				//voxelMap.Storage.ReadRange(m_cache, MyStorageDataTypeFlags.Material, Vector3I.Zero, size - 1); 
 			});
 
 			foreach (byte materialIndex in m_cache.Data)

@@ -101,9 +101,9 @@ namespace SEServerExtender
 		}
 
 		private bool SetupTimers()
-		{
+		{		
 			m_entityTreeRefreshTimer = new System.Windows.Forms.Timer();
-			m_entityTreeRefreshTimer.Interval = 500;
+			m_entityTreeRefreshTimer.Interval = 1000;
 			m_entityTreeRefreshTimer.Tick += new EventHandler(TreeViewRefresh);
 
 			m_chatViewRefreshTimer = new System.Windows.Forms.Timer();
@@ -420,36 +420,46 @@ namespace SEServerExtender
 
 		private void TreeViewRefresh(object sender, EventArgs e)
 		{
-			if (!SandboxGameAssemblyWrapper.Instance.IsGameStarted)
-				return;
+			m_entityTreeRefreshTimer.Enabled = false;
 
-			if (TAB_MainTabs.SelectedTab != TAB_Entities_Page)
-				return;
-
-			TRV_Entities.BeginUpdate();
-
-			TreeNode sectorObjectsNode;
-			TreeNode sectorEventsNode;
-
-			if (TRV_Entities.Nodes.Count < 2)
+			try
 			{
-				sectorObjectsNode = TRV_Entities.Nodes.Add("Sector Objects");
-				sectorEventsNode = TRV_Entities.Nodes.Add("Sector Events");
+				if (!SandboxGameAssemblyWrapper.Instance.IsGameStarted)
+					return;
 
-				sectorObjectsNode.Name = sectorObjectsNode.Text;
-				sectorEventsNode.Name = sectorEventsNode.Text;
+				if (TAB_MainTabs.SelectedTab != TAB_Entities_Page)
+					return;
+
+				TRV_Entities.BeginUpdate();
+
+				TreeNode sectorObjectsNode;
+				TreeNode sectorEventsNode;
+
+				if (TRV_Entities.Nodes.Count < 2)
+				{
+					sectorObjectsNode = TRV_Entities.Nodes.Add("Sector Objects");
+					sectorEventsNode = TRV_Entities.Nodes.Add("Sector Events");
+
+					sectorObjectsNode.Name = sectorObjectsNode.Text;
+					sectorEventsNode.Name = sectorEventsNode.Text;
+				}
+				else
+				{
+					sectorObjectsNode = TRV_Entities.Nodes[0];
+					sectorEventsNode = TRV_Entities.Nodes[1];
+				}
+
+				RenderSectorObjectChildNodes(sectorObjectsNode);
+				sectorObjectsNode.Text = sectorObjectsNode.Name + " (" + SectorObjectManager.Instance.Count.ToString() + ")";
+				sectorObjectsNode.Tag = SectorObjectManager.Instance;
+
+				TRV_Entities.EndUpdate();
 			}
-			else
+			finally
 			{
-				sectorObjectsNode = TRV_Entities.Nodes[0];
-				sectorEventsNode = TRV_Entities.Nodes[1];
+				m_entityTreeRefreshTimer.Interval = 1000;
+				m_entityTreeRefreshTimer.Enabled = true;
 			}
-
-			RenderSectorObjectChildNodes(sectorObjectsNode);
-			sectorObjectsNode.Text = sectorObjectsNode.Name + " (" + SectorObjectManager.Instance.Count.ToString() + ")";
-			sectorObjectsNode.Tag = SectorObjectManager.Instance;
-
-			TRV_Entities.EndUpdate();
 		}
 
 		private void RenderSectorObjectChildNodes(TreeNode objectsNode)
