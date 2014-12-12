@@ -103,7 +103,7 @@ namespace SEServerExtender
 		private bool SetupTimers()
 		{		
 			m_entityTreeRefreshTimer = new System.Windows.Forms.Timer();
-			m_entityTreeRefreshTimer.Interval = 1000;
+			m_entityTreeRefreshTimer.Interval = 500;
 			m_entityTreeRefreshTimer.Tick += new EventHandler(TreeViewRefresh);
 
 			m_chatViewRefreshTimer = new System.Windows.Forms.Timer();
@@ -457,7 +457,7 @@ namespace SEServerExtender
 			}
 			finally
 			{
-				m_entityTreeRefreshTimer.Interval = 1000;
+				m_entityTreeRefreshTimer.Interval = 500;
 				m_entityTreeRefreshTimer.Enabled = true;
 			}
 		}
@@ -645,6 +645,12 @@ namespace SEServerExtender
 			{
 				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
 					{
+						if (x == null || x.IsDisposed || x.IsLoading)
+							return -1;
+
+						if (y == null || y.IsDisposed || y.IsLoading)
+							return 1;
+
 						return Vector3D.Distance(x.Position, Vector3D.Zero).CompareTo(Vector3D.Distance(y.Position, Vector3D.Zero));
 					});
 			}

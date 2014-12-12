@@ -280,8 +280,15 @@ namespace SEModAPIInternal.API.Entity
 				positionOrientation.Position = body.Position;
 				 */
 
+				HkRigidBody body = PhysicsBody;
+				if (body == null || body.IsDisposed)
+					return m_positionOrientation;
+
 				IMyEntity entity = Entity;
 				if (entity == null)
+					return m_positionOrientation;
+
+				if (entity.Physics == null)
 					return m_positionOrientation;
 
 				MyPositionAndOrientation positionOrientation = new MyPositionAndOrientation(entity.Physics.GetWorldMatrix());				

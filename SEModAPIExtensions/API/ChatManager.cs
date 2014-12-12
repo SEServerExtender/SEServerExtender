@@ -1050,7 +1050,7 @@ namespace SEModAPIExtensions.API
 						if (entity.EntityId != entityId)
 							continue;
 
-						Vector3 newPosition = new Vector3(x, y, z);
+						Vector3D newPosition = new Vector3D(x, y, z);
 						entity.Position = newPosition;
 
 						SendPrivateChatMessage(remoteUserId, "Entity '" + entity.EntityId.ToString() + "' has been moved to '" + newPosition.ToString() + "'");

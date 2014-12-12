@@ -118,7 +118,7 @@ namespace SEModAPI.API
 			return new Vector3DWrapper(v);
 		}
 
-		public static implicit operator Vector3DWrapper(Vector3 v)
+		public static implicit operator Vector3DWrapper(Vector3D v)
 		{
 			return new Vector3DWrapper(v);
 		}
