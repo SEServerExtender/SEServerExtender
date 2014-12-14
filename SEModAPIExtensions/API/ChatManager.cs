@@ -29,6 +29,8 @@ using Sandbox.Definitions;
 using System.Collections;
 using System.Linq;
 
+using Havok;
+
 namespace SEModAPIExtensions.API
 {
 	[ServiceContract]

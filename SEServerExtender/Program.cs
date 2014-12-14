@@ -73,6 +73,8 @@ namespace SEServerExtender
 			Application.ThreadException += Application_ThreadException;
 			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
+			//AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
+
 			LogManager.APILog.WriteLine("Starting SEServerExtender with " + args.Length.ToString() + " arguments ...");
 
 			CommandLineArgs extenderArgs = new CommandLineArgs();
@@ -280,7 +282,7 @@ namespace SEServerExtender
 			}
 		}
 
-		static void Application_ThreadException(Object sender, ThreadExceptionEventArgs e)
+		public static void Application_ThreadException(Object sender, ThreadExceptionEventArgs e)
 		{
 			Console.WriteLine("Application.ThreadException - " + e.Exception.ToString());
 
@@ -296,7 +298,7 @@ namespace SEServerExtender
 			}
 		}
 
-		static void AppDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+		public static void AppDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
 		{
 			Console.WriteLine("AppDomain.UnhandledException - " + ((Exception)e.ExceptionObject).ToString());
 

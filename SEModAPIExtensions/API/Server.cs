@@ -9,6 +9,8 @@ using System.ServiceModel.Description;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.ExceptionServices;
+using System.Security;
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
@@ -566,6 +568,16 @@ namespace SEModAPIExtensions.API
 					SandboxGameAssemblyWrapper.InitAPIGateway();
 					m_pluginManager.LoadPlugins();
 					m_pluginManager.Init();
+
+					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+					{
+						AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
+						AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+					});
+
+					//AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+					Application.ThreadException += Application_ThreadException;
+					Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 				}
 			}
 			else
@@ -577,7 +589,39 @@ namespace SEModAPIExtensions.API
 				m_pluginManager.Update();
 			}
 		}
-		
+
+		static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+		{
+			Console.WriteLine("Renewed Application.ThreadException - " + e.Exception.ToString());
+
+			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
+			{
+				LogManager.APILog.WriteLine("Application.ThreadException");
+				LogManager.APILog.WriteLine(e.Exception);
+			}
+			if (LogManager.ErrorLog != null && LogManager.ErrorLog.LogEnabled)
+			{
+				LogManager.ErrorLog.WriteLine("Application.ThreadException");
+				LogManager.ErrorLog.WriteLine(e.Exception);
+			}
+		}
+
+		static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			Console.WriteLine("Renewed - AppDomain.UnhandledException - " + ((Exception)e.ExceptionObject).ToString());
+
+			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
+			{
+				LogManager.APILog.WriteLine("AppDomain.UnhandledException");
+				LogManager.APILog.WriteLine((Exception)e.ExceptionObject);
+			}
+			if (LogManager.ErrorLog != null && LogManager.ErrorLog.LogEnabled)
+			{
+				LogManager.ErrorLog.WriteLine("AppDomain.UnhandledException");
+				LogManager.ErrorLog.WriteLine((Exception)e.ExceptionObject);
+			}			
+		}
+
 		private void AutoSaveMain(object sender, EventArgs e)
 		{
 			if (!Server.Instance.IsRunning)
@@ -592,6 +636,8 @@ namespace SEModAPIExtensions.API
 				WorldManager.Instance.AsynchronousSaveWorld();
 		}
 
+		[HandleProcessCorruptedStateExceptions]
+		[SecurityCritical]
 		private void RunServer()
 		{
 			if (m_restartLimit < 0)
@@ -812,5 +858,34 @@ namespace SEModAPIExtensions.API
 		}
 
 		#endregion
+	}
+
+	static class ServerExtensions
+	{
+		public static void ClearEventInvocations(this object obj, string eventName)
+		{
+			var fi = obj.GetType().GetEventField(eventName);
+			if (fi == null) return;
+			fi.SetValue(obj, null);
+		}
+
+		private static FieldInfo GetEventField(this Type type, string eventName)
+		{
+			FieldInfo field = null;
+			while (type != null)
+			{
+				/* Find events defined as field */
+				field = type.GetField(eventName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+				if (field != null && (field.FieldType == typeof(MulticastDelegate) || field.FieldType.IsSubclassOf(typeof(MulticastDelegate))))
+					break;
+
+				/* Find events defined as property { add; remove; } */
+				field = type.GetField("EVENT_" + eventName.ToUpper(), BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
+				if (field != null)
+					break;
+				type = type.BaseType;
+			}
+			return field;
+		}
 	}
 }

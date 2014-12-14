@@ -500,7 +500,7 @@ namespace SEModAPIInternal.API.Entity
 		[Category("Entity")]
 		[Browsable(false)]
 		[ReadOnly(true)]
-		internal HkRigidBody PhysicsBody
+		public HkRigidBody PhysicsBody
 		{
 			get
 			{				
