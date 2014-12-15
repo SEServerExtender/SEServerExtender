@@ -21,12 +21,12 @@ namespace SEModAPIInternal.API.Server
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "497988D07732071C850C2D16D6C6BD77";
-		//public static string ServerNetworkManagerKickPlayerMethod = "AF83E07B7D155D7060E64DB0AAB13109";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "2D4D82526C3086D9F46E1CB7C18D1629";
+		//public static string ServerNetworkManagerKickPlayerMethod = "8D112C6122BCD42145B374B74ACE9EB6";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "2D4D82526C3086D9F46E1CB7C18D1629";
-		public static string ServerNetworkManagerKickPlayerMethod = "8D112C6122BCD42145B374B74ACE9EB6"; 
-  
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "52ABAEB2E1A267053BCCC83AAA151C81";
+		public static string ServerNetworkManagerKickPlayerMethod = "1CF809B4BC8D3FB0638C26818A62E683"; 
+    
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
 		#endregion

@@ -181,6 +181,10 @@ namespace SEServerExtender
 					{
 						extenderArgs.autoSaveSync = false;
 					}
+					if (arg.ToLower().Equals("autosavesync"))
+					{
+						extenderArgs.autoSaveSync = true;
+					}
 					if (arg.ToLower().Equals("restartoncrash"))
 					{
 						extenderArgs.restartOnCrash = true;

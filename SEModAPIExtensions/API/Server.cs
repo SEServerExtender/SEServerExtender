@@ -329,6 +329,10 @@ namespace SEModAPIExtensions.API
 				{
 					Console.WriteLine("Restart On Crash: Enabled");
 				}
+				if (m_commandLineArgs.autoSaveSync)
+				{
+					Console.WriteLine("Synchronous Autosave: Enabled");
+				}
 			}
 			catch (Exception ex)
 			{
