@@ -11,6 +11,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using System.Runtime.ExceptionServices;
+using System.Security;
 
 using Sandbox.Input;
 
@@ -205,6 +207,8 @@ namespace SEModAPIInternal.API.Server
 			PhysicsReset();
 		}
 
+		[HandleProcessCorruptedStateExceptions]
+		[SecurityCritical]
 		public bool StartServer(string instanceName = "", string overridePath = "", bool useConsole = true)
 		{
 			try

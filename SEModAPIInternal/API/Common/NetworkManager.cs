@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Collections;
+using System.Linq;
 
 using SEModAPIInternal.Support;
 using SEModAPIInternal.API.Entity;
@@ -54,6 +56,7 @@ namespace SEModAPIInternal.API.Common
 		public static string NetworkManagerWrapperNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
 		public static string NetworkManagerWrapperClass = "8920513CC2D9F0BEBCDC74DBD637049F";
 		public static string NetworkManagerWrapperManagerInstanceField = "8E8199A1194065205F01051DC8B72DE7";
+		public static string NetworkManagerControlType = "5B9DDD8F4DF9A88D297B3B0B3B79FBAA";
 
 		//This is an abstract class that the actual network managers implement
 		public static string NetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
@@ -61,6 +64,7 @@ namespace SEModAPIInternal.API.Common
 		public static string NetworkManagerSendStructMethod = "6D24456D3649B6393BA2AF59E656E4BF";
 		public static string NetworkManagerRegisterChatReceiverMethod = "8A73057A206BFCA00EC372183441891A";
 		public static string NetworkManagerInternalNetManagerField = "E863C8EAD57B154571B7A487C6A39AC6";
+		public static string NetworkManagerControlHandlerField = "958DE615347A2316DDEF38E8149C34EC";
 
 		public static string InternalNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string InternalNetManagerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
@@ -110,8 +114,9 @@ namespace SEModAPIInternal.API.Common
 		protected NetworkManager()
 		{
 			m_instance = this;
-
+			ReplaceOnWorldRequest();
 			Console.WriteLine("Finished loading NetworkManager");
+
 		}
 
 		#endregion
@@ -199,6 +204,64 @@ namespace SEModAPIInternal.API.Common
 			{
 				LogManager.ErrorLog.WriteLine(ex);
 			}
+		}
+
+		private Type GetControlType()
+		{
+			Type controlType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(NetworkManagerWrapperNamespace, NetworkManagerControlType);
+			return controlType;
+		}
+
+		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
+		protected void ReplaceOnWorldRequest()
+		{
+			try
+			{
+				/*
+				var netManager = GetNetworkManager();
+				var controlHandlerField = BaseObject.GetEntityFieldValue(netManager, NetworkManagerControlHandlerField);
+				Dictionary<int, object> controlHandlers = UtilityFunctions.ConvertDictionary<int>(controlHandlerField);
+				Console.WriteLine("Count: {0}", controlHandlers.Count);
+				var worldJoinField = controlHandlers[0];
+				Console.WriteLine("Type: {0}", worldJoinField.GetType());
+				//FAD031AB4FED05B9FE273ACD199496EE
+				FieldInfo worldJoinDelegateField = worldJoinField.GetType().GetField("FAD031AB4FED05B9FE273ACD199496EE");
+				MulticastDelegate action = (MulticastDelegate)worldJoinDelegateField.GetValue(worldJoinField);
+				FieldInfo methodBaseField = action.GetType().GetField("_methodBase", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+				FieldInfo methodPtrField = action.GetType().GetField("_methodPtr", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+				FieldInfo methodPtrAuxField = action.GetType().GetField("_methodPtrAux", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+			    Console.WriteLine("Got action");
+
+				
+				//Type delegateType = action.Method.GetGenericMethodDefinition();
+				//methodInfo = action.Method.GetGenericMethodDefinition();
+				ControlMessageHandler<test> handler = OnWorldRequestReplace;
+				Delegate newDelegate = UtilityFunctions.DelegateUtility.Cast(handler, action.GetType());
+				//C42525D7DE28CE4CFB44651F3D03A50D.69BCF201AF4FAC4108B36AFA089FE230
+				methodBaseField.SetValue(action, newDelegate.Method);
+				methodPtrField.SetValue(action, methodPtrField.GetValue(newDelegate));
+				methodPtrAuxField.SetValue(action, methodPtrAuxField.GetValue(newDelegate));
+
+				Console.WriteLine("Set Action");
+				//this.RegisterControlMessage<MyControlWorldRequestMsg>(MyControlMessageEnum.WorldRequest, new ControlMessageHandler<MyControlWorldRequestMsg>(this.OnWorldRequest));
+			    */
+			}
+			catch (Exception ex)
+			{
+
+			}
+		}
+
+
+		public delegate void ControlMessageHandler<T>(ref T message, ulong sender) where T : struct;
+		public static void OnWorldRequestReplace<T>(ref T message, ulong sender) where T : struct
+		{
+			Console.WriteLine("Welcome");
+		}
+
+		public struct test
+		{
+
 		}
 
 		public abstract List<ulong> GetConnectedPlayers();

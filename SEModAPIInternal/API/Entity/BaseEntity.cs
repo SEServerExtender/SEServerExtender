@@ -942,16 +942,23 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		public static void BroadcastRemoveEntity(IMyEntity entity)
+		public static void BroadcastRemoveEntity(IMyEntity entity, bool safe = true)
 		{
 			Object result = BaseEntity.InvokeEntityMethod(entity, BaseEntity.BaseEntityGetNetManagerMethod);
 			if(result == null)
 				return;
 
-			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+			if (safe)
+			{
+				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+				{
+					BaseEntity.InvokeEntityMethod(result, BaseEntityBroadcastRemovalMethod);
+				});
+			}
+			else
 			{
 				BaseEntity.InvokeEntityMethod(result, BaseEntityBroadcastRemovalMethod);
-			});
+			}
 		}
 
 		public Object NetworkManager

@@ -640,8 +640,6 @@ namespace SEModAPIExtensions.API
 				WorldManager.Instance.AsynchronousSaveWorld();
 		}
 
-		[HandleProcessCorruptedStateExceptions]
-		[SecurityCritical]
 		private void RunServer()
 		{
 			if (m_restartLimit < 0)
@@ -654,6 +652,7 @@ namespace SEModAPIExtensions.API
 				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
 				m_serverWrapper = ServerAssemblyWrapper.Instance;
 				bool result = m_serverWrapper.StartServer(m_commandLineArgs.instanceName, m_commandLineArgs.path, !m_commandLineArgs.noConsole);
+				Console.WriteLine("Server has stopped running");
 
 				m_isServerRunning = false;
 
@@ -661,8 +660,6 @@ namespace SEModAPIExtensions.API
 				m_autosaveTimer.Stop();
 
 				m_pluginManager.Shutdown();
-
-				Console.WriteLine("Server has stopped running");
 
 				if (!result && m_commandLineArgs.closeOnCrash)
 				{
@@ -705,6 +702,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch (Exception ex)
 			{
+				Console.WriteLine("Uncaught");
 				LogManager.ErrorLog.WriteLine(ex);
 			}
 			finally
