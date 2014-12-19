@@ -52,6 +52,7 @@ namespace SEModAPIExtensions.API
 		public bool closeOnCrash;
 		public bool autoSaveSync;
 		public bool restartOnCrash;
+		public bool worldRequestReplace;
 		public string args;
 	}
 
@@ -333,6 +334,10 @@ namespace SEModAPIExtensions.API
 				{
 					Console.WriteLine("Synchronous Autosave: Enabled");
 				}
+				if (m_commandLineArgs.worldRequestReplace)
+				{
+					Console.WriteLine("World Request Replace: Enabled");
+				}
 			}
 			catch (Exception ex)
 			{
@@ -569,6 +574,9 @@ namespace SEModAPIExtensions.API
 			{
 				if (SandboxGameAssemblyWrapper.Instance.IsGameStarted)
 				{
+					if (CommandLineArgs.worldRequestReplace)
+						NetworkManager.Instance.ReplaceWorldJoin();
+
 					SandboxGameAssemblyWrapper.InitAPIGateway();
 					m_pluginManager.LoadPlugins();
 					m_pluginManager.Init();

@@ -5,6 +5,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Collections;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.IO;
+
+using Sandbox.ModAPI;
+using Sandbox.Common.ObjectBuilders;
+using Sandbox.Common.ObjectBuilders.Serializer;
 
 using SEModAPIInternal.Support;
 using SEModAPIInternal.API.Entity;
@@ -52,6 +59,9 @@ namespace SEModAPIInternal.API.Common
 		protected static MethodInfo m_registerPacketHandlerMethod2;
 		protected static MethodInfo m_registerPacketHandlerMethod3;
 
+		protected static MulticastDelegate m_onWorldRequest;
+		protected static Type m_onWorldRequestType;
+
 		//This class is just a container for some basic steam game values as well as the actual network manager instance
 		public static string NetworkManagerWrapperNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
 		public static string NetworkManagerWrapperClass = "8920513CC2D9F0BEBCDC74DBD637049F";
@@ -75,6 +85,16 @@ namespace SEModAPIInternal.API.Common
 		public static string PacketRegistryNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string PacketRegistryClass = "4D0D6F8422AC35DCF2A403F1C4B70957";
 		public static string PacketRegistryTypeIdMapField = "5C5BB4D88AA04A59AB078CB70049BAC8";
+
+		//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
+
+		public static string NetworkingNamespace = "36CC7CE820B9BBBE4B3FECFEEFE4AE86";
+
+		public static string MyMultipartMessageClass = "7B6560DE2B6A29DE7F0157E9CDFFCC37";
+		public static string MyMultipartMessagePreemble = "7AEDE70A5F16434A660FC187077FC86F";
+
+		//36CC7CE820B9BBBE4B3FECFEEFE4AE86.73C7CA87DB0535EFE711E10913D8ACFB
+		public static string MyMultipartSenderClass = "73C7CA87DB0535EFE711E10913D8ACFB";
 
 		/////////////////////////////////////////////////
 
@@ -113,10 +133,9 @@ namespace SEModAPIInternal.API.Common
 
 		protected NetworkManager()
 		{
+			
 			m_instance = this;
-			ReplaceOnWorldRequest();
 			Console.WriteLine("Finished loading NetworkManager");
-
 		}
 
 		#endregion
@@ -213,38 +232,29 @@ namespace SEModAPIInternal.API.Common
 		}
 
 		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
-		protected void ReplaceOnWorldRequest()
+		public void ReplaceWorldJoin()
 		{
 			try
 			{
-				/*
 				var netManager = GetNetworkManager();
 				var controlHandlerField = BaseObject.GetEntityFieldValue(netManager, NetworkManagerControlHandlerField);
 				Dictionary<int, object> controlHandlers = UtilityFunctions.ConvertDictionary<int>(controlHandlerField);
-				Console.WriteLine("Count: {0}", controlHandlers.Count);
 				var worldJoinField = controlHandlers[0];
-				Console.WriteLine("Type: {0}", worldJoinField.GetType());
 				//FAD031AB4FED05B9FE273ACD199496EE
 				FieldInfo worldJoinDelegateField = worldJoinField.GetType().GetField("FAD031AB4FED05B9FE273ACD199496EE");
 				MulticastDelegate action = (MulticastDelegate)worldJoinDelegateField.GetValue(worldJoinField);
-				FieldInfo methodBaseField = action.GetType().GetField("_methodBase", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				FieldInfo methodPtrField = action.GetType().GetField("_methodPtr", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				FieldInfo methodPtrAuxField = action.GetType().GetField("_methodPtrAux", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-			    Console.WriteLine("Got action");
-
+				m_onWorldRequest = action;
+				m_onWorldRequestType = worldJoinDelegateField.FieldType.GetGenericArguments()[0];
+				MethodInfo removeMethod = controlHandlerField.GetType().GetMethod("Remove");
+				removeMethod.Invoke(controlHandlerField, new object[] { 0 });
 				
-				//Type delegateType = action.Method.GetGenericMethodDefinition();
-				//methodInfo = action.Method.GetGenericMethodDefinition();
-				ControlMessageHandler<test> handler = OnWorldRequestReplace;
-				Delegate newDelegate = UtilityFunctions.DelegateUtility.Cast(handler, action.GetType());
-				//C42525D7DE28CE4CFB44651F3D03A50D.69BCF201AF4FAC4108B36AFA089FE230
-				methodBaseField.SetValue(action, newDelegate.Method);
-				methodPtrField.SetValue(action, methodPtrField.GetValue(newDelegate));
-				methodPtrAuxField.SetValue(action, methodPtrAuxField.GetValue(newDelegate));
-
-				Console.WriteLine("Set Action");
-				//this.RegisterControlMessage<MyControlWorldRequestMsg>(MyControlMessageEnum.WorldRequest, new ControlMessageHandler<MyControlWorldRequestMsg>(this.OnWorldRequest));
-			    */
+				ThreadPool.QueueUserWorkItem((state) =>
+					{
+						OnWorldRequestReplace(state);
+					});
+				//Thread thread = new Thread(OnWorldRequestReplace);
+				//thread.IsBackground = true;
+				//thread.Start();
 			}
 			catch (Exception ex)
 			{
@@ -252,17 +262,167 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
-
-		public delegate void ControlMessageHandler<T>(ref T message, ulong sender) where T : struct;
-		public static void OnWorldRequestReplace<T>(ref T message, ulong sender) where T : struct
+		protected void OnWorldRequestReplace(object state)
 		{
-			Console.WriteLine("Welcome");
+			List<ulong> responded = new List<ulong>();
+			List<ulong> clearResponse = new List<ulong>();
+			List<ulong> inGame = new List<ulong>();
+
+			while (true)
+			{
+				try
+				{
+					DateTime start = DateTime.Now;
+					List<ulong> connectedList = PlayerManager.Instance.ConnectedPlayers;
+					for (int r = clearResponse.Count - 1; r >= 0; r--)
+					{
+						ulong player = clearResponse[r];
+
+						if (!connectedList.Contains(player))
+						{
+							LogManager.APILog.WriteLineAndConsole("Removing user - Clear");
+							clearResponse.Remove(player);
+							continue;
+						}
+
+						LogManager.APILog.WriteLineAndConsole("Sending world data");
+						clearResponse.Remove(player);
+						inGame.Add(player);
+
+						ThreadPool.QueueUserWorkItem((ns) =>
+						{
+							try
+							{
+								SendWorldData(player);
+							}
+							catch
+							{
+								LogManager.APILog.WriteLineAndConsole("Error sending world data to user.  User must retry");
+							}
+						});
+					}
+
+					foreach (ulong player in connectedList)
+					{
+						if (player.ToString().StartsWith("9009"))
+							continue;
+
+						if (!responded.Contains(player) && !clearResponse.Contains(player) && !inGame.Contains(player))
+						{
+							LogManager.APILog.WriteLineAndConsole("Responding to new user");
+							clearResponse.Add(player);
+						}
+					}
+
+					for (int r = inGame.Count - 1; r >= 0; r--)
+					{
+						ulong player = inGame[r];
+
+						if (!connectedList.Contains(player))
+						{
+							LogManager.APILog.WriteLineAndConsole("Removing user - Ingame");
+							inGame.Remove(player);
+							continue;
+						}
+					}
+
+					Thread.Sleep(1000);
+				}
+				catch (Exception ex)
+				{
+					LogManager.ErrorLog.WriteLineAndConsole(string.Format("New World Response Error: {0}", ex.ToString()));
+				}
+			}
 		}
 
-		public struct test
+		private void SendWorldData(ulong steamId)
 		{
+			//var a = FormatterServices.GetUninitializedObject(m_onWorldRequestType);
+			//m_onWorldRequest.DynamicInvoke(new object[] { a, steamId });
 
+			/*
+			
+			// Not required
+			MySandboxGame.Log.WriteLineAndConsole(string.Concat("World request received: ", this.GetMemberName(sender)));
+			// Why is this global?
+			this.m_worldSendStream = new MemoryStream();
+			if (this.IsServer && MySession.Static != null)
+			{
+				MySandboxGame.Log.WriteLine("...responding");
+				MyMultipartMessage.SendPreemble(sender, 1);
+				MyObjectBuilder_World world = MySession.Static.GetWorld();
+				MyObjectBuilder_Checkpoint checkpoint = world.Checkpoint;
+				checkpoint.WorkshopId = null;
+				checkpoint.CharacterToolbar = null;
+				MyObjectBuilderSerializer.SerializeXML(this.m_worldSendStream, world, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
+				this.SyncLayer.TransportLayer.SendFlush(sender);
+			}
+			byte[] array = this.m_worldSendStream.ToArray();
+			MyMultipartSender myMultipartSender = new MyMultipartSender(array, (int)array.Length, sender, 1, 13800);
+			this.m_worldSenders[sender] = myMultipartSender;
+			*/
+
+			// this.IsServer --> doesn't matter, we're a server
+			// MySession.Static != null --> This is required
+			Console.WriteLine("User connecting");
+			MemoryStream ms = new MemoryStream();
+			if(MyAPIGateway.Session != null)
+			{
+				Console.WriteLine("...responding !!");
+
+				//MyMultipartMessage.SendPreemble(steamId, 1);
+				SendPreemble(steamId, 1);
+				MyObjectBuilder_World myObjectBuilderWorld = MyAPIGateway.Session.GetWorld();
+                MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
+                checkpoint.WorkshopId = null;
+                checkpoint.CharacterToolbar = null;
+                MyObjectBuilderSerializer.SerializeXML(ms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
+				SendFlush(steamId);
+                //this.E863C8EAD57B154571B7A487C6A39AC6.6F79877D9F8B092082EAEF8828D69F98.DA0F40A1E0E2E5DD9B141562B91BDDDC(u003473BA790F3D0D9179F83CABE87FE18E9);
+            }
+
+			BeginTransfer(ms, steamId);
 		}
+
+		private Type MyMultipartSenderType()
+		{
+			Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(NetworkingNamespace, MyMultipartSenderClass);
+			return type;
+		}
+
+		private void BeginTransfer(MemoryStream ms, ulong steamId)
+		{
+			byte[] array = ms.ToArray();
+			var myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, (int)array.Length, steamId, 1, 13800 });
+
+
+			//netManager
+
+			//73C7CA87DB0535EFE711E10913D8ACFB _73C7CA87DB0535EFE711E10913D8ACFB = new 73C7CA87DB0535EFE711E10913D8ACFB(array, (int)array.Length, u003473BA790F3D0D9179F83CABE87FE18E9, 1, 13800);
+			//this.5B529DE4132B960BEBDFE4BBF87876BA[u003473BA790F3D0D9179F83CABE87FE18E9] = _73C7CA87DB0535EFE711E10913D8ACFB;
+		}
+
+		private static Type MyMultipartMessageType()
+		{
+			Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(NetworkingNamespace, MyMultipartMessageClass);
+			return type;
+		}
+
+		private void SendPreemble(ulong steamId, int num)
+		{
+			//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
+			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreemble, new object[] { steamId, num });
+		}		
+
+		private void SendFlush(ulong steamId)
+		{
+			var netManager = GetNetworkManager();
+			var mySyncLayer = BaseObject.GetEntityField(netManager, "E863C8EAD57B154571B7A487C6A39AC6");
+			var myTransportLayer = BaseObject.GetEntityField(mySyncLayer, "6F79877D9F8B092082EAEF8828D69F98");
+			BaseObject.InvokeEntityMethod(myTransportLayer, "DA0F40A1E0E2E5DD9B141562B91BDDDC", new object[] { steamId });
+		}
+
+
 
 		public abstract List<ulong> GetConnectedPlayers();
 
