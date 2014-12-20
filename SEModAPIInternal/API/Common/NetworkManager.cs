@@ -249,12 +249,9 @@ namespace SEModAPIInternal.API.Common
 				removeMethod.Invoke(controlHandlerField, new object[] { 0 });
 				
 				ThreadPool.QueueUserWorkItem((state) =>
-					{
-						OnWorldRequestReplace(state);
-					});
-				//Thread thread = new Thread(OnWorldRequestReplace);
-				//thread.IsBackground = true;
-				//thread.Start();
+				{
+					OnWorldRequestReplace(state);
+				});
 			}
 			catch (Exception ex)
 			{
@@ -268,6 +265,8 @@ namespace SEModAPIInternal.API.Common
 			List<ulong> clearResponse = new List<ulong>();
 			List<ulong> inGame = new List<ulong>();
 
+			Dictionary<ulong, DateTime> slowDown = new Dictionary<ulong, DateTime>();
+
 			while (true)
 			{
 				try
@@ -280,12 +279,11 @@ namespace SEModAPIInternal.API.Common
 
 						if (!connectedList.Contains(player))
 						{
-							LogManager.APILog.WriteLineAndConsole("Removing user - Clear");
+							LogManager.APILog.WriteLineAndConsole("Removing User - Clear Response");
 							clearResponse.Remove(player);
 							continue;
 						}
 
-						LogManager.APILog.WriteLineAndConsole("Sending world data");
 						clearResponse.Remove(player);
 						inGame.Add(player);
 
@@ -293,11 +291,26 @@ namespace SEModAPIInternal.API.Common
 						{
 							try
 							{
-								SendWorldData(player);
+								bool shouldSlowDown = false;
+								if (slowDown.ContainsKey(player))
+								{
+									shouldSlowDown = (DateTime.Now - slowDown[player]).TotalSeconds < 60;
+								}
+
+								LogManager.APILog.WriteLineAndConsole(string.Format("Sending world data.  Throttle: {0}", shouldSlowDown));
+								SendWorldData(player, shouldSlowDown);
 							}
 							catch
 							{
 								LogManager.APILog.WriteLineAndConsole("Error sending world data to user.  User must retry");
+							}
+
+							lock (slowDown)
+							{
+								if (!slowDown.ContainsKey(player))
+									slowDown.Add(player, DateTime.Now);
+								else
+									slowDown[player] = DateTime.Now;
 							}
 						});
 					}
@@ -309,7 +322,7 @@ namespace SEModAPIInternal.API.Common
 
 						if (!responded.Contains(player) && !clearResponse.Contains(player) && !inGame.Contains(player))
 						{
-							LogManager.APILog.WriteLineAndConsole("Responding to new user");
+							LogManager.APILog.WriteLineAndConsole("Preparing a response for new user");
 							clearResponse.Add(player);
 						}
 					}
@@ -320,7 +333,7 @@ namespace SEModAPIInternal.API.Common
 
 						if (!connectedList.Contains(player))
 						{
-							LogManager.APILog.WriteLineAndConsole("Removing user - Ingame");
+							LogManager.APILog.WriteLineAndConsole("Removing user - Ingame / Downloading");
 							inGame.Remove(player);
 							continue;
 						}
@@ -335,53 +348,30 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
-		private void SendWorldData(ulong steamId)
+		private void SendWorldData(ulong steamId, bool shouldSlowDown)
 		{
-			//var a = FormatterServices.GetUninitializedObject(m_onWorldRequestType);
-			//m_onWorldRequest.DynamicInvoke(new object[] { a, steamId });
-
-			/*
-			
-			// Not required
-			MySandboxGame.Log.WriteLineAndConsole(string.Concat("World request received: ", this.GetMemberName(sender)));
-			// Why is this global?
-			this.m_worldSendStream = new MemoryStream();
-			if (this.IsServer && MySession.Static != null)
-			{
-				MySandboxGame.Log.WriteLine("...responding");
-				MyMultipartMessage.SendPreemble(sender, 1);
-				MyObjectBuilder_World world = MySession.Static.GetWorld();
-				MyObjectBuilder_Checkpoint checkpoint = world.Checkpoint;
-				checkpoint.WorkshopId = null;
-				checkpoint.CharacterToolbar = null;
-				MyObjectBuilderSerializer.SerializeXML(this.m_worldSendStream, world, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
-				this.SyncLayer.TransportLayer.SendFlush(sender);
-			}
-			byte[] array = this.m_worldSendStream.ToArray();
-			MyMultipartSender myMultipartSender = new MyMultipartSender(array, (int)array.Length, sender, 1, 13800);
-			this.m_worldSenders[sender] = myMultipartSender;
-			*/
-
-			// this.IsServer --> doesn't matter, we're a server
-			// MySession.Static != null --> This is required
-			Console.WriteLine("User connecting");
 			MemoryStream ms = new MemoryStream();
 			if(MyAPIGateway.Session != null)
 			{
-				Console.WriteLine("...responding !!");
-
-				//MyMultipartMessage.SendPreemble(steamId, 1);
+				LogManager.APILog.WriteLineAndConsole(string.Format("...responding to user: {0}", steamId));
 				SendPreemble(steamId, 1);
-				MyObjectBuilder_World myObjectBuilderWorld = MyAPIGateway.Session.GetWorld();
+
+				// Let's sleep for 5 seconds and let plugins know we're online
+				Thread.Sleep(5000);
+				MyObjectBuilder_World myObjectBuilderWorld = null;
+				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+				{
+					myObjectBuilderWorld = MyAPIGateway.Session.GetWorld();
+				});
+
                 MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
                 checkpoint.WorkshopId = null;
                 checkpoint.CharacterToolbar = null;
                 MyObjectBuilderSerializer.SerializeXML(ms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
 				SendFlush(steamId);
-                //this.E863C8EAD57B154571B7A487C6A39AC6.6F79877D9F8B092082EAEF8828D69F98.DA0F40A1E0E2E5DD9B141562B91BDDDC(u003473BA790F3D0D9179F83CABE87FE18E9);
             }
 
-			BeginTransfer(ms, steamId);
+			TransferWorld(ms, steamId, shouldSlowDown);
 		}
 
 		private Type MyMultipartSenderType()
@@ -390,16 +380,20 @@ namespace SEModAPIInternal.API.Common
 			return type;
 		}
 
-		private void BeginTransfer(MemoryStream ms, ulong steamId)
+		private void TransferWorld(MemoryStream ms, ulong steamId, bool shouldSlowDown)
 		{
+			DateTime start = DateTime.Now;
 			byte[] array = ms.ToArray();
-			var myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, (int)array.Length, steamId, 1, 13800 });
+			var myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, (int)array.Length, steamId, 1, 12000 });
+			while((bool)BaseObject.InvokeEntityMethod(myMultipartSender, "A822BAC1F661C682C78230403DDF5670"))
+			{
+				if (shouldSlowDown)
+					Thread.Sleep(25);
+				else
+					Thread.Sleep(1);
+			}
 
-
-			//netManager
-
-			//73C7CA87DB0535EFE711E10913D8ACFB _73C7CA87DB0535EFE711E10913D8ACFB = new 73C7CA87DB0535EFE711E10913D8ACFB(array, (int)array.Length, u003473BA790F3D0D9179F83CABE87FE18E9, 1, 13800);
-			//this.5B529DE4132B960BEBDFE4BBF87876BA[u003473BA790F3D0D9179F83CABE87FE18E9] = _73C7CA87DB0535EFE711E10913D8ACFB;
+			LogManager.APILog.WriteLineAndConsole(string.Format("Buffered World Send: {0}ms", (DateTime.Now - start).TotalMilliseconds));
 		}
 
 		private static Type MyMultipartMessageType()
@@ -417,12 +411,10 @@ namespace SEModAPIInternal.API.Common
 		private void SendFlush(ulong steamId)
 		{
 			var netManager = GetNetworkManager();
-			var mySyncLayer = BaseObject.GetEntityField(netManager, "E863C8EAD57B154571B7A487C6A39AC6");
-			var myTransportLayer = BaseObject.GetEntityField(mySyncLayer, "6F79877D9F8B092082EAEF8828D69F98");
+			var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, "E863C8EAD57B154571B7A487C6A39AC6");
+			var myTransportLayer = BaseObject.GetEntityFieldValue(mySyncLayer, "6F79877D9F8B092082EAEF8828D69F98");
 			BaseObject.InvokeEntityMethod(myTransportLayer, "DA0F40A1E0E2E5DD9B141562B91BDDDC", new object[] { steamId });
 		}
-
-
 
 		public abstract List<ulong> GetConnectedPlayers();
 
@@ -431,7 +423,6 @@ namespace SEModAPIInternal.API.Common
 			try
 			{
 				Object internalNetManager = BaseObject.GetEntityFieldValue(GetNetworkManager(), NetworkManagerInternalNetManagerField);
-
 				return internalNetManager;
 			}
 			catch (Exception ex)
