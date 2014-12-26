@@ -373,7 +373,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static FieldInfo GetStaticField(Type objectType, string fieldName)
+		public static FieldInfo GetStaticField(Type objectType, string fieldName)
 		{
 			try
 			{
@@ -392,7 +392,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static FieldInfo GetEntityField(Object gameEntity, string fieldName)
+		public static FieldInfo GetEntityField(Object gameEntity, string fieldName)
 		{
 			try
 			{
@@ -422,7 +422,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static MethodInfo GetStaticMethod(Type objectType, string methodName)
+		public static MethodInfo GetStaticMethod(Type objectType, string methodName)
 		{
 			try
 			{
@@ -456,7 +456,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static MethodInfo GetStaticMethod(Type objectType, string methodName, Type[] argTypes)
+		public static MethodInfo GetStaticMethod(Type objectType, string methodName, Type[] argTypes)
 		{
 			try
 			{
@@ -493,7 +493,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static MethodInfo GetEntityMethod(Object gameEntity, string methodName)
+		public static MethodInfo GetEntityMethod(Object gameEntity, string methodName)
 		{
 			try
 			{
@@ -529,7 +529,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static MethodInfo GetEntityMethod(Object gameEntity, string methodName, Type[] argTypes)
+		public static MethodInfo GetEntityMethod(Object gameEntity, string methodName, Type[] argTypes)
 		{
 			try
 			{
@@ -568,7 +568,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static Object GetStaticFieldValue(Type objectType, string fieldName)
+		public static Object GetStaticFieldValue(Type objectType, string fieldName)
 		{
 			try
 			{
@@ -585,7 +585,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static void SetStaticFieldValue(Type objectType, string fieldName, Object value)
+		public static void SetStaticFieldValue(Type objectType, string fieldName, Object value)
 		{
 			try
 			{
@@ -600,7 +600,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static Object GetEntityFieldValue(Object gameEntity, string fieldName)
+		public static Object GetEntityFieldValue(Object gameEntity, string fieldName)
 		{
 			try
 			{
@@ -617,7 +617,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static void SetEntityFieldValue(Object gameEntity, string fieldName, Object value)
+		public static void SetEntityFieldValue(Object gameEntity, string fieldName, Object value)
 		{
 			try
 			{
@@ -632,12 +632,12 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static Object InvokeStaticMethod(Type objectType, string methodName)
+		public static Object InvokeStaticMethod(Type objectType, string methodName)
 		{
 			return InvokeStaticMethod(objectType, methodName, new object[] { });
 		}
 
-		internal static Object InvokeStaticMethod(Type objectType, string methodName, Object[] parameters)
+		public static Object InvokeStaticMethod(Type objectType, string methodName, Object[] parameters)
 		{
 			try
 			{
@@ -658,17 +658,17 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static Object InvokeEntityMethod(Object gameEntity, string methodName)
+		public static Object InvokeEntityMethod(Object gameEntity, string methodName)
 		{
 			return InvokeEntityMethod(gameEntity, methodName, new object[] { });
 		}
 
-		internal static Object InvokeEntityMethod(Object gameEntity, string methodName, Object[] parameters)
+		public static Object InvokeEntityMethod(Object gameEntity, string methodName, Object[] parameters)
 		{
 			return InvokeEntityMethod(gameEntity, methodName, parameters, null);
 		}
 
-		internal static Object InvokeEntityMethod(Object gameEntity, string methodName, Object[] parameters, Type[] argTypes)
+		public static Object InvokeEntityMethod(Object gameEntity, string methodName, Object[] parameters, Type[] argTypes)
 		{
 			try
 			{
@@ -691,7 +691,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static PropertyInfo GetEntityProperty(Object gameEntity, string propertyName)
+		public static PropertyInfo GetEntityProperty(Object gameEntity, string propertyName)
 		{
 			try
 			{
@@ -711,7 +711,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static Object GetEntityPropertyValue(Object gameEntity, string propertyName)
+		public static Object GetEntityPropertyValue(Object gameEntity, string propertyName)
 		{
 			try
 			{
@@ -732,7 +732,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		internal static void SetEntityPropertyValue(Object gameEntity, string propertyName, Object value)
+		public static void SetEntityPropertyValue(Object gameEntity, string propertyName, Object value)
 		{
 			try
 			{
