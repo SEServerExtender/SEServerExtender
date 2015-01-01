@@ -25,11 +25,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string PistonNamespace = "AAD9061F948E6A3635200145188D64A9";
 		public static string PistonClass = "BB5F18CC2986DBE98E7199353DD42570";
 
-		public static string PistonGetVelocityMethod = "4F68A20C100B8224FB6631B65C0D7F8C";
+		public static string PistonGetVelocityMethod = "get_Velocity";
 		public static string PistonSetVelocityMethod = "098E60E484F608B7F8D1C596244A4AB7";
-		public static string PistonGetMinLimitMethod = "0E29ADCC5075989BF4A72E552F871425";
+		public static string PistonGetMinLimitMethod = "get_MinLimit";
 		public static string PistonSetMinLimitMethod = "ADF5E62C4A5337CC85009531D442E921";
-		public static string PistonGetMaxLimitMethod = "0DDBA2A8D27BC58CBF8A46CCE34ACE82";
+		public static string PistonGetMaxLimitMethod = "get_MaxLimit";
 		public static string PistonSetMaxLimitMethod = "2E4611FD9E17A856C250DF3C2AEC5C94";
 		public static string PistonGetNetworkManagerMethod = "E8902D9F85DF1866E02EA8A0324EFF2C";
 

@@ -29,8 +29,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		//public static string LandingGearGetAutoLockMethod = "71F8F86678091875138C01C64F0C2F01";
 		//public static string LandingGearGetAutoLockMethod = "3ECDCF46AB6230B4998CE81E37A36F34";
+
 		public static string LandingGearSetAutoLockMethod = "F542ACDC0D61EB46F733A5527CFFBE14";
-		public static string LandingGearGetBrakeForceMethod = "A84CC3FC7B1C4CA0A631E34D2F024163";
+		public static string LandingGearGetBrakeForceMethod = "get_BreakForce";
 		public static string LandingGearSetBrakeForceMethod = "013F45FD594F8A80D5952A7AC22A931E";
 
 		public static string LandingGearIsLockedField = "00F45118D3A7F21253C28F4B11D1F70E";
