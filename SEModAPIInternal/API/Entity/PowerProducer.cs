@@ -18,12 +18,12 @@ namespace SEModAPIInternal.API.Entity
 		public static string PowerProducerNamespace = "FB8C11741B7126BD9C97FE76747E087F";
 		public static string PowerProducerClass = "7E69388ED0DB47818FB7AFF9F16C6EDA";
 		
-		//public static string PowerProducerGetMaxPowerOutputMethod = "09C6BD4B086B163EF40A58B94351EF45";
-		//public static string PowerProducerGetCurrentOutputMethod = "66E6F7850ECFF43C86B78131C77CFAE0";
-		//public static string PowerProducerSetCurrentOutputMethod = "2287F99CE1DEB7355327290175E9D660";
-		public static string PowerProducerGetMaxPowerOutputMethod = "CE1BE0AFCC72AC4B3DD4097DC99323F6";
-		public static string PowerProducerGetCurrentOutputMethod = "688E539EA170C9AEED2E656A3C3FD7DF";
-		public static string PowerProducerSetCurrentOutputMethod = "B9394438A89EBE831720026D1095AAEA";
+		//public static string PowerProducerGetMaxPowerOutputMethod = "CE1BE0AFCC72AC4B3DD4097DC99323F6";
+		//public static string PowerProducerGetCurrentOutputMethod = "688E539EA170C9AEED2E656A3C3FD7DF";
+		//public static string PowerProducerSetCurrentOutputMethod = "B9394438A89EBE831720026D1095AAEA";
+		public static string PowerProducerGetMaxPowerOutputMethod = "669CDB01C8228B38435008DD369996CF";
+		public static string PowerProducerGetCurrentOutputMethod = "29F33115B1262D8C4D5E5B8F2D0DCD51";
+		public static string PowerProducerSetCurrentOutputMethod = "8593FA338E3B01D62685B04468402DA1";
 
         #endregion
 

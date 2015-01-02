@@ -16,6 +16,7 @@ using SEModAPIInternal.Support;
 using VRage;
 using Sandbox.Definitions;
 using Sandbox.ModAPI;
+using Sandbox.ModAPI.Interfaces;
 
 namespace SEModAPIInternal.API.Entity
 {
