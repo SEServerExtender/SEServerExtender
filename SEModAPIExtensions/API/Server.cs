@@ -648,6 +648,8 @@ namespace SEModAPIExtensions.API
 				WorldManager.Instance.AsynchronousSaveWorld();
 		}
 
+		[HandleProcessCorruptedStateExceptions]
+		[SecurityCritical]
 		private void RunServer()
 		{
 			if (m_restartLimit < 0)

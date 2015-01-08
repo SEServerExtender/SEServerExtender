@@ -16,7 +16,7 @@ using SEModAPIInternal.Support;
 using VRage;
 using Sandbox.Definitions;
 using Sandbox.ModAPI;
-using Sandbox.ModAPI.Interfaces;
+//using Sandbox.ModAPI.Interfaces;
 
 namespace SEModAPIInternal.API.Entity
 {
@@ -167,7 +167,7 @@ namespace SEModAPIInternal.API.Entity
 							if (BackingObject != null)
 							{
 								IMyInventory myInventory = (IMyInventory)BackingObject;
-								foreach (IMyInventoryItem item in myInventory.GetItems())
+								foreach (Sandbox.ModAPI.Interfaces.IMyInventoryItem item in myInventory.GetItems())
 								{
 									InventoryItemEntity newItem = new InventoryItemEntity(item, this);
 									newList.Add(newItem);
@@ -459,7 +459,7 @@ namespace SEModAPIInternal.API.Entity
 			m_backingObject = backingObject;
 			m_parentContainer = parent;
 
-			IMyInventoryItem item = (IMyInventoryItem)backingObject;
+			Sandbox.ModAPI.Interfaces.IMyInventoryItem item = (Sandbox.ModAPI.Interfaces.IMyInventoryItem)backingObject;
 			MyObjectBuilder_InventoryItem newItem = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>();
 			newItem.Amount = item.Amount;
 			newItem.Content = item.Content;
@@ -475,11 +475,11 @@ namespace SEModAPIInternal.API.Entity
 		#region "Properties"
 
 		[IgnoreDataMember]
-		internal IMyInventoryItem InventoryInterface
+		internal Sandbox.ModAPI.Interfaces.IMyInventoryItem InventoryInterface
 		{
 			get
 			{
-				IMyInventoryItem item = null;
+				Sandbox.ModAPI.Interfaces.IMyInventoryItem item = null;
 				if (BackingObject == null)
 				{
 					if (m_parentContainer != null)
@@ -494,7 +494,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 				else
 				{
-					item = (IMyInventoryItem)BackingObject;
+					item = (Sandbox.ModAPI.Interfaces.IMyInventoryItem)BackingObject;
 				}
 
 				return item;

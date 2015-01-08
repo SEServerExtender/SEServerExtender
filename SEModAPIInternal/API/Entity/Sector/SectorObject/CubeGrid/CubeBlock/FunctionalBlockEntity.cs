@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 
+using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.VRageData;
@@ -174,6 +175,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			InvokeEntityMethod(ActualObject, FunctionalBlockSetEnabledMethod, new object[] { m_enabled });
 			InvokeEntityMethod(ActualObject, FunctionalBlockBroadcastEnabledMethod, new object[] { m_enabled });
+		}
+
+		public static void SetState(IMyEntity entity, bool enabled)
+		{
+			if(!(entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock))
+				return;
+
+			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+			{
+				InvokeEntityMethod(entity, FunctionalBlockSetEnabledMethod, new object[] { enabled });
+				InvokeEntityMethod(entity, FunctionalBlockBroadcastEnabledMethod, new object[] { enabled });
+			});
+		}
+
+		public static bool GetState(IMyEntity entity)
+		{
+			if (!(entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock))
+				return false;
+
+			Object rawResult = InvokeEntityMethod(entity, FunctionalBlockGetEnabledMethod);
+			if (rawResult == null)
+				return false;
+			bool result = (bool)rawResult;
+			return result;
 		}
 
 		protected virtual float InternalPowerReceiverCallback()
