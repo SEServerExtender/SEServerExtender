@@ -520,6 +520,22 @@ namespace SEModAPIExtensions.API
                             LogManager.ErrorLog.WriteLine(ex);
                         }
                         break;
+					case EntityEventManager.EntityEventType.OnPlayerWorldSent:
+						try
+						{
+							MethodInfo updateMethod = plugin.GetType().GetMethod("OnPlayerWorldSent");
+							if (updateMethod != null)
+							{
+								//FIXME - Temporary hack to pass along the player's steam id
+								ulong steamId = (ulong)entityEvent.entity;
+								updateMethod.Invoke(plugin, new object[] { steamId });
+							}
+						}
+						catch (Exception ex)
+						{
+							LogManager.ErrorLog.WriteLine(ex);
+						}
+						break;
                     default:
                         try
                         {

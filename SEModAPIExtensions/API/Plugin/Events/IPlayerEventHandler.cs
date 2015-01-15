@@ -9,5 +9,6 @@ namespace SEModAPIExtensions.API.Plugin.Events
 	{
 		void OnPlayerJoined(ulong remoteUserId);
 		void OnPlayerLeft(ulong remoteUserId);
+		void OnPlayerWorldSent(ulong remoteUserId);
 	}
 }

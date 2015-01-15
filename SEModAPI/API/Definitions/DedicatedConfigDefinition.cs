@@ -595,6 +595,66 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable(true)]
 		[ReadOnly(false)]
+		[Description("The seed value to use for procedural generation")]
+		[Category("World Settings")]
+		public int ProceduralSeed
+		{
+			get { return m_definition.SessionSettings.ProceduralSeed; }
+			set
+			{
+				if (m_definition.SessionSettings.ProceduralSeed == value) return;
+				m_definition.SessionSettings.ProceduralSeed = value;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("The density of procedurally generated asteroids")]
+		[Category("World Settings")]
+		public float ProceduralDensity
+		{
+			get { return m_definition.SessionSettings.ProceduralDensity; }
+			set
+			{
+				if (m_definition.SessionSettings.ProceduralDensity == value) return;
+				m_definition.SessionSettings.ProceduralDensity = value;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("The maximum view distance that a player can see in game")]
+		[Category("World Settings")]
+		public int ViewDistance
+		{
+			get { return m_definition.SessionSettings.ViewDistance; }
+			set
+			{
+				if (m_definition.SessionSettings.ViewDistance == value) return;
+				m_definition.SessionSettings.ViewDistance = value;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
+		[Description("Enable or Disable ingame scripting")]
+		[Category("World Settings")]
+		public bool EnableIngameScripts
+		{
+			get { return m_definition.SessionSettings.EnableIngameScripts; }
+			set
+			{
+				if (m_definition.SessionSettings.EnableIngameScripts == value) return;
+				m_definition.SessionSettings.EnableIngameScripts = value;
+			}
+		}
+
+		[DataMember]
+		[Browsable(true)]
+		[ReadOnly(false)]
 		[Description("Get or set the Scenario's TypeId")]
 		[Category("World Settings")]
 		/// <summary>
@@ -774,7 +834,7 @@ namespace SEModAPI.API.Definitions
 			set
 			{
 				if (m_definition.PauseGameWhenEmpty == value) return;
-				m_definition.PauseGameWhenEmpty = value;
+				m_definition.PauseGameWhenEmpty = value;				
 			}
 		}
 

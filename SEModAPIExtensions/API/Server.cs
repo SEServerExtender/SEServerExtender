@@ -584,9 +584,9 @@ namespace SEModAPIExtensions.API
 					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
 					{
 						AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
-						AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 					});
 
+					AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 					//AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					Application.ThreadException += Application_ThreadException;
 					Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);

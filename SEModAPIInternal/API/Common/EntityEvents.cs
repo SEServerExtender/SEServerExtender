@@ -14,6 +14,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			OnPlayerJoined,
 			OnPlayerLeft,
+			OnPlayerWorldSent,
 			OnBaseEntityMoved,
 			OnBaseEntityCreated,
 			OnBaseEntityDeleted,

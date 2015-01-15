@@ -424,6 +424,11 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
+		public void TriggerWorldSendEvent(ulong steamId)
+		{
+			//EntityEventManager.EntityEvent
+		}
+
 		private Type MyMultipartSenderType()
 		{
 			Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(NetworkingNamespace, MyMultipartSenderClass);
