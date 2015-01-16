@@ -141,6 +141,12 @@ namespace SEModAPIInternal.API.Common
         public static string PlayerMapGetSteamItemMappingField = "F8D0682ABF3074A0515A99D0E537D2E1";
 		public static string PlayerMapGetFastPlayerIdFromSteamIdMethod = "664B2E5CBB958C38E24656118771D345";
 
+		public static string PlayerMapSessionNamespace = "AAC05F537A6F0F6775339593FBDFC564";
+		public static string PlayerMapSessionClass = "D580AE7552E79DAB03A3D64B1F7B67F9";
+		public static string PlayerMapSessionCameraField = "B475119E5256E23CEA219027068578E6";
+		public static string PlayerMapCameraDataClass = "1363E4575A0EAB9C07E1CC9EE70B0711";
+		public static string PlayerMapGetCameraDataField = "3A4EC5D20D8A9F113F78FC05516F0D8B";
+
         // SteamIdToPlayerId? public long 664B2E5CBB958C38E24656118771D345(ulong u00336ADF4D8C43635669729322024D2AD33, int u0032FA8049E153F637DEA99600B785ECCA0 = 0)
 
 
@@ -201,13 +207,17 @@ namespace SEModAPIInternal.API.Common
                 result &= BaseObject.HasField(type1, PlayerMapGetPlayerItemMappingField);
                 result &= BaseObject.HasField(type1, PlayerMapGetSteamItemMappingField);
 				result &= BaseObject.HasMethod(type1, PlayerMapGetFastPlayerIdFromSteamIdMethod);
-
-				/*
-				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapEntryNamespace, PlayerMapEntryClass);
+								
+				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapCameraDataClass);
 				if (type2 == null)
-					throw new Exception("Could not find player map entry type for PlayerMap");
-				result &= BaseObject.HasField(type2, PlayerMapEntrySteamIdField);
-				*/
+					throw new Exception("Could not find camera data type for PlayerMap");
+				result &= BaseObject.HasField(type2, PlayerMapGetCameraDataField);
+
+				Type type3 = WorldManager.InternalType;
+				if(type3 == null)
+					throw new Exception("Could not find world manager type for PlayerMap");
+				result &= BaseObject.HasField(type3, PlayerMapSessionCameraField);
+
 				return result;
 			}
 			catch (Exception ex)
@@ -404,6 +414,41 @@ namespace SEModAPIInternal.API.Common
 			int num = 0;
 			long result = (long)BaseObject.InvokeEntityMethod(BackingObject, PlayerMapGetFastPlayerIdFromSteamIdMethod, new object[] {steamId, num });
 			return result;
+		}
+
+		public void RemovePlayer(long playerId)
+		{
+			try
+			{
+				Object rawPlayerItemMapping = BaseObject.GetEntityFieldValue(BackingObject, PlayerMapGetPlayerItemMappingField);
+				MethodInfo removeMethod = rawPlayerItemMapping.GetType().GetMethod("Remove");
+				removeMethod.Invoke(rawPlayerItemMapping, new object[] { playerId });
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("RemovePlayer(): {0}", ex.ToString()));
+			}
+		}
+
+		/*
+		public static string PlayerMapSessionCameraField = "B475119E5256E23CEA219027068578E6";
+		public static string PlayerMapGetCameraDataClass = "1363E4575A0EAB9C07E1CC9EE70B0711";
+		public static string PlayerMapGetCameraDataField = "3A4EC5D20D8A9F113F78FC05516F0D8B";
+		 */
+ 
+		public void ClearCameraData()
+		{
+			try
+			{
+				Object cameraDataObject = BaseObject.GetEntityFieldValue(WorldManager.Instance.BackingObject, PlayerMapSessionCameraField);
+				Object cameraDictionaryObject = BaseObject.GetEntityFieldValue(cameraDataObject, PlayerMapGetCameraDataField);
+				MethodInfo removeMethod = cameraDictionaryObject.GetType().GetMethod("Clear");
+				removeMethod.Invoke(cameraDictionaryObject, new object[] { });				
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("ClearCameraData(): {0}", ex.ToString()));
+			}
 		}
 
         // --

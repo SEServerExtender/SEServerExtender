@@ -392,9 +392,8 @@ namespace SEModAPIInternal.API.Common
 					SendFlush(steamId);
 
 					// Let's sleep for 5 seconds and let plugins know we're online
-					Thread.Sleep(5000);
+					//Thread.Sleep(5000);
 					MyObjectBuilder_World myObjectBuilderWorld = null;
-
 					lock(m_inGame)
 					{
 						if (!m_inGame.Contains(steamId))
@@ -426,7 +425,12 @@ namespace SEModAPIInternal.API.Common
 
 		public void TriggerWorldSendEvent(ulong steamId)
 		{
-			//EntityEventManager.EntityEvent
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+			newEvent.type = EntityEventManager.EntityEventType.OnPlayerWorldSent;
+			newEvent.timestamp = DateTime.Now;
+			newEvent.entity = steamId;
+			newEvent.priority = 0;
+			EntityEventManager.Instance.AddEvent(newEvent);	
 		}
 
 		private Type MyMultipartSenderType()
@@ -477,6 +481,9 @@ namespace SEModAPIInternal.API.Common
 						}
 					}
 				}
+
+				if (m_inGame.Contains(steamId))
+					TriggerWorldSendEvent(steamId);
 
 				LogManager.APILog.WriteLineAndConsole(string.Format("World Snapshot Send -> {0} ({2} - {3}): {1}ms", steamId, (DateTime.Now - start).TotalMilliseconds, size, count));
 			}

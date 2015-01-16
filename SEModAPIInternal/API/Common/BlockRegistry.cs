@@ -88,6 +88,7 @@ namespace SEModAPIInternal.API.Common
 			Register(typeof(MyObjectBuilder_OreDetector), typeof(OreDetectorEntity), tools);
 			Register(typeof(MyObjectBuilder_RemoteControl), typeof(ButtonPanelEntity), utility);
 			Register(typeof(MyObjectBuilder_InteriorTurret), typeof(InteriorTurretEntity), weapons);
+			Register(typeof(MyObjectBuilder_ShipConnector), typeof(ShipConnectorEntity), tools);
 
 			//Base Types
 			Register(typeof(MyObjectBuilder_CubeBlock), typeof(CubeBlockEntity), structural);
