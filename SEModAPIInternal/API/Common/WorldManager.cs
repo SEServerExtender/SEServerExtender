@@ -44,6 +44,13 @@ namespace SEModAPIInternal.API.Common
 
 		public static string WorldResourceManagerResourceLockField = "5378A366A1927C9686ABCFD6316F5AE6";
 
+		///////////////////////////////////////////////////////////////////
+
+		public static string SandboxGameNamespace = "33FB6E717989660631E6772B99F502AD";
+		public static string SandboxGameGameStatsClass = "8EE387052960DB6076920F525374285D";
+		public static string SandboxGameGetGameStatsInstance = "9FADFDED60BE5D614F2CA2DB13B753DE";
+		public static string SandboxGameGetUpdatesPerSecondField = "87D39FAEA45F9E56D966C7580B2E42B7";
+
 		#endregion
 
 		#region "Constructors and Initializers"
@@ -153,6 +160,7 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
+
 		#endregion
 
 		#region "Methods"
@@ -186,6 +194,13 @@ namespace SEModAPIInternal.API.Common
 					throw new Exception("Could not find world snapshot type for WorldManager");
 				result &= BaseObject.HasMethod(type3, WorldSnapshotSaveMethod);
 
+				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(SandboxGameNamespace, SandboxGameGameStatsClass);
+				if (type4 == null)
+					throw new Exception("Count not find type for SandboxGameStats");
+
+				result &= BaseObject.HasMethod(type4, SandboxGameGetGameStatsInstance);
+				result &= BaseObject.HasField(type4, SandboxGameGetUpdatesPerSecondField);
+
 				return result;
 			}
 			catch (Exception ex)
@@ -193,6 +208,32 @@ namespace SEModAPIInternal.API.Common
 				Console.WriteLine(ex);
 				return false;
 			}
+		}
+
+		/*
+		public static string SandboxGameNamespace = "33FB6E717989660631E6772B99F502AD";
+		public static string SandboxGameGameStatsClass = "8EE387052960DB6076920F525374285D";
+		public static string SandboxGameGetGameStatsInstance = "9FADFDED60BE5D614F2CA2DB13B753DE";
+		public static string SandboxGameGetUpdatesPerSecondField = "87D39FAEA45F9E56D966C7580B2E42B7";
+		 */
+ 
+		public static long GetUpdatesPerSecond()
+		{
+			long result = 0L;
+
+			try
+			{
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(SandboxGameNamespace, SandboxGameGameStatsClass);
+
+				object gameStatsObject = BaseObject.InvokeStaticMethod(type, SandboxGameGetGameStatsInstance);
+				result = (long)BaseObject.GetEntityFieldValue(gameStatsObject, SandboxGameGetUpdatesPerSecondField);
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+			}
+
+			return result;
 		}
 
 		public void SaveWorld()

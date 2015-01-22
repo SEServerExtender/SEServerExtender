@@ -64,6 +64,7 @@ namespace SEServerExtender
 		private System.Windows.Forms.Timer m_pluginManagerRefreshTimer;
 		private System.Windows.Forms.Timer m_statusCheckTimer;
 		private System.Windows.Forms.Timer m_utilitiesCleanFloatingObjectsTimer;
+		private System.Windows.Forms.Timer m_statisticsTimer;
 
 		//Utilities Page
 		private int m_floatingObjectsCount;
@@ -127,6 +128,10 @@ namespace SEServerExtender
 			m_utilitiesCleanFloatingObjectsTimer.Interval = 5000;
 			m_utilitiesCleanFloatingObjectsTimer.Tick += new EventHandler(UtilitiesCleanFloatingObjects);
 
+			m_statisticsTimer = new System.Windows.Forms.Timer();
+			m_statisticsTimer.Interval = 1000;
+			m_statisticsTimer.Tick += new EventHandler(StatisticsRefresh);
+
 			return true;
 		}
 
@@ -170,6 +175,7 @@ namespace SEServerExtender
 			m_pluginManagerRefreshTimer.Stop();
 			m_statusCheckTimer.Stop();
 			m_utilitiesCleanFloatingObjectsTimer.Stop();
+			m_statisticsTimer.Stop();
 		}
 
 		#endregion
@@ -177,6 +183,13 @@ namespace SEServerExtender
 		#region "Methods"
 
 		#region "General"
+
+		private void StatisticsRefresh(object sender, EventArgs e)
+		{
+			StringBuilder sb = new StringBuilder();
+			Sandbox.Stats.Generic.WriteTo(sb);
+			TB_Statistics.Text = sb.ToString();
+		}
 
 		private void StatusCheckRefresh(object sender, EventArgs e)
 		{
@@ -192,6 +205,9 @@ namespace SEServerExtender
 					m_factionRefreshTimer.Start();
 				if (!m_pluginManagerRefreshTimer.Enabled)
 					m_pluginManagerRefreshTimer.Start();
+
+				if (!m_statisticsTimer.Enabled)
+					m_statisticsTimer.Start();
 
 				if (PG_Control_Server_Properties.SelectedObject != m_server.Config)
 					PG_Control_Server_Properties.SelectedObject = m_server.Config;
@@ -421,6 +437,8 @@ namespace SEServerExtender
 		private void TreeViewRefresh(object sender, EventArgs e)
 		{
 			m_entityTreeRefreshTimer.Enabled = false;
+
+			SS_Bottom.Items[0].Text = string.Format("Updates Per Second: {0}", WorldManager.GetUpdatesPerSecond());
 
 			try
 			{
@@ -1200,7 +1218,7 @@ namespace SEServerExtender
 			if (linkedObject is VoxelMap)
 			{
 				VoxelMap voxelMap = (VoxelMap)linkedObject;
-
+				/*
 				List<MyVoxelMaterialDefinition> materialDefs = new List<MyVoxelMaterialDefinition>(MyDefinitionManager.Static.GetVoxelMaterialDefinitions());
 				Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
 
@@ -1229,7 +1247,7 @@ namespace SEServerExtender
 						node.Text = node.Name + " (" + total.ToString() + ")";
 					}
 				}
-
+				*/
 				TRV_Entities.EndUpdate();
 			}
 

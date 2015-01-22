@@ -189,9 +189,13 @@ namespace SEServerExtender
 					{
 						extenderArgs.restartOnCrash = true;
 					}
-					if (arg.ToLower().Equals("worldrequestreplace"))
+					if (arg.ToLower().Equals("wrr"))
 					{
 						extenderArgs.worldRequestReplace = true;
+					}
+					if (arg.ToLower().Equals("wrm"))
+					{
+						extenderArgs.worldDataModify = true;
 					}
 				}
 			}

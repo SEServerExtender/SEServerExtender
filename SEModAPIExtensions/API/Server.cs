@@ -53,6 +53,7 @@ namespace SEModAPIExtensions.API
 		public bool autoSaveSync;
 		public bool restartOnCrash;
 		public bool worldRequestReplace;
+		public bool worldDataModify;
 		public string args;
 	}
 
@@ -576,6 +577,9 @@ namespace SEModAPIExtensions.API
 				{
 					if (CommandLineArgs.worldRequestReplace)
 						NetworkManager.Instance.ReplaceWorldJoin();
+
+					if (CommandLineArgs.worldDataModify)
+						NetworkManager.Instance.ReplaceWorldData();
 
 					SandboxGameAssemblyWrapper.InitAPIGateway();
 					m_pluginManager.LoadPlugins();

@@ -22,7 +22,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string SmallGatlingGunClass = "MySmallGatlingGun";
 
 		public static string SmallGatlingGunGetInventoryMethod = "GetInventory";
-		public static string SmallGatlingGunShootMethod = "Shoot";
+		//public static string SmallGatlingGunShootMethod = "Shoot";
 		public static string SmallGatlingGunCanShootMethod = "CanShoot";
 		public static string SmallGatlingGunGetDirectionToTargetMethod = "DirectionToTarget";
 
@@ -98,7 +98,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					throw new Exception("Could not find internal type for SmallGatlingGunEntity");
 
 				result &= HasMethod(type, SmallGatlingGunGetInventoryMethod);
-				result &= HasMethod(type, SmallGatlingGunShootMethod);
+				//result &= HasMethod(type, SmallGatlingGunShootMethod);
 				result &= HasMethod(type, SmallGatlingGunCanShootMethod);
 				result &= HasMethod(type, SmallGatlingGunGetDirectionToTargetMethod);
 
@@ -167,7 +167,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				Vector3 direction = (Vector3)InvokeEntityMethod(ActualObject, SmallGatlingGunGetDirectionToTargetMethod, new object[] { Vector3.Zero });
 
-				InvokeEntityMethod(ActualObject, SmallGatlingGunShootMethod, new object[] { null, direction });
+				//InvokeEntityMethod(ActualObject, SmallGatlingGunShootMethod, new object[] { null, direction });
 			}
 			catch (Exception ex)
 			{

@@ -89,8 +89,13 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.BTN_Utilities_ClearFloatingObjectsNow = new System.Windows.Forms.Button();
 			this.CHK_Utilities_FloatingObjectAutoClean = new System.Windows.Forms.CheckBox();
+			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.TAB_Statistics = new System.Windows.Forms.TabPage();
+			this.TB_Statistics = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.TAB_MainTabs.SuspendLayout();
 			this.TAB_Control_Page.SuspendLayout();
@@ -150,6 +155,8 @@
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.SS_Bottom.SuspendLayout();
+			this.TAB_Statistics.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -163,6 +170,10 @@
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.TAB_MainTabs);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.SS_Bottom);
 			this.splitContainer1.Size = new System.Drawing.Size(951, 598);
 			this.splitContainer1.SplitterDistance = 569;
 			this.splitContainer1.TabIndex = 0;
@@ -175,6 +186,7 @@
 			this.TAB_MainTabs.Controls.Add(this.TAB_Factions_Page);
 			this.TAB_MainTabs.Controls.Add(this.TAB_Plugins_Page);
 			this.TAB_MainTabs.Controls.Add(this.TAB_Utilities_Page);
+			this.TAB_MainTabs.Controls.Add(this.TAB_Statistics);
 			this.TAB_MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TAB_MainTabs.Location = new System.Drawing.Point(0, 0);
 			this.TAB_MainTabs.Name = "TAB_MainTabs";
@@ -889,6 +901,42 @@
 			this.CHK_Utilities_FloatingObjectAutoClean.UseVisualStyleBackColor = true;
 			this.CHK_Utilities_FloatingObjectAutoClean.CheckedChanged += new System.EventHandler(this.CHK_Utilities_FloatingObjectAutoClean_CheckedChanged);
 			// 
+			// SS_Bottom
+			// 
+			this.SS_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+			this.SS_Bottom.Location = new System.Drawing.Point(0, 3);
+			this.SS_Bottom.Name = "SS_Bottom";
+			this.SS_Bottom.Size = new System.Drawing.Size(951, 22);
+			this.SS_Bottom.TabIndex = 0;
+			this.SS_Bottom.Text = "None";
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(124, 17);
+			this.toolStripStatusLabel1.Text = "Updates Per Second: 0";
+			// 
+			// TAB_Statistics
+			// 
+			this.TAB_Statistics.Controls.Add(this.TB_Statistics);
+			this.TAB_Statistics.Location = new System.Drawing.Point(4, 22);
+			this.TAB_Statistics.Name = "TAB_Statistics";
+			this.TAB_Statistics.Padding = new System.Windows.Forms.Padding(3);
+			this.TAB_Statistics.Size = new System.Drawing.Size(943, 543);
+			this.TAB_Statistics.TabIndex = 6;
+			this.TAB_Statistics.Text = "Statistics";
+			this.TAB_Statistics.UseVisualStyleBackColor = true;
+			// 
+			// TB_Statistics
+			// 
+			this.TB_Statistics.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TB_Statistics.Location = new System.Drawing.Point(3, 3);
+			this.TB_Statistics.Multiline = true;
+			this.TB_Statistics.Name = "TB_Statistics";
+			this.TB_Statistics.Size = new System.Drawing.Size(937, 537);
+			this.TB_Statistics.TabIndex = 0;
+			// 
 			// SEServerExtender
 			// 
 			this.AcceptButton = this.BTN_Chat_Send;
@@ -899,6 +947,8 @@
 			this.Name = "SEServerExtender";
 			this.Text = "SEServerExtender";
 			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.TAB_MainTabs.ResumeLayout(false);
@@ -962,6 +1012,10 @@
 			this.splitContainer4.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.SS_Bottom.ResumeLayout(false);
+			this.SS_Bottom.PerformLayout();
+			this.TAB_Statistics.ResumeLayout(false);
+			this.TAB_Statistics.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1028,5 +1082,9 @@
 		private System.Windows.Forms.Button BTN_Plugins_Reload;
 		private System.Windows.Forms.ComboBox CB_Entity_Sort;
 		private System.Windows.Forms.Button BTN_Plugins_Enable;
+		private System.Windows.Forms.StatusStrip SS_Bottom;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+		private System.Windows.Forms.TabPage TAB_Statistics;
+		private System.Windows.Forms.TextBox TB_Statistics;
 	}
 }

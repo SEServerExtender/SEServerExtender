@@ -19,6 +19,9 @@ using SEModAPIInternal.Support;
 using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Utility;
 using System.Linq.Expressions;
+
+using VRageMath;
+
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 
 namespace SEModAPIInternal.API.Common
@@ -65,12 +68,12 @@ namespace SEModAPIInternal.API.Common
 		protected static Type m_onWorldRequestType;
 
 		protected static int[] m_speeds = { 512, 256, 128, 128 };
+		protected static bool replaceData = false;
 
-
-		List<ulong> m_responded = new List<ulong>();
-		List<ulong> m_clearResponse = new List<ulong>();
-		List<ulong> m_inGame = new List<ulong>();
-		Dictionary<ulong, Tuple<DateTime, int>> m_slowDown = new Dictionary<ulong, Tuple<DateTime, int>>();
+		private static List<ulong> m_responded = new List<ulong>();
+		private static List<ulong> m_clearResponse = new List<ulong>();
+		private static List<ulong> m_inGame = new List<ulong>();
+		private static Dictionary<ulong, Tuple<DateTime, int>> m_slowDown = new Dictionary<ulong, Tuple<DateTime, int>>();
 
 		//This class is just a container for some basic steam game values as well as the actual network manager instance
 		public static string NetworkManagerWrapperNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
@@ -112,6 +115,8 @@ namespace SEModAPIInternal.API.Common
 		public static string MyMultipartSenderClass = "73C7CA87DB0535EFE711E10913D8ACFB";
 		public static string MyMultipartSenderSendPart = "A822BAC1F661C682C78230403DDF5670";
 
+		public static string MySyncLayerSendMessage = "358D29D15C14B49FEA47651E0DE22024";
+
 		/////////////////////////////////////////////////
 
 		//1 Packet Type
@@ -137,6 +142,26 @@ namespace SEModAPIInternal.API.Common
 		//2 Packet Types
 		public static string VoxelMapNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string VoxelMapNetManagerClass = "EA51F988BB36804CAE6371053AD2602E";
+
+		/////////////////////////////////////////////////////// 
+
+		private static string MultiplayerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
+
+		private static string SendCloseClass = "48D79F8E3C8922F14D85F6D98237314C";
+		private static string SendCloseClosedMsg = "4038C6AE0CB130E41455232470357263";
+		private static string SendCloseClosedMsgEntityId = "3E16AD760B497CC0921CDE99D46348D9";
+
+		private static string SendCreateClass = "8EFE49A46AB934472427B7D117FD3C64";
+		private static string SendCreateRelativeCompressedMsg = "4DFD818DC1531F7E40ED1E5D94A2B650";
+		private static string SendCreateCompressedMsg = "9163D0037A92C9B6DBF801EF5D53998E";
+
+		private static string SendCreateRelativeCompressedMsgCreateMessage = "21859045930ACEE4A31D6391A0937D87";
+		private static string SendCreateRelativeCompressedMsgBaseEntity = "EE1F27FD35F85E8CD38338A0D8AB4AC8";
+		private static string SendCreateRelativeCompressedMsgRelativeVelocity = "A4DD67802385CCB3335B898BA717910B";
+
+		private static string SendCreateCompressedMsgObjectBuilders = "75490843CC702E3F6857E0CF65C5E908";
+		private static string SendCreateCompressedMsgBuilderLengths = "DADA09BE16684760302EB5A06A68A7C4";
+
 
 		#endregion
 
@@ -251,6 +276,101 @@ namespace SEModAPIInternal.API.Common
 			return controlType;
 		}
 
+		private static void SendMessage(object msg, ulong userId, Type msgType, int flag)
+		{
+			try
+			{
+				var netManager = GetNetworkManager();
+				var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
+				MethodInfo[] methods = mySyncLayer.GetType().GetMethods();
+				MethodInfo sendMessageMethod = methods.FirstOrDefault(x => x.Name == MySyncLayerSendMessage);
+				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
+				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, userId, flag });
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+			}
+		}
+
+		public static void SendCloseEntity(ulong userId, long entityId)
+		{
+			int pos = 0;
+			try
+			{
+				Type sendCloseClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, SendCloseClass);
+				Type sendCloseType = sendCloseClassType.GetNestedType(SendCloseClosedMsg, BindingFlags.NonPublic);
+				FieldInfo sendCloseEntityIdField = sendCloseType.GetField(SendCloseClosedMsgEntityId);
+				Object sendCloseStruct = Activator.CreateInstance(sendCloseType);
+				sendCloseEntityIdField.SetValue(sendCloseStruct, entityId);
+
+				NetworkManager.SendMessage(sendCloseStruct, userId, sendCloseType, 2);
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("SendCloseEntity({1}): {0}", ex.ToString(), pos));
+			}
+		}
+
+		public static void SendEntityCreated(MyObjectBuilder_EntityBase entity, ulong userId)
+		{
+			Type sendCreateClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, SendCreateClass);
+			Type sendCreateCompressedMsgType = sendCreateClassType.GetNestedType(SendCreateCompressedMsg, BindingFlags.NonPublic);
+
+			FieldInfo createObjectBuilders = sendCreateCompressedMsgType.GetField(SendCreateCompressedMsgObjectBuilders);
+			FieldInfo createBuilderLengths = sendCreateCompressedMsgType.GetField(SendCreateCompressedMsgBuilderLengths);
+
+			MemoryStream memoryStream = new MemoryStream();
+			MyObjectBuilderSerializer.SerializeXML(memoryStream, entity, MyObjectBuilderSerializer.XmlCompression.Gzip, typeof(MyObjectBuilder_EntityBase));
+			if (memoryStream.Length > (long)2147483647)
+			{
+				return;
+			}
+
+			object createMessage = Activator.CreateInstance(sendCreateCompressedMsgType);
+
+			createObjectBuilders.SetValue(createMessage, memoryStream.ToArray());
+			createBuilderLengths.SetValue(createMessage, new int[] { (int)memoryStream.Length });
+
+			SendMessage(createMessage, userId, sendCreateCompressedMsgType, 1);
+		}
+
+		public static void SendEntityCreatedRelative(MyObjectBuilder_EntityBase entity, IMyCubeGrid grid, Vector3 relativeVelocity, ulong userId)
+		{
+			Type sendCreateClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, SendCreateClass);
+			Type sendCreateRelativeCompressedMsgType = sendCreateClassType.GetNestedType(SendCreateRelativeCompressedMsg, BindingFlags.NonPublic);
+			Type sendCreateCompressedMsgType = sendCreateClassType.GetNestedType(SendCreateCompressedMsg, BindingFlags.NonPublic);
+
+			FieldInfo createMessageField = sendCreateRelativeCompressedMsgType.GetField(SendCreateRelativeCompressedMsgCreateMessage);
+			FieldInfo createBaseEntity = sendCreateRelativeCompressedMsgType.GetField(SendCreateRelativeCompressedMsgBaseEntity);
+			FieldInfo createRelativeVelocity = sendCreateRelativeCompressedMsgType.GetField(SendCreateRelativeCompressedMsgRelativeVelocity);
+
+			FieldInfo createObjectBuilders = sendCreateCompressedMsgType.GetField(SendCreateCompressedMsgObjectBuilders);
+			FieldInfo createBuilderLengths = sendCreateCompressedMsgType.GetField(SendCreateCompressedMsgBuilderLengths);
+
+			MemoryStream memoryStream = new MemoryStream();
+			MyPositionAndOrientation value = entity.PositionAndOrientation.Value;
+			Matrix matrix = value.GetMatrix() * grid.PositionComp.WorldMatrixNormalizedInv;
+			entity.PositionAndOrientation = new MyPositionAndOrientation?(new MyPositionAndOrientation(matrix));
+			MyObjectBuilderSerializer.SerializeXML(memoryStream, entity, MyObjectBuilderSerializer.XmlCompression.Gzip, typeof(MyObjectBuilder_EntityBase));
+			if (memoryStream.Length > (long)2147483647)
+			{
+				return;
+			}
+
+			// SetValues
+			object relativeMessage = Activator.CreateInstance(sendCreateRelativeCompressedMsgType);
+			object createMessage = createMessageField.GetValue(relativeMessage);
+
+			createObjectBuilders.SetValue(createMessage, memoryStream.ToArray());
+			createBuilderLengths.SetValue(createMessage, new int[] { (int)memoryStream.Length });
+
+			createBaseEntity.SetValue(relativeMessage, entity.EntityId);
+			createRelativeVelocity.SetValue(relativeMessage, relativeVelocity);
+
+			SendMessage(relativeMessage, userId, sendCreateCompressedMsgType, 1);
+		}
+
 		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
 		public void ReplaceWorldJoin()
 		{
@@ -277,6 +397,11 @@ namespace SEModAPIInternal.API.Common
 			{
 
 			}
+		}
+
+		public void ReplaceWorldData()
+		{
+			replaceData = true;
 		}
 
 		/// <summary>
@@ -349,7 +474,6 @@ namespace SEModAPIInternal.API.Common
 
 						if (!m_responded.Contains(player) && !m_clearResponse.Contains(player) && !m_inGame.Contains(player))
 						{
-							LogManager.APILog.WriteLineAndConsole("Preparing a response for connecting user ...");
 							m_clearResponse.Add(player);
 						}
 					}
@@ -380,13 +504,14 @@ namespace SEModAPIInternal.API.Common
 
 		[HandleProcessCorruptedStateExceptions]
 		[SecurityCritical]
-		private void SendWorldData(ulong steamId)
+		public static void SendWorldData(ulong steamId)
 		{
 			try
 			{
 				MemoryStream ms = new MemoryStream();
 				if (MyAPIGateway.Session != null)
 				{
+					DateTime start = DateTime.Now;
 					LogManager.APILog.WriteLineAndConsole(string.Format("...responding to user: {0}", steamId));
 					SendPreemble(steamId, 1);
 					SendFlush(steamId);
@@ -409,10 +534,28 @@ namespace SEModAPIInternal.API.Common
 						myObjectBuilderWorld = MyAPIGateway.Session.GetWorld();
 					});
 
+					if (replaceData)
+					{
+						for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
+						{
+							MyObjectBuilder_EntityBase entity = (MyObjectBuilder_EntityBase)myObjectBuilderWorld.Sector.SectorObjects[r];
+							if (!(entity is MyObjectBuilder_CubeGrid))
+								continue;
+
+							if ((entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
+								continue;
+
+							myObjectBuilderWorld.Sector.SectorObjects.RemoveAt(r);
+						}
+					}
+
 					MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
 					checkpoint.WorkshopId = null;
 					checkpoint.CharacterToolbar = null;
+					DateTime cs = DateTime.Now;
 					MyObjectBuilderSerializer.SerializeXML(ms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
+					LogManager.APILog.WriteLineAndConsole(string.Format("...response construction took {0}ms (cp - {1}ms)", (DateTime.Now - start).TotalMilliseconds, (DateTime.Now - cs).TotalMilliseconds));
+
 				}
 
 				TransferWorld(ms, steamId);
@@ -423,7 +566,7 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
-		public void TriggerWorldSendEvent(ulong steamId)
+		private static void TriggerWorldSendEvent(ulong steamId)
 		{
 			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
 			newEvent.type = EntityEventManager.EntityEventType.OnPlayerWorldSent;
@@ -433,13 +576,13 @@ namespace SEModAPIInternal.API.Common
 			EntityEventManager.Instance.AddEvent(newEvent);	
 		}
 
-		private Type MyMultipartSenderType()
+		private static Type MyMultipartSenderType()
 		{
 			Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(NetworkingNamespace, MyMultipartSenderClass);
 			return type;
 		}
 
-		private void TransferWorld(MemoryStream ms, ulong steamId)
+		private static void TransferWorld(MemoryStream ms, ulong steamId)
 		{
 			try
 			{
@@ -499,13 +642,13 @@ namespace SEModAPIInternal.API.Common
 			return type;
 		}
 
-		private void SendPreemble(ulong steamId, int num)
+		private static void SendPreemble(ulong steamId, int num)
 		{
 			//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
 			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreemble, new object[] { steamId, num });
 		}		
 
-		private void SendFlush(ulong steamId)
+		private static void SendFlush(ulong steamId)
 		{
 			var netManager = GetNetworkManager();
 			var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
