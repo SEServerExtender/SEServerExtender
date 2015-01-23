@@ -59,6 +59,7 @@
     <Compile Include="API\Plugin\PluginBase.cs" />
     <Compile Include="API\PluginManager.cs" />
     <Compile Include="API\Server.cs" />
+    <Compile Include="API\ServerExtensions.cs" />
     <Compile Include="API\ServerService.cs" />
     <Compile Include="API\SessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
