@@ -44,6 +44,7 @@
     <Compile Include="API\ChatService.cs" />
     <Compile Include="API\IChatServiceContract.cs" />
     <Compile Include="API\IPC\CorsInspector.cs" />
+    <Compile Include="API\IPC\IInternalServiceContract.cs" />
     <Compile Include="API\IPC\IService.cs" />
     <Compile Include="API\IPC\Service.cs" />
     <Compile Include="API\IPC\UserNameValidator.cs" />
