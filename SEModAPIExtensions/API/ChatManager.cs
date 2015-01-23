@@ -33,42 +33,6 @@ using Havok;
 
 namespace SEModAPIExtensions.API
 {
-	[ServiceContract]
-	public interface IChatServiceContract
-	{
-		[OperationContract]
-		List<string> GetChatMessages();
-
-		[OperationContract]
-		void SendPrivateChatMessage(ulong remoteUserId, string message);
-
-		[OperationContract]
-		void SendPublicChatMessage(string message);
-	}
-
-	[ServiceBehavior(
-		ConcurrencyMode = ConcurrencyMode.Single,
-		IncludeExceptionDetailInFaults = true,
-		IgnoreExtensionDataObject = true
-	)]
-	public class ChatService : IChatServiceContract
-	{
-		public List<string> GetChatMessages()
-		{
-			return ChatManager.Instance.ChatMessages;
-		}
-
-		public void SendPrivateChatMessage(ulong remoteUserId, string message)
-		{
-			ChatManager.Instance.SendPrivateChatMessage(remoteUserId, message);
-		}
-
-		public void SendPublicChatMessage(string message)
-		{
-			ChatManager.Instance.SendPublicChatMessage(message);
-		}
-	}
-
 	public class ChatManager
 	{
 		public struct ChatCommand
