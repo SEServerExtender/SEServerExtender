@@ -36,35 +36,7 @@ namespace SEModAPIExtensions.API
         public List<ChatManager.ChatEvent> chatEvents;
     }
 
-	[ServiceBehavior(
-        ConcurrencyMode = ConcurrencyMode.Single,
-        IncludeExceptionDetailInFaults = true,
-        IgnoreExtensionDataObject = true
-    )]
-    public class PluginService : IPluginServiceContract
-    {
-        public List<Guid> GetPluginGuids()
-        {
-            return new List<Guid>(PluginManager.Instance.Plugins.Keys);
-        }
-
-        public bool GetPluginStatus(Guid guid)
-        {
-            return PluginManager.Instance.GetPluginState(guid);
-        }
-
-        public void LoadPlugin(Guid guid)
-        {
-            PluginManager.Instance.InitPlugin(guid);
-        }
-
-        public void UnloadPlugin(Guid guid)
-        {
-            PluginManager.Instance.UnloadPlugin(guid);
-        }
-    }
-
-    public class PluginManager
+	public class PluginManager
     {
         #region "Attributes"
 

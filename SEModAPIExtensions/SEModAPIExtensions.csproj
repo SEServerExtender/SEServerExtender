@@ -48,6 +48,7 @@
     <Compile Include="API\IPluginServiceContract.cs" />
     <Compile Include="API\IServerServiceContract.cs" />
     <Compile Include="API\MultiblockStructure.cs" />
+    <Compile Include="API\PluginService.cs" />
     <Compile Include="API\Plugin\Events\IBaseEntityHandler.cs" />
     <Compile Include="API\Plugin\Events\ICharacterEventHandler.cs" />
     <Compile Include="API\Plugin\Events\IChatEventHandler.cs" />
