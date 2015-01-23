@@ -45,6 +45,7 @@
     <Compile Include="API\IPC\IService.cs" />
     <Compile Include="API\IPC\Service.cs" />
     <Compile Include="API\IPC\UserNameValidator.cs" />
+    <Compile Include="API\IServerServiceContract.cs" />
     <Compile Include="API\MultiblockStructure.cs" />
     <Compile Include="API\Plugin\Events\IBaseEntityHandler.cs" />
     <Compile Include="API\Plugin\Events\ICharacterEventHandler.cs" />

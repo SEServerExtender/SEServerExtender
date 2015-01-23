@@ -57,28 +57,6 @@ namespace SEModAPIExtensions.API
 		public string args;
 	}
 
-	[ServiceContract]
-	public interface IServerServiceContract
-	{
-		[OperationContract]
-		Server GetServer();
-
-		[OperationContract]
-		void StartServer();
-
-		[OperationContract]
-		void StopServer();
-
-		[OperationContract]
-		void LoadServerConfig();
-
-		[OperationContract]
-		void SaveServerConfig();
-
-		[OperationContract]
-		void SetAutosaveInterval(double interval);
-	}
-
 	[ServiceBehavior(
 		ConcurrencyMode = ConcurrencyMode.Single,
 		IncludeExceptionDetailInFaults = true,
