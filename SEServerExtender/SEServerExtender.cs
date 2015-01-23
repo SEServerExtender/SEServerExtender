@@ -188,6 +188,9 @@ namespace SEServerExtender
 		{
 			StringBuilder sb = new StringBuilder();
 			Sandbox.Stats.Generic.WriteTo(sb);
+			Sandbox.Stats.Network.WriteTo(sb);
+			Sandbox.Stats.Timing.WriteTo(sb);
+			
 			TB_Statistics.Text = sb.ToString();
 		}
 
@@ -1218,37 +1221,45 @@ namespace SEServerExtender
 			if (linkedObject is VoxelMap)
 			{
 				VoxelMap voxelMap = (VoxelMap)linkedObject;
-				/*
+				
 				List<MyVoxelMaterialDefinition> materialDefs = new List<MyVoxelMaterialDefinition>(MyDefinitionManager.Static.GetVoxelMaterialDefinitions());
-				Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
 
-				TRV_Entities.BeginUpdate();
-				if (e.Node.Nodes.Count < materialDefs.Count)
+				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
 				{
-					e.Node.Nodes.Clear();
+					Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
 
-					foreach (var material in materialDefs)
+					this.Invoke(new Action(() =>
 					{
-						TreeNode newNode = e.Node.Nodes.Add(material.Id.SubtypeName);
-						newNode.Name = newNode.Text;
-						newNode.Tag = material;
-					}
-				}
+						TRV_Entities.BeginUpdate();
+						if (e.Node.Nodes.Count < materialDefs.Count)
+						{
+							e.Node.Nodes.Clear();
 
-				foreach (TreeNode node in e.Node.Nodes)
-				{
-					Object tag = node.Tag;
-					if(tag == null || !(tag is MyVoxelMaterialDefinition))
-						continue;
-					MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
-					if (totalMaterials.ContainsKey(material))
-					{
-						float total = totalMaterials[material];
-						node.Text = node.Name + " (" + total.ToString() + ")";
-					}
-				}
-				*/
-				TRV_Entities.EndUpdate();
+							foreach (var material in materialDefs)
+							{
+								TreeNode newNode = e.Node.Nodes.Add(material.Id.SubtypeName);
+								newNode.Name = newNode.Text;
+								newNode.Tag = material;
+							}
+						}
+
+						foreach (TreeNode node in e.Node.Nodes)
+						{
+							Object tag = node.Tag;
+							if (tag == null || !(tag is MyVoxelMaterialDefinition))
+								continue;
+							MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
+							if (totalMaterials.ContainsKey(material))
+							{
+								float total = totalMaterials[material];
+								node.Text = node.Name + " (" + total.ToString() + ")";
+							}
+						}
+
+						TRV_Entities.EndUpdate();
+					}));
+				}));
+
 			}
 
 			if (linkedObject is CharacterEntity)

@@ -14,6 +14,7 @@ using System.Security;
 using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Serializer;
+using Sandbox.Common.ObjectBuilders.Voxels;
 
 using SEModAPIInternal.Support;
 using SEModAPIInternal.API.Entity;
@@ -516,7 +517,7 @@ namespace SEModAPIInternal.API.Common
 					SendPreemble(steamId, 1);
 					SendFlush(steamId);
 
-					// Let's sleep for 5 seconds and let plugins know we're online
+					// Let's sleep for 5 seconds and let plugins know we're online -- let's not after all, causing sync issues
 					//Thread.Sleep(5000);
 					MyObjectBuilder_World myObjectBuilderWorld = null;
 					lock(m_inGame)
@@ -539,14 +540,16 @@ namespace SEModAPIInternal.API.Common
 						for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
 						{
 							MyObjectBuilder_EntityBase entity = (MyObjectBuilder_EntityBase)myObjectBuilderWorld.Sector.SectorObjects[r];
-							if (!(entity is MyObjectBuilder_CubeGrid))
+							if (!(entity is MyObjectBuilder_CubeGrid) && !(entity is MyObjectBuilder_VoxelMap))
 								continue;
 
-							if ((entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
+							if ((entity is MyObjectBuilder_CubeGrid) && (entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
 								continue;
 
 							myObjectBuilderWorld.Sector.SectorObjects.RemoveAt(r);
 						}
+
+						myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
 					}
 
 					MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
