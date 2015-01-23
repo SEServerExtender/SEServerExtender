@@ -3,7 +3,7 @@ namespace SEModAPIExtensions.API
 	using System;
 	using System.Reflection;
 
-	static class ServerExtensions
+	static class ServerExtensionMethods
 	{
 		public static void ClearEventInvocations(this object obj, string eventName)
 		{
