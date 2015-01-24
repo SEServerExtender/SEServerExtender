@@ -1,26 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Definitions;
-
-using SEModAPI.API.Definitions;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.Support;
 
 using VRageMath;
-using VRage.Common.Utils;
-using System.Collections;
 
 namespace SEModAPIExtensions.API
 {
@@ -37,13 +25,7 @@ namespace SEModAPIExtensions.API
 
 		public static CargoShipManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new CargoShipManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new CargoShipManager( ) ); }
 		}
 
 		public void SpawnCargoShipGroup( ulong remoteUserId = 0 )
@@ -115,7 +97,7 @@ namespace SEModAPIExtensions.API
 				int randomShipIndex = Math.Max( 0, Math.Min( (int)Math.Round( randomChance * possibleGroups.Count, 0 ), possibleGroups.Count - 1 ) );
 				MySpawnGroupDefinition randomSpawnGroup = possibleGroups[ randomShipIndex ];
 
-				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, "Spawning cargo group '" + randomSpawnGroup.DisplayNameText.ToString( ) + "' ..." );
+				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Spawning cargo group '{0}' ...", randomSpawnGroup.DisplayNameText.ToString( ) ) );
 
 				//Spawn the ships in the group
 				Matrix orientation = Matrix.CreateLookAt( startPosition, stopPosition, new Vector3( 0, 1, 0 ) );
@@ -175,7 +157,7 @@ namespace SEModAPIExtensions.API
 					SectorObjectManager.Instance.AddEntity( cubeGrid );
 				}
 
-				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, "Cargo group '" + randomSpawnGroup.DisplayNameText.ToString( ) + "' spawned with " + randomSpawnGroup.Prefabs.Count.ToString( ) + " ships at " + startPosition.ToString( ) );
+				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Cargo group '{0}' spawned with {1} ships at {2}", randomSpawnGroup.DisplayNameText.ToString( ), randomSpawnGroup.Prefabs.Count.ToString( ), startPosition.ToString( ) ) );
 			}
 			catch ( Exception ex )
 			{
