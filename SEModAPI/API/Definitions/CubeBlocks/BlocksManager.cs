@@ -18,7 +18,6 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		#region "Attributes"
 
 		private static string m_DefaultFileName = "CubeBlocks.sbc";
-		private bool m_pendingChanges = false;
 		private ConfigFileSerializer m_configFileSerializer;
 		private MyObjectBuilder_Definitions m_definitions;
 
@@ -225,7 +224,6 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			m_definitions.CubeBlocks = ExtractBaseDefinitionsFromContainers().ToArray();
 			m_configFileSerializer.Serialize(m_definitions);
-			m_pendingChanges = false;
 		}
 
 		/// <summary>
@@ -486,7 +484,6 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 					break;
 				}*/
 			}
-			m_pendingChanges = false;
 		}
 
 		/// <summary>
