@@ -81,141 +81,141 @@ namespace SEModAPIExtensions.API
 
 		#region "Constructors and Initializers"
 
-		protected ChatManager()
+		protected ChatManager( )
 		{
 			m_instance = this;
 
-			m_chatMessages = new List<string>();
-			m_chatHistory = new List<ChatEvent>();
+			m_chatMessages = new List<string>( );
+			m_chatHistory = new List<ChatEvent>( );
 			m_chatHandlerSetup = false;
-			m_resourceLock = new FastResourceLock();
-			m_chatEvents = new List<ChatEvent>();
-			m_chatCommands = new Dictionary<ChatCommand, Guid>();
+			m_resourceLock = new FastResourceLock( );
+			m_chatEvents = new List<ChatEvent>( );
+			m_chatCommands = new Dictionary<ChatCommand, Guid>( );
 
-			ChatCommand deleteCommand = new ChatCommand();
+			ChatCommand deleteCommand = new ChatCommand( );
 			deleteCommand.command = "delete";
 			deleteCommand.callback = Command_Delete;
 			deleteCommand.requiresAdmin = true;
 
-			ChatCommand tpCommand = new ChatCommand();
+			ChatCommand tpCommand = new ChatCommand( );
 			tpCommand.command = "tp";
 			tpCommand.callback = Command_Teleport;
 			tpCommand.requiresAdmin = true;
 
-			ChatCommand stopCommand = new ChatCommand();
+			ChatCommand stopCommand = new ChatCommand( );
 			stopCommand.command = "stop";
 			stopCommand.callback = Command_Stop;
 			stopCommand.requiresAdmin = true;
 
-			ChatCommand getIdCommand = new ChatCommand();
+			ChatCommand getIdCommand = new ChatCommand( );
 			getIdCommand.command = "getid";
 			getIdCommand.callback = Command_GetId;
 			getIdCommand.requiresAdmin = true;
 
-			ChatCommand saveCommand = new ChatCommand();
+			ChatCommand saveCommand = new ChatCommand( );
 			saveCommand.command = "save";
 			saveCommand.callback = Command_Save;
 			saveCommand.requiresAdmin = true;
 
-			ChatCommand ownerCommand = new ChatCommand();
+			ChatCommand ownerCommand = new ChatCommand( );
 			ownerCommand.command = "owner";
 			ownerCommand.callback = Command_Owner;
 			ownerCommand.requiresAdmin = true;
 
-			ChatCommand exportCommand = new ChatCommand();
+			ChatCommand exportCommand = new ChatCommand( );
 			exportCommand.command = "export";
 			exportCommand.callback = Command_Export;
 			exportCommand.requiresAdmin = true;
 
-			ChatCommand importCommand = new ChatCommand();
+			ChatCommand importCommand = new ChatCommand( );
 			importCommand.command = "import";
 			importCommand.callback = Command_Import;
 			importCommand.requiresAdmin = true;
 
-			ChatCommand spawnCommand = new ChatCommand();
+			ChatCommand spawnCommand = new ChatCommand( );
 			spawnCommand.command = "spawn";
 			spawnCommand.callback = Command_Spawn;
 			spawnCommand.requiresAdmin = true;
 
-			ChatCommand clearCommand = new ChatCommand();
+			ChatCommand clearCommand = new ChatCommand( );
 			clearCommand.command = "clear";
 			clearCommand.callback = Command_Clear;
 			clearCommand.requiresAdmin = true;
 
-			ChatCommand listCommand = new ChatCommand();
+			ChatCommand listCommand = new ChatCommand( );
 			listCommand.command = "list";
 			listCommand.callback = Command_List;
 			listCommand.requiresAdmin = true;
 
-			ChatCommand kickCommand = new ChatCommand();
+			ChatCommand kickCommand = new ChatCommand( );
 			kickCommand.command = "kick";
 			kickCommand.callback = Command_Kick;
 			kickCommand.requiresAdmin = true;
 
-            ChatCommand onCommand = new ChatCommand();
-            onCommand.command = "on";
-            onCommand.callback = Command_On;
-            onCommand.requiresAdmin = true;
+			ChatCommand onCommand = new ChatCommand( );
+			onCommand.command = "on";
+			onCommand.callback = Command_On;
+			onCommand.requiresAdmin = true;
 
-			ChatCommand offCommand = new ChatCommand();
+			ChatCommand offCommand = new ChatCommand( );
 			offCommand.command = "off";
 			offCommand.callback = Command_Off;
 			offCommand.requiresAdmin = true;
 
-			ChatCommand banCommand = new ChatCommand();
+			ChatCommand banCommand = new ChatCommand( );
 			banCommand.command = "ban";
 			banCommand.callback = Command_Ban;
 			banCommand.requiresAdmin = true;
 
-			ChatCommand unbanCommand = new ChatCommand();
+			ChatCommand unbanCommand = new ChatCommand( );
 			unbanCommand.command = "unban";
 			unbanCommand.callback = Command_Unban;
 			unbanCommand.requiresAdmin = true;
 
-			ChatCommand asyncSaveCommand = new ChatCommand();
+			ChatCommand asyncSaveCommand = new ChatCommand( );
 			asyncSaveCommand.command = "savesync";
 			asyncSaveCommand.callback = Command_SyncSave;
 			asyncSaveCommand.requiresAdmin = true;
 
-			RegisterChatCommand(offCommand);
-			RegisterChatCommand(onCommand);
-			RegisterChatCommand(deleteCommand);
-			RegisterChatCommand(tpCommand);
-			RegisterChatCommand(stopCommand);
-			RegisterChatCommand(getIdCommand);
-			RegisterChatCommand(saveCommand);
-			RegisterChatCommand(ownerCommand);
-			RegisterChatCommand(exportCommand);
-			RegisterChatCommand(importCommand);
-			RegisterChatCommand(spawnCommand);
-			RegisterChatCommand(clearCommand);
-			RegisterChatCommand(listCommand);
-			RegisterChatCommand(kickCommand);	
-			RegisterChatCommand(banCommand);
-			RegisterChatCommand(unbanCommand);
-			RegisterChatCommand(asyncSaveCommand);
+			RegisterChatCommand( offCommand );
+			RegisterChatCommand( onCommand );
+			RegisterChatCommand( deleteCommand );
+			RegisterChatCommand( tpCommand );
+			RegisterChatCommand( stopCommand );
+			RegisterChatCommand( getIdCommand );
+			RegisterChatCommand( saveCommand );
+			RegisterChatCommand( ownerCommand );
+			RegisterChatCommand( exportCommand );
+			RegisterChatCommand( importCommand );
+			RegisterChatCommand( spawnCommand );
+			RegisterChatCommand( clearCommand );
+			RegisterChatCommand( listCommand );
+			RegisterChatCommand( kickCommand );
+			RegisterChatCommand( banCommand );
+			RegisterChatCommand( unbanCommand );
+			RegisterChatCommand( asyncSaveCommand );
 
-			SetupWCFService();
+			SetupWCFService( );
 
-			Console.WriteLine("Finished loading ChatManager");
+			Console.WriteLine( "Finished loading ChatManager" );
 		}
 
-		private bool SetupWCFService()
+		private bool SetupWCFService( )
 		{
-			if (!Server.Instance.IsWCFEnabled)
+			if ( !Server.Instance.IsWCFEnabled )
 				return true;
 
 			ServiceHost selfHost = null;
 			try
 			{
-				selfHost = Server.CreateServiceHost(typeof(ChatService), typeof(IChatServiceContract), "Chat/", "ChatService");
-				selfHost.Open();
+				selfHost = Server.CreateServiceHost( typeof( ChatService ), typeof( IChatServiceContract ), "Chat/", "ChatService" );
+				selfHost.Open( );
 			}
-			catch (CommunicationException ex)
+			catch ( CommunicationException ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole("An exception occurred: " + ex.Message);
-				if(selfHost != null)
-					selfHost.Abort();
+				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
+				if ( selfHost != null )
+					selfHost.Abort( );
 				return false;
 			}
 
@@ -230,9 +230,9 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				if (m_instance == null)
+				if ( m_instance == null )
 				{
-					m_instance = new ChatManager();
+					m_instance = new ChatManager( );
 				}
 				return m_instance;
 			}
@@ -242,7 +242,7 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				SetupChatHandlers();
+				SetupChatHandlers( );
 
 				return m_chatMessages;
 			}
@@ -252,13 +252,13 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				SetupChatHandlers();
+				SetupChatHandlers( );
 
-				m_resourceLock.AcquireShared();
+				m_resourceLock.AcquireShared( );
 
-				List<ChatEvent> history = new List<ChatEvent>(m_chatHistory);
+				List<ChatEvent> history = new List<ChatEvent>( m_chatHistory );
 
-				m_resourceLock.ReleaseShared();
+				m_resourceLock.ReleaseShared( );
 
 				return history;
 			}
@@ -268,9 +268,9 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				SetupChatHandlers();
+				SetupChatHandlers( );
 
-				List<ChatEvent> copy = new List<ChatEvent>(m_chatEvents.ToArray());
+				List<ChatEvent> copy = new List<ChatEvent>( m_chatEvents.ToArray( ) );
 				return copy;
 			}
 		}
@@ -281,366 +281,366 @@ namespace SEModAPIExtensions.API
 
 		#region "General"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ChatMessageStructNamespace, ChatMessageStructClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for ChatMessageStruct");
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ChatMessageStructNamespace, ChatMessageStructClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for ChatMessageStruct" );
 				bool result = true;
-				result &= BaseObject.HasField(type, ChatMessageMessageField);
+				result &= BaseObject.HasField( type, ChatMessageMessageField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		private void SetupChatHandlers()
+		private void SetupChatHandlers( )
 		{
-			if (m_chatHandlerSetup)
+			if ( m_chatHandlerSetup )
 				return;
 
-			if (!SandboxGameAssemblyWrapper.Instance.IsGameStarted)
+			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 				return;
 
 			try
 			{
-				var netManager = ServerNetworkManager.GetNetworkManager();
-				if (netManager == null)
+				var netManager = ServerNetworkManager.GetNetworkManager( );
+				if ( netManager == null )
 					return;
 
 				Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
-				ServerNetworkManager.Instance.RegisterChatReceiver(chatHook);
+				ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
 
 				m_chatHandlerSetup = true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected Object CreateChatMessageStruct(string message)
+		protected Object CreateChatMessageStruct( string message )
 		{
-			Type chatMessageStructType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ChatMessageStructNamespace, ChatMessageStructClass);
-			FieldInfo messageField = chatMessageStructType.GetField(ChatMessageMessageField);
+			Type chatMessageStructType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ChatMessageStructNamespace, ChatMessageStructClass );
+			FieldInfo messageField = chatMessageStructType.GetField( ChatMessageMessageField );
 
-			Object chatMessageStruct = Activator.CreateInstance(chatMessageStructType);
-			messageField.SetValue(chatMessageStruct, message);
+			Object chatMessageStruct = Activator.CreateInstance( chatMessageStructType );
+			messageField.SetValue( chatMessageStruct, message );
 
 			return chatMessageStruct;
 		}
 
-		protected void ReceiveChatMessage(ulong remoteUserId, string message, ChatEntryTypeEnum entryType)
+		protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
-			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(remoteUserId);
+			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
 
-			bool commandParsed = ParseChatCommands(message, remoteUserId);
+			bool commandParsed = ParseChatCommands( message, remoteUserId );
 
-			if (!commandParsed && entryType == ChatEntryTypeEnum.ChatMsg)
+			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
 			{
-				m_chatMessages.Add(playerName + ": " + message);
-				LogManager.ChatLog.WriteLineAndConsole("Chat - Client '" + playerName + "': " + message);
+				m_chatMessages.Add( playerName + ": " + message );
+				LogManager.ChatLog.WriteLineAndConsole( "Chat - Client '" + playerName + "': " + message );
 			}
 
-			ChatEvent chatEvent = new ChatEvent();
+			ChatEvent chatEvent = new ChatEvent( );
 			chatEvent.type = ChatEventType.OnChatReceived;
 			chatEvent.timestamp = DateTime.Now;
 			chatEvent.sourceUserId = remoteUserId;
 			chatEvent.remoteUserId = 0;
 			chatEvent.message = message;
 			chatEvent.priority = 0;
-			ChatManager.Instance.AddEvent(chatEvent);
+			ChatManager.Instance.AddEvent( chatEvent );
 
-			m_resourceLock.AcquireExclusive();
-			m_chatHistory.Add(chatEvent);
-			m_resourceLock.ReleaseExclusive();
+			m_resourceLock.AcquireExclusive( );
+			m_chatHistory.Add( chatEvent );
+			m_resourceLock.ReleaseExclusive( );
 		}
 
-		public void SendPrivateChatMessage(ulong remoteUserId, string message)
+		public void SendPrivateChatMessage( ulong remoteUserId, string message )
 		{
-			if (!SandboxGameAssemblyWrapper.Instance.IsGameStarted)
+			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 				return;
-			if (string.IsNullOrEmpty(message))
+			if ( string.IsNullOrEmpty( message ) )
 				return;
 
 			try
 			{
-				if (remoteUserId != 0)
+				if ( remoteUserId != 0 )
 				{
-					Object chatMessageStruct = CreateChatMessageStruct(message);
-					ServerNetworkManager.Instance.SendStruct(remoteUserId, chatMessageStruct, chatMessageStruct.GetType());
+					Object chatMessageStruct = CreateChatMessageStruct( message );
+					ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
 				}
 
-				m_chatMessages.Add("Server: " + message);
+				m_chatMessages.Add( "Server: " + message );
 
-				LogManager.ChatLog.WriteLineAndConsole("Chat - Server: " + message);
+				LogManager.ChatLog.WriteLineAndConsole( "Chat - Server: " + message );
 
-				ChatEvent chatEvent = new ChatEvent();
+				ChatEvent chatEvent = new ChatEvent( );
 				chatEvent.type = ChatEventType.OnChatSent;
 				chatEvent.timestamp = DateTime.Now;
 				chatEvent.sourceUserId = 0;
 				chatEvent.remoteUserId = remoteUserId;
 				chatEvent.message = message;
 				chatEvent.priority = 0;
-				ChatManager.Instance.AddEvent(chatEvent);
+				ChatManager.Instance.AddEvent( chatEvent );
 
-				m_resourceLock.AcquireExclusive();
-				m_chatHistory.Add(chatEvent);
-				m_resourceLock.ReleaseExclusive();
+				m_resourceLock.AcquireExclusive( );
+				m_chatHistory.Add( chatEvent );
+				m_resourceLock.ReleaseExclusive( );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public void SendPublicChatMessage(string message)
+		public void SendPublicChatMessage( string message )
 		{
-			if (!SandboxGameAssemblyWrapper.Instance.IsGameStarted)
+			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 				return;
-			if (string.IsNullOrEmpty(message))
+			if ( string.IsNullOrEmpty( message ) )
 				return;
 
-			bool commandParsed = ParseChatCommands(message);
+			bool commandParsed = ParseChatCommands( message );
 
 			try
 			{
-				if (!commandParsed && message[0] != '/')
+				if ( !commandParsed && message[ 0 ] != '/' )
 				{
-					Object chatMessageStruct = CreateChatMessageStruct(message);
+					Object chatMessageStruct = CreateChatMessageStruct( message );
 					List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
-					foreach (ulong remoteUserId in connectedPlayers)
+					foreach ( ulong remoteUserId in connectedPlayers )
 					{
-						if(!remoteUserId.ToString().StartsWith("9009"))
-							ServerNetworkManager.Instance.SendStruct(remoteUserId, chatMessageStruct, chatMessageStruct.GetType());
+						if ( !remoteUserId.ToString( ).StartsWith( "9009" ) )
+							ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
 
-						ChatEvent chatEvent = new ChatEvent();
+						ChatEvent chatEvent = new ChatEvent( );
 						chatEvent.type = ChatEventType.OnChatSent;
 						chatEvent.timestamp = DateTime.Now;
 						chatEvent.sourceUserId = 0;
 						chatEvent.remoteUserId = remoteUserId;
 						chatEvent.message = message;
 						chatEvent.priority = 0;
-						ChatManager.Instance.AddEvent(chatEvent);
+						ChatManager.Instance.AddEvent( chatEvent );
 					}
-					m_chatMessages.Add("Server: " + message);
-					LogManager.ChatLog.WriteLineAndConsole("Chat - Server: " + message);
+					m_chatMessages.Add( "Server: " + message );
+					LogManager.ChatLog.WriteLineAndConsole( "Chat - Server: " + message );
 				}
 
 				//Send a loopback chat event for server-sent messages
-				ChatEvent selfChatEvent = new ChatEvent();
+				ChatEvent selfChatEvent = new ChatEvent( );
 				selfChatEvent.type = ChatEventType.OnChatReceived;
 				selfChatEvent.timestamp = DateTime.Now;
 				selfChatEvent.sourceUserId = 0;
 				selfChatEvent.remoteUserId = 0;
 				selfChatEvent.message = message;
 				selfChatEvent.priority = 0;
-				ChatManager.Instance.AddEvent(selfChatEvent);
+				ChatManager.Instance.AddEvent( selfChatEvent );
 
-				m_resourceLock.AcquireExclusive();
-				m_chatHistory.Add(selfChatEvent);
-				m_resourceLock.ReleaseExclusive();
+				m_resourceLock.AcquireExclusive( );
+				m_chatHistory.Add( selfChatEvent );
+				m_resourceLock.ReleaseExclusive( );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected bool ParseChatCommands(string message, ulong remoteUserId = 0)
+		protected bool ParseChatCommands( string message, ulong remoteUserId = 0 )
 		{
 			try
 			{
-				if (string.IsNullOrEmpty(message))
+				if ( string.IsNullOrEmpty( message ) )
 					return false;
 
-				string[] commandParts = message.Split(' ');
-				if (commandParts == null || commandParts.Length == 0)
+				string[ ] commandParts = message.Split( ' ' );
+				if ( commandParts == null || commandParts.Length == 0 )
 					return false;
 
 				//Skip if message doesn't have leading forward slash
-				if (!message.Substring(0, 1).Equals("/"))
+				if ( !message.Substring( 0, 1 ).Equals( "/" ) )
 					return false;
 
 				//Get the base command and strip off the leading slash
-				string command = commandParts[0].ToLower().Substring(1);
-				if (string.IsNullOrEmpty(command))
+				string command = commandParts[ 0 ].ToLower( ).Substring( 1 );
+				if ( string.IsNullOrEmpty( command ) )
 					return false;
 
 				//Search for a matching, registered command
 				bool foundMatch = false;
-				foreach (ChatCommand chatCommand in m_chatCommands.Keys)
+				foreach ( ChatCommand chatCommand in m_chatCommands.Keys )
 				{
 					try
 					{
-						if (chatCommand.requiresAdmin && remoteUserId != 0 && !PlayerManager.Instance.IsUserAdmin(remoteUserId))
+						if ( chatCommand.requiresAdmin && remoteUserId != 0 && !PlayerManager.Instance.IsUserAdmin( remoteUserId ) )
 							continue;
 
-						if (command.Equals(chatCommand.command.ToLower()))
+						if ( command.Equals( chatCommand.command.ToLower( ) ) )
 						{
-							ChatEvent chatEvent = new ChatEvent();
+							ChatEvent chatEvent = new ChatEvent( );
 							chatEvent.message = message;
 							chatEvent.remoteUserId = remoteUserId;
 							chatEvent.timestamp = DateTime.Now;
 
 
 							bool discard = false;
-							PluginManager.HookChatMessage(null, PluginManager.Instance.Plugins, PluginManager.Instance.PluginStates, chatEvent, out discard);
+							PluginManager.HookChatMessage( null, PluginManager.Instance.Plugins, PluginManager.Instance.PluginStates, chatEvent, out discard );
 
-							if(!discard)
-								chatCommand.callback(chatEvent);
+							if ( !discard )
+								chatCommand.callback( chatEvent );
 
 							foundMatch = true;
 							break;
 						}
 					}
-					catch (Exception ex)
+					catch ( Exception ex )
 					{
-						LogManager.ErrorLog.WriteLine(ex);
+						LogManager.ErrorLog.WriteLine( ex );
 					}
 				}
 
-				if (foundMatch)
+				if ( foundMatch )
 					return true;
 				else
 					return false;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void RegisterChatCommand(ChatCommand command)
+		public void RegisterChatCommand( ChatCommand command )
 		{
 			//Check if the given command already is registered
-			foreach (ChatCommand chatCommand in m_chatCommands.Keys)
+			foreach ( ChatCommand chatCommand in m_chatCommands.Keys )
 			{
-				if (chatCommand.command.ToLower().Equals(command.command.ToLower()))
+				if ( chatCommand.command.ToLower( ).Equals( command.command.ToLower( ) ) )
 					return;
 			}
 
-			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly().GetCustomAttributes(typeof(GuidAttribute), true)[0];
-			Guid guidValue = new Guid(guid.Value);
+			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
+			Guid guidValue = new Guid( guid.Value );
 
-			m_chatCommands.Add(command, guidValue);
+			m_chatCommands.Add( command, guidValue );
 		}
 
-		public void UnregisterChatCommands()
+		public void UnregisterChatCommands( )
 		{
-			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly().GetCustomAttributes(typeof(GuidAttribute), true)[0];
-			Guid guidValue = new Guid(guid.Value);
+			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
+			Guid guidValue = new Guid( guid.Value );
 
-			List<ChatCommand> commandsToRemove = new List<ChatCommand>();
-			foreach (var entry in m_chatCommands)
+			List<ChatCommand> commandsToRemove = new List<ChatCommand>( );
+			foreach ( var entry in m_chatCommands )
 			{
-				if (entry.Value.Equals(guidValue))
-					commandsToRemove.Add(entry.Key);
+				if ( entry.Value.Equals( guidValue ) )
+					commandsToRemove.Add( entry.Key );
 			}
-			foreach (var entry in commandsToRemove)
+			foreach ( var entry in commandsToRemove )
 			{
-				m_chatCommands.Remove(entry);
+				m_chatCommands.Remove( entry );
 			}
 		}
 
-		public void AddEvent(ChatEvent newEvent)
+		public void AddEvent( ChatEvent newEvent )
 		{
-			m_chatEvents.Add(newEvent);
+			m_chatEvents.Add( newEvent );
 		}
 
-		public void ClearEvents()
+		public void ClearEvents( )
 		{
-			m_chatEvents.Clear();
+			m_chatEvents.Clear( );
 		}
 
 		#endregion
 
 		#region "Chat Command Callbacks"
 
-		protected void Command_Delete(ChatEvent chatEvent)
+		protected void Command_Delete( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			//All entities
-			if (paramCount > 1 && commandParts[1].ToLower().Equals("all"))
+			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 			{
 				//All cube grids that have no beacon or only a beacon with no name
-				if (commandParts[2].ToLower().Equals("nobeacon"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>();
-					foreach (CubeGridEntity entity in entities)
+					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
+					foreach ( CubeGridEntity entity in entities )
 					{
-						while (entity.CubeBlocks.Count == 0)
+						while ( entity.CubeBlocks.Count == 0 )
 						{
-							Thread.Sleep(20);
+							Thread.Sleep( 20 );
 						}
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						if (blocks.Count > 0)
+						if ( blocks.Count > 0 )
 						{
 							bool foundBeacon = false;
-							foreach (CubeBlockEntity cubeBlock in blocks)
+							foreach ( CubeBlockEntity cubeBlock in blocks )
 							{
-								if (cubeBlock is BeaconEntity)
+								if ( cubeBlock is BeaconEntity )
 								{
 									foundBeacon = true;
 									break;
 								}
 							}
-							if (!foundBeacon)
+							if ( !foundBeacon )
 							{
-								entitiesToDispose.Add(entity);
+								entitiesToDispose.Add( entity );
 							}
 						}
 					}
 
-					foreach (CubeGridEntity entity in entitiesToDispose)
+					foreach ( CubeGridEntity entity in entitiesToDispose )
 					{
 						bool isLinkedShip = false;
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						foreach (CubeBlockEntity cubeBlock in blocks)
+						foreach ( CubeBlockEntity cubeBlock in blocks )
 						{
-							if (cubeBlock is MergeBlockEntity)
+							if ( cubeBlock is MergeBlockEntity )
 							{
 								MergeBlockEntity block = (MergeBlockEntity)cubeBlock;
-								if (block.IsAttached)
+								if ( block.IsAttached )
 								{
-									if (!entitiesToDispose.Contains(block.AttachedCubeGrid))
+									if ( !entitiesToDispose.Contains( block.AttachedCubeGrid ) )
 									{
 										isLinkedShip = true;
 										break;
 									}
 								}
 							}
-							if (cubeBlock is PistonEntity)
+							if ( cubeBlock is PistonEntity )
 							{
 								PistonEntity block = (PistonEntity)cubeBlock;
 								CubeBlockEntity topBlock = block.TopBlock;
-								if (topBlock != null)
+								if ( topBlock != null )
 								{
-									if (!entitiesToDispose.Contains(topBlock.Parent))
+									if ( !entitiesToDispose.Contains( topBlock.Parent ) )
 									{
 										isLinkedShip = true;
 										break;
 									}
 								}
 							}
-							if (cubeBlock is RotorEntity)
+							if ( cubeBlock is RotorEntity )
 							{
 								RotorEntity block = (RotorEntity)cubeBlock;
 								CubeBlockEntity topBlock = block.TopBlock;
-								if (topBlock != null)
+								if ( topBlock != null )
 								{
-									if (!entitiesToDispose.Contains(topBlock.Parent))
+									if ( !entitiesToDispose.Contains( topBlock.Parent ) )
 									{
 										isLinkedShip = true;
 										break;
@@ -648,35 +648,35 @@ namespace SEModAPIExtensions.API
 								}
 							}
 						}
-						if (isLinkedShip)
+						if ( isLinkedShip )
 							continue;
 
-						entity.Dispose();
+						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage(remoteUserId, entitiesToDispose.Count.ToString() + " cube grids have been removed");
+					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " cube grids have been removed" );
 				}
 				//All cube grids that have no power
-				else if (commandParts[2].ToLower().Equals("nopower"))
+				else if ( commandParts[ 2 ].ToLower( ).Equals( "nopower" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>();
-					foreach (CubeGridEntity entity in entities)
+					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
+					foreach ( CubeGridEntity entity in entities )
 					{
-						if (entity.TotalPower <= 0)
+						if ( entity.TotalPower <= 0 )
 						{
-							entitiesToDispose.Add(entity);
+							entitiesToDispose.Add( entity );
 						}
 					}
 
-					foreach (CubeGridEntity entity in entitiesToDispose)
+					foreach ( CubeGridEntity entity in entitiesToDispose )
 					{
-						entity.Dispose();
+						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage(remoteUserId, entitiesToDispose.Count.ToString() + " cube grids have been removed");
+					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " cube grids have been removed" );
 				}
-				else if (commandParts[2].ToLower().Equals("floatingobjects"))	//All floating objects
+				else if ( commandParts[ 2 ].ToLower( ).Equals( "floatingobjects" ) )	//All floating objects
 				{
 					/*
 					List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
@@ -688,164 +688,164 @@ namespace SEModAPIExtensions.API
 					 */
 
 					int count = 0;
-					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 					{
-						HashSet<IMyEntity> entities = new HashSet<IMyEntity>();
-						MyAPIGateway.Entities.GetEntities(entities, null);
-						List<IMyEntity> entitiesToRemove = new List<IMyEntity>();
+						HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
+						MyAPIGateway.Entities.GetEntities( entities, null );
+						List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
 
-						foreach (IMyEntity entity in entities)
+						foreach ( IMyEntity entity in entities )
 						{
 							MyObjectBuilder_Base objectBuilder;
 							try
 							{
-								objectBuilder = entity.GetObjectBuilder();
+								objectBuilder = entity.GetObjectBuilder( );
 							}
 							catch
 							{
 								continue;
 							}
 
-							if(objectBuilder is MyObjectBuilder_FloatingObject)
-								entitiesToRemove.Add(entity);
+							if ( objectBuilder is MyObjectBuilder_FloatingObject )
+								entitiesToRemove.Add( entity );
 						}
 
-						for (int r = entitiesToRemove.Count - 1; r >= 0; r--)
+						for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
 						{
-							IMyEntity entity = entitiesToRemove[r];
-							MyAPIGateway.Entities.RemoveEntity(entity);
+							IMyEntity entity = entitiesToRemove[ r ];
+							MyAPIGateway.Entities.RemoveEntity( entity );
 							count++;
 						}
-					});
+					} );
 
-					SendPrivateChatMessage(remoteUserId, count.ToString() + " floating objects have been removed");
+					SendPrivateChatMessage( remoteUserId, count.ToString( ) + " floating objects have been removed" );
 				}
 				else
 				{
-					string entityName = commandParts[2];
-					if (commandParts.Length > 3)
+					string entityName = commandParts[ 2 ];
+					if ( commandParts.Length > 3 )
 					{
-						for (int i = 3; i < commandParts.Length; i++)
+						for ( int i = 3; i < commandParts.Length; i++ )
 						{
-							entityName += " " + commandParts[i];
+							entityName += " " + commandParts[ i ];
 						}
 					}
 
 					int matchingEntitiesCount = 0;
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-					foreach (BaseEntity entity in entities)
+					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+					foreach ( BaseEntity entity in entities )
 					{
-						bool isMatch = Regex.IsMatch(entity.Name, entityName, RegexOptions.IgnoreCase);
-						if (!isMatch)
+						bool isMatch = Regex.IsMatch( entity.Name, entityName, RegexOptions.IgnoreCase );
+						if ( !isMatch )
 							continue;
 
-						entity.Dispose();
+						entity.Dispose( );
 
 						matchingEntitiesCount++;
 					}
 
-					SendPrivateChatMessage(remoteUserId, matchingEntitiesCount.ToString() + " objects have been removed");
+					SendPrivateChatMessage( remoteUserId, matchingEntitiesCount.ToString( ) + " objects have been removed" );
 				}
 			}
 
 			//All non-static cube grids
-			if (paramCount > 1 && commandParts[1].ToLower().Equals("ship"))
+			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "ship" ) )
 			{
 				//That have no beacon or only a beacon with no name
-				if (commandParts[2].ToLower().Equals("nobeacon"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>();
-					foreach (CubeGridEntity entity in entities)
+					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
+					foreach ( CubeGridEntity entity in entities )
 					{
 						//Skip static cube grids
-						if (((CubeGridEntity)entity).IsStatic)
+						if ( ( (CubeGridEntity)entity ).IsStatic )
 							continue;
 
-						if (entity.Name.Equals(entity.EntityId.ToString()))
+						if ( entity.Name.Equals( entity.EntityId.ToString( ) ) )
 						{
-							entitiesToDispose.Add(entity);
+							entitiesToDispose.Add( entity );
 							continue;
 						}
 
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						if (blocks.Count > 0)
+						if ( blocks.Count > 0 )
 						{
 							bool foundBeacon = false;
-							foreach (CubeBlockEntity cubeBlock in entity.CubeBlocks)
+							foreach ( CubeBlockEntity cubeBlock in entity.CubeBlocks )
 							{
-								if (cubeBlock is BeaconEntity)
+								if ( cubeBlock is BeaconEntity )
 								{
 									foundBeacon = true;
 									break;
 								}
 							}
-							if (!foundBeacon)
+							if ( !foundBeacon )
 							{
-								entitiesToDispose.Add(entity);
+								entitiesToDispose.Add( entity );
 							}
 						}
 					}
 
-					foreach (CubeGridEntity entity in entitiesToDispose)
+					foreach ( CubeGridEntity entity in entitiesToDispose )
 					{
-						entity.Dispose();
+						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage(remoteUserId, entitiesToDispose.Count.ToString() + " ships have been removed");
+					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " ships have been removed" );
 				}
 			}
 
 			//All static cube grids
-			if (paramCount > 1 && commandParts[1].ToLower().Equals("station"))
+			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "station" ) )
 			{
 				//That have no beacon or only a beacon with no name
-				if (commandParts[2].ToLower().Equals("nobeacon"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>();
-					foreach (CubeGridEntity entity in entities)
+					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
+					foreach ( CubeGridEntity entity in entities )
 					{
 						//Skip non-static cube grids
-						if (!((CubeGridEntity)entity).IsStatic)
+						if ( !( (CubeGridEntity)entity ).IsStatic )
 							continue;
 
-						if (entity.Name.Equals(entity.EntityId.ToString()))
+						if ( entity.Name.Equals( entity.EntityId.ToString( ) ) )
 						{
-							entitiesToDispose.Add(entity);
+							entitiesToDispose.Add( entity );
 							continue;
 						}
 
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						if (blocks.Count > 0)
+						if ( blocks.Count > 0 )
 						{
 							bool foundBeacon = false;
-							foreach (CubeBlockEntity cubeBlock in entity.CubeBlocks)
+							foreach ( CubeBlockEntity cubeBlock in entity.CubeBlocks )
 							{
-								if (cubeBlock is BeaconEntity)
+								if ( cubeBlock is BeaconEntity )
 								{
 									foundBeacon = true;
 									break;
 								}
 							}
-							if (!foundBeacon)
+							if ( !foundBeacon )
 							{
-								entitiesToDispose.Add(entity);
+								entitiesToDispose.Add( entity );
 							}
 						}
 					}
 
-					foreach (CubeGridEntity entity in entitiesToDispose)
+					foreach ( CubeGridEntity entity in entitiesToDispose )
 					{
-						entity.Dispose();
+						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage(remoteUserId, entitiesToDispose.Count.ToString() + " stations have been removed");
+					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " stations have been removed" );
 				}
 			}
 
 			//Prunes defunct player entries in the faction data
-            /*
+			/*
 			if (paramCount > 1 && commandParts[1].ToLower().Equals("player"))
 			{
 				List<MyObjectBuilder_Checkpoint.PlayerItem> playersToRemove = new List<MyObjectBuilder_Checkpoint.PlayerItem>();
@@ -902,152 +902,152 @@ namespace SEModAPIExtensions.API
 
 				SendPrivateChatMessage(remoteUserId, "Deleted " + playersRemovedCount.ToString() + " player entries");
 			}
-            */
+			*/
 			//Prunes defunct faction entries in the faction data
-			if (paramCount > 1 && commandParts[1].ToLower().Equals("faction"))
+			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "faction" ) )
 			{
-				List<Faction> factionsToRemove = new List<Faction>();
-				if (commandParts[2].ToLower().Equals("empty"))
+				List<Faction> factionsToRemove = new List<Faction>( );
+				if ( commandParts[ 2 ].ToLower( ).Equals( "empty" ) )
 				{
-					foreach(var entry in FactionsManager.Instance.Factions)
+					foreach ( var entry in FactionsManager.Instance.Factions )
 					{
-						if (entry.Members.Count == 0)
-							factionsToRemove.Add(entry);
+						if ( entry.Members.Count == 0 )
+							factionsToRemove.Add( entry );
 					}
 				}
-				if (commandParts[2].ToLower().Equals("nofounder"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "nofounder" ) )
 				{
-					foreach (var entry in FactionsManager.Instance.Factions)
+					foreach ( var entry in FactionsManager.Instance.Factions )
 					{
 						bool founderMatch = false;
 
-						foreach (var member in entry.Members)
+						foreach ( var member in entry.Members )
 						{
-							if (member.IsFounder)
+							if ( member.IsFounder )
 							{
 								founderMatch = true;
 								break;
 							}
 						}
 
-						if (!founderMatch)
-							factionsToRemove.Add(entry);
+						if ( !founderMatch )
+							factionsToRemove.Add( entry );
 					}
 				}
-				if (commandParts[2].ToLower().Equals("noleader"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "noleader" ) )
 				{
-					foreach (var entry in FactionsManager.Instance.Factions)
+					foreach ( var entry in FactionsManager.Instance.Factions )
 					{
 						bool founderMatch = false;
 
-						foreach (var member in entry.Members)
+						foreach ( var member in entry.Members )
 						{
-							if (member.IsFounder || member.IsLeader)
+							if ( member.IsFounder || member.IsLeader )
 							{
 								founderMatch = true;
 								break;
 							}
 						}
 
-						if (!founderMatch)
-							factionsToRemove.Add(entry);
+						if ( !founderMatch )
+							factionsToRemove.Add( entry );
 					}
 				}
 
-				foreach (var entry in factionsToRemove)
+				foreach ( var entry in factionsToRemove )
 				{
-					FactionsManager.Instance.RemoveFaction(entry.Id);
+					FactionsManager.Instance.RemoveFaction( entry.Id );
 				}
 
-				SendPrivateChatMessage(remoteUserId, "Deleted " + factionsToRemove.Count.ToString() + " factions");
+				SendPrivateChatMessage( remoteUserId, "Deleted " + factionsToRemove.Count.ToString( ) + " factions" );
 			}
 
 			//Single entity
-			if (paramCount == 1)
+			if ( paramCount == 1 )
 			{
-				string rawEntityId = commandParts[1];
+				string rawEntityId = commandParts[ 1 ];
 
 				try
 				{
-					long entityId = long.Parse(rawEntityId);
+					long entityId = long.Parse( rawEntityId );
 
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-					foreach (BaseEntity entity in entities)
+					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+					foreach ( BaseEntity entity in entities )
 					{
-						if (entity.EntityId != entityId)
+						if ( entity.EntityId != entityId )
 							continue;
 
-						entity.Dispose();
+						entity.Dispose( );
 					}
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 		}
 
-		protected void Command_Teleport(ChatEvent chatEvent)
+		protected void Command_Teleport( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount == 2)
+			if ( paramCount == 2 )
 			{
-				string rawEntityId = commandParts[1];
-				string rawPosition = commandParts[2];
+				string rawEntityId = commandParts[ 1 ];
+				string rawPosition = commandParts[ 2 ];
 
 				try
 				{
-					long entityId = long.Parse(rawEntityId);
+					long entityId = long.Parse( rawEntityId );
 
-					string[] rawCoordinateValues = rawPosition.Split(',');
-					if (rawCoordinateValues.Length < 3)
+					string[ ] rawCoordinateValues = rawPosition.Split( ',' );
+					if ( rawCoordinateValues.Length < 3 )
 						return;
 
-					float x = float.Parse(rawCoordinateValues[0]);
-					float y = float.Parse(rawCoordinateValues[1]);
-					float z = float.Parse(rawCoordinateValues[2]);
+					float x = float.Parse( rawCoordinateValues[ 0 ] );
+					float y = float.Parse( rawCoordinateValues[ 1 ] );
+					float z = float.Parse( rawCoordinateValues[ 2 ] );
 
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-					foreach (BaseEntity entity in entities)
+					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+					foreach ( BaseEntity entity in entities )
 					{
-						if (entity.EntityId != entityId)
+						if ( entity.EntityId != entityId )
 							continue;
 
-						Vector3D newPosition = new Vector3D(x, y, z);
+						Vector3D newPosition = new Vector3D( x, y, z );
 						entity.Position = newPosition;
 
-						SendPrivateChatMessage(remoteUserId, "Entity '" + entity.EntityId.ToString() + "' has been moved to '" + newPosition.ToString() + "'");
+						SendPrivateChatMessage( remoteUserId, "Entity '" + entity.EntityId.ToString( ) + "' has been moved to '" + newPosition.ToString( ) + "'" );
 					}
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 		}
 
-		protected void Command_Stop(ChatEvent chatEvent)
+		protected void Command_Stop( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount != 1)
+			if ( paramCount != 1 )
 				return;
 
-			if (commandParts[1].ToLower().Equals("all"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 			{
-				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
+				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
 				int entitiesStoppedCount = 0;
-				foreach (BaseEntity entity in entities)
+				foreach ( BaseEntity entity in entities )
 				{
-					double linear = Math.Round(((Vector3)entity.LinearVelocity).LengthSquared(), 1);
-					double angular = Math.Round(((Vector3)entity.AngularVelocity).LengthSquared(), 1);
+					double linear = Math.Round( ( (Vector3)entity.LinearVelocity ).LengthSquared( ), 1 );
+					double angular = Math.Round( ( (Vector3)entity.AngularVelocity ).LengthSquared( ), 1 );
 
-					if (linear > 0 || angular > 0)
+					if ( linear > 0 || angular > 0 )
 					{
 						entity.LinearVelocity = Vector3.Zero;
 						entity.AngularVelocity = Vector3.Zero;
@@ -1055,202 +1055,202 @@ namespace SEModAPIExtensions.API
 						entitiesStoppedCount++;
 					}
 				}
-				SendPrivateChatMessage(remoteUserId, entitiesStoppedCount.ToString() + " entities are no longer moving or rotating");
+				SendPrivateChatMessage( remoteUserId, entitiesStoppedCount.ToString( ) + " entities are no longer moving or rotating" );
 			}
 			else
 			{
-				string rawEntityId = commandParts[1];
+				string rawEntityId = commandParts[ 1 ];
 
 				try
 				{
-					long entityId = long.Parse(rawEntityId);
+					long entityId = long.Parse( rawEntityId );
 
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-					foreach (BaseEntity entity in entities)
+					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+					foreach ( BaseEntity entity in entities )
 					{
-						if (entity.EntityId != entityId)
+						if ( entity.EntityId != entityId )
 							continue;
 
 						entity.LinearVelocity = Vector3.Zero;
 						entity.AngularVelocity = Vector3.Zero;
 
-						SendPrivateChatMessage(remoteUserId, "Entity '" + entity.EntityId.ToString() + "' is no longer moving or rotating");
+						SendPrivateChatMessage( remoteUserId, "Entity '" + entity.EntityId.ToString( ) + "' is no longer moving or rotating" );
 					}
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 		}
 
-		protected void Command_GetId(ChatEvent chatEvent)
+		protected void Command_GetId( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount > 0)
+			if ( paramCount > 0 )
 			{
-				string entityName = commandParts[1];
-				if (commandParts.Length > 2)
+				string entityName = commandParts[ 1 ];
+				if ( commandParts.Length > 2 )
 				{
-					for (int i = 2; i < commandParts.Length; i++)
+					for ( int i = 2; i < commandParts.Length; i++ )
 					{
-						entityName += " " + commandParts[i];
+						entityName += " " + commandParts[ i ];
 					}
 				}
 
-				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-				foreach (BaseEntity entity in entities)
+				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+				foreach ( BaseEntity entity in entities )
 				{
-					if (!entity.Name.ToLower().Equals(entityName.ToLower()))
+					if ( !entity.Name.ToLower( ).Equals( entityName.ToLower( ) ) )
 						continue;
 
-					SendPrivateChatMessage(remoteUserId, "Entity ID is '" + entity.EntityId.ToString() + "'");
+					SendPrivateChatMessage( remoteUserId, "Entity ID is '" + entity.EntityId.ToString( ) + "'" );
 				}
 			}
 		}
 
-		protected void Command_Save(ChatEvent chatEvent)
+		protected void Command_Save( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			WorldManager.Instance.AsynchronousSaveWorld();
-			SendPrivateChatMessage(remoteUserId, "Performing an asynchronous save.");
+			WorldManager.Instance.AsynchronousSaveWorld( );
+			SendPrivateChatMessage( remoteUserId, "Performing an asynchronous save." );
 		}
 
-		protected void Command_SyncSave(ChatEvent chatEvent)
+		protected void Command_SyncSave( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			WorldManager.Instance.SaveWorld();
+			WorldManager.Instance.SaveWorld( );
 
-			SendPrivateChatMessage(remoteUserId, "World has been saved!");
+			SendPrivateChatMessage( remoteUserId, "World has been saved!" );
 		}
 
-		protected void Command_Owner(ChatEvent chatEvent)
+		protected void Command_Owner( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount == 2)
+			if ( paramCount == 2 )
 			{
-				string rawEntityId = commandParts[1];
-				string rawOwnerId = commandParts[2];
+				string rawEntityId = commandParts[ 1 ];
+				string rawOwnerId = commandParts[ 2 ];
 
 				try
 				{
-					long entityId = long.Parse(rawEntityId);
-					long ownerId = long.Parse(rawOwnerId);
+					long entityId = long.Parse( rawEntityId );
+					long ownerId = long.Parse( rawOwnerId );
 
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-					foreach (CubeGridEntity cubeGrid in entities)
+					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+					foreach ( CubeGridEntity cubeGrid in entities )
 					{
-						if (cubeGrid.EntityId != entityId)
+						if ( cubeGrid.EntityId != entityId )
 							continue;
 
 						//Update the owner of the blocks on the cube grid
-						foreach (CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks)
+						foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
 						{
 							//Skip blocks that don't have an entity id
-							if (cubeBlock.EntityId == 0)
+							if ( cubeBlock.EntityId == 0 )
 								continue;
 
 							cubeBlock.Owner = ownerId;
 						}
 
-						SendPrivateChatMessage(remoteUserId, "CubeGridEntity '" + cubeGrid.EntityId.ToString() + "' owner has been changed to '" + ownerId.ToString() + "'");
+						SendPrivateChatMessage( remoteUserId, "CubeGridEntity '" + cubeGrid.EntityId.ToString( ) + "' owner has been changed to '" + ownerId.ToString( ) + "'" );
 					}
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 		}
 
-		protected void Command_Export(ChatEvent chatEvent)
+		protected void Command_Export( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount == 1)
+			if ( paramCount == 1 )
 			{
-				string rawEntityId = commandParts[1];
+				string rawEntityId = commandParts[ 1 ];
 
 				try
 				{
-					long entityId = long.Parse(rawEntityId);
+					long entityId = long.Parse( rawEntityId );
 
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-					foreach (BaseEntity entity in entities)
+					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+					foreach ( BaseEntity entity in entities )
 					{
-						if (entity.EntityId != entityId)
+						if ( entity.EntityId != entityId )
 							continue;
 
 						string modPath = MyFileSystem.ModsPath;
-						if (!Directory.Exists(modPath))
+						if ( !Directory.Exists( modPath ) )
 							break;
 
-						string fileName = entity.Name.ToLower();
-						Regex rgx = new Regex("[^a-zA-Z0-9]");
-						string cleanFileName = rgx.Replace(fileName, "");
+						string fileName = entity.Name.ToLower( );
+						Regex rgx = new Regex( "[^a-zA-Z0-9]" );
+						string cleanFileName = rgx.Replace( fileName, "" );
 
-						string exportPath = Path.Combine(modPath, "Exports");
-						if (!Directory.Exists(exportPath))
-							Directory.CreateDirectory(exportPath);
-						FileInfo exportFile = new FileInfo(Path.Combine(exportPath, cleanFileName + ".sbc"));
-						entity.Export(exportFile);
+						string exportPath = Path.Combine( modPath, "Exports" );
+						if ( !Directory.Exists( exportPath ) )
+							Directory.CreateDirectory( exportPath );
+						FileInfo exportFile = new FileInfo( Path.Combine( exportPath, cleanFileName + ".sbc" ) );
+						entity.Export( exportFile );
 
-						SendPrivateChatMessage(remoteUserId, "Entity '" + entity.EntityId.ToString() + "' has been exported to Mods/Exports");
+						SendPrivateChatMessage( remoteUserId, "Entity '" + entity.EntityId.ToString( ) + "' has been exported to Mods/Exports" );
 					}
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 		}
 
-		protected void Command_Import(ChatEvent chatEvent)
+		protected void Command_Import( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount == 1)
+			if ( paramCount == 1 )
 			{
 				try
 				{
-					string fileName = commandParts[1];
-					Regex rgx = new Regex("[^a-zA-Z0-9]");
-					string cleanFileName = rgx.Replace(fileName, "");
+					string fileName = commandParts[ 1 ];
+					Regex rgx = new Regex( "[^a-zA-Z0-9]" );
+					string cleanFileName = rgx.Replace( fileName, "" );
 
 					string modPath = MyFileSystem.ModsPath;
-					if (Directory.Exists(modPath))
+					if ( Directory.Exists( modPath ) )
 					{
-						string exportPath = Path.Combine(modPath, "Exports");
-						if (Directory.Exists(exportPath))
+						string exportPath = Path.Combine( modPath, "Exports" );
+						if ( Directory.Exists( exportPath ) )
 						{
-							FileInfo importFile = new FileInfo(Path.Combine(exportPath, cleanFileName));
-							if (importFile.Exists)
+							FileInfo importFile = new FileInfo( Path.Combine( exportPath, cleanFileName ) );
+							if ( importFile.Exists )
 							{
 								string objectBuilderTypeName = "";
-								using (XmlReader reader = XmlReader.Create(importFile.OpenText()))
+								using ( XmlReader reader = XmlReader.Create( importFile.OpenText( ) ) )
 								{
-									while (reader.Read())
+									while ( reader.Read( ) )
 									{
-										if (reader.NodeType == XmlNodeType.XmlDeclaration)
+										if ( reader.NodeType == XmlNodeType.XmlDeclaration )
 											continue;
 
-										if (reader.NodeType != XmlNodeType.Element)
+										if ( reader.NodeType != XmlNodeType.Element )
 											continue;
 
 										objectBuilderTypeName = reader.Name;
@@ -1258,14 +1258,14 @@ namespace SEModAPIExtensions.API
 									}
 								}
 
-								if (string.IsNullOrEmpty(objectBuilderTypeName))
+								if ( string.IsNullOrEmpty( objectBuilderTypeName ) )
 									return;
 
-								switch (objectBuilderTypeName)
+								switch ( objectBuilderTypeName )
 								{
 									case "MyObjectBuilder_CubeGrid":
-										CubeGridEntity cubeGrid = new CubeGridEntity(importFile);
-										SectorObjectManager.Instance.AddEntity(cubeGrid);
+										CubeGridEntity cubeGrid = new CubeGridEntity( importFile );
+										SectorObjectManager.Instance.AddEntity( cubeGrid );
 										break;
 									default:
 										break;
@@ -1274,406 +1274,406 @@ namespace SEModAPIExtensions.API
 						}
 					}
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 		}
 
-		protected void Command_Spawn(ChatEvent chatEvent)
+		protected void Command_Spawn( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount > 1 && commandParts[1].ToLower().Equals("ship"))
+			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "ship" ) )
 			{
-				if (commandParts[2].ToLower().Equals("all"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "all" ) )
 				{
 				}
-				if (commandParts[2].ToLower().Equals("exports"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "exports" ) )
 				{
 				}
-				if (commandParts[2].ToLower().Equals("cargo"))
+				if ( commandParts[ 2 ].ToLower( ).Equals( "cargo" ) )
 				{
-					CargoShipManager.Instance.SpawnCargoShipGroup(remoteUserId);
+					CargoShipManager.Instance.SpawnCargoShipGroup( remoteUserId );
 				}
 			}
 		}
 
-		protected void Command_Clear(ChatEvent chatEvent)
+		protected void Command_Clear( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount != 1)
+			if ( paramCount != 1 )
 				return;
 
-			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
+			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 			int queueCount = 0;
-			foreach (var cubeGrid in cubeGrids)
+			foreach ( var cubeGrid in cubeGrids )
 			{
-				foreach (CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks)
+				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
 				{
-					if (commandParts[1].ToLower().Equals("productionqueue") && cubeBlock is ProductionBlockEntity)
+					if ( commandParts[ 1 ].ToLower( ).Equals( "productionqueue" ) && cubeBlock is ProductionBlockEntity )
 					{
 						ProductionBlockEntity block = (ProductionBlockEntity)cubeBlock;
-						block.ClearQueue();
+						block.ClearQueue( );
 						queueCount++;
 					}
-					if (commandParts[1].ToLower().Equals("refineryqueue") && cubeBlock is RefineryEntity)
+					if ( commandParts[ 1 ].ToLower( ).Equals( "refineryqueue" ) && cubeBlock is RefineryEntity )
 					{
 						RefineryEntity block = (RefineryEntity)cubeBlock;
-						block.ClearQueue();
+						block.ClearQueue( );
 						queueCount++;
 					}
-					if (commandParts[1].ToLower().Equals("assemblerqueue") && cubeBlock is AssemblerEntity)
+					if ( commandParts[ 1 ].ToLower( ).Equals( "assemblerqueue" ) && cubeBlock is AssemblerEntity )
 					{
 						AssemblerEntity block = (AssemblerEntity)cubeBlock;
-						block.ClearQueue();
+						block.ClearQueue( );
 						queueCount++;
 					}
 				}
 			}
 
-			SendPrivateChatMessage(remoteUserId, "Cleared the production queue of " + queueCount.ToString() + " blocks");
+			SendPrivateChatMessage( remoteUserId, "Cleared the production queue of " + queueCount.ToString( ) + " blocks" );
 		}
 
-		protected void Command_List(ChatEvent chatEvent)
+		protected void Command_List( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount != 1)
+			if ( paramCount != 1 )
 				return;
 
-			if (commandParts[1].ToLower().Equals("all"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 			{
-				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
-				LogManager.APILog.WriteLineAndConsole("Total entities: '" + entities.Count.ToString() + "'");
+				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
+				LogManager.APILog.WriteLineAndConsole( "Total entities: '" + entities.Count.ToString( ) + "'" );
 
-				SendPrivateChatMessage(remoteUserId, "Total entities: '" + entities.Count.ToString() + "'");
+				SendPrivateChatMessage( remoteUserId, "Total entities: '" + entities.Count.ToString( ) + "'" );
 			}
-			if (commandParts[1].ToLower().Equals("cubegrid"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "cubegrid" ) )
 			{
-				List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-				LogManager.APILog.WriteLineAndConsole("Cubegrid entities: '" + entities.Count.ToString() + "'");
+				List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+				LogManager.APILog.WriteLineAndConsole( "Cubegrid entities: '" + entities.Count.ToString( ) + "'" );
 
-				SendPrivateChatMessage(remoteUserId, "Cubegrid entities: '" + entities.Count.ToString() + "'");
+				SendPrivateChatMessage( remoteUserId, "Cubegrid entities: '" + entities.Count.ToString( ) + "'" );
 			}
-			if (commandParts[1].ToLower().Equals("character"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "character" ) )
 			{
-				List<CharacterEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>();
-				LogManager.APILog.WriteLineAndConsole("Character entities: '" + entities.Count.ToString() + "'");
+				List<CharacterEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>( );
+				LogManager.APILog.WriteLineAndConsole( "Character entities: '" + entities.Count.ToString( ) + "'" );
 
-				SendPrivateChatMessage(remoteUserId, "Character entities: '" + entities.Count.ToString() + "'");
+				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count.ToString( ) + "'" );
 			}
-			if (commandParts[1].ToLower().Equals("voxelmap"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
 			{
-				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>();
-				LogManager.APILog.WriteLineAndConsole("Voxelmap entities: '" + entities.Count.ToString() + "'");
+				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
+				LogManager.APILog.WriteLineAndConsole( "Voxelmap entities: '" + entities.Count.ToString( ) + "'" );
 
-				SendPrivateChatMessage(remoteUserId, "Voxelmap entities: '" + entities.Count.ToString() + "'");
+				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count.ToString( ) + "'" );
 			}
-			if (commandParts[1].ToLower().Equals("meteor"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "meteor" ) )
 			{
-				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>();
-				LogManager.APILog.WriteLineAndConsole("Meteor entities: '" + entities.Count.ToString() + "'");
+				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );
+				LogManager.APILog.WriteLineAndConsole( "Meteor entities: '" + entities.Count.ToString( ) + "'" );
 
-				SendPrivateChatMessage(remoteUserId, "Meteor entities: '" + entities.Count.ToString() + "'");
+				SendPrivateChatMessage( remoteUserId, "Meteor entities: '" + entities.Count.ToString( ) + "'" );
 			}
-			if (commandParts[1].ToLower().Equals("floatingobject"))
+			if ( commandParts[ 1 ].ToLower( ).Equals( "floatingobject" ) )
 			{
-				List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
-				LogManager.APILog.WriteLineAndConsole("Floating object entities: '" + entities.Count.ToString() + "'");
+				List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>( );
+				LogManager.APILog.WriteLineAndConsole( "Floating object entities: '" + entities.Count.ToString( ) + "'" );
 
-				SendPrivateChatMessage(remoteUserId, "Floating object entities: '" + entities.Count.ToString() + "'");
+				SendPrivateChatMessage( remoteUserId, "Floating object entities: '" + entities.Count.ToString( ) + "'" );
 			}
 		}
 
-		protected void Command_Off(ChatEvent chatEvent)
+		protected void Command_Off( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount != 1)
+			if ( paramCount != 1 )
 				return;
 
-			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
+			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 			int poweredOffCount = 0;
-			foreach (var cubeGrid in cubeGrids)
+			foreach ( var cubeGrid in cubeGrids )
 			{
-				foreach (CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks)
+				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
 				{
-					if (!(cubeBlock is FunctionalBlockEntity))
+					if ( !( cubeBlock is FunctionalBlockEntity ) )
 						continue;
 
 					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
 
-					if (commandParts[1].ToLower().Equals("all"))
+					if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
-					if (commandParts[1].ToLower().Equals("production") && cubeBlock is ProductionBlockEntity)
+					if ( commandParts[ 1 ].ToLower( ).Equals( "production" ) && cubeBlock is ProductionBlockEntity )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
-					if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is BeaconEntity)
+					if ( commandParts[ 1 ].ToLower( ).Equals( "beacon" ) && cubeBlock is BeaconEntity )
 					{
 						functionalBlock.Enabled = false;
 						BeaconEntity beacon = (BeaconEntity)cubeBlock;
 						beacon.BroadcastRadius = 1;
 						poweredOffCount++;
 					}
-					if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity))
+					if ( commandParts[ 1 ].ToLower( ).Equals( "tools" ) && ( cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity ) )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
-                    if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is TurretBaseEntity))
-                    {
-                        functionalBlock.Enabled = false;
-                        poweredOffCount++;
-                    }
-
-					if (commandParts[1].ToLower().Equals(cubeBlock.Id.SubtypeName.ToLower()))
+					if ( commandParts[ 1 ].ToLower( ).Equals( "turrets" ) && ( cubeBlock is TurretBaseEntity ) )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
-					}					
-				
+					}
+
+					if ( commandParts[ 1 ].ToLower( ).Equals( cubeBlock.Id.SubtypeName.ToLower( ) ) )
+					{
+						functionalBlock.Enabled = false;
+						poweredOffCount++;
+					}
+
 				}
 			}
 
-			SendPrivateChatMessage(remoteUserId, "Turned off " + poweredOffCount.ToString() + " blocks");
+			SendPrivateChatMessage( remoteUserId, "Turned off " + poweredOffCount.ToString( ) + " blocks" );
 		}
 
-        protected void Command_On(ChatEvent chatEvent)
-        {
-            ulong remoteUserId = chatEvent.remoteUserId;
-            string[] commandParts = chatEvent.message.Split(' ');
-            int paramCount = commandParts.Length - 1;
+		protected void Command_On( ChatEvent chatEvent )
+		{
+			ulong remoteUserId = chatEvent.remoteUserId;
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			int paramCount = commandParts.Length - 1;
 
-            if (paramCount != 1)
-                return;
+			if ( paramCount != 1 )
+				return;
 
-            List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>();
-            int poweredOffCount = 0;
-            foreach (var cubeGrid in cubeGrids)
-            {
-                foreach (CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks)
-                {
-                    if (!(cubeBlock is FunctionalBlockEntity))
-                        continue;
+			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+			int poweredOffCount = 0;
+			foreach ( var cubeGrid in cubeGrids )
+			{
+				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
+				{
+					if ( !( cubeBlock is FunctionalBlockEntity ) )
+						continue;
 
-                    FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
+					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
 
-                    if (commandParts[1].ToLower().Equals("all"))
-                    {
-                        functionalBlock.Enabled = true;
-                        poweredOffCount++;
-                    }
-                    if (commandParts[1].ToLower().Equals("production") && cubeBlock is ProductionBlockEntity)
-                    {
-                        functionalBlock.Enabled = true;
-                        poweredOffCount++;
-                    }
-                    if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is BeaconEntity)
-                    {
-                        functionalBlock.Enabled = true;
-                        poweredOffCount++;
-                    }
-                    if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity))
-                    {
-                        functionalBlock.Enabled = true;
-                        poweredOffCount++;
-                    }
-                    if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is TurretBaseEntity))
-                    {
-                        functionalBlock.Enabled = true;
-                        poweredOffCount++;
-                    }
-
-					if (commandParts[1].ToLower().Equals(cubeBlock.Id.SubtypeName.ToLower()))
+					if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 					{
 						functionalBlock.Enabled = true;
 						poweredOffCount++;
 					}
-                }
-            }
+					if ( commandParts[ 1 ].ToLower( ).Equals( "production" ) && cubeBlock is ProductionBlockEntity )
+					{
+						functionalBlock.Enabled = true;
+						poweredOffCount++;
+					}
+					if ( commandParts[ 1 ].ToLower( ).Equals( "beacon" ) && cubeBlock is BeaconEntity )
+					{
+						functionalBlock.Enabled = true;
+						poweredOffCount++;
+					}
+					if ( commandParts[ 1 ].ToLower( ).Equals( "tools" ) && ( cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity ) )
+					{
+						functionalBlock.Enabled = true;
+						poweredOffCount++;
+					}
+					if ( commandParts[ 1 ].ToLower( ).Equals( "turrets" ) && ( cubeBlock is TurretBaseEntity ) )
+					{
+						functionalBlock.Enabled = true;
+						poweredOffCount++;
+					}
 
-            SendPrivateChatMessage(remoteUserId, "Turned on " + poweredOffCount.ToString() + " blocks");
-        }
-
-		protected void Command_Kick(ChatEvent chatEvent)
-		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
-			int paramCount = commandParts.Length - 1;
-
-			if (paramCount != 1)
-				return;
-
-			//Get the steam id of the player
-			string rawSteamId = commandParts[1];
-
-			if (rawSteamId.Length < 3)
-			{
-				SendPrivateChatMessage(remoteUserId, "3 or more characters required to kick.");
-				return;
-			}
-
-			ulong steamId = 0;
-			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
-			if (playerItems.Count == 0)
-			{
-				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
-				if (steamId == 0)
-					return;
-			}
-			else
-			{
-				if (playerItems.Count > 1)
-				{
-					SendPrivateChatMessage(remoteUserId, "There is more than one player with the specified name;");
-
-					string playersString = "";
-					foreach (var playeritem in playerItems)
-						playersString += playeritem.name + " ";
-
-					SendPrivateChatMessage(remoteUserId, playersString);
-					return;
+					if ( commandParts[ 1 ].ToLower( ).Equals( cubeBlock.Id.SubtypeName.ToLower( ) ) )
+					{
+						functionalBlock.Enabled = true;
+						poweredOffCount++;
+					}
 				}
-
-				steamId = playerItems[0].steamId;
-				if(steamId == 0)
-					return;
 			}
 
-			if (steamId.ToString().StartsWith("9009"))
-			{
-				SendPrivateChatMessage(remoteUserId, string.Format("Unable to kick player '{0}'.  This player is the server.", steamId));
-				return;
-			}
-
-			PlayerManager.Instance.KickPlayer(steamId);
-			SendPrivateChatMessage(remoteUserId, "Kicked player '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' off of the server");
+			SendPrivateChatMessage( remoteUserId, "Turned on " + poweredOffCount.ToString( ) + " blocks" );
 		}
 
-		protected void Command_Ban(ChatEvent chatEvent)
+		protected void Command_Kick( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount != 1)
+			if ( paramCount != 1 )
 				return;
 
 			//Get the steam id of the player
-			string rawSteamId = commandParts[1];
+			string rawSteamId = commandParts[ 1 ];
 
-			if (rawSteamId.Length < 3)
+			if ( rawSteamId.Length < 3 )
 			{
-				SendPrivateChatMessage(remoteUserId, "3 or more characters required to ban.");
+				SendPrivateChatMessage( remoteUserId, "3 or more characters required to kick." );
 				return;
 			}
 
 			ulong steamId = 0;
-
-			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
-
-			if (playerItems.Count == 0)
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
+			if ( playerItems.Count == 0 )
 			{
-				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
-				if (steamId == 0)
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName( rawSteamId );
+				if ( steamId == 0 )
 					return;
 			}
 			else
 			{
-				if (playerItems.Count > 1)
+				if ( playerItems.Count > 1 )
 				{
-					SendPrivateChatMessage(remoteUserId, "There is more than one player with the specified name;");
+					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
 					string playersString = "";
-					foreach (var playeritem in playerItems)
+					foreach ( var playeritem in playerItems )
 						playersString += playeritem.name + " ";
 
-					SendPrivateChatMessage(remoteUserId, playersString);
+					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
 				}
 
-				steamId = playerItems[0].steamId;
-				if (steamId == 0)
+				steamId = playerItems[ 0 ].steamId;
+				if ( steamId == 0 )
 					return;
 			}
 
-			if (steamId.ToString().StartsWith("9009"))
+			if ( steamId.ToString( ).StartsWith( "9009" ) )
 			{
-				SendPrivateChatMessage(remoteUserId, string.Format("Unable to ban player '{0}'.  This player is the server.", steamId));
+				SendPrivateChatMessage( remoteUserId, string.Format( "Unable to kick player '{0}'.  This player is the server.", steamId ) );
 				return;
 			}
-			
-			PlayerManager.Instance.BanPlayer(steamId);
 
-			SendPrivateChatMessage(remoteUserId, "Banned '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "' and kicked them off of the server");
+			PlayerManager.Instance.KickPlayer( steamId );
+			SendPrivateChatMessage( remoteUserId, "Kicked player '" + ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) + "' off of the server" );
 		}
 
-		protected void Command_Unban(ChatEvent chatEvent)
+		protected void Command_Ban( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.remoteUserId;
-			string[] commandParts = chatEvent.message.Split(' ');
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
-			if (paramCount != 1)
+			if ( paramCount != 1 )
 				return;
 
 			//Get the steam id of the player
-			string rawSteamId = commandParts[1];
+			string rawSteamId = commandParts[ 1 ];
 
-			if (rawSteamId.Length < 3)
+			if ( rawSteamId.Length < 3 )
 			{
-				SendPrivateChatMessage(remoteUserId, "3 or more characters required to unban.");
+				SendPrivateChatMessage( remoteUserId, "3 or more characters required to ban." );
 				return;
 			}
 
 			ulong steamId = 0;
 
-			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName(rawSteamId);
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
 
-			if (playerItems.Count == 0)
+			if ( playerItems.Count == 0 )
 			{
-				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName(rawSteamId);
-				if (steamId == 0)
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName( rawSteamId );
+				if ( steamId == 0 )
 					return;
 			}
 			else
 			{
-				if (playerItems.Count > 1)
+				if ( playerItems.Count > 1 )
 				{
-					SendPrivateChatMessage(remoteUserId, "There is more than one player with the specified name;");
+					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
 					string playersString = "";
-					foreach (var playeritem in playerItems)
+					foreach ( var playeritem in playerItems )
 						playersString += playeritem.name + " ";
 
-					SendPrivateChatMessage(remoteUserId, playersString);
+					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
 				}
 
-				steamId = playerItems[0].steamId;
-				if (steamId == 0)
+				steamId = playerItems[ 0 ].steamId;
+				if ( steamId == 0 )
 					return;
 			}
 
-			PlayerManager.Instance.UnBanPlayer(steamId);
+			if ( steamId.ToString( ).StartsWith( "9009" ) )
+			{
+				SendPrivateChatMessage( remoteUserId, string.Format( "Unable to ban player '{0}'.  This player is the server.", steamId ) );
+				return;
+			}
 
-			SendPrivateChatMessage(remoteUserId, "Unbanned '" + (playerItems.Count == 0 ? rawSteamId : playerItems[0].name) + "'");
+			PlayerManager.Instance.BanPlayer( steamId );
+
+			SendPrivateChatMessage( remoteUserId, "Banned '" + ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) + "' and kicked them off of the server" );
+		}
+
+		protected void Command_Unban( ChatEvent chatEvent )
+		{
+			ulong remoteUserId = chatEvent.remoteUserId;
+			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			int paramCount = commandParts.Length - 1;
+
+			if ( paramCount != 1 )
+				return;
+
+			//Get the steam id of the player
+			string rawSteamId = commandParts[ 1 ];
+
+			if ( rawSteamId.Length < 3 )
+			{
+				SendPrivateChatMessage( remoteUserId, "3 or more characters required to unban." );
+				return;
+			}
+
+			ulong steamId = 0;
+
+			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
+
+			if ( playerItems.Count == 0 )
+			{
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName( rawSteamId );
+				if ( steamId == 0 )
+					return;
+			}
+			else
+			{
+				if ( playerItems.Count > 1 )
+				{
+					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
+
+					string playersString = "";
+					foreach ( var playeritem in playerItems )
+						playersString += playeritem.name + " ";
+
+					SendPrivateChatMessage( remoteUserId, playersString );
+					return;
+				}
+
+				steamId = playerItems[ 0 ].steamId;
+				if ( steamId == 0 )
+					return;
+			}
+
+			PlayerManager.Instance.UnBanPlayer( steamId );
+
+			SendPrivateChatMessage( remoteUserId, "Unbanned '" + ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) + "'" );
 		}
 
 		#endregion
