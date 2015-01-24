@@ -5,36 +5,25 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.ExceptionServices;
 using System.Security;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
 using SEModAPI.API;
 using SEModAPI.API.Definitions;
-using SEModAPI.Support;
-
-using SEModAPIInternal.API;
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
-
-using VRage.Common.Utils;
 using SEModAPIExtensions.API.IPC;
 using System.ServiceModel.Web;
-using System.IdentityModel.Selectors;
-using System.ServiceModel.Security;
 
 namespace SEModAPIExtensions.API
 {
+	using System.Diagnostics;
+	using System.Timers;
+
 	public struct CommandLineArgs
 	{
 		public bool autoStart;
@@ -92,8 +81,8 @@ namespace SEModAPIExtensions.API
 		private SessionManager m_sessionManager;
 
 		//Timers
-		private System.Timers.Timer m_pluginMainLoop;
-		private System.Timers.Timer m_autosaveTimer;
+		private readonly Timer m_pluginMainLoop;
+		private readonly Timer m_autosaveTimer;
 
 		#endregion
 
@@ -107,12 +96,10 @@ namespace SEModAPIExtensions.API
 			m_lastRestart = DateTime.Now;
 			m_restartLimit = 3;
 
-			m_pluginMainLoop = new System.Timers.Timer( );
-			m_pluginMainLoop.Interval = 200;
+			m_pluginMainLoop = new Timer { Interval = 200 };
 			m_pluginMainLoop.Elapsed += PluginManagerMain;
 
-			m_autosaveTimer = new System.Timers.Timer( );
-			m_autosaveTimer.Interval = 300000;
+			m_autosaveTimer = new Timer { Interval = 300000 };
 			m_autosaveTimer.Elapsed += AutoSaveMain;
 
 			m_isWCFEnabled = true;
@@ -156,7 +143,7 @@ namespace SEModAPIExtensions.API
 
 		private bool SetupWebService( )
 		{
-			Uri webServiceAddress = new Uri( "http://localhost:" + WCFPort.ToString( ) + "/SEServerExtender/Web/" );
+			Uri webServiceAddress = new Uri( "http://localhost:" + WCFPort + "/SEServerExtender/Web/" );
 			m_webHost = new WebServiceHost( typeof( WebService ), webServiceAddress );
 			try
 			{
@@ -248,11 +235,11 @@ namespace SEModAPIExtensions.API
 				}
 				if ( m_commandLineArgs.wcfPort > 0 )
 				{
-					Console.WriteLine( "WCF port: " + m_commandLineArgs.wcfPort.ToString( ) );
+					Console.WriteLine( "WCF port: " + m_commandLineArgs.wcfPort );
 				}
 				if ( m_commandLineArgs.autosave > 0 )
 				{
-					Console.WriteLine( "Autosave interval: " + m_commandLineArgs.autosave.ToString( ) );
+					Console.WriteLine( "Autosave interval: " + m_commandLineArgs.autosave );
 				}
 				if ( m_commandLineArgs.closeOnCrash )
 				{
@@ -295,13 +282,7 @@ namespace SEModAPIExtensions.API
 		[IgnoreDataMember]
 		public static Server Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new Server( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new Server( ) ); }
 		}
 
 		[DataMember]
@@ -440,28 +421,25 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				Uri baseAddress = new Uri( "http://localhost:" + Server.Instance.WCFPort.ToString( ) + "/SEServerExtender/" + urlExtension );
+				Uri baseAddress = new Uri( string.Format( "http://localhost:{0}/SEServerExtender/{1}", Instance.WCFPort, urlExtension ) );
 				ServiceHost selfHost = new ServiceHost( serviceType, baseAddress );
 
-				WSHttpBinding binding = new WSHttpBinding( );
-				binding.Security.Mode = SecurityMode.Message;
-				binding.Security.Message.ClientCredentialType = MessageCredentialType.Windows;
+				WSHttpBinding binding = new WSHttpBinding { Security = { Mode = SecurityMode.Message, Message = { ClientCredentialType = MessageCredentialType.Windows } } };
 				selfHost.AddServiceEndpoint( contractType, binding, name );
 
-				ServiceMetadataBehavior smb = new ServiceMetadataBehavior( );
-				smb.HttpGetEnabled = true;
+				ServiceMetadataBehavior smb = new ServiceMetadataBehavior { HttpGetEnabled = true };
 				selfHost.Description.Behaviors.Add( smb );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					Console.WriteLine( "Created WCF service at '" + baseAddress.ToString( ) + "'" );
+					Console.WriteLine( "Created WCF service at '{0}'", baseAddress );
 				}
 
 				return selfHost;
 			}
 			catch ( CommunicationException ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
+				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
 				return null;
 			}
 		}
@@ -498,7 +476,7 @@ namespace SEModAPIExtensions.API
 
 		private void PluginManagerMain( object sender, EventArgs e )
 		{
-			if ( !Server.Instance.IsRunning )
+			if ( !Instance.IsRunning )
 			{
 				m_pluginMainLoop.Stop( );
 				return;
@@ -524,12 +502,9 @@ namespace SEModAPIExtensions.API
 					m_pluginManager.LoadPlugins( );
 					m_pluginManager.Init( );
 
-					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-					{
-						AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" );
-					} );
+					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
 
-					AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler( CurrentDomain_UnhandledException );
+					AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					//AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					Application.ThreadException += Application_ThreadException;
 					Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
@@ -547,7 +522,7 @@ namespace SEModAPIExtensions.API
 
 		static void Application_ThreadException( object sender, ThreadExceptionEventArgs e )
 		{
-			Console.WriteLine( "Renewed Application.ThreadException - " + e.Exception.ToString( ) );
+			Console.WriteLine( "Renewed Application.ThreadException - {0}", e.Exception );
 
 			if ( LogManager.APILog != null && LogManager.APILog.LogEnabled )
 			{
@@ -563,7 +538,7 @@ namespace SEModAPIExtensions.API
 
 		static void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
 		{
-			Console.WriteLine( "Renewed - AppDomain.UnhandledException - " + ( (Exception)e.ExceptionObject ).ToString( ) );
+			Console.WriteLine( "Renewed - AppDomain.UnhandledException - {0}", e.ExceptionObject );
 
 			if ( LogManager.APILog != null && LogManager.APILog.LogEnabled )
 			{
@@ -579,7 +554,7 @@ namespace SEModAPIExtensions.API
 
 		private void AutoSaveMain( object sender, EventArgs e )
 		{
-			if ( !Server.Instance.IsRunning )
+			if ( !Instance.IsRunning )
 			{
 				m_autosaveTimer.Stop( );
 				return;
@@ -624,12 +599,12 @@ namespace SEModAPIExtensions.API
 				{
 					Thread.Sleep( 5000 );
 
-					String restartText = "timeout /t 20\r\n";
-					restartText += String.Format( "cd /d \"{0}\"\r\n", System.IO.Path.GetDirectoryName( Application.ExecutablePath ) );
-					restartText += System.IO.Path.GetFileName( Application.ExecutablePath ) + " " + m_commandLineArgs.args + "\r\n";
+					string restartText = "timeout /t 20\r\n";
+					restartText += string.Format( "cd /d \"{0}\"\r\n", System.IO.Path.GetDirectoryName( Application.ExecutablePath ) );
+					restartText += string.Format( "{0} {1}\r\n", System.IO.Path.GetFileName( Application.ExecutablePath ), m_commandLineArgs.args );
 
 					File.WriteAllText( "RestartApp.bat", restartText );
-					System.Diagnostics.Process.Start( "RestartApp.bat" );
+					Process.Start( "RestartApp.bat" );
 					Environment.Exit( 1 );
 				}
 
@@ -683,8 +658,7 @@ namespace SEModAPIExtensions.API
 				m_isServerRunning = true;
 				m_serverRan = true;
 
-				m_runServerThread = new Thread( new ThreadStart( this.RunServer ) );
-				m_runServerThread.IsBackground = true;
+				m_runServerThread = new Thread( RunServer ) { IsBackground = true };
 				m_runServerThread.Start( );
 			}
 			catch ( Exception ex )
@@ -796,7 +770,7 @@ namespace SEModAPIExtensions.API
 				}
 				catch ( Exception ex )
 				{
-					LogManager.APILog.WriteLineAndConsole( string.Format( "Error on configuration change ({1}): {0}", e.FullPath, ex.ToString( ) ) );
+					LogManager.APILog.WriteLineAndConsole( string.Format( "Error on configuration change ({1}): {0}", e.FullPath, ex ) );
 				}
 			}
 		}
