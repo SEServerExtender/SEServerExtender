@@ -28,6 +28,8 @@ using Sandbox.ModAPI;
 
 namespace SEModAPIExtensions.API
 {
+	using System.Linq;
+
 	public class ChatManager
 	{
 		public struct ChatCommand
@@ -51,12 +53,34 @@ namespace SEModAPIExtensions.API
 
 		public struct ChatEvent
 		{
+			public ChatEvent( ChatEventType type, DateTime timestamp, ulong sourceUserId, ulong remoteUserId, string message, ushort priority )
+			{
+				Type = type;
+				Timestamp = timestamp;
+				SourceUserId = sourceUserId;
+				RemoteUserId = remoteUserId;
+				Message = message;
+				Priority = priority;
+			}
+
 			public ChatEventType Type;
 			public DateTime Timestamp;
 			public ulong SourceUserId;
 			public ulong RemoteUserId;
 			public string Message;
 			public ushort Priority;
+
+			public ChatEvent( DateTime timestamp, ulong remoteUserId, string message )
+			{
+				Timestamp = timestamp;
+				RemoteUserId = remoteUserId;
+				Message = message;
+
+				//Defaults
+				Type = ChatEventType.OnChatReceived;
+				SourceUserId = 0;
+				Priority = 0;
+			}
 		}
 
 		#region "Attributes"
@@ -115,17 +139,17 @@ namespace SEModAPIExtensions.API
 
 			ChatCommand listCommand = new ChatCommand( "list", Command_List, true );
 
-			ChatCommand kickCommand = new ChatCommand("kick",Command_Kick, true);
+			ChatCommand kickCommand = new ChatCommand( "kick", Command_Kick, true );
 
-			ChatCommand onCommand = new ChatCommand("on",Command_On, true);
+			ChatCommand onCommand = new ChatCommand( "on", Command_On, true );
 
-			ChatCommand offCommand = new ChatCommand("off",Command_Off, true);
+			ChatCommand offCommand = new ChatCommand( "off", Command_Off, true );
 
-			ChatCommand banCommand = new ChatCommand( "ban",Command_Ban,true);
+			ChatCommand banCommand = new ChatCommand( "ban", Command_Ban, true );
 
-			ChatCommand unbanCommand = new ChatCommand("unban",Command_Unban, true);
+			ChatCommand unbanCommand = new ChatCommand( "unban", Command_Unban, true );
 
-			ChatCommand asyncSaveCommand = new ChatCommand("savesync",Command_SyncSave, true);
+			ChatCommand asyncSaveCommand = new ChatCommand( "savesync", Command_SyncSave, true );
 
 			RegisterChatCommand( offCommand );
 			RegisterChatCommand( onCommand );
@@ -145,15 +169,15 @@ namespace SEModAPIExtensions.API
 			RegisterChatCommand( unbanCommand );
 			RegisterChatCommand( asyncSaveCommand );
 
-			SetupWCFService( );
+			SetupWcfService( );
 
 			Console.WriteLine( "Finished loading ChatManager" );
 		}
 
-		private bool SetupWCFService( )
+		private static void SetupWcfService( )
 		{
 			if ( !Server.Instance.IsWCFEnabled )
-				return true;
+				return;
 
 			ServiceHost selfHost = null;
 			try
@@ -163,13 +187,10 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( CommunicationException ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
+				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
 				if ( selfHost != null )
 					selfHost.Abort( );
-				return false;
 			}
-
-			return true;
 		}
 
 		#endregion
@@ -178,14 +199,7 @@ namespace SEModAPIExtensions.API
 
 		public static ChatManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-				{
-					m_instance = new ChatManager( );
-				}
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new ChatManager( ) ); }
 		}
 
 		public List<string> ChatMessages
@@ -260,7 +274,7 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
-				var netManager = ServerNetworkManager.GetNetworkManager( );
+				object netManager = NetworkManager.GetNetworkManager( );
 				if ( netManager == null )
 					return;
 
@@ -294,18 +308,12 @@ namespace SEModAPIExtensions.API
 
 			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
 			{
-				m_chatMessages.Add( playerName + ": " + message );
-				LogManager.ChatLog.WriteLineAndConsole( "Chat - Client '" + playerName + "': " + message );
+				m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
+				LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Client '{0}': {1}", playerName, message ) );
 			}
 
-			ChatEvent chatEvent = new ChatEvent( );
-			chatEvent.Type = ChatEventType.OnChatReceived;
-			chatEvent.Timestamp = DateTime.Now;
-			chatEvent.SourceUserId = remoteUserId;
-			chatEvent.RemoteUserId = 0;
-			chatEvent.Message = message;
-			chatEvent.Priority = 0;
-			ChatManager.Instance.AddEvent( chatEvent );
+			ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
+			Instance.AddEvent( chatEvent );
 
 			m_resourceLock.AcquireExclusive( );
 			m_chatHistory.Add( chatEvent );
@@ -327,18 +335,12 @@ namespace SEModAPIExtensions.API
 					ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
 				}
 
-				m_chatMessages.Add( "Server: " + message );
+				m_chatMessages.Add( string.Format( "Server: {0}", message ) );
 
-				LogManager.ChatLog.WriteLineAndConsole( "Chat - Server: " + message );
+				LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Server: {0}", message ) );
 
-				ChatEvent chatEvent = new ChatEvent( );
-				chatEvent.Type = ChatEventType.OnChatSent;
-				chatEvent.Timestamp = DateTime.Now;
-				chatEvent.SourceUserId = 0;
-				chatEvent.RemoteUserId = remoteUserId;
-				chatEvent.Message = message;
-				chatEvent.Priority = 0;
-				ChatManager.Instance.AddEvent( chatEvent );
+				ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
+				Instance.AddEvent( chatEvent );
 
 				m_resourceLock.AcquireExclusive( );
 				m_chatHistory.Add( chatEvent );
@@ -370,28 +372,17 @@ namespace SEModAPIExtensions.API
 						if ( !remoteUserId.ToString( ).StartsWith( "9009" ) )
 							ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
 
-						ChatEvent chatEvent = new ChatEvent( );
-						chatEvent.Type = ChatEventType.OnChatSent;
-						chatEvent.Timestamp = DateTime.Now;
-						chatEvent.SourceUserId = 0;
-						chatEvent.RemoteUserId = remoteUserId;
-						chatEvent.Message = message;
-						chatEvent.Priority = 0;
-						ChatManager.Instance.AddEvent( chatEvent );
+						ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
+						Instance.AddEvent( chatEvent );
 					}
-					m_chatMessages.Add( "Server: " + message );
-					LogManager.ChatLog.WriteLineAndConsole( "Chat - Server: " + message );
+					m_chatMessages.Add( string.Format( "Server: {0}", message ) );
+					LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Server: {0}", message ) );
 				}
 
 				//Send a loopback chat event for server-sent messages
-				ChatEvent selfChatEvent = new ChatEvent( );
-				selfChatEvent.Type = ChatEventType.OnChatReceived;
-				selfChatEvent.Timestamp = DateTime.Now;
-				selfChatEvent.SourceUserId = 0;
-				selfChatEvent.RemoteUserId = 0;
-				selfChatEvent.Message = message;
-				selfChatEvent.Priority = 0;
-				ChatManager.Instance.AddEvent( selfChatEvent );
+				ChatEvent selfChatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, 0, message, 0 );
+
+				Instance.AddEvent( selfChatEvent );
 
 				m_resourceLock.AcquireExclusive( );
 				m_chatHistory.Add( selfChatEvent );
@@ -411,7 +402,7 @@ namespace SEModAPIExtensions.API
 					return false;
 
 				string[ ] commandParts = message.Split( ' ' );
-				if ( commandParts == null || commandParts.Length == 0 )
+				if ( commandParts.Length == 0 )
 					return false;
 
 				//Skip if message doesn't have leading forward slash
@@ -434,13 +425,9 @@ namespace SEModAPIExtensions.API
 
 						if ( command.Equals( chatCommand.Command.ToLower( ) ) )
 						{
-							ChatEvent chatEvent = new ChatEvent( );
-							chatEvent.Message = message;
-							chatEvent.RemoteUserId = remoteUserId;
-							chatEvent.Timestamp = DateTime.Now;
+							ChatEvent chatEvent = new ChatEvent( DateTime.Now, remoteUserId, message );
 
-
-							bool discard = false;
+							bool discard;
 							PluginManager.HookChatMessage( null, PluginManager.Instance.Plugins, PluginManager.Instance.PluginStates, chatEvent, out discard );
 
 							if ( !discard )
@@ -456,10 +443,7 @@ namespace SEModAPIExtensions.API
 					}
 				}
 
-				if ( foundMatch )
-					return true;
-				else
-					return false;
+				return foundMatch;
 			}
 			catch ( Exception ex )
 			{
@@ -471,10 +455,9 @@ namespace SEModAPIExtensions.API
 		public void RegisterChatCommand( ChatCommand command )
 		{
 			//Check if the given command already is registered
-			foreach ( ChatCommand chatCommand in m_chatCommands.Keys )
+			if ( m_chatCommands.Keys.Any( chatCommand => chatCommand.Command.ToLower( ).Equals( command.Command.ToLower( ) ) ) )
 			{
-				if ( chatCommand.Command.ToLower( ).Equals( command.Command.ToLower( ) ) )
-					return;
+				return;
 			}
 
 			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
@@ -488,13 +471,10 @@ namespace SEModAPIExtensions.API
 			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 			Guid guidValue = new Guid( guid.Value );
 
-			List<ChatCommand> commandsToRemove = new List<ChatCommand>( );
-			foreach ( var entry in m_chatCommands )
-			{
-				if ( entry.Value.Equals( guidValue ) )
-					commandsToRemove.Add( entry.Key );
-			}
-			foreach ( var entry in commandsToRemove )
+			List<ChatCommand> commandsToRemove = ( from entry in m_chatCommands
+												   where entry.Value.Equals( guidValue )
+												   select entry.Key ).ToList( );
+			foreach ( ChatCommand entry in commandsToRemove )
 			{
 				m_chatCommands.Remove( entry );
 			}
@@ -537,15 +517,7 @@ namespace SEModAPIExtensions.API
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
 						if ( blocks.Count > 0 )
 						{
-							bool foundBeacon = false;
-							foreach ( CubeBlockEntity cubeBlock in blocks )
-							{
-								if ( cubeBlock is BeaconEntity )
-								{
-									foundBeacon = true;
-									break;
-								}
-							}
+							bool foundBeacon = blocks.OfType<BeaconEntity>( ).Any( );
 							if ( !foundBeacon )
 							{
 								entitiesToDispose.Add( entity );
@@ -604,27 +576,20 @@ namespace SEModAPIExtensions.API
 						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " cube grids have been removed" );
+					SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
 				}
 				//All cube grids that have no power
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "nopower" ) )
 				{
 					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
-					foreach ( CubeGridEntity entity in entities )
-					{
-						if ( entity.TotalPower <= 0 )
-						{
-							entitiesToDispose.Add( entity );
-						}
-					}
+					List<CubeGridEntity> entitiesToDispose = entities.Where( entity => entity.TotalPower <= 0 ).ToList( );
 
 					foreach ( CubeGridEntity entity in entitiesToDispose )
 					{
 						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " cube grids have been removed" );
+					SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
 				}
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "floatingobjects" ) )	//All floating objects
 				{
@@ -641,7 +606,7 @@ namespace SEModAPIExtensions.API
 					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 					{
 						HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
-						MyAPIGateway.Entities.GetEntities( entities, null );
+						MyAPIGateway.Entities.GetEntities( entities );
 						List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
 
 						foreach ( IMyEntity entity in entities )
@@ -668,7 +633,7 @@ namespace SEModAPIExtensions.API
 						}
 					} );
 
-					SendPrivateChatMessage( remoteUserId, count.ToString( ) + " floating objects have been removed" );
+					SendPrivateChatMessage( remoteUserId, count + " floating objects have been removed" );
 				}
 				else
 				{
@@ -694,7 +659,7 @@ namespace SEModAPIExtensions.API
 						matchingEntitiesCount++;
 					}
 
-					SendPrivateChatMessage( remoteUserId, matchingEntitiesCount.ToString( ) + " objects have been removed" );
+					SendPrivateChatMessage( remoteUserId, string.Format( "{0} objects have been removed", matchingEntitiesCount ) );
 				}
 			}
 
@@ -709,7 +674,7 @@ namespace SEModAPIExtensions.API
 					foreach ( CubeGridEntity entity in entities )
 					{
 						//Skip static cube grids
-						if ( ( (CubeGridEntity)entity ).IsStatic )
+						if ( entity.IsStatic )
 							continue;
 
 						if ( entity.Name.Equals( entity.EntityId.ToString( ) ) )
@@ -721,15 +686,7 @@ namespace SEModAPIExtensions.API
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
 						if ( blocks.Count > 0 )
 						{
-							bool foundBeacon = false;
-							foreach ( CubeBlockEntity cubeBlock in entity.CubeBlocks )
-							{
-								if ( cubeBlock is BeaconEntity )
-								{
-									foundBeacon = true;
-									break;
-								}
-							}
+							bool foundBeacon = entity.CubeBlocks.OfType<BeaconEntity>( ).Any( );
 							if ( !foundBeacon )
 							{
 								entitiesToDispose.Add( entity );
@@ -742,7 +699,7 @@ namespace SEModAPIExtensions.API
 						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " ships have been removed" );
+					SendPrivateChatMessage( remoteUserId, string.Format( "{0} ships have been removed", entitiesToDispose.Count ) );
 				}
 			}
 
@@ -757,7 +714,7 @@ namespace SEModAPIExtensions.API
 					foreach ( CubeGridEntity entity in entities )
 					{
 						//Skip non-static cube grids
-						if ( !( (CubeGridEntity)entity ).IsStatic )
+						if ( !entity.IsStatic )
 							continue;
 
 						if ( entity.Name.Equals( entity.EntityId.ToString( ) ) )
@@ -769,15 +726,7 @@ namespace SEModAPIExtensions.API
 						List<CubeBlockEntity> blocks = entity.CubeBlocks;
 						if ( blocks.Count > 0 )
 						{
-							bool foundBeacon = false;
-							foreach ( CubeBlockEntity cubeBlock in entity.CubeBlocks )
-							{
-								if ( cubeBlock is BeaconEntity )
-								{
-									foundBeacon = true;
-									break;
-								}
-							}
+							bool foundBeacon = entity.CubeBlocks.OfType<BeaconEntity>( ).Any( );
 							if ( !foundBeacon )
 							{
 								entitiesToDispose.Add( entity );
@@ -790,7 +739,7 @@ namespace SEModAPIExtensions.API
 						entity.Dispose( );
 					}
 
-					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count.ToString( ) + " stations have been removed" );
+					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count + " stations have been removed" );
 				}
 			}
 
@@ -859,26 +808,13 @@ namespace SEModAPIExtensions.API
 				List<Faction> factionsToRemove = new List<Faction>( );
 				if ( commandParts[ 2 ].ToLower( ).Equals( "empty" ) )
 				{
-					foreach ( var entry in FactionsManager.Instance.Factions )
-					{
-						if ( entry.Members.Count == 0 )
-							factionsToRemove.Add( entry );
-					}
+					factionsToRemove.AddRange( FactionsManager.Instance.Factions.Where( entry => entry.Members.Count == 0 ) );
 				}
 				if ( commandParts[ 2 ].ToLower( ).Equals( "nofounder" ) )
 				{
 					foreach ( var entry in FactionsManager.Instance.Factions )
 					{
-						bool founderMatch = false;
-
-						foreach ( var member in entry.Members )
-						{
-							if ( member.IsFounder )
-							{
-								founderMatch = true;
-								break;
-							}
-						}
+						bool founderMatch = entry.Members.Any( member => member.IsFounder );
 
 						if ( !founderMatch )
 							factionsToRemove.Add( entry );
@@ -888,16 +824,7 @@ namespace SEModAPIExtensions.API
 				{
 					foreach ( var entry in FactionsManager.Instance.Factions )
 					{
-						bool founderMatch = false;
-
-						foreach ( var member in entry.Members )
-						{
-							if ( member.IsFounder || member.IsLeader )
-							{
-								founderMatch = true;
-								break;
-							}
-						}
+						bool founderMatch = entry.Members.Any( member => member.IsFounder || member.IsLeader );
 
 						if ( !founderMatch )
 							factionsToRemove.Add( entry );
@@ -909,7 +836,7 @@ namespace SEModAPIExtensions.API
 					FactionsManager.Instance.RemoveFaction( entry.Id );
 				}
 
-				SendPrivateChatMessage( remoteUserId, "Deleted " + factionsToRemove.Count.ToString( ) + " factions" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Deleted {0} factions", factionsToRemove.Count ) );
 			}
 
 			//Single entity
@@ -969,7 +896,7 @@ namespace SEModAPIExtensions.API
 						Vector3D newPosition = new Vector3D( x, y, z );
 						entity.Position = newPosition;
 
-						SendPrivateChatMessage( remoteUserId, "Entity '" + entity.EntityId.ToString( ) + "' has been moved to '" + newPosition.ToString( ) + "'" );
+						SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' has been moved to '{1}'", entity.EntityId, newPosition ) );
 					}
 				}
 				catch ( Exception ex )
@@ -1005,7 +932,7 @@ namespace SEModAPIExtensions.API
 						entitiesStoppedCount++;
 					}
 				}
-				SendPrivateChatMessage( remoteUserId, entitiesStoppedCount.ToString( ) + " entities are no longer moving or rotating" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "{0} entities are no longer moving or rotating", entitiesStoppedCount ) );
 			}
 			else
 			{
@@ -1024,7 +951,7 @@ namespace SEModAPIExtensions.API
 						entity.LinearVelocity = Vector3.Zero;
 						entity.AngularVelocity = Vector3.Zero;
 
-						SendPrivateChatMessage( remoteUserId, "Entity '" + entity.EntityId.ToString( ) + "' is no longer moving or rotating" );
+						SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' is no longer moving or rotating", entity.EntityId ) );
 					}
 				}
 				catch ( Exception ex )
@@ -1047,7 +974,7 @@ namespace SEModAPIExtensions.API
 				{
 					for ( int i = 2; i < commandParts.Length; i++ )
 					{
-						entityName += " " + commandParts[ i ];
+						entityName += string.Format( " {0}", commandParts[ i ] );
 					}
 				}
 
@@ -1057,7 +984,7 @@ namespace SEModAPIExtensions.API
 					if ( !entity.Name.ToLower( ).Equals( entityName.ToLower( ) ) )
 						continue;
 
-					SendPrivateChatMessage( remoteUserId, "Entity ID is '" + entity.EntityId.ToString( ) + "'" );
+					SendPrivateChatMessage( remoteUserId, string.Format( "Entity ID is '{0}'", entity.EntityId ) );
 				}
 			}
 		}
@@ -1065,8 +992,6 @@ namespace SEModAPIExtensions.API
 		protected void Command_Save( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
 
 			WorldManager.Instance.AsynchronousSaveWorld( );
 			SendPrivateChatMessage( remoteUserId, "Performing an asynchronous save." );
@@ -1075,8 +1000,6 @@ namespace SEModAPIExtensions.API
 		protected void Command_SyncSave( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
 
 			WorldManager.Instance.SaveWorld( );
 
@@ -1106,16 +1029,12 @@ namespace SEModAPIExtensions.API
 							continue;
 
 						//Update the owner of the blocks on the cube grid
-						foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
+						foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks.Where( cubeBlock => cubeBlock.EntityId != 0 ) )
 						{
-							//Skip blocks that don't have an entity id
-							if ( cubeBlock.EntityId == 0 )
-								continue;
-
 							cubeBlock.Owner = ownerId;
 						}
 
-						SendPrivateChatMessage( remoteUserId, "CubeGridEntity '" + cubeGrid.EntityId.ToString( ) + "' owner has been changed to '" + ownerId.ToString( ) + "'" );
+						SendPrivateChatMessage( remoteUserId, string.Format( "CubeGridEntity '{0}' owner has been changed to '{1}'", cubeGrid.EntityId, ownerId ) );
 					}
 				}
 				catch ( Exception ex )
@@ -1151,7 +1070,7 @@ namespace SEModAPIExtensions.API
 
 						string fileName = entity.Name.ToLower( );
 						Regex rgx = new Regex( "[^a-zA-Z0-9]" );
-						string cleanFileName = rgx.Replace( fileName, "" );
+						string cleanFileName = rgx.Replace( fileName, string.Empty );
 
 						string exportPath = Path.Combine( modPath, "Exports" );
 						if ( !Directory.Exists( exportPath ) )
@@ -1159,7 +1078,7 @@ namespace SEModAPIExtensions.API
 						FileInfo exportFile = new FileInfo( Path.Combine( exportPath, cleanFileName + ".sbc" ) );
 						entity.Export( exportFile );
 
-						SendPrivateChatMessage( remoteUserId, "Entity '" + entity.EntityId.ToString( ) + "' has been exported to Mods/Exports" );
+						SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' has been exported to Mods/Exports", entity.EntityId ) );
 					}
 				}
 				catch ( Exception ex )
@@ -1171,7 +1090,6 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Import( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.RemoteUserId;
 			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
@@ -1181,7 +1099,7 @@ namespace SEModAPIExtensions.API
 				{
 					string fileName = commandParts[ 1 ];
 					Regex rgx = new Regex( "[^a-zA-Z0-9]" );
-					string cleanFileName = rgx.Replace( fileName, "" );
+					string cleanFileName = rgx.Replace( fileName, string.Empty );
 
 					string modPath = MyFileSystem.ModsPath;
 					if ( Directory.Exists( modPath ) )
@@ -1192,7 +1110,7 @@ namespace SEModAPIExtensions.API
 							FileInfo importFile = new FileInfo( Path.Combine( exportPath, cleanFileName ) );
 							if ( importFile.Exists )
 							{
-								string objectBuilderTypeName = "";
+								string objectBuilderTypeName = string.Empty;
 								using ( XmlReader reader = XmlReader.Create( importFile.OpenText( ) ) )
 								{
 									while ( reader.Read( ) )
@@ -1288,7 +1206,7 @@ namespace SEModAPIExtensions.API
 				}
 			}
 
-			SendPrivateChatMessage( remoteUserId, "Cleared the production queue of " + queueCount.ToString( ) + " blocks" );
+			SendPrivateChatMessage( remoteUserId, "Cleared the production queue of " + queueCount + " blocks" );
 		}
 
 		protected void Command_List( ChatEvent chatEvent )
@@ -1303,44 +1221,44 @@ namespace SEModAPIExtensions.API
 			if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 			{
 				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-				LogManager.APILog.WriteLineAndConsole( "Total entities: '" + entities.Count.ToString( ) + "'" );
+				LogManager.APILog.WriteLineAndConsole( "Total entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Total entities: '" + entities.Count.ToString( ) + "'" );
+				SendPrivateChatMessage( remoteUserId, "Total entities: '" + entities.Count + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "cubegrid" ) )
 			{
 				List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-				LogManager.APILog.WriteLineAndConsole( "Cubegrid entities: '" + entities.Count.ToString( ) + "'" );
+				LogManager.APILog.WriteLineAndConsole( "Cubegrid entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Cubegrid entities: '" + entities.Count.ToString( ) + "'" );
+				SendPrivateChatMessage( remoteUserId, "Cubegrid entities: '" + entities.Count + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "character" ) )
 			{
 				List<CharacterEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>( );
-				LogManager.APILog.WriteLineAndConsole( "Character entities: '" + entities.Count.ToString( ) + "'" );
+				LogManager.APILog.WriteLineAndConsole( "Character entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count.ToString( ) + "'" );
+				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
 			{
 				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
-				LogManager.APILog.WriteLineAndConsole( "Voxelmap entities: '" + entities.Count.ToString( ) + "'" );
+				LogManager.APILog.WriteLineAndConsole( "Voxelmap entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count.ToString( ) + "'" );
+				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "meteor" ) )
 			{
 				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );
-				LogManager.APILog.WriteLineAndConsole( "Meteor entities: '" + entities.Count.ToString( ) + "'" );
+				LogManager.APILog.WriteLineAndConsole( "Meteor entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Meteor entities: '" + entities.Count.ToString( ) + "'" );
+				SendPrivateChatMessage( remoteUserId, "Meteor entities: '" + entities.Count + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "floatingobject" ) )
 			{
 				List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>( );
-				LogManager.APILog.WriteLineAndConsole( "Floating object entities: '" + entities.Count.ToString( ) + "'" );
+				LogManager.APILog.WriteLineAndConsole( "Floating object entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Floating object entities: '" + entities.Count.ToString( ) + "'" );
+				SendPrivateChatMessage( remoteUserId, "Floating object entities: '" + entities.Count + "'" );
 			}
 		}
 
@@ -1401,7 +1319,7 @@ namespace SEModAPIExtensions.API
 				}
 			}
 
-			SendPrivateChatMessage( remoteUserId, "Turned off " + poweredOffCount.ToString( ) + " blocks" );
+			SendPrivateChatMessage( remoteUserId, "Turned off " + poweredOffCount + " blocks" );
 		}
 
 		protected void Command_On( ChatEvent chatEvent )
@@ -1458,7 +1376,7 @@ namespace SEModAPIExtensions.API
 				}
 			}
 
-			SendPrivateChatMessage( remoteUserId, "Turned on " + poweredOffCount.ToString( ) + " blocks" );
+			SendPrivateChatMessage( remoteUserId, "Turned on " + poweredOffCount + " blocks" );
 		}
 
 		protected void Command_Kick( ChatEvent chatEvent )
@@ -1479,7 +1397,7 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 
-			ulong steamId = 0;
+			ulong steamId;
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
 			if ( playerItems.Count == 0 )
 			{
@@ -1493,9 +1411,7 @@ namespace SEModAPIExtensions.API
 				{
 					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
-					string playersString = "";
-					foreach ( var playeritem in playerItems )
-						playersString += playeritem.name + " ";
+					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.name  ) );
 
 					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
@@ -1513,7 +1429,7 @@ namespace SEModAPIExtensions.API
 			}
 
 			PlayerManager.Instance.KickPlayer( steamId );
-			SendPrivateChatMessage( remoteUserId, "Kicked player '" + ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) + "' off of the server" );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Kicked player '{0}' off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) ) );
 		}
 
 		protected void Command_Ban( ChatEvent chatEvent )
@@ -1534,7 +1450,7 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 
-			ulong steamId = 0;
+			ulong steamId;
 
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
 
@@ -1550,9 +1466,7 @@ namespace SEModAPIExtensions.API
 				{
 					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
-					string playersString = "";
-					foreach ( var playeritem in playerItems )
-						playersString += playeritem.name + " ";
+					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.name ) );
 
 					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
@@ -1571,7 +1485,7 @@ namespace SEModAPIExtensions.API
 
 			PlayerManager.Instance.BanPlayer( steamId );
 
-			SendPrivateChatMessage( remoteUserId, "Banned '" + ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) + "' and kicked them off of the server" );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Banned '{0}' and kicked them off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) ) );
 		}
 
 		protected void Command_Unban( ChatEvent chatEvent )
@@ -1592,7 +1506,7 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 
-			ulong steamId = 0;
+			ulong steamId;
 
 			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
 
@@ -1608,9 +1522,7 @@ namespace SEModAPIExtensions.API
 				{
 					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
-					string playersString = "";
-					foreach ( var playeritem in playerItems )
-						playersString += playeritem.name + " ";
+					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.name ) );
 
 					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
@@ -1623,7 +1535,7 @@ namespace SEModAPIExtensions.API
 
 			PlayerManager.Instance.UnBanPlayer( steamId );
 
-			SendPrivateChatMessage( remoteUserId, "Unbanned '" + ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) + "'" );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Unbanned '{0}'", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) ) );
 		}
 
 		#endregion
