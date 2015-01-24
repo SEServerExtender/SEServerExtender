@@ -23,7 +23,10 @@ using Sandbox.Definitions;
 
 namespace SEServerExtender
 {
-	public partial class SEServerExtender : Form
+	using Sandbox;
+	using Timer = System.Windows.Forms.Timer;
+
+	public sealed partial class SEServerExtender : Form
 	{
 		#region "Attributes"
 
@@ -41,13 +44,13 @@ namespace SEServerExtender
 		private int m_sortBy = 0;
 
 		//Timers
-		private System.Windows.Forms.Timer m_entityTreeRefreshTimer;
-		private System.Windows.Forms.Timer m_chatViewRefreshTimer;
-		private System.Windows.Forms.Timer m_factionRefreshTimer;
-		private System.Windows.Forms.Timer m_pluginManagerRefreshTimer;
-		private System.Windows.Forms.Timer m_statusCheckTimer;
-		private System.Windows.Forms.Timer m_utilitiesCleanFloatingObjectsTimer;
-		private System.Windows.Forms.Timer m_statisticsTimer;
+		private Timer m_entityTreeRefreshTimer;
+		private Timer m_chatViewRefreshTimer;
+		private Timer m_factionRefreshTimer;
+		private Timer m_pluginManagerRefreshTimer;
+		private Timer m_statusCheckTimer;
+		private Timer m_utilitiesCleanFloatingObjectsTimer;
+		private Timer m_statisticsTimer;
 
 		//Utilities Page
 		private int m_floatingObjectsCount;
@@ -79,41 +82,34 @@ namespace SEServerExtender
 			PG_Control_Server_Properties.SelectedObject = m_server.Config;
 
 			//Update the title bar text with the assembly version
-			this.Text = "SEServerExtender " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			Text = string.Format( "SEServerExtender {0}", Assembly.GetExecutingAssembly().GetName().Version );
 
-			this.FormClosing += OnFormClosing;
+			FormClosing += OnFormClosing;
 		}
 
 		private bool SetupTimers()
 		{		
-			m_entityTreeRefreshTimer = new System.Windows.Forms.Timer();
-			m_entityTreeRefreshTimer.Interval = 500;
-			m_entityTreeRefreshTimer.Tick += new EventHandler(TreeViewRefresh);
+			m_entityTreeRefreshTimer = new Timer { Interval = 500 };
+			m_entityTreeRefreshTimer.Tick += TreeViewRefresh;
 
-			m_chatViewRefreshTimer = new System.Windows.Forms.Timer();
-			m_chatViewRefreshTimer.Interval = 1000;
-			m_chatViewRefreshTimer.Tick += new EventHandler(ChatViewRefresh);
+			m_chatViewRefreshTimer = new Timer { Interval = 1000 };
+			m_chatViewRefreshTimer.Tick += ChatViewRefresh;
 
-			m_factionRefreshTimer = new System.Windows.Forms.Timer();
-			m_factionRefreshTimer.Interval = 5000;
-			m_factionRefreshTimer.Tick += new EventHandler(FactionRefresh);
+			m_factionRefreshTimer = new Timer { Interval = 5000 };
+			m_factionRefreshTimer.Tick += FactionRefresh;
 
-			m_pluginManagerRefreshTimer = new System.Windows.Forms.Timer();
-			m_pluginManagerRefreshTimer.Interval = 10000;
-			m_pluginManagerRefreshTimer.Tick += new EventHandler(PluginManagerRefresh);
+			m_pluginManagerRefreshTimer = new Timer { Interval = 10000 };
+			m_pluginManagerRefreshTimer.Tick += PluginManagerRefresh;
 
-			m_statusCheckTimer = new System.Windows.Forms.Timer();
-			m_statusCheckTimer.Interval = 5000;
-			m_statusCheckTimer.Tick += new EventHandler(StatusCheckRefresh);
+			m_statusCheckTimer = new Timer { Interval = 5000 };
+			m_statusCheckTimer.Tick += StatusCheckRefresh;
 			m_statusCheckTimer.Start();
 
-			m_utilitiesCleanFloatingObjectsTimer = new System.Windows.Forms.Timer();
-			m_utilitiesCleanFloatingObjectsTimer.Interval = 5000;
-			m_utilitiesCleanFloatingObjectsTimer.Tick += new EventHandler(UtilitiesCleanFloatingObjects);
+			m_utilitiesCleanFloatingObjectsTimer = new Timer { Interval = 5000 };
+			m_utilitiesCleanFloatingObjectsTimer.Tick += UtilitiesCleanFloatingObjects;
 
-			m_statisticsTimer = new System.Windows.Forms.Timer();
-			m_statisticsTimer.Interval = 1000;
-			m_statisticsTimer.Tick += new EventHandler(StatisticsRefresh);
+			m_statisticsTimer = new Timer { Interval = 1000 };
+			m_statisticsTimer.Tick += StatisticsRefresh;
 
 			return true;
 		}
@@ -170,9 +166,9 @@ namespace SEServerExtender
 		private void StatisticsRefresh(object sender, EventArgs e)
 		{
 			StringBuilder sb = new StringBuilder();
-			Sandbox.Stats.Generic.WriteTo(sb);
-			Sandbox.Stats.Network.WriteTo(sb);
-			Sandbox.Stats.Timing.WriteTo(sb);
+			Stats.Generic.WriteTo(sb);
+			Stats.Network.WriteTo(sb);
+			Stats.Timing.WriteTo(sb);
 			
 			TB_Statistics.Text = sb.ToString();
 		}
@@ -392,7 +388,7 @@ namespace SEServerExtender
 				if (entriesChanged)
 				{
 					node.Nodes.Clear();
-					node.Text = node.Name + " (" + source.Count.ToString() + ")";
+					node.Text = node.Name + " (" + source.Count + ")";
 				}
 
 				int index = 0;
@@ -454,8 +450,9 @@ namespace SEServerExtender
 				}
 
 				RenderSectorObjectChildNodes(sectorObjectsNode);
-				sectorObjectsNode.Text = sectorObjectsNode.Name + " (" + SectorObjectManager.Instance.Count.ToString() + ")";
+				sectorObjectsNode.Text = string.Format( "{0} ({1})", sectorObjectsNode.Name, SectorObjectManager.Instance.Count );
 				sectorObjectsNode.Tag = SectorObjectManager.Instance;
+
 
 				TRV_Entities.EndUpdate();
 			}
@@ -574,17 +571,13 @@ namespace SEServerExtender
 			}
 
 			//Add new nodes
-			foreach (var item in list)
+			foreach (CubeGridEntity item in list)
 			{
 				try
 				{
 					if (item == null)
 						continue;
 
-					Vector3D rawPosition = item.Position;
-					double distance = rawPosition.Length();
-
-					Type sectorObjectType = item.GetType();
 					string nodeKey = item.EntityId.ToString();
 
 					TreeNode newNode = rootNode.Nodes.Add(nodeKey, GenerateCubeNodeText(item));
@@ -598,7 +591,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count.ToString() + ")";
+			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
 
 		private string GenerateCubeNodeText(CubeGridEntity item)
@@ -606,20 +599,20 @@ namespace SEServerExtender
 			string text = item.DisplayName;
 
 			int sortBy = CB_Entity_Sort.SelectedIndex;
-			if (sortBy == 0)
+			switch ( sortBy )
 			{
-				text += " | " + item.Name;
-			}
-			else if (sortBy == 1)
-			{
-				text += " | ID: " + item.EntityId;
-			}
-			else if (sortBy == 4)
-			{
-				text += " | Mass: " + Math.Floor(item.Mass).ToString() + " kg";
+				case 0:
+					text += string.Format( " | {0}", item.Name );
+					break;
+				case 1:
+					text += string.Format( " | ID: {0}", item.EntityId );
+					break;
+				case 4:
+					text += string.Format( " | Mass: {0} kg", Math.Floor(item.Mass) );
+					break;
 			}
 			
-			text += " | Dist: " + Math.Round(((Vector3D)item.Position).Length(), 0) + "m";
+			text += string.Format( " | Dist: {0}m", Math.Round(((Vector3D)item.Position).Length(), 0) );
 
 			return text;
 		}
@@ -631,23 +624,20 @@ namespace SEServerExtender
 			if (sortBy == 0) // Name
 			{
 				list.Sort(delegate(CubeGridEntity x, CubeGridEntity y)
-				{
-					if (x.Name == null && y.Name == null) return 0;
-					else if (x.Name == null) return -1;
-					else if (y.Name == null) return 1;
-					else return x.Name.CompareTo(y.Name);
-				});
+				          {
+					          if (x.Name == null && y.Name == null) return 0;
+					          if (x.Name == null) return -1;
+					          if (y.Name == null) return 1;
+					          return x.Name.CompareTo(y.Name);
+				          } );
 			}
 			else if (sortBy == 1) // Entity ID
 			{
-				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
-					{
-						return x.EntityId.CompareTo(y.EntityId);
-					});
+				list.Sort(( x, y ) => x.EntityId.CompareTo(y.EntityId) );
 			}
 			else if (sortBy == 2) // Distance From Center
 			{
-				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
+				list.Sort(( x, y ) =>
 					{
 						if (x == null || x.IsDisposed || x.IsLoading)
 							return -1;
@@ -660,10 +650,7 @@ namespace SEServerExtender
 			}
 			else if(sortBy == 3) // Display Name
 			{
-				list.Sort((CubeGridEntity x, CubeGridEntity y) =>
-					{
-						return x.DisplayName.CompareTo(y.DisplayName);
-					});
+				list.Sort(( x, y ) => x.DisplayName.CompareTo(y.DisplayName) );
 			}
 		}
 
@@ -691,7 +678,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
-							string newNodeText = item.Name + " | Dist: " + distance.ToString() + "m";
+							string newNodeText = string.Format( "{0} | Dist: {1}m", item.Name, distance );
 							node.Text = newNodeText;
 						}
 						list.Remove(item);
@@ -718,10 +705,9 @@ namespace SEServerExtender
 					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
-					Type sectorObjectType = item.GetType();
 					string nodeKey = item.EntityId.ToString();
 
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Dist: " + distance.ToString() + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, string.Format( "{0} | Dist: {1}m", item.Name, distance ));
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -732,7 +718,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count.ToString() + ")";
+			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
 
 		private void RenderVoxelMapNodes(TreeNode rootNode)
@@ -759,7 +745,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
-							string newNodeText = item.Name + " | Dist: " + distance.ToString() + "m";
+							string newNodeText = item.Name + " | Dist: " + distance + "m";
 							node.Text = newNodeText;
 						}
 						list.Remove(item);
@@ -789,7 +775,7 @@ namespace SEServerExtender
 					Type sectorObjectType = item.GetType();
 					string nodeKey = item.EntityId.ToString();
 
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Dist: " + distance.ToString() + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Dist: " + distance + "m");
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -800,7 +786,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count.ToString() + ")";
+			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count + ")";
 		}
 
 		private void RenderFloatingObjectNodes(TreeNode rootNode)
@@ -827,7 +813,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
-							string newNodeText = item.Name + " | Amount: " + item.Item.Amount.ToString() + " | Dist: " + distance.ToString() + "m";
+							string newNodeText = item.Name + " | Amount: " + item.Item.Amount + " | Dist: " + distance + "m";
 							node.Text = newNodeText;
 						}
 						list.Remove(item);
@@ -861,7 +847,7 @@ namespace SEServerExtender
 					Type sectorObjectType = item.GetType();
 					string nodeKey = item.EntityId.ToString();
 
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Amount: " + item.Item.Amount.ToString() + " | Dist: " + distance.ToString() + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Amount: " + item.Item.Amount + " | Dist: " + distance + "m");
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -872,7 +858,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count.ToString() + ")";
+			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count + ")";
 
 			// Update a var for the Utilities Floating object cleaner.
 			m_floatingObjectsCount = rootNode.Nodes.Count;
@@ -902,7 +888,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
-							string newNodeText = item.Name + " | Dist: " + distance.ToString() + "m";
+							string newNodeText = item.Name + " | Dist: " + distance + "m";
 							node.Text = newNodeText;
 						}
 						list.Remove(item);
@@ -930,7 +916,7 @@ namespace SEServerExtender
 					double distance = rawPosition.Length();
 
 					string nodeKey = item.EntityId.ToString();
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Dist: " + distance.ToString() + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Dist: " + distance + "m");
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -941,7 +927,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count.ToString() + ")";
+			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count + ")";
 		}
 
 		private void RenderCubeGridChildNodes(CubeGridEntity cubeGrid, TreeNode blocksNode)
@@ -1108,16 +1094,16 @@ namespace SEServerExtender
 				}
 			}
 
-			structuralBlocksNode.Text = structuralBlocksNode.Name + " (" + structuralBlocksNode.Nodes.Count.ToString() + ")";
-			containerBlocksNode.Text = containerBlocksNode.Name + " (" + containerBlocksNode.Nodes.Count.ToString() + ")";
-			productionBlocksNode.Text = productionBlocksNode.Name + " (" + productionBlocksNode.Nodes.Count.ToString() + ")";
-			energyBlocksNode.Text = energyBlocksNode.Name + " (" + energyBlocksNode.Nodes.Count.ToString() + ")";
-			conveyorBlocksNode.Text = conveyorBlocksNode.Name + " (" + conveyorBlocksNode.Nodes.Count.ToString() + ")";
-			utilityBlocksNode.Text = utilityBlocksNode.Name + " (" + utilityBlocksNode.Nodes.Count.ToString() + ")";
-			weaponBlocksNode.Text = weaponBlocksNode.Name + " (" + weaponBlocksNode.Nodes.Count.ToString() + ")";
-			toolBlocksNode.Text = toolBlocksNode.Name + " (" + toolBlocksNode.Nodes.Count.ToString() + ")";
-			lightBlocksNode.Text = lightBlocksNode.Name + " (" + lightBlocksNode.Nodes.Count.ToString() + ")";
-			miscBlocksNode.Text = miscBlocksNode.Name + " (" + miscBlocksNode.Nodes.Count.ToString() + ")";
+			structuralBlocksNode.Text = structuralBlocksNode.Name + " (" + structuralBlocksNode.Nodes.Count + ")";
+			containerBlocksNode.Text = containerBlocksNode.Name + " (" + containerBlocksNode.Nodes.Count + ")";
+			productionBlocksNode.Text = productionBlocksNode.Name + " (" + productionBlocksNode.Nodes.Count + ")";
+			energyBlocksNode.Text = energyBlocksNode.Name + " (" + energyBlocksNode.Nodes.Count + ")";
+			conveyorBlocksNode.Text = conveyorBlocksNode.Name + " (" + conveyorBlocksNode.Nodes.Count + ")";
+			utilityBlocksNode.Text = utilityBlocksNode.Name + " (" + utilityBlocksNode.Nodes.Count + ")";
+			weaponBlocksNode.Text = weaponBlocksNode.Name + " (" + weaponBlocksNode.Nodes.Count + ")";
+			toolBlocksNode.Text = toolBlocksNode.Name + " (" + toolBlocksNode.Nodes.Count + ")";
+			lightBlocksNode.Text = lightBlocksNode.Name + " (" + lightBlocksNode.Nodes.Count + ")";
+			miscBlocksNode.Text = miscBlocksNode.Name + " (" + miscBlocksNode.Nodes.Count + ")";
 		}
 
 		private void TRV_Entities_NodeRefresh(object sender, TreeNodeMouseClickEventArgs e)
@@ -1207,41 +1193,41 @@ namespace SEServerExtender
 				
 				List<MyVoxelMaterialDefinition> materialDefs = new List<MyVoxelMaterialDefinition>(MyDefinitionManager.Static.GetVoxelMaterialDefinitions());
 
-				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
-				{
-					Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
+				ThreadPool.QueueUserWorkItem((object state) =>
+				                             {
+					                             Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
 
-					this.Invoke(new Action(() =>
-					{
-						TRV_Entities.BeginUpdate();
-						if (e.Node.Nodes.Count < materialDefs.Count)
-						{
-							e.Node.Nodes.Clear();
+					                             Invoke(new Action(() =>
+					                                                    {
+						                                                    TRV_Entities.BeginUpdate();
+						                                                    if (e.Node.Nodes.Count < materialDefs.Count)
+						                                                    {
+							                                                    e.Node.Nodes.Clear();
 
-							foreach (var material in materialDefs)
-							{
-								TreeNode newNode = e.Node.Nodes.Add(material.Id.SubtypeName);
-								newNode.Name = newNode.Text;
-								newNode.Tag = material;
-							}
-						}
+							                                                    foreach (var material in materialDefs)
+							                                                    {
+								                                                    TreeNode newNode = e.Node.Nodes.Add(material.Id.SubtypeName);
+								                                                    newNode.Name = newNode.Text;
+								                                                    newNode.Tag = material;
+							                                                    }
+						                                                    }
 
-						foreach (TreeNode node in e.Node.Nodes)
-						{
-							Object tag = node.Tag;
-							if (tag == null || !(tag is MyVoxelMaterialDefinition))
-								continue;
-							MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
-							if (totalMaterials.ContainsKey(material))
-							{
-								float total = totalMaterials[material];
-								node.Text = node.Name + " (" + total.ToString() + ")";
-							}
-						}
+						                                                    foreach (TreeNode node in e.Node.Nodes)
+						                                                    {
+							                                                    Object tag = node.Tag;
+							                                                    if (tag == null || !(tag is MyVoxelMaterialDefinition))
+								                                                    continue;
+							                                                    MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
+							                                                    if (totalMaterials.ContainsKey(material))
+							                                                    {
+								                                                    float total = totalMaterials[material];
+								                                                    node.Text = node.Name + " (" + total + ")";
+							                                                    }
+						                                                    }
 
-						TRV_Entities.EndUpdate();
-					}));
-				}));
+						                                                    TRV_Entities.EndUpdate();
+					                                                    }));
+				                             });
 
 			}
 
@@ -1772,7 +1758,7 @@ namespace SEServerExtender
 								{
 									foundMatch = true;
 
-									string newNodeText = item.Name + " (" + item.Members.Count.ToString() + ")";
+									string newNodeText = item.Name + " (" + item.Members.Count + ")";
 									node.Text = newNodeText;
 
 									TreeNode membersNode = node.Nodes[0];
@@ -1828,7 +1814,7 @@ namespace SEServerExtender
 							Type sectorObjectType = item.GetType();
 							string nodeKey = item.Id.ToString();
 
-							TreeNode newNode = TRV_Factions.Nodes.Add(nodeKey, item.Name + " (" + item.Members.Count.ToString() + ")");
+							TreeNode newNode = TRV_Factions.Nodes.Add(nodeKey, item.Name + " (" + item.Members.Count + ")");
 							newNode.Name = item.Name;
 							newNode.Tag = item;
 
@@ -1926,7 +1912,7 @@ namespace SEServerExtender
 				foreach (var key in PluginManager.Instance.Plugins.Keys)
 				{
 					IPlugin plugin = (IPlugin)PluginManager.Instance.Plugins[key]; 
-					LST_Plugins.Items.Add(plugin.Name + " - " + key.ToString());
+					LST_Plugins.Items.Add(plugin.Name + " - " + key);
 				}
 				LST_Plugins.SelectedIndex = selectedIndex;
 				LST_Plugins.EndUpdate();
@@ -1971,7 +1957,7 @@ namespace SEServerExtender
 				}
 
 				value.Dock = DockStyle.Fill;
-				value.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				value.FormBorderStyle = FormBorderStyle.None;
 				value.Visible = true;
 			}
 			else // Default PropertyGrid view
@@ -2115,14 +2101,14 @@ namespace SEServerExtender
 		// Start the Auto Clean timer if user checks the auto clean checkbox.
 		private void CHK_Utilities_FloatingObjectAutoClean_CheckedChanged(object sender, EventArgs e)
 		{
-			if (CHK_Utilities_FloatingObjectAutoClean.Checked == true)
+			if (CHK_Utilities_FloatingObjectAutoClean.Checked)
 			{
 				if(!m_utilitiesCleanFloatingObjectsTimer.Enabled)
 					m_utilitiesCleanFloatingObjectsTimer.Start();
 			}
 			else
 			{
-				if (m_utilitiesCleanFloatingObjectsTimer.Enabled == true)
+				if (m_utilitiesCleanFloatingObjectsTimer.Enabled)
 				{
 					m_utilitiesCleanFloatingObjectsTimer.Enabled = false;
 					m_utilitiesCleanFloatingObjectsTimer.Stop();

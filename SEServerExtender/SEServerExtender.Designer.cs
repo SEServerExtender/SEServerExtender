@@ -1,6 +1,6 @@
 ﻿namespace SEServerExtender
 {
-	partial class SEServerExtender
+	sealed partial class SEServerExtender
 	{
 		/// <summary>
 		/// Required designer variable.
