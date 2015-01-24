@@ -1218,10 +1218,10 @@ namespace SEServerExtender
 							                                                    if ( !(tag is MyVoxelMaterialDefinition))
 								                                                    continue;
 							                                                    MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
-							                                                    if (totalMaterials.ContainsKey(material))
+							                                                    float total;
+							                                                    if (totalMaterials.TryGetValue( material, out total ))
 							                                                    {
-								                                                    float total = totalMaterials[material];
-								                                                    node.Text = node.Name + " (" + total + ")";
+								                                                    node.Text = string.Format( "{0} ({1})", node.Name, total );
 							                                                    }
 						                                                    }
 
