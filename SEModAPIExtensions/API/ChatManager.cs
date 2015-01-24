@@ -25,11 +25,6 @@ using VRage.Common.Utils;
 using VRageMath;
 
 using Sandbox.ModAPI;
-using Sandbox.Definitions;
-using System.Collections;
-using System.Linq;
-
-using Havok;
 
 namespace SEModAPIExtensions.API
 {
@@ -37,9 +32,15 @@ namespace SEModAPIExtensions.API
 	{
 		public struct ChatCommand
 		{
-			public string command;
-			public Action<ChatEvent> callback;
-			public bool requiresAdmin;
+			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
+			{
+				Command = command;
+				Callback = callback;
+				RequiresAdmin = requiresAdmin;
+			}
+			public string Command;
+			public Action<ChatEvent> Callback;
+			public bool RequiresAdmin;
 		}
 
 		public enum ChatEventType
@@ -50,12 +51,12 @@ namespace SEModAPIExtensions.API
 
 		public struct ChatEvent
 		{
-			public ChatEventType type;
-			public DateTime timestamp;
-			public ulong sourceUserId;
-			public ulong remoteUserId;
-			public string message;
-			public ushort priority;
+			public ChatEventType Type;
+			public DateTime Timestamp;
+			public ulong SourceUserId;
+			public ulong RemoteUserId;
+			public string Message;
+			public ushort Priority;
 		}
 
 		#region "Attributes"
@@ -92,90 +93,39 @@ namespace SEModAPIExtensions.API
 			m_chatEvents = new List<ChatEvent>( );
 			m_chatCommands = new Dictionary<ChatCommand, Guid>( );
 
-			ChatCommand deleteCommand = new ChatCommand( );
-			deleteCommand.command = "delete";
-			deleteCommand.callback = Command_Delete;
-			deleteCommand.requiresAdmin = true;
+			ChatCommand deleteCommand = new ChatCommand( "delete", Command_Delete, true );
 
-			ChatCommand tpCommand = new ChatCommand( );
-			tpCommand.command = "tp";
-			tpCommand.callback = Command_Teleport;
-			tpCommand.requiresAdmin = true;
+			ChatCommand tpCommand = new ChatCommand( "tp", Command_Teleport, true );
 
-			ChatCommand stopCommand = new ChatCommand( );
-			stopCommand.command = "stop";
-			stopCommand.callback = Command_Stop;
-			stopCommand.requiresAdmin = true;
+			ChatCommand stopCommand = new ChatCommand( "stop", Command_Stop, true );
 
-			ChatCommand getIdCommand = new ChatCommand( );
-			getIdCommand.command = "getid";
-			getIdCommand.callback = Command_GetId;
-			getIdCommand.requiresAdmin = true;
+			ChatCommand getIdCommand = new ChatCommand( "getid", Command_GetId, true );
 
-			ChatCommand saveCommand = new ChatCommand( );
-			saveCommand.command = "save";
-			saveCommand.callback = Command_Save;
-			saveCommand.requiresAdmin = true;
+			ChatCommand saveCommand = new ChatCommand( "save", Command_Save, true );
 
-			ChatCommand ownerCommand = new ChatCommand( );
-			ownerCommand.command = "owner";
-			ownerCommand.callback = Command_Owner;
-			ownerCommand.requiresAdmin = true;
+			ChatCommand ownerCommand = new ChatCommand( "owner", Command_Owner, true );
 
-			ChatCommand exportCommand = new ChatCommand( );
-			exportCommand.command = "export";
-			exportCommand.callback = Command_Export;
-			exportCommand.requiresAdmin = true;
+			ChatCommand exportCommand = new ChatCommand( "export", Command_Export, true );
 
-			ChatCommand importCommand = new ChatCommand( );
-			importCommand.command = "import";
-			importCommand.callback = Command_Import;
-			importCommand.requiresAdmin = true;
+			ChatCommand importCommand = new ChatCommand( "import", Command_Import, true );
 
-			ChatCommand spawnCommand = new ChatCommand( );
-			spawnCommand.command = "spawn";
-			spawnCommand.callback = Command_Spawn;
-			spawnCommand.requiresAdmin = true;
+			ChatCommand spawnCommand = new ChatCommand( "spawn", Command_Spawn, true );
 
-			ChatCommand clearCommand = new ChatCommand( );
-			clearCommand.command = "clear";
-			clearCommand.callback = Command_Clear;
-			clearCommand.requiresAdmin = true;
+			ChatCommand clearCommand = new ChatCommand( "clear", Command_Clear, true );
 
-			ChatCommand listCommand = new ChatCommand( );
-			listCommand.command = "list";
-			listCommand.callback = Command_List;
-			listCommand.requiresAdmin = true;
+			ChatCommand listCommand = new ChatCommand( "list", Command_List, true );
 
-			ChatCommand kickCommand = new ChatCommand( );
-			kickCommand.command = "kick";
-			kickCommand.callback = Command_Kick;
-			kickCommand.requiresAdmin = true;
+			ChatCommand kickCommand = new ChatCommand("kick",Command_Kick, true);
 
-			ChatCommand onCommand = new ChatCommand( );
-			onCommand.command = "on";
-			onCommand.callback = Command_On;
-			onCommand.requiresAdmin = true;
+			ChatCommand onCommand = new ChatCommand("on",Command_On, true);
 
-			ChatCommand offCommand = new ChatCommand( );
-			offCommand.command = "off";
-			offCommand.callback = Command_Off;
-			offCommand.requiresAdmin = true;
+			ChatCommand offCommand = new ChatCommand("off",Command_Off, true);
 
-			ChatCommand banCommand = new ChatCommand( );
-			banCommand.command = "ban";
-			banCommand.callback = Command_Ban;
-			banCommand.requiresAdmin = true;
+			ChatCommand banCommand = new ChatCommand( "ban",Command_Ban,true);
 
-			ChatCommand unbanCommand = new ChatCommand( );
-			unbanCommand.command = "unban";
-			unbanCommand.callback = Command_Unban;
-			unbanCommand.requiresAdmin = true;
+			ChatCommand unbanCommand = new ChatCommand("unban",Command_Unban, true);
 
-			ChatCommand asyncSaveCommand = new ChatCommand( );
-			asyncSaveCommand.command = "savesync";
-			asyncSaveCommand.callback = Command_SyncSave;
-			asyncSaveCommand.requiresAdmin = true;
+			ChatCommand asyncSaveCommand = new ChatCommand("savesync",Command_SyncSave, true);
 
 			RegisterChatCommand( offCommand );
 			RegisterChatCommand( onCommand );
@@ -349,12 +299,12 @@ namespace SEModAPIExtensions.API
 			}
 
 			ChatEvent chatEvent = new ChatEvent( );
-			chatEvent.type = ChatEventType.OnChatReceived;
-			chatEvent.timestamp = DateTime.Now;
-			chatEvent.sourceUserId = remoteUserId;
-			chatEvent.remoteUserId = 0;
-			chatEvent.message = message;
-			chatEvent.priority = 0;
+			chatEvent.Type = ChatEventType.OnChatReceived;
+			chatEvent.Timestamp = DateTime.Now;
+			chatEvent.SourceUserId = remoteUserId;
+			chatEvent.RemoteUserId = 0;
+			chatEvent.Message = message;
+			chatEvent.Priority = 0;
 			ChatManager.Instance.AddEvent( chatEvent );
 
 			m_resourceLock.AcquireExclusive( );
@@ -382,12 +332,12 @@ namespace SEModAPIExtensions.API
 				LogManager.ChatLog.WriteLineAndConsole( "Chat - Server: " + message );
 
 				ChatEvent chatEvent = new ChatEvent( );
-				chatEvent.type = ChatEventType.OnChatSent;
-				chatEvent.timestamp = DateTime.Now;
-				chatEvent.sourceUserId = 0;
-				chatEvent.remoteUserId = remoteUserId;
-				chatEvent.message = message;
-				chatEvent.priority = 0;
+				chatEvent.Type = ChatEventType.OnChatSent;
+				chatEvent.Timestamp = DateTime.Now;
+				chatEvent.SourceUserId = 0;
+				chatEvent.RemoteUserId = remoteUserId;
+				chatEvent.Message = message;
+				chatEvent.Priority = 0;
 				ChatManager.Instance.AddEvent( chatEvent );
 
 				m_resourceLock.AcquireExclusive( );
@@ -421,12 +371,12 @@ namespace SEModAPIExtensions.API
 							ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
 
 						ChatEvent chatEvent = new ChatEvent( );
-						chatEvent.type = ChatEventType.OnChatSent;
-						chatEvent.timestamp = DateTime.Now;
-						chatEvent.sourceUserId = 0;
-						chatEvent.remoteUserId = remoteUserId;
-						chatEvent.message = message;
-						chatEvent.priority = 0;
+						chatEvent.Type = ChatEventType.OnChatSent;
+						chatEvent.Timestamp = DateTime.Now;
+						chatEvent.SourceUserId = 0;
+						chatEvent.RemoteUserId = remoteUserId;
+						chatEvent.Message = message;
+						chatEvent.Priority = 0;
 						ChatManager.Instance.AddEvent( chatEvent );
 					}
 					m_chatMessages.Add( "Server: " + message );
@@ -435,12 +385,12 @@ namespace SEModAPIExtensions.API
 
 				//Send a loopback chat event for server-sent messages
 				ChatEvent selfChatEvent = new ChatEvent( );
-				selfChatEvent.type = ChatEventType.OnChatReceived;
-				selfChatEvent.timestamp = DateTime.Now;
-				selfChatEvent.sourceUserId = 0;
-				selfChatEvent.remoteUserId = 0;
-				selfChatEvent.message = message;
-				selfChatEvent.priority = 0;
+				selfChatEvent.Type = ChatEventType.OnChatReceived;
+				selfChatEvent.Timestamp = DateTime.Now;
+				selfChatEvent.SourceUserId = 0;
+				selfChatEvent.RemoteUserId = 0;
+				selfChatEvent.Message = message;
+				selfChatEvent.Priority = 0;
 				ChatManager.Instance.AddEvent( selfChatEvent );
 
 				m_resourceLock.AcquireExclusive( );
@@ -479,22 +429,22 @@ namespace SEModAPIExtensions.API
 				{
 					try
 					{
-						if ( chatCommand.requiresAdmin && remoteUserId != 0 && !PlayerManager.Instance.IsUserAdmin( remoteUserId ) )
+						if ( chatCommand.RequiresAdmin && remoteUserId != 0 && !PlayerManager.Instance.IsUserAdmin( remoteUserId ) )
 							continue;
 
-						if ( command.Equals( chatCommand.command.ToLower( ) ) )
+						if ( command.Equals( chatCommand.Command.ToLower( ) ) )
 						{
 							ChatEvent chatEvent = new ChatEvent( );
-							chatEvent.message = message;
-							chatEvent.remoteUserId = remoteUserId;
-							chatEvent.timestamp = DateTime.Now;
+							chatEvent.Message = message;
+							chatEvent.RemoteUserId = remoteUserId;
+							chatEvent.Timestamp = DateTime.Now;
 
 
 							bool discard = false;
 							PluginManager.HookChatMessage( null, PluginManager.Instance.Plugins, PluginManager.Instance.PluginStates, chatEvent, out discard );
 
 							if ( !discard )
-								chatCommand.callback( chatEvent );
+								chatCommand.Callback( chatEvent );
 
 							foundMatch = true;
 							break;
@@ -523,7 +473,7 @@ namespace SEModAPIExtensions.API
 			//Check if the given command already is registered
 			foreach ( ChatCommand chatCommand in m_chatCommands.Keys )
 			{
-				if ( chatCommand.command.ToLower( ).Equals( command.command.ToLower( ) ) )
+				if ( chatCommand.Command.ToLower( ).Equals( command.Command.ToLower( ) ) )
 					return;
 			}
 
@@ -566,8 +516,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Delete( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			//All entities
@@ -989,8 +939,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Teleport( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount == 2 )
@@ -1031,8 +981,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Stop( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1086,8 +1036,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_GetId( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount > 0 )
@@ -1114,8 +1064,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Save( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			WorldManager.Instance.AsynchronousSaveWorld( );
@@ -1124,8 +1074,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_SyncSave( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			WorldManager.Instance.SaveWorld( );
@@ -1135,8 +1085,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Owner( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount == 2 )
@@ -1177,8 +1127,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Export( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount == 1 )
@@ -1221,8 +1171,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Import( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount == 1 )
@@ -1283,8 +1233,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Spawn( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "ship" ) )
@@ -1304,8 +1254,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Clear( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1343,8 +1293,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_List( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1396,8 +1346,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Off( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1456,8 +1406,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_On( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1513,8 +1463,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Kick( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1568,8 +1518,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Ban( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )
@@ -1626,8 +1576,8 @@ namespace SEModAPIExtensions.API
 
 		protected void Command_Unban( ChatEvent chatEvent )
 		{
-			ulong remoteUserId = chatEvent.remoteUserId;
-			string[ ] commandParts = chatEvent.message.Split( ' ' );
+			ulong remoteUserId = chatEvent.RemoteUserId;
+			string[ ] commandParts = chatEvent.Message.Split( ' ' );
 			int paramCount = commandParts.Length - 1;
 
 			if ( paramCount != 1 )

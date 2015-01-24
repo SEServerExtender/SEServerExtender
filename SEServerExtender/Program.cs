@@ -231,8 +231,8 @@ namespace SEServerExtender
 				m_server.Init();
 
 				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand();
-				guiCommand.command = "gui";
-				guiCommand.callback = ChatCommand_GUI;
+				guiCommand.Command = "gui";
+				guiCommand.Callback = ChatCommand_GUI;
 				ChatManager.Instance.RegisterChatCommand(guiCommand);
 
 				if (extenderArgs.autoStart)

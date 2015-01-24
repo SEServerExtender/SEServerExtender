@@ -471,7 +471,7 @@ namespace SEModAPIExtensions.API
 						if ( discard )
 							continue;
 
-						string methodName = chatEvent.type.ToString( );
+						string methodName = chatEvent.Type.ToString( );
 						MethodInfo updateMethod = plugin.GetType( ).GetMethod( methodName );
 						if ( updateMethod != null )
 							updateMethod.Invoke( plugin, new object[ ] { chatEvent } );

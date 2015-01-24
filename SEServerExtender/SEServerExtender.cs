@@ -1655,11 +1655,11 @@ namespace SEServerExtender
 					if (pos >= m_chatLineCount)
 					{
 
-						string timestamp = entry.timestamp.ToLongTimeString();
+						string timestamp = entry.Timestamp.ToLongTimeString();
 						string playerName = "Server";
-						if (entry.sourceUserId != 0)
-							playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(entry.sourceUserId);
-						string formattedMessage = timestamp + " - " + playerName + " - " + entry.message + "\r\n";
+						if (entry.SourceUserId != 0)
+							playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(entry.SourceUserId);
+						string formattedMessage = timestamp + " - " + playerName + " - " + entry.Message + "\r\n";
 						RTB_Chat_Messages.AppendText(formattedMessage);
 					}
 
