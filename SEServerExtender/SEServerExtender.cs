@@ -1425,14 +1425,14 @@ namespace SEServerExtender
 
 				TreeNode parentNode = TRV_Entities.SelectedNode.Parent;
 				TRV_Entities.SelectedNode.Tag = null;
-				TreeNode newSelectedNode = TRV_Entities.SelectedNode.NextVisibleNode;
-				if (newSelectedNode == null)
-					newSelectedNode = TRV_Entities.SelectedNode.PrevVisibleNode;
-				if (newSelectedNode == null)
-					newSelectedNode = parentNode.FirstNode;
+				TreeNode newSelectedNode = ( TRV_Entities.SelectedNode.NextVisibleNode ?? TRV_Entities.SelectedNode.PrevVisibleNode ) ?? parentNode.FirstNode;
+
 				TRV_Entities.SelectedNode.Remove();
-				if (parentNode.FirstNode != null)
-					PG_Entities_Details.SelectedObject = parentNode.FirstNode.Tag;
+				if ( newSelectedNode != null )
+				{
+					TRV_Entities.SelectedNode = newSelectedNode;
+					PG_Entities_Details.SelectedObject = newSelectedNode.Tag;
+				}
 			}
 			catch (Exception ex)
 			{
