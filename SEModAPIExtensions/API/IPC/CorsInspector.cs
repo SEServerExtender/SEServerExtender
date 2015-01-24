@@ -7,6 +7,8 @@ using System.ServiceModel.Description;
 
 namespace SEModAPIExtensions.API.IPC
 {
+	using System.Collections.ObjectModel;
+
 	public class CorsInspector : IDispatchMessageInspector
 	{
 		Dictionary<string, string> requiredHeaders;
@@ -21,7 +23,7 @@ namespace SEModAPIExtensions.API.IPC
 			return null;
 		}
 
-		public void BeforeSendReply( ref System.ServiceModel.Channels.Message reply, object correlationState )
+		public void BeforeSendReply( ref Message reply, object correlationState )
 		{
 			var httpHeader = reply.Properties[ "httpResponse" ] as HttpResponseMessageProperty;
 			foreach ( var item in requiredHeaders )
@@ -34,7 +36,7 @@ namespace SEModAPIExtensions.API.IPC
 	[AttributeUsage( AttributeTargets.Class )]
 	public class EnableCorsBehavior : Attribute, IServiceBehavior
 	{
-		public void AddBindingParameters( ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, System.Collections.ObjectModel.Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters )
+		public void AddBindingParameters( ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters )
 		{
 
 		}

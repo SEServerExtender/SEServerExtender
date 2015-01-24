@@ -132,7 +132,7 @@ namespace SEModAPIExtensions.API
 					//Speed is clamped between 1.0f and the max cube grid speed
 					Vector3 travelVector = stopPosition - startPosition;
 					travelVector.Normalize( );
-					Vector3 shipVelocity = travelVector * (float)Math.Min( cubeGrid.MaxLinearVelocity, Math.Max( 1.0f, entry.Speed ) );
+					Vector3 shipVelocity = travelVector * Math.Min( cubeGrid.MaxLinearVelocity, Math.Max( 1.0f, entry.Speed ) );
 					cubeGrid.LinearVelocity = shipVelocity;
 
 					cubeGrid.IsDampenersEnabled = false;
