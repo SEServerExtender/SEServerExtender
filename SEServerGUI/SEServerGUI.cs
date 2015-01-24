@@ -7,11 +7,6 @@ using SEServerGUI.ServiceReference;
 using SEServerGUI.ServerServiceReference;
 using SEServerGUI.ChatServiceReference;
 using SEServerGUI.PluginServiceReference;
-
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 using SEModAPIInternal.Support;
 
 using VRageMath;
@@ -23,18 +18,17 @@ namespace SEServerGUI
 	{
 		#region "Attributes"
 
-		private InternalServiceContractClient m_serviceClient;
-		private ServerServiceContractClient m_serverClient;
-		private ChatServiceContractClient m_chatClient;
-		private PluginServiceContractClient m_pluginClient;
+		private readonly InternalServiceContractClient m_serviceClient;
+		private readonly ServerServiceContractClient m_serverClient;
+		private readonly ChatServiceContractClient m_chatClient;
+		private readonly PluginServiceContractClient m_pluginClient;
 
 		private List<BaseEntityProxy> m_sectorEntities;
-		private List<CubeGridEntityProxy> m_sectorCubeGridEntities;
 
-		private System.Windows.Forms.Timer m_serverStatusCheckTimer;
-		private System.Windows.Forms.Timer m_entityTreeRefreshTimer;
-		private System.Windows.Forms.Timer m_chatViewRefreshTimer;
-		private System.Windows.Forms.Timer m_pluginManagerRefreshTimer;
+		private Timer m_serverStatusCheckTimer;
+		private Timer m_entityTreeRefreshTimer;
+		private Timer m_chatViewRefreshTimer;
+		private Timer m_pluginManagerRefreshTimer;
 
 		private ServerProxy m_serverProxy;
 
@@ -52,21 +46,21 @@ namespace SEServerGUI
 			m_pluginClient = new PluginServiceContractClient();
 
 			m_sectorEntities = new List<BaseEntityProxy>();
-			m_sectorCubeGridEntities = new List<CubeGridEntityProxy>();
+			new List<CubeGridEntityProxy>();
 
-			m_serverStatusCheckTimer = new System.Windows.Forms.Timer();
+			m_serverStatusCheckTimer = new Timer();
 			m_serverStatusCheckTimer.Interval = 4000;
 			m_serverStatusCheckTimer.Tick += new EventHandler(ServerStatusRefresh);
 
-			m_entityTreeRefreshTimer = new System.Windows.Forms.Timer();
+			m_entityTreeRefreshTimer = new Timer();
 			m_entityTreeRefreshTimer.Interval = 1000;
 			m_entityTreeRefreshTimer.Tick += new EventHandler(TreeViewRefresh);
 
-			m_chatViewRefreshTimer = new System.Windows.Forms.Timer();
+			m_chatViewRefreshTimer = new Timer();
 			m_chatViewRefreshTimer.Interval = 1000;
 			m_chatViewRefreshTimer.Tick += new EventHandler(ChatViewRefresh);
 
-			m_pluginManagerRefreshTimer = new System.Windows.Forms.Timer();
+			m_pluginManagerRefreshTimer = new Timer();
 			m_pluginManagerRefreshTimer.Interval = 10000;
 			m_pluginManagerRefreshTimer.Tick += new EventHandler(PluginManagerRefresh);
 
@@ -824,7 +818,7 @@ namespace SEServerGUI
 
 			foreach (var cubeBlock in cubeBlocks)
 			{
-				cubeBlock.PropertyChanged += this.CubeBlockPropertyChangedCallback;
+				cubeBlock.PropertyChanged += CubeBlockPropertyChangedCallback;
 
 				TreeNode newNode = new TreeNode(cubeBlock.Name);
 				newNode.Name = newNode.Text;
