@@ -5,35 +5,23 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.Text;
-using System.Timers;
 using System.Threading;
-
-using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIExtensions.API.IPC;
 using SEModAPIExtensions.API.Plugin;
 
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 using SEModAPIInternal.Support;
-
-using VRage.Common.Utils;
 
 namespace SEModAPIExtensions.API
 {
 	public class PluginManagerThreadParams
 	{
-		public Object plugin;
-		public Guid key;
-		public Dictionary<Guid, Object> plugins;
-		public Dictionary<Guid, bool> pluginState;
-		public List<EntityEventManager.EntityEvent> events;
-		public List<ChatManager.ChatEvent> chatEvents;
+		public Object Plugin;
+		public Guid Key;
+		public Dictionary<Guid, Object> Plugins;
+		public Dictionary<Guid, bool> PluginState;
+		public List<EntityEventManager.EntityEvent> Events;
+		public List<ChatManager.ChatEvent> ChatEvents;
 	}
 
 	public class PluginManager
@@ -114,13 +102,7 @@ namespace SEModAPIExtensions.API
 
 		public static PluginManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new PluginManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new PluginManager( ) ); }
 		}
 
 		public bool Loaded
@@ -380,12 +362,12 @@ namespace SEModAPIExtensions.API
 					continue;
 
 				PluginManagerThreadParams parameters = new PluginManagerThreadParams( );
-				parameters.plugin = plugin;
-				parameters.key = key;
-				parameters.plugins = m_plugins;
-				parameters.pluginState = m_pluginState;
-				parameters.events = new List<EntityEventManager.EntityEvent>( events );
-				parameters.chatEvents = new List<ChatManager.ChatEvent>( chatEvents );
+				parameters.Plugin = plugin;
+				parameters.Key = key;
+				parameters.Plugins = m_plugins;
+				parameters.PluginState = m_pluginState;
+				parameters.Events = new List<EntityEventManager.EntityEvent>( events );
+				parameters.ChatEvents = new List<ChatManager.ChatEvent>( chatEvents );
 
 				ThreadPool.QueueUserWorkItem( new WaitCallback( DoUpdate ), parameters );
 				//				Thread pluginThread = new Thread(DoUpdate);
@@ -424,11 +406,11 @@ namespace SEModAPIExtensions.API
 				if ( _parameters == null ) return;
 				PluginManagerThreadParams parameters = (PluginManagerThreadParams)_parameters;
 
-				List<EntityEventManager.EntityEvent> events = parameters.events;
-				List<ChatManager.ChatEvent> chatEvents = parameters.chatEvents;
-				Object plugin = parameters.plugin;
-				Dictionary<Guid, Object> plugins = parameters.plugins;
-				Dictionary<Guid, bool> pluginState = parameters.pluginState;
+				List<EntityEventManager.EntityEvent> events = parameters.Events;
+				List<ChatManager.ChatEvent> chatEvents = parameters.ChatEvents;
+				Object plugin = parameters.Plugin;
+				Dictionary<Guid, Object> plugins = parameters.Plugins;
+				Dictionary<Guid, bool> pluginState = parameters.PluginState;
 
 				//Run entity events
 				foreach ( EntityEventManager.EntityEvent entityEvent in events )
