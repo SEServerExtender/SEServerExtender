@@ -1419,7 +1419,7 @@ namespace SEServerExtender
 
 				InventoryEntity inventory = inventoryEntity;
 
-				UpdateNodeInventoryItemBranch<InventoryItemEntity>(e.Node, inventory.Items);
+				UpdateNodeInventoryItemBranch(e.Node, inventory.Items);
 			}
 
 			if (linkedObject is InventoryItemEntity)
