@@ -1139,7 +1139,7 @@ namespace SEServerExtender
 			if (parentNode == null)
 				return;
 
-			if (parentNode.Tag != null && parentNode.Tag is SectorObjectManager)
+			if ( parentNode.Tag is SectorObjectManager)
 			{
 				if (selectedNode == parentNode.Nodes[0])
 				{
@@ -1147,7 +1147,7 @@ namespace SEServerExtender
 				}
 			}
 
-			if (parentNode.Tag != null && parentNode.Tag is CubeGridEntity)
+			if ( parentNode.Tag is CubeGridEntity)
 			{
 				BTN_Entities_New.Enabled = true;
 			}
@@ -1215,7 +1215,7 @@ namespace SEServerExtender
 						                                                    foreach (TreeNode node in e.Node.Nodes)
 						                                                    {
 							                                                    Object tag = node.Tag;
-							                                                    if (tag == null || !(tag is MyVoxelMaterialDefinition))
+							                                                    if ( !(tag is MyVoxelMaterialDefinition))
 								                                                    continue;
 							                                                    MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
 							                                                    if (totalMaterials.ContainsKey(material))
