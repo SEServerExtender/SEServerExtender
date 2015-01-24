@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 
 using SysUtils.Utils;
-
-using SEModAPIInternal;
 using SEModAPIInternal.API.Common;
 using System.Threading;
 using VRage.Common.Utils;

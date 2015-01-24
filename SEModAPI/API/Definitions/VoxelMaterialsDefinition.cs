@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using SEModAPI.Support;
+﻿using Sandbox.Common.ObjectBuilders.Definitions;
 
 namespace SEModAPI.API.Definitions
 {

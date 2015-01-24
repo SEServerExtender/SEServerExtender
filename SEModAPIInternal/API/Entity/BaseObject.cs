@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Threading;
 using System.Xml;
 
 using Sandbox.Common.ObjectBuilders;

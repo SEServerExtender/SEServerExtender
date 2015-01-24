@@ -1,24 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 using Sandbox.Definitions;
-
-using SEModAPI.API.Definitions;
-using SEModAPI.API.Definitions.CubeBlocks;
-using SEModAPI.Support;
-
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.Support;

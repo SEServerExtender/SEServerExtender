@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.Serializer;
 using Sandbox.Definitions;
 

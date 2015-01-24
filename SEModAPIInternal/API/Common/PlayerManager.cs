@@ -8,12 +8,8 @@ using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
-
-using VRage.Serialization;
-
 using Sandbox.ModAPI;
 using System.Reflection;
-using SteamSDK;
 
 namespace SEModAPIInternal.API.Common
 {

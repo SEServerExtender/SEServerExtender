@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Game.Entities;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.Support;
 
 using VRage.Common.Utils;
 using VRageMath;
-using VRage;
 
 namespace SEModAPIInternal.API.Utility
 {

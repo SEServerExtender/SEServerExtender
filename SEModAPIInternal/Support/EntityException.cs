@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
-
 using SEModAPI.Support;
-
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.Support
 {

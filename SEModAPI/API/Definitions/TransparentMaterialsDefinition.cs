@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.VRageData;
 using VRageMath;
-
-using SEModAPI.Support;
 
 namespace SEModAPI.API.Definitions
 {

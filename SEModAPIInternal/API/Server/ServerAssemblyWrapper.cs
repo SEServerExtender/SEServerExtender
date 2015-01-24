@@ -3,14 +3,10 @@
 using SteamSDK;
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Runtime.ExceptionServices;
 using System.Security;
 
@@ -20,14 +16,11 @@ using SysUtils.Utils;
 using Sandbox.Audio;
 
 using VRage.Common.Utils;
-using VRage.Common.Noise;
 using VRage.Common.Plugins;
 
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.Support;
-
-using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Server
 {

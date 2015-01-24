@@ -18,7 +18,6 @@ using SEModAPIInternal.Support;
 using VRage;
 using VRageMath;
 using SEModAPIInternal.API.Utility;
-using System.Reflection;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {

@@ -7,9 +7,6 @@ using System.Runtime.Serialization;
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Game.Weapons;
-using Sandbox.Common;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 using System.Reflection;

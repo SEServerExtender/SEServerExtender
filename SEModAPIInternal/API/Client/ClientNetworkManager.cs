@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using SEModAPIInternal.API.Common;
 
 namespace SEModAPIInternal.API.Client

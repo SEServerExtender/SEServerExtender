@@ -1,5 +1,4 @@
 ﻿using Sandbox.Common.ObjectBuilders.Definitions;
-using System.IO;
 
 namespace SEModAPI.API.Definitions.CubeBlocks
 {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;

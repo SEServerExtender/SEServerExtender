@@ -1,17 +1,6 @@
-﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Reflection;
-using ProtoBuf;
+﻿using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPI.Support;
 
 namespace SEModAPI.API.Definitions
 {

@@ -1,7 +1,5 @@
 ﻿using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using SEModAPI.API.Definitions;
-
 using VRage.Common.Utils;
 
 namespace SEModAPI.API.Definitions

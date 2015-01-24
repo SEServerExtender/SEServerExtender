@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
+﻿using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders.VRageData;
 
 using VRageMath;
-
-using SEModAPI.Support;
-using SEModAPI.API.Definitions;
-using SEModAPI.API.Definitions.CubeBlocks;
 
 namespace SEModAPI.API
 {

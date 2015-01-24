@@ -4,12 +4,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.Serializer;
-
-using SEModAPI.API;
-using SEModAPI.API.Definitions;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 

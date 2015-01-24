@@ -1,42 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
 using SEModAPI.API;
 using SEModAPI.API.Definitions;
 using SEModAPI.Support;
 
 using SEModAPIExtensions.API;
 using SEModAPIExtensions.API.Plugin;
-
-using SEModAPIInternal.API;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
-
-using VRage.Common.Utils;
 using VRageMath;
 using Sandbox.Definitions;
-
-using Sandbox.ModAPI;
 
 namespace SEServerExtender
 {

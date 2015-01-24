@@ -2,9 +2,6 @@
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.ServiceModel.Web;
 using System.ServiceProcess;
 using System.Linq;
 
@@ -14,7 +11,6 @@ using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 using SEModAPIExtensions.API;
-using SEModAPIExtensions.API.IPC;
 
 namespace SEServerExtender
 {
