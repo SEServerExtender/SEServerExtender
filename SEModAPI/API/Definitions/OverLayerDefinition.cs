@@ -489,16 +489,16 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
-		protected string Serialize<T>(object item)
+		protected string Serialize<T1>(object item)
 		{
 			using (var textWriter = new StringWriter())
 			{
-				new XmlSerializerContract().GetSerializer(typeof(T)).Serialize(textWriter, item);
+				new XmlSerializerContract().GetSerializer(typeof(T1)).Serialize(textWriter, item);
 				return textWriter.ToString();
 			}
 		}
 
-		public static bool WriteSpaceEngineersFile<T, TS>(T sector, string filename)
+		public static bool WriteSpaceEngineersFile<T1, TS>(T1 sector, string filename)
 			where TS : XmlSerializer1
 		{
 			// How they appear to be writing the files currently.
