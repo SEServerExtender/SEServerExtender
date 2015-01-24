@@ -502,16 +502,21 @@ namespace SEServerExtender
 			m_sectorEntities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>();
 			foreach (var entry in m_sectorEntities)
 			{
-				if (entry is CubeGridEntity)
-					m_cubeGridEntities.Add((CubeGridEntity)entry);
-				if (entry is CharacterEntity)
-					m_characterEntities.Add((CharacterEntity)entry);
-				if (entry is VoxelMap)
-					m_voxelMapEntities.Add((VoxelMap)entry);
-				if (entry is FloatingObject)
-					m_floatingObjectEntities.Add((FloatingObject)entry);
-				if (entry is Meteor)
-					m_meteorEntities.Add((Meteor)entry);
+				CubeGridEntity cubeGridEntity = entry as CubeGridEntity;
+				if (cubeGridEntity != null)
+					m_cubeGridEntities.Add(cubeGridEntity);
+				CharacterEntity characterEntity = entry as CharacterEntity;
+				if (characterEntity != null)
+					m_characterEntities.Add(characterEntity);
+				VoxelMap voxelMap = entry as VoxelMap;
+				if (voxelMap != null)
+					m_voxelMapEntities.Add(voxelMap);
+				FloatingObject floatingObject = entry as FloatingObject;
+				if (floatingObject != null)
+					m_floatingObjectEntities.Add(floatingObject);
+				Meteor meteor = entry as Meteor;
+				if (meteor != null)
+					m_meteorEntities.Add(meteor);
 			}
 
 			RenderCubeGridNodes(cubeGridsNode);
@@ -1176,20 +1181,22 @@ namespace SEServerExtender
 				BTN_Entities_Delete.Enabled = true;
 			}
 
-			if (linkedObject is CubeGridEntity)
+			CubeGridEntity cubeGridEntity = linkedObject as CubeGridEntity;
+			if (cubeGridEntity != null)
 			{
 				BTN_Entities_New.Enabled = true;
 
 				TRV_Entities.BeginUpdate();
 
-				RenderCubeGridChildNodes((CubeGridEntity)linkedObject, e.Node);
+				RenderCubeGridChildNodes(cubeGridEntity, e.Node);
 
 				TRV_Entities.EndUpdate();
 			}
 
-			if (linkedObject is VoxelMap)
+			VoxelMap map = linkedObject as VoxelMap;
+			if (map != null)
 			{
-				VoxelMap voxelMap = (VoxelMap)linkedObject;
+				VoxelMap voxelMap = map;
 				
 				List<MyVoxelMaterialDefinition> materialDefs = new List<MyVoxelMaterialDefinition>(MyDefinitionManager.Static.GetVoxelMaterialDefinitions());
 
@@ -1231,9 +1238,10 @@ namespace SEServerExtender
 
 			}
 
-			if (linkedObject is CharacterEntity)
+			CharacterEntity characterEntity = linkedObject as CharacterEntity;
+			if (characterEntity != null)
 			{
-				CharacterEntity character = (CharacterEntity)linkedObject;
+				CharacterEntity character = characterEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1248,9 +1256,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is SmallGatlingGunEntity)
+			SmallGatlingGunEntity smallGatlingGunEntity = linkedObject as SmallGatlingGunEntity;
+			if (smallGatlingGunEntity != null)
 			{
-				SmallGatlingGunEntity gun = (SmallGatlingGunEntity)linkedObject;
+				SmallGatlingGunEntity gun = smallGatlingGunEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1265,9 +1274,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is TurretBaseEntity)
+			TurretBaseEntity turretBaseEntity = linkedObject as TurretBaseEntity;
+			if (turretBaseEntity != null)
 			{
-				TurretBaseEntity gun = (TurretBaseEntity)linkedObject;
+				TurretBaseEntity gun = turretBaseEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1282,9 +1292,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is CockpitEntity)
+			CockpitEntity cockpitEntity = linkedObject as CockpitEntity;
+			if (cockpitEntity != null)
 			{
-				CockpitEntity cockpit = (CockpitEntity)linkedObject;
+				CockpitEntity cockpit = cockpitEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1308,9 +1319,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is CargoContainerEntity)
+			CargoContainerEntity cargoContainerEntity = linkedObject as CargoContainerEntity;
+			if (cargoContainerEntity != null)
 			{
-				CargoContainerEntity container = (CargoContainerEntity)linkedObject;
+				CargoContainerEntity container = cargoContainerEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1325,9 +1337,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is ReactorEntity)
+			ReactorEntity reactorEntity = linkedObject as ReactorEntity;
+			if (reactorEntity != null)
 			{
-				ReactorEntity reactor = (ReactorEntity)linkedObject;
+				ReactorEntity reactor = reactorEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1342,9 +1355,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is ShipToolBaseEntity)
+			ShipToolBaseEntity shipToolBaseEntity = linkedObject as ShipToolBaseEntity;
+			if (shipToolBaseEntity != null)
 			{
-				ShipToolBaseEntity shipTool = (ShipToolBaseEntity)linkedObject;
+				ShipToolBaseEntity shipTool = shipToolBaseEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1359,9 +1373,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is ShipDrillEntity)
+			ShipDrillEntity shipDrillEntity = linkedObject as ShipDrillEntity;
+			if (shipDrillEntity != null)
 			{
-				ShipDrillEntity shipDrill = (ShipDrillEntity)linkedObject;
+				ShipDrillEntity shipDrill = shipDrillEntity;
 
 				if (e.Node.Nodes.Count < 1)
 				{
@@ -1376,9 +1391,10 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is ProductionBlockEntity)
+			ProductionBlockEntity productionBlockEntity = linkedObject as ProductionBlockEntity;
+			if (productionBlockEntity != null)
 			{
-				ProductionBlockEntity productionBlock = (ProductionBlockEntity)linkedObject;
+				ProductionBlockEntity productionBlock = productionBlockEntity;
 
 				if (e.Node.Nodes.Count < 2)
 				{
@@ -1396,11 +1412,12 @@ namespace SEServerExtender
 				}
 			}
 
-			if (linkedObject is InventoryEntity)
+			InventoryEntity inventoryEntity = linkedObject as InventoryEntity;
+			if (inventoryEntity != null)
 			{
 				BTN_Entities_New.Enabled = true;
 
-				InventoryEntity inventory = (InventoryEntity)linkedObject;
+				InventoryEntity inventory = inventoryEntity;
 
 				UpdateNodeInventoryItemBranch<InventoryItemEntity>(e.Node, inventory.Items);
 			}
@@ -1454,7 +1471,8 @@ namespace SEServerExtender
 				if (parentNode == null)
 					return;
 
-				if (parentNode.Tag != null && parentNode.Tag is SectorObjectManager)
+				SectorObjectManager sectorObjectManager = parentNode.Tag as SectorObjectManager;
+				if ( sectorObjectManager != null)
 				{
 					if (selectedNode == parentNode.Nodes[0])
 					{
@@ -1463,10 +1481,10 @@ namespace SEServerExtender
 					}
 				}
 
-				if (parentNode.Tag != null && parentNode.Tag is CubeGridEntity)
+				CubeGridEntity cubeGridEntity = parentNode.Tag as CubeGridEntity;
+				if ( cubeGridEntity != null)
 				{
-					CubeBlockDialog dialog = new CubeBlockDialog();
-					dialog.ParentCubeGrid = (CubeGridEntity)parentNode.Tag;
+					CubeBlockDialog dialog = new CubeBlockDialog { ParentCubeGrid = cubeGridEntity };
 					dialog.ShowDialog(this);
 					return;
 				}
@@ -1479,10 +1497,10 @@ namespace SEServerExtender
 
 				BaseObject linkedObject = (BaseObject)selectedNode.Tag;
 
-				if (linkedObject is InventoryEntity)
+				InventoryEntity inventoryEntity = linkedObject as InventoryEntity;
+				if (inventoryEntity != null)
 				{
-					InventoryItemDialog newItemDialog = new InventoryItemDialog();
-					newItemDialog.InventoryContainer = (InventoryEntity)linkedObject;
+					InventoryItemDialog newItemDialog = new InventoryItemDialog { InventoryContainer = inventoryEntity };
 					newItemDialog.ShowDialog(this);
 
 					TreeViewEventArgs newEvent = new TreeViewEventArgs(selectedNode);
@@ -1491,10 +1509,10 @@ namespace SEServerExtender
 					return;
 				}
 
-				if (linkedObject is InventoryItemEntity)
+				InventoryItemEntity inventoryItemEntity = linkedObject as InventoryItemEntity;
+				if (inventoryItemEntity != null)
 				{
-					InventoryItemDialog newItemDialog = new InventoryItemDialog();
-					newItemDialog.InventoryContainer = ((InventoryItemEntity)linkedObject).Container;
+					InventoryItemDialog newItemDialog = new InventoryItemDialog { InventoryContainer = inventoryItemEntity.Container };
 					newItemDialog.ShowDialog(this);
 
 					TreeViewEventArgs newEvent = new TreeViewEventArgs(parentNode);
@@ -1529,9 +1547,7 @@ namespace SEServerExtender
 
 				BaseObject objectToExport = (BaseObject)linkedObject;
 
-				SaveFileDialog saveFileDialog = new SaveFileDialog();
-				saveFileDialog.Filter = "sbc file (*.sbc)|*.sbc|All files (*.*)|*.*";
-				saveFileDialog.InitialDirectory = GameInstallationInfo.GamePath;
+				SaveFileDialog saveFileDialog = new SaveFileDialog { Filter = "sbc file (*.sbc)|*.sbc|All files (*.*)|*.*", InitialDirectory = GameInstallationInfo.GamePath };
 
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
@@ -1879,16 +1895,16 @@ namespace SEServerExtender
 
 			var linkedObject = node.Tag;
 
-			if (linkedObject is Faction)
+			Faction faction = linkedObject as Faction;
+			if (faction != null)
 			{
-				Faction faction = (Faction)linkedObject;
 				FactionsManager.Instance.RemoveFaction(faction.Id);
 			}
 
-			if (linkedObject is FactionMember)
+			FactionMember factionMember = linkedObject as FactionMember;
+			if (factionMember != null)
 			{
-				FactionMember member = (FactionMember)linkedObject;
-				member.Parent.RemoveMember(member.PlayerId);
+				factionMember.Parent.RemoveMember( factionMember.PlayerId );
 			}
 		}
 
