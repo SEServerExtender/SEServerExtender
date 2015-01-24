@@ -7,11 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Reflection;
-
-using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPI.Support;
 
 namespace SEModAPI.API.Definitions
 {
@@ -129,7 +125,7 @@ namespace SEModAPI.API.Definitions
 
 		//Use Long (key) as Id and OverLayerDefinition sub type (value) as Name
 		//For entity objects (saved game data) we use EntityId as the long key
-		private Dictionary<long, TU> m_definitions = new Dictionary<long, TU>();
+		private readonly Dictionary<long, TU> m_definitions = new Dictionary<long, TU>();
 
 		#endregion
 
@@ -141,7 +137,7 @@ namespace SEModAPI.API.Definitions
 			m_isMutable = true;
 		}
 
-		protected OverLayerDefinitionsManager(T[] baseDefinitions)
+		protected OverLayerDefinitionsManager(IEnumerable<T> baseDefinitions)
 		{
 			m_changed = false;
 			m_isMutable = true;
@@ -167,12 +163,7 @@ namespace SEModAPI.API.Definitions
 			get
 			{
 				if (m_changed) return true;
-				foreach (var def in GetInternalData())
-				{
-					if (GetChangedState(def.Value))
-						return true;
-				}
-				return false;
+				return GetInternalData( ).Any( def => GetChangedState( def.Value ) );
 			}
 		}
 
@@ -200,12 +191,7 @@ namespace SEModAPI.API.Definitions
 		/// <returns>All instances of the MyObjectBuilder_Definitions sub type sub type in the manager</returns>
 		public List<T> ExtractBaseDefinitions()
 		{
-			List<T> list = new List<T>();
-			foreach (var def in GetInternalData().Values)
-			{
-				list.Add(GetBaseTypeOf(def));
-			}
-			return list;
+			return GetInternalData( ).Values.Select( GetBaseTypeOf ).ToList( );
 		}
 
 		private bool IsIdValid(long id)
@@ -375,7 +361,7 @@ namespace SEModAPI.API.Definitions
 			m_definitionsContainerField = GetMatchingDefinitionsContainerField();
 		}
 
-		protected SerializableDefinitionsManager(T[] baseDefinitions)
+		protected SerializableDefinitionsManager(IEnumerable<T> baseDefinitions)
 			: base(baseDefinitions)
 		{
 			m_fileInfo = null;
@@ -572,7 +558,7 @@ namespace SEModAPI.API.Definitions
 			return overLayer.Changed;
 		}
 
-		private FieldInfo GetMatchingDefinitionsContainerField()
+		private static FieldInfo GetMatchingDefinitionsContainerField()
 		{
 			//Find the the matching field in the container
 			Type thisType = typeof(T[]);
@@ -634,9 +620,9 @@ namespace SEModAPI.API.Definitions
 
 		public bool Save()
 		{
-			if (!this.Changed) return false;
-			if (!this.IsMutable) return false;
-			if (this.FileInfo == null) return false;
+			if (!Changed) return false;
+			if (!IsMutable) return false;
+			if (FileInfo == null) return false;
 
 			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions();
 
