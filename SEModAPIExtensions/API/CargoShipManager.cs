@@ -97,7 +97,7 @@ namespace SEModAPIExtensions.API
 				int randomShipIndex = Math.Max( 0, Math.Min( (int)Math.Round( randomChance * possibleGroups.Count, 0 ), possibleGroups.Count - 1 ) );
 				MySpawnGroupDefinition randomSpawnGroup = possibleGroups[ randomShipIndex ];
 
-				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Spawning cargo group '{0}' ...", randomSpawnGroup.DisplayNameText.ToString( ) ) );
+				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Spawning cargo group '{0}' ...", randomSpawnGroup.DisplayNameText ) );
 
 				//Spawn the ships in the group
 				Matrix orientation = Matrix.CreateLookAt( startPosition, stopPosition, new Vector3( 0, 1, 0 ) );
@@ -157,7 +157,7 @@ namespace SEModAPIExtensions.API
 					SectorObjectManager.Instance.AddEntity( cubeGrid );
 				}
 
-				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Cargo group '{0}' spawned with {1} ships at {2}", randomSpawnGroup.DisplayNameText.ToString( ), randomSpawnGroup.Prefabs.Count.ToString( ), startPosition.ToString( ) ) );
+				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Cargo group '{0}' spawned with {1} ships at {2}", randomSpawnGroup.DisplayNameText, randomSpawnGroup.Prefabs.Count, startPosition ) );
 			}
 			catch ( Exception ex )
 			{
