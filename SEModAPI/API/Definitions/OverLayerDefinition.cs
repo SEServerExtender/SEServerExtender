@@ -120,7 +120,7 @@ namespace SEModAPI.API.Definitions
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public abstract class OverLayerDefinitionsManager<T, U> where U : OverLayerDefinition<T>
+	public abstract class OverLayerDefinitionsManager<T, TU> where TU : OverLayerDefinition<T>
 	{
 		#region "Attributes"
 
@@ -129,7 +129,7 @@ namespace SEModAPI.API.Definitions
 
 		//Use Long (key) as Id and OverLayerDefinition sub type (value) as Name
 		//For entity objects (saved game data) we use EntityId as the long key
-		private Dictionary<long, U> m_definitions = new Dictionary<long, U>();
+		private Dictionary<long, TU> m_definitions = new Dictionary<long, TU>();
 
 		#endregion
 
@@ -176,7 +176,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
-		public U[] Definitions
+		public TU[] Definitions
 		{
 			get
 			{
@@ -188,7 +188,7 @@ namespace SEModAPI.API.Definitions
 
 		#region "Methods"
 
-		protected virtual Dictionary<long, U> GetInternalData()
+		protected virtual Dictionary<long, TU> GetInternalData()
 		{
 			return m_definitions;
 		}
@@ -218,18 +218,18 @@ namespace SEModAPI.API.Definitions
 			return (index < GetInternalData().Keys.Count && index >= 0);
 		}
 
-		public U DefinitionOf(long id)
+		public TU DefinitionOf(long id)
 		{
-			U result = default(U);
+			TU result = default(TU);
 			if (IsIdValid(id))
 				GetInternalData().TryGetValue(id, out result);
 
 			return result;
 		}
 
-		public U DefinitionOf(int index)
+		public TU DefinitionOf(int index)
 		{
-			return IsIndexValid(index) ? GetInternalData().Values.ToArray()[index] : default(U);
+			return IsIndexValid(index) ? GetInternalData().Values.ToArray()[index] : default(TU);
 		}
 
 		#region "Abstract Methods"
@@ -239,35 +239,35 @@ namespace SEModAPI.API.Definitions
 		/// </summary>
 		/// <param name="definition">MyObjectBuilder_Definitions object</param>
 		/// <returns>An instance representing OverLayerDefinition sub type</returns>
-		protected abstract U CreateOverLayerSubTypeInstance(T definition);
+		protected abstract TU CreateOverLayerSubTypeInstance(T definition);
 
 		/// <summary>
 		/// This template method is intended to extact the BaseObject inside the overlayer
 		/// </summary>
 		/// <param name="overLayer">the over layer from which to extract the base object</param>
 		/// <returns>MyObjectBuilder_Definitions Sub Type</returns>
-		protected abstract T GetBaseTypeOf(U overLayer);
+		protected abstract T GetBaseTypeOf(TU overLayer);
 
 		/// <summary>
 		/// This template method is intended to know if the state of the object insate the overlayer has changed
 		/// </summary>
 		/// <param name="overLayer">the overlayer from which to know if the base type has changed</param>
 		/// <returns>if the underlying object has changed</returns>
-		protected abstract bool GetChangedState(U overLayer);
+		protected abstract bool GetChangedState(TU overLayer);
 
 		#endregion
 
-		public U NewEntry()
+		public TU NewEntry()
 		{
-			if (!IsMutable) return default(U);
+			if (!IsMutable) return default(TU);
 
 			var sourceInstance = (T)Activator.CreateInstance(typeof(T), new object[] { });
 			return NewEntry(sourceInstance);
 		}
 
-		public U NewEntry(long id)
+		public TU NewEntry(long id)
 		{
-			if (!IsMutable) return default(U);
+			if (!IsMutable) return default(TU);
 
 			var newEntry = CreateOverLayerSubTypeInstance((T)Activator.CreateInstance(typeof(T), new object[] { }));
 			GetInternalData().Add(id, newEntry);
@@ -276,9 +276,9 @@ namespace SEModAPI.API.Definitions
 			return newEntry;
 		}
 
-		public U NewEntry(T source)
+		public TU NewEntry(T source)
 		{
-			if (!IsMutable) return default(U);
+			if (!IsMutable) return default(TU);
 
 			var newEntry = CreateOverLayerSubTypeInstance(source);
 			GetInternalData().Add(m_definitions.Count, newEntry);
@@ -287,9 +287,9 @@ namespace SEModAPI.API.Definitions
 			return newEntry;
 		}
 
-		public U NewEntry(U source)
+		public TU NewEntry(TU source)
 		{
-			if (!IsMutable) return default(U);
+			if (!IsMutable) return default(TU);
 
 			//Create the new object
 			Type entryType = typeof(T);
@@ -337,7 +337,7 @@ namespace SEModAPI.API.Definitions
 			return false;
 		}
 
-		public bool DeleteEntry(U entry)
+		public bool DeleteEntry(TU entry)
 		{
 			if (!IsMutable) return false;
 
@@ -357,7 +357,7 @@ namespace SEModAPI.API.Definitions
 		#endregion
 	}
 
-	public class SerializableDefinitionsManager<T, U> : OverLayerDefinitionsManager<T, U> where U : OverLayerDefinition<T>
+	public class SerializableDefinitionsManager<T, TU> : OverLayerDefinitionsManager<T, TU> where TU : OverLayerDefinition<T>
 	{
 		#region "Attributes"
 
@@ -411,7 +411,7 @@ namespace SEModAPI.API.Definitions
 
 		#region "Serializers"
 
-		public static T LoadContentFile<T, TS>(FileInfo fileInfo) where TS : XmlSerializer1
+		public static T1 LoadContentFile<T1, TS>(FileInfo fileInfo) where TS : XmlSerializer1
 		{
 			object fileContent = null;
 
@@ -424,7 +424,7 @@ namespace SEModAPI.API.Definitions
 
 			try
 			{
-				fileContent = ReadSpaceEngineersFile<T, TS>(filePath);
+				fileContent = ReadSpaceEngineersFile<T1, TS>(filePath);
 			}
 			catch
 			{
@@ -440,10 +440,10 @@ namespace SEModAPI.API.Definitions
 			//     Lock the load during this time, in case it happens multiple times.
 			// Report a friendly error if this load fails.
 
-			return (T)fileContent;
+			return (T1)fileContent;
 		}
 
-		public static void SaveContentFile<T, TS>(T fileContent, FileInfo fileInfo) where TS : XmlSerializer1
+		public static void SaveContentFile<T1, TS>(T1 fileContent, FileInfo fileInfo) where TS : XmlSerializer1
 		{
 
 			string filePath = fileInfo.FullName;
@@ -455,7 +455,7 @@ namespace SEModAPI.API.Definitions
 
 			try
 			{
-				WriteSpaceEngineersFile<T, TS>(fileContent, filePath);
+				WriteSpaceEngineersFile<T1, TS>(fileContent, filePath);
 			}
 			catch
 			{
@@ -472,7 +472,7 @@ namespace SEModAPI.API.Definitions
 			// Report a friendly error if this load fails.
 		}
 
-		public static T ReadSpaceEngineersFile<T, TS>(string filename)
+		public static T1 ReadSpaceEngineersFile<T1, TS>(string filename)
 			where TS : XmlSerializer1
 		{
 			var settings = new XmlReaderSettings
@@ -492,14 +492,14 @@ namespace SEModAPI.API.Definitions
 				}
 			}
 
-			return (T)obj;
+			return (T1)obj;
 		}
 
-		protected T Deserialize<T>(string xml)
+		protected T1 Deserialize<T1>(string xml)
 		{
 			using (var textReader = new StringReader(xml))
 			{
-				return (T)(new XmlSerializerContract().GetSerializer(typeof(T)).Deserialize(textReader));
+				return (T1)(new XmlSerializerContract().GetSerializer(typeof(T1)).Deserialize(textReader));
 			}
 		}
 
@@ -557,17 +557,17 @@ namespace SEModAPI.API.Definitions
 
 		#endregion
 
-		protected override U CreateOverLayerSubTypeInstance(T definition)
+		protected override TU CreateOverLayerSubTypeInstance(T definition)
 		{
-			return (U)Activator.CreateInstance(typeof(U), new object[] { definition });
+			return (TU)Activator.CreateInstance(typeof(TU), new object[] { definition });
 		}
 
-		protected override T GetBaseTypeOf(U overLayer)
+		protected override T GetBaseTypeOf(TU overLayer)
 		{
 			return overLayer.BaseDefinition;
 		}
 
-		protected override bool GetChangedState(U overLayer)
+		protected override bool GetChangedState(TU overLayer)
 		{
 			return overLayer.Changed;
 		}
@@ -622,7 +622,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
-		public void Load(U[] source)
+		public void Load(TU[] source)
 		{
 			//Copy the data into the manager
 			GetInternalData().Clear();
