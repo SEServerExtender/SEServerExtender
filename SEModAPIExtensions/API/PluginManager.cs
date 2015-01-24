@@ -30,11 +30,7 @@ namespace SEModAPIExtensions.API
 
 		private static PluginManager m_instance;
 
-		private Dictionary<Guid, Object> m_plugins;
-		private Dictionary<Guid, bool> m_pluginState;
-		private Dictionary<Guid, Assembly> m_pluginAssemblies;
-		private bool m_loaded;
-		private bool m_initialized;
+		private readonly Dictionary<Guid, Assembly> m_pluginAssemblies;
 		private DateTime m_lastUpdate;
 		private TimeSpan m_lastUpdateTime;
 		private double m_averageUpdateInterval;
@@ -42,9 +38,7 @@ namespace SEModAPIExtensions.API
 		private DateTime m_lastAverageOutput;
 		private double m_averageEvents;
 		private List<ulong> m_lastConnectedPlayerList;
-		private EntityRegistry m_entityRegistry;
-		private BlockRegistry m_blockRegistry;
-		private Dictionary<Guid, String> m_pluginPaths;
+		private readonly Dictionary<Guid, String> m_pluginPaths;
 
 		#endregion
 
@@ -54,10 +48,10 @@ namespace SEModAPIExtensions.API
 		{
 			m_instance = this;
 
-			m_plugins = new Dictionary<Guid, Object>( );
-			m_pluginState = new Dictionary<Guid, bool>( );
+			Plugins = new Dictionary<Guid, Object>( );
+			PluginStates = new Dictionary<Guid, bool>( );
 			m_pluginAssemblies = new Dictionary<Guid, Assembly>( );
-			m_initialized = false;
+			Initialized = false;
 			m_lastUpdate = DateTime.Now;
 			m_lastUpdateTime = DateTime.Now - m_lastUpdate;
 			m_averageUpdateInterval = 0;
@@ -65,19 +59,17 @@ namespace SEModAPIExtensions.API
 			m_lastAverageOutput = DateTime.Now;
 			m_averageEvents = 0;
 			m_lastConnectedPlayerList = new List<ulong>( );
-			m_entityRegistry = EntityRegistry.Instance;
-			m_blockRegistry = BlockRegistry.Instance;
 			m_pluginPaths = new Dictionary<Guid, string>( );
 
-			SetupWCFService( );
+			SetupWcfService( );
 
 			Console.WriteLine( "Finished loading PluginManager" );
 		}
 
-		private bool SetupWCFService( )
+		private static void SetupWcfService( )
 		{
 			if ( !Server.Instance.IsWCFEnabled )
-				return true;
+				return;
 
 			ServiceHost selfHost = null;
 			try
@@ -87,13 +79,10 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( CommunicationException ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
+				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
 				if ( selfHost != null )
 					selfHost.Abort( );
-				return false;
 			}
-
-			return true;
 		}
 
 		#endregion
@@ -105,52 +94,32 @@ namespace SEModAPIExtensions.API
 			get { return m_instance ?? ( m_instance = new PluginManager( ) ); }
 		}
 
-		public bool Loaded
-		{
-			get { return m_loaded; }
-		}
+		public bool Loaded { get; private set; }
 
-		public bool Initialized
-		{
-			get { return m_initialized; }
-		}
+		public bool Initialized { get; private set; }
 
-		public Dictionary<Guid, Object> Plugins
-		{
-			get { return m_plugins; }
-		}
+		public Dictionary<Guid, object> Plugins { get; private set; }
 
-		public Dictionary<Guid, bool> PluginStates
-		{
-			get { return m_pluginState; }
-		}
+		public Dictionary<Guid, bool> PluginStates { get; private set; }
 
 		#endregion
 
 		#region "Methods"
 
-		private bool CompareInterfaces( Type type, Object criteria )
-		{
-			if ( type.ToString( ) == criteria.ToString( ) )
-				return true;
-			else
-				return false;
-		}
-
 		public void LoadPlugins( bool forceLoad = false )
 		{
-			if ( m_loaded && !forceLoad )
+			if ( Loaded && !forceLoad )
 				return;
 
 			Console.WriteLine( "Loading plugins ..." );
 
 			try
 			{
-				m_loaded = true;
+				Loaded = true;
 				//				m_initialized = false;   // THIS CAUSES all plugins to stop working 
 
 				string modsPath = Path.Combine( Server.Instance.Path, "Mods" );
-				Console.WriteLine( String.Format( "Scanning: {0}", modsPath ) );
+				Console.WriteLine( "Scanning: {0}", modsPath );
 				if ( !Directory.Exists( modsPath ) )
 					return;
 
@@ -196,7 +165,7 @@ namespace SEModAPIExtensions.API
 							foreach ( Type type in types )
 							{
 								//Check that we don't have an entry already for this GUID
-								if ( m_plugins.ContainsKey( guidValue ) )
+								if ( Plugins.ContainsKey( guidValue ) )
 									break;
 
 								//if (type.BaseType == null)
@@ -211,10 +180,10 @@ namespace SEModAPIExtensions.API
 										try
 										{
 											//Create an instance of the plugin object
-											var pluginObject = Activator.CreateInstance( type );
+											object pluginObject = Activator.CreateInstance( type );
 
 											//And add it to the dictionary
-											m_plugins.Add( guidValue, pluginObject );
+											Plugins.Add( guidValue, pluginObject );
 
 											break;
 										}
@@ -272,23 +241,15 @@ namespace SEModAPIExtensions.API
 		{
 			Type[ ] types = assembly.GetExportedTypes( );
 
-			foreach ( Type type in types )
-			{
-				if ( type.GetInterface( typeof( IPlugin ).FullName ) != null )
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return types.Any( type => type.GetInterface( typeof ( IPlugin ).FullName ) != null );
 		}
 
 		public void Init( )
 		{
 			Console.WriteLine( "Initializing plugins ..." );
-			m_initialized = true;
+			Initialized = true;
 
-			foreach ( var key in m_plugins.Keys )
+			foreach ( Guid key in Plugins.Keys )
 			{
 				InitPlugin( key );
 			}
@@ -322,13 +283,15 @@ namespace SEModAPIExtensions.API
 				{
 					if ( !m_lastConnectedPlayerList.Contains( steamId ) )
 					{
-						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent( );
-						playerEvent.priority = 1;
-						playerEvent.timestamp = DateTime.Now;
-						playerEvent.type = EntityEventManager.EntityEventType.OnPlayerJoined;
+						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent
+						                                             {
+							                                             priority = 1,
+							                                             timestamp = DateTime.Now,
+							                                             type = EntityEventManager.EntityEventType.OnPlayerJoined,
+							                                             entity = steamId
+						                                             };
 						//TODO - Find a way to stall the event long enough for a linked character entity to exist - this is impossible because of cockpits and respawnships
 						//For now, create a dummy entity just for passing the player's steam id along
-						playerEvent.entity = (Object)steamId;
 						events.Add( playerEvent );
 					}
 				}
@@ -336,40 +299,44 @@ namespace SEModAPIExtensions.API
 				{
 					if ( !connectedPlayers.Contains( steamId ) )
 					{
-						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent( );
-						playerEvent.priority = 1;
-						playerEvent.timestamp = DateTime.Now;
-						playerEvent.type = EntityEventManager.EntityEventType.OnPlayerLeft;
+						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent
+						                                             {
+							                                             priority = 1,
+							                                             timestamp = DateTime.Now,
+							                                             type = EntityEventManager.EntityEventType.OnPlayerLeft,
+							                                             entity = steamId
+						                                             };
 						//TODO - Find a way to stall the event long enough for a linked character entity to exist - this is impossible because of cockpits and respawnships
 						//For now, create a dummy entity just for passing the player's steam id along
-						playerEvent.entity = (Object)steamId;
 						events.Add( playerEvent );
 					}
 				}
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "PluginManager.Update() Exception in player discovery: " + ex.ToString( ) );
+				LogManager.APILog.WriteLine( string.Format( "PluginManager.Update() Exception in player discovery: {0}", ex ) );
 			}
 			m_lastConnectedPlayerList = new List<ulong>( connectedPlayers );
 
 			//Run the update threads on the plugins
-			foreach ( var key in m_plugins.Keys )
+			foreach ( Guid key in Plugins.Keys )
 			{
-				var plugin = m_plugins[ key ];
+				object plugin = Plugins[ key ];
 
-				if ( !m_pluginState.ContainsKey( key ) )
+				if ( !PluginStates.ContainsKey( key ) )
 					continue;
 
-				PluginManagerThreadParams parameters = new PluginManagerThreadParams( );
-				parameters.Plugin = plugin;
-				parameters.Key = key;
-				parameters.Plugins = m_plugins;
-				parameters.PluginState = m_pluginState;
-				parameters.Events = new List<EntityEventManager.EntityEvent>( events );
-				parameters.ChatEvents = new List<ChatManager.ChatEvent>( chatEvents );
+				PluginManagerThreadParams parameters = new PluginManagerThreadParams
+				                                       {
+					                                       Plugin = plugin,
+					                                       Key = key,
+					                                       Plugins = Plugins,
+					                                       PluginState = PluginStates,
+					                                       Events = new List<EntityEventManager.EntityEvent>( events ),
+					                                       ChatEvents = new List<ChatManager.ChatEvent>( chatEvents )
+				                                       };
 
-				ThreadPool.QueueUserWorkItem( new WaitCallback( DoUpdate ), parameters );
+				ThreadPool.QueueUserWorkItem( DoUpdate, parameters );
 				//				Thread pluginThread = new Thread(DoUpdate);
 				//				pluginThread.Start(parameters);
 			}
@@ -387,9 +354,9 @@ namespace SEModAPIExtensions.API
 				{
 					m_lastAverageOutput = DateTime.Now;
 
-					LogManager.APILog.WriteLine( "PluginManager - Update interval = " + m_averageUpdateInterval.ToString( ) + "ms" );
-					LogManager.APILog.WriteLine( "PluginManager - Update time = " + m_averageUpdateTime.ToString( ) + "ms" );
-					LogManager.APILog.WriteLine( "PluginManager - Events per update = " + m_averageEvents.ToString( ) );
+					LogManager.APILog.WriteLine( string.Format( "PluginManager - Update interval = {0}ms", m_averageUpdateInterval ) );
+					LogManager.APILog.WriteLine( string.Format( "PluginManager - Update time = {0}ms", m_averageUpdateTime ) );
+					LogManager.APILog.WriteLine( string.Format( "PluginManager - Events per update = {0}", m_averageEvents ) );
 				}
 			}
 
@@ -399,12 +366,13 @@ namespace SEModAPIExtensions.API
 			ChatManager.Instance.ClearEvents( );
 		}
 
-		public static void DoUpdate( object _parameters )
+		public static void DoUpdate( object args )
 		{
 			try
 			{
-				if ( _parameters == null ) return;
-				PluginManagerThreadParams parameters = (PluginManagerThreadParams)_parameters;
+				if ( args == null )
+					return;
+				PluginManagerThreadParams parameters = (PluginManagerThreadParams)args;
 
 				List<EntityEventManager.EntityEvent> events = parameters.Events;
 				List<ChatManager.ChatEvent> chatEvents = parameters.ChatEvents;
@@ -482,7 +450,7 @@ namespace SEModAPIExtensions.API
 								string methodName = entityEvent.type.ToString( );
 								MethodInfo updateMethod = plugin.GetType( ).GetMethod( methodName );
 								if ( updateMethod != null )
-									updateMethod.Invoke( plugin, new object[ ] { entityEvent.entity } );
+									updateMethod.Invoke( plugin, new[ ] { entityEvent.entity } );
 							}
 							catch ( Exception ex )
 							{
@@ -535,17 +503,17 @@ namespace SEModAPIExtensions.API
 		{
 			discard = false;
 
-			foreach ( var key in plugins.Keys )
+			foreach ( Guid key in plugins.Keys )
 			{
-				var hookPlugin = plugins[ key ];
+				object hookPlugin = plugins[ key ];
 				if ( !pluginState.ContainsKey( key ) )
 					continue;
 
 				MethodInfo hookMethod = hookPlugin.GetType( ).GetMethod( "OnChatHook" );
 				if ( hookMethod != null )
 				{
-					bool hookDiscard = false;
-					object[ ] args = new object[ ] { chatEvent, plugin, hookDiscard };
+					const bool hookDiscard = false;
+					object[ ] args = { chatEvent, plugin, hookDiscard };
 					hookMethod.Invoke( hookPlugin, args );
 					discard = (bool)args[ 2 ];
 				}
@@ -555,16 +523,16 @@ namespace SEModAPIExtensions.API
 
 		public void Shutdown( )
 		{
-			for ( int r = m_plugins.Count - 1; r >= 0; r-- )
+			for ( int r = Plugins.Count - 1; r >= 0; r-- )
 			{
-				var key = m_plugins.ElementAt( r ).Key;
+				Guid key = Plugins.ElementAt( r ).Key;
 				UnloadPlugin( key );
 			}
 		}
 
 		public void InitPlugin( Guid key )
 		{
-			if ( m_pluginState.ContainsKey( key ) )
+			if ( PluginStates.ContainsKey( key ) )
 				return;
 
 			String pluginPath = m_pluginPaths[ key ];
@@ -572,7 +540,7 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
-				var plugin = m_plugins[ key ];
+				object plugin = Plugins[ key ];
 				MethodInfo initMethod = plugin.GetType( ).GetMethod( "InitWithPath" );
 				if ( initMethod != null )
 				{
@@ -584,7 +552,7 @@ namespace SEModAPIExtensions.API
 					initMethod.Invoke( plugin, new object[ ] { } );
 				}
 
-				m_pluginState.Add( key, true );
+				PluginStates.Add( key, true );
 			}
 			catch ( Exception ex )
 			{
@@ -594,20 +562,17 @@ namespace SEModAPIExtensions.API
 
 		public void UnloadPlugin( Guid key )
 		{
-			if ( key == null )
-				return;
-
 			//Skip if the plugin doesn't exist
-			if ( !m_plugins.ContainsKey( key ) )
+			if ( !Plugins.ContainsKey( key ) )
 				return;
 
 			//Skip if the plugin is already unloaded
-			if ( !m_pluginState.ContainsKey( key ) )
+			if ( !PluginStates.ContainsKey( key ) )
 				return;
 
-			LogManager.APILog.WriteLineAndConsole( "Unloading plugin '" + key.ToString( ) + "'" );
+			LogManager.APILog.WriteLineAndConsole( "Unloading plugin '" + key + "'" );
 
-			var plugin = m_plugins[ key ];
+			object plugin = Plugins[ key ];
 			try
 			{
 				MethodInfo initMethod = plugin.GetType( ).GetMethod( "Shutdown" );
@@ -619,16 +584,16 @@ namespace SEModAPIExtensions.API
 			}
 
 			m_pluginAssemblies.Remove( key );
-			m_pluginState.Remove( key );
-			m_plugins.Remove( key );
+			PluginStates.Remove( key );
+			Plugins.Remove( key );
 		}
 
 		public bool GetPluginState( Guid key )
 		{
-			if ( !m_pluginState.ContainsKey( key ) )
+			if ( !PluginStates.ContainsKey( key ) )
 				return false;
 
-			return m_pluginState[ key ];
+			return PluginStates[ key ];
 		}
 
 		#endregion
