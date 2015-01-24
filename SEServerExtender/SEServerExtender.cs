@@ -240,7 +240,7 @@ namespace SEServerExtender
 			if (SandboxGameAssemblyWrapper.UseCommonProgramData)
 				m_server.InstanceName = CMB_Control_CommonInstanceList.Text;
 			else
-				m_server.InstanceName = "";
+				m_server.InstanceName = string.Empty;
 
 			m_server.LoadServerConfig();
 
@@ -1702,10 +1702,10 @@ namespace SEServerExtender
 		private void BTN_Chat_Send_Click(object sender, EventArgs e)
 		{
 			string message = TXT_Chat_Message.Text;
-			if (message != null && message != "")
+			if (!string.IsNullOrEmpty( message ))
 			{
 				ChatManager.Instance.SendPublicChatMessage(message);
-				TXT_Chat_Message.Text = "";
+				TXT_Chat_Message.Text = string.Empty;
 			}
 		}
 
@@ -1714,10 +1714,10 @@ namespace SEServerExtender
 			if (e.KeyCode == Keys.Enter)
 			{
 				string message = TXT_Chat_Message.Text;
-				if (message != null && message != "")
+				if (!string.IsNullOrEmpty( message ))
 				{
 					ChatManager.Instance.SendPublicChatMessage(message);
-					TXT_Chat_Message.Text = "";
+					TXT_Chat_Message.Text = string.Empty;
 				}
 			}
 		}
@@ -1727,7 +1727,7 @@ namespace SEServerExtender
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
 			{
 				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
-				ChatManager.Instance.SendPublicChatMessage("/kick " + item.SteamId);
+				ChatManager.Instance.SendPublicChatMessage(string.Format( "/kick {0}", item.SteamId ));
 			}
 		}
 
@@ -1736,7 +1736,7 @@ namespace SEServerExtender
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
 			{
 				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
-				ChatManager.Instance.SendPublicChatMessage("/ban " + item.SteamId);
+				ChatManager.Instance.SendPublicChatMessage(string.Format( "/ban {0}", item.SteamId ));
 			}
 		}
 		#endregion
@@ -1774,7 +1774,7 @@ namespace SEServerExtender
 								{
 									foundMatch = true;
 
-									string newNodeText = item.Name + " (" + item.Members.Count + ")";
+									string newNodeText = string.Format( "{0} ({1})", item.Name, item.Members.Count );
 									node.Text = newNodeText;
 
 									TreeNode membersNode = node.Nodes[0];
@@ -1830,7 +1830,7 @@ namespace SEServerExtender
 							Type sectorObjectType = item.GetType();
 							string nodeKey = item.Id.ToString();
 
-							TreeNode newNode = TRV_Factions.Nodes.Add(nodeKey, item.Name + " (" + item.Members.Count + ")");
+							TreeNode newNode = TRV_Factions.Nodes.Add(nodeKey, string.Format( "{0} ({1})", item.Name, item.Members.Count ));
 							newNode.Name = item.Name;
 							newNode.Tag = item;
 
@@ -1928,7 +1928,7 @@ namespace SEServerExtender
 				foreach (var key in PluginManager.Instance.Plugins.Keys)
 				{
 					IPlugin plugin = (IPlugin)PluginManager.Instance.Plugins[key]; 
-					LST_Plugins.Items.Add(plugin.Name + " - " + key);
+					LST_Plugins.Items.Add(string.Format( "{0} - {1}", plugin.Name, key ));
 				}
 				LST_Plugins.SelectedIndex = selectedIndex;
 				LST_Plugins.EndUpdate();
@@ -2154,7 +2154,7 @@ namespace SEServerExtender
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
 			{
 				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
-				ChatManager.Instance.SendPublicChatMessage("/kick " + item.SteamId);
+				ChatManager.Instance.SendPublicChatMessage(string.Format( "/kick {0}", item.SteamId ));
 			}
 		}
 
@@ -2165,7 +2165,7 @@ namespace SEServerExtender
 			if (LST_Chat_ConnectedPlayers.SelectedItem != null)
 			{
 				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
-				ChatManager.Instance.SendPublicChatMessage("/ban " + item.SteamId);
+				ChatManager.Instance.SendPublicChatMessage(string.Format( "/ban {0}", item.SteamId ));
 			}
 		}
 	}
