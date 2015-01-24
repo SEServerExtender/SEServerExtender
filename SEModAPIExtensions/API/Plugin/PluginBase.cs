@@ -16,14 +16,14 @@ namespace SEModAPIExtensions.API.Plugin
 
 		#region "Constructors and Initializers"
 
-		public PluginBase()
+		public PluginBase( )
 		{
-			Assembly assembly = Assembly.GetCallingAssembly();
-			GuidAttribute guidAttr = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-			m_pluginId = new Guid(guidAttr.Value);
-			AssemblyName asmName = assembly.GetName();
+			Assembly assembly = Assembly.GetCallingAssembly( );
+			GuidAttribute guidAttr = (GuidAttribute)assembly.GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
+			m_pluginId = new Guid( guidAttr.Value );
+			AssemblyName asmName = assembly.GetName( );
 			m_name = asmName.Name;
-			m_version = asmName.Version.ToString();
+			m_version = asmName.Version.ToString( );
 		}
 
 		#endregion
@@ -49,13 +49,13 @@ namespace SEModAPIExtensions.API.Plugin
 
 		#region "Methods"
 
-		public abstract void Init();
+		public abstract void Init( );
 		//public void InitWithPath(String modPath)
 		//{
 		//}
 
-		public abstract void Update();
-		public abstract void Shutdown();
+		public abstract void Update( );
+		public abstract void Shutdown( );
 
 		#endregion
 	}
