@@ -16,7 +16,7 @@ namespace SEModAPIExtensions.API.Plugin
 
 		#region "Constructors and Initializers"
 
-		public PluginBase( )
+		protected PluginBase( )
 		{
 			Assembly assembly = Assembly.GetCallingAssembly( );
 			GuidAttribute guidAttr = (GuidAttribute)assembly.GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];

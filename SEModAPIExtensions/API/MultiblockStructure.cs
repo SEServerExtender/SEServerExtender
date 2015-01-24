@@ -43,7 +43,7 @@ namespace SEModAPIExtensions.API
 
 		#region "Constructors and Initializers"
 
-		public MultiblockStructure( CubeGridEntity parent )
+		protected MultiblockStructure( CubeGridEntity parent )
 		{
 			m_parent = parent;
 			m_definition = new Dictionary<Vector3I, StructureEntry>( );
