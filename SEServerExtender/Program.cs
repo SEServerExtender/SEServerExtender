@@ -238,7 +238,7 @@ namespace SEServerExtender
 
 				if ( !extenderArgs.NoGui )
 				{
-					Thread uiThread = new Thread( StartGUI );
+					Thread uiThread = new Thread( StartGui );
 					uiThread.SetApartmentState( ApartmentState.STA );
 					uiThread.Start( );
 				}
@@ -324,13 +324,13 @@ namespace SEServerExtender
 
 		static void ChatCommand_GUI( ChatManager.ChatEvent chatEvent )
 		{
-			Thread uiThread = new Thread( StartGUI );
+			Thread uiThread = new Thread( StartGui );
 			uiThread.SetApartmentState( ApartmentState.STA );
 			uiThread.Start( );
 		}
 
 		[STAThread]
-		static void StartGUI( )
+		static void StartGui( )
 		{
 			if ( !Environment.UserInteractive )
 				return;
