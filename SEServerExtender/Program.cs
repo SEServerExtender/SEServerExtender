@@ -20,17 +20,17 @@ namespace SEServerExtender
 		{
 			public WindowsService()
 			{
-				this.ServiceName = "SEServerExtender";
-				this.CanPauseAndContinue = false;
-				this.CanStop = true;	
-				this.AutoLog = true;
+				ServiceName = "SEServerExtender";
+				CanPauseAndContinue = false;
+				CanStop = true;	
+				AutoLog = true;
 			}
 
 			protected override void OnStart(string[] args)
 			{
-				LogManager.APILog.WriteLine("Starting SEServerExtender Service with " + args.Length.ToString() + " arguments ...");
+				LogManager.APILog.WriteLine(string.Format( "Starting SEServerExtender Service with {0} arguments ...", args.Length ));
 
-				Program.Start(args);
+				Start(args);
 			}
 
 			protected override void OnStop()
@@ -71,25 +71,27 @@ namespace SEServerExtender
 
 			//AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
 
-			LogManager.APILog.WriteLine("Starting SEServerExtender with " + args.Length.ToString() + " arguments ...");
+			LogManager.APILog.WriteLine(string.Format( "Starting SEServerExtender with {0} arguments ...", args.Length ));
 
-			CommandLineArgs extenderArgs = new CommandLineArgs();
+			CommandLineArgs extenderArgs = new CommandLineArgs
+			                               {
+				                               autoStart = false,
+				                               worldName = string.Empty,
+				                               instanceName = string.Empty,
+				                               noGUI = false,
+				                               noConsole = false,
+				                               debug = false,
+				                               gamePath = string.Empty,
+				                               noWCF = false,
+				                               autosave = 0,
+				                               wcfPort = 0,
+				                               path = string.Empty,
+				                               closeOnCrash = false,
+				                               restartOnCrash = false,
+				                               args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
+			                               };
 
 			//Setup the default args
-			extenderArgs.autoStart = false;
-			extenderArgs.worldName = "";
-			extenderArgs.instanceName = "";
-			extenderArgs.noGUI = false;
-			extenderArgs.noConsole = false;
-			extenderArgs.debug = false;
-			extenderArgs.gamePath = "";
-			extenderArgs.noWCF = false;
-			extenderArgs.autosave = 0;
-			extenderArgs.wcfPort = 0;
-			extenderArgs.path = "";
-			extenderArgs.closeOnCrash = false;
-			extenderArgs.restartOnCrash = false;
-			extenderArgs.args = string.Join(" ", args.Select(x => "\"" + x + "\""));
 
 			//Process the args
 			foreach (string arg in args)
@@ -117,7 +119,7 @@ namespace SEServerExtender
 						{
 							extenderArgs.autosave = int.Parse(argValue);
 						}
-						catch (Exception)
+						catch
 						{
 							//Do nothing
 						}
@@ -128,7 +130,7 @@ namespace SEServerExtender
 						{
 							extenderArgs.wcfPort = ushort.Parse(argValue);
 						}
-						catch (Exception)
+						catch
 						{
 							//Do nothing
 						}
@@ -201,7 +203,7 @@ namespace SEServerExtender
 
 			if (!string.IsNullOrEmpty(extenderArgs.path))
 			{
-				extenderArgs.instanceName = "";
+				extenderArgs.instanceName = string.Empty;
 			}
 
 			if (!Environment.UserInteractive)
@@ -226,9 +228,7 @@ namespace SEServerExtender
 				m_server.WCFPort = extenderArgs.wcfPort;
 				m_server.Init();
 
-				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand();
-				guiCommand.Command = "gui";
-				guiCommand.Callback = ChatCommand_GUI;
+				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand { Command = "gui", Callback = ChatCommand_GUI };
 				ChatManager.Instance.RegisterChatCommand(guiCommand);
 
 				if (extenderArgs.autoStart)
@@ -238,7 +238,7 @@ namespace SEServerExtender
 
 				if (!extenderArgs.noGUI)
 				{
-					Thread uiThread = new Thread(new ThreadStart(StartGUI));
+					Thread uiThread = new Thread(StartGUI);
 					uiThread.SetApartmentState(ApartmentState.STA);
 					uiThread.Start();
 				}
@@ -248,9 +248,9 @@ namespace SEServerExtender
 			catch (AutoException eEx)
 			{
 				if (!extenderArgs.noConsole)
-					Console.WriteLine("AutoException - " + eEx.AdditionnalInfo + "\n\r" + eEx.GetDebugString());
+					Console.WriteLine("AutoException - {0}\n\r{1}", eEx.AdditionnalInfo, eEx.GetDebugString() );
 				if (!extenderArgs.noGUI)
-					MessageBox.Show(eEx.AdditionnalInfo + "\n\r" + eEx.GetDebugString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(string.Format( "{0}\n\r{1}", eEx.AdditionnalInfo, eEx.GetDebugString() ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				if (extenderArgs.noConsole && extenderArgs.noGUI)
 					throw eEx.GetBaseException();
@@ -258,22 +258,22 @@ namespace SEServerExtender
 			catch (TargetInvocationException ex)
 			{
 				if (!extenderArgs.noConsole)
-					Console.WriteLine("TargetInvocationException - " + ex.ToString() + "\n\r" + ex.InnerException.ToString());
+					Console.WriteLine("TargetInvocationException - {0}\n\r{1}", ex, ex.InnerException );
 				if (!extenderArgs.noGUI)
-					MessageBox.Show(ex.ToString() + "\n\r" + ex.InnerException.ToString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(string.Format( "{0}\n\r{1}", ex, ex.InnerException ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				if (extenderArgs.noConsole && extenderArgs.noGUI)
-					throw ex;
+					throw;
 			}
 			catch (Exception ex)
 			{
 				if (!extenderArgs.noConsole)
-					Console.WriteLine("Exception - " + ex.ToString());
+					Console.WriteLine("Exception - {0}", ex );
 				if (!extenderArgs.noGUI)
 					MessageBox.Show(ex.ToString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				if (extenderArgs.noConsole && extenderArgs.noGUI)
-					throw ex;
+					throw;
 			}
 		}
 
@@ -281,7 +281,7 @@ namespace SEServerExtender
 		{
 			if(m_server != null && m_server.IsRunning)
 				m_server.StopServer();
-			if (m_serverExtenderForm != null && m_serverExtenderForm.Visible == true)
+			if (m_serverExtenderForm != null && m_serverExtenderForm.Visible)
 				m_serverExtenderForm.Close();
 
 			if (m_server.ServerThread != null)
@@ -292,7 +292,7 @@ namespace SEServerExtender
 
 		public static void Application_ThreadException(Object sender, ThreadExceptionEventArgs e)
 		{
-			Console.WriteLine("Application.ThreadException - " + e.Exception.ToString());
+			Console.WriteLine("Application.ThreadException - {0}", e.Exception );
 
 			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
 			{
@@ -308,7 +308,7 @@ namespace SEServerExtender
 
 		public static void AppDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
 		{
-			Console.WriteLine("AppDomain.UnhandledException - " + ((Exception)e.ExceptionObject).ToString());
+			Console.WriteLine("AppDomain.UnhandledException - {0}", e.ExceptionObject );
 
 			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
 			{
@@ -324,7 +324,7 @@ namespace SEServerExtender
 
 		static void ChatCommand_GUI(ChatManager.ChatEvent chatEvent)
 		{
-			Thread uiThread = new Thread(new ThreadStart(StartGUI));
+			Thread uiThread = new Thread(StartGUI);
 			uiThread.SetApartmentState(ApartmentState.STA);
 			uiThread.Start();
 		}
