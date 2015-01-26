@@ -13,13 +13,13 @@ namespace SEModAPIInternal.Support
 
 	public class EntityException : AutoException
 	{
-		public EntityException(EntityExceptionState state, string additionnalInfo = "", Exception original = null)
-			: base(state, additionnalInfo)
+		public EntityException( EntityExceptionState state, string additionnalInfo = "", Exception original = null )
+			: base( state, additionnalInfo )
 		{
-			LogManager.ErrorLog.WriteLine(original);
+			LogManager.ErrorLog.WriteLine( original );
 		}
 
-		public new string[] StateRepresentation =
+		public new string[ ] StateRepresentation =
         {
             "Invalid",
 			"NotFound",

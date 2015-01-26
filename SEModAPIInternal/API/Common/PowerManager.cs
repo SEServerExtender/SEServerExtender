@@ -27,16 +27,16 @@ namespace SEModAPIInternal.API.Common
 		public static string PowerManagerPowerProducerHashSetField = "9923D3B372EC5E98B4B3E4F043C89137";
 		public static string PowerManagerTotalPowerField = "2321C01912603DCD25560D74826632AC";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public PowerManager(Object powerManager)
+		public PowerManager( Object powerManager )
 		{
 			m_powerManager = powerManager;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -46,12 +46,12 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					float totalPower = (float)BaseObject.GetEntityFieldValue(m_powerManager, PowerManagerTotalPowerField);
+					float totalPower = (float)BaseObject.GetEntityFieldValue( m_powerManager, PowerManagerTotalPowerField );
 					return totalPower;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return 0;
 				}
 			}
@@ -63,68 +63,68 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					float availablePower = TotalPower - (float)BaseObject.InvokeEntityMethod(m_powerManager, PowerManagerGetAvailablePowerMethod);
+					float availablePower = TotalPower - (float)BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerGetAvailablePowerMethod );
 					return availablePower;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return 0;
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
-				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PowerManagerNamespace, PowerManagerClass);
-				if (type1 == null)
-					throw new Exception("Could not find internal type for PowerManager");
+				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PowerManagerNamespace, PowerManagerClass );
+				if ( type1 == null )
+					throw new Exception( "Could not find internal type for PowerManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type1, PowerManagerRegisterPowerReceiverMethod);
-				result &= BaseObject.HasMethod(type1, PowerManagerUnregisterPowerReceiverMethod);
-				result &= BaseObject.HasMethod(type1, PowerManagerRegisterPowerProducerMethod);
-				result &= BaseObject.HasMethod(type1, PowerManagerUnregisterPowerProducerMethod);
-				result &= BaseObject.HasMethod(type1, PowerManagerGetAvailablePowerMethod);
-				result &= BaseObject.HasMethod(type1, PowerManagerGetUsedPowerPercentMethod);
-				result &= BaseObject.HasField(type1, PowerManagerPowerReceiverHashSetField);
-				result &= BaseObject.HasField(type1, PowerManagerPowerProducerHashSetField);
-				result &= BaseObject.HasField(type1, PowerManagerTotalPowerField);
+				result &= BaseObject.HasMethod( type1, PowerManagerRegisterPowerReceiverMethod );
+				result &= BaseObject.HasMethod( type1, PowerManagerUnregisterPowerReceiverMethod );
+				result &= BaseObject.HasMethod( type1, PowerManagerRegisterPowerProducerMethod );
+				result &= BaseObject.HasMethod( type1, PowerManagerUnregisterPowerProducerMethod );
+				result &= BaseObject.HasMethod( type1, PowerManagerGetAvailablePowerMethod );
+				result &= BaseObject.HasMethod( type1, PowerManagerGetUsedPowerPercentMethod );
+				result &= BaseObject.HasField( type1, PowerManagerPowerReceiverHashSetField );
+				result &= BaseObject.HasField( type1, PowerManagerPowerProducerHashSetField );
+				result &= BaseObject.HasField( type1, PowerManagerTotalPowerField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void RegisterPowerReceiver(Object receiver)
+		public void RegisterPowerReceiver( Object receiver )
 		{
-			BaseObject.InvokeEntityMethod(m_powerManager, PowerManagerRegisterPowerReceiverMethod, new object[] { receiver });
+			BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerRegisterPowerReceiverMethod, new object[ ] { receiver } );
 		}
 
-		public void UnregisterPowerReceiver(Object receiver)
+		public void UnregisterPowerReceiver( Object receiver )
 		{
-			BaseObject.InvokeEntityMethod(m_powerManager, PowerManagerUnregisterPowerReceiverMethod, new object[] { receiver });
+			BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerUnregisterPowerReceiverMethod, new object[ ] { receiver } );
 		}
 
-		public void RegisterPowerProducer(Object producer)
+		public void RegisterPowerProducer( Object producer )
 		{
-			BaseObject.InvokeEntityMethod(m_powerManager, PowerManagerRegisterPowerProducerMethod, new object[] { producer });
+			BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerRegisterPowerProducerMethod, new object[ ] { producer } );
 		}
 
-		public void UnregisterPowerProducer(Object producer)
+		public void UnregisterPowerProducer( Object producer )
 		{
-			BaseObject.InvokeEntityMethod(m_powerManager, PowerManagerUnregisterPowerProducerMethod, new object[] { producer });
+			BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerUnregisterPowerProducerMethod, new object[ ] { producer } );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

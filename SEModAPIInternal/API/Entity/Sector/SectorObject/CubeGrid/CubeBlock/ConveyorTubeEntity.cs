@@ -4,7 +4,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "ConveyorTubeEntityProxy")]
+	[DataContract( Name = "ConveyorTubeEntityProxy" )]
 	public class ConveyorTubeEntity : CubeBlockEntity
 	{
 		#region "Attributes"
@@ -12,28 +12,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string ConveyorTubeNamespace = "";
 		public static string ConveyorTubeClass = "";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public ConveyorTubeEntity(CubeGridEntity parent, MyObjectBuilder_ConveyorConnector definition)
-			: base(parent, definition)
+		public ConveyorTubeEntity( CubeGridEntity parent, MyObjectBuilder_ConveyorConnector definition )
+			: base( parent, definition )
 		{
 		}
 
-		public ConveyorTubeEntity(CubeGridEntity parent, MyObjectBuilder_ConveyorConnector definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public ConveyorTubeEntity( CubeGridEntity parent, MyObjectBuilder_ConveyorConnector definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 		}
 
-		#endregion
-
-		#region "Properties"
-
-		#endregion
-
-		#region "Methods"
-
-		#endregion
+		#endregion "Constructors and Intializers"
 	}
 }

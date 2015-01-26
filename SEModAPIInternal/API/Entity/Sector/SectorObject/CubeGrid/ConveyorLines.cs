@@ -2,15 +2,15 @@
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
-	class ConveyorLine : BaseObject
+	internal class ConveyorLine : BaseObject
 	{
-		public ConveyorLine(CubeGridEntity parent, MyObjectBuilder_ConveyorLine definition)
-			: base(definition)
+		public ConveyorLine( CubeGridEntity parent, MyObjectBuilder_ConveyorLine definition )
+			: base( definition )
 		{
 		}
 	}
 
-	class ConveyorLineManager
+	internal class ConveyorLineManager
 	{
 	}
 }

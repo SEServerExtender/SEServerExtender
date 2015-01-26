@@ -1,28 +1,23 @@
-﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
-
+using Microsoft.Xml.Serialization.GeneratedAssembly;
 using Sandbox.Common.ObjectBuilders;
-
 using Sandbox.Definitions;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.Support;
-
 using VRage;
 using VRageMath;
-using SEModAPIInternal.API.Utility;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract(Name = "CubeGridEntityProxy")]
-	[KnownType("KnownTypes")]
+	[DataContract( Name = "CubeGridEntityProxy" )]
+	[KnownType( "KnownTypes" )]
 	public class CubeGridEntity : BaseEntity
 	{
 		#region "Attributes"
@@ -52,107 +47,107 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public static string CubeGridPackedCubeBlockClass = "904EBABB7F499A29EBFA14472321E896";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		protected CubeGridEntity()
-			: base(new MyObjectBuilder_CubeGrid())
+		protected CubeGridEntity( )
+			: base( new MyObjectBuilder_CubeGrid( ) )
 		{
-			m_cubeBlockManager = new CubeBlockManager(this);
+			m_cubeBlockManager = new CubeBlockManager( this );
 			m_lastNameRefresh = DateTime.Now;
 			m_lastBaseCubeBlockRefresh = DateTime.Now;
 			m_name = "Cube Grid";
 		}
 
-		public CubeGridEntity(FileInfo prefabFile)
-			: base(BaseObjectManager.LoadContentFile<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeGridSerializer>(prefabFile))
+		public CubeGridEntity( FileInfo prefabFile )
+			: base( BaseObjectManager.LoadContentFile<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeGridSerializer>( prefabFile ) )
 		{
 			EntityId = 0;
 			ObjectBuilder.EntityId = 0;
-			if(ObjectBuilder.PositionAndOrientation != null)
-				PositionAndOrientation = ObjectBuilder.PositionAndOrientation.GetValueOrDefault();
+			if ( ObjectBuilder.PositionAndOrientation != null )
+				PositionAndOrientation = ObjectBuilder.PositionAndOrientation.GetValueOrDefault( );
 
-			m_cubeBlockManager = new CubeBlockManager(this);
-			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>();
-			foreach (var cubeBlock in ObjectBuilder.CubeBlocks)
+			m_cubeBlockManager = new CubeBlockManager( this );
+			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>( );
+			foreach ( var cubeBlock in ObjectBuilder.CubeBlocks )
 			{
 				cubeBlock.EntityId = 0;
-				cubeBlockList.Add(new CubeBlockEntity(this, cubeBlock));
+				cubeBlockList.Add( new CubeBlockEntity( this, cubeBlock ) );
 			}
-			m_cubeBlockManager.Load(cubeBlockList);
+			m_cubeBlockManager.Load( cubeBlockList );
 
 			m_lastNameRefresh = DateTime.Now;
 			m_lastBaseCubeBlockRefresh = DateTime.Now;
 			m_name = "Cube Grid";
 		}
 
-		public CubeGridEntity(MyObjectBuilder_CubeGrid definition)
-			: base(definition)
+		public CubeGridEntity( MyObjectBuilder_CubeGrid definition )
+			: base( definition )
 		{
-			m_cubeBlockManager = new CubeBlockManager(this);
-			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>();
-			foreach (var cubeBlock in definition.CubeBlocks)
+			m_cubeBlockManager = new CubeBlockManager( this );
+			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>( );
+			foreach ( var cubeBlock in definition.CubeBlocks )
 			{
 				cubeBlock.EntityId = 0;
-				cubeBlockList.Add(new CubeBlockEntity(this, cubeBlock));
+				cubeBlockList.Add( new CubeBlockEntity( this, cubeBlock ) );
 			}
-			m_cubeBlockManager.Load(cubeBlockList);
+			m_cubeBlockManager.Load( cubeBlockList );
 
 			m_lastNameRefresh = DateTime.Now;
 			m_lastBaseCubeBlockRefresh = DateTime.Now;
 			m_name = "Cube Grid";
 		}
 
-		public CubeGridEntity(MyObjectBuilder_CubeGrid definition, Object backingObject)
-			: base(definition, backingObject)
+		public CubeGridEntity( MyObjectBuilder_CubeGrid definition, Object backingObject )
+			: base( definition, backingObject )
 		{
-			m_cubeBlockManager = new CubeBlockManager(this, backingObject, CubeGridGetCubeBlocksHashSetMethod);
-			m_cubeBlockManager.Refresh();
+			m_cubeBlockManager = new CubeBlockManager( this, backingObject, CubeGridGetCubeBlocksHashSetMethod );
+			m_cubeBlockManager.Refresh( );
 
-			m_networkManager = new CubeGridNetworkManager(this);
-			m_managerManager = new CubeGridManagerManager(this, GetManagerManager());
+			m_networkManager = new CubeGridNetworkManager( this );
+			m_managerManager = new CubeGridManagerManager( this, GetManagerManager( ) );
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCubeGridCreated;
 			newEvent.timestamp = DateTime.Now;
 			newEvent.entity = this;
 			newEvent.priority = 1;
-			EntityEventManager.Instance.AddEvent(newEvent);
+			EntityEventManager.Instance.AddEvent( newEvent );
 
 			m_lastNameRefresh = DateTime.Now;
 			m_lastBaseCubeBlockRefresh = DateTime.Now;
 			m_name = "Cube Grid";
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
 			get
 			{
-				if (m_internalType == null)
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CubeGridNamespace, CubeGridClass);
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridNamespace, CubeGridClass );
 				return m_internalType;
 			}
 		}
 
 		[DataMember]
-		[Category("Cube Grid")]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[ReadOnly( true )]
 		public override string Name
 		{
 			get
 			{
 				string name = "";
 				TimeSpan timeSinceLastNameRefresh = DateTime.Now - m_lastNameRefresh;
-				if (timeSinceLastNameRefresh.TotalSeconds < 2)
+				if ( timeSinceLastNameRefresh.TotalSeconds < 2 )
 				{
 					name = m_name;
 				}
@@ -160,36 +155,36 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				{
 					m_lastNameRefresh = DateTime.Now;
 
-					List<MyObjectBuilder_CubeBlock> blocks = new List<MyObjectBuilder_CubeBlock>(ObjectBuilder.CubeBlocks);
-					foreach (var cubeBlock in blocks)
+					List<MyObjectBuilder_CubeBlock> blocks = new List<MyObjectBuilder_CubeBlock>( ObjectBuilder.CubeBlocks );
+					foreach ( var cubeBlock in blocks )
 					{
 						try
 						{
-							if (cubeBlock == null)
+							if ( cubeBlock == null )
 								continue;
-							if (cubeBlock.TypeId == typeof(MyObjectBuilder_Beacon))
+							if ( cubeBlock.TypeId == typeof( MyObjectBuilder_Beacon ) )
 							{
-								if (name.Length > 0)
+								if ( name.Length > 0 )
 									name += "|";
 
-								string customName = ((MyObjectBuilder_Beacon)cubeBlock).CustomName;
-								if (customName == "")
+								string customName = ( (MyObjectBuilder_Beacon)cubeBlock ).CustomName;
+								if ( customName == "" )
 									customName = "Beacon";
 								name += customName;
 							}
 						}
-						catch (Exception ex)
+						catch ( Exception ex )
 						{
-							LogManager.ErrorLog.WriteLine(ex);
+							LogManager.ErrorLog.WriteLine( ex );
 						}
 					}
 				}
 
-				if (name.Length == 0)
+				if ( name.Length == 0 )
 					name = DisplayName;
 
-				if (name.Length == 0)
-					name = ObjectBuilder.EntityId.ToString();
+				if ( name.Length == 0 )
+					name = ObjectBuilder.EntityId.ToString( );
 
 				m_name = name;
 
@@ -198,14 +193,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Cube Grid")]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[ReadOnly( true )]
 		public override string DisplayName
 		{
 			get { return ObjectBuilder.DisplayName; }
 			set
 			{
-				if (ObjectBuilder.DisplayName == value) return;
+				if ( ObjectBuilder.DisplayName == value ) return;
 				ObjectBuilder.DisplayName = value;
 				Changed = true;
 
@@ -214,17 +209,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_CubeGrid ObjectBuilder
 		{
 			get
 			{
 				MyObjectBuilder_CubeGrid objectBuilder = (MyObjectBuilder_CubeGrid)base.ObjectBuilder;
-				if (objectBuilder == null)
+				if ( objectBuilder == null )
 				{
-					objectBuilder = new MyObjectBuilder_CubeGrid();
+					objectBuilder = new MyObjectBuilder_CubeGrid( );
 					ObjectBuilder = objectBuilder;
 				}
 
@@ -240,8 +235,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Cube Grid")]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[ReadOnly( true )]
 		public MyCubeSize GridSizeEnum
 		{
 			get { return ObjectBuilder.GridSizeEnum; }
@@ -252,8 +247,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Cube Grid")]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[ReadOnly( true )]
 		public bool IsStatic
 		{
 			get { return ObjectBuilder.IsStatic; }
@@ -264,17 +259,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Cube Grid")]
+		[Category( "Cube Grid" )]
 		public bool IsDampenersEnabled
 		{
 			get { return ObjectBuilder.DampenersEnabled; }
 			set
 			{
-				if (ObjectBuilder.DampenersEnabled == value) return;
+				if ( ObjectBuilder.DampenersEnabled == value ) return;
 				ObjectBuilder.DampenersEnabled = value;
 				Changed = true;
 
-				if (ThrusterManager != null)
+				if ( ThrusterManager != null )
 				{
 					ThrusterManager.DampenersEnabled = value;
 				}
@@ -282,14 +277,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public List<CubeBlockEntity> CubeBlocks
 		{
 			get
 			{
-				List<CubeBlockEntity> cubeBlocks = m_cubeBlockManager.GetTypedInternalData<CubeBlockEntity>();
+				List<CubeBlockEntity> cubeBlocks = m_cubeBlockManager.GetTypedInternalData<CubeBlockEntity>( );
 				return cubeBlocks;
 			}
 			private set
@@ -299,8 +294,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
 		public List<MyObjectBuilder_CubeBlock> BaseCubeBlocks
 		{
 			get
@@ -311,33 +306,33 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
 		public List<BoneInfo> Skeleton
 		{
 			get { return ObjectBuilder.Skeleton; }
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
 		public List<MyObjectBuilder_ConveyorLine> ConveyorLines
 		{
 			get { return ObjectBuilder.ConveyorLines; }
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
 		public List<MyObjectBuilder_BlockGroup> BlockGroups
 		{
 			get { return ObjectBuilder.BlockGroups; }
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public CubeGridNetworkManager NetworkManager
 		{
 			get { return m_networkManager; }
@@ -348,9 +343,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public PowerManager PowerManager
 		{
 			get { return m_managerManager.PowerManager; }
@@ -361,9 +356,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public CubeGridThrusterManager ThrusterManager
 		{
 			get { return m_managerManager.ThrusterManager; }
@@ -374,8 +369,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[Browsable(false)]
+		[Category( "Cube Grid" )]
+		[Browsable( false )]
 		public bool IsLoading
 		{
 			get
@@ -393,8 +388,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[ReadOnly( true )]
 		public float TotalPower
 		{
 			get { return PowerManager.TotalPower; }
@@ -405,8 +400,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Cube Grid")]
-		[ReadOnly(true)]
+		[Category( "Cube Grid" )]
+		[ReadOnly( true )]
 		public float AvailablePower
 		{
 			get { return PowerManager.AvailablePower; }
@@ -416,23 +411,23 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static List<Type> KnownTypes()
+		public static List<Type> KnownTypes( )
 		{
-			return UtilityFunctions.GetObjectBuilderTypes();
+			return UtilityFunctions.GetObjectBuilderTypes( );
 		}
 
-		public override void Dispose()
+		public override void Dispose( )
 		{
-			if(SandboxGameAssemblyWrapper.IsDebugging)
-				LogManager.APILog.WriteLine("Disposing CubeGridEntity '" + Name + "' ...");
+			if ( SandboxGameAssemblyWrapper.IsDebugging )
+				LogManager.APILog.WriteLine( "Disposing CubeGridEntity '" + Name + "' ..." );
 
 			//Dispose the cube grid by disposing all of the blocks
 			//This may be slow but it's reliable ... so far
-            /*
+			/*
 			List<CubeBlockEntity> blocks = CubeBlocks;
 			int blockCount = blocks.Count;
 			foreach (CubeBlockEntity cubeBlock in blocks)
@@ -442,169 +437,169 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			if (SandboxGameAssemblyWrapper.IsDebugging)
 				LogManager.APILog.WriteLine("Disposed " + blockCount.ToString() + " blocks on CubeGridEntity '" + Name + "'");
-            */
+			*/
 			//Broadcast the removal to the clients just to save processing time for the clients
-			BaseNetworkManager.RemoveEntity();
+			BaseNetworkManager.RemoveEntity( );
 
 			m_isDisposed = true;
 
-			if (EntityId != 0)
+			if ( EntityId != 0 )
 			{
-				GameEntityManager.RemoveEntity(EntityId);
+				GameEntityManager.RemoveEntity( EntityId );
 			}
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCubeGridDeleted;
 			newEvent.timestamp = DateTime.Now;
 			newEvent.entity = this;
 			newEvent.priority = 1;
-			EntityEventManager.Instance.AddEvent(newEvent);
+			EntityEventManager.Instance.AddEvent( newEvent );
 		}
 
-		public override void Export(FileInfo fileInfo)
+		public override void Export( FileInfo fileInfo )
 		{
-			RefreshBaseCubeBlocks();
+			RefreshBaseCubeBlocks( );
 
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeGridSerializer>(ObjectBuilder, fileInfo);
+			BaseObjectManager.SaveContentFile<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeGridSerializer>( ObjectBuilder, fileInfo );
 		}
 
-		new public MyObjectBuilder_CubeGrid Export()
+		new public MyObjectBuilder_CubeGrid Export( )
 		{
-			RefreshBaseCubeBlocks();
+			RefreshBaseCubeBlocks( );
 
 			return ObjectBuilder;
 		}
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for CubeGridEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for CubeGridEntity" );
 				bool result = true;
-				result &= HasMethod(type, CubeGridGetCubeBlocksHashSetMethod);
-				result &= HasMethod(type, CubeGridAddCubeBlockMethod);
-				result &= HasMethod(type, CubeGridRemoveCubeBlockMethod);
-				result &= HasMethod(type, CubeGridGetManagerManagerMethod);
-				result &= HasField(type, CubeGridBlockGroupsField);
+				result &= HasMethod( type, CubeGridGetCubeBlocksHashSetMethod );
+				result &= HasMethod( type, CubeGridAddCubeBlockMethod );
+				result &= HasMethod( type, CubeGridRemoveCubeBlockMethod );
+				result &= HasMethod( type, CubeGridGetManagerManagerMethod );
+				result &= HasField( type, CubeGridBlockGroupsField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public CubeBlockEntity GetCubeBlock(Vector3I cubePosition)
+		public CubeBlockEntity GetCubeBlock( Vector3I cubePosition )
 		{
 			try
 			{
 				long packedBlockCoordinates = (long)cubePosition.X + (long)cubePosition.Y * 10000 + (long)cubePosition.Z * 100000000;
-				CubeBlockEntity cubeBlock = (CubeBlockEntity)m_cubeBlockManager.GetEntry(packedBlockCoordinates);
+				CubeBlockEntity cubeBlock = (CubeBlockEntity)m_cubeBlockManager.GetEntry( packedBlockCoordinates );
 
 				return cubeBlock;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public void AddCubeBlock(CubeBlockEntity cubeBlock)
+		public void AddCubeBlock( CubeBlockEntity cubeBlock )
 		{
 			m_cubeBlockToAddRemove = cubeBlock;
 
 			Action action = InternalAddCubeBlock;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		public void DeleteCubeBlock(CubeBlockEntity cubeBlock)
+		public void DeleteCubeBlock( CubeBlockEntity cubeBlock )
 		{
 			m_cubeBlockToAddRemove = cubeBlock;
 
 			Action action = InternalRemoveCubeBlock;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		protected void RefreshBaseCubeBlocks()
+		protected void RefreshBaseCubeBlocks( )
 		{
 			MyObjectBuilder_CubeGrid cubeGrid = (MyObjectBuilder_CubeGrid)ObjectBuilder;
 
 			//Refresh the cube blocks content in the cube grid from the cube blocks manager
-			cubeGrid.CubeBlocks.Clear();
-			foreach (var item in CubeBlocks)
+			cubeGrid.CubeBlocks.Clear( );
+			foreach ( var item in CubeBlocks )
 			{
-				cubeGrid.CubeBlocks.Add((MyObjectBuilder_CubeBlock)item.ObjectBuilder);
+				cubeGrid.CubeBlocks.Add( (MyObjectBuilder_CubeBlock)item.ObjectBuilder );
 			}
 		}
 
 		#region "Internal"
 
-		protected Object GetManagerManager()
+		protected Object GetManagerManager( )
 		{
-			Object result = InvokeEntityMethod(BackingObject, CubeGridGetManagerManagerMethod);
+			Object result = InvokeEntityMethod( BackingObject, CubeGridGetManagerManagerMethod );
 			return result;
 		}
 
-		protected void InternalCubeGridMovedEvent(Object entity)
+		protected void InternalCubeGridMovedEvent( Object entity )
 		{
 			try
 			{
-				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 				newEvent.type = EntityEventManager.EntityEventType.OnCubeGridMoved;
 				newEvent.timestamp = DateTime.Now;
 				newEvent.entity = this;
 				newEvent.priority = 9;
-				EntityEventManager.Instance.AddEvent(newEvent);
+				EntityEventManager.Instance.AddEvent( newEvent );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalAddCubeBlock()
+		protected void InternalAddCubeBlock( )
 		{
-			if (m_cubeBlockToAddRemove == null)
+			if ( m_cubeBlockToAddRemove == null )
 				return;
 
 			try
 			{
 				MyObjectBuilder_CubeBlock objectBuilder = m_cubeBlockToAddRemove.ObjectBuilder;
-				MyCubeBlockDefinition blockDef = MyDefinitionManager.Static.GetCubeBlockDefinition(objectBuilder);
+				MyCubeBlockDefinition blockDef = MyDefinitionManager.Static.GetCubeBlockDefinition( objectBuilder );
 
-				NetworkManager.BroadcastAddCubeBlock(m_cubeBlockToAddRemove);
+				NetworkManager.BroadcastAddCubeBlock( m_cubeBlockToAddRemove );
 
-				Object result = InvokeEntityMethod(BackingObject, CubeGridAddCubeBlockMethod, new object[] { objectBuilder, true, blockDef });
+				Object result = InvokeEntityMethod( BackingObject, CubeGridAddCubeBlockMethod, new object[ ] { objectBuilder, true, blockDef } );
 				m_cubeBlockToAddRemove.BackingObject = result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			m_cubeBlockToAddRemove = null;
 		}
 
-		protected void InternalRemoveCubeBlock()
+		protected void InternalRemoveCubeBlock( )
 		{
-			if (m_cubeBlockToAddRemove == null)
+			if ( m_cubeBlockToAddRemove == null )
 				return;
 
 			//NOTE - We don't broadcast the removal because the game internals take care of that by broadcasting the removal delta lists every frame update
 
-			InvokeEntityMethod(BackingObject, CubeGridRemoveCubeBlockMethod, new object[] { m_cubeBlockToAddRemove.BackingObject, Type.Missing });
+			InvokeEntityMethod( BackingObject, CubeGridRemoveCubeBlockMethod, new object[ ] { m_cubeBlockToAddRemove.BackingObject, Type.Missing } );
 
 			m_cubeBlockToAddRemove = null;
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class CubeGridManagerManager
@@ -623,20 +618,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public static string CubeGridManagerManagerGetPowerManagerMethod = "F05ACB25E5255DA110249186EE895C73";
 		public static string CubeGridManagerManagerGetThrusterManagerMethod = "0EF76C91FA04B0B200A3F3AC155F089D";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CubeGridManagerManager(CubeGridEntity parent, Object backingObject)
+		public CubeGridManagerManager( CubeGridEntity parent, Object backingObject )
 		{
 			m_parent = parent;
 			m_backingObject = backingObject;
 
-			m_powerManager = new PowerManager(GetPowerManager());
-			m_thrusterManager = new CubeGridThrusterManager(GetThrusterManager(), m_parent);
+			m_powerManager = new PowerManager( GetPowerManager( ) );
+			m_thrusterManager = new CubeGridThrusterManager( GetThrusterManager( ), m_parent );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -644,7 +639,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CubeGridManagerManagerNamespace, CubeGridManagerManagerClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridManagerManagerNamespace, CubeGridManagerManagerClass );
 				return type;
 			}
 		}
@@ -664,43 +659,43 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			get { return m_thrusterManager; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for CubeGridManagerManager");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for CubeGridManagerManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type, CubeGridManagerManagerGetPowerManagerMethod);
-				result &= BaseObject.HasMethod(type, CubeGridManagerManagerGetThrusterManagerMethod);
+				result &= BaseObject.HasMethod( type, CubeGridManagerManagerGetPowerManagerMethod );
+				result &= BaseObject.HasMethod( type, CubeGridManagerManagerGetThrusterManagerMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		private Object GetPowerManager()
+		private Object GetPowerManager( )
 		{
-			Object manager = BaseObject.InvokeEntityMethod(BackingObject, CubeGridManagerManagerGetPowerManagerMethod);
+			Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetPowerManagerMethod );
 			return manager;
 		}
 
-		private Object GetThrusterManager()
+		private Object GetThrusterManager( )
 		{
-			Object manager = BaseObject.InvokeEntityMethod(BackingObject, CubeGridManagerManagerGetThrusterManagerMethod);
+			Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetThrusterManagerMethod );
 			return manager;
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class CubeGridNetworkManager
@@ -717,6 +712,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			//Construction/Item packets
 			CubeBlockBuildIntegrityValues = 25,	//..EF2D90F50F1E378F0495FFB906D1C6C6
+
 			CubeBlockItemList = 26,				//..3FD479635EACD6C3047ACB77CBAB645D
 			Packet2_4 = 27,
 			Packet2_5 = 28,
@@ -757,10 +753,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		//Definition
 		public static string CubeGridNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
+
 		public static string CubeGridNetManagerClass = "E727876839B1C8FFEE302CD2A1948CDA";
 
 		//Methods
 		public static string CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod = "F7C40254F25941842EA6558205FAC160";
+
 		public static string CubeGridNetManagerBroadcastCubeBlockFactionDataMethod = "EF45C83059E3CD5A2C5354ABB687D861";
 		public static string CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod = "4A75379DE89606408396FDADD89822F3";
 		public static string CubeGridNetManagerBroadcastAddCubeBlockMethod = "0B27B2B92323D75DF73055AD0A6DB4B6";
@@ -773,21 +771,21 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public static string CubeGridIntegrityChangeEnumNamespace = CubeGridEntity.CubeGridNamespace + "." + CubeGridEntity.CubeGridClass;
 		public static string CubeGridIntegrityChangeEnumClass = "55D3513B52D474C7AF161242E01FB9A9";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CubeGridNetworkManager(CubeGridEntity cubeGrid)
+		public CubeGridNetworkManager( CubeGridEntity cubeGrid )
 		{
 			m_cubeGrid = cubeGrid;
 			var entity = m_cubeGrid.BackingObject;
-			m_netManager = BaseObject.InvokeEntityMethod(entity, CubeGridGetNetManagerMethod);
+			m_netManager = BaseObject.InvokeEntityMethod( entity, CubeGridGetNetManagerMethod );
 
 			Action action = RegisterPacketHandlers;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -795,7 +793,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CubeGridNetManagerNamespace, CubeGridNetManagerClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridNetManagerNamespace, CubeGridNetManagerClass );
 				return type;
 			}
 			private set
@@ -804,121 +802,121 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for CubeGridNetworkManager");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for CubeGridNetworkManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type, CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod);
-				result &= BaseObject.HasMethod(type, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod);
-				result &= BaseObject.HasMethod(type, CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod);
-				result &= BaseObject.HasMethod(type, CubeGridNetManagerBroadcastAddCubeBlockMethod);
-				result &= BaseObject.HasField(type, CubeGridNetManagerCubeBlocksToDestroyField);
+				result &= BaseObject.HasMethod( type, CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod );
+				result &= BaseObject.HasMethod( type, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod );
+				result &= BaseObject.HasMethod( type, CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod );
+				result &= BaseObject.HasMethod( type, CubeGridNetManagerBroadcastAddCubeBlockMethod );
+				result &= BaseObject.HasField( type, CubeGridNetManagerCubeBlocksToDestroyField );
 
-				Type type2 = CubeGridEntity.InternalType.GetNestedType(CubeGridIntegrityChangeEnumClass);
-				if (type2 == null)
-					throw new Exception("Could not find type for CubeGridNetworkManager-CubeGridIntegrityChangeEnum");
+				Type type2 = CubeGridEntity.InternalType.GetNestedType( CubeGridIntegrityChangeEnumClass );
+				if ( type2 == null )
+					throw new Exception( "Could not find type for CubeGridNetworkManager-CubeGridIntegrityChangeEnum" );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void BroadcastCubeBlockFactionData(CubeBlockEntity cubeBlock)
+		public void BroadcastCubeBlockFactionData( CubeBlockEntity cubeBlock )
 		{
 			try
 			{
-				BaseObject.InvokeEntityMethod(m_netManager, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod, new object[] { m_cubeGrid.BackingObject, cubeBlock.ActualObject, cubeBlock.Owner, cubeBlock.ShareMode });
+				BaseObject.InvokeEntityMethod( m_netManager, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod, new object[ ] { m_cubeGrid.BackingObject, cubeBlock.ActualObject, cubeBlock.Owner, cubeBlock.ShareMode } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public void BroadcastCubeBlockBuildIntegrityValues(CubeBlockEntity cubeBlock)
+		public void BroadcastCubeBlockBuildIntegrityValues( CubeBlockEntity cubeBlock )
 		{
 			try
 			{
-				Type someEnum = CubeGridEntity.InternalType.GetNestedType(CubeGridIntegrityChangeEnumClass);
-				Array someEnumValues = someEnum.GetEnumValues();
-				Object enumValue = someEnumValues.GetValue(0);
-				BaseObject.InvokeEntityMethod(m_netManager, CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod, new object[] { cubeBlock.BackingObject, enumValue, 0L });
+				Type someEnum = CubeGridEntity.InternalType.GetNestedType( CubeGridIntegrityChangeEnumClass );
+				Array someEnumValues = someEnum.GetEnumValues( );
+				Object enumValue = someEnumValues.GetValue( 0 );
+				BaseObject.InvokeEntityMethod( m_netManager, CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod, new object[ ] { cubeBlock.BackingObject, enumValue, 0L } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public void BroadcastCubeBlockRemoveLists()
+		public void BroadcastCubeBlockRemoveLists( )
 		{
-			BaseObject.InvokeEntityMethod(m_netManager, CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod);
+			BaseObject.InvokeEntityMethod( m_netManager, CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod );
 		}
 
-		public void BroadcastAddCubeBlock(CubeBlockEntity cubeBlock)
+		public void BroadcastAddCubeBlock( CubeBlockEntity cubeBlock )
 		{
 			try
 			{
-				Type packedStructType = CubeGridEntity.InternalType.GetNestedType(CubeGridEntity.CubeGridPackedCubeBlockClass);
-				Object packedStruct = Activator.CreateInstance(packedStructType);
-				MyCubeBlockDefinition def = MyDefinitionManager.Static.GetCubeBlockDefinition(cubeBlock.ObjectBuilder);
+				Type packedStructType = CubeGridEntity.InternalType.GetNestedType( CubeGridEntity.CubeGridPackedCubeBlockClass );
+				Object packedStruct = Activator.CreateInstance( packedStructType );
+				MyCubeBlockDefinition def = MyDefinitionManager.Static.GetCubeBlockDefinition( cubeBlock.ObjectBuilder );
 
 				//Set def id
-				BaseObject.SetEntityFieldValue(packedStruct, "35E024D9E3B721592FB9B6FC1A1E239A", (DefinitionIdBlit)def.Id);
+				BaseObject.SetEntityFieldValue( packedStruct, "35E024D9E3B721592FB9B6FC1A1E239A", (DefinitionIdBlit)def.Id );
 
 				//Set position
-				BaseObject.SetEntityFieldValue(packedStruct, "5C3938C9B8CED1D0057CCF12F04329AB", cubeBlock.Position);
+				BaseObject.SetEntityFieldValue( packedStruct, "5C3938C9B8CED1D0057CCF12F04329AB", cubeBlock.Position );
 
 				//Set block size
-				BaseObject.SetEntityFieldValue(packedStruct, "0DDB53EB9299ECC9826DF9A47E5E4F38", new Vector3UByte(def.Size));
+				BaseObject.SetEntityFieldValue( packedStruct, "0DDB53EB9299ECC9826DF9A47E5E4F38", new Vector3UByte( def.Size ) );
 
 				//Set block margins
-				BaseObject.SetEntityFieldValue(packedStruct, "4045ED59A8C93DE0B41218EF2E947E55", new Vector3B(0, 0, 0));
-				BaseObject.SetEntityFieldValue(packedStruct, "096897446D5BD5243D3D6E5C53CE1772", new Vector3B(0, 0, 0));
+				BaseObject.SetEntityFieldValue( packedStruct, "4045ED59A8C93DE0B41218EF2E947E55", new Vector3B( 0, 0, 0 ) );
+				BaseObject.SetEntityFieldValue( packedStruct, "096897446D5BD5243D3D6E5C53CE1772", new Vector3B( 0, 0, 0 ) );
 
 				//Set block margin scale
-				BaseObject.SetEntityFieldValue(packedStruct, "E28B9725868E18B339D1E0594EF14444", new Vector3B(0, 0, 0));
+				BaseObject.SetEntityFieldValue( packedStruct, "E28B9725868E18B339D1E0594EF14444", new Vector3B( 0, 0, 0 ) );
 
 				//Set orientation
 				Quaternion rot;
-				cubeBlock.BlockOrientation.GetQuaternion(out rot);
-				BaseObject.SetEntityFieldValue(packedStruct, "F1AAFF5C8F200592F313BC7E02140A38", Base6Directions.GetForward(rot));
-				BaseObject.SetEntityFieldValue(packedStruct, "E80AA7B84131E39F9F88209A109EED59", Base6Directions.GetUp(rot));
+				cubeBlock.BlockOrientation.GetQuaternion( out rot );
+				BaseObject.SetEntityFieldValue( packedStruct, "F1AAFF5C8F200592F313BC7E02140A38", Base6Directions.GetForward( rot ) );
+				BaseObject.SetEntityFieldValue( packedStruct, "E80AA7B84131E39F9F88209A109EED59", Base6Directions.GetUp( rot ) );
 
 				//Set color
-				BaseObject.SetEntityFieldValue(packedStruct, "556976F2528411FF5F95FC75DC13FEED", ColorExtensions.PackHSVToUint(cubeBlock.ColorMaskHSV));
+				BaseObject.SetEntityFieldValue( packedStruct, "556976F2528411FF5F95FC75DC13FEED", ColorExtensions.PackHSVToUint( cubeBlock.ColorMaskHSV ) );
 
-				object[] parameters = {
+				object[ ] parameters = {
 					packedStruct,
 					new HashSet<Vector3UByte>(),
 					cubeBlock.EntityId,
 					MyRandom.Instance.CreateRandomSeed()
 				};
-				BaseObject.InvokeEntityMethod(m_netManager, CubeGridNetManagerBroadcastAddCubeBlockMethod, parameters);
+				BaseObject.InvokeEntityMethod( m_netManager, CubeGridNetManagerBroadcastAddCubeBlockMethod, parameters );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected static void RegisterPacketHandlers()
+		protected static void RegisterPacketHandlers( )
 		{
 			try
 			{
-				if (m_isRegistered)
+				if ( m_isRegistered )
 					return;
 
 				bool result = true;
@@ -933,44 +931,44 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				result &= NetworkManager.RegisterCustomPacketHandler(PacketRegistrationType.Instance, packetType2, method2, InternalType);
 				*/
 
-				if (!result)
+				if ( !result )
 					return;
 
 				m_isRegistered = true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected static void ReceiveThrusterManagerVectorPacket<T>(Object instanceNetManager, ref T packet, Object masterNetManager) where T : struct
+		protected static void ReceiveThrusterManagerVectorPacket<T>( Object instanceNetManager, ref T packet, Object masterNetManager ) where T : struct
 		{
 			try
 			{
 				//For now we ignore any inbound packets that set the positionorientation
 				//This prevents the clients from having any control over the actual ship position
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected static void ReceiveThrusterGyroForceVectorPacket<T>(Object instanceNetManager, ref T packet, Object masterNetManager) where T : struct
+		protected static void ReceiveThrusterGyroForceVectorPacket<T>( Object instanceNetManager, ref T packet, Object masterNetManager ) where T : struct
 		{
 			try
 			{
 				//For now we ignore any inbound packets that set the positionorientation
 				//This prevents the clients from having any control over the actual ship position
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class CubeGridThrusterManager
@@ -989,17 +987,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public static string CubeGridThrusterManagerSetEnabled = "86B66668D555E1C1B744C17D2AFA77F7";
 		public static string CubeGridThrusterManagerSetControlEnabled = "BC83851AFAE183711CFB864BA6F62CC6";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CubeGridThrusterManager(Object thrusterManager, CubeGridEntity parent)
+		public CubeGridThrusterManager( Object thrusterManager, CubeGridEntity parent )
 		{
 			m_thrusterManager = thrusterManager;
 			m_parent = parent;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -1010,66 +1008,66 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public bool DampenersEnabled
 		{
-			get { return InternalGetDampenersEnabled(); }
+			get { return InternalGetDampenersEnabled( ); }
 			set
 			{
 				m_dampenersEnabled = value;
 
 				Action action = InternalUpdateDampenersEnabled;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CubeGridThrusterManagerNamespace, CubeGridThrusterManagerClass);
-				if (type == null)
-					throw new Exception("Could not find type for CubeGridThrusterManager");
-				result &= BaseObject.HasMethod(type, CubeGridThrusterManagerGetEnabled);
-				result &= BaseObject.HasMethod(type, CubeGridThrusterManagerSetEnabled);
-				result &= BaseObject.HasMethod(type, CubeGridThrusterManagerSetControlEnabled);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridThrusterManagerNamespace, CubeGridThrusterManagerClass );
+				if ( type == null )
+					throw new Exception( "Could not find type for CubeGridThrusterManager" );
+				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerGetEnabled );
+				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerSetEnabled );
+				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerSetControlEnabled );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected bool InternalGetDampenersEnabled()
+		protected bool InternalGetDampenersEnabled( )
 		{
-			bool result = (bool)BaseObject.InvokeEntityMethod(BackingObject, CubeGridThrusterManagerGetEnabled);
+			bool result = (bool)BaseObject.InvokeEntityMethod( BackingObject, CubeGridThrusterManagerGetEnabled );
 			return result;
 		}
 
-		protected void InternalUpdateDampenersEnabled()
+		protected void InternalUpdateDampenersEnabled( )
 		{
-			foreach (CubeBlockEntity cubeBlock in m_parent.CubeBlocks)
+			foreach ( CubeBlockEntity cubeBlock in m_parent.CubeBlocks )
 			{
-				if (cubeBlock is CockpitEntity)
+				if ( cubeBlock is CockpitEntity )
 				{
 					CockpitEntity cockpit = (CockpitEntity)cubeBlock;
-					if (cockpit.IsPassengerSeat)
+					if ( cockpit.IsPassengerSeat )
 						continue;
 
-					cockpit.NetworkManager.BroadcastDampenersStatus(m_dampenersEnabled);
+					cockpit.NetworkManager.BroadcastDampenersStatus( m_dampenersEnabled );
 					break;
 				}
 			}
 
-			BaseObject.InvokeEntityMethod(BackingObject, CubeGridThrusterManagerSetEnabled, new object[] { m_dampenersEnabled });
+			BaseObject.InvokeEntityMethod( BackingObject, CubeGridThrusterManagerSetEnabled, new object[ ] { m_dampenersEnabled } );
 			//BaseObject.InvokeEntityMethod(BackingObject, CubeGridThrusterManagerSetControlEnabled, new object[] { m_dampenersEnabled });
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

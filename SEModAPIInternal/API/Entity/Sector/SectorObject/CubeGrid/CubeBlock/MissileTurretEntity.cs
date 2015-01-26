@@ -4,7 +4,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "MissileTurretEntityProxy")]
+	[DataContract( Name = "MissileTurretEntityProxy" )]
 	public class MissileTurretEntity : TurretBaseEntity
 	{
 		#region "Attributes"
@@ -12,28 +12,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string MissileTurretNamespace = "";
 		public static string MissileTurretClass = "";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public MissileTurretEntity(CubeGridEntity parent, MyObjectBuilder_LargeMissileTurret definition)
-			: base(parent, definition)
+		public MissileTurretEntity( CubeGridEntity parent, MyObjectBuilder_LargeMissileTurret definition )
+			: base( parent, definition )
 		{
 		}
 
-		public MissileTurretEntity(CubeGridEntity parent, MyObjectBuilder_LargeMissileTurret definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public MissileTurretEntity( CubeGridEntity parent, MyObjectBuilder_LargeMissileTurret definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 		}
 
-		#endregion
-
-		#region "Properties"
-
-		#endregion
-
-		#region "Methods"
-
-		#endregion
+		#endregion "Constructors and Intializers"
 	}
 }

@@ -175,5 +175,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ChatService\" />
+    <Folder Include="InternalService\" />
+    <Folder Include="PluginService\" />
+    <Folder Include="ServerService\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
