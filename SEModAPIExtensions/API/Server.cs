@@ -145,7 +145,7 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				string gamePath = _commandLineArgs.gamePath;
+				string gamePath = _commandLineArgs.GamePath;
 				if ( gamePath.Length > 0 )
 				{
 					if ( !GameInstallationInfo.IsValidGamePath( gamePath ) )
@@ -186,56 +186,56 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				if ( _commandLineArgs.autoStart )
+				if ( _commandLineArgs.AutoStart )
 				{
 					Console.WriteLine( "Auto-Start enabled" );
 				}
-				if ( _commandLineArgs.instanceName.Length != 0 )
+				if ( _commandLineArgs.InstanceName.Length != 0 )
 				{
-					Console.WriteLine( "Common instance pre-selected: '" + _commandLineArgs.instanceName + "'" );
+					Console.WriteLine( "Common instance pre-selected: '" + _commandLineArgs.InstanceName + "'" );
 				}
-				if ( _commandLineArgs.noGUI )
+				if ( _commandLineArgs.NoGui )
 				{
 					Console.WriteLine( "GUI disabled" );
 				}
-				if ( _commandLineArgs.debug )
+				if ( _commandLineArgs.Debug )
 				{
 					Console.WriteLine( "Debugging enabled" );
 					SandboxGameAssemblyWrapper.IsDebugging = true;
 				}
-				if ( _commandLineArgs.noWCF )
+				if ( _commandLineArgs.NoWcf )
 				{
 					Console.WriteLine( "WCF disabled" );
 				}
-				if ( _commandLineArgs.wcfPort > 0 )
+				if ( _commandLineArgs.WcfPort > 0 )
 				{
-					Console.WriteLine( "WCF port: " + _commandLineArgs.wcfPort );
+					Console.WriteLine( "WCF port: " + _commandLineArgs.WcfPort );
 				}
-				if ( _commandLineArgs.autosave > 0 )
+				if ( _commandLineArgs.Autosave > 0 )
 				{
-					Console.WriteLine( "Autosave interval: " + _commandLineArgs.autosave );
+					Console.WriteLine( "Autosave interval: " + _commandLineArgs.Autosave );
 				}
-				if ( _commandLineArgs.closeOnCrash )
+				if ( _commandLineArgs.CloseOnCrash )
 				{
 					Console.WriteLine( "Close On Crash: Enabled" );
 				}
-				if ( _commandLineArgs.autoSaveSync )
+				if ( _commandLineArgs.AutoSaveSync )
 				{
 					Console.WriteLine( "Synchronous Save: Enabled" );
 				}
-				if ( _commandLineArgs.path.Length != 0 )
+				if ( _commandLineArgs.Path.Length != 0 )
 				{
-					Console.WriteLine( "Full path pre-selected: '" + _commandLineArgs.path + "'" );
+					Console.WriteLine( "Full path pre-selected: '" + _commandLineArgs.Path + "'" );
 				}
-				if ( _commandLineArgs.restartOnCrash )
+				if ( _commandLineArgs.RestartOnCrash )
 				{
 					Console.WriteLine( "Restart On Crash: Enabled" );
 				}
-				if ( _commandLineArgs.autoSaveSync )
+				if ( _commandLineArgs.AutoSaveSync )
 				{
 					Console.WriteLine( "Synchronous Autosave: Enabled" );
 				}
-				if ( _commandLineArgs.worldRequestReplace )
+				if ( _commandLineArgs.WorldRequestReplace )
 				{
 					Console.WriteLine( "World Request Replace: Enabled" );
 				}
@@ -293,8 +293,8 @@ namespace SEModAPIExtensions.API
 		[DataMember]
 		public string InstanceName
 		{
-			get { return _commandLineArgs.instanceName; }
-			set { _commandLineArgs.instanceName = value; }
+			get { return _commandLineArgs.InstanceName; }
+			set { _commandLineArgs.InstanceName = value; }
 		}
 
 		[DataMember]
@@ -302,7 +302,7 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				_commandLineArgs.autosave = (int)Math.Round( _autosaveTimer.Interval / 60000.0 );
+				_commandLineArgs.Autosave = (int)Math.Round( _autosaveTimer.Interval / 60000.0 );
 				return _autosaveTimer.Interval;
 			}
 			set
@@ -312,7 +312,7 @@ namespace SEModAPIExtensions.API
 				if ( _autosaveTimer.Interval <= 0 )
 					_autosaveTimer.Interval = 300000;
 
-				_commandLineArgs.autosave = (int)Math.Round( _autosaveTimer.Interval / 60000.0 );
+				_commandLineArgs.Autosave = (int)Math.Round( _autosaveTimer.Interval / 60000.0 );
 			}
 		}
 
@@ -351,13 +351,13 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				ushort port = _commandLineArgs.wcfPort;
+				ushort port = _commandLineArgs.WcfPort;
 				if ( port == 0 )
 					port = 8000;
 
 				return port;
 			}
-			set { _commandLineArgs.wcfPort = value; }
+			set { _commandLineArgs.WcfPort = value; }
 		}
 
 		[IgnoreDataMember]
@@ -365,7 +365,7 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				string path = _commandLineArgs.path;
+				string path = _commandLineArgs.Path;
 				if ( path == null || string.IsNullOrEmpty( path ) )
 				{
 					if ( InstanceName.Length != 0 )
@@ -378,7 +378,7 @@ namespace SEModAPIExtensions.API
 
 				return path;
 			}
-			set { _commandLineArgs.path = value; }
+			set { _commandLineArgs.Path = value; }
 		}
 
 		[IgnoreDataMember]
@@ -435,8 +435,8 @@ namespace SEModAPIExtensions.API
 				SetupWebService( );
 			}
 
-			if ( _commandLineArgs.autosave > 0 )
-				_autosaveTimer.Interval = _commandLineArgs.autosave * 60000;
+			if ( _commandLineArgs.Autosave > 0 )
+				_autosaveTimer.Interval = _commandLineArgs.Autosave * 60000;
 
 			if ( !setupResult )
 			{
@@ -466,10 +466,10 @@ namespace SEModAPIExtensions.API
 			{
 				if ( SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 				{
-					if ( CommandLineArgs.worldRequestReplace )
+					if ( CommandLineArgs.WorldRequestReplace )
 						NetworkManager.Instance.ReplaceWorldJoin( );
 
-					if ( CommandLineArgs.worldDataModify )
+					if ( CommandLineArgs.WorldDataModify )
 						NetworkManager.Instance.ReplaceWorldData( );
 
 					SandboxGameAssemblyWrapper.InitAPIGateway( );
@@ -534,7 +534,7 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 
-			if ( CommandLineArgs.autoSaveSync )
+			if ( CommandLineArgs.AutoSaveSync )
 				WorldManager.Instance.SaveWorld( );
 			else
 				WorldManager.Instance.AsynchronousSaveWorld( );
@@ -551,7 +551,7 @@ namespace SEModAPIExtensions.API
 			{
 				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
 				_serverWrapper = ServerAssemblyWrapper.Instance;
-				bool result = _serverWrapper.StartServer( _commandLineArgs.instanceName, _commandLineArgs.path, !_commandLineArgs.noConsole );
+				bool result = _serverWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.Path, !_commandLineArgs.NoConsole );
 				Console.WriteLine( "Server has stopped running" );
 
 				_isServerRunning = false;
@@ -561,19 +561,19 @@ namespace SEModAPIExtensions.API
 
 				_pluginManager.Shutdown( );
 
-				if ( !result && _commandLineArgs.closeOnCrash )
+				if ( !result && _commandLineArgs.CloseOnCrash )
 				{
 					Thread.Sleep( 5000 );
 					Environment.Exit( 1 );
 				}
 
-				if ( !result && _commandLineArgs.restartOnCrash )
+				if ( !result && _commandLineArgs.RestartOnCrash )
 				{
 					Thread.Sleep( 5000 );
 
 					string restartText = "timeout /t 20\r\n";
 					restartText += string.Format( "cd /d \"{0}\"\r\n", System.IO.Path.GetDirectoryName( Application.ExecutablePath ) );
-					restartText += string.Format( "{0} {1}\r\n", System.IO.Path.GetFileName( Application.ExecutablePath ), _commandLineArgs.args );
+					restartText += string.Format( "{0} {1}\r\n", System.IO.Path.GetFileName( Application.ExecutablePath ), _commandLineArgs.Args );
 
 					File.WriteAllText( "RestartApp.bat", restartText );
 					Process.Start( "RestartApp.bat" );

@@ -75,20 +75,20 @@ namespace SEServerExtender
 
 			CommandLineArgs extenderArgs = new CommandLineArgs
 			                               {
-				                               autoStart = false,
-				                               worldName = string.Empty,
-				                               instanceName = string.Empty,
-				                               noGUI = false,
-				                               noConsole = false,
-				                               debug = false,
-				                               gamePath = string.Empty,
-				                               noWCF = false,
-				                               autosave = 0,
-				                               wcfPort = 0,
-				                               path = string.Empty,
-				                               closeOnCrash = false,
-				                               restartOnCrash = false,
-				                               args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
+				                               AutoStart = false,
+				                               WorldName = string.Empty,
+				                               InstanceName = string.Empty,
+				                               NoGui = false,
+				                               NoConsole = false,
+				                               Debug = false,
+				                               GamePath = string.Empty,
+				                               NoWcf = false,
+				                               Autosave = 0,
+				                               WcfPort = 0,
+				                               Path = string.Empty,
+				                               CloseOnCrash = false,
+				                               RestartOnCrash = false,
+				                               Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
 			                               };
 
 			//Setup the default args
@@ -105,19 +105,19 @@ namespace SEServerExtender
 					{
 						if (argValue[argValue.Length - 1] == '"')
 							argValue = argValue.Substring(0, argValue.Length - 1);
-						extenderArgs.instanceName = argValue;
+						extenderArgs.InstanceName = argValue;
 					}
 					else if (argName.ToLower().Equals("gamepath"))
 					{
 						if (argValue[argValue.Length - 1] == '"')
 							argValue = argValue.Substring(0, argValue.Length - 1);
-						extenderArgs.gamePath = argValue;
+						extenderArgs.GamePath = argValue;
 					}
 					else if (argName.ToLower().Equals("autosave"))
 					{
 						try
 						{
-							extenderArgs.autosave = int.Parse(argValue);
+							extenderArgs.Autosave = int.Parse(argValue);
 						}
 						catch
 						{
@@ -128,7 +128,7 @@ namespace SEServerExtender
 					{
 						try
 						{
-							extenderArgs.wcfPort = ushort.Parse(argValue);
+							extenderArgs.WcfPort = ushort.Parse(argValue);
 						}
 						catch
 						{
@@ -139,81 +139,81 @@ namespace SEServerExtender
 					{
 						if (argValue[argValue.Length - 1] == '"')
 							argValue = argValue.Substring(0, argValue.Length - 1);
-						extenderArgs.path = argValue;
+						extenderArgs.Path = argValue;
 					}
 				}
 				else
 				{
 					if (arg.ToLower().Equals("autostart"))
 					{
-						extenderArgs.autoStart = true;
+						extenderArgs.AutoStart = true;
 					}
 					if (arg.ToLower().Equals("nogui"))
 					{
-						extenderArgs.noGUI = true;
+						extenderArgs.NoGui = true;
 
 						//Implies autostart
-						extenderArgs.autoStart = true;
+						extenderArgs.AutoStart = true;
 					}
 					if (arg.ToLower().Equals("noconsole"))
 					{
-						extenderArgs.noConsole = true;
+						extenderArgs.NoConsole = true;
 
 						//Implies nogui and autostart
-						extenderArgs.noGUI = true;
-						extenderArgs.autoStart = true;
+						extenderArgs.NoGui = true;
+						extenderArgs.AutoStart = true;
 					}
 					if (arg.ToLower().Equals("debug"))
 					{
-						extenderArgs.debug = true;
+						extenderArgs.Debug = true;
 					}
 					if (arg.ToLower().Equals("nowcf"))
 					{
-						extenderArgs.noWCF = true;
+						extenderArgs.NoWcf = true;
 					}
 					if (arg.ToLower().Equals("closeoncrash"))
 					{
-						extenderArgs.closeOnCrash = true;
+						extenderArgs.CloseOnCrash = true;
 					}
 					if (arg.ToLower().Equals("autosaveasync"))
 					{
-						extenderArgs.autoSaveSync = false;
+						extenderArgs.AutoSaveSync = false;
 					}
 					if (arg.ToLower().Equals("autosavesync"))
 					{
-						extenderArgs.autoSaveSync = true;
+						extenderArgs.AutoSaveSync = true;
 					}
 					if (arg.ToLower().Equals("restartoncrash"))
 					{
-						extenderArgs.restartOnCrash = true;
+						extenderArgs.RestartOnCrash = true;
 					}
 					if (arg.ToLower().Equals("wrr"))
 					{
-						extenderArgs.worldRequestReplace = true;
+						extenderArgs.WorldRequestReplace = true;
 					}
 					if (arg.ToLower().Equals("wrm"))
 					{
-						extenderArgs.worldDataModify = true;
+						extenderArgs.WorldDataModify = true;
 					}
 				}
 			}
 
-			if (extenderArgs.noWCF)
-				extenderArgs.wcfPort = 0;
+			if (extenderArgs.NoWcf)
+				extenderArgs.WcfPort = 0;
 
-			if (!string.IsNullOrEmpty(extenderArgs.path))
+			if (!string.IsNullOrEmpty(extenderArgs.Path))
 			{
-				extenderArgs.instanceName = string.Empty;
+				extenderArgs.InstanceName = string.Empty;
 			}
 
 			if (!Environment.UserInteractive)
 			{
-				extenderArgs.noConsole = true;
-				extenderArgs.noGUI = true;
-				extenderArgs.autoStart = true;
+				extenderArgs.NoConsole = true;
+				extenderArgs.NoGui = true;
+				extenderArgs.AutoStart = true;
 			}
 
-			if (extenderArgs.debug)
+			if (extenderArgs.Debug)
 				SandboxGameAssemblyWrapper.IsDebugging = true;
 
 			try
@@ -224,19 +224,19 @@ namespace SEServerExtender
 
 				_server = Server.Instance;
 				_server.CommandLineArgs = extenderArgs;
-				_server.IsWCFEnabled = !extenderArgs.noWCF;
-				_server.WCFPort = extenderArgs.wcfPort;
+				_server.IsWCFEnabled = !extenderArgs.NoWcf;
+				_server.WCFPort = extenderArgs.WcfPort;
 				_server.Init();
 
 				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand { Command = "gui", Callback = ChatCommand_GUI };
 				ChatManager.Instance.RegisterChatCommand(guiCommand);
 
-				if (extenderArgs.autoStart)
+				if (extenderArgs.AutoStart)
 				{
 					_server.StartServer();
 				}
 
-				if (!extenderArgs.noGUI)
+				if (!extenderArgs.NoGui)
 				{
 					Thread uiThread = new Thread(StartGUI);
 					uiThread.SetApartmentState(ApartmentState.STA);
@@ -247,32 +247,32 @@ namespace SEServerExtender
 			}
 			catch (AutoException eEx)
 			{
-				if (!extenderArgs.noConsole)
+				if (!extenderArgs.NoConsole)
 					Console.WriteLine("AutoException - {0}\n\r{1}", eEx.AdditionnalInfo, eEx.GetDebugString() );
-				if (!extenderArgs.noGUI)
+				if (!extenderArgs.NoGui)
 					MessageBox.Show(string.Format( "{0}\n\r{1}", eEx.AdditionnalInfo, eEx.GetDebugString() ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-				if (extenderArgs.noConsole && extenderArgs.noGUI)
+				if (extenderArgs.NoConsole && extenderArgs.NoGui)
 					throw eEx.GetBaseException();
 			}
 			catch (TargetInvocationException ex)
 			{
-				if (!extenderArgs.noConsole)
+				if (!extenderArgs.NoConsole)
 					Console.WriteLine("TargetInvocationException - {0}\n\r{1}", ex, ex.InnerException );
-				if (!extenderArgs.noGUI)
+				if (!extenderArgs.NoGui)
 					MessageBox.Show(string.Format( "{0}\n\r{1}", ex, ex.InnerException ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-				if (extenderArgs.noConsole && extenderArgs.noGUI)
+				if (extenderArgs.NoConsole && extenderArgs.NoGui)
 					throw;
 			}
 			catch (Exception ex)
 			{
-				if (!extenderArgs.noConsole)
+				if (!extenderArgs.NoConsole)
 					Console.WriteLine("Exception - {0}", ex );
-				if (!extenderArgs.noGUI)
+				if (!extenderArgs.NoGui)
 					MessageBox.Show(ex.ToString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-				if (extenderArgs.noConsole && extenderArgs.noGUI)
+				if (extenderArgs.NoConsole && extenderArgs.NoGui)
 					throw;
 			}
 		}

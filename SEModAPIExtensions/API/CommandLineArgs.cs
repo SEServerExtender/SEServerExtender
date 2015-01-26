@@ -1,23 +1,23 @@
 namespace SEModAPIExtensions.API
 {
-	public struct CommandLineArgs
+	public class CommandLineArgs
 	{
-		public bool autoStart;
-		public string worldName;
-		public string instanceName;
-		public bool noGUI;
-		public bool noConsole;
-		public bool debug;
-		public string gamePath;
-		public bool noWCF;
-		public ushort wcfPort;
-		public int autosave;
-		public string path;
-		public bool closeOnCrash;
-		public bool autoSaveSync;
-		public bool restartOnCrash;
-		public bool worldRequestReplace;
-		public bool worldDataModify;
-		public string args;
+		public bool AutoStart;
+		public string WorldName;
+		public string InstanceName;
+		public bool NoGui;
+		public bool NoConsole;
+		public bool Debug;
+		public string GamePath;
+		public bool NoWcf;
+		public ushort WcfPort;
+		public int Autosave;
+		public string Path;
+		public bool CloseOnCrash;
+		public bool AutoSaveSync;
+		public bool RestartOnCrash;
+		public bool WorldRequestReplace;
+		public bool WorldDataModify;
+		public string Args;
 	}
 }

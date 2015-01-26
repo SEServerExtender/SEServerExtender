@@ -118,7 +118,7 @@ namespace SEServerExtender
 		{
 			try
 			{
-				if (string.IsNullOrEmpty(m_server.CommandLineArgs.path))
+				if (string.IsNullOrEmpty(m_server.CommandLineArgs.Path))
 				{
 					List<String> instanceList = SandboxGameAssemblyWrapper.Instance.GetCommonInstanceList();
 					CMB_Control_CommonInstanceList.BeginUpdate();
@@ -342,7 +342,7 @@ namespace SEServerExtender
 
 			if (m_server.Config != null)
 			{
-				if (string.IsNullOrEmpty(m_server.CommandLineArgs.path) && CMB_Control_CommonInstanceList.Items.Count > 0)
+				if (string.IsNullOrEmpty(m_server.CommandLineArgs.Path) && CMB_Control_CommonInstanceList.Items.Count > 0)
 					CHK_Control_CommonDataPath.Enabled = !m_server.IsRunning;
 				else
 					CHK_Control_CommonDataPath.Enabled = false;

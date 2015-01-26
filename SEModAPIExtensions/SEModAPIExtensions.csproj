@@ -42,6 +42,7 @@
     <Compile Include="API\CargoShipManager.cs" />
     <Compile Include="API\ChatManager.cs" />
     <Compile Include="API\ChatService.cs" />
+    <Compile Include="API\CommandLineArgs.cs" />
     <Compile Include="API\IChatServiceContract.cs" />
     <Compile Include="API\IPC\CorsInspector.cs" />
     <Compile Include="API\IPC\IInternalServiceContract.cs" />
