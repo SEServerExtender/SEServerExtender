@@ -21,9 +21,6 @@ namespace SEModAPIInternal.API.Common
 		private Assembly m_assembly;
 
 		protected static SandboxGameAssemblyWrapper m_instance;
-		protected static bool m_isDebugging;
-		protected static bool m_isUsingCommonProgramData;
-		protected static bool m_isInSafeMode;
 		protected static bool m_gatewayInitialzed;
 		protected static Thread m_gameThread;
 		protected static string m_instanceName;
@@ -86,10 +83,9 @@ namespace SEModAPIInternal.API.Common
 		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "85DD00A89AFE64DF0A1B3FD4A5139A04";
 
 		////////////////////////////////////////////////////////////////////////////////
-		private static string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-		private static string MyAPIGatewayClass = "4C1ED56341F07A7D73298D03926F04DE";
-		private static string MyAPIGatewayInitMethod = "0DE98737B4717615E252D27A4F3A2B44";
-
+		private const string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
+		private const string MyAPIGatewayClass = "4C1ED56341F07A7D73298D03926F04DE";
+		private const string MyAPIGatewayInitMethod = "0DE98737B4717615E252D27A4F3A2B44";
 
 		#endregion
 
@@ -98,9 +94,9 @@ namespace SEModAPIInternal.API.Common
 		protected SandboxGameAssemblyWrapper()
 		{
 			m_instance = this;
-			m_isDebugging = false;
-			m_isUsingCommonProgramData = false;
-			m_isInSafeMode = false;
+			IsDebugging = false;
+			UseCommonProgramData = false;
+			IsInSafeMode = false;
 			m_gatewayInitialzed = false;
 			m_gameThread = null;
 
@@ -131,53 +127,17 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
-		public static bool IsDebugging
-		{
-			get
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				return m_isDebugging;
-			}
-			set
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				m_isDebugging = value;
-			}
-		}
+		public static bool IsDebugging { get; set; }
 
-		public static bool UseCommonProgramData
-		{
-			get
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				return m_isUsingCommonProgramData;
-			}
-			set
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				m_isUsingCommonProgramData = value;
-			}
-		}
+		public static bool UseCommonProgramData { get; set; }
 
-		public static bool IsInSafeMode
-		{
-			get
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				return m_isInSafeMode;
-			}
-			set
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				m_isInSafeMode = value;
-			}
-		}
+		public static bool IsInSafeMode { get; set; }
 
 		public static Type MainGameType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MainGameNamespace, MainGameClass);
+				Type type = Instance.GetAssemblyType(MainGameNamespace, MainGameClass);
 				return type;
 			}
 		}
@@ -186,7 +146,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ServerCoreNamespace, ServerCoreClass);
+				Type type = Instance.GetAssemblyType(ServerCoreNamespace, ServerCoreClass);
 				return type;
 			}
 		}
@@ -195,7 +155,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(GameConstantsNamespace, GameConstantsClass);
+				Type type = Instance.GetAssemblyType(GameConstantsNamespace, GameConstantsClass);
 				return type;
 			}
 		}
@@ -204,7 +164,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ConfigContainerNamespace, ConfigContainerClass);
+				Type type = Instance.GetAssemblyType(ConfigContainerNamespace, ConfigContainerClass);
 				return type;
 			}
 		}
@@ -213,7 +173,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CubeBlockObjectFactoryNamespace, CubeBlockObjectFactoryClass);
+				Type type = Instance.GetAssemblyType(CubeBlockObjectFactoryNamespace, CubeBlockObjectFactoryClass);
 				return type;
 			}
 		}
@@ -222,7 +182,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(EntityBaseObjectFactoryNamespace, EntityBaseObjectFactoryClass);
+				Type type = Instance.GetAssemblyType(EntityBaseObjectFactoryNamespace, EntityBaseObjectFactoryClass);
 				return type;
 			}
 		}
@@ -249,7 +209,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MyAPIGatewayNamespace, MyAPIGatewayClass);
+				Type type = Instance.GetAssemblyType(MyAPIGatewayNamespace, MyAPIGatewayClass);
 				return type;
 			}
 		}
@@ -388,7 +348,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				MyObjectBuilder_CubeBlock newObjectBuilder = (MyObjectBuilder_CubeBlock)BaseObject.InvokeStaticMethod(CubeBlockObjectFactoryType, CubeBlockObjectFactoryGetBuilderFromEntityMethod, new object[] { entity });
+				MyObjectBuilder_CubeBlock newObjectBuilder = (MyObjectBuilder_CubeBlock)BaseObject.InvokeStaticMethod(CubeBlockObjectFactoryType, CubeBlockObjectFactoryGetBuilderFromEntityMethod, new [] { entity });
 
 				return newObjectBuilder;
 			}
@@ -403,7 +363,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				MyObjectBuilder_EntityBase newObjectBuilder = (MyObjectBuilder_EntityBase)BaseObject.InvokeStaticMethod(EntityBaseObjectFactoryType, EntityBaseObjectFactoryGetBuilderFromEntityMethod, new object[] { entity });
+				MyObjectBuilder_EntityBase newObjectBuilder = (MyObjectBuilder_EntityBase)BaseObject.InvokeStaticMethod(EntityBaseObjectFactoryType, EntityBaseObjectFactoryGetBuilderFromEntityMethod, new [] { entity });
 
 				return newObjectBuilder;
 			}
@@ -426,7 +386,7 @@ namespace SEModAPIInternal.API.Common
 
 				BaseObject.InvokeEntityMethod(MainGame, MainGameEnqueueActionMethod, new object[] { action });
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if (IsDebugging)
 				{
 					UpdateProfile();
 				}
@@ -449,7 +409,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				m_averageQueuedActions = m_countQueuedActions / timeSinceLastProfilingOutput.TotalSeconds;
 
-				LogManager.APILog.WriteLine("Average actions queued per second: " + Math.Round(m_averageQueuedActions, 2).ToString());
+				LogManager.APILog.WriteLine("Average actions queued per second: " + Math.Round(m_averageQueuedActions, 2));
 
 				m_countQueuedActions = 0;
 				m_lastProfilingOutput = DateTime.Now;
@@ -461,22 +421,26 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				ThreadPool.QueueUserWorkItem(new WaitCallback(delegate(Object arg)
-				{
-					AutoResetEvent e = new AutoResetEvent(false);
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
-					{
-						if (m_gameThread == null)
-							m_gameThread = Thread.CurrentThread;
+				ThreadPool.QueueUserWorkItem( o =>
+				                              {
+					                              AutoResetEvent e = new AutoResetEvent( false );
+					                              Instance.EnqueueMainGameAction( ( ) =>
+					                                                              {
+						                                                              if ( m_gameThread == null )
+						                                                              {
+							                                                              m_gameThread = Thread.CurrentThread;
+						                                                              }
 
-						action();
-						e.Set();
-					}));
-					e.WaitOne();
+						                                                              action( );
+						                                                              e.Set( );
+					                                                              } );
+					                              e.WaitOne( );
 
-					if (callback != null)
-						callback(state);
-				}));
+					                              if ( callback != null )
+					                              {
+						                              callback( state );
+					                              }
+				                              } );
 
 				return true;
 			}
@@ -492,14 +456,16 @@ namespace SEModAPIInternal.API.Common
 			try
 			{
 				AutoResetEvent e = new AutoResetEvent(false);
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
-					{
-						if (m_gameThread == null)
-							m_gameThread = Thread.CurrentThread;
+				Instance.EnqueueMainGameAction( ( ) =>
+				                                {
+					                                if ( m_gameThread == null )
+					                                {
+						                                m_gameThread = Thread.CurrentThread;
+					                                }
 
-						action();
-						e.Set();
-					}));
+					                                action( );
+					                                e.Set( );
+				                                } );
 				e.WaitOne();
 				return true;
 			}
@@ -516,7 +482,6 @@ namespace SEModAPIInternal.API.Common
 			try
 			{
 				LogManager.APILog.WriteLine("Exiting");
-				System.Threading.AutoResetEvent e = new System.Threading.AutoResetEvent(false);
 				/*
 				GameAction(new Action(delegate()
 				{
@@ -560,7 +525,6 @@ namespace SEModAPIInternal.API.Common
 			catch (Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
-				return;
 			}
 		}
 
@@ -596,8 +560,8 @@ namespace SEModAPIInternal.API.Common
 
 		public String GetUserDataPath(string instanceName = "")
 		{
-			string userDataPath = "";
-			if (SandboxGameAssemblyWrapper.UseCommonProgramData && instanceName != "")
+			string userDataPath;
+			if (UseCommonProgramData && instanceName != string.Empty)
 			{
 				userDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SpaceEngineersDedicated", instanceName);
 			}
@@ -612,7 +576,7 @@ namespace SEModAPIInternal.API.Common
 		public void InitMyFileSystem(string instanceName = "", bool reset = true)
 		{
 			string contentPath = Path.Combine(new FileInfo(MyFileSystem.ExePath).Directory.FullName, "Content");
-			string userDataPath = SandboxGameAssemblyWrapper.Instance.GetUserDataPath(instanceName);
+			string userDataPath = Instance.GetUserDataPath(instanceName);
 
 			if (reset)
 			{
@@ -634,10 +598,7 @@ namespace SEModAPIInternal.API.Common
 			}
 
 			MyFileSystem.Init(contentPath, userDataPath);
-			MyFileSystem.InitUserSpecific((string)null);
-
-			string debugContentPath = MyFileSystem.ContentPath;
-			string debugUserDataPath = MyFileSystem.UserDataPath;
+			MyFileSystem.InitUserSpecific(null);
 
 			m_instanceName = instanceName;
 		}
@@ -654,7 +615,7 @@ namespace SEModAPIInternal.API.Common
 					string[] subDirectories = Directory.GetDirectories(commonPath);
 					foreach (string fullInstancePath in subDirectories)
 					{
-						string[] directories = fullInstancePath.Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
+						string[] directories = fullInstancePath.Split(new [] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
 						string instanceName = directories[directories.Length - 1];
 
 						result.Add(instanceName);
