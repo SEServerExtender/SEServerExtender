@@ -11,27 +11,27 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 	{
 		#region "Attributes"
 
-		private static string m_DefaultFileName = "CubeBlocks.sbc";
-		private ConfigFileSerializer m_configFileSerializer;
-		private MyObjectBuilder_Definitions m_definitions;
+		private const string DefaultFileName = "CubeBlocks.sbc";
+		private readonly ConfigFileSerializer _configFileSerializer;
+		private MyObjectBuilder_Definitions _definitions;
 
 
-		private List<CubeBlockDef> m_cubeBlocks = new List<CubeBlockDef>();
-		private List<AssemblerDefinition> m_assemblers = new List<AssemblerDefinition>();
-		private List<CargoContainerDefinition> m_cargoContainers = new List<CargoContainerDefinition>();
-		private List<CockpitDefinition> m_cockpits = new List<CockpitDefinition>();
-		private List<GravityGeneratorDefinition> m_gravityGenerators = new List<GravityGeneratorDefinition>();
-		private List<GyroscopeDefinition> m_gyroscopes = new List<GyroscopeDefinition>();
-		private List<MergeBlockDefinition> m_mergeBlocks = new List<MergeBlockDefinition>();
-		private List<MotorStatorDefinition> m_motorStators = new List<MotorStatorDefinition>();
-		private List<OreDetectorDefinition> m_oreDetectors = new List<OreDetectorDefinition>();
-		private List<ReactorDefinition> m_reactors = new List<ReactorDefinition>();
-		private List<RefineryDefinition> m_refineries = new List<RefineryDefinition>();
-		private List<LightingBlockDefinition> m_lightingBlocks = new List<LightingBlockDefinition>();
-		private List<ShipDrillDefinition> m_shipDrills = new List<ShipDrillDefinition>();
-		private List<SolarPanelDefinition> m_solarPanels = new List<SolarPanelDefinition>();
-		private List<ThrusterDefinition> m_thrusters = new List<ThrusterDefinition>();
-		private List<VirtualMassDefinition> m_virtualMasses = new List<VirtualMassDefinition>();
+		private readonly List<CubeBlockDef> _cubeBlocks = new List<CubeBlockDef>();
+		private readonly List<AssemblerDefinition> _assemblers = new List<AssemblerDefinition>();
+		private readonly List<CargoContainerDefinition> _cargoContainers = new List<CargoContainerDefinition>();
+		private readonly List<CockpitDefinition> _cockpits = new List<CockpitDefinition>();
+		private readonly List<GravityGeneratorDefinition> _gravityGenerators = new List<GravityGeneratorDefinition>();
+		private readonly List<GyroscopeDefinition> _gyroscopes = new List<GyroscopeDefinition>();
+		private readonly List<MergeBlockDefinition> _mergeBlocks = new List<MergeBlockDefinition>();
+		private readonly List<MotorStatorDefinition> _motorStators = new List<MotorStatorDefinition>();
+		private readonly List<OreDetectorDefinition> _oreDetectors = new List<OreDetectorDefinition>();
+		private readonly List<ReactorDefinition> _reactors = new List<ReactorDefinition>();
+		private readonly List<RefineryDefinition> _refineries = new List<RefineryDefinition>();
+		private readonly List<LightingBlockDefinition> _lightingBlocks = new List<LightingBlockDefinition>();
+		private readonly List<ShipDrillDefinition> _shipDrills = new List<ShipDrillDefinition>();
+		private readonly List<SolarPanelDefinition> _solarPanels = new List<SolarPanelDefinition>();
+		private readonly List<ThrusterDefinition> _thrusters = new List<ThrusterDefinition>();
+		private readonly List<VirtualMassDefinition> _virtualMasses = new List<VirtualMassDefinition>();
 
 		#endregion
 		
@@ -47,12 +47,12 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			if (defaultName)
 			{
-				if (cubeBlocksFileInfo.Name != m_DefaultFileName)
+				if (cubeBlocksFileInfo.Name != DefaultFileName)
 				{
 					throw new SEConfigurationException(SEConfigurationExceptionState.InvalidDefaultConfigFileName, "The given file name is not matching the default configuration name pattern: CubeBlocks.sbc");
 				}
 			}
-			m_configFileSerializer = new ConfigFileSerializer(cubeBlocksFileInfo, defaultName);
+			_configFileSerializer = new ConfigFileSerializer(cubeBlocksFileInfo, defaultName);
 			if (cubeBlocksFileInfo.Exists)
 			{
 				Deserialize();
@@ -68,7 +68,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<AssemblerDefinition> Assemblers
 		{
-			get { return m_assemblers; }
+			get { return _assemblers; }
 		}
 
 		/// <summary>
@@ -76,7 +76,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<CargoContainerDefinition> CargoContainers
 		{
-			get { return m_cargoContainers; }
+			get { return _cargoContainers; }
 		}
 
 		/// <summary>
@@ -84,7 +84,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<CubeBlockDef> CubeBlocks
 		{
-			get { return m_cubeBlocks; }
+			get { return _cubeBlocks; }
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<CockpitDefinition> Cockpits
 		{
-			get { return m_cockpits; }
+			get { return _cockpits; }
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<GravityGeneratorDefinition> GravityGenerators
 		{
-			get { return m_gravityGenerators; }
+			get { return _gravityGenerators; }
 		}
 
 		/// <summary>
@@ -108,7 +108,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<GyroscopeDefinition> Gyroscopes
 		{
-			get { return m_gyroscopes; }
+			get { return _gyroscopes; }
 		}
 
 		/// <summary>
@@ -116,7 +116,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<LightingBlockDefinition> LightingBlocks
 		{
-			get { return m_lightingBlocks; }
+			get { return _lightingBlocks; }
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<MergeBlockDefinition> MergeBlocks
 		{
-			get { return m_mergeBlocks; }
+			get { return _mergeBlocks; }
 		}
 
 		/// <summary>
@@ -132,7 +132,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<MotorStatorDefinition> MotorStators
 		{
-			get { return m_motorStators; }
+			get { return _motorStators; }
 		}
 
 		/// <summary>
@@ -140,7 +140,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<OreDetectorDefinition> OreDetectors
 		{
-			get { return m_oreDetectors; }
+			get { return _oreDetectors; }
 		}
 
 		/// <summary>
@@ -148,7 +148,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<ReactorDefinition> Reactors
 		{
-			get { return m_reactors; }
+			get { return _reactors; }
 		}
 
 		/// <summary>
@@ -156,7 +156,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<RefineryDefinition> Refineries
 		{
-			get { return m_refineries; }
+			get { return _refineries; }
 		}
 
 		/// <summary>
@@ -164,7 +164,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<ShipDrillDefinition> ShipDrills
 		{
-			get { return m_shipDrills; }
+			get { return _shipDrills; }
 		}
 
 		/// <summary>
@@ -172,7 +172,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<SolarPanelDefinition> SolarPanels
 		{
-			get { return m_solarPanels; }
+			get { return _solarPanels; }
 		}
 
 		/// <summary>
@@ -180,7 +180,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<ThrusterDefinition> Thrusters
 		{
-			get { return m_thrusters; }
+			get { return _thrusters; }
 		}
 
 		/// <summary>
@@ -188,7 +188,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public List<VirtualMassDefinition> VirtualMasses
 		{
-			get { return m_virtualMasses; }
+			get { return _virtualMasses; }
 		}
 
 		#endregion
@@ -216,8 +216,8 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public void Serialize()
 		{
-			m_definitions.CubeBlocks = ExtractBaseDefinitionsFromContainers().ToArray();
-			m_configFileSerializer.Serialize(m_definitions);
+			_definitions.CubeBlocks = ExtractBaseDefinitionsFromContainers().ToArray();
+			_configFileSerializer.Serialize(_definitions);
 		}
 
 		/// <summary>
@@ -225,8 +225,8 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// </summary>
 		public void Deserialize()
 		{
-			m_definitions = m_configFileSerializer.Deserialize();
-			FillOverLayerContainers(m_definitions.CubeBlocks);
+			_definitions = _configFileSerializer.Deserialize();
+			FillOverLayerContainers(_definitions.CubeBlocks);
 		}
 
 		/// <summary>
@@ -235,245 +235,245 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <param name="blocks">If an array is given, the containers will be filled with this array instead of the default underlayed one</param>
 		public void FillOverLayerContainers(MyObjectBuilder_CubeBlockDefinition[] blocks)
 		{
-			m_cubeBlocks.Clear();
-			m_assemblers.Clear();
-			m_cargoContainers.Clear();
-			m_cockpits.Clear();
-			m_gravityGenerators.Clear();
-			m_gyroscopes.Clear();
-			m_mergeBlocks.Clear();
-			m_motorStators.Clear();
-			m_oreDetectors.Clear();
-			m_reactors.Clear();
-			m_refineries.Clear();
-			m_lightingBlocks.Clear();
-			m_shipDrills.Clear();
-			m_solarPanels.Clear();
-			m_thrusters.Clear();
-			m_virtualMasses.Clear();
+			_cubeBlocks.Clear();
+			_assemblers.Clear();
+			_cargoContainers.Clear();
+			_cockpits.Clear();
+			_gravityGenerators.Clear();
+			_gyroscopes.Clear();
+			_mergeBlocks.Clear();
+			_motorStators.Clear();
+			_oreDetectors.Clear();
+			_reactors.Clear();
+			_refineries.Clear();
+			_lightingBlocks.Clear();
+			_shipDrills.Clear();
+			_solarPanels.Clear();
+			_thrusters.Clear();
+			_virtualMasses.Clear();
 			foreach (var cubeBlock in blocks)
 			{/*
 				switch (cubeBlock.Id.TypeId)
 				{
 					case (MyObjectBuilderTypeEnum.CubeBlock):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Assembler):
 					{
-						m_assemblers.Add(new AssemblerDefinition((MyObjectBuilder_AssemblerDefinition)cubeBlock));
+						_assemblers.Add(new AssemblerDefinition((MyObjectBuilder_AssemblerDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Beacon):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.CargoContainer):
 					{
-						m_cargoContainers.Add(new CargoContainerDefinition((MyObjectBuilder_CargoContainerDefinition)cubeBlock));
+						_cargoContainers.Add(new CargoContainerDefinition((MyObjectBuilder_CargoContainerDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Cockpit):
 					{
-						m_cockpits.Add(new CockpitDefinition((MyObjectBuilder_CockpitDefinition)cubeBlock));
+						_cockpits.Add(new CockpitDefinition((MyObjectBuilder_CockpitDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Collector):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Conveyor):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.ConveyorConnector):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Decoy):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Door):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Drill):
 					{
-						m_shipDrills.Add(new ShipDrillDefinition((MyObjectBuilder_ShipDrillDefinition)cubeBlock));
+						_shipDrills.Add(new ShipDrillDefinition((MyObjectBuilder_ShipDrillDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.GravityGenerator):
 					{
-						m_gravityGenerators.Add(new GravityGeneratorDefinition((MyObjectBuilder_GravityGeneratorDefinition)cubeBlock));
+						_gravityGenerators.Add(new GravityGeneratorDefinition((MyObjectBuilder_GravityGeneratorDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Gyro):
 					{
-						m_gyroscopes.Add(new GyroscopeDefinition((MyObjectBuilder_GyroDefinition)cubeBlock));
+						_gyroscopes.Add(new GyroscopeDefinition((MyObjectBuilder_GyroDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.LandingGear):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.LargeGatlingTurret):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.LightingBlock):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.MedicalRoom):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.MergeBlock):
 					{
-						m_mergeBlocks.Add(new MergeBlockDefinition((MyObjectBuilder_MergeBlockDefinition)cubeBlock));
+						_mergeBlocks.Add(new MergeBlockDefinition((MyObjectBuilder_MergeBlockDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.MotorRotor):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.MotorStator):
 					{
-						m_motorStators.Add(new MotorStatorDefinition((MyObjectBuilder_MotorStatorDefinition)cubeBlock));
+						_motorStators.Add(new MotorStatorDefinition((MyObjectBuilder_MotorStatorDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.OreDetector):
 					{
-						m_oreDetectors.Add(new OreDetectorDefinition((MyObjectBuilder_OreDetectorDefinition)cubeBlock));
+						_oreDetectors.Add(new OreDetectorDefinition((MyObjectBuilder_OreDetectorDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Passage):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.RadioAntenna):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Reactor):
 					{
-						m_reactors.Add(new ReactorDefinition((MyObjectBuilder_ReactorDefinition)cubeBlock));
+						_reactors.Add(new ReactorDefinition((MyObjectBuilder_ReactorDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.RealWheel):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Refinery):
 					{
-						m_refineries.Add(new RefineryDefinition((MyObjectBuilder_RefineryDefinition)cubeBlock));
+						_refineries.Add(new RefineryDefinition((MyObjectBuilder_RefineryDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.ReflectorLight):
 					{
-						m_lightingBlocks.Add(new LightingBlockDefinition((MyObjectBuilder_LightingBlockDefinition)cubeBlock));
+						_lightingBlocks.Add(new LightingBlockDefinition((MyObjectBuilder_LightingBlockDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.ShipConnector):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.ShipGrinder):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.ShipWelder):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.SmallGatlingGun):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.SmallMissileLauncher):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.SolarPanel):
 					{
-						m_solarPanels.Add(new SolarPanelDefinition((MyObjectBuilder_SolarPanelDefinition)cubeBlock));
+						_solarPanels.Add(new SolarPanelDefinition((MyObjectBuilder_SolarPanelDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Thrust):
 					{
-						m_thrusters.Add(new ThrusterDefinition((MyObjectBuilder_ThrustDefinition)cubeBlock));
+						_thrusters.Add(new ThrusterDefinition((MyObjectBuilder_ThrustDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.VirtualMass):
 					{
-						m_virtualMasses.Add(new VirtualMassDefinition((MyObjectBuilder_VirtualMassDefinition)cubeBlock));
+						_virtualMasses.Add(new VirtualMassDefinition((MyObjectBuilder_VirtualMassDefinition)cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Warhead):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 
 					case (MyObjectBuilderTypeEnum.Wheel):
 					{
-						m_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
+						_cubeBlocks.Add(new CubeBlockDef(cubeBlock));
 					}
 					break;
 				}*/
@@ -487,67 +487,67 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			List<MyObjectBuilder_CubeBlockDefinition> blocks = new List<MyObjectBuilder_CubeBlockDefinition>();
 
-			foreach (var item in m_cubeBlocks)
+			foreach (var item in _cubeBlocks)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_assemblers)
+			foreach (var item in _assemblers)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_cargoContainers)
+			foreach (var item in _cargoContainers)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_cockpits)
+			foreach (var item in _cockpits)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_gravityGenerators)
+			foreach (var item in _gravityGenerators)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_gyroscopes)
+			foreach (var item in _gyroscopes)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_lightingBlocks)
+			foreach (var item in _lightingBlocks)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_mergeBlocks)
+			foreach (var item in _mergeBlocks)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_motorStators)
+			foreach (var item in _motorStators)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_oreDetectors)
+			foreach (var item in _oreDetectors)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_reactors)
+			foreach (var item in _reactors)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_refineries)
+			foreach (var item in _refineries)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_shipDrills)
+			foreach (var item in _shipDrills)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_solarPanels)
+			foreach (var item in _solarPanels)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_thrusters)
+			foreach (var item in _thrusters)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in m_virtualMasses)
+			foreach (var item in _virtualMasses)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
@@ -562,63 +562,63 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			List<BlockDefinition> blocks = new List<BlockDefinition>();
 
-			foreach (var item in m_cubeBlocks)
+			foreach (var item in _cubeBlocks)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_cargoContainers)
+			foreach (var item in _cargoContainers)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_cockpits)
+			foreach (var item in _cockpits)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_gravityGenerators)
+			foreach (var item in _gravityGenerators)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_gyroscopes)
+			foreach (var item in _gyroscopes)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_lightingBlocks)
+			foreach (var item in _lightingBlocks)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_mergeBlocks)
+			foreach (var item in _mergeBlocks)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_motorStators)
+			foreach (var item in _motorStators)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_oreDetectors)
+			foreach (var item in _oreDetectors)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_reactors)
+			foreach (var item in _reactors)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_refineries)
+			foreach (var item in _refineries)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_shipDrills)
+			foreach (var item in _shipDrills)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_solarPanels)
+			foreach (var item in _solarPanels)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_thrusters)
+			foreach (var item in _thrusters)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in m_virtualMasses)
+			foreach (var item in _virtualMasses)
 			{
 				blocks.Add(item);
 			}
