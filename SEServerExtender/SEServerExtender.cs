@@ -32,13 +32,13 @@ namespace SEServerExtender
 
 		//General
 		private static SEServerExtender m_instance;
-		private Server m_server;
+		private readonly Server m_server;
 		private List<BaseEntity> m_sectorEntities;
-		private List<CubeGridEntity> m_cubeGridEntities;
-		private List<CharacterEntity> m_characterEntities;
-		private List<VoxelMap> m_voxelMapEntities;
-		private List<FloatingObject> m_floatingObjectEntities;
-		private List<Meteor> m_meteorEntities;
+		private readonly List<CubeGridEntity> m_cubeGridEntities;
+		private readonly List<CharacterEntity> m_characterEntities;
+		private readonly List<VoxelMap> m_voxelMapEntities;
+		private readonly List<FloatingObject> m_floatingObjectEntities;
+		private readonly List<Meteor> m_meteorEntities;
 
 		private int m_chatLineCount = 0;
 		private int m_sortBy = 0;
@@ -135,7 +135,9 @@ namespace SEServerExtender
 				CMB_Control_AutosaveInterval.Items.Add(2);
 				CMB_Control_AutosaveInterval.Items.Add(5);
 				CMB_Control_AutosaveInterval.Items.Add(10);
+				CMB_Control_AutosaveInterval.Items.Add(15);
 				CMB_Control_AutosaveInterval.Items.Add(30);
+				CMB_Control_AutosaveInterval.Items.Add(60);
 				CMB_Control_AutosaveInterval.EndUpdate();
 			}
 			catch (AutoException)
@@ -237,10 +239,7 @@ namespace SEServerExtender
 			SandboxGameAssemblyWrapper.UseCommonProgramData = CHK_Control_CommonDataPath.CheckState == CheckState.Checked;
 			CMB_Control_CommonInstanceList.Enabled = SandboxGameAssemblyWrapper.UseCommonProgramData;
 
-			if (SandboxGameAssemblyWrapper.UseCommonProgramData)
-				m_server.InstanceName = CMB_Control_CommonInstanceList.Text;
-			else
-				m_server.InstanceName = string.Empty;
+			m_server.InstanceName = SandboxGameAssemblyWrapper.UseCommonProgramData ? CMB_Control_CommonInstanceList.Text : string.Empty;
 
 			m_server.LoadServerConfig();
 
@@ -292,9 +291,9 @@ namespace SEServerExtender
 			{
 				interval = double.Parse(CMB_Control_AutosaveInterval.Text);
 			}
-			catch (Exception)
+			catch
 			{
-				//Do something
+				MessageBox.Show( this, "Invalid input for auto-save interval." );
 			}
 
 			m_server.AutosaveInterval = interval * 60000;
@@ -394,7 +393,7 @@ namespace SEServerExtender
 				int index = 0;
 				foreach (var item in source)
 				{
-					TreeNode itemNode = null;
+					TreeNode itemNode;
 					if (entriesChanged)
 					{
 						itemNode = node.Nodes.Add(item.Name);
@@ -849,10 +848,9 @@ namespace SEServerExtender
 					Vector3D rawPosition = item.Position;
 					double distance = rawPosition.Length();
 
-					Type sectorObjectType = item.GetType();
 					string nodeKey = item.EntityId.ToString();
 
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Amount: " + item.Item.Amount + " | Dist: " + distance + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, string.Format( "{0} | Amount: {1} | Dist: {2}m", item.Name, item.Item.Amount, distance ));
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -863,7 +861,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count + ")";
+			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 
 			// Update a var for the Utilities Floating object cleaner.
 			m_floatingObjectsCount = rootNode.Nodes.Count;
@@ -893,7 +891,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round(rawPosition.Length(), 0);
-							string newNodeText = item.Name + " | Dist: " + distance + "m";
+							string newNodeText = string.Format( "{0} | Dist: {1}m", item.Name, distance );
 							node.Text = newNodeText;
 						}
 						list.Remove(item);
@@ -921,7 +919,7 @@ namespace SEServerExtender
 					double distance = rawPosition.Length();
 
 					string nodeKey = item.EntityId.ToString();
-					TreeNode newNode = rootNode.Nodes.Add(nodeKey, item.Name + " | Dist: " + distance + "m");
+					TreeNode newNode = rootNode.Nodes.Add(nodeKey, string.Format( "{0} | Dist: {1}m", item.Name, distance ));
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -932,7 +930,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count + ")";
+			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
 
 		private void RenderCubeGridChildNodes(CubeGridEntity cubeGrid, TreeNode blocksNode)
@@ -1099,16 +1097,16 @@ namespace SEServerExtender
 				}
 			}
 
-			structuralBlocksNode.Text = structuralBlocksNode.Name + " (" + structuralBlocksNode.Nodes.Count + ")";
-			containerBlocksNode.Text = containerBlocksNode.Name + " (" + containerBlocksNode.Nodes.Count + ")";
-			productionBlocksNode.Text = productionBlocksNode.Name + " (" + productionBlocksNode.Nodes.Count + ")";
-			energyBlocksNode.Text = energyBlocksNode.Name + " (" + energyBlocksNode.Nodes.Count + ")";
-			conveyorBlocksNode.Text = conveyorBlocksNode.Name + " (" + conveyorBlocksNode.Nodes.Count + ")";
-			utilityBlocksNode.Text = utilityBlocksNode.Name + " (" + utilityBlocksNode.Nodes.Count + ")";
-			weaponBlocksNode.Text = weaponBlocksNode.Name + " (" + weaponBlocksNode.Nodes.Count + ")";
-			toolBlocksNode.Text = toolBlocksNode.Name + " (" + toolBlocksNode.Nodes.Count + ")";
-			lightBlocksNode.Text = lightBlocksNode.Name + " (" + lightBlocksNode.Nodes.Count + ")";
-			miscBlocksNode.Text = miscBlocksNode.Name + " (" + miscBlocksNode.Nodes.Count + ")";
+			structuralBlocksNode.Text = string.Format( "{0} ({1})", structuralBlocksNode.Name, structuralBlocksNode.Nodes.Count );
+			containerBlocksNode.Text = string.Format( "{0} ({1})", containerBlocksNode.Name, containerBlocksNode.Nodes.Count );
+			productionBlocksNode.Text = string.Format( "{0} ({1})", productionBlocksNode.Name, productionBlocksNode.Nodes.Count );
+			energyBlocksNode.Text = string.Format( "{0} ({1})", energyBlocksNode.Name, energyBlocksNode.Nodes.Count );
+			conveyorBlocksNode.Text = string.Format( "{0} ({1})", conveyorBlocksNode.Name, conveyorBlocksNode.Nodes.Count );
+			utilityBlocksNode.Text = string.Format( "{0} ({1})", utilityBlocksNode.Name, utilityBlocksNode.Nodes.Count );
+			weaponBlocksNode.Text = string.Format( "{0} ({1})", weaponBlocksNode.Name, weaponBlocksNode.Nodes.Count );
+			toolBlocksNode.Text = string.Format( "{0} ({1})", toolBlocksNode.Name, toolBlocksNode.Nodes.Count );
+			lightBlocksNode.Text = string.Format( "{0} ({1})", lightBlocksNode.Name, lightBlocksNode.Nodes.Count );
+			miscBlocksNode.Text = string.Format( "{0} ({1})", miscBlocksNode.Name, miscBlocksNode.Nodes.Count );
 		}
 
 		private void TRV_Entities_NodeRefresh(object sender, TreeNodeMouseClickEventArgs e)
@@ -1200,7 +1198,7 @@ namespace SEServerExtender
 				
 				List<MyVoxelMaterialDefinition> materialDefs = new List<MyVoxelMaterialDefinition>(MyDefinitionManager.Static.GetVoxelMaterialDefinitions());
 
-				ThreadPool.QueueUserWorkItem((object state) =>
+				ThreadPool.QueueUserWorkItem( state =>
 				                             {
 					                             Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
 
@@ -1827,7 +1825,6 @@ namespace SEServerExtender
 							if (item == null)
 								continue;
 
-							Type sectorObjectType = item.GetType();
 							string nodeKey = item.Id.ToString();
 
 							TreeNode newNode = TRV_Factions.Nodes.Add(nodeKey, string.Format( "{0} ({1})", item.Name, item.Members.Count ));
