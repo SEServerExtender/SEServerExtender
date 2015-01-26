@@ -1,4 +1,4 @@
-﻿namespace SEModAPI
+﻿namespace SEModAPI.Interop
 {
     public enum CubeType
     {
