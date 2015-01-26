@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -20,8 +19,6 @@ namespace SEServerExtender
 	public partial class CubeBlockDialog : Form
 	{
 		#region "Attributes"
-
-		private CubeGridEntity m_parent;
 
 		#endregion
 
@@ -47,11 +44,7 @@ namespace SEServerExtender
 
 		#region "Properties"
 
-		public CubeGridEntity ParentCubeGrid
-		{
-			get { return m_parent; }
-			set { m_parent = value; }
-		}
+		public CubeGridEntity ParentCubeGrid { get; set; }
 
 		public KeyValuePair<Type, Type> SelectedType
 		{
@@ -73,11 +66,11 @@ namespace SEServerExtender
 			{
 				try
 				{
-					int pos_x = int.Parse(TXT_Position_X.Text);
-					int pos_y = int.Parse(TXT_Position_Y.Text);
-					int pos_z = int.Parse(TXT_Position_Z.Text);
+					int posX = int.Parse(TXT_Position_X.Text);
+					int posY = int.Parse(TXT_Position_Y.Text);
+					int posZ = int.Parse(TXT_Position_Z.Text);
 
-					return new Vector3I(pos_x, pos_y, pos_z);
+					return new Vector3I(posX, posY, posZ);
 				}
 				catch (Exception ex)
 				{
@@ -105,7 +98,7 @@ namespace SEServerExtender
 				CubeBlockEntity cubeBlock = (CubeBlockEntity) Activator.CreateInstance(SelectedType.Value, new object[] { Parent, objectBuilder });
 				ParentCubeGrid.AddCubeBlock(cubeBlock);
 
-				this.Close();
+				Close();
 			}
 			catch (Exception ex)
 			{
