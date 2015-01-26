@@ -15,6 +15,8 @@ using VRageMath;
 
 namespace SEServerExtender
 {
+	using VRage.Collections;
+
 	public partial class CubeBlockDialog : Form
 	{
 		#region "Attributes"
@@ -115,11 +117,17 @@ namespace SEServerExtender
 		{
 			CMB_BlockSubType.BeginUpdate();
 			CMB_BlockSubType.Items.Clear();
-			foreach (MyCubeBlockDefinition cubeBlockDefinition in Enumerable.OfType<MyCubeBlockDefinition>((IEnumerable)MyDefinitionManager.Static.GetAllDefinitions()))
+			DictionaryValuesReader<MyDefinitionId, MyDefinitionBase> allDefinitions = MyDefinitionManager.Static.GetAllDefinitions( );
+			foreach ( MyDefinitionBase o in allDefinitions )
 			{
-				if (cubeBlockDefinition.Id.TypeId == SelectedType.Key)
+				MyCubeBlockDefinition cubeBlockDefinition = o as MyCubeBlockDefinition;
+				if ( cubeBlockDefinition == null )
 				{
-					CMB_BlockSubType.Items.Add(cubeBlockDefinition.Id.SubtypeName);					
+					continue;
+				}
+				if ( cubeBlockDefinition.Id.TypeId == SelectedType.Key )
+				{
+					CMB_BlockSubType.Items.Add( cubeBlockDefinition.Id.SubtypeName );
 				}
 			}
 			CMB_BlockSubType.EndUpdate();
