@@ -70,7 +70,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			m_cubeBlockManager = new CubeBlockManager( this );
 			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>( );
-			foreach ( var cubeBlock in ObjectBuilder.CubeBlocks )
+			foreach ( MyObjectBuilder_CubeBlock cubeBlock in ObjectBuilder.CubeBlocks )
 			{
 				cubeBlock.EntityId = 0;
 				cubeBlockList.Add( new CubeBlockEntity( this, cubeBlock ) );
@@ -87,7 +87,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			m_cubeBlockManager = new CubeBlockManager( this );
 			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>( );
-			foreach ( var cubeBlock in definition.CubeBlocks )
+			foreach ( MyObjectBuilder_CubeBlock cubeBlock in definition.CubeBlocks )
 			{
 				cubeBlock.EntityId = 0;
 				cubeBlockList.Add( new CubeBlockEntity( this, cubeBlock ) );
@@ -145,7 +145,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				string name = "";
+				string name = string.Empty;
 				TimeSpan timeSinceLastNameRefresh = DateTime.Now - m_lastNameRefresh;
 				if ( timeSinceLastNameRefresh.TotalSeconds < 2 )
 				{
@@ -156,22 +156,23 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 					m_lastNameRefresh = DateTime.Now;
 
 					List<MyObjectBuilder_CubeBlock> blocks = new List<MyObjectBuilder_CubeBlock>( ObjectBuilder.CubeBlocks );
-					foreach ( var cubeBlock in blocks )
+					foreach ( MyObjectBuilder_CubeBlock cubeBlock in blocks )
 					{
 						try
 						{
 							if ( cubeBlock == null )
 								continue;
-							if ( cubeBlock.TypeId == typeof( MyObjectBuilder_Beacon ) )
+							if ( cubeBlock.TypeId != typeof ( MyObjectBuilder_Beacon ) )
 							{
-								if ( name.Length > 0 )
-									name += "|";
-
-								string customName = ( (MyObjectBuilder_Beacon)cubeBlock ).CustomName;
-								if ( customName == "" )
-									customName = "Beacon";
-								name += customName;
+								continue;
 							}
+							if ( name.Length > 0 )
+								name += "|";
+
+							string customName = ( (MyObjectBuilder_Beacon)cubeBlock ).CustomName;
+							if ( customName == string.Empty )
+								customName = "Beacon";
+							name += customName;
 						}
 						catch ( Exception ex )
 						{
@@ -531,7 +532,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			//Refresh the cube blocks content in the cube grid from the cube blocks manager
 			cubeGrid.CubeBlocks.Clear( );
-			foreach ( var item in CubeBlocks )
+			foreach ( CubeBlockEntity item in CubeBlocks )
 			{
 				cubeGrid.CubeBlocks.Add( (MyObjectBuilder_CubeBlock)item.ObjectBuilder );
 			}
@@ -778,7 +779,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public CubeGridNetworkManager( CubeGridEntity cubeGrid )
 		{
 			m_cubeGrid = cubeGrid;
-			var entity = m_cubeGrid.BackingObject;
+			object entity = m_cubeGrid.BackingObject;
 			m_netManager = BaseObject.InvokeEntityMethod( entity, CubeGridGetNetManagerMethod );
 
 			Action action = RegisterPacketHandlers;
