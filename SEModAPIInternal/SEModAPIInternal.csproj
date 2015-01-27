@@ -88,6 +88,8 @@
     <Compile Include="API\Entity\PowerProducer.cs" />
     <Compile Include="API\Entity\PowerReceiver.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridEntity.cs" />
+    <Compile Include="API\Entity\Sector\SectorObject\CubeGridManagerManager.cs" />
+    <Compile Include="API\Entity\Sector\SectorObject\CubeGridNetworkManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\AntennaEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\AssemblerEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\BatteryBlockEntity.cs" />
@@ -128,7 +130,7 @@
     <Compile Include="API\Entity\SectorEntity.cs" />
     <Compile Include="API\Entity\Sector\Event.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CharacterEntity.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid.cs" />
+    <Compile Include="API\Entity\Sector\SectorObject\CubeGridThrusterManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\BlockGroups.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\ConveyorLines.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlockEntity.cs" />

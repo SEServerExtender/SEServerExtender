@@ -1,110 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Sandbox.Definitions;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-using SEModAPIInternal.Support;
-using VRage;
-using VRageMath;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	public class CubeGridManagerManager
-	{
-		#region "Attributes"
-
-		private CubeGridEntity m_parent;
-		private Object m_backingObject;
-
-		private PowerManager m_powerManager;
-		private CubeGridThrusterManager m_thrusterManager;
-
-		public static string CubeGridManagerManagerNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string CubeGridManagerManagerClass = "0A0120EAD12D237F859BDAB2D84DA72B";
-
-		public static string CubeGridManagerManagerGetPowerManagerMethod = "F05ACB25E5255DA110249186EE895C73";
-		public static string CubeGridManagerManagerGetThrusterManagerMethod = "0EF76C91FA04B0B200A3F3AC155F089D";
-
-		#endregion "Attributes"
-
-		#region "Constructors and Initializers"
-
-		public CubeGridManagerManager( CubeGridEntity parent, Object backingObject )
-		{
-			m_parent = parent;
-			m_backingObject = backingObject;
-
-			m_powerManager = new PowerManager( GetPowerManager( ) );
-			m_thrusterManager = new CubeGridThrusterManager( GetThrusterManager( ), m_parent );
-		}
-
-		#endregion "Constructors and Initializers"
-
-		#region "Properties"
-
-		public static Type InternalType
-		{
-			get
-			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridManagerManagerNamespace, CubeGridManagerManagerClass );
-				return type;
-			}
-		}
-
-		public Object BackingObject
-		{
-			get { return m_backingObject; }
-		}
-
-		public PowerManager PowerManager
-		{
-			get { return m_powerManager; }
-		}
-
-		public CubeGridThrusterManager ThrusterManager
-		{
-			get { return m_thrusterManager; }
-		}
-
-		#endregion "Properties"
-
-		#region "Methods"
-
-		public static bool ReflectionUnitTest( )
-		{
-			try
-			{
-				Type type = InternalType;
-				if ( type == null )
-					throw new Exception( "Could not find internal type for CubeGridManagerManager" );
-				bool result = true;
-				result &= BaseObject.HasMethod( type, CubeGridManagerManagerGetPowerManagerMethod );
-				result &= BaseObject.HasMethod( type, CubeGridManagerManagerGetThrusterManagerMethod );
-
-				return result;
-			}
-			catch ( Exception ex )
-			{
-				LogManager.APILog.WriteLine( ex );
-				return false;
-			}
-		}
-
-		private Object GetPowerManager( )
-		{
-			Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetPowerManagerMethod );
-			return manager;
-		}
-
-		private Object GetThrusterManager( )
-		{
-			Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetThrusterManagerMethod );
-			return manager;
-		}
-
-		#endregion "Methods"
-	}
+	using System;
+	using System.Collections.Generic;
+	using Sandbox.Definitions;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.Support;
+	using VRage;
+	using VRageMath;
 
 	public class CubeGridNetworkManager
 	{
@@ -307,11 +210,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				BaseObject.SetEntityFieldValue( packedStruct, "556976F2528411FF5F95FC75DC13FEED", ColorExtensions.PackHSVToUint( cubeBlock.ColorMaskHSV ) );
 
 				object[ ] parameters = {
-					packedStruct,
-					new HashSet<Vector3UByte>(),
-					cubeBlock.EntityId,
-					MyRandom.Instance.CreateRandomSeed()
-				};
+					                       packedStruct,
+					                       new HashSet<Vector3UByte>(),
+					                       cubeBlock.EntityId,
+					                       MyRandom.Instance.CreateRandomSeed()
+				                       };
 				BaseObject.InvokeEntityMethod( m_netManager, CubeGridNetManagerBroadcastAddCubeBlockMethod, parameters );
 			}
 			catch ( Exception ex )
@@ -374,106 +277,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 			}
-		}
-
-		#endregion "Methods"
-	}
-
-	public class CubeGridThrusterManager
-	{
-		#region "Attributes"
-
-		private Object m_thrusterManager;
-		private CubeGridEntity m_parent;
-
-		private bool m_dampenersEnabled;
-
-		public static string CubeGridThrusterManagerNamespace = "8EAF60352312606996BD8147B0A3C880";
-		public static string CubeGridThrusterManagerClass = "958ADAA3423FBDC5DE98C1A32DE7258C";
-
-		public static string CubeGridThrusterManagerGetEnabled = "51FDDFF9224B3F717EEFFEBEA5F1BAF6";
-		public static string CubeGridThrusterManagerSetEnabled = "86B66668D555E1C1B744C17D2AFA77F7";
-		public static string CubeGridThrusterManagerSetControlEnabled = "BC83851AFAE183711CFB864BA6F62CC6";
-
-		#endregion "Attributes"
-
-		#region "Constructors and Initializers"
-
-		public CubeGridThrusterManager( Object thrusterManager, CubeGridEntity parent )
-		{
-			m_thrusterManager = thrusterManager;
-			m_parent = parent;
-		}
-
-		#endregion "Constructors and Initializers"
-
-		#region "Properties"
-
-		public Object BackingObject
-		{
-			get { return m_thrusterManager; }
-		}
-
-		public bool DampenersEnabled
-		{
-			get { return InternalGetDampenersEnabled( ); }
-			set
-			{
-				m_dampenersEnabled = value;
-
-				Action action = InternalUpdateDampenersEnabled;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
-			}
-		}
-
-		#endregion "Properties"
-
-		#region "Methods"
-
-		public static bool ReflectionUnitTest( )
-		{
-			try
-			{
-				bool result = true;
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridThrusterManagerNamespace, CubeGridThrusterManagerClass );
-				if ( type == null )
-					throw new Exception( "Could not find type for CubeGridThrusterManager" );
-				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerGetEnabled );
-				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerSetEnabled );
-				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerSetControlEnabled );
-
-				return result;
-			}
-			catch ( Exception ex )
-			{
-				LogManager.APILog.WriteLine( ex );
-				return false;
-			}
-		}
-
-		protected bool InternalGetDampenersEnabled( )
-		{
-			bool result = (bool)BaseObject.InvokeEntityMethod( BackingObject, CubeGridThrusterManagerGetEnabled );
-			return result;
-		}
-
-		protected void InternalUpdateDampenersEnabled( )
-		{
-			foreach ( CubeBlockEntity cubeBlock in m_parent.CubeBlocks )
-			{
-				if ( cubeBlock is CockpitEntity )
-				{
-					CockpitEntity cockpit = (CockpitEntity)cubeBlock;
-					if ( cockpit.IsPassengerSeat )
-						continue;
-
-					cockpit.NetworkManager.BroadcastDampenersStatus( m_dampenersEnabled );
-					break;
-				}
-			}
-
-			BaseObject.InvokeEntityMethod( BackingObject, CubeGridThrusterManagerSetEnabled, new object[ ] { m_dampenersEnabled } );
-			//BaseObject.InvokeEntityMethod(BackingObject, CubeGridThrusterManagerSetControlEnabled, new object[] { m_dampenersEnabled });
 		}
 
 		#endregion "Methods"
