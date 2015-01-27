@@ -14,9 +14,6 @@ namespace SEModAPI.API.Definitions
 
 		#region "Constructors and Initializers"
 
-		public EnvironmentDefinition()
-		{}
-
 		#endregion
 
 		#region "Properties"

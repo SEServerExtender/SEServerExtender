@@ -13,10 +13,6 @@ namespace SEModAPI.API.Definitions
 
 		#region "Constructors and Initializers"
 
-		public ConfigurationDefinition()
-		{
-
-		}
 
 		#endregion
 
