@@ -366,7 +366,7 @@ namespace SEModAPIExtensions.API
 			get
 			{
 				string path = _commandLineArgs.Path;
-				if ( path == null || string.IsNullOrEmpty( path ) )
+				if ( string.IsNullOrEmpty( path ) )
 				{
 					if ( InstanceName.Length != 0 )
 					{
