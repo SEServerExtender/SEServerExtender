@@ -22,16 +22,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	{
 		#region "Attributes"
 
-		private CubeBlockManager m_cubeBlockManager;
-		private CubeGridNetworkManager m_networkManager;
-		private CubeGridManagerManager m_managerManager;
+		private CubeBlockManager _cubeBlockManager;
+		private CubeGridNetworkManager _networkManager;
+		private CubeGridManagerManager _managerManager;
 
-		private static Type m_internalType;
-		private string m_name;
-		private DateTime m_lastNameRefresh;
-		private DateTime m_lastBaseCubeBlockRefresh;
+		private static Type _internalType;
+		private string _name;
+		private DateTime _lastNameRefresh;
+		private DateTime _lastBaseCubeBlockRefresh;
 
-		private CubeBlockEntity m_cubeBlockToAddRemove;
+		private CubeBlockEntity _cubeBlockToAddRemove;
 
 		public static string CubeGridNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string CubeGridClass = "98262C3F38A1199E47F2B9338045794C";
@@ -54,10 +54,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		protected CubeGridEntity( )
 			: base( new MyObjectBuilder_CubeGrid( ) )
 		{
-			m_cubeBlockManager = new CubeBlockManager( this );
-			m_lastNameRefresh = DateTime.Now;
-			m_lastBaseCubeBlockRefresh = DateTime.Now;
-			m_name = "Cube Grid";
+			_cubeBlockManager = new CubeBlockManager( this );
+			_lastNameRefresh = DateTime.Now;
+			_lastBaseCubeBlockRefresh = DateTime.Now;
+			_name = "Cube Grid";
 		}
 
 		public CubeGridEntity( FileInfo prefabFile )
@@ -68,45 +68,45 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			if ( ObjectBuilder.PositionAndOrientation != null )
 				PositionAndOrientation = ObjectBuilder.PositionAndOrientation.GetValueOrDefault( );
 
-			m_cubeBlockManager = new CubeBlockManager( this );
+			_cubeBlockManager = new CubeBlockManager( this );
 			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>( );
 			foreach ( MyObjectBuilder_CubeBlock cubeBlock in ObjectBuilder.CubeBlocks )
 			{
 				cubeBlock.EntityId = 0;
 				cubeBlockList.Add( new CubeBlockEntity( this, cubeBlock ) );
 			}
-			m_cubeBlockManager.Load( cubeBlockList );
+			_cubeBlockManager.Load( cubeBlockList );
 
-			m_lastNameRefresh = DateTime.Now;
-			m_lastBaseCubeBlockRefresh = DateTime.Now;
-			m_name = "Cube Grid";
+			_lastNameRefresh = DateTime.Now;
+			_lastBaseCubeBlockRefresh = DateTime.Now;
+			_name = "Cube Grid";
 		}
 
 		public CubeGridEntity( MyObjectBuilder_CubeGrid definition )
 			: base( definition )
 		{
-			m_cubeBlockManager = new CubeBlockManager( this );
+			_cubeBlockManager = new CubeBlockManager( this );
 			List<CubeBlockEntity> cubeBlockList = new List<CubeBlockEntity>( );
 			foreach ( MyObjectBuilder_CubeBlock cubeBlock in definition.CubeBlocks )
 			{
 				cubeBlock.EntityId = 0;
 				cubeBlockList.Add( new CubeBlockEntity( this, cubeBlock ) );
 			}
-			m_cubeBlockManager.Load( cubeBlockList );
+			_cubeBlockManager.Load( cubeBlockList );
 
-			m_lastNameRefresh = DateTime.Now;
-			m_lastBaseCubeBlockRefresh = DateTime.Now;
-			m_name = "Cube Grid";
+			_lastNameRefresh = DateTime.Now;
+			_lastBaseCubeBlockRefresh = DateTime.Now;
+			_name = "Cube Grid";
 		}
 
 		public CubeGridEntity( MyObjectBuilder_CubeGrid definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			m_cubeBlockManager = new CubeBlockManager( this, backingObject, CubeGridGetCubeBlocksHashSetMethod );
-			m_cubeBlockManager.Refresh( );
+			_cubeBlockManager = new CubeBlockManager( this, backingObject, CubeGridGetCubeBlocksHashSetMethod );
+			_cubeBlockManager.Refresh( );
 
-			m_networkManager = new CubeGridNetworkManager( this );
-			m_managerManager = new CubeGridManagerManager( this, GetManagerManager( ) );
+			_networkManager = new CubeGridNetworkManager( this );
+			_managerManager = new CubeGridManagerManager( this, GetManagerManager( ) );
 
 			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCubeGridCreated;
@@ -115,9 +115,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			newEvent.priority = 1;
 			EntityEventManager.Instance.AddEvent( newEvent );
 
-			m_lastNameRefresh = DateTime.Now;
-			m_lastBaseCubeBlockRefresh = DateTime.Now;
-			m_name = "Cube Grid";
+			_lastNameRefresh = DateTime.Now;
+			_lastBaseCubeBlockRefresh = DateTime.Now;
+			_name = "Cube Grid";
 		}
 
 		#endregion "Constructors and Initializers"
@@ -132,9 +132,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridNamespace, CubeGridClass );
-				return m_internalType;
+				if ( _internalType == null )
+					_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridNamespace, CubeGridClass );
+				return _internalType;
 			}
 		}
 
@@ -146,14 +146,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			get
 			{
 				string name = string.Empty;
-				TimeSpan timeSinceLastNameRefresh = DateTime.Now - m_lastNameRefresh;
+				TimeSpan timeSinceLastNameRefresh = DateTime.Now - _lastNameRefresh;
 				if ( timeSinceLastNameRefresh.TotalSeconds < 2 )
 				{
-					name = m_name;
+					name = _name;
 				}
 				else
 				{
-					m_lastNameRefresh = DateTime.Now;
+					_lastNameRefresh = DateTime.Now;
 
 					List<MyObjectBuilder_CubeBlock> blocks = new List<MyObjectBuilder_CubeBlock>( ObjectBuilder.CubeBlocks );
 					foreach ( MyObjectBuilder_CubeBlock cubeBlock in blocks )
@@ -187,7 +187,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( name.Length == 0 )
 					name = ObjectBuilder.EntityId.ToString( );
 
-				m_name = name;
+				_name = name;
 
 				return name;
 			}
@@ -285,7 +285,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				List<CubeBlockEntity> cubeBlocks = m_cubeBlockManager.GetTypedInternalData<CubeBlockEntity>( );
+				List<CubeBlockEntity> cubeBlocks = _cubeBlockManager.GetTypedInternalData<CubeBlockEntity>( );
 				return cubeBlocks;
 			}
 			private set
@@ -336,7 +336,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		public CubeGridNetworkManager NetworkManager
 		{
-			get { return m_networkManager; }
+			get { return _networkManager; }
 			private set
 			{
 				//Do nothing!
@@ -349,7 +349,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		public PowerManager PowerManager
 		{
-			get { return m_managerManager.PowerManager; }
+			get { return _managerManager.PowerManager; }
 			private set
 			{
 				//Do nothing!
@@ -362,7 +362,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		public CubeGridThrusterManager ThrusterManager
 		{
-			get { return m_managerManager.ThrusterManager; }
+			get { return _managerManager.ThrusterManager; }
 			private set
 			{
 				//Do nothing!
@@ -378,7 +378,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				bool isLoading = true;
 
-				isLoading = isLoading && m_cubeBlockManager.IsLoading;
+				isLoading = isLoading && _cubeBlockManager.IsLoading;
 
 				return isLoading;
 			}
@@ -499,7 +499,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				long packedBlockCoordinates = (long)cubePosition.X + (long)cubePosition.Y * 10000 + (long)cubePosition.Z * 100000000;
-				CubeBlockEntity cubeBlock = (CubeBlockEntity)m_cubeBlockManager.GetEntry( packedBlockCoordinates );
+				CubeBlockEntity cubeBlock = (CubeBlockEntity)_cubeBlockManager.GetEntry( packedBlockCoordinates );
 
 				return cubeBlock;
 			}
@@ -512,7 +512,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public void AddCubeBlock( CubeBlockEntity cubeBlock )
 		{
-			m_cubeBlockToAddRemove = cubeBlock;
+			_cubeBlockToAddRemove = cubeBlock;
 
 			Action action = InternalAddCubeBlock;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -520,7 +520,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public void DeleteCubeBlock( CubeBlockEntity cubeBlock )
 		{
-			m_cubeBlockToAddRemove = cubeBlock;
+			_cubeBlockToAddRemove = cubeBlock;
 
 			Action action = InternalRemoveCubeBlock;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -565,37 +565,37 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		protected void InternalAddCubeBlock( )
 		{
-			if ( m_cubeBlockToAddRemove == null )
+			if ( _cubeBlockToAddRemove == null )
 				return;
 
 			try
 			{
-				MyObjectBuilder_CubeBlock objectBuilder = m_cubeBlockToAddRemove.ObjectBuilder;
+				MyObjectBuilder_CubeBlock objectBuilder = _cubeBlockToAddRemove.ObjectBuilder;
 				MyCubeBlockDefinition blockDef = MyDefinitionManager.Static.GetCubeBlockDefinition( objectBuilder );
 
-				NetworkManager.BroadcastAddCubeBlock( m_cubeBlockToAddRemove );
+				NetworkManager.BroadcastAddCubeBlock( _cubeBlockToAddRemove );
 
 				Object result = InvokeEntityMethod( BackingObject, CubeGridAddCubeBlockMethod, new object[ ] { objectBuilder, true, blockDef } );
-				m_cubeBlockToAddRemove.BackingObject = result;
+				_cubeBlockToAddRemove.BackingObject = result;
 			}
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 			}
 
-			m_cubeBlockToAddRemove = null;
+			_cubeBlockToAddRemove = null;
 		}
 
 		protected void InternalRemoveCubeBlock( )
 		{
-			if ( m_cubeBlockToAddRemove == null )
+			if ( _cubeBlockToAddRemove == null )
 				return;
 
 			//NOTE - We don't broadcast the removal because the game internals take care of that by broadcasting the removal delta lists every frame update
 
-			InvokeEntityMethod( BackingObject, CubeGridRemoveCubeBlockMethod, new object[ ] { m_cubeBlockToAddRemove.BackingObject, Type.Missing } );
+			InvokeEntityMethod( BackingObject, CubeGridRemoveCubeBlockMethod, new object[ ] { _cubeBlockToAddRemove.BackingObject, Type.Missing } );
 
-			m_cubeBlockToAddRemove = null;
+			_cubeBlockToAddRemove = null;
 		}
 
 		#endregion "Internal"
