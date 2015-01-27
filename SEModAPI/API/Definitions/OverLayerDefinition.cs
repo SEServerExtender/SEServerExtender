@@ -399,7 +399,7 @@ namespace SEModAPI.API.Definitions
 
 		public static T1 LoadContentFile<T1, TS>(FileInfo fileInfo) where TS : XmlSerializer1
 		{
-			object fileContent = null;
+			object fileContent;
 
 			string filePath = fileInfo.FullName;
 

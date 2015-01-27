@@ -906,7 +906,7 @@ namespace SEModAPI.API.Definitions
 		/// <returns></returns>
 		public static MyConfigDedicatedData Load( FileInfo fileInfo )
 		{
-			object fileContent = null;
+			object fileContent;
 
 			string filePath = fileInfo.FullName;
 
