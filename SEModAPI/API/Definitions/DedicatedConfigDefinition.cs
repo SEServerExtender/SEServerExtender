@@ -786,8 +786,13 @@ namespace SEModAPI.API.Definitions
 			get { return m_definition.Banned.ConvertAll( x => x.ToString( ) ).ToArray( ); }
 			set
 			{
-				List<ulong> banned = value.ToList( ).ConvertAll( x => ulong.Parse( x ) );
-				if ( m_definition.Banned == banned ) return;
+				List<ulong> banned = value.ToList( ).ConvertAll( ulong.Parse );
+				if ( m_definition == null )
+				{
+					return;
+				}
+				if ( m_definition.Banned == banned )
+					return;
 				m_definition.Banned = banned;
 			}
 		}
