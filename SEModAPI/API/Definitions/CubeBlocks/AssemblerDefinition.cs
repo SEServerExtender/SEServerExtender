@@ -26,7 +26,8 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 			get { return GetSubTypeDefinition().OperationalPowerConsumption; }
 			set
 			{
-				if (GetSubTypeDefinition().OperationalPowerConsumption.Equals(value)) return;
+				if (GetSubTypeDefinition().OperationalPowerConsumption.Equals(value))
+					return;
 				GetSubTypeDefinition().OperationalPowerConsumption = value;
 				Changed = true;
 			}
@@ -43,7 +44,8 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 			get { return GetSubTypeDefinition().StandbyPowerConsumption; }
 			set
 			{
-				if (GetSubTypeDefinition().StandbyPowerConsumption.Equals(value)) return;
+				if (GetSubTypeDefinition().StandbyPowerConsumption.Equals(value))
+					return;
 				GetSubTypeDefinition().StandbyPowerConsumption = value;
 				Changed = true;
 			}
@@ -60,7 +62,8 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 			get { return GetSubTypeDefinition().InventoryMaxVolume; }
 			set
 			{
-				if (GetSubTypeDefinition().InventoryMaxVolume.Equals(value)) return;
+				if (GetSubTypeDefinition().InventoryMaxVolume.Equals(value))
+					return;
 				GetSubTypeDefinition().InventoryMaxVolume = value;
 				Changed = true;
 			}
