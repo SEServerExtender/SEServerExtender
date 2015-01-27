@@ -104,11 +104,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			_networkManager = new CubeGridNetworkManager( this );
 			_managerManager = new CubeGridManagerManager( this, GetManagerManager( ) );
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-			newEvent.type = EntityEventManager.EntityEventType.OnCubeGridCreated;
-			newEvent.timestamp = DateTime.Now;
-			newEvent.entity = this;
-			newEvent.priority = 1;
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+			                                          {
+				                                          type = EntityEventManager.EntityEventType.OnCubeGridCreated,
+				                                          timestamp = DateTime.Now,
+				                                          entity = this,
+				                                          priority = 1
+			                                          };
 			EntityEventManager.Instance.AddEvent( newEvent );
 
 			_lastNameRefresh = DateTime.Now;
@@ -444,11 +446,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				GameEntityManager.RemoveEntity( EntityId );
 			}
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-			newEvent.type = EntityEventManager.EntityEventType.OnCubeGridDeleted;
-			newEvent.timestamp = DateTime.Now;
-			newEvent.entity = this;
-			newEvent.priority = 1;
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+			                                          {
+				                                          type = EntityEventManager.EntityEventType.OnCubeGridDeleted,
+				                                          timestamp = DateTime.Now,
+				                                          entity = this,
+				                                          priority = 1
+			                                          };
 			EntityEventManager.Instance.AddEvent( newEvent );
 		}
 
@@ -545,11 +549,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			try
 			{
-				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-				newEvent.type = EntityEventManager.EntityEventType.OnCubeGridMoved;
-				newEvent.timestamp = DateTime.Now;
-				newEvent.entity = this;
-				newEvent.priority = 9;
+				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+				                                          {
+					                                          type = EntityEventManager.EntityEventType.OnCubeGridMoved,
+					                                          timestamp = DateTime.Now,
+					                                          entity = this,
+					                                          priority = 9
+				                                          };
 				EntityEventManager.Instance.AddEvent( newEvent );
 			}
 			catch ( Exception ex )
