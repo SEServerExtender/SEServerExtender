@@ -810,8 +810,9 @@ namespace SEModAPI.API.Definitions
 			get { return m_definition.Mods.ConvertAll( x => x.ToString( ) ).ToArray( ); }
 			set
 			{
-				List<ulong> mods = value.ToList( ).ConvertAll( x => ulong.Parse( x ) );
-				if ( m_definition.Mods == mods ) return;
+				List<ulong> mods = value.ToList( ).ConvertAll( ulong.Parse );
+				if ( m_definition.Mods == mods )
+					return;
 				m_definition.Mods = mods;
 
 			}
