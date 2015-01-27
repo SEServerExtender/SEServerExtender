@@ -29,7 +29,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private static Type _internalType;
 		private string _name;
 		private DateTime _lastNameRefresh;
-		private DateTime _lastBaseCubeBlockRefresh;
 
 		private CubeBlockEntity _cubeBlockToAddRemove;
 
@@ -56,7 +55,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			_cubeBlockManager = new CubeBlockManager( this );
 			_lastNameRefresh = DateTime.Now;
-			_lastBaseCubeBlockRefresh = DateTime.Now;
 			_name = "Cube Grid";
 		}
 
@@ -78,7 +76,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			_cubeBlockManager.Load( cubeBlockList );
 
 			_lastNameRefresh = DateTime.Now;
-			_lastBaseCubeBlockRefresh = DateTime.Now;
 			_name = "Cube Grid";
 		}
 
@@ -95,7 +92,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			_cubeBlockManager.Load( cubeBlockList );
 
 			_lastNameRefresh = DateTime.Now;
-			_lastBaseCubeBlockRefresh = DateTime.Now;
 			_name = "Cube Grid";
 		}
 
@@ -116,7 +112,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			EntityEventManager.Instance.AddEvent( newEvent );
 
 			_lastNameRefresh = DateTime.Now;
-			_lastBaseCubeBlockRefresh = DateTime.Now;
 			_name = "Cube Grid";
 		}
 
