@@ -22,9 +22,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	{
 		#region "Attributes"
 
-		private CubeBlockManager _cubeBlockManager;
-		private CubeGridNetworkManager _networkManager;
-		private CubeGridManagerManager _managerManager;
+		private readonly CubeBlockManager _cubeBlockManager;
+		private readonly CubeGridNetworkManager _networkManager;
+		private readonly CubeGridManagerManager _managerManager;
 
 		private static Type _internalType;
 		private string _name;
