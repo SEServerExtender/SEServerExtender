@@ -264,9 +264,9 @@ namespace SEModAPIInternal.API.Common
 		{
 			string lowerName = playerName.ToLower( );
 
-			var playerItemstoReturn = new List<InternalPlayerItem>( );
+			List<InternalPlayerItem> playerItemstoReturn = new List<InternalPlayerItem>( );
 
-			foreach ( var playerItem in InternalGetSteamDictionary( ).Values )
+			foreach ( InternalPlayerItem playerItem in InternalGetSteamDictionary( ).Values )
 			{
 				if ( playerItem.name.ToLower( ).Contains( lowerName ) )
 				{

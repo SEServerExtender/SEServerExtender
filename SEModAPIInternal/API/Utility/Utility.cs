@@ -123,7 +123,7 @@ namespace SEModAPIInternal.API.Utility
 
 			try
 			{
-				foreach ( var rawEntity in source )
+				foreach ( T rawEntity in source )
 				{
 					dataSet.Add( rawEntity );
 				}
@@ -142,7 +142,7 @@ namespace SEModAPIInternal.API.Utility
 
 			try
 			{
-				foreach ( var rawEntity in source )
+				foreach ( T rawEntity in source )
 				{
 					dataSet.Add( rawEntity );
 				}
@@ -161,7 +161,7 @@ namespace SEModAPIInternal.API.Utility
 
 			try
 			{
-				foreach ( var rawEntity in source )
+				foreach ( KeyValuePair<T, U> rawEntity in source )
 				{
 					dataSet.Add( rawEntity.Key, rawEntity.Value );
 				}
@@ -180,7 +180,7 @@ namespace SEModAPIInternal.API.Utility
 
 			try
 			{
-				foreach ( var rawEntity in source )
+				foreach ( KeyValuePair<U, T> rawEntity in source )
 				{
 					dataSet.Add( rawEntity.Key, rawEntity.Value );
 				}

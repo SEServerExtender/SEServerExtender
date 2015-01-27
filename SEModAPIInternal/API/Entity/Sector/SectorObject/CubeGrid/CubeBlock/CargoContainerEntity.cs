@@ -83,7 +83,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			get
 			{
 				long count = 0;
-				foreach ( var item in ObjectBuilder.Inventory.Items )
+				foreach ( MyObjectBuilder_InventoryItem item in ObjectBuilder.Inventory.Items )
 				{
 					count += item.Amount.RawValue;
 				}

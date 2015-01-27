@@ -911,7 +911,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				}
 
 				//Cleanup old entities
-				foreach ( var entry in internalDataCopy )
+				foreach ( KeyValuePair<long, BaseObject> entry in internalDataCopy )
 				{
 					try
 					{

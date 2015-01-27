@@ -247,7 +247,7 @@ namespace SEModAPIInternal.Support
 			{
 				if ( m_gameLog == null )
 				{
-					var temp = Instance;
+					LogManager temp = Instance;
 
 					try
 					{
@@ -273,7 +273,7 @@ namespace SEModAPIInternal.Support
 			{
 				if ( m_apiLog == null )
 				{
-					var temp = Instance;
+					LogManager temp = Instance;
 
 					try
 					{
@@ -300,7 +300,7 @@ namespace SEModAPIInternal.Support
 			{
 				if ( m_chatLog == null )
 				{
-					var temp = Instance;
+					LogManager temp = Instance;
 
 					try
 					{
@@ -327,7 +327,7 @@ namespace SEModAPIInternal.Support
 			{
 				if ( m_errorLog == null )
 				{
-					var temp = Instance;
+					LogManager temp = Instance;
 
 					try
 					{

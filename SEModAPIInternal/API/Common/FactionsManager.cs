@@ -40,13 +40,13 @@ namespace SEModAPIInternal.API.Common
 			m_faction = faction;
 
 			m_members = new Dictionary<long, FactionMember>( );
-			foreach ( var member in m_faction.Members )
+			foreach ( MyObjectBuilder_FactionMember member in m_faction.Members )
 			{
 				m_members.Add( member.PlayerId, new FactionMember( this, member ) );
 			}
 
 			m_joinRequests = new Dictionary<long, FactionMember>( );
-			foreach ( var member in m_faction.JoinRequests )
+			foreach ( MyObjectBuilder_FactionMember member in m_faction.JoinRequests )
 			{
 				m_joinRequests.Add( member.PlayerId, new FactionMember( this, member ) );
 			}
@@ -158,7 +158,7 @@ namespace SEModAPIInternal.API.Common
 				m_memberToModify = memberId;
 
 				MyObjectBuilder_FactionMember memberToRemove = new MyObjectBuilder_FactionMember( );
-				foreach ( var member in m_faction.Members )
+				foreach ( MyObjectBuilder_FactionMember member in m_faction.Members )
 				{
 					if ( member.PlayerId == m_memberToModify )
 					{
@@ -442,7 +442,7 @@ namespace SEModAPIInternal.API.Common
 			foreach ( Faction faction in m_factions.Values )
 			{
 				bool foundMatch = false;
-				foreach ( var entry in factionList )
+				foreach ( MyObjectBuilder_Faction entry in factionList )
 				{
 					if ( entry.FactionId == faction.Id )
 					{

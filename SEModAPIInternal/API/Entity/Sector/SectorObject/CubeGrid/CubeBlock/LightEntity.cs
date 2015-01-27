@@ -73,7 +73,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			get
 			{
-				var baseEntity = ObjectBuilder;
+				MyObjectBuilder_LightingBlock baseEntity = ObjectBuilder;
 				Color color = new Color( baseEntity.ColorRed, baseEntity.ColorGreen, baseEntity.ColorBlue, baseEntity.ColorAlpha );
 
 				return color;
@@ -81,7 +81,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			set
 			{
 				if ( Color == value ) return;
-				var baseEntity = ObjectBuilder;
+				MyObjectBuilder_LightingBlock baseEntity = ObjectBuilder;
 				baseEntity.ColorAlpha = value.A;
 				baseEntity.ColorRed = value.R;
 				baseEntity.ColorGreen = value.G;

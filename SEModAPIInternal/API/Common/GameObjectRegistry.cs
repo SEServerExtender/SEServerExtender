@@ -168,7 +168,7 @@ namespace SEModAPIInternal.API.Common
 				return;
 
 			HashSet<GameObjectTypeEntry> hashSet = m_registry[ guidValue ];
-			foreach ( var entry in hashSet )
+			foreach ( GameObjectTypeEntry entry in hashSet )
 			{
 				if ( m_typeMap.ContainsKey( entry.gameType ) || m_typeMap.ContainsValue( entry.apiType ) )
 					m_typeMap.Remove( entry.gameType );
@@ -188,7 +188,7 @@ namespace SEModAPIInternal.API.Common
 			Guid guidValue = new Guid( guid.Value );
 
 			HashSet<GameObjectTypeEntry> hashSet = m_registry[ guidValue ];
-			foreach ( var entry in hashSet )
+			foreach ( GameObjectTypeEntry entry in hashSet )
 			{
 				if ( entry.gameType == gameType )
 				{

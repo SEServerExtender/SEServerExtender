@@ -172,7 +172,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				List<ProductionQueueItem> list = new List<ProductionQueueItem>( );
 				if ( ObjectBuilder.Queue != null )
 				{
-					foreach ( var item in ObjectBuilder.Queue )
+					foreach ( MyObjectBuilder_ProductionBlock.QueueItem item in ObjectBuilder.Queue )
 						list.Add( item );
 				}
 

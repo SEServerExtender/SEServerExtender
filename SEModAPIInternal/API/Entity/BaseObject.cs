@@ -1111,7 +1111,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( m_backingObject == null )
 					return;
-				var rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
+				object rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
 				if ( rawValue == null )
 					return;
 
@@ -1122,7 +1122,7 @@ namespace SEModAPIInternal.API.Entity
 					m_rawDataHashSet.Clear( );
 
 				//Only allow valid entities in the hash set
-				foreach ( var entry in UtilityFunctions.ConvertHashSet( rawValue ) )
+				foreach ( object entry in UtilityFunctions.ConvertHashSet( rawValue ) )
 				{
 					if ( !IsValidEntity( entry ) )
 						continue;
@@ -1151,7 +1151,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( m_backingObject == null )
 					return;
-				var rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
+				object rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
 				if ( rawValue == null )
 					return;
 
@@ -1162,7 +1162,7 @@ namespace SEModAPIInternal.API.Entity
 					m_rawDataList.Clear( );
 
 				//Only allow valid entities in the list
-				foreach ( var entry in UtilityFunctions.ConvertList( rawValue ) )
+				foreach ( object entry in UtilityFunctions.ConvertList( rawValue ) )
 				{
 					if ( !IsValidEntity( entry ) )
 						continue;
@@ -1260,7 +1260,7 @@ namespace SEModAPIInternal.API.Entity
 		public static T ReadSpaceEngineersFile<T, TS>( string filename )
 			where TS : XmlSerializer1
 		{
-			var settings = new XmlReaderSettings
+			XmlReaderSettings settings = new XmlReaderSettings
 			{
 				IgnoreComments = true,
 				IgnoreWhitespace = true,
@@ -1270,9 +1270,9 @@ namespace SEModAPIInternal.API.Entity
 
 			if ( File.Exists( filename ) )
 			{
-				using ( var xmlReader = XmlReader.Create( filename, settings ) )
+				using ( XmlReader xmlReader = XmlReader.Create( filename, settings ) )
 				{
-					var serializer = (TS)Activator.CreateInstance( typeof( TS ) );
+					TS serializer = (TS)Activator.CreateInstance( typeof( TS ) );
 					obj = serializer.Deserialize( xmlReader );
 				}
 			}
@@ -1282,7 +1282,7 @@ namespace SEModAPIInternal.API.Entity
 
 		protected T Deserialize<T>( string xml )
 		{
-			using ( var textReader = new StringReader( xml ) )
+			using ( StringReader textReader = new StringReader( xml ) )
 			{
 				return (T)( new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Deserialize( textReader ) );
 			}
@@ -1290,7 +1290,7 @@ namespace SEModAPIInternal.API.Entity
 
 		protected string Serialize<T>( object item )
 		{
-			using ( var textWriter = new StringWriter( ) )
+			using ( StringWriter textWriter = new StringWriter( ) )
 			{
 				new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Serialize( textWriter, item );
 				return textWriter.ToString( );
@@ -1303,7 +1303,7 @@ namespace SEModAPIInternal.API.Entity
 			// How they appear to be writing the files currently.
 			try
 			{
-				using ( var xmlTextWriter = new XmlTextWriter( filename, null ) )
+				using ( XmlTextWriter xmlTextWriter = new XmlTextWriter( filename, null ) )
 				{
 					xmlTextWriter.Formatting = Formatting.Indented;
 					xmlTextWriter.Indentation = 2;
@@ -1359,7 +1359,7 @@ namespace SEModAPIInternal.API.Entity
 				m_resourceLock.AcquireShared( );
 
 				List<T> newList = new List<T>( );
-				foreach ( var def in GetInternalData( ).Values )
+				foreach ( BaseObject def in GetInternalData( ).Values )
 				{
 					if ( !( def is T ) )
 						continue;
@@ -1390,7 +1390,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return default( T );
 			MyObjectBuilder_Base newBase = MyObjectBuilderSerializer.CreateNewObject( typeof( MyObjectBuilder_EntityBase ) );
-			var newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { newBase } );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { newBase } );
 			GetInternalData( ).Add( m_definitions.Count, newEntry );
 			m_changed = true;
 
@@ -1402,7 +1402,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return default( T );
 
-			var newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source } );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source } );
 			GetInternalData( ).Add( m_definitions.Count, newEntry );
 			m_changed = true;
 
@@ -1413,7 +1413,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return default( T );
 
-			var newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source.ObjectBuilder } );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source.ObjectBuilder } );
 			GetInternalData( ).Add( m_definitions.Count, newEntry );
 			m_changed = true;
 
@@ -1438,7 +1438,7 @@ namespace SEModAPIInternal.API.Entity
 
 			if ( GetInternalData( ).ContainsKey( id ) )
 			{
-				var entry = GetInternalData( )[ id ];
+				BaseObject entry = GetInternalData( )[ id ];
 				GetInternalData( ).Remove( id );
 				entry.Dispose( );
 				m_changed = true;
@@ -1452,7 +1452,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return false;
 
-			foreach ( var def in m_definitions )
+			foreach ( KeyValuePair<long, BaseObject> def in m_definitions )
 			{
 				if ( def.Value.Equals( entry ) )
 				{
@@ -1468,7 +1468,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return false;
 
-			foreach ( var entry in entries )
+			foreach ( T entry in entries )
 			{
 				DeleteEntry( entry );
 			}
@@ -1480,7 +1480,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return false;
 
-			foreach ( var entry in entries.Keys )
+			foreach ( long entry in entries.Keys )
 			{
 				DeleteEntry( entry );
 			}
@@ -1496,7 +1496,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			//Copy the data into the manager
 			GetInternalData( ).Clear( );
-			foreach ( var definition in source )
+			foreach ( T definition in source )
 			{
 				GetInternalData( ).Add( GetInternalData( ).Count, definition );
 			}
@@ -1523,7 +1523,7 @@ namespace SEModAPIInternal.API.Entity
 				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.Invalid, "Failed to find matching definitions field in the given file." );
 
 			List<MyObjectBuilder_Base> baseDefs = new List<MyObjectBuilder_Base>( );
-			foreach ( var baseObject in GetInternalData( ).Values )
+			foreach ( BaseObject baseObject in GetInternalData( ).Values )
 			{
 				baseDefs.Add( baseObject.ObjectBuilder );
 			}

@@ -367,7 +367,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				m_voxelCount = voxels.Length;
 				m_materialTotals.Clear( );
 
-				foreach ( var entry in voxels )
+				foreach ( object entry in voxels )
 				{
 					try
 					{

@@ -41,7 +41,7 @@ namespace SEModAPIInternal.API.Entity
 			m_meteorManager = new BaseObjectManager( );
 
 			List<Event> events = new List<Event>( );
-			foreach ( var sectorEvent in definition.SectorEvents.Events )
+			foreach ( MyObjectBuilder_GlobalEventBase sectorEvent in definition.SectorEvents.Events )
 			{
 				events.Add( new Event( sectorEvent ) );
 			}
@@ -50,7 +50,7 @@ namespace SEModAPIInternal.API.Entity
 			List<VoxelMap> voxelMaps = new List<VoxelMap>( );
 			List<FloatingObject> floatingObjects = new List<FloatingObject>( );
 			List<Meteor> meteors = new List<Meteor>( );
-			foreach ( var sectorObject in definition.SectorObjects )
+			foreach ( MyObjectBuilder_EntityBase sectorObject in definition.SectorObjects )
 			{
 				if ( sectorObject.TypeId == typeof( MyObjectBuilder_CubeGrid ) )
 				{
@@ -107,26 +107,26 @@ namespace SEModAPIInternal.API.Entity
 				{
 					//Update the events in the base definition
 					baseSector.SectorEvents.Events.Clear( );
-					foreach ( var item in m_eventManager.GetTypedInternalData<Event>( ) )
+					foreach ( Event item in m_eventManager.GetTypedInternalData<Event>( ) )
 					{
 						baseSector.SectorEvents.Events.Add( item.ObjectBuilder );
 					}
 
 					//Update the sector objects in the base definition
 					baseSector.SectorObjects.Clear( );
-					foreach ( var item in m_cubeGridManager.GetTypedInternalData<CubeGridEntity>( ) )
+					foreach ( CubeGridEntity item in m_cubeGridManager.GetTypedInternalData<CubeGridEntity>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( var item in m_voxelMapManager.GetTypedInternalData<VoxelMap>( ) )
+					foreach ( VoxelMap item in m_voxelMapManager.GetTypedInternalData<VoxelMap>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( var item in m_floatingObjectManager.GetTypedInternalData<FloatingObject>( ) )
+					foreach ( FloatingObject item in m_floatingObjectManager.GetTypedInternalData<FloatingObject>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( var item in m_meteorManager.GetTypedInternalData<Meteor>( ) )
+					foreach ( Meteor item in m_meteorManager.GetTypedInternalData<Meteor>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
@@ -161,7 +161,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				var newList = m_eventManager.GetTypedInternalData<Event>( );
+				List<Event> newList = m_eventManager.GetTypedInternalData<Event>( );
 				return newList;
 			}
 		}
@@ -172,7 +172,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				var newList = m_cubeGridManager.GetTypedInternalData<CubeGridEntity>( );
+				List<CubeGridEntity> newList = m_cubeGridManager.GetTypedInternalData<CubeGridEntity>( );
 				return newList;
 			}
 		}
@@ -183,7 +183,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				var newList = m_voxelMapManager.GetTypedInternalData<VoxelMap>( );
+				List<VoxelMap> newList = m_voxelMapManager.GetTypedInternalData<VoxelMap>( );
 				return newList;
 			}
 		}
@@ -194,7 +194,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				var newList = m_floatingObjectManager.GetTypedInternalData<FloatingObject>( );
+				List<FloatingObject> newList = m_floatingObjectManager.GetTypedInternalData<FloatingObject>( );
 				return newList;
 			}
 		}
@@ -205,7 +205,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				var newList = m_meteorManager.GetTypedInternalData<Meteor>( );
+				List<Meteor> newList = m_meteorManager.GetTypedInternalData<Meteor>( );
 				return newList;
 			}
 		}
@@ -397,7 +397,7 @@ namespace SEModAPIInternal.API.Entity
 
 				m_rawDataHashSetResourceLock.AcquireExclusive( );
 
-				var rawValue = BaseObject.InvokeStaticMethod( InternalType, ObjectManagerGetEntityHashSet );
+				object rawValue = BaseObject.InvokeStaticMethod( InternalType, ObjectManagerGetEntityHashSet );
 				if ( rawValue == null )
 					return;
 
@@ -408,7 +408,7 @@ namespace SEModAPIInternal.API.Entity
 					m_rawDataHashSet.Clear( );
 
 				//Only allow valid entities in the hash set
-				foreach ( var entry in UtilityFunctions.ConvertHashSet( rawValue ) )
+				foreach ( object entry in UtilityFunctions.ConvertHashSet( rawValue ) )
 				{
 					if ( !IsValidEntity( entry ) )
 						continue;
@@ -482,7 +482,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 
 				//Cleanup old entities
-				foreach ( var entry in internalDataCopy )
+				foreach ( KeyValuePair<long, BaseObject> entry in internalDataCopy )
 				{
 					try
 					{

@@ -247,7 +247,7 @@ namespace SEModAPIInternal.API.Common
 
 				sendStructMethod = sendStructMethod.MakeGenericMethod( structType );
 
-				var netManager = GetNetworkManager( );
+				object netManager = GetNetworkManager( );
 				sendStructMethod.Invoke( netManager, new object[ ] { remoteUserId, data } );
 			}
 			catch ( Exception ex )
@@ -260,7 +260,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				var netManager = GetNetworkManager( );
+				object netManager = GetNetworkManager( );
 				BaseObject.InvokeEntityMethod( netManager, NetworkManagerRegisterChatReceiverMethod, new object[ ] { action } );
 			}
 			catch ( Exception ex )
@@ -279,8 +279,8 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				var netManager = GetNetworkManager( );
-				var mySyncLayer = BaseObject.GetEntityFieldValue( netManager, MySyncLayerField );
+				object netManager = GetNetworkManager( );
+				object mySyncLayer = BaseObject.GetEntityFieldValue( netManager, MySyncLayerField );
 				MethodInfo[ ] methods = mySyncLayer.GetType( ).GetMethods( );
 				MethodInfo sendMessageMethod = methods.FirstOrDefault( x => x.Name == MySyncLayerSendMessage );
 				sendMessageMethod = sendMessageMethod.MakeGenericMethod( msgType );
@@ -375,10 +375,10 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				var netManager = GetNetworkManager( );
-				var controlHandlerField = BaseObject.GetEntityFieldValue( netManager, NetworkManagerControlHandlerField );
+				object netManager = GetNetworkManager( );
+				object controlHandlerField = BaseObject.GetEntityFieldValue( netManager, NetworkManagerControlHandlerField );
 				Dictionary<int, object> controlHandlers = UtilityFunctions.ConvertDictionary<int>( controlHandlerField );
-				var worldJoinField = controlHandlers[ 0 ];
+				object worldJoinField = controlHandlers[ 0 ];
 				//FAD031AB4FED05B9FE273ACD199496EE
 				FieldInfo worldJoinDelegateField = worldJoinField.GetType( ).GetField( NetworkingOnWorldRequestField );
 				MulticastDelegate action = (MulticastDelegate)worldJoinDelegateField.GetValue( worldJoinField );
@@ -608,7 +608,7 @@ namespace SEModAPIInternal.API.Common
 					}
 				}
 
-				var myMultipartSender = Activator.CreateInstance( MyMultipartSenderType( ), new object[ ] { array, (int)array.Length, steamId, 1, size } );
+				object myMultipartSender = Activator.CreateInstance( MyMultipartSenderType( ), new object[ ] { array, (int)array.Length, steamId, 1, size } );
 				while ( (bool)BaseObject.InvokeEntityMethod( myMultipartSender, MyMultipartSenderSendPart ) )
 				{
 					Thread.Sleep( 2 + count );
@@ -649,9 +649,9 @@ namespace SEModAPIInternal.API.Common
 
 		private static void SendFlush( ulong steamId )
 		{
-			var netManager = GetNetworkManager( );
-			var mySyncLayer = BaseObject.GetEntityFieldValue( netManager, MySyncLayerField );
-			var myTransportLayer = BaseObject.GetEntityFieldValue( mySyncLayer, MyTransportLayerField );
+			object netManager = GetNetworkManager( );
+			object mySyncLayer = BaseObject.GetEntityFieldValue( netManager, MySyncLayerField );
+			object myTransportLayer = BaseObject.GetEntityFieldValue( mySyncLayer, MyTransportLayerField );
 			BaseObject.InvokeEntityMethod( myTransportLayer, MyTransportLayerClearMethod, new object[ ] { steamId } );
 		}
 
@@ -803,7 +803,7 @@ namespace SEModAPIInternal.API.Common
 				Object matchedHandler = null;
 				List<Object> matchedHandlerList = new List<object>( );
 				List<Type> messageTypes = new List<Type>( );
-				foreach ( var entry in packetRegisteryHashSet )
+				foreach ( object entry in packetRegisteryHashSet )
 				{
 					FieldInfo delegateField = entry.GetType( ).GetField( "C2AEC105AF9AB1EF82105555583139FC" );
 					Type fieldType = delegateField.FieldType;
