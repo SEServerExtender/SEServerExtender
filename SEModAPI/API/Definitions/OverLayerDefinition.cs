@@ -142,7 +142,7 @@ namespace SEModAPI.API.Definitions
 			m_changed = false;
 			m_isMutable = true;
 
-			foreach (var definition in baseDefinitions)
+			foreach (T definition in baseDefinitions)
 			{
 				NewEntry(definition);
 			}
@@ -247,7 +247,7 @@ namespace SEModAPI.API.Definitions
 		{
 			if (!IsMutable) return default(TU);
 
-			var sourceInstance = (T)Activator.CreateInstance(typeof(T), new object[] { });
+			T sourceInstance = (T)Activator.CreateInstance(typeof(T), new object[] { });
 			return NewEntry(sourceInstance);
 		}
 
@@ -255,7 +255,7 @@ namespace SEModAPI.API.Definitions
 		{
 			if (!IsMutable) return default(TU);
 
-			var newEntry = CreateOverLayerSubTypeInstance((T)Activator.CreateInstance(typeof(T), new object[] { }));
+			TU newEntry = CreateOverLayerSubTypeInstance((T)Activator.CreateInstance(typeof(T), new object[] { }));
 			GetInternalData().Add(id, newEntry);
 			m_changed = true;
 
@@ -266,7 +266,7 @@ namespace SEModAPI.API.Definitions
 		{
 			if (!IsMutable) return default(TU);
 
-			var newEntry = CreateOverLayerSubTypeInstance(source);
+			TU newEntry = CreateOverLayerSubTypeInstance(source);
 			GetInternalData().Add(m_definitions.Count, newEntry);
 			m_changed = true;
 
@@ -279,7 +279,7 @@ namespace SEModAPI.API.Definitions
 
 			//Create the new object
 			Type entryType = typeof(T);
-			var newEntry = (T)Activator.CreateInstance(entryType, new object[] { });
+			T newEntry = (T)Activator.CreateInstance(entryType, new object[] { });
 
 			//Copy the field data
 			//TODO - Find a way to fully copy complex data structures in fields instead of just copying reference
@@ -310,7 +310,7 @@ namespace SEModAPI.API.Definitions
 		{
 			if (!IsMutable) return false;
 
-			foreach (var def in m_definitions)
+			foreach (KeyValuePair<long, TU> def in m_definitions)
 			{
 				if (def.Value.BaseDefinition.Equals(entry))
 				{
@@ -327,7 +327,7 @@ namespace SEModAPI.API.Definitions
 		{
 			if (!IsMutable) return false;
 
-			foreach (var def in m_definitions)
+			foreach (KeyValuePair<long, TU> def in m_definitions)
 			{
 				if (def.Value.Equals(entry))
 				{
@@ -461,7 +461,7 @@ namespace SEModAPI.API.Definitions
 		public static T1 ReadSpaceEngineersFile<T1, TS>(string filename)
 			where TS : XmlSerializer1
 		{
-			var settings = new XmlReaderSettings
+			XmlReaderSettings settings = new XmlReaderSettings
 			{
 				IgnoreComments = true,
 				IgnoreWhitespace = true,
@@ -471,9 +471,9 @@ namespace SEModAPI.API.Definitions
 
 			if (File.Exists(filename))
 			{
-				using (var xmlReader = XmlReader.Create(filename, settings))
+				using (XmlReader xmlReader = XmlReader.Create(filename, settings))
 				{
-					var serializer = (TS)Activator.CreateInstance(typeof(TS));
+					TS serializer = (TS)Activator.CreateInstance(typeof(TS));
 					obj = serializer.Deserialize(xmlReader);
 				}
 			}
@@ -483,7 +483,7 @@ namespace SEModAPI.API.Definitions
 
 		protected T1 Deserialize<T1>(string xml)
 		{
-			using (var textReader = new StringReader(xml))
+			using (StringReader textReader = new StringReader(xml))
 			{
 				return (T1)(new XmlSerializerContract().GetSerializer(typeof(T1)).Deserialize(textReader));
 			}
@@ -491,7 +491,7 @@ namespace SEModAPI.API.Definitions
 
 		protected string Serialize<T1>(object item)
 		{
-			using (var textWriter = new StringWriter())
+			using (StringWriter textWriter = new StringWriter())
 			{
 				new XmlSerializerContract().GetSerializer(typeof(T1)).Serialize(textWriter, item);
 				return textWriter.ToString();
@@ -504,7 +504,7 @@ namespace SEModAPI.API.Definitions
 			// How they appear to be writing the files currently.
 			try
 			{
-				using (var xmlTextWriter = new XmlTextWriter(filename, null))
+				using (XmlTextWriter xmlTextWriter = new XmlTextWriter(filename, null))
 				{
 					xmlTextWriter.Formatting = Formatting.Indented;
 					xmlTextWriter.Indentation = 2;
@@ -592,7 +592,7 @@ namespace SEModAPI.API.Definitions
 
 			//Copy the data into the manager
 			GetInternalData().Clear();
-			foreach (var definition in baseDefinitions)
+			foreach (T definition in baseDefinitions)
 			{
 				NewEntry(definition);
 			}
@@ -602,7 +602,7 @@ namespace SEModAPI.API.Definitions
 		{
 			//Copy the data into the manager
 			GetInternalData().Clear();
-			foreach (var definition in source)
+			foreach (T definition in source)
 			{
 				NewEntry(definition);
 			}
@@ -612,7 +612,7 @@ namespace SEModAPI.API.Definitions
 		{
 			//Copy the data into the manager
 			GetInternalData().Clear();
-			foreach (var definition in source)
+			foreach (TU definition in source)
 			{
 				NewEntry(definition.BaseDefinition);
 			}

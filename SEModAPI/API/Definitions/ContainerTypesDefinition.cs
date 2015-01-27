@@ -31,7 +31,7 @@ namespace SEModAPI.API.Definitions
             get
             {
 				if (base.Changed) return true;
-				foreach (var def in m_itemsManager.Definitions)
+				foreach (ContainerTypeItem def in m_itemsManager.Definitions)
                 {
                     if (def.Changed)
                         return true;

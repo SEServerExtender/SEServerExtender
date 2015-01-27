@@ -29,7 +29,7 @@ namespace SEModAPI.API.Definitions
 			get
 			{
 				if (base.Changed) return true;
-				foreach (var def in m_prefabsManager.Definitions)
+				foreach (SpawnGroupPrefab def in m_prefabsManager.Definitions)
 				{
 					if (def.Changed)
 						return true;

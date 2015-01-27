@@ -43,15 +43,15 @@ namespace SEModAPI.API.Definitions
 		/// <param name="definitions">The definition to serialize.</param>
 		public void Serialize(MyObjectBuilder_Definitions definitions)
 		{
-			var settings = new XmlWriterSettings()
+			XmlWriterSettings settings = new XmlWriterSettings()
 			{
 				CloseOutput = true,
 				Indent = true,
 				ConformanceLevel = ConformanceLevel.Auto,
 				NewLineHandling = NewLineHandling.Entitize
 			};
-			var writer = XmlWriter.Create(m_configFileInfo.FullName, settings);
-			var serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
+			XmlWriter writer = XmlWriter.Create(m_configFileInfo.FullName, settings);
+			MyObjectBuilder_DefinitionsSerializer serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
 			serializer.Serialize(writer,definitions);
 			writer.Close();
 		}
@@ -66,14 +66,14 @@ namespace SEModAPI.API.Definitions
 				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidFileInfo, "The file pointed by configFileInfo does not exists." + "\r\n" + "Cannot deserialize: " + m_configFileInfo.FullName);
 			}
 
-			var settings = new XmlReaderSettings();
-			var reader = XmlReader.Create(m_configFileInfo.FullName, settings);
-			var serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
+			XmlReaderSettings settings = new XmlReaderSettings();
+			XmlReader reader = XmlReader.Create(m_configFileInfo.FullName, settings);
+			MyObjectBuilder_DefinitionsSerializer serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
 			if (!serializer.CanDeserialize(reader))
 			{
 				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidConfigurationFile, "The file pointed by configFileInfo cannot be deserialized: " + m_configFileInfo.FullName);
 			}
-			var definitions = (MyObjectBuilder_Definitions) serializer.Deserialize(reader);
+			MyObjectBuilder_Definitions definitions = (MyObjectBuilder_Definitions) serializer.Deserialize(reader);
 			reader.Close();
 			return definitions;
 		}

@@ -11,6 +11,8 @@ using System.Linq;
 
 namespace SEModAPI.API.Definitions
 {
+	using System.Collections.Generic;
+
 	[DataContract]
 	public class DedicatedConfigDefinition
 	{
@@ -784,7 +786,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_definition.Banned.ConvertAll( x => x.ToString( ) ).ToArray( ); }
 			set
 			{
-				var banned = value.ToList( ).ConvertAll( x => ulong.Parse( x ) );
+				List<ulong> banned = value.ToList( ).ConvertAll( x => ulong.Parse( x ) );
 				if ( m_definition.Banned == banned ) return;
 				m_definition.Banned = banned;
 			}
@@ -803,7 +805,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_definition.Mods.ConvertAll( x => x.ToString( ) ).ToArray( ); }
 			set
 			{
-				var mods = value.ToList( ).ConvertAll( x => ulong.Parse( x ) );
+				List<ulong> mods = value.ToList( ).ConvertAll( x => ulong.Parse( x ) );
 				if ( m_definition.Mods == mods ) return;
 				m_definition.Mods = mods;
 
@@ -908,15 +910,15 @@ namespace SEModAPI.API.Definitions
 
 			try
 			{
-				var settings = new XmlReaderSettings
+				XmlReaderSettings settings = new XmlReaderSettings
 				{
 					IgnoreComments = true,
 					IgnoreWhitespace = true,
 				};
 
-				using ( var xmlReader = XmlReader.Create( filePath, settings ) )
+				using ( XmlReader xmlReader = XmlReader.Create( filePath, settings ) )
 				{
-					var serializer = (MyConfigDedicatedDataSerializer)Activator.CreateInstance( typeof( MyConfigDedicatedDataSerializer ) );
+					MyConfigDedicatedDataSerializer serializer = (MyConfigDedicatedDataSerializer)Activator.CreateInstance( typeof( MyConfigDedicatedDataSerializer ) );
 					fileContent = serializer.Deserialize( xmlReader );
 				}
 			}
@@ -940,7 +942,7 @@ namespace SEModAPI.API.Definitions
 			//Save the definitions container out to the file
 			try
 			{
-				using ( var xmlTextWriter = new XmlTextWriter( fileInfo.FullName, null ) )
+				using ( XmlTextWriter xmlTextWriter = new XmlTextWriter( fileInfo.FullName, null ) )
 				{
 					xmlTextWriter.Formatting = Formatting.Indented;
 					xmlTextWriter.Indentation = 2;

@@ -180,10 +180,10 @@ namespace SEModAPI.API
 		public bool IsBaseAssembliesChanged()
 		{
 			// We use the Bin64 Path, as these assemblies are marked "All CPU", and will work regardless of processor architecture.
-			var baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
-			var appFilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			string baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
+			string appFilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-			foreach (var filename in CoreSpaceEngineersFiles)
+			foreach (string filename in CoreSpaceEngineersFiles)
 			{
 				if (DoFilesDiffer(baseFilePath, appFilePath, filename))
 					return true;
@@ -195,11 +195,11 @@ namespace SEModAPI.API
 		public bool UpdateBaseFiles()
 		{
 			// We use the Bin64 Path, as these assemblies are marked "All CPU", and will work regardless of processor architecture.
-			var baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
+			string baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
 
-			foreach (var filename in CoreSpaceEngineersFiles)
+			foreach (string filename in CoreSpaceEngineersFiles)
 			{
-				var sourceFile = Path.Combine(baseFilePath, filename);
+				string sourceFile = Path.Combine(baseFilePath, filename);
 
 				if (File.Exists(sourceFile))
 				{
@@ -220,17 +220,17 @@ namespace SEModAPI.API
 			if (File.Exists(file1) != File.Exists(file2))
 				return false;
 
-			var buffer1 = File.ReadAllBytes(file1);
-			var buffer2 = File.ReadAllBytes(file2);
+			byte[ ] buffer1 = File.ReadAllBytes(file1);
+			byte[ ] buffer2 = File.ReadAllBytes(file2);
 
 			if (buffer1.Length != buffer2.Length)
 				return true;
 
-			var ass1 = Assembly.Load(buffer1);
-			var guid1 = ass1.ManifestModule.ModuleVersionId;
+			Assembly ass1 = Assembly.Load(buffer1);
+			Guid guid1 = ass1.ManifestModule.ModuleVersionId;
 
-			var ass2 = Assembly.Load(buffer2);
-			var guid2 = ass2.ManifestModule.ModuleVersionId;
+			Assembly ass2 = Assembly.Load(buffer2);
+			Guid guid2 = ass2.ManifestModule.ModuleVersionId;
 
 			return guid1 != guid2;
 		}
@@ -243,7 +243,7 @@ namespace SEModAPI.API
 
 		internal static int? RunElevated(string fileName, string arguments, bool elevate, bool waitForExit)
 		{
-			var processInfo = new ProcessStartInfo(fileName, arguments);
+			ProcessStartInfo processInfo = new ProcessStartInfo(fileName, arguments);
 
 			if (elevate)
 			{
@@ -252,7 +252,7 @@ namespace SEModAPI.API
 
 			try
 			{
-				var process = Process.Start(processInfo);
+				Process process = Process.Start(processInfo);
 
 				if (waitForExit)
 				{

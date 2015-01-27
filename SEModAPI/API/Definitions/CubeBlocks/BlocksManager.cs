@@ -175,7 +175,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns></returns>
 		public bool FindChangesInDefinitions()
 		{
-			foreach (var block in ExtractDefinitionsFromContainers())
+			foreach (BlockDefinition block in ExtractDefinitionsFromContainers())
 			{
 				if (block.Changed)
 				{
@@ -201,67 +201,67 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			List<MyObjectBuilder_CubeBlockDefinition> blocks = new List<MyObjectBuilder_CubeBlockDefinition>();
 
-			foreach (var item in _cubeBlocks)
+			foreach (CubeBlockDef item in _cubeBlocks)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _assemblers)
+			foreach (AssemblerDefinition item in _assemblers)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _cargoContainers)
+			foreach (CargoContainerDefinition item in _cargoContainers)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _cockpits)
+			foreach (CockpitDefinition item in _cockpits)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _gravityGenerators)
+			foreach (GravityGeneratorDefinition item in _gravityGenerators)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _gyroscopes)
+			foreach (GyroscopeDefinition item in _gyroscopes)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _lightingBlocks)
+			foreach (LightingBlockDefinition item in _lightingBlocks)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _mergeBlocks)
+			foreach (MergeBlockDefinition item in _mergeBlocks)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _motorStators)
+			foreach (MotorStatorDefinition item in _motorStators)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _oreDetectors)
+			foreach (OreDetectorDefinition item in _oreDetectors)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _reactors)
+			foreach (ReactorDefinition item in _reactors)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _refineries)
+			foreach (RefineryDefinition item in _refineries)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _shipDrills)
+			foreach (ShipDrillDefinition item in _shipDrills)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _solarPanels)
+			foreach (SolarPanelDefinition item in _solarPanels)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _thrusters)
+			foreach (ThrusterDefinition item in _thrusters)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
-			foreach (var item in _virtualMasses)
+			foreach (VirtualMassDefinition item in _virtualMasses)
 			{
 				blocks.Add(item.GetSubTypeDefinition());
 			}
@@ -276,63 +276,63 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			List<BlockDefinition> blocks = new List<BlockDefinition>();
 
-			foreach (var item in _cubeBlocks)
+			foreach (CubeBlockDef item in _cubeBlocks)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _cargoContainers)
+			foreach (CargoContainerDefinition item in _cargoContainers)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _cockpits)
+			foreach (CockpitDefinition item in _cockpits)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _gravityGenerators)
+			foreach (GravityGeneratorDefinition item in _gravityGenerators)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _gyroscopes)
+			foreach (GyroscopeDefinition item in _gyroscopes)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _lightingBlocks)
+			foreach (LightingBlockDefinition item in _lightingBlocks)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _mergeBlocks)
+			foreach (MergeBlockDefinition item in _mergeBlocks)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _motorStators)
+			foreach (MotorStatorDefinition item in _motorStators)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _oreDetectors)
+			foreach (OreDetectorDefinition item in _oreDetectors)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _reactors)
+			foreach (ReactorDefinition item in _reactors)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _refineries)
+			foreach (RefineryDefinition item in _refineries)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _shipDrills)
+			foreach (ShipDrillDefinition item in _shipDrills)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _solarPanels)
+			foreach (SolarPanelDefinition item in _solarPanels)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _thrusters)
+			foreach (ThrusterDefinition item in _thrusters)
 			{
 				blocks.Add(item);
 			}
-			foreach (var item in _virtualMasses)
+			foreach (VirtualMassDefinition item in _virtualMasses)
 			{
 				blocks.Add(item);
 			}
