@@ -147,6 +147,8 @@ namespace SEModAPIInternal.API.Common
 		public static string PlayerMapCameraDataClass = "1363E4575A0EAB9C07E1CC9EE70B0711";
 		public static string PlayerMapGetCameraDataField = "3A4EC5D20D8A9F113F78FC05516F0D8B";
 
+		public static string PlayerMapForceDisplaySpawnMenu = "BFF5EBE381CB1EE971FAE0A3DECAB00F";
+
         // SteamIdToPlayerId? public long 664B2E5CBB958C38E24656118771D345(ulong u00336ADF4D8C43635669729322024D2AD33, int u0032FA8049E153F637DEA99600B785ECCA0 = 0)
 
 

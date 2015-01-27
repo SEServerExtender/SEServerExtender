@@ -336,6 +336,10 @@ namespace SEModAPIInternal.API.Entity
 
 				return true;
 			}
+			catch (AmbiguousMatchException aex)
+			{
+				return true;
+			}
 			catch (Exception ex)
 			{
 				if (SandboxGameAssemblyWrapper.IsDebugging)
@@ -370,6 +374,27 @@ namespace SEModAPIInternal.API.Entity
 					LogManager.ErrorLog.WriteLineAndConsole("Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "': " + ex.Message);
 				LogManager.ErrorLog.WriteLine(ex);
 				return false;
+			}
+		}
+
+		public static bool HasNestedType(Type objectType, string nestedTypeName)
+		{
+			try
+			{
+				if(string.IsNullOrEmpty(nestedTypeName))
+					return false;
+
+				Type type = objectType.GetNestedType(nestedTypeName, BindingFlags.Public | BindingFlags.NonPublic);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				if (SandboxGameAssemblyWrapper.IsDebugging)
+					LogManager.ErrorLog.WriteLineAndConsole("Failed to find nested type '" + nestedTypeName + "' in type '" + objectType.FullName + "': " + ex.Message);
+
+				LogManager.ErrorLog.WriteLine(ex);
+				return false;
+
 			}
 		}
 

@@ -576,10 +576,10 @@ namespace SEModAPIExtensions.API
 				if (SandboxGameAssemblyWrapper.Instance.IsGameStarted)
 				{
 					if (CommandLineArgs.worldRequestReplace)
-						NetworkManager.Instance.ReplaceWorldJoin();
+						ServerNetworkManager.Instance.ReplaceWorldJoin();
 
 					if (CommandLineArgs.worldDataModify)
-						NetworkManager.Instance.ReplaceWorldData();
+						ServerNetworkManager.Instance.ReplaceWorldData();
 
 					SandboxGameAssemblyWrapper.InitAPIGateway();
 					m_pluginManager.LoadPlugins();
