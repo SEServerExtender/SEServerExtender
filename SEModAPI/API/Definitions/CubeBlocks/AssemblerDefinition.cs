@@ -79,7 +79,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		new public MyObjectBuilder_AssemblerDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_AssemblerDefinition) m_baseDefinition;
+			return (MyObjectBuilder_AssemblerDefinition) BaseDefinition;
 		}
 
 		#endregion

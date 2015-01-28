@@ -76,7 +76,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_ThrustDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_ThrustDefinition)m_baseDefinition;
+			return (MyObjectBuilder_ThrustDefinition)BaseDefinition;
 		}
 
 		#endregion

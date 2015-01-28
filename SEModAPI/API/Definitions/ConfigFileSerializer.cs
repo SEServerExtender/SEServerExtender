@@ -8,13 +8,13 @@ namespace SEModAPI.API.Definitions
 {
 	public class ConfigFileSerializer
 	{
-		private const string m_DefaultExtension = ".sbc";
-		private static FileInfo m_configFileInfo;
+		private const string DefaultExtension = ".sbc";
+		private static FileInfo _configFileInfo;
 
 		public ConfigFileSerializer(FileInfo configFileInfo, bool useDefaultFileName = true)
 		{
 			EnsureFileInfoValidity(configFileInfo, useDefaultFileName);
-			m_configFileInfo = configFileInfo;
+			_configFileInfo = configFileInfo;
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace SEModAPI.API.Definitions
 			}
 			if (defaultName)
 			{
-				if (configFileInfo.Extension != m_DefaultExtension)
+				if (configFileInfo.Extension != DefaultExtension)
 				{
 					throw new SEConfigurationException(SEConfigurationExceptionState.InvalidDefaultConfigFileName, "The given file name is not matching the default configuration name pattern.");
 				}
@@ -50,7 +50,7 @@ namespace SEModAPI.API.Definitions
 				ConformanceLevel = ConformanceLevel.Auto,
 				NewLineHandling = NewLineHandling.Entitize
 			};
-			XmlWriter writer = XmlWriter.Create(m_configFileInfo.FullName, settings);
+			XmlWriter writer = XmlWriter.Create(_configFileInfo.FullName, settings);
 			MyObjectBuilder_DefinitionsSerializer serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
 			serializer.Serialize(writer,definitions);
 			writer.Close();
@@ -62,16 +62,16 @@ namespace SEModAPI.API.Definitions
 		/// <returns>The deserialized definition.</returns>
 		public MyObjectBuilder_Definitions Deserialize()
 		{
-			if (!m_configFileInfo.Exists){
-				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidFileInfo, "The file pointed by configFileInfo does not exists." + "\r\n" + "Cannot deserialize: " + m_configFileInfo.FullName);
+			if (!_configFileInfo.Exists){
+				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidFileInfo, "The file pointed by configFileInfo does not exists." + "\r\n" + "Cannot deserialize: " + _configFileInfo.FullName);
 			}
 
 			XmlReaderSettings settings = new XmlReaderSettings();
-			XmlReader reader = XmlReader.Create(m_configFileInfo.FullName, settings);
+			XmlReader reader = XmlReader.Create(_configFileInfo.FullName, settings);
 			MyObjectBuilder_DefinitionsSerializer serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
 			if (!serializer.CanDeserialize(reader))
 			{
-				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidConfigurationFile, "The file pointed by configFileInfo cannot be deserialized: " + m_configFileInfo.FullName);
+				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidConfigurationFile, "The file pointed by configFileInfo cannot be deserialized: " + _configFileInfo.FullName);
 			}
 			MyObjectBuilder_Definitions definitions = (MyObjectBuilder_Definitions) serializer.Deserialize(reader);
 			reader.Close();

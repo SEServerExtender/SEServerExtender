@@ -42,7 +42,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_MergeBlockDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_MergeBlockDefinition)m_baseDefinition;
+			return (MyObjectBuilder_MergeBlockDefinition)BaseDefinition;
 		}
 
 		#endregion

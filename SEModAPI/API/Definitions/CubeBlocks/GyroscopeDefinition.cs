@@ -42,7 +42,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_GyroDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_GyroDefinition)m_baseDefinition;
+			return (MyObjectBuilder_GyroDefinition)BaseDefinition;
 		}
 
 		#endregion

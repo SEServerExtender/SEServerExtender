@@ -59,7 +59,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_ShipDrillDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_ShipDrillDefinition)m_baseDefinition;
+			return (MyObjectBuilder_ShipDrillDefinition)BaseDefinition;
 		}
 
 		#endregion
