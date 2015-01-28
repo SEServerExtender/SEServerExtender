@@ -1,29 +1,21 @@
-﻿using Havok;
-
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
-
+using Havok;
+using Microsoft.Xml.Serialization.GeneratedAssembly;
+using Sandbox.Common.Components;
 using Sandbox.Common.ObjectBuilders;
-
+using Sandbox.ModAPI;
 using SEModAPI.API;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.Support;
-
 using VRageMath;
-
-using Sandbox.Common.Components;
-
-using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Entity
 {
-	[DataContract(Name = "BaseEntityProxy")]
+	[DataContract( Name = "BaseEntityProxy" )]
 	public class BaseEntity : BaseObject
 	{
 		#region "Attributes"
@@ -40,17 +32,23 @@ namespace SEModAPIInternal.API.Entity
 
 		//Definition
 		public static string BaseEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
+
 		public static string BaseEntityClass = "F6DF01EE4159339113BB9650DEEE1913";
 
 		//Methods
 		public static string BaseEntityGetObjectBuilderMethod = "GetObjectBuilder";
+
 		public static string BaseEntityGetPhysicsManagerMethod = "691FA4830C80511C934826203A251981";
-        //public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
+
+		//public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
 		public static string BaseEntityCombineOnClosedEventMethod = "C1704F26C9D5D7EBE19DC78AB8923F4E";
+
 		public static string BaseEntityGetIsDisposedMethod = "6D8F627C1C0F9F166031C3B600FEDA60";
 		public static string BaseEntityGetOrientationMatrixMethod = "FD50436D896ACC794550210055349FE0";
+
 		//public static string BaseEntityGetNetManagerMethod = "F4456F82186EC3AE6C73294FA6C0A11D";
-        public static string BaseEntityGetNetManagerMethod = "get_SyncObject";
+		public static string BaseEntityGetNetManagerMethod = "get_SyncObject";
+
 		public static string BaseEntitySetEntityIdMethod = "D3D6702587D6336FEE37725E8D2C52CD";
 		public static string BaseEntityGetDisplayNameMethod = "DB913685BC5152DC19A4796E9E8CF659";
 		public static string BaseEntitySetDisplayNameMethod = "DFF609C956C433D5F03DAA6AA8814223";
@@ -66,125 +64,125 @@ namespace SEModAPIInternal.API.Entity
 		public static string PhysicsManagerClass = "5BAA908D4615EC702E28985E09DBEF8F";
 		public static string PhysicsManagerGetRigidBodyMethod = "634E5EC534E45874230868BD089055B1";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public BaseEntity(MyObjectBuilder_EntityBase baseEntity)
-			: base(baseEntity)
+		public BaseEntity( MyObjectBuilder_EntityBase baseEntity )
+			: base( baseEntity )
 		{
-			if (baseEntity != null)
+			if ( baseEntity != null )
 			{
 				m_entityId = baseEntity.EntityId;
-				if (baseEntity.PositionAndOrientation != null)
+				if ( baseEntity.PositionAndOrientation != null )
 				{
-					m_positionOrientation = baseEntity.PositionAndOrientation.GetValueOrDefault();
+					m_positionOrientation = baseEntity.PositionAndOrientation.GetValueOrDefault( );
 				}
 				else
 				{
-					m_positionOrientation = new MyPositionAndOrientation();
-					m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition(new Vector3D(-500000, -500000, -500000), new Vector3D(500000, 500000, 500000));
-					m_positionOrientation.Forward = new Vector3(0, 0, 1);
-					m_positionOrientation.Up = new Vector3(0, 1, 0);
+					m_positionOrientation = new MyPositionAndOrientation( );
+					m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3D( -500000, -500000, -500000 ), new Vector3D( 500000, 500000, 500000 ) );
+					m_positionOrientation.Forward = new Vector3( 0, 0, 1 );
+					m_positionOrientation.Up = new Vector3( 0, 1, 0 );
 				}
 			}
 			else
 			{
 				m_entityId = 0;
-				m_positionOrientation = new MyPositionAndOrientation();
-				m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition(new Vector3(-500000, -500000, -500000), new Vector3(500000, 500000, 500000));
-				m_positionOrientation.Forward = new Vector3(0, 0, 1);
-				m_positionOrientation.Up = new Vector3(0, 1, 0);
+				m_positionOrientation = new MyPositionAndOrientation( );
+				m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) );
+				m_positionOrientation.Forward = new Vector3( 0, 0, 1 );
+				m_positionOrientation.Up = new Vector3( 0, 1, 0 );
 			}
 
-			m_linearVelocity = new Vector3(0, 0, 0);
-			m_angularVelocity = new Vector3(0, 0, 0);
+			m_linearVelocity = new Vector3( 0, 0, 0 );
+			m_angularVelocity = new Vector3( 0, 0, 0 );
 			m_maxLinearVelocity = (float)104.7;
 		}
 
-		public BaseEntity(MyObjectBuilder_EntityBase baseEntity, Object backingObject)
-			: base(baseEntity, backingObject)
+		public BaseEntity( MyObjectBuilder_EntityBase baseEntity, Object backingObject )
+			: base( baseEntity, backingObject )
 		{
-			if (baseEntity != null)
+			if ( baseEntity != null )
 			{
 				m_entityId = baseEntity.EntityId;
-				if (baseEntity.PositionAndOrientation != null)
+				if ( baseEntity.PositionAndOrientation != null )
 				{
-					m_positionOrientation = baseEntity.PositionAndOrientation.GetValueOrDefault();
+					m_positionOrientation = baseEntity.PositionAndOrientation.GetValueOrDefault( );
 				}
 				else
 				{
-					m_positionOrientation = new MyPositionAndOrientation();
-					m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition(new Vector3(-500000, -500000, -500000), new Vector3(500000, 500000, 500000));
-					m_positionOrientation.Forward = new Vector3(0, 0, 1);
-					m_positionOrientation.Up = new Vector3(0, 1, 0);
+					m_positionOrientation = new MyPositionAndOrientation( );
+					m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) );
+					m_positionOrientation.Forward = new Vector3( 0, 0, 1 );
+					m_positionOrientation.Up = new Vector3( 0, 1, 0 );
 				}
 			}
 			else
 			{
 				m_entityId = 0;
-				m_positionOrientation = new MyPositionAndOrientation();
-				m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition(new Vector3(-500000, -500000, -500000), new Vector3(500000, 500000, 500000));
-				m_positionOrientation.Forward = new Vector3(0, 0, 1);
-				m_positionOrientation.Up = new Vector3(0, 1, 0);
+				m_positionOrientation = new MyPositionAndOrientation( );
+				m_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) );
+				m_positionOrientation.Forward = new Vector3( 0, 0, 1 );
+				m_positionOrientation.Up = new Vector3( 0, 1, 0 );
 			}
 
-			m_networkManager = new BaseEntityNetworkManager(this, GetEntityNetworkManager(BackingObject));
+			m_networkManager = new BaseEntityNetworkManager( this, GetEntityNetworkManager( BackingObject ) );
 
-			m_linearVelocity = new Vector3(0, 0, 0);
-			m_angularVelocity = new Vector3(0, 0, 0);
+			m_linearVelocity = new Vector3( 0, 0, 0 );
+			m_angularVelocity = new Vector3( 0, 0, 0 );
 			m_maxLinearVelocity = (float)104.7;
 
-			if (EntityId != 0)
+			if ( EntityId != 0 )
 			{
-				GameEntityManager.AddEntity(EntityId, this);
+				GameEntityManager.AddEntity( EntityId, this );
 			}
 
 			Action action = InternalRegisterEntityMovedEvent;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal static Type InternalType
 		{
 			get
 			{
-				if (m_internalType == null)
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(BaseEntityNamespace, BaseEntityClass);
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( BaseEntityNamespace, BaseEntityClass );
 				return m_internalType;
 			}
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[Browsable(true)]
-		[ReadOnly(true)]
-		[Description("Formatted Name of an entity")]
+		[Category( "Entity" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
+		[Description( "Formatted Name of an entity" )]
 		public override string Name
 		{
 			get
 			{
-				return ObjectBuilder.Name == "" ? ObjectBuilder.TypeId.ToString() : ObjectBuilder.EntityId.ToString();
+				return ObjectBuilder.Name == "" ? ObjectBuilder.TypeId.ToString( ) : ObjectBuilder.EntityId.ToString( );
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_EntityBase ObjectBuilder
 		{
 			get
 			{
 				MyObjectBuilder_EntityBase entityBase = (MyObjectBuilder_EntityBase)base.ObjectBuilder;
-				if (entityBase == null)
+				if ( entityBase == null )
 					return (MyObjectBuilder_EntityBase)null;
 
 				entityBase.EntityId = m_entityId;
@@ -199,59 +197,59 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[DataMember]
-		[Category("Entity")]
+		[Category( "Entity" )]
 		public virtual string DisplayName
 		{
 			get { return m_displayName; }
 			set
 			{
-				if (m_displayName == value) return;
+				if ( m_displayName == value ) return;
 				m_displayName = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateDisplayName;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[Browsable(true)]
-		[Description("The unique entity ID representing a functional entity in-game")]
+		[Category( "Entity" )]
+		[Browsable( true )]
+		[Description( "The unique entity ID representing a functional entity in-game" )]
 		public long EntityId
 		{
 			get
 			{
-				if (BackingObject == null)
+				if ( BackingObject == null )
 					return m_entityId;
 
-				long entityId = BaseEntity.GetEntityId(BackingObject);
-				if (entityId == 0)
+				long entityId = BaseEntity.GetEntityId( BackingObject );
+				if ( entityId == 0 )
 					return m_entityId;
 
 				return entityId;
 			}
 			set
 			{
-				if (m_entityId == value) return;
+				if ( m_entityId == value ) return;
 				m_entityId = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateEntityId;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public MyPersistentEntityFlags2 PersistentFlags
 		{
 			get { return ObjectBuilder.PersistentFlags; }
@@ -262,8 +260,8 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
+		[Category( "Entity" )]
+		[Browsable( false )]
 		public MyPositionAndOrientation PositionAndOrientation
 		{
 			get
@@ -281,17 +279,17 @@ namespace SEModAPIInternal.API.Entity
 				 */
 
 				HkRigidBody body = PhysicsBody;
-				if (body == null || body.IsDisposed)
+				if ( body == null || body.IsDisposed )
 					return m_positionOrientation;
 
 				IMyEntity entity = Entity;
-				if (entity == null)
+				if ( entity == null )
 					return m_positionOrientation;
 
-				if (entity.Physics == null)
+				if ( entity.Physics == null )
 					return m_positionOrientation;
 
-				MyPositionAndOrientation positionOrientation = new MyPositionAndOrientation(entity.Physics.GetWorldMatrix());				
+				MyPositionAndOrientation positionOrientation = new MyPositionAndOrientation( entity.Physics.GetWorldMatrix( ) );
 				return positionOrientation;
 			}
 			set
@@ -299,19 +297,19 @@ namespace SEModAPIInternal.API.Entity
 				m_positionOrientation = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdatePosition;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 					Action action2 = InternalUpdateOrientation;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action2);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action2 );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[TypeConverter(typeof(Vector3DTypeConverter))]
+		[Category( "Entity" )]
+		[TypeConverter( typeof( Vector3DTypeConverter ) )]
 		public Vector3DWrapper Position
 		{
 			get { return PositionAndOrientation.Position; }
@@ -320,17 +318,17 @@ namespace SEModAPIInternal.API.Entity
 				m_positionOrientation.Position = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdatePosition;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[TypeConverter(typeof(Vector3TypeConverter))]
+		[Category( "Entity" )]
+		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3Wrapper Up
 		{
 			get { return PositionAndOrientation.Up; }
@@ -339,17 +337,17 @@ namespace SEModAPIInternal.API.Entity
 				m_positionOrientation.Up = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateOrientation;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[TypeConverter(typeof(Vector3TypeConverter))]
+		[Category( "Entity" )]
+		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3Wrapper Forward
 		{
 			get { return PositionAndOrientation.Forward; }
@@ -358,29 +356,29 @@ namespace SEModAPIInternal.API.Entity
 				m_positionOrientation.Forward = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateOrientation;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[TypeConverter(typeof(Vector3TypeConverter))]
+		[Category( "Entity" )]
+		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3Wrapper LinearVelocity
 		{
 			get
 			{
-				if (BackingObject == null)
+				if ( BackingObject == null )
 					return m_linearVelocity;
 
 				HkRigidBody body = PhysicsBody;
-				if (body == null || body.IsDisposed)
+				if ( body == null || body.IsDisposed )
 					return m_linearVelocity;
 
-				if (body.LinearVelocity == Vector3.Zero)
+				if ( body.LinearVelocity == Vector3.Zero )
 					return m_linearVelocity;
 
 				return body.LinearVelocity;
@@ -390,26 +388,26 @@ namespace SEModAPIInternal.API.Entity
 				m_linearVelocity = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateLinearVelocity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[TypeConverter(typeof(Vector3TypeConverter))]
+		[Category( "Entity" )]
+		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3Wrapper AngularVelocity
 		{
 			get
 			{
-				if (BackingObject == null)
+				if ( BackingObject == null )
 					return m_angularVelocity;
 
 				HkRigidBody body = PhysicsBody;
-				if (body == null || body.IsDisposed)
+				if ( body == null || body.IsDisposed )
 					return m_angularVelocity;
 
 				return body.AngularVelocity;
@@ -419,56 +417,56 @@ namespace SEModAPIInternal.API.Entity
 				m_angularVelocity = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateAngularVelocity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
+		[Category( "Entity" )]
 		public float MaxLinearVelocity
 		{
 			get
 			{
-				if (BackingObject == null)
+				if ( BackingObject == null )
 					return m_maxLinearVelocity;
 
 				HkRigidBody body = PhysicsBody;
-				if (body == null || body.IsDisposed)
+				if ( body == null || body.IsDisposed )
 					return m_maxLinearVelocity;
 
 				return body.MaxLinearVelocity;
 			}
 			set
 			{
-				if (m_maxLinearVelocity == value) return;
+				if ( m_maxLinearVelocity == value ) return;
 				m_maxLinearVelocity = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateMaxLinearVelocity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public float Mass
 		{
 			get
 			{
-				if (BackingObject == null)
+				if ( BackingObject == null )
 					return 0;
 
 				HkRigidBody body = PhysicsBody;
-				if (body == null || body.IsDisposed)
+				if ( body == null || body.IsDisposed )
 					return 0;
 
 				return body.Mass;
@@ -480,10 +478,10 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[DataMember]
-		[Category("Entity")]
-		[Browsable(true)]
-		[ReadOnly(true)]
-		[TypeConverter(typeof(Vector3TypeConverter))]
+		[Category( "Entity" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
+		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3 CenterOfMass
 		{
 			get
@@ -497,233 +495,231 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public HkRigidBody PhysicsBody
 		{
 			get
-			{				
-				if (BackingObject == null)
+			{
+				if ( BackingObject == null )
 					return null;
 
-				return BaseEntity.GetRigidBody(BackingObject);
+				return BaseEntity.GetRigidBody( BackingObject );
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal IMyEntity Entity
 		{
 			get
 			{
-				if (BackingObject == null)
+				if ( BackingObject == null )
 					return null;
 
 				return (IMyEntity)BackingObject;
 			}
 		}
 
-
 		[IgnoreDataMember]
-		[Category("Entity")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Entity" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal BaseEntityNetworkManager BaseNetworkManager
 		{
 			get { return m_networkManager; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static long GenerateEntityId()
+		public static long GenerateEntityId( )
 		{
-			return UtilityFunctions.GenerateEntityId();
+			return UtilityFunctions.GenerateEntityId( );
 		}
 
-		public override void Dispose()
+		public override void Dispose( )
 		{
-			if (IsDisposed)
+			if ( IsDisposed )
 				return;
 
-			base.Dispose();
+			base.Dispose( );
 
-			if (BackingObject != null)
+			if ( BackingObject != null )
 			{
 				//Only remove if the backing object isn't already disposed
-				bool isDisposed = (bool)BaseEntity.InvokeEntityMethod(BackingObject, BaseEntity.BaseEntityGetIsDisposedMethod);
-				if (!isDisposed)
+				bool isDisposed = (bool)BaseEntity.InvokeEntityMethod( BackingObject, BaseEntity.BaseEntityGetIsDisposedMethod );
+				if ( !isDisposed )
 				{
-					m_networkManager.RemoveEntity();
+					m_networkManager.RemoveEntity( );
 
 					Action action = InternalRemoveEntity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 
-			if (EntityId != 0)
+			if ( EntityId != 0 )
 			{
-				GameEntityManager.RemoveEntity(EntityId);
+				GameEntityManager.RemoveEntity( EntityId );
 			}
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnBaseEntityDeleted;
 			newEvent.timestamp = DateTime.Now;
 			newEvent.entity = this;
 			newEvent.priority = 1;
-			EntityEventManager.Instance.AddEvent(newEvent);
+			EntityEventManager.Instance.AddEvent( newEvent );
 		}
 
-		public override void Export(FileInfo fileInfo)
-		{                        
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_EntityBase, MyObjectBuilder_EntityBaseSerializer>(ObjectBuilder, fileInfo);
+		public override void Export( FileInfo fileInfo )
+		{
+			BaseObjectManager.SaveContentFile<MyObjectBuilder_EntityBase, MyObjectBuilder_EntityBaseSerializer>( ObjectBuilder, fileInfo );
 		}
 
-		new public MyObjectBuilder_EntityBase Export()
+		new public MyObjectBuilder_EntityBase Export( )
 		{
 			return ObjectBuilder;
 		}
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for BaseEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for BaseEntity" );
 				bool result = true;
-				result &= HasMethod(type, BaseEntityGetObjectBuilderMethod);
-				result &= HasMethod(type, BaseEntityGetPhysicsManagerMethod);
-				result &= HasMethod(type, BaseEntityGetPositionManagerMethod);
+				result &= HasMethod( type, BaseEntityGetObjectBuilderMethod );
+				result &= HasMethod( type, BaseEntityGetPhysicsManagerMethod );
+				result &= HasMethod( type, BaseEntityGetPositionManagerMethod );
 				//result &= HasMethod(type, BaseEntityCombineOnMovedEventMethod);
-				result &= HasMethod(type, BaseEntityCombineOnClosedEventMethod);
-				result &= HasMethod(type, BaseEntityGetIsDisposedMethod);
-				result &= HasMethod(type, BaseEntityGetOrientationMatrixMethod);
-				result &= HasMethod(type, BaseEntityGetNetManagerMethod);
-				result &= HasMethod(type, BaseEntitySetEntityIdMethod);
-				result &= HasMethod(type, BaseEntityGetDisplayNameMethod);
-				result &= HasMethod(type, BaseEntitySetDisplayNameMethod);
-				result &= HasField(type, BaseEntityEntityIdField);
+				result &= HasMethod( type, BaseEntityCombineOnClosedEventMethod );
+				result &= HasMethod( type, BaseEntityGetIsDisposedMethod );
+				result &= HasMethod( type, BaseEntityGetOrientationMatrixMethod );
+				result &= HasMethod( type, BaseEntityGetNetManagerMethod );
+				result &= HasMethod( type, BaseEntitySetEntityIdMethod );
+				result &= HasMethod( type, BaseEntityGetDisplayNameMethod );
+				result &= HasMethod( type, BaseEntitySetDisplayNameMethod );
+				result &= HasField( type, BaseEntityEntityIdField );
 
-				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PhysicsManagerNamespace, PhysicsManagerClass);
-				if (type2 == null)
-					throw new Exception("Could not find physics manager type for BaseEntity");
-				result &= HasMethod(type2, PhysicsManagerGetRigidBodyMethod);
+				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PhysicsManagerNamespace, PhysicsManagerClass );
+				if ( type2 == null )
+					throw new Exception( "Could not find physics manager type for BaseEntity" );
+				result &= HasMethod( type2, PhysicsManagerGetRigidBodyMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
 		#region "Internal"
 
-		private static Object GetEntityPhysicsObject(Object entity)
+		private static Object GetEntityPhysicsObject( Object entity )
 		{
 			try
 			{
-				Object physicsObject = InvokeEntityMethod(entity, BaseEntityGetPhysicsManagerMethod);
+				Object physicsObject = InvokeEntityMethod( entity, BaseEntityGetPhysicsManagerMethod );
 
 				return physicsObject;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		internal static HkRigidBody GetRigidBody(Object entity)
+		internal static HkRigidBody GetRigidBody( Object entity )
 		{
 			try
 			{
-				Object physicsObject = GetEntityPhysicsObject(entity);
-				if (physicsObject == null)
+				Object physicsObject = GetEntityPhysicsObject( entity );
+				if ( physicsObject == null )
 					return null;
-				HkRigidBody rigidBody = (HkRigidBody)InvokeEntityMethod(physicsObject, PhysicsManagerGetRigidBodyMethod);
+				HkRigidBody rigidBody = (HkRigidBody)InvokeEntityMethod( physicsObject, PhysicsManagerGetRigidBodyMethod );
 
 				return rigidBody;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		internal static Object GetEntityNetworkManager(Object entity)
+		internal static Object GetEntityNetworkManager( Object entity )
 		{
 			try
 			{
-				Object result = InvokeEntityMethod(entity, BaseEntityGetNetManagerMethod);
+				Object result = InvokeEntityMethod( entity, BaseEntityGetNetManagerMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
-
 		}
 
-		internal static long GetEntityId(Object entity)
+		internal static long GetEntityId( Object entity )
 		{
 			try
 			{
 				long entityId = 0L;
 				try
 				{
-					entityId = (long)GetEntityFieldValue(entity, BaseEntityEntityIdField);
+					entityId = (long)GetEntityFieldValue( entity, BaseEntityEntityIdField );
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 				return entityId;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return 0;
 			}
 		}
 
-		public static MyObjectBuilder_EntityBase GetObjectBuilder(Object entity)
+		public static MyObjectBuilder_EntityBase GetObjectBuilder( Object entity )
 		{
-			MyObjectBuilder_EntityBase objectBuilder = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod(entity, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[] { Type.Missing });
+			MyObjectBuilder_EntityBase objectBuilder = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
 			return objectBuilder;
 		}
 
-		protected void InternalUpdateMaxLinearVelocity()
+		protected void InternalUpdateMaxLinearVelocity( )
 		{
 			try
 			{
 				HkRigidBody havokBody = PhysicsBody;
-				if (havokBody == null)
+				if ( havokBody == null )
 					return;
 
 				havokBody.MaxLinearVelocity = m_maxLinearVelocity;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalUpdateEntityId()
+		protected void InternalUpdateEntityId( )
 		{
-			InvokeEntityMethod(BackingObject, BaseEntitySetEntityIdMethod, new object[] { EntityId });
+			InvokeEntityMethod( BackingObject, BaseEntitySetEntityIdMethod, new object[ ] { EntityId } );
 		}
 
-		protected void InternalUpdatePosition()
+		protected void InternalUpdatePosition( )
 		{
 			try
 			{
@@ -743,160 +739,159 @@ namespace SEModAPIInternal.API.Entity
 				 */
 
 				IMyEntity entity = Entity;
-				if (entity == null)
+				if ( entity == null )
 					return;
 
 				Vector3D newPosition = m_positionOrientation.Position;
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine(this.GetType().Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition().ToString() + "' to '" + newPosition.ToString() + "'");
+					LogManager.APILog.WriteLine( this.GetType( ).Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition( ).ToString( ) + "' to '" + newPosition.ToString( ) + "'" );
 				}
 
-				entity.SetPosition(newPosition);
+				entity.SetPosition( newPosition );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalUpdateOrientation()
+		protected void InternalUpdateOrientation( )
 		{
 			try
 			{
 				HkRigidBody havokBody = PhysicsBody;
-				if (havokBody == null)
+				if ( havokBody == null )
 					return;
 
-				Matrix orientationMatrix = m_positionOrientation.GetMatrix().GetOrientation();
-				Quaternion orientation = Quaternion.CreateFromRotationMatrix(orientationMatrix);
+				Matrix orientationMatrix = m_positionOrientation.GetMatrix( ).GetOrientation( );
+				Quaternion orientation = Quaternion.CreateFromRotationMatrix( orientationMatrix );
 				havokBody.Rotation = orientation;
-
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalUpdateLinearVelocity()
+		protected void InternalUpdateLinearVelocity( )
 		{
 			try
 			{
 				HkRigidBody havokBody = PhysicsBody;
-				if (havokBody == null)
+				if ( havokBody == null )
 					return;
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine(this.GetType().Name + " - Changing linear velocity of '" + Name + "' from '" + havokBody.LinearVelocity.ToString() + "' to '" + m_linearVelocity.ToString() + "'");
+					LogManager.APILog.WriteLine( this.GetType( ).Name + " - Changing linear velocity of '" + Name + "' from '" + havokBody.LinearVelocity.ToString( ) + "' to '" + m_linearVelocity.ToString( ) + "'" );
 				}
 
 				havokBody.LinearVelocity = m_linearVelocity;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalUpdateAngularVelocity()
+		protected void InternalUpdateAngularVelocity( )
 		{
 			try
 			{
 				HkRigidBody havokBody = PhysicsBody;
-				if (havokBody == null)
+				if ( havokBody == null )
 					return;
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine(this.GetType().Name + " - Changing angular velocity of '" + Name + "' from '" + havokBody.AngularVelocity.ToString() + "' to '" + m_angularVelocity.ToString() + "'");
+					LogManager.APILog.WriteLine( this.GetType( ).Name + " - Changing angular velocity of '" + Name + "' from '" + havokBody.AngularVelocity.ToString( ) + "' to '" + m_angularVelocity.ToString( ) + "'" );
 				}
 
 				havokBody.AngularVelocity = m_angularVelocity;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalRemoveEntity()
+		protected void InternalRemoveEntity( )
 		{
 			try
 			{
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.APILog.WriteLine(this.GetType().Name + " '" + Name + "': Calling 'Close' to remove entity");
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.APILog.WriteLine( this.GetType( ).Name + " '" + Name + "': Calling 'Close' to remove entity" );
 
-				BaseObject.InvokeEntityMethod(BackingObject, "Close");
+				BaseObject.InvokeEntityMethod( BackingObject, "Close" );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLineAndConsole("Failed to remove entity '" + Name + "'");
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLineAndConsole( "Failed to remove entity '" + Name + "'" );
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		private static Object GetEntityPositionObject(Object entity)
+		private static Object GetEntityPositionObject( Object entity )
 		{
 			try
 			{
-				Object positionObject = InvokeEntityMethod(entity, BaseEntityGetPositionManagerMethod);
+				Object positionObject = InvokeEntityMethod( entity, BaseEntityGetPositionManagerMethod );
 				return positionObject;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		protected void InternalRegisterEntityMovedEvent()
+		protected void InternalRegisterEntityMovedEvent( )
 		{
 			try
 			{
-				MyPositionComponentBase positionComponent = (MyPositionComponentBase)GetEntityPositionObject(BackingObject);
-				if (positionComponent == null)
+				MyPositionComponentBase positionComponent = (MyPositionComponentBase)GetEntityPositionObject( BackingObject );
+				if ( positionComponent == null )
 					return;
 
 				Action<MyPositionComponentBase> action = InternalEntityMovedEvent;
 				positionComponent.OnPositionChanged -= action;
 				positionComponent.OnPositionChanged += action;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalEntityMovedEvent(Object entity)
+		protected void InternalEntityMovedEvent( Object entity )
 		{
 			try
 			{
-				if (IsDisposed)
+				if ( IsDisposed )
 					return;
 
-				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 				newEvent.type = EntityEventManager.EntityEventType.OnBaseEntityMoved;
 				newEvent.timestamp = DateTime.Now;
 				newEvent.entity = this;
 				newEvent.priority = 10;
-				EntityEventManager.Instance.AddEvent(newEvent);
+				EntityEventManager.Instance.AddEvent( newEvent );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void InternalUpdateDisplayName()
+		protected void InternalUpdateDisplayName( )
 		{
-			InvokeEntityMethod(BackingObject, BaseEntitySetDisplayNameMethod, new object[] { m_displayName });
+			InvokeEntityMethod( BackingObject, BaseEntitySetDisplayNameMethod, new object[ ] { m_displayName } );
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class BaseEntityNetworkManager
@@ -909,8 +904,8 @@ namespace SEModAPIInternal.API.Entity
 		public static string BaseEntityNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string BaseEntityNetworkManagerClass = "48D79F8E3C8922F14D85F6D98237314C";
 
-        //public static string BaseEntityBroadcastRemovalMethod = "5EBE421019EACEA0F25718E2585CF3D2";
-        public static string BaseEntityBroadcastRemovalMethod = "SendCloseRequest";
+		//public static string BaseEntityBroadcastRemovalMethod = "5EBE421019EACEA0F25718E2585CF3D2";
+		public static string BaseEntityBroadcastRemovalMethod = "SendCloseRequest";
 
 		//Packets
 		//10 - ??
@@ -918,17 +913,17 @@ namespace SEModAPIInternal.API.Entity
 		//12 - Remove entity
 		//5741 - ??
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public BaseEntityNetworkManager(BaseEntity parent, Object netManager)
+		public BaseEntityNetworkManager( BaseEntity parent, Object netManager )
 		{
 			m_parent = parent;
 			m_networkManager = netManager;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -936,28 +931,28 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(BaseEntityNetworkManagerNamespace, BaseEntityNetworkManagerClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( BaseEntityNetworkManagerNamespace, BaseEntityNetworkManagerClass );
 
 				return type;
 			}
 		}
 
-		public static void BroadcastRemoveEntity(IMyEntity entity, bool safe = true)
+		public static void BroadcastRemoveEntity( IMyEntity entity, bool safe = true )
 		{
-			Object result = BaseEntity.InvokeEntityMethod(entity, BaseEntity.BaseEntityGetNetManagerMethod);
-			if(result == null)
+			Object result = BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetNetManagerMethod );
+			if ( result == null )
 				return;
 
-			if (safe)
+			if ( safe )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+				SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 				{
-					BaseEntity.InvokeEntityMethod(result, BaseEntityBroadcastRemovalMethod);
-				});
+					BaseEntity.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
+				} );
 			}
 			else
 			{
-				BaseEntity.InvokeEntityMethod(result, BaseEntityBroadcastRemovalMethod);
+				BaseEntity.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
 			}
 		}
 
@@ -965,61 +960,61 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if (m_networkManager == null)
+				if ( m_networkManager == null )
 				{
-					m_networkManager = BaseEntity.GetEntityNetworkManager(m_parent.BackingObject);
+					m_networkManager = BaseEntity.GetEntityNetworkManager( m_parent.BackingObject );
 				}
 
 				return m_networkManager;
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for BaseEntityNetworkManager");
-				bool result = BaseObject.HasMethod(type, BaseEntityBroadcastRemovalMethod);
+				if ( type == null )
+					throw new Exception( "Could not find internal type for BaseEntityNetworkManager" );
+				bool result = BaseObject.HasMethod( type, BaseEntityBroadcastRemovalMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void RemoveEntity()
+		public void RemoveEntity( )
 		{
-			if (NetworkManager == null)
+			if ( NetworkManager == null )
 				return;
 
 			Action action = InternalRemoveEntity;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		protected void InternalRemoveEntity()
+		protected void InternalRemoveEntity( )
 		{
 			try
 			{
-				if (NetworkManager == null)
+				if ( NetworkManager == null )
 					return;
 
-				BaseObject.InvokeEntityMethod(NetworkManager, BaseEntityBroadcastRemovalMethod);
+				BaseObject.InvokeEntityMethod( NetworkManager, BaseEntityBroadcastRemovalMethod );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

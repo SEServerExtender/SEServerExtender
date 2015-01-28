@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
@@ -23,10 +19,10 @@ namespace SEModAPIExtensions.API
 		public bool useSubTypeName;
 		public string subTypeName;
 
-		public StructureEntry()
+		public StructureEntry( )
 		{
-			type = typeof(CubeBlockEntity);
-			color = new Color(0, 0, 0);
+			type = typeof( CubeBlockEntity );
+			color = new Color( 0, 0, 0 );
 			useOrientation = false;
 			orientation = MyBlockOrientation.Identity;
 			useSubTypeName = false;
@@ -47,11 +43,11 @@ namespace SEModAPIExtensions.API
 
 		#region "Constructors and Initializers"
 
-		public MultiblockStructure(CubeGridEntity parent)
+		protected MultiblockStructure( CubeGridEntity parent )
 		{
 			m_parent = parent;
-			m_definition = new Dictionary<Vector3I, StructureEntry>();
-			m_blocks = new List<CubeBlockEntity>();
+			m_definition = new Dictionary<Vector3I, StructureEntry>( );
+			m_blocks = new List<CubeBlockEntity>( );
 		}
 
 		#endregion
@@ -72,23 +68,23 @@ namespace SEModAPIExtensions.API
 					bool isFunctional = true;
 
 					//Check if the structure is structurally sound and functional blocks are enabled
-					foreach (CubeBlockEntity cubeBlock in m_blocks)
+					foreach ( CubeBlockEntity cubeBlock in m_blocks )
 					{
-						if (cubeBlock == null)
+						if ( cubeBlock == null )
 							return false;
-						if (cubeBlock.IsDisposed)
+						if ( cubeBlock.IsDisposed )
 							return false;
 
-						if (cubeBlock.IntegrityPercent < 0.75)
+						if ( cubeBlock.IntegrityPercent < 0.75 )
 						{
 							isFunctional = false;
 							break;
 						}
 
-						if (cubeBlock is FunctionalBlockEntity)
+						if ( cubeBlock is FunctionalBlockEntity )
 						{
 							FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
-							if (!functionalBlock.Enabled)
+							if ( !functionalBlock.Enabled )
 							{
 								isFunctional = false;
 								break;
@@ -97,14 +93,14 @@ namespace SEModAPIExtensions.API
 					}
 
 					//Check if the structure still matches the definition
-					if (!IsDefinitionMatch(AnchorBlock))
+					if ( !IsDefinitionMatch( AnchorBlock ) )
 						isFunctional = false;
 
 					return isFunctional;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return false;
 				}
 			}
@@ -127,15 +123,15 @@ namespace SEModAPIExtensions.API
 				Vector3I min = Vector3I.Zero;
 				Vector3I max = Vector3I.Zero;
 
-				foreach (FunctionalBlockEntity cubeBlock in m_blocks)
+				foreach ( FunctionalBlockEntity cubeBlock in m_blocks )
 				{
-					if (cubeBlock.Position.CompareTo(min) < 0)
+					if ( cubeBlock.Position.CompareTo( min ) < 0 )
 						min = cubeBlock.Position;
-					if (cubeBlock.Position.CompareTo(max) > 0)
+					if ( cubeBlock.Position.CompareTo( max ) > 0 )
 						max = cubeBlock.Position;
 				}
 
-				BoundingBox bounds = new BoundingBox(min, max);
+				BoundingBox bounds = new BoundingBox( min, max );
 
 				return bounds;
 			}
@@ -145,89 +141,89 @@ namespace SEModAPIExtensions.API
 
 		#region "Methods"
 
-		public void LoadBlocks()
+		public void LoadBlocks( )
 		{
-			var def = GetMultiblockDefinition();
-			m_blocks.Clear();
-			foreach (Vector3I key in def.Keys)
+			var def = GetMultiblockDefinition( );
+			m_blocks.Clear( );
+			foreach ( Vector3I key in def.Keys )
 			{
 				Vector3I blockPos = m_anchor.Position + key;
-				CubeBlockEntity cubeBlock = Parent.GetCubeBlock(blockPos);
-				if (cubeBlock == null)
+				CubeBlockEntity cubeBlock = Parent.GetCubeBlock( blockPos );
+				if ( cubeBlock == null )
 				{
-					m_blocks.Clear();
+					m_blocks.Clear( );
 					return;
 				}
-				m_blocks.Add(cubeBlock);
+				m_blocks.Add( cubeBlock );
 			}
 		}
 
-		public void LoadBlocksFromAnchor(Vector3I anchor)
+		public void LoadBlocksFromAnchor( Vector3I anchor )
 		{
-			var def = GetMultiblockDefinition();
-			m_blocks.Clear();
-			foreach (Vector3I key in def.Keys)
+			var def = GetMultiblockDefinition( );
+			m_blocks.Clear( );
+			foreach ( Vector3I key in def.Keys )
 			{
 				Vector3I blockPos = anchor + key;
-				CubeBlockEntity cubeBlock = Parent.GetCubeBlock(blockPos);
-				if (cubeBlock == null)
+				CubeBlockEntity cubeBlock = Parent.GetCubeBlock( blockPos );
+				if ( cubeBlock == null )
 				{
-					m_blocks.Clear();
+					m_blocks.Clear( );
 					return;
 				}
-				m_blocks.Add(cubeBlock);
+				m_blocks.Add( cubeBlock );
 			}
 		}
 
-		public bool IsDefinitionMatch(CubeBlockEntity cubeToCheck, int recurseDepth = 0)
+		public bool IsDefinitionMatch( CubeBlockEntity cubeToCheck, int recurseDepth = 0 )
 		{
-			if (cubeToCheck == null)
+			if ( cubeToCheck == null )
 				return false;
-			if (cubeToCheck.IsDisposed)
+			if ( cubeToCheck.IsDisposed )
 				return false;
-			if (cubeToCheck.Parent == null)
+			if ( cubeToCheck.Parent == null )
 				return false;
-			if (cubeToCheck.Parent.IsDisposed)
+			if ( cubeToCheck.Parent.IsDisposed )
 				return false;
-			if (cubeToCheck.Parent.IsLoading)
+			if ( cubeToCheck.Parent.IsLoading )
 				return false;
-			if (recurseDepth < 0 || recurseDepth > 2)
+			if ( recurseDepth < 0 || recurseDepth > 2 )
 				return false;
 
 			bool isMatch = false;
 			Vector3I cubePos = cubeToCheck.Position;
-			Type cubeType = cubeToCheck.GetType();
+			Type cubeType = cubeToCheck.GetType( );
 
-			Dictionary<Vector3I, StructureEntry> structureDef = GetMultiblockDefinition();
-			StructureEntry anchorDef = structureDef[Vector3I.Zero];
+			Dictionary<Vector3I, StructureEntry> structureDef = GetMultiblockDefinition( );
+			StructureEntry anchorDef = structureDef[ Vector3I.Zero ];
 
 			//Check if this block isn't the anchor type
-			if (cubeType != anchorDef.type)
+			if ( cubeType != anchorDef.type )
 			{
 				//Check if this block is anywhere in the definition
 				bool foundMatch = false;
-				foreach (StructureEntry entry in structureDef.Values)
+				foreach ( StructureEntry entry in structureDef.Values )
 				{
-					if (entry.type == cubeType)
+					if ( entry.type == cubeType )
 					{
 						foundMatch = true;
 						break;
 					}
 				}
-				if (!foundMatch)
+				if ( !foundMatch )
 					return false;
 
 				//Recursively search through possible anchor blocks
-				foreach (Vector3I key in structureDef.Keys)
+				foreach ( Vector3I key in structureDef.Keys )
 				{
-					StructureEntry entry = structureDef[key];
+					StructureEntry entry = structureDef[ key ];
 
-					if (cubeType == entry.type)
+					if ( cubeType == entry.type )
 					{
 						Vector3I possibleAnchorPos = cubePos - key;
-						CubeBlockEntity posCubeBlock = cubeToCheck.Parent.GetCubeBlock(possibleAnchorPos);
-						isMatch = IsDefinitionMatch(posCubeBlock, recurseDepth + 1);
-						if (isMatch)
+						CubeBlockEntity posCubeBlock = cubeToCheck.Parent.GetCubeBlock( possibleAnchorPos );
+						isMatch = IsDefinitionMatch( posCubeBlock, recurseDepth + 1 );
+						if ( isMatch )
 							break;
 					}
 				}
@@ -235,28 +231,28 @@ namespace SEModAPIExtensions.API
 			else
 			{
 				isMatch = true;
-				foreach (Vector3I key in structureDef.Keys)
+				foreach ( Vector3I key in structureDef.Keys )
 				{
-					StructureEntry entry = structureDef[key];
+					StructureEntry entry = structureDef[ key ];
 					Vector3I defPos = cubePos + key;
-					CubeBlockEntity posCubeBlock = cubeToCheck.Parent.GetCubeBlock(defPos);
-					if (posCubeBlock == null)
+					CubeBlockEntity posCubeBlock = cubeToCheck.Parent.GetCubeBlock( defPos );
+					if ( posCubeBlock == null )
 					{
 						isMatch = false;
 						break;
 					}
 
 					//Compare the block type
-					if (!entry.type.IsAssignableFrom(posCubeBlock.GetType()))
+					if ( !entry.type.IsAssignableFrom( posCubeBlock.GetType( ) ) )
 					{
 						isMatch = false;
 						break;
 					}
 
 					//Compare the block color, if set
-					if (entry.color != null && entry.color.ColorToHSV() != Vector3.Zero)
+					if ( entry.color != null && entry.color.ColorToHSV( ) != Vector3.Zero )
 					{
-						if (entry.color.ColorToHSV() != (Vector3)posCubeBlock.ColorMaskHSV)
+						if ( entry.color.ColorToHSV( ) != (Vector3)posCubeBlock.ColorMaskHSV )
 						{
 							isMatch = false;
 							break;
@@ -264,9 +260,9 @@ namespace SEModAPIExtensions.API
 					}
 
 					//Compare the block orientation, if enabled
-					if (entry.useOrientation)
+					if ( entry.useOrientation )
 					{
-						if (entry.orientation.Forward != posCubeBlock.BlockOrientation.Forward || entry.orientation.Up != posCubeBlock.BlockOrientation.Up)
+						if ( entry.orientation.Forward != posCubeBlock.BlockOrientation.Forward || entry.orientation.Up != posCubeBlock.BlockOrientation.Up )
 						{
 							isMatch = false;
 							break;
@@ -274,22 +270,22 @@ namespace SEModAPIExtensions.API
 					}
 
 					//Compare the block subtype, if enabled
-					if (entry.useSubTypeName)
+					if ( entry.useSubTypeName )
 					{
-						string cleanEntrySubType = entry.subTypeName.ToLower();
-						string cleanBlockSubType = posCubeBlock.Id.SubtypeName.ToLower();
-						if (cleanEntrySubType != cleanBlockSubType)
+						string cleanEntrySubType = entry.subTypeName.ToLower( );
+						string cleanBlockSubType = posCubeBlock.Id.SubtypeName.ToLower( );
+						if ( cleanEntrySubType != cleanBlockSubType )
 						{
 							isMatch = false;
 							break;
 						}
 					}
 				}
-				if(isMatch)
+				if ( isMatch )
 					m_anchor = cubeToCheck;
 			}
 
-			if (isMatch && SandboxGameAssemblyWrapper.IsDebugging && recurseDepth == 0)
+			if ( isMatch && SandboxGameAssemblyWrapper.IsDebugging && recurseDepth == 0 )
 			{
 				//LogManager.APILog.WriteLine("Found multiblock match in cube grid '" + cubeToCheck.Parent.Name + "' anchored at " + ((Vector3I)m_anchor.Min).ToString());
 			}
@@ -297,27 +293,27 @@ namespace SEModAPIExtensions.API
 			return isMatch;
 		}
 
-		public List<Vector3I> GetDefinitionMatches(CubeGridEntity cubeGrid)
+		public List<Vector3I> GetDefinitionMatches( CubeGridEntity cubeGrid )
 		{
 			try
 			{
-				List<Vector3I> anchorList = new List<Vector3I>();
-				foreach (CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks)
+				List<Vector3I> anchorList = new List<Vector3I>( );
+				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
 				{
-					if(IsDefinitionMatch(cubeBlock))
-						anchorList.Add(m_anchor.Position);
+					if ( IsDefinitionMatch( cubeBlock ) )
+						anchorList.Add( m_anchor.Position );
 				}
 
 				return anchorList;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return new List<Vector3I>();
+				LogManager.ErrorLog.WriteLine( ex );
+				return new List<Vector3I>( );
 			}
 		}
 
-		public abstract Dictionary<Vector3I, StructureEntry> GetMultiblockDefinition();
+		public abstract Dictionary<Vector3I, StructureEntry> GetMultiblockDefinition( );
 
 		#endregion
 	}

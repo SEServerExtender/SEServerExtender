@@ -9,11 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace SEServerGUI.ServiceReference {
-    using System.Runtime.Serialization;
-    using System;
-    
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
+	[System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseEntityProxy", Namespace="http://schemas.datacontract.org/2004/07/SEModAPIInternal.API.Entity")]
     [System.SerializableAttribute()]

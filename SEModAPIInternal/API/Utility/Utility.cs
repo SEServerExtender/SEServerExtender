@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Game.Entities;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.Support;
 
 using VRage.Common.Utils;
 using VRageMath;
-using VRage;
 
 namespace SEModAPIInternal.API.Utility
 {
@@ -25,11 +18,12 @@ namespace SEModAPIInternal.API.Utility
 		public static string UtilityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string UtilityClass = "226D9974B43A7269CDD3E322CC8110D5";
 		public static string UtilityGenerateEntityIdMethod = "3B4924802BEBD1AE13B29920376CE914";
-		#endregion
+
+		#endregion "Attributes"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
@@ -38,282 +32,281 @@ namespace SEModAPIInternal.API.Utility
 				//	throw new Exception("Could not find internal type for UtilityFunctions");
 				//bool result = true;
 				//result &= BaseObject.HasMethod(type, UtilityGenerateEntityIdMethod);
-                //return result;
+				//return result;
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public static HashSet<Object> ConvertHashSet(Object source)
+		public static HashSet<Object> ConvertHashSet( Object source )
 		{
 			try
 			{
-				Type rawType = source.GetType();
-				Type[] genericArgs = rawType.GetGenericArguments();
-				MethodInfo conversion = typeof(UtilityFunctions).GetMethod("ConvertEntityHashSet", BindingFlags.Public | BindingFlags.Static);
-				conversion = conversion.MakeGenericMethod(genericArgs[0]);
-				HashSet<Object> result = (HashSet<Object>)conversion.Invoke(null, new object[] { source });
+				Type rawType = source.GetType( );
+				Type[ ] genericArgs = rawType.GetGenericArguments( );
+				MethodInfo conversion = typeof( UtilityFunctions ).GetMethod( "ConvertEntityHashSet", BindingFlags.Public | BindingFlags.Static );
+				conversion = conversion.MakeGenericMethod( genericArgs[ 0 ] );
+				HashSet<Object> result = (HashSet<Object>)conversion.Invoke( null, new object[ ] { source } );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return new HashSet<object>();
+				LogManager.ErrorLog.WriteLine( ex );
+				return new HashSet<object>( );
 			}
 		}
 
-		public static List<Object> ConvertList(Object source)
+		public static List<Object> ConvertList( Object source )
 		{
 			try
 			{
-				Type rawType = source.GetType();
-				Type[] genericArgs = rawType.GetGenericArguments();
-				MethodInfo conversion = typeof(UtilityFunctions).GetMethod("ConvertEntityList", BindingFlags.Public | BindingFlags.Static);
-				conversion = conversion.MakeGenericMethod(genericArgs[0]);
-				List<Object> result = (List<Object>)conversion.Invoke(null, new object[] { source });
+				Type rawType = source.GetType( );
+				Type[ ] genericArgs = rawType.GetGenericArguments( );
+				MethodInfo conversion = typeof( UtilityFunctions ).GetMethod( "ConvertEntityList", BindingFlags.Public | BindingFlags.Static );
+				conversion = conversion.MakeGenericMethod( genericArgs[ 0 ] );
+				List<Object> result = (List<Object>)conversion.Invoke( null, new object[ ] { source } );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return new List<object>();
+				LogManager.ErrorLog.WriteLine( ex );
+				return new List<object>( );
 			}
 		}
 
-		public static Dictionary<T, Object> ConvertDictionary<T>(Object source)
+		public static Dictionary<T, Object> ConvertDictionary<T>( Object source )
 		{
 			try
 			{
-				Type rawType = source.GetType();
-				Type[] genericArgs = rawType.GetGenericArguments();
-				MethodInfo conversion = typeof(UtilityFunctions).GetMethod("ConvertEntityDictionary", BindingFlags.Public | BindingFlags.Static);
-				conversion = conversion.MakeGenericMethod(genericArgs);
-				Dictionary<T, Object> result = (Dictionary<T, Object>)conversion.Invoke(null, new object[] { source });
+				Type rawType = source.GetType( );
+				Type[ ] genericArgs = rawType.GetGenericArguments( );
+				MethodInfo conversion = typeof( UtilityFunctions ).GetMethod( "ConvertEntityDictionary", BindingFlags.Public | BindingFlags.Static );
+				conversion = conversion.MakeGenericMethod( genericArgs );
+				Dictionary<T, Object> result = (Dictionary<T, Object>)conversion.Invoke( null, new object[ ] { source } );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return new Dictionary<T, Object>();
+				LogManager.ErrorLog.WriteLine( ex );
+				return new Dictionary<T, Object>( );
 			}
 		}
 
-        public static Dictionary<Object, T> ConvertDictionaryReverse<T>(Object source)
-        {
-            try
-            {
-                Type rawType = source.GetType();
-                Type[] genericArgs = rawType.GetGenericArguments();
-                MethodInfo conversion = typeof(UtilityFunctions).GetMethod("ConvertEntityDictionaryReverse", BindingFlags.Public | BindingFlags.Static);
-                conversion = conversion.MakeGenericMethod(genericArgs);
-                Dictionary<Object, T> result = (Dictionary<Object, T>)conversion.Invoke(null, new object[] { source });
-                return result;
-            }
-            catch (Exception ex)
-            {
-                LogManager.ErrorLog.WriteLine(ex);
-                return new Dictionary<Object, T>();
-            }
-
-        }
-
-		public static HashSet<Object> ConvertEntityHashSet<T>(IEnumerable<T> source)
+		public static Dictionary<Object, T> ConvertDictionaryReverse<T>( Object source )
 		{
-			HashSet<Object> dataSet = new HashSet<Object>();
+			try
+			{
+				Type rawType = source.GetType( );
+				Type[ ] genericArgs = rawType.GetGenericArguments( );
+				MethodInfo conversion = typeof( UtilityFunctions ).GetMethod( "ConvertEntityDictionaryReverse", BindingFlags.Public | BindingFlags.Static );
+				conversion = conversion.MakeGenericMethod( genericArgs );
+				Dictionary<Object, T> result = (Dictionary<Object, T>)conversion.Invoke( null, new object[ ] { source } );
+				return result;
+			}
+			catch ( Exception ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
+				return new Dictionary<Object, T>( );
+			}
+		}
+
+		public static HashSet<Object> ConvertEntityHashSet<T>( IEnumerable<T> source )
+		{
+			HashSet<Object> dataSet = new HashSet<Object>( );
 
 			try
 			{
-				foreach (var rawEntity in source)
+				foreach ( T rawEntity in source )
 				{
-					dataSet.Add(rawEntity);
+					dataSet.Add( rawEntity );
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			return dataSet;
 		}
 
-		public static List<Object> ConvertEntityList<T>(IEnumerable<T> source)
+		public static List<Object> ConvertEntityList<T>( IEnumerable<T> source )
 		{
-			List<Object> dataSet = new List<Object>();
+			List<Object> dataSet = new List<Object>( );
 
 			try
 			{
-				foreach (var rawEntity in source)
+				foreach ( T rawEntity in source )
 				{
-					dataSet.Add(rawEntity);
+					dataSet.Add( rawEntity );
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			return dataSet;
 		}
 
-		public static Dictionary<T, Object> ConvertEntityDictionary<T, U>(IEnumerable<KeyValuePair<T, U>> source)
+		public static Dictionary<T, Object> ConvertEntityDictionary<T, U>( IEnumerable<KeyValuePair<T, U>> source )
 		{
-			Dictionary<T, Object> dataSet = new Dictionary<T, Object>();
+			Dictionary<T, Object> dataSet = new Dictionary<T, Object>( );
 
 			try
 			{
-				foreach (var rawEntity in source)
+				foreach ( KeyValuePair<T, U> rawEntity in source )
 				{
-					dataSet.Add(rawEntity.Key, rawEntity.Value);
+					dataSet.Add( rawEntity.Key, rawEntity.Value );
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			return dataSet;
 		}
 
-        public static Dictionary<Object, T> ConvertEntityDictionaryReverse<U, T>(IEnumerable<KeyValuePair<U, T>> source)
-        {
-            Dictionary<Object, T> dataSet = new Dictionary<Object, T>();
+		public static Dictionary<Object, T> ConvertEntityDictionaryReverse<U, T>( IEnumerable<KeyValuePair<U, T>> source )
+		{
+			Dictionary<Object, T> dataSet = new Dictionary<Object, T>( );
 
-            try
-            {
-                foreach (var rawEntity in source)
-                {
-                    dataSet.Add(rawEntity.Key, rawEntity.Value);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogManager.ErrorLog.WriteLine(ex);
-            }
+			try
+			{
+				foreach ( KeyValuePair<U, T> rawEntity in source )
+				{
+					dataSet.Add( rawEntity.Key, rawEntity.Value );
+				}
+			}
+			catch ( Exception ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
+			}
 
-            return dataSet;
-        }
+			return dataSet;
+		}
 
-		public static Object ChangeObjectType(Object source, Type newType)
+		public static Object ChangeObjectType( Object source, Type newType )
 		{
 			try
 			{
-				MethodInfo conversion = typeof(UtilityFunctions).GetMethod("CastObject", BindingFlags.Public | BindingFlags.Static);
-				conversion = conversion.MakeGenericMethod(newType);
-				Object result = conversion.Invoke(null, new object[] { source });
+				MethodInfo conversion = typeof( UtilityFunctions ).GetMethod( "CastObject", BindingFlags.Public | BindingFlags.Static );
+				conversion = conversion.MakeGenericMethod( newType );
+				Object result = conversion.Invoke( null, new object[ ] { source } );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return source;
 			}
 		}
 
-		public static T CastObject<T>(Object source)
+		public static T CastObject<T>( Object source )
 		{
 			return (T)source;
 		}
 
-		public static Object ChangeObjectGeneric(Object source, Type newGenericType)
+		public static Object ChangeObjectGeneric( Object source, Type newGenericType )
 		{
 			try
 			{
-				Type newType = source.GetType().MakeGenericType(newGenericType);
-				Object result = ChangeObjectType(source, newType);
+				Type newType = source.GetType( ).MakeGenericType( newGenericType );
+				Object result = ChangeObjectType( source, newType );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return source;
 			}
 		}
 
-		public static long GenerateEntityId()
+		public static long GenerateEntityId( )
 		{
 			try
 			{
-				return MyEntityIdentifier.AllocateId();
+				return MyEntityIdentifier.AllocateId( );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to generate entity id");
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to generate entity id" );
+				LogManager.ErrorLog.WriteLine( ex );
 				return 0;
 			}
 		}
 
-		public static Vector3D GenerateRandomBorderPosition(Vector3 borderStart, Vector3 borderEnd)
+		public static Vector3D GenerateRandomBorderPosition( Vector3 borderStart, Vector3 borderEnd )
 		{
-			BoundingBoxD box = new BoundingBoxD(borderStart, borderEnd);
-			Vector3D result = MyVRageUtils.GetRandomBorderPosition(ref box);
+			BoundingBoxD box = new BoundingBoxD( borderStart, borderEnd );
+			Vector3D result = MyVRageUtils.GetRandomBorderPosition( ref box );
 
 			return result;
 		}
 
-		public static List<Type> GetObjectBuilderTypes()
+		public static List<Type> GetObjectBuilderTypes( )
 		{
-			List<Type> types = new List<Type>();
+			List<Type> types = new List<Type>( );
 
-			Assembly assembly = Assembly.GetAssembly(typeof(MyObjectBuilder_Base));
-			foreach (Type type in assembly.GetTypes())
+			Assembly assembly = Assembly.GetAssembly( typeof( MyObjectBuilder_Base ) );
+			foreach ( Type type in assembly.GetTypes( ) )
 			{
-				if (typeof(MyObjectBuilder_Base).IsAssignableFrom(type))
-					types.Add(type);
+				if ( typeof( MyObjectBuilder_Base ).IsAssignableFrom( type ) )
+					types.Add( type );
 			}
 
 			return types;
 		}
 
-		public static List<Type> GetCubeBlockTypes()
+		public static List<Type> GetCubeBlockTypes( )
 		{
-			List<Type> types = new List<Type>();
+			List<Type> types = new List<Type>( );
 
-			Assembly assembly = Assembly.GetAssembly(typeof(CubeBlockEntity));
-			foreach (Type type in assembly.GetTypes())
+			Assembly assembly = Assembly.GetAssembly( typeof( CubeBlockEntity ) );
+			foreach ( Type type in assembly.GetTypes( ) )
 			{
-				if (typeof(CubeBlockEntity).IsAssignableFrom(type))
-					types.Add(type);
+				if ( typeof( CubeBlockEntity ).IsAssignableFrom( type ) )
+					types.Add( type );
 			}
 			return types;
 		}
 
 		public static class DelegateUtility
 		{
-			public static T Cast<T>(Delegate source) where T : class
+			public static T Cast<T>( Delegate source ) where T : class
 			{
-				return Cast(source, typeof(T)) as T;
+				return Cast( source, typeof( T ) ) as T;
 			}
 
-			public static Delegate Cast(Delegate source, Type type)
+			public static Delegate Cast( Delegate source, Type type )
 			{
-				if (source == null)
+				if ( source == null )
 					return null;
 
-				Delegate[] delegates = source.GetInvocationList();
+				Delegate[ ] delegates = source.GetInvocationList( );
 
-				if (delegates.Length == 1)
-					return Delegate.CreateDelegate(type,
-						delegates[0].Target, delegates[0].Method);
+				if ( delegates.Length == 1 )
+					return Delegate.CreateDelegate( type,
+						delegates[ 0 ].Target, delegates[ 0 ].Method );
 
-				Delegate[] delegatesDest = new Delegate[delegates.Length];
-				for (int nDelegate = 0; nDelegate < delegates.Length; nDelegate++)
-					delegatesDest[nDelegate] = Delegate.CreateDelegate(type,
-						delegates[nDelegate].Target, delegates[nDelegate].Method);
+				Delegate[ ] delegatesDest = new Delegate[ delegates.Length ];
+				for ( int nDelegate = 0; nDelegate < delegates.Length; nDelegate++ )
+					delegatesDest[ nDelegate ] = Delegate.CreateDelegate( type,
+						delegates[ nDelegate ].Target, delegates[ nDelegate ].Method );
 
-				return Delegate.Combine(delegatesDest);
+				return Delegate.Combine( delegatesDest );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

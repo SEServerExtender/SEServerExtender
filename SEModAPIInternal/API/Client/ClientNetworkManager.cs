@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using SEModAPIInternal.API.Common;
 
 namespace SEModAPIInternal.API.Client
@@ -17,7 +14,7 @@ namespace SEModAPIInternal.API.Client
 		public static string ClientNetworkManagerClass = "917D70698518C7E9DB7763365C3831D7";
 		public static string ClientNetworkManagerConnectedPlayersField = "0A6298E827EEFE85ABBA7D3FA0A0EFCA";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Properties"
 
@@ -25,22 +22,22 @@ namespace SEModAPIInternal.API.Client
 		{
 			get
 			{
-				if (m_instance == null)
-					m_instance = new ClientNetworkManager();
+				if ( m_instance == null )
+					m_instance = new ClientNetworkManager( );
 
 				return m_instance;
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public override List<ulong> GetConnectedPlayers()
+		public override List<ulong> GetConnectedPlayers( )
 		{
-			throw new NotImplementedException();
+			throw new NotImplementedException( );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

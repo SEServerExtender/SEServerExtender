@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Common
@@ -45,22 +41,22 @@ namespace SEModAPIInternal.API.Common
 		private List<EntityEvent> m_entityEventsBuffer;
 		private bool m_isResourceLocked;
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		protected EntityEventManager()
+		protected EntityEventManager( )
 		{
-			m_entityEvents = new List<EntityEvent>();
-			m_entityEventsBuffer = new List<EntityEvent>();
+			m_entityEvents = new List<EntityEvent>( );
+			m_entityEventsBuffer = new List<EntityEvent>( );
 			m_isResourceLocked = false;
 
 			m_instance = this;
 
-			Console.WriteLine("Finished loading EntityEventManager");
+			Console.WriteLine( "Finished loading EntityEventManager" );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -68,8 +64,8 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				if (m_instance == null)
-					m_instance = new EntityEventManager();
+				if ( m_instance == null )
+					m_instance = new EntityEventManager( );
 
 				return m_instance;
 			}
@@ -88,46 +84,46 @@ namespace SEModAPIInternal.API.Common
 			get { return m_isResourceLocked; }
 			set
 			{
-				if (value == false)
+				if ( value == false )
 				{
-					m_entityEvents.AddList(m_entityEventsBuffer);
-					m_entityEventsBuffer.Clear();
+					m_entityEvents.AddList( m_entityEventsBuffer );
+					m_entityEventsBuffer.Clear( );
 				}
 
 				m_isResourceLocked = value;
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public void AddEvent(EntityEvent newEvent)
+		public void AddEvent( EntityEvent newEvent )
 		{
 			try
 			{
-				if (ResourceLocked)
+				if ( ResourceLocked )
 				{
 					//Only add priority 0 and 1 events to the buffer while the list is locked
-					if (newEvent.priority < 2)
-						m_entityEventsBuffer.Add(newEvent);
+					if ( newEvent.priority < 2 )
+						m_entityEventsBuffer.Add( newEvent );
 				}
 				else
 				{
-					m_entityEvents.Add(newEvent);
+					m_entityEvents.Add( newEvent );
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public void ClearEvents()
+		public void ClearEvents( )
 		{
-			m_entityEvents.Clear();
+			m_entityEvents.Clear( );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

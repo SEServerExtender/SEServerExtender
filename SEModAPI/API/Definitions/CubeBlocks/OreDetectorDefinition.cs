@@ -42,7 +42,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_OreDetectorDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_OreDetectorDefinition)m_baseDefinition;
+			return (MyObjectBuilder_OreDetectorDefinition)BaseDefinition;
 		}
 
 		#endregion

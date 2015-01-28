@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 
 using SEModAPI.API;
@@ -17,7 +13,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "ThrustEntityProxy")]
+	[DataContract( Name = "ThrustEntityProxy" )]
 	public class ThrustEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -38,6 +34,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		//Note: The following fields exist but are not broadcast and as such setting these on the server will do nothing client-side
 		public static string ThrustFlameColorField = "3BB80065D0377A358D2F75331BF07A6D";
+
 		public static string ThrustLightField = "079E76305C1B63982C61439EDDB9D211";
 		public static string ThrustFlameScaleCoefficientField = "5912C868C1061CCE7788DC17F8FDE754";
 
@@ -47,36 +44,35 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//SmallShip-Large: 300
 		//SmallShip-Small: 200
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public ThrustEntity(CubeGridEntity parent, MyObjectBuilder_Thrust definition)
-			: base(parent, definition)
+		public ThrustEntity( CubeGridEntity parent, MyObjectBuilder_Thrust definition )
+			: base( parent, definition )
 		{
 		}
 
-		public ThrustEntity(CubeGridEntity parent, MyObjectBuilder_Thrust definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public ThrustEntity( CubeGridEntity parent, MyObjectBuilder_Thrust definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 			m_thrustOverride = 0;
-			m_networkManager = new ThrustNetworkManager(this, InternalGetThrustNetManager());
+			m_networkManager = new ThrustNetworkManager( this, InternalGetThrustNetManager( ) );
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Thrust")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Thrust" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_Thrust ObjectBuilder
 		{
 			get
 			{
 				MyObjectBuilder_Thrust thrust = (MyObjectBuilder_Thrust)base.ObjectBuilder;
-
 
 				return thrust;
 			}
@@ -87,43 +83,43 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Thrust")]
-		[Browsable(true)]
-		[ReadOnly(false)]
+		[Category( "Thrust" )]
+		[Browsable( true )]
+		[ReadOnly( false )]
 		public float Override
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return m_thrustOverride;
 
-				return InternalGetThrustOverride();
+				return InternalGetThrustOverride( );
 			}
 			set
 			{
 				m_thrustOverride = value;
 				Changed = true;
 
-				if (BackingObject != null && ActualObject != null)
+				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateOverride;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Thrust")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Thrust" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public Vector3Wrapper MaxThrustVector
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return Vector3.Zero;
 
-				return InternalGetMaxThrustVector();
+				return InternalGetMaxThrustVector( );
 			}
 			private set
 			{
@@ -131,76 +127,76 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ThrustNamespace, ThrustClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for ThrustEntity");
-				result &= HasMethod(type, ThrustGetOverrideMethod);
-				result &= HasMethod(type, ThrustSetOverrideMethod);
-				result &= HasMethod(type, ThrustGetMaxThrustVectorMethod);
-				result &= HasMethod(type, ThrustGetMaxPowerConsumptionMethod);
-				result &= HasMethod(type, ThrustGetMinPowerConsumptionMethod);
-				result &= HasField(type, ThrustNetManagerField);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ThrustNamespace, ThrustClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for ThrustEntity" );
+				result &= HasMethod( type, ThrustGetOverrideMethod );
+				result &= HasMethod( type, ThrustSetOverrideMethod );
+				result &= HasMethod( type, ThrustGetMaxThrustVectorMethod );
+				result &= HasMethod( type, ThrustGetMaxPowerConsumptionMethod );
+				result &= HasMethod( type, ThrustGetMinPowerConsumptionMethod );
+				result &= HasField( type, ThrustNetManagerField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
 		#region "Internal"
 
-		protected Object InternalGetThrustNetManager()
+		protected Object InternalGetThrustNetManager( )
 		{
 			try
 			{
-				FieldInfo field = GetEntityField(ActualObject, ThrustNetManagerField);
-				Object result = field.GetValue(ActualObject);
+				FieldInfo field = GetEntityField( ActualObject, ThrustNetManagerField );
+				Object result = field.GetValue( ActualObject );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		protected float InternalGetThrustOverride()
+		protected float InternalGetThrustOverride( )
 		{
-			float result = (float)InvokeEntityMethod(ActualObject, ThrustGetOverrideMethod);
+			float result = (float)InvokeEntityMethod( ActualObject, ThrustGetOverrideMethod );
 
 			return result;
 		}
 
-		protected Vector3 InternalGetMaxThrustVector()
+		protected Vector3 InternalGetMaxThrustVector( )
 		{
-			Vector3 result = (Vector3)InvokeEntityMethod(ActualObject, ThrustGetMaxThrustVectorMethod);
+			Vector3 result = (Vector3)InvokeEntityMethod( ActualObject, ThrustGetMaxThrustVectorMethod );
 
 			return result;
 		}
 
-		protected void InternalUpdateOverride()
+		protected void InternalUpdateOverride( )
 		{
-			InvokeEntityMethod(ActualObject, ThrustSetOverrideMethod, new object[] { m_thrustOverride });
-			m_networkManager.BroadcastOverride(m_thrustOverride);
+			InvokeEntityMethod( ActualObject, ThrustSetOverrideMethod, new object[ ] { m_thrustOverride } );
+			m_networkManager.BroadcastOverride( m_thrustOverride );
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class ThrustNetworkManager
@@ -220,60 +216,58 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//Packets
 		//7416 - Thrust override
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public ThrustNetworkManager(ThrustEntity parent, Object backingObject)
+		public ThrustNetworkManager( ThrustEntity parent, Object backingObject )
 		{
 			m_parent = parent;
 			m_backingObject = backingObject;
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
-		#region "Properties"
 
-		#endregion
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ThrustNetManagerNamespace, ThrustNetManagerClass);
-				if (type == null)
-					throw new Exception("Could not find network manager type for ThrustEntity");
-				result &= BaseObject.HasMethod(type, ThrustNetManagerBroadcastOverrideMethod);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ThrustNetManagerNamespace, ThrustNetManagerClass );
+				if ( type == null )
+					throw new Exception( "Could not find network manager type for ThrustEntity" );
+				result &= BaseObject.HasMethod( type, ThrustNetManagerBroadcastOverrideMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void BroadcastOverride(float overrideValue)
+		public void BroadcastOverride( float overrideValue )
 		{
-			if (m_backingObject == null)
+			if ( m_backingObject == null )
 				return;
 
 			m_lastOverride = overrideValue;
 
 			Action action = InternalBroadcastOverride;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		protected void InternalBroadcastOverride()
+		protected void InternalBroadcastOverride( )
 		{
-			BaseObject.InvokeEntityMethod(m_backingObject, ThrustNetManagerBroadcastOverrideMethod, new object[] { m_lastOverride });
+			BaseObject.InvokeEntityMethod( m_backingObject, ThrustNetManagerBroadcastOverrideMethod, new object[ ] { m_lastOverride } );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

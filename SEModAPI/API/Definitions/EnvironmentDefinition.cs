@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Sandbox.Common.ObjectBuilders;
+﻿using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using SEModAPI.Support;
 using VRageMath;
 
 namespace SEModAPI.API.Definitions
@@ -16,9 +13,6 @@ namespace SEModAPI.API.Definitions
 		#endregion
 
 		#region "Constructors and Initializers"
-
-		public EnvironmentDefinition()
-		{}
 
 		#endregion
 

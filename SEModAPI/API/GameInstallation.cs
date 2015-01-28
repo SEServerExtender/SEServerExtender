@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
-using SEModAPI.Support;
 
 namespace SEModAPI.API
 {
@@ -16,7 +15,7 @@ namespace SEModAPI.API
 	{
 		#region "Attributes"
 
-		private static string m_GamePath;
+		private static string _gamePath;
 
 		internal static readonly string[] CoreSpaceEngineersFiles = 
 		{
@@ -40,14 +39,14 @@ namespace SEModAPI.API
 		/// </summary>
 		public GameInstallationInfo()
 		{
-			m_GamePath = GetGameRegistryPath();
-			if (m_GamePath == null || m_GamePath == "")
+			_gamePath = GetGameRegistryPath();
+			if (string.IsNullOrEmpty( _gamePath ))
 			{
-				m_GamePath = GetGameSteamPath();
-				if (m_GamePath == null || m_GamePath == "")
+				_gamePath = GetGameSteamPath();
+				if (string.IsNullOrEmpty( _gamePath ))
 				{
-					m_GamePath = GetGameEXEPath();
-					if (m_GamePath == null || m_GamePath == "")
+					_gamePath = GetGameExePath();
+					if (string.IsNullOrEmpty( _gamePath ))
 					{
 						throw new GameInstallationInfoException(GameInstallationInfoExceptionState.EmptyGamePath, "Can't find the game path");
 					}
@@ -55,7 +54,7 @@ namespace SEModAPI.API
 					
 			}
 
-			if (!IsValidGamePath(m_GamePath))
+			if (!IsValidGamePath(_gamePath))
 				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.BrokenGameDirectory, "The game directory is broken");
 		}
 
@@ -65,11 +64,11 @@ namespace SEModAPI.API
 		/// <param name="gamePath">Location of the game executable</param>
 		public GameInstallationInfo(string gamePath)
 		{
-			m_GamePath = gamePath;
-			if (m_GamePath == null || m_GamePath == "")
+			_gamePath = gamePath;
+			if (string.IsNullOrEmpty( _gamePath ))
 				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.EmptyGamePath, "The gamePath given is empty");
 
-			if (!IsValidGamePath(m_GamePath))
+			if (!IsValidGamePath(_gamePath))
 				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.BrokenGameDirectory, "The gamePath provided is invalid");
 		}
 
@@ -79,7 +78,7 @@ namespace SEModAPI.API
 
 		public static string GamePath
 		{
-			get { return m_GamePath; }
+			get { return _gamePath; }
 		}
 
 		#endregion
@@ -124,16 +123,12 @@ namespace SEModAPI.API
 			else
 				key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 244850", false);
 
-			if (key != null)
+			if ( key == null )
 			{
-				string path = key.GetValue("InstallLocation") as string;
-				if (Directory.Exists(path))
-					return path;
-				else
-					return null;
+				return null;
 			}
-
-			return null;
+			string path = key.GetValue("InstallLocation") as string;
+			return path != null && Directory.Exists(path) ? path : null;
 		}
 
 		/// <summary>
@@ -154,10 +149,7 @@ namespace SEModAPI.API
 			{
 				string steamBasePath = (string)key.GetValue("InstallPath");
 				string path = Path.Combine(steamBasePath, "steamapps", "common", "spaceengineers");
-				if (Directory.Exists(path))
-					return path;
-				else
-					return null;
+				return Directory.Exists(path) ? path : null;
 			}
 
 			return null;
@@ -167,7 +159,7 @@ namespace SEModAPI.API
 		/// Looks for the game install by going to the parent directory of this application
 		/// </summary>
 		/// <returns>The parent path of this application</returns>
-		public static string GetGameEXEPath()
+		public static string GetGameExePath()
 		{
 			try
 			{
@@ -188,10 +180,10 @@ namespace SEModAPI.API
 		public bool IsBaseAssembliesChanged()
 		{
 			// We use the Bin64 Path, as these assemblies are marked "All CPU", and will work regardless of processor architecture.
-			var baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
-			var appFilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			string baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
+			string appFilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-			foreach (var filename in CoreSpaceEngineersFiles)
+			foreach (string filename in CoreSpaceEngineersFiles)
 			{
 				if (DoFilesDiffer(baseFilePath, appFilePath, filename))
 					return true;
@@ -203,12 +195,11 @@ namespace SEModAPI.API
 		public bool UpdateBaseFiles()
 		{
 			// We use the Bin64 Path, as these assemblies are marked "All CPU", and will work regardless of processor architecture.
-			var baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
-			var appFilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			string baseFilePath = Path.Combine(GamePath, "DedicatedServer64");
 
-			foreach (var filename in CoreSpaceEngineersFiles)
+			foreach (string filename in CoreSpaceEngineersFiles)
 			{
-				var sourceFile = Path.Combine(baseFilePath, filename);
+				string sourceFile = Path.Combine(baseFilePath, filename);
 
 				if (File.Exists(sourceFile))
 				{
@@ -229,30 +220,30 @@ namespace SEModAPI.API
 			if (File.Exists(file1) != File.Exists(file2))
 				return false;
 
-			var buffer1 = File.ReadAllBytes(file1);
-			var buffer2 = File.ReadAllBytes(file2);
+			byte[ ] buffer1 = File.ReadAllBytes(file1);
+			byte[ ] buffer2 = File.ReadAllBytes(file2);
 
 			if (buffer1.Length != buffer2.Length)
 				return true;
 
-			var ass1 = Assembly.Load(buffer1);
-			var guid1 = ass1.ManifestModule.ModuleVersionId;
+			Assembly ass1 = Assembly.Load(buffer1);
+			Guid guid1 = ass1.ManifestModule.ModuleVersionId;
 
-			var ass2 = Assembly.Load(buffer2);
-			var guid2 = ass2.ManifestModule.ModuleVersionId;
+			Assembly ass2 = Assembly.Load(buffer2);
+			Guid guid2 = ass2.ManifestModule.ModuleVersionId;
 
 			return guid1 != guid2;
 		}
 
 		internal static bool CheckIsRuningElevated()
 		{
-			var pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+			WindowsPrincipal pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
 			return pricipal.IsInRole(WindowsBuiltInRole.Administrator);
 		}
 
 		internal static int? RunElevated(string fileName, string arguments, bool elevate, bool waitForExit)
 		{
-			var processInfo = new ProcessStartInfo(fileName, arguments);
+			ProcessStartInfo processInfo = new ProcessStartInfo(fileName, arguments);
 
 			if (elevate)
 			{
@@ -261,7 +252,7 @@ namespace SEModAPI.API
 
 			try
 			{
-				var process = Process.Start(processInfo);
+				Process process = Process.Start(processInfo);
 
 				if (waitForExit)
 				{

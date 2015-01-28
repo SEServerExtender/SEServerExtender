@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "SolarPanelEntityProxy")]
+	[DataContract( Name = "SolarPanelEntityProxy" )]
 	public class SolarPanelEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -25,29 +20,29 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string SolarPanelSetMaxOutputMethod = "802879712B29AAC2DB4EC9F7B128C979";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public SolarPanelEntity(CubeGridEntity parent, MyObjectBuilder_SolarPanel definition)
-			: base(parent, definition)
+		public SolarPanelEntity( CubeGridEntity parent, MyObjectBuilder_SolarPanel definition )
+			: base( parent, definition )
 		{
 		}
 
-		public SolarPanelEntity(CubeGridEntity parent, MyObjectBuilder_SolarPanel definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public SolarPanelEntity( CubeGridEntity parent, MyObjectBuilder_SolarPanel definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
-			m_powerProducer = new PowerProducer(Parent.PowerManager, ActualObject);
+			m_powerProducer = new PowerProducer( Parent.PowerManager, ActualObject );
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Solar Panel")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Solar Panel" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_SolarPanel ObjectBuilder
 		{
 			get { return (MyObjectBuilder_SolarPanel)base.ObjectBuilder; }
@@ -58,7 +53,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Solar Panel")]
+		[Category( "Solar Panel" )]
 		public float MaxPower
 		{
 			get { return PowerProducer.MaxPowerOutput; }
@@ -67,12 +62,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				m_maxPowerOutput = value;
 
 				Action action = InternalUpdateMaxPowerOutput;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 			}
 		}
 
 		[DataMember]
-		[Category("Solar Panel")]
+		[Category( "Solar Panel" )]
 		public float Power
 		{
 			get { return PowerProducer.PowerOutput; }
@@ -80,43 +75,43 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Solar Panel")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Solar Panel" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal PowerProducer PowerProducer
 		{
 			get { return m_powerProducer; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(SolarPanelNamespace, SolarPanelClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for SolarPanelEntity");
-				result &= HasMethod(type, SolarPanelSetMaxOutputMethod);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( SolarPanelNamespace, SolarPanelClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for SolarPanelEntity" );
+				result &= HasMethod( type, SolarPanelSetMaxOutputMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected void InternalUpdateMaxPowerOutput()
+		protected void InternalUpdateMaxPowerOutput( )
 		{
-			InvokeEntityMethod(ActualObject, SolarPanelSetMaxOutputMethod, new object[] { m_maxPowerOutput });
+			InvokeEntityMethod( ActualObject, SolarPanelSetMaxOutputMethod, new object[ ] { m_maxPowerOutput } );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders.Definitions;
 
 namespace SEModAPI.API.Definitions.CubeBlocks
@@ -63,7 +59,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_ShipDrillDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_ShipDrillDefinition)m_baseDefinition;
+			return (MyObjectBuilder_ShipDrillDefinition)BaseDefinition;
 		}
 
 		#endregion

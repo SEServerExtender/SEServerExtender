@@ -1,38 +1,32 @@
-﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Threading;
 using System.Xml;
-
+using Microsoft.Xml.Serialization.GeneratedAssembly;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.Serializer;
-
+using Sandbox.Definitions;
 using SEModAPI.API;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.Support;
-
 using VRage;
-using Sandbox.Definitions;
 
 namespace SEModAPIInternal.API.Entity
 {
-	[DataContract(Name="BaseObjectProxy")]
-	[KnownType(typeof(BaseEntity))]
-	[KnownType(typeof(CharacterEntity))]
-	[KnownType(typeof(CubeGridEntity))]
-	[KnownType(typeof(FloatingObject))]
-	[KnownType(typeof(Meteor))]
-	[KnownType(typeof(VoxelMap))]
+	[DataContract( Name = "BaseObjectProxy" )]
+	[KnownType( typeof( BaseEntity ) )]
+	[KnownType( typeof( CharacterEntity ) )]
+	[KnownType( typeof( CubeGridEntity ) )]
+	[KnownType( typeof( FloatingObject ) )]
+	[KnownType( typeof( Meteor ) )]
+	[KnownType( typeof( VoxelMap ) )]
 	public class BaseObject : IDisposable
 	{
 		#region "Attributes"
@@ -44,53 +38,52 @@ namespace SEModAPIInternal.API.Entity
 
 		protected bool m_isDisposed = false;
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public BaseObject()
+		public BaseObject( )
 		{
-
 		}
 
-		public BaseObject(MyObjectBuilder_Base baseEntity)
+		public BaseObject( MyObjectBuilder_Base baseEntity )
 		{
 			m_objectBuilder = baseEntity;
 
-			m_definitionId = new MyDefinitionId(m_objectBuilder.TypeId, m_objectBuilder.SubtypeId.ToString());
-			if (!string.IsNullOrEmpty(m_objectBuilder.SubtypeName))
+			m_definitionId = new MyDefinitionId( m_objectBuilder.TypeId, m_objectBuilder.SubtypeId.ToString( ) );
+			if ( !string.IsNullOrEmpty( m_objectBuilder.SubtypeName ) )
 			{
 				try
 				{
-					m_definition = MyDefinitionManager.Static.GetDefinition(m_definitionId);
+					m_definition = MyDefinitionManager.Static.GetDefinition( m_definitionId );
 				}
-				catch (Exception)
+				catch ( Exception )
 				{
 					//Do nothing!
 				}
 			}
 		}
 
-		public BaseObject(MyObjectBuilder_Base baseEntity, Object backingObject)
+		public BaseObject( MyObjectBuilder_Base baseEntity, Object backingObject )
 		{
 			m_objectBuilder = baseEntity;
 			m_backingObject = backingObject;
 
-			m_definitionId = new MyDefinitionId(m_objectBuilder.TypeId, m_objectBuilder.SubtypeId.ToString());
-			if (!string.IsNullOrEmpty(m_objectBuilder.SubtypeName))
+			m_definitionId = new MyDefinitionId( m_objectBuilder.TypeId, m_objectBuilder.SubtypeId.ToString( ) );
+			if ( !string.IsNullOrEmpty( m_objectBuilder.SubtypeName ) )
 			{
 				try
 				{
-					m_definition = MyDefinitionManager.Static.GetDefinition(m_definitionId);
+					m_definition = MyDefinitionManager.Static.GetDefinition( m_definitionId );
 				}
-				catch (Exception)
+				catch ( Exception )
 				{
 					//Do nothing!
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -98,36 +91,36 @@ namespace SEModAPIInternal.API.Entity
 		/// Changed status of the object
 		/// </summary>
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("Represent the state of changes in the object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		[Description( "Represent the state of changes in the object" )]
 		public virtual bool Changed { get; protected set; }
 
 		/// <summary>
 		/// API formated name of the object
 		/// </summary>
 		[DataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("The formatted name of the object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		[Description( "The formatted name of the object" )]
 		public virtual string Name { get; private set; }
 
 		/// <summary>
 		/// Object builder data of the object
 		/// </summary>
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("Object builder data of the object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		[Description( "Object builder data of the object" )]
 		internal MyObjectBuilder_Base ObjectBuilder
 		{
 			get { return m_objectBuilder; }
 			set
 			{
-				if (m_objectBuilder == value) return;
+				if ( m_objectBuilder == value ) return;
 				m_objectBuilder = value;
 
 				Changed = true;
@@ -138,9 +131,9 @@ namespace SEModAPIInternal.API.Entity
 		/// Internal, in-game object that matches to this object
 		/// </summary>
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[Description("Internal, in-game object that matches to this object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[Description( "Internal, in-game object that matches to this object" )]
 		public Object BackingObject
 		{
 			get { return m_backingObject; }
@@ -155,10 +148,10 @@ namespace SEModAPIInternal.API.Entity
 		/// Full type of the object
 		/// </summary>
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(true)]
-		[ReadOnly(true)]
-		[Description("The ID representing the definition type of the object")]
+		[Category( "Object" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
+		[Description( "The ID representing the definition type of the object" )]
 		public MyDefinitionId Id
 		{
 			get
@@ -172,10 +165,10 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(true)]
-		[ReadOnly(true)]
-		[Description("The definition type of the object")]
+		[Category( "Object" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
+		[Description( "The definition type of the object" )]
 		public MyDefinitionBase Definition
 		{
 			get
@@ -189,10 +182,10 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("The value ID representing the type of the object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		[Description( "The value ID representing the type of the object" )]
 		[Obsolete]
 		public MyObjectBuilderType TypeId
 		{
@@ -204,10 +197,10 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("The value ID representing the sub-type of the object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		[Description( "The value ID representing the sub-type of the object" )]
 		[Obsolete]
 		public string Subtype
 		{
@@ -219,9 +212,9 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[DataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public bool IsDisposed
 		{
 			get { return m_isDisposed; }
@@ -231,16 +224,16 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public virtual void Dispose()
+		public virtual void Dispose( )
 		{
-			if (IsDisposed)
+			if ( IsDisposed )
 				return;
 
-			if (BackingObject != null)
+			if ( BackingObject != null )
 			{
 				//Do stuff
 			}
@@ -248,88 +241,88 @@ namespace SEModAPIInternal.API.Entity
 			m_isDisposed = true;
 		}
 
-		public virtual void Export(FileInfo fileInfo)
+		public virtual void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_Base, MyObjectBuilder_BaseSerializer>(ObjectBuilder, fileInfo);
+			BaseObjectManager.SaveContentFile<MyObjectBuilder_Base, MyObjectBuilder_BaseSerializer>( ObjectBuilder, fileInfo );
 		}
 
-		public MyObjectBuilder_Base Export()
+		public MyObjectBuilder_Base Export( )
 		{
 			return ObjectBuilder;
 		}
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			return true;
 		}
 
 		#region "Internal"
 
-		public static bool HasField(Type objectType, string fieldName)
+		public static bool HasField( Type objectType, string fieldName )
 		{
 			try
 			{
-				if (fieldName == null || fieldName.Length == 0)
+				if ( fieldName == null || fieldName.Length == 0 )
 					return false;
-				FieldInfo field = objectType.GetField(fieldName);
-				if (field == null)
-					field = objectType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (field == null)
-					field = objectType.BaseType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (field == null)
+				FieldInfo field = objectType.GetField( fieldName );
+				if ( field == null )
+					field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( field == null )
+					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( field == null )
 				{
-					if(SandboxGameAssemblyWrapper.IsDebugging)
-						LogManager.ErrorLog.WriteLineAndConsole("Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'");
+					if ( SandboxGameAssemblyWrapper.IsDebugging )
+						LogManager.ErrorLog.WriteLineAndConsole( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
 					return false;
 				}
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLineAndConsole("Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message);
-				LogManager.ErrorLog.WriteLine(ex);
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLineAndConsole( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public static bool HasMethod(Type objectType, string methodName)
+		public static bool HasMethod( Type objectType, string methodName )
 		{
-			return HasMethod(objectType, methodName, null);
+			return HasMethod( objectType, methodName, null );
 		}
 
-		public static bool HasMethod(Type objectType, string methodName, Type[] argTypes)
+		public static bool HasMethod( Type objectType, string methodName, Type[ ] argTypes )
 		{
 			try
 			{
-				if (methodName == null || methodName.Length == 0)
+				if ( methodName == null || methodName.Length == 0 )
 					return false;
 
-				if (argTypes == null)
+				if ( argTypes == null )
 				{
-					MethodInfo method = objectType.GetMethod(methodName);
-					if (method == null)
-						method = objectType.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-					if (method == null && objectType.BaseType != null)
-						method = objectType.BaseType.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-					if (method == null)
+					MethodInfo method = objectType.GetMethod( methodName );
+					if ( method == null )
+						method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+					if ( method == null && objectType.BaseType != null )
+						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+					if ( method == null )
 					{
-						if (SandboxGameAssemblyWrapper.IsDebugging)
-							LogManager.ErrorLog.WriteLineAndConsole("Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'");
+						if ( SandboxGameAssemblyWrapper.IsDebugging )
+							LogManager.ErrorLog.WriteLineAndConsole( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
 						return false;
 					}
 				}
 				else
 				{
-					MethodInfo method = objectType.GetMethod(methodName, argTypes);
-					if (method == null)
-						method = objectType.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null);
-					if (method == null && objectType.BaseType != null)
-						method = objectType.BaseType.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null);
-					if (method == null)
+					MethodInfo method = objectType.GetMethod( methodName, argTypes );
+					if ( method == null )
+						method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
+					if ( method == null && objectType.BaseType != null )
+						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
+					if ( method == null )
 					{
-						if (SandboxGameAssemblyWrapper.IsDebugging)
-							LogManager.ErrorLog.WriteLineAndConsole("Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'");
+						if ( SandboxGameAssemblyWrapper.IsDebugging )
+							LogManager.ErrorLog.WriteLineAndConsole( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
 						return false;
 					}
 				}
@@ -340,39 +333,39 @@ namespace SEModAPIInternal.API.Entity
 			{
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLineAndConsole("Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message);
-				LogManager.ErrorLog.WriteLine(ex);
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLineAndConsole( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public static bool HasProperty(Type objectType, string propertyName)
+		public static bool HasProperty( Type objectType, string propertyName )
 		{
 			try
 			{
-				if (propertyName == null || propertyName.Length == 0)
+				if ( propertyName == null || propertyName.Length == 0 )
 					return false;
-				PropertyInfo property = objectType.GetProperty(propertyName);
-				if (property == null)
-					property = objectType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (property == null)
-					property = objectType.BaseType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (property == null)
+				PropertyInfo property = objectType.GetProperty( propertyName );
+				if ( property == null )
+					property = objectType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( property == null )
+					property = objectType.BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( property == null )
 				{
-					if (SandboxGameAssemblyWrapper.IsDebugging)
-						LogManager.ErrorLog.WriteLineAndConsole("Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "'");
+					if ( SandboxGameAssemblyWrapper.IsDebugging )
+						LogManager.ErrorLog.WriteLineAndConsole( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "'" );
 					return false;
 				}
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLineAndConsole("Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "': " + ex.Message);
-				LogManager.ErrorLog.WriteLine(ex);
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLineAndConsole( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
@@ -398,38 +391,38 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		public static FieldInfo GetStaticField(Type objectType, string fieldName)
+		public static FieldInfo GetStaticField( Type objectType, string fieldName )
 		{
 			try
 			{
-				FieldInfo field = objectType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (field == null)
-					field = objectType.BaseType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+				FieldInfo field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( field == null )
+					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				return field;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get static field '" + fieldName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get static field '" + fieldName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static FieldInfo GetEntityField(Object gameEntity, string fieldName)
+		public static FieldInfo GetEntityField( Object gameEntity, string fieldName )
 		{
 			try
 			{
-				FieldInfo field = gameEntity.GetType().GetField(fieldName);
-				if (field == null)
+				FieldInfo field = gameEntity.GetType( ).GetField( fieldName );
+				if ( field == null )
 				{
 					//Recurse up through the class heirarchy to try to find the field
-					Type type = gameEntity.GetType();
-					while (type != typeof(Object))
+					Type type = gameEntity.GetType( );
+					while ( type != typeof( Object ) )
 					{
-						field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-						if (field != null)
+						field = type.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+						if ( field != null )
 							break;
 
 						type = type.BaseType;
@@ -437,355 +430,355 @@ namespace SEModAPIInternal.API.Entity
 				}
 				return field;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get entity field '" + fieldName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get entity field '" + fieldName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static MethodInfo GetStaticMethod(Type objectType, string methodName)
+		public static MethodInfo GetStaticMethod( Type objectType, string methodName )
 		{
 			try
 			{
-				if (methodName == null || methodName.Length == 0)
-					throw new Exception("Method name was empty");
-				MethodInfo method = objectType.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (method == null)
+				if ( methodName == null || methodName.Length == 0 )
+					throw new Exception( "Method name was empty" );
+				MethodInfo method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( method == null )
 				{
 					//Recurse up through the class heirarchy to try to find the method
 					Type type = objectType;
-					while (type != typeof(Object))
+					while ( type != typeof( Object ) )
 					{
-						method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-						if (method != null)
+						method = type.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+						if ( method != null )
 							break;
 
 						type = type.BaseType;
 					}
 				}
-				if (method == null)
-					throw new Exception("Method not found");
+				if ( method == null )
+					throw new Exception( "Method not found" );
 				return method;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get static method '" + methodName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get static method '" + methodName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static MethodInfo GetStaticMethod(Type objectType, string methodName, Type[] argTypes)
+		public static MethodInfo GetStaticMethod( Type objectType, string methodName, Type[ ] argTypes )
 		{
 			try
 			{
-				if (argTypes == null || argTypes.Length == 0)
-					return GetStaticMethod(objectType, methodName);
+				if ( argTypes == null || argTypes.Length == 0 )
+					return GetStaticMethod( objectType, methodName );
 
-				if (methodName == null || methodName.Length == 0)
-					throw new Exception("Method name was empty");
-				MethodInfo method = objectType.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null);
-				if (method == null)
+				if ( methodName == null || methodName.Length == 0 )
+					throw new Exception( "Method name was empty" );
+				MethodInfo method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
+				if ( method == null )
 				{
 					//Recurse up through the class heirarchy to try to find the method
 					Type type = objectType;
-					while (type != typeof(Object))
+					while ( type != typeof( Object ) )
 					{
-						method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null);
-						if (method != null)
+						method = type.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
+						if ( method != null )
 							break;
 
 						type = type.BaseType;
 					}
 				}
-				if (method == null)
-					throw new Exception("Method not found");
+				if ( method == null )
+					throw new Exception( "Method not found" );
 				return method;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get static method '" + methodName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get static method '" + methodName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static MethodInfo GetEntityMethod(Object gameEntity, string methodName)
+		public static MethodInfo GetEntityMethod( Object gameEntity, string methodName )
 		{
 			try
 			{
-				if (gameEntity == null)
-					throw new Exception("Game entity was null");
-				if (methodName == null || methodName.Length == 0)
-					throw new Exception("Method name was empty");
-				MethodInfo method = gameEntity.GetType().GetMethod(methodName);
-				if (method == null)
+				if ( gameEntity == null )
+					throw new Exception( "Game entity was null" );
+				if ( methodName == null || methodName.Length == 0 )
+					throw new Exception( "Method name was empty" );
+				MethodInfo method = gameEntity.GetType( ).GetMethod( methodName );
+				if ( method == null )
 				{
 					//Recurse up through the class heirarchy to try to find the method
-					Type type = gameEntity.GetType();
-					while (type != typeof(Object))
+					Type type = gameEntity.GetType( );
+					while ( type != typeof( Object ) )
 					{
-						method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-						if (method != null)
+						method = type.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+						if ( method != null )
 							break;
 
 						type = type.BaseType;
 					}
 				}
-				if (method == null)
-					throw new Exception("Method not found");
+				if ( method == null )
+					throw new Exception( "Method not found" );
 				return method;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get entity method '" + methodName + "': " + ex.Message);
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get entity method '" + methodName + "': " + ex.Message );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static MethodInfo GetEntityMethod(Object gameEntity, string methodName, Type[] argTypes)
+		public static MethodInfo GetEntityMethod( Object gameEntity, string methodName, Type[ ] argTypes )
 		{
 			try
 			{
-				if (argTypes == null || argTypes.Length == 0)
-					return GetEntityMethod(gameEntity, methodName);
+				if ( argTypes == null || argTypes.Length == 0 )
+					return GetEntityMethod( gameEntity, methodName );
 
-				if (gameEntity == null)
-					throw new Exception("Game entity was null");
-				if (methodName == null || methodName.Length == 0)
-					throw new Exception("Method name was empty");
-				MethodInfo method = gameEntity.GetType().GetMethod(methodName, argTypes);
-				if (method == null)
+				if ( gameEntity == null )
+					throw new Exception( "Game entity was null" );
+				if ( methodName == null || methodName.Length == 0 )
+					throw new Exception( "Method name was empty" );
+				MethodInfo method = gameEntity.GetType( ).GetMethod( methodName, argTypes );
+				if ( method == null )
 				{
 					//Recurse up through the class heirarchy to try to find the method
-					Type type = gameEntity.GetType();
-					while (type != typeof(Object))
+					Type type = gameEntity.GetType( );
+					while ( type != typeof( Object ) )
 					{
-						method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null);
-						if (method != null)
+						method = type.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
+						if ( method != null )
 							break;
 
 						type = type.BaseType;
 					}
 				}
-				if (method == null)
-					throw new Exception("Method not found");
+				if ( method == null )
+					throw new Exception( "Method not found" );
 				return method;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get entity method '" + methodName + "': " + ex.Message);
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get entity method '" + methodName + "': " + ex.Message );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static Object GetStaticFieldValue(Type objectType, string fieldName)
+		public static Object GetStaticFieldValue( Type objectType, string fieldName )
 		{
 			try
 			{
-				FieldInfo field = GetStaticField(objectType, fieldName);
-				if (field == null)
+				FieldInfo field = GetStaticField( objectType, fieldName );
+				if ( field == null )
 					return null;
-				Object value = field.GetValue(null);
+				Object value = field.GetValue( null );
 				return value;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static void SetStaticFieldValue(Type objectType, string fieldName, Object value)
+		public static void SetStaticFieldValue( Type objectType, string fieldName, Object value )
 		{
 			try
 			{
-				FieldInfo field = GetStaticField(objectType, fieldName);
-				if (field == null)
+				FieldInfo field = GetStaticField( objectType, fieldName );
+				if ( field == null )
 					return;
-				field.SetValue(null, value);
+				field.SetValue( null, value );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public static Object GetEntityFieldValue(Object gameEntity, string fieldName)
+		public static Object GetEntityFieldValue( Object gameEntity, string fieldName )
 		{
 			try
 			{
-				FieldInfo field = GetEntityField(gameEntity, fieldName);
-				if (field == null)
+				FieldInfo field = GetEntityField( gameEntity, fieldName );
+				if ( field == null )
 					return null;
-				Object value = field.GetValue(gameEntity);
+				Object value = field.GetValue( gameEntity );
 				return value;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static void SetEntityFieldValue(Object gameEntity, string fieldName, Object value)
+		public static void SetEntityFieldValue( Object gameEntity, string fieldName, Object value )
 		{
 			try
 			{
-				FieldInfo field = GetEntityField(gameEntity, fieldName);
-				if (field == null)
+				FieldInfo field = GetEntityField( gameEntity, fieldName );
+				if ( field == null )
 					return;
-				field.SetValue(gameEntity, value);
+				field.SetValue( gameEntity, value );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public static Object InvokeStaticMethod(Type objectType, string methodName)
+		public static Object InvokeStaticMethod( Type objectType, string methodName )
 		{
-			return InvokeStaticMethod(objectType, methodName, new object[] { });
+			return InvokeStaticMethod( objectType, methodName, new object[ ] { } );
 		}
 
-		public static Object InvokeStaticMethod(Type objectType, string methodName, Object[] parameters)
+		public static Object InvokeStaticMethod( Type objectType, string methodName, Object[ ] parameters )
 		{
 			try
 			{
-				MethodInfo method = GetStaticMethod(objectType, methodName);
-				if (method == null)
-					throw new Exception("Method is empty");
-				Object result = method.Invoke(null, parameters);
+				MethodInfo method = GetStaticMethod( objectType, methodName );
+				if ( method == null )
+					throw new Exception( "Method is empty" );
+				Object result = method.Invoke( null, parameters );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to invoke static method '" + methodName + "': " + ex.Message);
-				if(SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to invoke static method '" + methodName + "': " + ex.Message );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static Object InvokeEntityMethod(Object gameEntity, string methodName)
+		public static Object InvokeEntityMethod( Object gameEntity, string methodName )
 		{
-			return InvokeEntityMethod(gameEntity, methodName, new object[] { });
+			return InvokeEntityMethod( gameEntity, methodName, new object[ ] { } );
 		}
 
-		public static Object InvokeEntityMethod(Object gameEntity, string methodName, Object[] parameters)
+		public static Object InvokeEntityMethod( Object gameEntity, string methodName, Object[ ] parameters )
 		{
-			return InvokeEntityMethod(gameEntity, methodName, parameters, null);
+			return InvokeEntityMethod( gameEntity, methodName, parameters, null );
 		}
 
-		public static Object InvokeEntityMethod(Object gameEntity, string methodName, Object[] parameters, Type[] argTypes)
+		public static Object InvokeEntityMethod( Object gameEntity, string methodName, Object[ ] parameters, Type[ ] argTypes )
 		{
 			try
 			{
-				MethodInfo method = GetEntityMethod(gameEntity, methodName, argTypes);
-				if (method == null)
-					throw new Exception("Method is empty");
-				Object result = method.Invoke(gameEntity, parameters);
+				MethodInfo method = GetEntityMethod( gameEntity, methodName, argTypes );
+				if ( method == null )
+					throw new Exception( "Method is empty" );
+				Object result = method.Invoke( gameEntity, parameters );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to invoke entity method '" + methodName + "' on type '" + gameEntity.GetType().FullName + "': " + ex.Message);
+				LogManager.APILog.WriteLine( "Failed to invoke entity method '" + methodName + "' on type '" + gameEntity.GetType( ).FullName + "': " + ex.Message );
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static PropertyInfo GetEntityProperty(Object gameEntity, string propertyName)
+		public static PropertyInfo GetEntityProperty( Object gameEntity, string propertyName )
 		{
 			try
 			{
-				PropertyInfo property = gameEntity.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-				if (property == null)
-					property = gameEntity.GetType().BaseType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+				PropertyInfo property = gameEntity.GetType( ).GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( property == null )
+					property = gameEntity.GetType( ).BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 
 				return property;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get entity property '" + propertyName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get entity property '" + propertyName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static Object GetEntityPropertyValue(Object gameEntity, string propertyName)
+		public static Object GetEntityPropertyValue( Object gameEntity, string propertyName )
 		{
 			try
 			{
-				PropertyInfo property = GetEntityProperty(gameEntity, propertyName);
-				if (property == null)
+				PropertyInfo property = GetEntityProperty( gameEntity, propertyName );
+				if ( property == null )
 					return null;
 
-				Object result = property.GetValue(gameEntity, null);
+				Object result = property.GetValue( gameEntity, null );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to get entity property value '" + propertyName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to get entity property value '" + propertyName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static void SetEntityPropertyValue(Object gameEntity, string propertyName, Object value)
+		public static void SetEntityPropertyValue( Object gameEntity, string propertyName, Object value )
 		{
 			try
 			{
-				PropertyInfo property = GetEntityProperty(gameEntity, propertyName);
-				if (property == null)
+				PropertyInfo property = GetEntityProperty( gameEntity, propertyName );
+				if ( property == null )
 					return;
 
-				property.SetValue(gameEntity, value, null);
+				property.SetValue( gameEntity, value, null );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine("Failed to set entity property value '" + propertyName + "'");
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLine(Environment.StackTrace);
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.APILog.WriteLine( "Failed to set entity property value '" + propertyName + "'" );
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				LogManager.ErrorLog.WriteLine( ex );
 				return;
 			}
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	[DataContract]
-	[KnownType(typeof(SectorObjectManager))]
-	[KnownType(typeof(InventoryItemManager))]
-	[KnownType(typeof(CubeBlockManager))]
+	[KnownType( typeof( SectorObjectManager ) )]
+	[KnownType( typeof( InventoryItemManager ) )]
+	[KnownType( typeof( CubeBlockManager ) )]
 	public class BaseObjectManager
 	{
 		public enum InternalBackingType
@@ -812,59 +805,61 @@ namespace SEModAPIInternal.API.Entity
 		private static int m_staticRefreshCount;
 		private static Dictionary<Type, int> m_staticRefreshCountMap;
 
-		protected FastResourceLock m_resourceLock = new FastResourceLock();
-		protected FastResourceLock m_rawDataHashSetResourceLock = new FastResourceLock();
-		protected FastResourceLock m_rawDataListResourceLock = new FastResourceLock();
-		protected FastResourceLock m_rawDataObjectBuilderListResourceLock = new FastResourceLock();
+		protected FastResourceLock m_resourceLock = new FastResourceLock( );
+		protected FastResourceLock m_rawDataHashSetResourceLock = new FastResourceLock( );
+		protected FastResourceLock m_rawDataListResourceLock = new FastResourceLock( );
+		protected FastResourceLock m_rawDataObjectBuilderListResourceLock = new FastResourceLock( );
 
 		//Flags
 		private bool m_isMutable = true;
+
 		private bool m_changed = false;
 		private bool m_isDynamic = false;
 
 		//Raw data stores
-		protected HashSet<Object> m_rawDataHashSet = new HashSet<object>();
-		protected List<Object> m_rawDataList = new List<object>();
-		protected Dictionary<Object, MyObjectBuilder_Base> m_rawDataObjectBuilderList = new Dictionary<object, MyObjectBuilder_Base>();
+		protected HashSet<Object> m_rawDataHashSet = new HashSet<object>( );
+
+		protected List<Object> m_rawDataList = new List<object>( );
+		protected Dictionary<Object, MyObjectBuilder_Base> m_rawDataObjectBuilderList = new Dictionary<object, MyObjectBuilder_Base>( );
 
 		//Clean data stores
-		private Dictionary<long, BaseObject> m_definitions = new Dictionary<long, BaseObject>();
+		private Dictionary<long, BaseObject> m_definitions = new Dictionary<long, BaseObject>( );
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public BaseObjectManager()
+		public BaseObjectManager( )
 		{
 			m_fileInfo = null;
 			m_changed = false;
 			m_isMutable = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField();
+			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
 			m_backingSourceType = InternalBackingType.Hashset;
 
 			m_lastLoadTime = DateTime.Now;
 
-			if (m_lastProfilingOutput == null)
+			if ( m_lastProfilingOutput == null )
 				m_lastProfilingOutput = DateTime.Now;
-			if (m_lastInternalProfilingOutput == null)
+			if ( m_lastInternalProfilingOutput == null )
 				m_lastInternalProfilingOutput = DateTime.Now;
 
-			if (m_staticRefreshCountMap == null)
-				m_staticRefreshCountMap = new Dictionary<Type, int>();
+			if ( m_staticRefreshCountMap == null )
+				m_staticRefreshCountMap = new Dictionary<Type, int>( );
 
 			m_refreshInterval = 250;
 		}
 
-		public BaseObjectManager(Object backingSource, string backingMethodName, InternalBackingType backingSourceType)
+		public BaseObjectManager( Object backingSource, string backingMethodName, InternalBackingType backingSourceType )
 		{
 			m_fileInfo = null;
 			m_changed = false;
 			m_isMutable = true;
 			m_isDynamic = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField();
+			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
 			m_backingObject = backingSource;
 			m_backingSourceMethod = backingMethodName;
@@ -872,40 +867,40 @@ namespace SEModAPIInternal.API.Entity
 
 			m_lastLoadTime = DateTime.Now;
 
-			if (m_lastProfilingOutput == null)
+			if ( m_lastProfilingOutput == null )
 				m_lastProfilingOutput = DateTime.Now;
-			if (m_lastInternalProfilingOutput == null)
+			if ( m_lastInternalProfilingOutput == null )
 				m_lastInternalProfilingOutput = DateTime.Now;
 
-			if (m_staticRefreshCountMap == null)
-				m_staticRefreshCountMap = new Dictionary<Type, int>();
+			if ( m_staticRefreshCountMap == null )
+				m_staticRefreshCountMap = new Dictionary<Type, int>( );
 
 			m_refreshInterval = 250;
 		}
 
-		public BaseObjectManager(BaseObject[] baseDefinitions)
+		public BaseObjectManager( BaseObject[ ] baseDefinitions )
 		{
 			m_fileInfo = null;
 			m_changed = false;
 			m_isMutable = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField();
+			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
-			Load(baseDefinitions);
+			Load( baseDefinitions );
 		}
 
-		public BaseObjectManager(List<BaseObject> baseDefinitions)
+		public BaseObjectManager( List<BaseObject> baseDefinitions )
 		{
 			m_fileInfo = null;
 			m_changed = false;
 			m_isMutable = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField();
+			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
-			Load(baseDefinitions);
+			Load( baseDefinitions );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -919,10 +914,10 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if (m_changed) return true;
-				foreach (BaseObject def in GetInternalData().Values)
+				if ( m_changed ) return true;
+				foreach ( BaseObject def in GetInternalData( ).Values )
 				{
-					if (def.Changed)
+					if ( def.Changed )
 						return true;
 				}
 				return false;
@@ -948,28 +943,28 @@ namespace SEModAPIInternal.API.Entity
 
 		public bool IsInternalResourceLocked
 		{
-			get { return (m_rawDataHashSetResourceLock.Owned || m_rawDataListResourceLock.Owned || m_rawDataObjectBuilderListResourceLock.Owned); }
+			get { return ( m_rawDataHashSetResourceLock.Owned || m_rawDataListResourceLock.Owned || m_rawDataObjectBuilderListResourceLock.Owned ); }
 		}
 
 		public bool CanRefresh
 		{
 			get
 			{
-				if (!IsDynamic)
+				if ( !IsDynamic )
 					return false;
-				if (!IsMutable)
+				if ( !IsMutable )
 					return false;
-				if (IsResourceLocked)
+				if ( IsResourceLocked )
 					return false;
-				if (IsInternalResourceLocked)
+				if ( IsInternalResourceLocked )
 					return false;
-				if (!SandboxGameAssemblyWrapper.Instance.IsGameStarted)
+				if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 					return false;
-				if (WorldManager.Instance.IsWorldSaving)
+				if ( WorldManager.Instance.IsWorldSaving )
 					return false;
-				if (WorldManager.Instance.InternalGetResourceLock() == null)
+				if ( WorldManager.Instance.InternalGetResourceLock( ) == null )
 					return false;
-				if (WorldManager.Instance.InternalGetResourceLock().Owned)
+				if ( WorldManager.Instance.InternalGetResourceLock( ).Owned )
 					return false;
 
 				return true;
@@ -981,11 +976,11 @@ namespace SEModAPIInternal.API.Entity
 			get { return m_definitions.Count; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public void SetBackingProperties(Object backingObject, string backingMethod, InternalBackingType backingType)
+		public void SetBackingProperties( Object backingObject, string backingMethod, InternalBackingType backingType )
 		{
 			m_isDynamic = true;
 
@@ -994,16 +989,16 @@ namespace SEModAPIInternal.API.Entity
 			m_backingSourceType = backingType;
 		}
 
-		private FieldInfo GetMatchingDefinitionsContainerField()
+		private FieldInfo GetMatchingDefinitionsContainerField( )
 		{
 			//Find the the matching field in the container
-			Type thisType = typeof(MyObjectBuilder_Base[]);
-			Type defType = typeof(MyObjectBuilder_Definitions);
+			Type thisType = typeof( MyObjectBuilder_Base[ ] );
+			Type defType = typeof( MyObjectBuilder_Definitions );
 			FieldInfo matchingField = null;
-			foreach (FieldInfo field in defType.GetFields())
+			foreach ( FieldInfo field in defType.GetFields( ) )
 			{
 				Type fieldType = field.FieldType;
-				if (thisType.FullName == fieldType.FullName)
+				if ( thisType.FullName == fieldType.FullName )
 				{
 					matchingField = field;
 					break;
@@ -1013,243 +1008,243 @@ namespace SEModAPIInternal.API.Entity
 			return matchingField;
 		}
 
-		protected virtual bool IsValidEntity(Object entity)
+		protected virtual bool IsValidEntity( Object entity )
 		{
 			return true;
 		}
 
 		#region "GetDataSource"
 
-		protected Dictionary<long, BaseObject> GetInternalData()
+		protected Dictionary<long, BaseObject> GetInternalData( )
 		{
 			return m_definitions;
 		}
 
-		protected HashSet<Object> GetBackingDataHashSet()
+		protected HashSet<Object> GetBackingDataHashSet( )
 		{
 			return m_rawDataHashSet;
 		}
 
-		protected List<Object> GetBackingDataList()
+		protected List<Object> GetBackingDataList( )
 		{
 			return m_rawDataList;
 		}
 
-		protected Dictionary<object, MyObjectBuilder_Base> GetObjectBuilderMap()
+		protected Dictionary<object, MyObjectBuilder_Base> GetObjectBuilderMap( )
 		{
 			return m_rawDataObjectBuilderList;
 		}
 
-		#endregion
+		#endregion "GetDataSource"
 
 		#region "RefreshDataSource"
 
-		public void Refresh()
+		public void Refresh( )
 		{
-			if (!CanRefresh)
+			if ( !CanRefresh )
 				return;
 
 			TimeSpan timeSinceLastLoad = DateTime.Now - m_lastLoadTime;
-			if (timeSinceLastLoad.TotalMilliseconds < m_refreshInterval)
+			if ( timeSinceLastLoad.TotalMilliseconds < m_refreshInterval )
 				return;
 			m_lastLoadTime = DateTime.Now;
 
 			//Run the refresh
 			Action action = RefreshData;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 
 			//Update the refresh counts
-			if (!m_staticRefreshCountMap.ContainsKey(this.GetType()))
-				m_staticRefreshCountMap.Add(this.GetType(), 1);
+			if ( !m_staticRefreshCountMap.ContainsKey( this.GetType( ) ) )
+				m_staticRefreshCountMap.Add( this.GetType( ), 1 );
 			else
-				m_staticRefreshCountMap[this.GetType()]++;
-			int typeRefreshCount = m_staticRefreshCountMap[this.GetType()];
+				m_staticRefreshCountMap[ this.GetType( ) ]++;
+			int typeRefreshCount = m_staticRefreshCountMap[ this.GetType( ) ];
 			m_staticRefreshCount++;
 
 			//Adjust the refresh interval based on percentage of total refreshes for this type
-			m_refreshInterval = (typeRefreshCount / m_staticRefreshCount) * 850 + 250;
+			m_refreshInterval = ( typeRefreshCount / m_staticRefreshCount ) * 850 + 250;
 		}
 
-		private void RefreshData()
+		private void RefreshData( )
 		{
-			if (!CanRefresh)
+			if ( !CanRefresh )
 				return;
 
 			try
 			{
 				DateTime startRefreshTime = DateTime.Now;
 
-				if (m_backingSourceType == InternalBackingType.Hashset)
-					InternalRefreshBackingDataHashSet();
-				if (m_backingSourceType == InternalBackingType.List)
-					InternalRefreshBackingDataList();
+				if ( m_backingSourceType == InternalBackingType.Hashset )
+					InternalRefreshBackingDataHashSet( );
+				if ( m_backingSourceType == InternalBackingType.List )
+					InternalRefreshBackingDataList( );
 
 				//Lock the main data
-				m_resourceLock.AcquireExclusive();
+				m_resourceLock.AcquireExclusive( );
 
 				//Lock all of the raw data
-				if (m_backingSourceType == InternalBackingType.Hashset)
-					m_rawDataHashSetResourceLock.AcquireShared();
-				if (m_backingSourceType == InternalBackingType.List)
-					m_rawDataListResourceLock.AcquireShared();
-				m_rawDataObjectBuilderListResourceLock.AcquireShared();
+				if ( m_backingSourceType == InternalBackingType.Hashset )
+					m_rawDataHashSetResourceLock.AcquireShared( );
+				if ( m_backingSourceType == InternalBackingType.List )
+					m_rawDataListResourceLock.AcquireShared( );
+				m_rawDataObjectBuilderListResourceLock.AcquireShared( );
 
 				//Refresh the main data
-				LoadDynamic();
+				LoadDynamic( );
 
 				//Unlock the main data
-				m_resourceLock.ReleaseExclusive();
+				m_resourceLock.ReleaseExclusive( );
 
 				//Unlock all of the raw data
-				if (m_backingSourceType == InternalBackingType.Hashset)
-					m_rawDataHashSetResourceLock.ReleaseShared();
-				if (m_backingSourceType == InternalBackingType.List)
-					m_rawDataListResourceLock.ReleaseShared();
-				m_rawDataObjectBuilderListResourceLock.ReleaseShared();
+				if ( m_backingSourceType == InternalBackingType.Hashset )
+					m_rawDataHashSetResourceLock.ReleaseShared( );
+				if ( m_backingSourceType == InternalBackingType.List )
+					m_rawDataListResourceLock.ReleaseShared( );
+				m_rawDataObjectBuilderListResourceLock.ReleaseShared( );
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
 					TimeSpan timeToRefresh = DateTime.Now - startRefreshTime;
-					m_averageRefreshDataTime = (m_averageRefreshDataTime + timeToRefresh.TotalMilliseconds) / 2;
+					m_averageRefreshDataTime = ( m_averageRefreshDataTime + timeToRefresh.TotalMilliseconds ) / 2;
 					TimeSpan timeSinceLastProfilingOutput = DateTime.Now - m_lastProfilingOutput;
-					if (timeSinceLastProfilingOutput.TotalSeconds > 30)
+					if ( timeSinceLastProfilingOutput.TotalSeconds > 30 )
 					{
 						m_lastProfilingOutput = DateTime.Now;
-						LogManager.APILog.WriteLine("ObjectManager - Average of " + Math.Round(m_averageRefreshDataTime, 2).ToString() + "ms to refresh API data");
+						LogManager.APILog.WriteLine( "ObjectManager - Average of " + Math.Round( m_averageRefreshDataTime, 2 ).ToString( ) + "ms to refresh API data" );
 					}
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected virtual void LoadDynamic()
+		protected virtual void LoadDynamic( )
 		{
 			return;
 		}
 
-		protected virtual void InternalRefreshBackingDataHashSet()
+		protected virtual void InternalRefreshBackingDataHashSet( )
 		{
 			try
 			{
-				if (!CanRefresh)
+				if ( !CanRefresh )
 					return;
 
-				m_rawDataHashSetResourceLock.AcquireExclusive();
+				m_rawDataHashSetResourceLock.AcquireExclusive( );
 
-				if (m_backingObject == null)
+				if ( m_backingObject == null )
 					return;
-				var rawValue = BaseObject.InvokeEntityMethod(m_backingObject, m_backingSourceMethod);
-				if (rawValue == null)
+				object rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
+				if ( rawValue == null )
 					return;
 
 				//Create/Clear the hash set
-				if (m_rawDataHashSet == null)
-					m_rawDataHashSet = new HashSet<object>();
+				if ( m_rawDataHashSet == null )
+					m_rawDataHashSet = new HashSet<object>( );
 				else
-					m_rawDataHashSet.Clear();
+					m_rawDataHashSet.Clear( );
 
 				//Only allow valid entities in the hash set
-				foreach (var entry in UtilityFunctions.ConvertHashSet(rawValue))
+				foreach ( object entry in UtilityFunctions.ConvertHashSet( rawValue ) )
 				{
-					if (!IsValidEntity(entry))
+					if ( !IsValidEntity( entry ) )
 						continue;
 
-					m_rawDataHashSet.Add(entry);
+					m_rawDataHashSet.Add( entry );
 				}
 
-				m_rawDataHashSetResourceLock.ReleaseExclusive();
+				m_rawDataHashSetResourceLock.ReleaseExclusive( );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				if(m_rawDataHashSetResourceLock.Owned)
-					m_rawDataHashSetResourceLock.ReleaseExclusive();
+				LogManager.ErrorLog.WriteLine( ex );
+				if ( m_rawDataHashSetResourceLock.Owned )
+					m_rawDataHashSetResourceLock.ReleaseExclusive( );
 			}
 		}
 
-		protected virtual void InternalRefreshBackingDataList()
+		protected virtual void InternalRefreshBackingDataList( )
 		{
 			try
 			{
-				if (!CanRefresh)
+				if ( !CanRefresh )
 					return;
 
-				m_rawDataListResourceLock.AcquireExclusive();
+				m_rawDataListResourceLock.AcquireExclusive( );
 
-				if (m_backingObject == null)
+				if ( m_backingObject == null )
 					return;
-				var rawValue = BaseObject.InvokeEntityMethod(m_backingObject, m_backingSourceMethod);
-				if (rawValue == null)
+				object rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
+				if ( rawValue == null )
 					return;
 
 				//Create/Clear the list
-				if (m_rawDataList == null)
-					m_rawDataList = new List<object>();
+				if ( m_rawDataList == null )
+					m_rawDataList = new List<object>( );
 				else
-					m_rawDataList.Clear();
+					m_rawDataList.Clear( );
 
 				//Only allow valid entities in the list
-				foreach (var entry in UtilityFunctions.ConvertList(rawValue))
+				foreach ( object entry in UtilityFunctions.ConvertList( rawValue ) )
 				{
-					if (!IsValidEntity(entry))
+					if ( !IsValidEntity( entry ) )
 						continue;
 
-					m_rawDataList.Add(entry);
+					m_rawDataList.Add( entry );
 				}
 
-				m_rawDataListResourceLock.ReleaseExclusive();
+				m_rawDataListResourceLock.ReleaseExclusive( );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				if(m_rawDataListResourceLock.Owned)
-					m_rawDataListResourceLock.ReleaseExclusive();
+				LogManager.ErrorLog.WriteLine( ex );
+				if ( m_rawDataListResourceLock.Owned )
+					m_rawDataListResourceLock.ReleaseExclusive( );
 			}
 		}
 
-		#endregion
+		#endregion "RefreshDataSource"
 
 		#region "Static"
 
-		public static FileInfo GetContentDataFile(string configName)
+		public static FileInfo GetContentDataFile( string configName )
 		{
-			string filePath = Path.Combine(Path.Combine(GameInstallationInfo.GamePath, @"Content\Data"), configName);
-			FileInfo saveFileInfo = new FileInfo(filePath);
+			string filePath = Path.Combine( Path.Combine( GameInstallationInfo.GamePath, @"Content\Data" ), configName );
+			FileInfo saveFileInfo = new FileInfo( filePath );
 
 			return saveFileInfo;
 		}
 
-		#endregion
+		#endregion "Static"
 
 		#region "Serializers"
 
-		public static T LoadContentFile<T, TS>(FileInfo fileInfo) where TS : XmlSerializer1
+		public static T LoadContentFile<T, TS>( FileInfo fileInfo ) where TS : XmlSerializer1
 		{
 			object fileContent = null;
 
 			string filePath = fileInfo.FullName;
 
-			if (!File.Exists(filePath))
+			if ( !File.Exists( filePath ) )
 			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileMissing, filePath);
+				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileMissing, filePath );
 			}
 
 			try
 			{
-				fileContent = ReadSpaceEngineersFile<T, TS>(filePath);
+				fileContent = ReadSpaceEngineersFile<T, TS>( filePath );
 			}
-			catch(Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath);
+				LogManager.ErrorLog.WriteLine( ex );
+				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
 			}
 
-			if (fileContent == null)
+			if ( fileContent == null )
 			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileEmpty, filePath);
+				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
 			}
 
 			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
@@ -1259,9 +1254,8 @@ namespace SEModAPIInternal.API.Entity
 			return (T)fileContent;
 		}
 
-		public static void SaveContentFile<T, TS>(T fileContent, FileInfo fileInfo) where TS : XmlSerializer1
+		public static void SaveContentFile<T, TS>( T fileContent, FileInfo fileInfo ) where TS : XmlSerializer1
 		{
-
 			string filePath = fileInfo.FullName;
 
 			//if (!File.Exists(filePath))
@@ -1271,16 +1265,16 @@ namespace SEModAPIInternal.API.Entity
 
 			try
 			{
-				WriteSpaceEngineersFile<T, TS>(fileContent, filePath);
+				WriteSpaceEngineersFile<T, TS>( fileContent, filePath );
 			}
 			catch
 			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath);
+				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
 			}
 
-			if (fileContent == null)
+			if ( fileContent == null )
 			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileEmpty, filePath);
+				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
 			}
 
 			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
@@ -1288,10 +1282,10 @@ namespace SEModAPIInternal.API.Entity
 			// Report a friendly error if this load fails.
 		}
 
-		public static T ReadSpaceEngineersFile<T, TS>(string filename)
+		public static T ReadSpaceEngineersFile<T, TS>( string filename )
 			where TS : XmlSerializer1
 		{
-			var settings = new XmlReaderSettings
+			XmlReaderSettings settings = new XmlReaderSettings
 			{
 				IgnoreComments = true,
 				IgnoreWhitespace = true,
@@ -1299,48 +1293,48 @@ namespace SEModAPIInternal.API.Entity
 
 			object obj = null;
 
-			if (File.Exists(filename))
+			if ( File.Exists( filename ) )
 			{
-				using(var xmlReader = XmlReader.Create(filename, settings))
+				using ( XmlReader xmlReader = XmlReader.Create( filename, settings ) )
 				{
-					var serializer = (TS)Activator.CreateInstance(typeof(TS));
-					obj = serializer.Deserialize(xmlReader);
+					TS serializer = (TS)Activator.CreateInstance( typeof( TS ) );
+					obj = serializer.Deserialize( xmlReader );
 				}
 			}
 
 			return (T)obj;
 		}
 
-		protected T Deserialize<T>(string xml)
+		protected T Deserialize<T>( string xml )
 		{
-			using (var textReader = new StringReader(xml))
+			using ( StringReader textReader = new StringReader( xml ) )
 			{
-				return (T)(new XmlSerializerContract().GetSerializer(typeof(T)).Deserialize(textReader));
+				return (T)( new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Deserialize( textReader ) );
 			}
 		}
 
-		protected string Serialize<T>(object item)
+		protected string Serialize<T>( object item )
 		{
-			using (var textWriter = new StringWriter())
+			using ( StringWriter textWriter = new StringWriter( ) )
 			{
-				new XmlSerializerContract().GetSerializer(typeof(T)).Serialize(textWriter, item);
-				return textWriter.ToString();
+				new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Serialize( textWriter, item );
+				return textWriter.ToString( );
 			}
 		}
 
-		public static bool WriteSpaceEngineersFile<T, TS>(T sector, string filename)
+		public static bool WriteSpaceEngineersFile<T, TS>( T sector, string filename )
 			where TS : XmlSerializer1
 		{
 			// How they appear to be writing the files currently.
 			try
 			{
-				using (var xmlTextWriter = new XmlTextWriter(filename, null))
+				using ( XmlTextWriter xmlTextWriter = new XmlTextWriter( filename, null ) )
 				{
 					xmlTextWriter.Formatting = Formatting.Indented;
 					xmlTextWriter.Indentation = 2;
 					xmlTextWriter.IndentChar = ' ';
-					TS serializer = (TS)Activator.CreateInstance(typeof(TS));
-					serializer.Serialize(xmlTextWriter, sector);
+					TS serializer = (TS)Activator.CreateInstance( typeof( TS ) );
+					serializer.Serialize( xmlTextWriter, sector );
 				}
 			}
 			catch
@@ -1371,107 +1365,107 @@ namespace SEModAPIInternal.API.Entity
 			return true;
 		}
 
-		#endregion
+		#endregion "Serializers"
 
 		#region "GetContent"
 
-		public BaseObject GetEntry(long key)
+		public BaseObject GetEntry( long key )
 		{
-			if (!GetInternalData().ContainsKey(key))
+			if ( !GetInternalData( ).ContainsKey( key ) )
 				return null;
 
-			return GetInternalData()[key];
+			return GetInternalData( )[ key ];
 		}
 
-		public List<T> GetTypedInternalData<T>() where T : BaseObject
+		public List<T> GetTypedInternalData<T>( ) where T : BaseObject
 		{
 			try
 			{
-				m_resourceLock.AcquireShared();
+				m_resourceLock.AcquireShared( );
 
-				List<T> newList = new List<T>();
-				foreach (var def in GetInternalData().Values)
+				List<T> newList = new List<T>( );
+				foreach ( BaseObject def in GetInternalData( ).Values )
 				{
-					if (!(def is T))
+					if ( !( def is T ) )
 						continue;
 
-					newList.Add((T)def);
+					newList.Add( (T)def );
 				}
 
-				m_resourceLock.ReleaseShared();
+				m_resourceLock.ReleaseShared( );
 
-				Refresh();
+				Refresh( );
 
 				return newList;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				if(m_resourceLock.Owned)
-					m_resourceLock.ReleaseShared();
-				return new List<T>();
+				LogManager.ErrorLog.WriteLine( ex );
+				if ( m_resourceLock.Owned )
+					m_resourceLock.ReleaseShared( );
+				return new List<T>( );
 			}
 		}
 
-		#endregion
+		#endregion "GetContent"
 
 		#region "NewContent"
 
-		public T NewEntry<T>() where T : BaseObject
+		public T NewEntry<T>( ) where T : BaseObject
 		{
-			if (!IsMutable) return default(T);
-            MyObjectBuilder_Base newBase = MyObjectBuilderSerializer.CreateNewObject(typeof(MyObjectBuilder_EntityBase));
-			var newEntry = (T)Activator.CreateInstance(typeof(T), new object[] { newBase });
-			GetInternalData().Add(m_definitions.Count, newEntry);
+			if ( !IsMutable ) return default( T );
+			MyObjectBuilder_Base newBase = MyObjectBuilderSerializer.CreateNewObject( typeof( MyObjectBuilder_EntityBase ) );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { newBase } );
+			GetInternalData( ).Add( m_definitions.Count, newEntry );
 			m_changed = true;
 
 			return newEntry;
 		}
 
 		[Obsolete]
-		public T NewEntry<T>(MyObjectBuilder_Base source) where T : BaseObject
+		public T NewEntry<T>( MyObjectBuilder_Base source ) where T : BaseObject
 		{
-			if (!IsMutable) return default(T);
+			if ( !IsMutable ) return default( T );
 
-			var newEntry = (T)Activator.CreateInstance(typeof(T), new object[] { source });
-			GetInternalData().Add(m_definitions.Count, newEntry);
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source } );
+			GetInternalData( ).Add( m_definitions.Count, newEntry );
 			m_changed = true;
 
 			return newEntry;
 		}
 
-		public T NewEntry<T>(T source) where T : BaseObject
+		public T NewEntry<T>( T source ) where T : BaseObject
 		{
-			if (!IsMutable) return default(T);
+			if ( !IsMutable ) return default( T );
 
-			var newEntry = (T)Activator.CreateInstance(typeof(T), new object[] { source.ObjectBuilder });
-			GetInternalData().Add(m_definitions.Count, newEntry);
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source.ObjectBuilder } );
+			GetInternalData( ).Add( m_definitions.Count, newEntry );
 			m_changed = true;
 
 			return newEntry;
 		}
 
-		public void AddEntry<T>(long key, T entry) where T : BaseObject
+		public void AddEntry<T>( long key, T entry ) where T : BaseObject
 		{
-			if (!IsMutable) return;
+			if ( !IsMutable ) return;
 
-			GetInternalData().Add(key, entry);
+			GetInternalData( ).Add( key, entry );
 			m_changed = true;
 		}
 
-		#endregion
+		#endregion "NewContent"
 
 		#region "DeleteContent"
 
-		public bool DeleteEntry(long id)
+		public bool DeleteEntry( long id )
 		{
-			if (!IsMutable) return false;
+			if ( !IsMutable ) return false;
 
-			if (GetInternalData().ContainsKey(id))
+			if ( GetInternalData( ).ContainsKey( id ) )
 			{
-				var entry = GetInternalData()[id];
-				GetInternalData().Remove(id);
-				entry.Dispose();
+				BaseObject entry = GetInternalData( )[ id ];
+				GetInternalData( ).Remove( id );
+				entry.Dispose( );
 				m_changed = true;
 				return true;
 			}
@@ -1479,15 +1473,15 @@ namespace SEModAPIInternal.API.Entity
 			return false;
 		}
 
-		public bool DeleteEntry(BaseObject entry)
+		public bool DeleteEntry( BaseObject entry )
 		{
-			if (!IsMutable) return false;
+			if ( !IsMutable ) return false;
 
-			foreach (var def in m_definitions)
+			foreach ( KeyValuePair<long, BaseObject> def in m_definitions )
 			{
-				if (def.Value.Equals(entry))
+				if ( def.Value.Equals( entry ) )
 				{
-					DeleteEntry(def.Key);
+					DeleteEntry( def.Key );
 					break;
 				}
 			}
@@ -1495,81 +1489,81 @@ namespace SEModAPIInternal.API.Entity
 			return false;
 		}
 
-		public bool DeleteEntries<T>(List<T> entries) where T : BaseObject
+		public bool DeleteEntries<T>( List<T> entries ) where T : BaseObject
 		{
-			if (!IsMutable) return false;
+			if ( !IsMutable ) return false;
 
-			foreach (var entry in entries)
+			foreach ( T entry in entries )
 			{
-				DeleteEntry(entry);
+				DeleteEntry( entry );
 			}
 
 			return true;
 		}
 
-		public bool DeleteEntries<T>(Dictionary<long, T> entries) where T : BaseObject
+		public bool DeleteEntries<T>( Dictionary<long, T> entries ) where T : BaseObject
 		{
-			if (!IsMutable) return false;
+			if ( !IsMutable ) return false;
 
-			foreach (var entry in entries.Keys)
+			foreach ( long entry in entries.Keys )
 			{
-				DeleteEntry(entry);
+				DeleteEntry( entry );
 			}
 
 			return true;
 		}
 
-		#endregion
+		#endregion "DeleteContent"
 
 		#region "LoadContent"
 
-		public void Load<T>(T[] source) where T : BaseObject
+		public void Load<T>( T[ ] source ) where T : BaseObject
 		{
 			//Copy the data into the manager
-			GetInternalData().Clear();
-			foreach (var definition in source)
+			GetInternalData( ).Clear( );
+			foreach ( T definition in source )
 			{
-				GetInternalData().Add(GetInternalData().Count, definition);
+				GetInternalData( ).Add( GetInternalData( ).Count, definition );
 			}
 		}
 
-		public void Load<T>(List<T> source) where T : BaseObject
+		public void Load<T>( List<T> source ) where T : BaseObject
 		{
-			Load(source.ToArray());
+			Load( source.ToArray( ) );
 		}
 
-		#endregion
+		#endregion "LoadContent"
 
 		#region "SaveContent"
 
-		public bool Save()
+		public bool Save( )
 		{
-			if (!this.Changed) return false;
-			if (!this.IsMutable) return false;
-			if (this.FileInfo == null) return false;
+			if ( !this.Changed ) return false;
+			if ( !this.IsMutable ) return false;
+			if ( this.FileInfo == null ) return false;
 
-			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions();
+			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions( );
 
-			if (m_definitionsContainerField == null)
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.Invalid, "Failed to find matching definitions field in the given file.");
+			if ( m_definitionsContainerField == null )
+				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.Invalid, "Failed to find matching definitions field in the given file." );
 
-			List<MyObjectBuilder_Base> baseDefs = new List<MyObjectBuilder_Base>();
-			foreach(var baseObject in GetInternalData().Values)
+			List<MyObjectBuilder_Base> baseDefs = new List<MyObjectBuilder_Base>( );
+			foreach ( BaseObject baseObject in GetInternalData( ).Values )
 			{
-				baseDefs.Add(baseObject.ObjectBuilder);
+				baseDefs.Add( baseObject.ObjectBuilder );
 			}
 
 			//Save the source data into the definitions container
-			m_definitionsContainerField.SetValue(definitionsContainer, baseDefs.ToArray());
+			m_definitionsContainerField.SetValue( definitionsContainer, baseDefs.ToArray( ) );
 
 			//Save the definitions container out to the file
-			SaveContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>(definitionsContainer, m_fileInfo);
+			SaveContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>( definitionsContainer, m_fileInfo );
 
 			return true;
 		}
 
-		#endregion
+		#endregion "SaveContent"
 
-		#endregion
+		#endregion "Methods"
 	}
 }

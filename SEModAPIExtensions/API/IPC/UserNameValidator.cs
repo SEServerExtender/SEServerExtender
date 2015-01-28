@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IdentityModel.Selectors;
 using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.ServiceModel.Security;
 
 namespace SEModAPIExtensions.API.IPC
 {

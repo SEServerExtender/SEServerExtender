@@ -1,5 +1,4 @@
 ﻿using Sandbox.Common.ObjectBuilders.Definitions;
-using System.IO;
 
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
@@ -21,7 +20,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		new public MyObjectBuilder_CubeBlockDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_CubeBlockDefinition)m_baseDefinition;
+			return (MyObjectBuilder_CubeBlockDefinition)BaseDefinition;
 		}
 
 		#endregion

@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "ShipDrillEntityProxy")]
+	[DataContract( Name = "ShipDrillEntityProxy" )]
 	public class ShipDrillEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -24,30 +18,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string ShipDrillGetInventoryMethod = "GetInventory";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public ShipDrillEntity(CubeGridEntity parent, MyObjectBuilder_Drill definition)
-			: base(parent, definition)
+		public ShipDrillEntity( CubeGridEntity parent, MyObjectBuilder_Drill definition )
+			: base( parent, definition )
 		{
-			m_inventory = new InventoryEntity(definition.Inventory);
+			m_inventory = new InventoryEntity( definition.Inventory );
 		}
 
-		public ShipDrillEntity(CubeGridEntity parent, MyObjectBuilder_Drill definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public ShipDrillEntity( CubeGridEntity parent, MyObjectBuilder_Drill definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
-			m_inventory = new InventoryEntity(definition.Inventory, InternalGetContainerInventory());
+			m_inventory = new InventoryEntity( definition.Inventory, InternalGetContainerInventory( ) );
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
 		[DataMember]
-		[Category("Drill")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Drill" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public InventoryEntity Inventory
 		{
 			get
@@ -60,31 +54,31 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
 		#region "Internal"
 
-		protected Object InternalGetContainerInventory()
+		protected Object InternalGetContainerInventory( )
 		{
 			try
 			{
 				Object baseObject = BackingObject;
-				Object actualObject = GetActualObject();
-				Object inventory = InvokeEntityMethod(actualObject, ShipDrillGetInventoryMethod, new object[] { 0 });
+				Object actualObject = GetActualObject( );
+				Object inventory = InvokeEntityMethod( actualObject, ShipDrillGetInventoryMethod, new object[ ] { 0 } );
 
 				return inventory;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 }

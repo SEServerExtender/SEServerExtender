@@ -6,7 +6,7 @@ namespace SEModAPI.API.Definitions
 	{
 		#region "Attributes"
 
-		private SpawnGroupPrefabsManager m_prefabsManager;
+		private readonly SpawnGroupPrefabsManager _prefabsManager;
 
 		#endregion
 
@@ -15,9 +15,9 @@ namespace SEModAPI.API.Definitions
 		public SpawnGroupDefinition(MyObjectBuilder_SpawnGroupDefinition definition)
             : base(definition)
         {
-			m_prefabsManager = new SpawnGroupPrefabsManager();
+			_prefabsManager = new SpawnGroupPrefabsManager();
 			if (definition.Prefabs != null)
-				m_prefabsManager.Load(definition.Prefabs);
+				_prefabsManager.Load(definition.Prefabs);
 		}
 
         #endregion
@@ -29,7 +29,7 @@ namespace SEModAPI.API.Definitions
 			get
 			{
 				if (base.Changed) return true;
-				foreach (var def in m_prefabsManager.Definitions)
+				foreach (SpawnGroupPrefab def in _prefabsManager.Definitions)
 				{
 					if (def.Changed)
 						return true;
@@ -43,7 +43,7 @@ namespace SEModAPI.API.Definitions
 		{
 			get
 			{
-				m_baseDefinition.Prefabs = m_prefabsManager.ExtractBaseDefinitions().ToArray();
+				m_baseDefinition.Prefabs = _prefabsManager.ExtractBaseDefinitions().ToArray();
 				return m_baseDefinition;
 			}
 		}
@@ -83,7 +83,7 @@ namespace SEModAPI.API.Definitions
 
 		public SpawnGroupPrefab[] Prefabs
 		{
-			get { return m_prefabsManager.Definitions; }
+			get { return _prefabsManager.Definitions; }
 		}
 
         #endregion
@@ -97,12 +97,12 @@ namespace SEModAPI.API.Definitions
 
 		public SpawnGroupPrefab NewEntry()
 		{
-			return m_prefabsManager.NewEntry();
+			return _prefabsManager.NewEntry();
 		}
 
 		public bool DeleteEntry(SpawnGroupPrefab source)
 		{
-			return m_prefabsManager.DeleteEntry(source);
+			return _prefabsManager.DeleteEntry(source);
 		}
 
         #endregion

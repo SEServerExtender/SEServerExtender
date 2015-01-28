@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
 
@@ -35,28 +31,28 @@ namespace SEModAPIInternal.API.Common
 		public static string FactionMembersDictionaryField = "6C5002516CE91D083B8487A823E176DE";
 		public static string FactionJoinRequestsDictionaryField = "1395A0D694642F440B050480A4D28F06";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public Faction(MyObjectBuilder_Faction faction)
+		public Faction( MyObjectBuilder_Faction faction )
 		{
 			m_faction = faction;
 
-			m_members = new Dictionary<long, FactionMember>();
-			foreach (var member in m_faction.Members)
+			m_members = new Dictionary<long, FactionMember>( );
+			foreach ( MyObjectBuilder_FactionMember member in m_faction.Members )
 			{
-				m_members.Add(member.PlayerId, new FactionMember(this, member));
+				m_members.Add( member.PlayerId, new FactionMember( this, member ) );
 			}
 
-			m_joinRequests = new Dictionary<long, FactionMember>();
-			foreach (var member in m_faction.JoinRequests)
+			m_joinRequests = new Dictionary<long, FactionMember>( );
+			foreach ( MyObjectBuilder_FactionMember member in m_faction.JoinRequests )
 			{
-				m_joinRequests.Add(member.PlayerId, new FactionMember(this, member));
+				m_joinRequests.Add( member.PlayerId, new FactionMember( this, member ) );
 			}
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -64,7 +60,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return FactionsManager.Instance.InternalGetFactionById(m_faction.FactionId);
+				return FactionsManager.Instance.InternalGetFactionById( m_faction.FactionId );
 			}
 		}
 
@@ -73,26 +69,26 @@ namespace SEModAPIInternal.API.Common
 			get { return m_faction; }
 		}
 
-		[Browsable(false)]
+		[Browsable( false )]
 		public List<FactionMember> Members
 		{
 			get
 			{
-				RefreshFactionMembers();
+				RefreshFactionMembers( );
 
-				List<FactionMember> memberList = new List<FactionMember>(m_members.Values);
+				List<FactionMember> memberList = new List<FactionMember>( m_members.Values );
 				return memberList;
 			}
 		}
 
-		[Browsable(false)]
+		[Browsable( false )]
 		public List<FactionMember> JoinRequests
 		{
 			get
 			{
-				RefreshFactionJoinRequests();
+				RefreshFactionJoinRequests( );
 
-				List<FactionMember> memberList = new List<FactionMember>(m_joinRequests.Values);
+				List<FactionMember> memberList = new List<FactionMember>( m_joinRequests.Values );
 				return memberList;
 			}
 		}
@@ -122,136 +118,136 @@ namespace SEModAPIInternal.API.Common
 			get { return m_faction.Tag; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
-				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(FactionNamespace, FactionClass);
-				if (type1 == null)
-					throw new Exception("Could not find internal type for Faction");
+				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FactionNamespace, FactionClass );
+				if ( type1 == null )
+					throw new Exception( "Could not find internal type for Faction" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type1, FactionGetMembersMethod);
-				result &= BaseObject.HasMethod(type1, FactionGetJoinRequestsMethod);
-				result &= BaseObject.HasMethod(type1, FactionAddApplicantMethod);
-				result &= BaseObject.HasMethod(type1, FactionRemoveApplicantMethod);
-				result &= BaseObject.HasMethod(type1, FactionAcceptApplicantMethod);
-				result &= BaseObject.HasMethod(type1, FactionRemoveMemberMethod);
-				result &= BaseObject.HasField(type1, FactionMembersDictionaryField);
-				result &= BaseObject.HasField(type1, FactionJoinRequestsDictionaryField);
+				result &= BaseObject.HasMethod( type1, FactionGetMembersMethod );
+				result &= BaseObject.HasMethod( type1, FactionGetJoinRequestsMethod );
+				result &= BaseObject.HasMethod( type1, FactionAddApplicantMethod );
+				result &= BaseObject.HasMethod( type1, FactionRemoveApplicantMethod );
+				result &= BaseObject.HasMethod( type1, FactionAcceptApplicantMethod );
+				result &= BaseObject.HasMethod( type1, FactionRemoveMemberMethod );
+				result &= BaseObject.HasField( type1, FactionMembersDictionaryField );
+				result &= BaseObject.HasField( type1, FactionJoinRequestsDictionaryField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void RemoveMember(long memberId)
+		public void RemoveMember( long memberId )
 		{
 			try
 			{
-				if (!m_members.ContainsKey(memberId))
+				if ( !m_members.ContainsKey( memberId ) )
 					return;
 
 				m_memberToModify = memberId;
 
-				MyObjectBuilder_FactionMember memberToRemove = new MyObjectBuilder_FactionMember();
-				foreach (var member in m_faction.Members)
+				MyObjectBuilder_FactionMember memberToRemove = new MyObjectBuilder_FactionMember( );
+				foreach ( MyObjectBuilder_FactionMember member in m_faction.Members )
 				{
-					if (member.PlayerId == m_memberToModify)
+					if ( member.PlayerId == m_memberToModify )
 					{
 						memberToRemove = member;
 						break;
 					}
 				}
-				m_faction.Members.Remove(memberToRemove);
+				m_faction.Members.Remove( memberToRemove );
 
 				Action action = InternalRemoveMember;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected void RefreshFactionMembers()
+		protected void RefreshFactionMembers( )
 		{
 			List<MyObjectBuilder_FactionMember> memberList = BaseEntity.Members;
 
 			//Cleanup missing members
-			List<FactionMember> membersToRemove = new List<FactionMember>();
-			foreach (FactionMember member in m_members.Values)
+			List<FactionMember> membersToRemove = new List<FactionMember>( );
+			foreach ( FactionMember member in m_members.Values )
 			{
-				if (memberList.Contains(member.BaseEntity))
+				if ( memberList.Contains( member.BaseEntity ) )
 					continue;
 
-				membersToRemove.Add(member);
+				membersToRemove.Add( member );
 			}
-			foreach (FactionMember member in membersToRemove)
+			foreach ( FactionMember member in membersToRemove )
 			{
-				m_members.Remove(member.PlayerId);
+				m_members.Remove( member.PlayerId );
 			}
 
 			//Add new members
-			foreach (MyObjectBuilder_FactionMember member in memberList)
+			foreach ( MyObjectBuilder_FactionMember member in memberList )
 			{
-				if (m_members.ContainsKey(member.PlayerId))
+				if ( m_members.ContainsKey( member.PlayerId ) )
 					continue;
 
-				FactionMember newMember = new FactionMember(this, member);
-				m_members.Add(newMember.PlayerId, newMember);
+				FactionMember newMember = new FactionMember( this, member );
+				m_members.Add( newMember.PlayerId, newMember );
 			}
 		}
 
-		protected void RefreshFactionJoinRequests()
+		protected void RefreshFactionJoinRequests( )
 		{
 			List<MyObjectBuilder_FactionMember> memberList = BaseEntity.JoinRequests;
 
 			//Cleanup missing members
-			List<FactionMember> membersToRemove = new List<FactionMember>();
-			foreach (FactionMember member in m_joinRequests.Values)
+			List<FactionMember> membersToRemove = new List<FactionMember>( );
+			foreach ( FactionMember member in m_joinRequests.Values )
 			{
-				if (memberList.Contains(member.BaseEntity))
+				if ( memberList.Contains( member.BaseEntity ) )
 					continue;
 
-				membersToRemove.Add(member);
+				membersToRemove.Add( member );
 			}
-			foreach (FactionMember member in membersToRemove)
+			foreach ( FactionMember member in membersToRemove )
 			{
-				m_joinRequests.Remove(member.PlayerId);
+				m_joinRequests.Remove( member.PlayerId );
 			}
 
 			//Add new members
-			foreach (MyObjectBuilder_FactionMember member in memberList)
+			foreach ( MyObjectBuilder_FactionMember member in memberList )
 			{
-				if (m_joinRequests.ContainsKey(member.PlayerId))
+				if ( m_joinRequests.ContainsKey( member.PlayerId ) )
 					continue;
 
-				FactionMember newMember = new FactionMember(this, member);
-				m_joinRequests.Add(newMember.PlayerId, newMember);
+				FactionMember newMember = new FactionMember( this, member );
+				m_joinRequests.Add( newMember.PlayerId, newMember );
 			}
 		}
 
-		protected void InternalRemoveMember()
+		protected void InternalRemoveMember( )
 		{
-			if (m_memberToModify == 0)
+			if ( m_memberToModify == 0 )
 				return;
 
-			FactionsManager.Instance.RemoveMember(Id, m_memberToModify);
+			FactionsManager.Instance.RemoveMember( Id, m_memberToModify );
 
-			BaseObject.InvokeEntityMethod(BackingObject, FactionRemoveMemberMethod, new object[] { m_memberToModify });
+			BaseObject.InvokeEntityMethod( BackingObject, FactionRemoveMemberMethod, new object[ ] { m_memberToModify } );
 
 			m_memberToModify = 0;
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class FactionMember
@@ -264,17 +260,17 @@ namespace SEModAPIInternal.API.Common
 		public static string FactionMemberNamespace = "AAC05F537A6F0F6775339593FBDFC564";
 		public static string FactionMemberClass = "32F8947D11EDAF4D079FD54C2397A951";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public FactionMember(Faction parent, MyObjectBuilder_FactionMember definition)
+		public FactionMember( Faction parent, MyObjectBuilder_FactionMember definition )
 		{
 			m_parent = parent;
 			m_member = definition;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -292,7 +288,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return PlayerMap.Instance.GetPlayerItemFromPlayerId(PlayerId).Name;
+				return PlayerMap.Instance.GetPlayerItemFromPlayerId( PlayerId ).Name;
 			}
 		}
 
@@ -300,7 +296,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return PlayerMap.Instance.GetPlayerItemFromPlayerId(PlayerId).SteamId;
+				return PlayerMap.Instance.GetPlayerItemFromPlayerId( PlayerId ).SteamId;
 			}
 		}
 
@@ -323,11 +319,11 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return PlayerMap.Instance.GetPlayerItemFromPlayerId(PlayerId).IsDead;
+				return PlayerMap.Instance.GetPlayerItemFromPlayerId( PlayerId ).IsDead;
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 	}
 
 	public class FactionsManager
@@ -356,19 +352,19 @@ namespace SEModAPIInternal.API.Common
 		public static string FactionNetManagerRemoveFactionMethod = "01E89FED8AEDE7182CACB3F84D5748AC";
 		public static string FactionNetManagerRemoveMemberMethod = "4FDD02E48E4AAF15026A9181C13F711E";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		protected FactionsManager()
+		protected FactionsManager( )
 		{
 			m_instance = this;
-			m_factions = new Dictionary<long, Faction>();
+			m_factions = new Dictionary<long, Faction>( );
 
-			Console.WriteLine("Finished loading FactionsManager");
+			Console.WriteLine( "Finished loading FactionsManager" );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -376,8 +372,8 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				if (m_instance == null)
-					m_instance = new FactionsManager();
+				if ( m_instance == null )
+					m_instance = new FactionsManager( );
 
 				return m_instance;
 			}
@@ -387,7 +383,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return WorldManager.Instance.InternalGetFactionManager();
+				return WorldManager.Instance.InternalGetFactionManager( );
 			}
 		}
 
@@ -395,140 +391,140 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				RefreshFactions();
+				RefreshFactions( );
 
-				List<Faction> factionList = new List<Faction>(m_factions.Values);
+				List<Faction> factionList = new List<Faction>( m_factions.Values );
 				return factionList;
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
-				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(FactionManagerNamespace, FactionManagerClass);
-				if (type1 == null)
-					throw new Exception("Could not find internal type for FactionsManager");
+				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FactionManagerNamespace, FactionManagerClass );
+				if ( type1 == null )
+					throw new Exception( "Could not find internal type for FactionsManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type1, FactionManagerGetFactionCollectionMethod);
-				result &= BaseObject.HasMethod(type1, FactionManagerGetFactionByIdMethod);
-				result &= BaseObject.HasMethod(type1, FactionManagerRemoveFactionByIdMethod);
+				result &= BaseObject.HasMethod( type1, FactionManagerGetFactionCollectionMethod );
+				result &= BaseObject.HasMethod( type1, FactionManagerGetFactionByIdMethod );
+				result &= BaseObject.HasMethod( type1, FactionManagerRemoveFactionByIdMethod );
 
-				result &= BaseObject.HasMethod(type1, FactionNetManagerRemoveFactionMethod);
-				result &= BaseObject.HasMethod(type1, FactionNetManagerRemoveMemberMethod);
+				result &= BaseObject.HasMethod( type1, FactionNetManagerRemoveFactionMethod );
+				result &= BaseObject.HasMethod( type1, FactionNetManagerRemoveMemberMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public MyObjectBuilder_FactionCollection GetSubTypeEntity()
+		public MyObjectBuilder_FactionCollection GetSubTypeEntity( )
 		{
-			m_factionCollection = (MyObjectBuilder_FactionCollection)BaseObject.InvokeEntityMethod(BackingObject, FactionManagerGetFactionCollectionMethod);
+			m_factionCollection = (MyObjectBuilder_FactionCollection)BaseObject.InvokeEntityMethod( BackingObject, FactionManagerGetFactionCollectionMethod );
 
 			return m_factionCollection;
 		}
 
-		protected void RefreshFactions()
+		protected void RefreshFactions( )
 		{
-			List<MyObjectBuilder_Faction> factionList = GetSubTypeEntity().Factions;
+			List<MyObjectBuilder_Faction> factionList = GetSubTypeEntity( ).Factions;
 
 			//Cleanup missing factions
-			List<Faction> factionsToRemove = new List<Faction>();
-			foreach (Faction faction in m_factions.Values)
+			List<Faction> factionsToRemove = new List<Faction>( );
+			foreach ( Faction faction in m_factions.Values )
 			{
 				bool foundMatch = false;
-				foreach (var entry in factionList)
+				foreach ( MyObjectBuilder_Faction entry in factionList )
 				{
-					if (entry.FactionId == faction.Id)
+					if ( entry.FactionId == faction.Id )
 					{
 						foundMatch = true;
 						break;
 					}
 				}
-				if (foundMatch)
+				if ( foundMatch )
 					continue;
 
-				factionsToRemove.Add(faction);
+				factionsToRemove.Add( faction );
 			}
-			foreach (Faction faction in factionsToRemove)
+			foreach ( Faction faction in factionsToRemove )
 			{
-				m_factions.Remove(faction.Id);
+				m_factions.Remove( faction.Id );
 			}
 
 			//Add new factions
-			foreach (MyObjectBuilder_Faction faction in factionList)
+			foreach ( MyObjectBuilder_Faction faction in factionList )
 			{
-				if (m_factions.ContainsKey(faction.FactionId))
+				if ( m_factions.ContainsKey( faction.FactionId ) )
 					continue;
 
-				Faction newFaction = new Faction(faction);
-				m_factions.Add(newFaction.Id, newFaction);
+				Faction newFaction = new Faction( faction );
+				m_factions.Add( newFaction.Id, newFaction );
 			}
 		}
 
-		public void RemoveFaction(long id)
+		public void RemoveFaction( long id )
 		{
 			m_factionToModify = id;
-			m_factions.Remove(id);
+			m_factions.Remove( id );
 
 			Action action = InternalRemoveFaction;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		internal void RemoveMember(long factionId, long memberId)
+		internal void RemoveMember( long factionId, long memberId )
 		{
 			m_factionToModify = factionId;
 			m_memberToModify = memberId;
 
 			Action action = InternalRemoveMember;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
 		#region "Internal"
 
-		internal Object InternalGetFactionById(long id)
+		internal Object InternalGetFactionById( long id )
 		{
-			Object internalFaction = BaseObject.InvokeEntityMethod(BackingObject, FactionManagerGetFactionByIdMethod, new object[] { id });
+			Object internalFaction = BaseObject.InvokeEntityMethod( BackingObject, FactionManagerGetFactionByIdMethod, new object[ ] { id } );
 
 			return internalFaction;
 		}
 
-		protected void InternalRemoveFaction()
+		protected void InternalRemoveFaction( )
 		{
-			if (m_factionToModify == 0)
+			if ( m_factionToModify == 0 )
 				return;
 
-			BaseObject.InvokeEntityMethod(BackingObject, FactionNetManagerRemoveFactionMethod, new object[] { m_factionToModify });
+			BaseObject.InvokeEntityMethod( BackingObject, FactionNetManagerRemoveFactionMethod, new object[ ] { m_factionToModify } );
 
-			BaseObject.InvokeEntityMethod(BackingObject, FactionManagerRemoveFactionByIdMethod, new object[] { m_factionToModify });
+			BaseObject.InvokeEntityMethod( BackingObject, FactionManagerRemoveFactionByIdMethod, new object[ ] { m_factionToModify } );
 
 			m_factionToModify = 0;
 		}
 
-		protected void InternalRemoveMember()
+		protected void InternalRemoveMember( )
 		{
-			if (m_factionToModify == 0)
+			if ( m_factionToModify == 0 )
 				return;
-			if (m_memberToModify == 0)
+			if ( m_memberToModify == 0 )
 				return;
 
-			BaseObject.InvokeEntityMethod(BackingObject, FactionNetManagerRemoveMemberMethod, new object[] { m_factionToModify, m_memberToModify });
+			BaseObject.InvokeEntityMethod( BackingObject, FactionNetManagerRemoveMemberMethod, new object[ ] { m_factionToModify, m_memberToModify } );
 
 			m_factionToModify = 0;
 			m_memberToModify = 0;
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 }

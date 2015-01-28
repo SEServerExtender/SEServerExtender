@@ -1,25 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
-using SEModAPI.API;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
-using VRageMath;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "GravitySphereEntityProxy")]
+	[DataContract( Name = "GravitySphereEntityProxy" )]
 	public class GravitySphereEntity : GravityBaseEntity
 	{
 		#region "Attributes"
@@ -29,28 +17,28 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string GravitySphereSetFieldRadiusMethod = "72427BC45A87B1130BF96C0306A88317";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public GravitySphereEntity(CubeGridEntity parent, MyObjectBuilder_GravityGeneratorSphere definition)
-			: base(parent, definition)
+		public GravitySphereEntity( CubeGridEntity parent, MyObjectBuilder_GravityGeneratorSphere definition )
+			: base( parent, definition )
 		{
 		}
 
-		public GravitySphereEntity(CubeGridEntity parent, MyObjectBuilder_GravityGeneratorSphere definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public GravitySphereEntity( CubeGridEntity parent, MyObjectBuilder_GravityGeneratorSphere definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Gravity Generator Sphere")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Gravity Generator Sphere" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_GravityGeneratorSphere ObjectBuilder
 		{
 			get
@@ -66,60 +54,60 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Gravity Generator Sphere")]
+		[Category( "Gravity Generator Sphere" )]
 		public float FieldRadius
 		{
 			get { return ObjectBuilder.Radius; }
 			set
 			{
-				if (ObjectBuilder.Radius.Equals(value)) return;
+				if ( ObjectBuilder.Radius.Equals( value ) ) return;
 				ObjectBuilder.Radius = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateFieldRadius;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(GravitySphereNamespace, GravitySphereClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for GravitySphereEntity");
-				result &= HasMethod(type, GravitySphereSetFieldRadiusMethod);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GravitySphereNamespace, GravitySphereClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for GravitySphereEntity" );
+				result &= HasMethod( type, GravitySphereSetFieldRadiusMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected void InternalUpdateFieldRadius()
+		protected void InternalUpdateFieldRadius( )
 		{
 			try
 			{
-				InvokeEntityMethod(ActualObject, GravitySphereSetFieldRadiusMethod, new object[] { FieldRadius });
+				InvokeEntityMethod( ActualObject, GravitySphereSetFieldRadiusMethod, new object[ ] { FieldRadius } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

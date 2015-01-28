@@ -1,7 +1,5 @@
 ﻿using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using SEModAPI.API.Definitions;
-
 using VRage.Common.Utils;
 
 namespace SEModAPI.API.Definitions
@@ -10,7 +8,7 @@ namespace SEModAPI.API.Definitions
     {
         #region "Attributes"
 
-        private ContainerTypeItemsManager m_itemsManager;
+        private readonly ContainerTypeItemsManager _itemsManager;
 
         #endregion
 
@@ -19,9 +17,9 @@ namespace SEModAPI.API.Definitions
 		public ContainerTypesDefinition(MyObjectBuilder_ContainerTypeDefinition definition)
 			: base(definition)
         {
-			m_itemsManager = new ContainerTypeItemsManager();
+			_itemsManager = new ContainerTypeItemsManager();
 			if(definition.Items != null)
-				m_itemsManager.Load(definition.Items);
+				_itemsManager.Load(definition.Items);
 		}
 
         #endregion
@@ -33,7 +31,7 @@ namespace SEModAPI.API.Definitions
             get
             {
 				if (base.Changed) return true;
-				foreach (var def in m_itemsManager.Definitions)
+				foreach (ContainerTypeItem def in _itemsManager.Definitions)
                 {
                     if (def.Changed)
                         return true;
@@ -51,7 +49,7 @@ namespace SEModAPI.API.Definitions
 		{
 			get
 			{
-				m_baseDefinition.Items = m_itemsManager.ExtractBaseDefinitions().ToArray();
+				m_baseDefinition.Items = _itemsManager.ExtractBaseDefinitions().ToArray();
 				return m_baseDefinition;
 			}
 		}
@@ -90,7 +88,7 @@ namespace SEModAPI.API.Definitions
 
         public ContainerTypeItem[] Items
         {
-            get { return m_itemsManager.Definitions; }
+            get { return _itemsManager.Definitions; }
         }
 
         #endregion
@@ -104,12 +102,12 @@ namespace SEModAPI.API.Definitions
 
 		public ContainerTypeItem NewEntry()
 		{
-			return m_itemsManager.NewEntry();
+			return _itemsManager.NewEntry();
 		}
 
 		public bool DeleteEntry(ContainerTypeItem source)
 		{
-			return m_itemsManager.DeleteEntry(source);
+			return _itemsManager.DeleteEntry(source);
 		}
 
         #endregion

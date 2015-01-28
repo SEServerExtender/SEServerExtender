@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "RotorEntityProxy")]
+	[DataContract( Name = "RotorEntityProxy" )]
 	public class RotorEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -22,41 +17,41 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string RotorTopBlockEntityIdField = "8B5AF0B1A3FABB9647F639CBBCEE6B9B";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public RotorEntity(CubeGridEntity parent, MyObjectBuilder_MotorStator definition)
-			: base(parent, definition)
+		public RotorEntity( CubeGridEntity parent, MyObjectBuilder_MotorStator definition )
+			: base( parent, definition )
 		{
 		}
 
-		public RotorEntity(CubeGridEntity parent, MyObjectBuilder_MotorStator definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public RotorEntity( CubeGridEntity parent, MyObjectBuilder_MotorStator definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Rotor")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Rotor" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new static Type InternalType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(RotorNamespace, RotorClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( RotorNamespace, RotorClass );
 				return type;
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Rotor")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Rotor" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_MotorStator ObjectBuilder
 		{
 			get { return (MyObjectBuilder_MotorStator)base.ObjectBuilder; }
@@ -67,21 +62,21 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Rotor")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Rotor" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public CubeBlockEntity TopBlock
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return null;
 
-				long topBlockEntityId = GetTopBlockEntityId();
-				if (topBlockEntityId == 0)
+				long topBlockEntityId = GetTopBlockEntityId( );
+				if ( topBlockEntityId == 0 )
 					return null;
-				BaseObject baseObject = GameEntityManager.GetEntity(topBlockEntityId);
-				if (!(baseObject is CubeBlockEntity))
+				BaseObject baseObject = GameEntityManager.GetEntity( topBlockEntityId );
+				if ( !( baseObject is CubeBlockEntity ) )
 					return null;
 				CubeBlockEntity block = (CubeBlockEntity)baseObject;
 				return block;
@@ -93,16 +88,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Rotor")]
-		[ReadOnly(true)]
+		[Category( "Rotor" )]
+		[ReadOnly( true )]
 		public long TopBlockId
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.RotorEntityId;
 
-				return GetTopBlockEntityId();
+				return GetTopBlockEntityId( );
 			}
 			private set
 			{
@@ -110,40 +105,40 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for RotorEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for RotorEntity" );
 
-				result &= HasField(type, RotorTopBlockEntityIdField);
+				result &= HasField( type, RotorTopBlockEntityIdField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected long GetTopBlockEntityId()
+		protected long GetTopBlockEntityId( )
 		{
-			Object rawResult = GetEntityFieldValue(ActualObject, RotorTopBlockEntityIdField);
-			if (rawResult == null)
+			Object rawResult = GetEntityFieldValue( ActualObject, RotorTopBlockEntityIdField );
+			if ( rawResult == null )
 				return 0;
 			long result = (long)rawResult;
 			return result;
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Xml;
 using Sandbox.Common.ObjectBuilders.Definitions;
 
 namespace SEModAPI.API.Definitions.CubeBlocks
@@ -39,7 +38,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		{
 			get
 			{
-				return m_baseDefinition.Id.SubtypeName == "" ? m_baseDefinition.Id.TypeId.ToString() : m_baseDefinition.Id.SubtypeName;
+				return BaseDefinition.Id.SubtypeName == string.Empty ? BaseDefinition.Id.TypeId.ToString() : BaseDefinition.Id.SubtypeName;
 			}
 		}
 
@@ -91,11 +90,11 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		[Description("Get or set if the Block is activated in game.")]
 		public bool Enabled
 		{
-			get { return m_baseDefinition.Public; }
+			get { return BaseDefinition.Public; }
 			set
 			{
-				if (m_baseDefinition.Public == value) return;
-				m_baseDefinition.Public = value;
+				if (BaseDefinition.Public == value) return;
+				BaseDefinition.Public = value;
 				Changed = true;
 			}
 		}
@@ -127,7 +126,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public MyObjectBuilder_CubeBlockDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_CubeBlockDefinition)m_baseDefinition;
+			return (MyObjectBuilder_CubeBlockDefinition)BaseDefinition;
 		}
 
 		#endregion

@@ -110,7 +110,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		new public MyObjectBuilder_CockpitDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_CockpitDefinition)m_baseDefinition;
+			return (MyObjectBuilder_CockpitDefinition)BaseDefinition;
 		}
 
 		#endregion

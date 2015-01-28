@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "CameraBlockEntityProxy")]
+	[DataContract( Name = "CameraBlockEntityProxy" )]
 	public class CameraBlockEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -27,30 +19,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string CameraBlockGetIsActiveMethod = "B9A8CAA8AE60E632F1A995F9492C5626";
 		public static string CameraBlockSetIsActiveMethod = "F1C9E65ABDAB28453725C43D05F95D4E";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CameraBlockEntity(CubeGridEntity parent, MyObjectBuilder_CameraBlock definition)
-			: base(parent, definition)
+		public CameraBlockEntity( CubeGridEntity parent, MyObjectBuilder_CameraBlock definition )
+			: base( parent, definition )
 		{
 			m_isActive = definition.IsActive;
 		}
 
-		public CameraBlockEntity(CubeGridEntity parent, MyObjectBuilder_CameraBlock definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public CameraBlockEntity( CubeGridEntity parent, MyObjectBuilder_CameraBlock definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 			m_isActive = definition.IsActive;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Camera")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Camera" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_CameraBlock ObjectBuilder
 		{
 			get
@@ -64,84 +56,84 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Camera")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Camera" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		new public static Type InternalType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CameraBlockNamespace, CameraBlockClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CameraBlockNamespace, CameraBlockClass );
 				return type;
 			}
 		}
 
 		[DataMember]
-		[Category("Camera")]
+		[Category( "Camera" )]
 		public bool IsActive
 		{
 			get
 			{
-				if(BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.IsActive;
 
-				return GetIsCameraActive();
+				return GetIsCameraActive( );
 			}
 			set
 			{
-				if(IsActive == value) return;
+				if ( IsActive == value ) return;
 				ObjectBuilder.IsActive = value;
 				m_isActive = value;
 				Changed = true;
 
-				if(BackingObject != null && ActualObject != null)
+				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateCameraIsActive;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for CameraBlockEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for CameraBlockEntity" );
 
-				result &= HasMethod(type, CameraBlockGetIsActiveMethod);
-				result &= HasMethod(type, CameraBlockSetIsActiveMethod);
+				result &= HasMethod( type, CameraBlockGetIsActiveMethod );
+				result &= HasMethod( type, CameraBlockSetIsActiveMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected bool GetIsCameraActive()
+		protected bool GetIsCameraActive( )
 		{
-			Object rawResult = InvokeEntityMethod(ActualObject, CameraBlockGetIsActiveMethod);
-			if (rawResult == null)
+			Object rawResult = InvokeEntityMethod( ActualObject, CameraBlockGetIsActiveMethod );
+			if ( rawResult == null )
 				return false;
 			bool result = (bool)rawResult;
 			return result;
 		}
 
-		protected void InternalUpdateCameraIsActive()
+		protected void InternalUpdateCameraIsActive( )
 		{
-			InvokeEntityMethod(ActualObject, CameraBlockSetIsActiveMethod, new object[] { m_isActive });
+			InvokeEntityMethod( ActualObject, CameraBlockSetIsActiveMethod, new object[ ] { m_isActive } );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

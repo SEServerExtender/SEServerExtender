@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sandbox.Common.ObjectBuilders;
-using System.Runtime.Serialization;
-using SEModAPIInternal.API.Common;
 using System.ComponentModel;
+using System.Runtime.Serialization;
+using Sandbox.Common.ObjectBuilders;
+using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "TurretBaseEntityProxy")]
+	[DataContract( Name = "TurretBaseEntityProxy" )]
 	public class TurretBaseEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -44,16 +41,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string TurretTargetMeteorsProperty = "TargetMeteors";
 		public static string TurretTargetMissilesProperty = "TargetMissiles";
 		public static string TurretTargetMovingProperty = "TargetMoving";
-        public static string TurretNetworkManagerProperty = "SyncObject";
+		public static string TurretNetworkManagerProperty = "SyncObject";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public TurretBaseEntity(CubeGridEntity parent, MyObjectBuilder_TurretBase definition)
-			: base(parent, definition)
+		public TurretBaseEntity( CubeGridEntity parent, MyObjectBuilder_TurretBase definition )
+			: base( parent, definition )
 		{
-			m_inventory = new InventoryEntity(definition.Inventory);
+			m_inventory = new InventoryEntity( definition.Inventory );
 
 			m_shootingRange = definition.Range;
 			m_searchingRange = m_shootingRange + 100;
@@ -63,11 +60,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			m_targetMoving = definition.TargetMoving;
 		}
 
-		public TurretBaseEntity(CubeGridEntity parent, MyObjectBuilder_TurretBase definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public TurretBaseEntity( CubeGridEntity parent, MyObjectBuilder_TurretBase definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
-			m_turretNetworkManager = new TurretNetworkManager(this, GetNetworkManager());
-			m_inventory = new InventoryEntity(definition.Inventory, GetTurretInventory());
+			m_turretNetworkManager = new TurretNetworkManager( this, GetNetworkManager( ) );
+			m_inventory = new InventoryEntity( definition.Inventory, GetTurretInventory( ) );
 
 			m_shootingRange = definition.Range;
 			m_searchingRange = m_shootingRange + 100;
@@ -77,13 +74,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			m_targetMoving = definition.TargetMoving;
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Turret")]
-		[Browsable(false)]
+		[Category( "Turret" )]
+		[Browsable( false )]
 		new internal MyObjectBuilder_TurretBase ObjectBuilder
 		{
 			get { return (MyObjectBuilder_TurretBase)base.ObjectBuilder; }
@@ -94,15 +91,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Turret")]
+		[Category( "Turret" )]
 		public float ShootingRange
 		{
 			get
 			{
-				if(BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.Range;
 
-				float range = GetShootingRange();
+				float range = GetShootingRange( );
 				return range;
 			}
 			set
@@ -110,20 +107,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				m_shootingRange = value;
 
 				Action action = SetShootingRange;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 			}
 		}
 
 		[DataMember]
-		[Category("Turret")]
+		[Category( "Turret" )]
 		public float SearchingRange
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.Range;
 
-				float range = GetSearchingRange();
+				float range = GetSearchingRange( );
 				return range;
 			}
 			set
@@ -131,36 +128,36 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				m_searchingRange = value;
 
 				Action action = SetSearchingRange;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Turret")]
+		[Category( "Turret" )]
 		public BaseObject Target
 		{
 			get
 			{
 				try
 				{
-					if (BackingObject == null || ActualObject == null)
+					if ( BackingObject == null || ActualObject == null )
 						return m_target;
 
-					Object target = GetTarget();
-					if (target == null)
+					Object target = GetTarget( );
+					if ( target == null )
 						return null;
 
-					if (m_target == null)
+					if ( m_target == null )
 					{
-						long entityId = BaseEntity.GetEntityId(target);
-						m_target = GameEntityManager.GetEntity(entityId);
+						long entityId = BaseEntity.GetEntityId( target );
+						m_target = GameEntityManager.GetEntity( entityId );
 					}
 
 					return m_target;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return m_target;
 				}
 			}
@@ -169,21 +166,21 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				m_target = value;
 
 				Action action = SetTarget;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 			}
 		}
 
 		[DataMember]
-		[Category("Turret")]
-		[ReadOnly(true)]
+		[Category( "Turret" )]
+		[ReadOnly( true )]
 		public int RemainingAmmo
 		{
 			get
 			{
-				if(BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.RemainingAmmo;
 
-				int ammo = GetRemainingAmmo();
+				int ammo = GetRemainingAmmo( );
 				return ammo;
 			}
 			private set
@@ -193,75 +190,75 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Turret")]
+		[Category( "Turret" )]
 		public bool TargetMeteors
 		{
 			get
 			{
-				if(BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.TargetMeteors;
 
-				return GetTargetMeteors();
+				return GetTargetMeteors( );
 			}
 			set
 			{
 				ObjectBuilder.TargetMeteors = value;
 				m_targetMeteors = value;
 
-				SetTargetMeteors();
+				SetTargetMeteors( );
 			}
 		}
 
 		[DataMember]
-		[Category("Turret")]
+		[Category( "Turret" )]
 		public bool TargetMissiles
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.TargetMissiles;
 
-				return GetTargetMissiles();
+				return GetTargetMissiles( );
 			}
 			set
 			{
 				ObjectBuilder.TargetMissiles = value;
 				m_targetMissiles = value;
 
-				SetTargetMissiles();
+				SetTargetMissiles( );
 			}
 		}
 
 		[DataMember]
-		[Category("Turret")]
+		[Category( "Turret" )]
 		public bool TargetMoving
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.TargetMoving;
 
-				return GetTargetMoving();
+				return GetTargetMoving( );
 			}
 			set
 			{
 				m_targetMoving = value;
 
-				SetTargetMoving();
+				SetTargetMoving( );
 			}
 		}
 
 		[DataMember]
-		[Category("Turret")]
-		[ReadOnly(true)]
+		[Category( "Turret" )]
+		[ReadOnly( true )]
 		public long NearestTargetId
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return 0;
 
-				long id = GetNearestTargetId();
+				long id = GetNearestTargetId( );
 				return id;
 			}
 			private set
@@ -271,235 +268,235 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Turret")]
-		[Browsable(false)]
+		[Category( "Turret" )]
+		[Browsable( false )]
 		public InventoryEntity Inventory
 		{
 			get { return m_inventory; }
 		}
 
 		[IgnoreDataMember]
-		[Category("Turret")]
-		[Browsable(false)]
+		[Category( "Turret" )]
+		[Browsable( false )]
 		internal TurretNetworkManager TurretNetManager
 		{
 			get { return m_turretNetworkManager; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(TurretNamespace, TurretClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for TurretBaseEntity");
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( TurretNamespace, TurretClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for TurretBaseEntity" );
 
-				result &= HasMethod(type, TurretIsTargetMethod);
-				result &= HasMethod(type, TurretIsTargetVisibleMethod);
-				result &= HasMethod(type, TurretIsTargetInViewMethod);
-				result &= HasMethod(type, TurretIsTargetEnemyMethod);
-				result &= HasMethod(type, TurretGetNearestVisibleTargetMethod);
-				result &= HasMethod(type, TurretGetRemainingAmmoMethod);
+				result &= HasMethod( type, TurretIsTargetMethod );
+				result &= HasMethod( type, TurretIsTargetVisibleMethod );
+				result &= HasMethod( type, TurretIsTargetInViewMethod );
+				result &= HasMethod( type, TurretIsTargetEnemyMethod );
+				result &= HasMethod( type, TurretGetNearestVisibleTargetMethod );
+				result &= HasMethod( type, TurretGetRemainingAmmoMethod );
 
-				result &= HasField(type, TurretSearchingRangeField);
-				result &= HasField(type, TurretInventoryField);
+				result &= HasField( type, TurretSearchingRangeField );
+				result &= HasField( type, TurretInventoryField );
 
-				result &= HasProperty(type, TurretTargetProperty);
-				result &= HasProperty(type, TurretShootingRangeProperty);
-				result &= HasProperty(type, TurretTargetMeteorsProperty);
-				result &= HasProperty(type, TurretTargetMissilesProperty);
-				result &= HasProperty(type, TurretTargetMovingProperty);
-                result &= HasProperty(type, TurretNetworkManagerProperty);
+				result &= HasProperty( type, TurretTargetProperty );
+				result &= HasProperty( type, TurretShootingRangeProperty );
+				result &= HasProperty( type, TurretTargetMeteorsProperty );
+				result &= HasProperty( type, TurretTargetMissilesProperty );
+				result &= HasProperty( type, TurretTargetMovingProperty );
+				result &= HasProperty( type, TurretNetworkManagerProperty );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public bool IsTarget(BaseObject gameEntity)
+		public bool IsTarget( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod(ActualObject, TurretIsTargetMethod, new object[] { gameEntity.BackingObject });
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetMethod, new object[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
-		public bool IsTargetVisible(BaseObject gameEntity)
+		public bool IsTargetVisible( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod(ActualObject, TurretIsTargetVisibleMethod, new object[] { gameEntity.BackingObject });
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetVisibleMethod, new object[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
-		public bool IsTargetInView(BaseObject gameEntity)
+		public bool IsTargetInView( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod(ActualObject, TurretIsTargetInViewMethod, new object[] { gameEntity.BackingObject });
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetInViewMethod, new object[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
-		public bool IsTargetEnemy(BaseObject gameEntity)
+		public bool IsTargetEnemy( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod(ActualObject, TurretIsTargetEnemyMethod, new object[] { gameEntity.BackingObject });
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetEnemyMethod, new object[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
-		public long GetNearestTargetId()
+		public long GetNearestTargetId( )
 		{
 			try
 			{
-				Object nearestTarget = GetNearestVisibleTarget();
-				if (nearestTarget == null)
+				Object nearestTarget = GetNearestVisibleTarget( );
+				if ( nearestTarget == null )
 					return 0;
 
-				long result = BaseEntity.GetEntityId(nearestTarget);
+				long result = BaseEntity.GetEntityId( nearestTarget );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return 0;
 			}
 		}
 
-		public void Shoot()
+		public void Shoot( )
 		{
 			Action action = InternalTurretShoot;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		protected Object GetNetworkManager()
+		protected Object GetNetworkManager( )
 		{
 			//Object result = GetEntityFieldValue(ActualObject, TurretNetworkManagerField);
-            Object result = GetEntityProperty(ActualObject, TurretNetworkManagerProperty);
-            return result;
+			Object result = GetEntityProperty( ActualObject, TurretNetworkManagerProperty );
+			return result;
 		}
 
-		protected Object GetNearestVisibleTarget()
+		protected Object GetNearestVisibleTarget( )
 		{
 			try
 			{
-				Object result = InvokeEntityMethod(ActualObject, TurretGetNearestVisibleTargetMethod, new object[] { m_searchingRange, false });
+				Object result = InvokeEntityMethod( ActualObject, TurretGetNearestVisibleTargetMethod, new object[ ] { m_searchingRange, false } );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		protected int GetRemainingAmmo()
+		protected int GetRemainingAmmo( )
 		{
-			int result = (int)InvokeEntityMethod(ActualObject, TurretGetRemainingAmmoMethod);
+			int result = (int)InvokeEntityMethod( ActualObject, TurretGetRemainingAmmoMethod );
 			return result;
 		}
 
-		protected Object GetTarget()
+		protected Object GetTarget( )
 		{
-			Object result = GetEntityPropertyValue(ActualObject, TurretTargetProperty);
+			Object result = GetEntityPropertyValue( ActualObject, TurretTargetProperty );
 			return result;
 		}
 
-		protected void SetTarget()
+		protected void SetTarget( )
 		{
-			if (m_target == null)
+			if ( m_target == null )
 				return;
 
-			SetEntityPropertyValue(ActualObject, TurretTargetProperty, m_target.BackingObject);
+			SetEntityPropertyValue( ActualObject, TurretTargetProperty, m_target.BackingObject );
 
-			TurretNetManager.BroadcastTargetId();
+			TurretNetManager.BroadcastTargetId( );
 		}
 
-		protected float GetShootingRange()
+		protected float GetShootingRange( )
 		{
-			float result = (float)GetEntityPropertyValue(ActualObject, TurretShootingRangeProperty);
+			float result = (float)GetEntityPropertyValue( ActualObject, TurretShootingRangeProperty );
 			return result;
 		}
 
-		protected void SetShootingRange()
+		protected void SetShootingRange( )
 		{
-			SetEntityPropertyValue(ActualObject, TurretShootingRangeProperty, m_shootingRange);
+			SetEntityPropertyValue( ActualObject, TurretShootingRangeProperty, m_shootingRange );
 
-			TurretNetManager.BroadcastRange();
+			TurretNetManager.BroadcastRange( );
 		}
 
-		protected float GetSearchingRange()
+		protected float GetSearchingRange( )
 		{
 			try
 			{
-				float result = (float)GetEntityFieldValue(ActualObject, TurretSearchingRangeField);
+				float result = (float)GetEntityFieldValue( ActualObject, TurretSearchingRangeField );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return m_searchingRange;
 			}
 		}
 
-		protected void SetSearchingRange()
+		protected void SetSearchingRange( )
 		{
-			SetEntityFieldValue(ActualObject, TurretSearchingRangeField, m_searchingRange);
+			SetEntityFieldValue( ActualObject, TurretSearchingRangeField, m_searchingRange );
 		}
 
-		protected bool GetTargetMeteors()
+		protected bool GetTargetMeteors( )
 		{
-			bool result = (bool)GetEntityPropertyValue(ActualObject, TurretTargetMeteorsProperty);
+			bool result = (bool)GetEntityPropertyValue( ActualObject, TurretTargetMeteorsProperty );
 			return result;
 		}
 
-		protected void SetTargetMeteors()
+		protected void SetTargetMeteors( )
 		{
-			SetEntityPropertyValue(ActualObject, TurretTargetMeteorsProperty, m_targetMeteors);
+			SetEntityPropertyValue( ActualObject, TurretTargetMeteorsProperty, m_targetMeteors );
 
-			TurretNetManager.BroadcastTargettingFlags();
+			TurretNetManager.BroadcastTargettingFlags( );
 		}
 
-		protected bool GetTargetMissiles()
+		protected bool GetTargetMissiles( )
 		{
-			bool result = (bool)GetEntityPropertyValue(ActualObject, TurretTargetMissilesProperty);
+			bool result = (bool)GetEntityPropertyValue( ActualObject, TurretTargetMissilesProperty );
 			return result;
 		}
 
-		protected void SetTargetMissiles()
+		protected void SetTargetMissiles( )
 		{
-			SetEntityPropertyValue(ActualObject, TurretTargetMissilesProperty, m_targetMissiles);
+			SetEntityPropertyValue( ActualObject, TurretTargetMissilesProperty, m_targetMissiles );
 
-			TurretNetManager.BroadcastTargettingFlags();
+			TurretNetManager.BroadcastTargettingFlags( );
 		}
 
-		protected bool GetTargetMoving()
+		protected bool GetTargetMoving( )
 		{
-			bool result = (bool)GetEntityPropertyValue(ActualObject, TurretTargetMovingProperty);
+			bool result = (bool)GetEntityPropertyValue( ActualObject, TurretTargetMovingProperty );
 			return result;
 		}
 
-		protected void SetTargetMoving()
+		protected void SetTargetMoving( )
 		{
-			SetEntityPropertyValue(ActualObject, TurretTargetMovingProperty, m_targetMoving);
+			SetEntityPropertyValue( ActualObject, TurretTargetMovingProperty, m_targetMoving );
 
-			TurretNetManager.BroadcastTargettingFlags();
+			TurretNetManager.BroadcastTargettingFlags( );
 		}
 
-		protected Object GetTurretInventory()
+		protected Object GetTurretInventory( )
 		{
-			Object result = GetEntityFieldValue(ActualObject, TurretInventoryField);
+			Object result = GetEntityFieldValue( ActualObject, TurretInventoryField );
 			return result;
 		}
 
-		protected void InternalTurretShoot()
+		protected void InternalTurretShoot( )
 		{
-			InvokeEntityMethod(ActualObject, TurretShootMethod);
+			InvokeEntityMethod( ActualObject, TurretShootMethod );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class TurretNetworkManager
@@ -521,17 +518,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string TurretNetworkManagerBroadcastRangeMethod = "8F298724F106679C0229CD9F9763EA90";
 		public static string TurretNetworkManagerBroadcastTargettingFlagsMethod = "70D4690C2D4A199ABB3EB37364BE0595";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public TurretNetworkManager(TurretBaseEntity parent, Object backingObject)
+		public TurretNetworkManager( TurretBaseEntity parent, Object backingObject )
 		{
 			m_parent = parent;
 			m_backingObject = backingObject;
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
@@ -541,53 +538,53 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			set { m_backingObject = value; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(TurretNetworkManagerNamespace, TurretNetworkManagerClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for TurretNetworkManager");
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( TurretNetworkManagerNamespace, TurretNetworkManagerClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for TurretNetworkManager" );
 
-				result &= BaseObject.HasMethod(type, TurretNetworkManagerBroadcastTargetIdMethod);
-				result &= BaseObject.HasMethod(type, TurretNetworkManagerBroadcastRangeMethod);
-				result &= BaseObject.HasMethod(type, TurretNetworkManagerBroadcastTargettingFlagsMethod);
+				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargetIdMethod );
+				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastRangeMethod );
+				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargettingFlagsMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void BroadcastTargetId()
+		public void BroadcastTargetId( )
 		{
-			long entityId = BaseEntity.GetEntityId(m_parent.ActualObject);
-			BaseObject.InvokeEntityMethod(BackingObject, TurretNetworkManagerBroadcastTargetIdMethod, new object[] { entityId, false });
+			long entityId = BaseEntity.GetEntityId( m_parent.ActualObject );
+			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargetIdMethod, new object[ ] { entityId, false } );
 		}
 
-		public void BroadcastRange()
+		public void BroadcastRange( )
 		{
 			float range = m_parent.ShootingRange;
-			BaseObject.InvokeEntityMethod(BackingObject, TurretNetworkManagerBroadcastRangeMethod, new object[] { range });
+			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastRangeMethod, new object[ ] { range } );
 		}
 
-		public void BroadcastTargettingFlags()
+		public void BroadcastTargettingFlags( )
 		{
 			bool targetMeteors = m_parent.TargetMeteors;
 			bool targetMoving = m_parent.TargetMoving;
 			bool targetMissiles = m_parent.TargetMissiles;
-			BaseObject.InvokeEntityMethod(BackingObject, TurretNetworkManagerBroadcastTargettingFlagsMethod, new object[] { targetMeteors, targetMoving, targetMissiles });
+			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargettingFlagsMethod, new object[ ] { targetMeteors, targetMoving, targetMissiles } );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

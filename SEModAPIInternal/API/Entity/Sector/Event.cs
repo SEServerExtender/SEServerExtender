@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPI.API.Definitions;
 
 namespace SEModAPIInternal.API.Entity.Sector
 {
@@ -13,29 +9,29 @@ namespace SEModAPIInternal.API.Entity.Sector
 	{
 		#region "Constructors and Initializers"
 
-		public Event(MyObjectBuilder_GlobalEventBase definition)
-			: base(definition)
-		{}
+		public Event( MyObjectBuilder_GlobalEventBase definition )
+			: base( definition )
+		{ }
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
-		[Category("Event")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Event" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public override string Name
 		{
 			get
 			{
-				string name = ObjectBuilder.EventType.ToString();
+				string name = ObjectBuilder.EventType.ToString( );
 				return name;
 			}
 		}
 
-		[Category("Event")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Event" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_GlobalEventBase ObjectBuilder
 		{
 			get
@@ -48,66 +44,62 @@ namespace SEModAPIInternal.API.Entity.Sector
 			}
 		}
 
-		[Category("Event")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Event" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public long ActivationTimeMs
 		{
 			get { return ObjectBuilder.ActivationTimeMs; }
 			set
 			{
-				if (ObjectBuilder.ActivationTimeMs == value) return;
+				if ( ObjectBuilder.ActivationTimeMs == value ) return;
 				ObjectBuilder.ActivationTimeMs = value;
 				Changed = true;
 			}
 		}
 
-		[Category("Event")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Event" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public SerializableDefinitionId DefinitionId
 		{
 			get { return ObjectBuilder.DefinitionId; }
 			set
 			{
-				if (ObjectBuilder.DefinitionId.Equals(value)) return;
+				if ( ObjectBuilder.DefinitionId.Equals( value ) ) return;
 				ObjectBuilder.DefinitionId = value;
 				Changed = true;
 			}
 		}
 
-		[Category("Event")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Event" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public bool Enabled
 		{
 			get { return ObjectBuilder.Enabled; }
 			set
 			{
-				if (ObjectBuilder.Enabled == value) return;
+				if ( ObjectBuilder.Enabled == value ) return;
 				ObjectBuilder.Enabled = value;
 				Changed = true;
 			}
 		}
 
-		[Category("Event")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Event" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public MyGlobalEventTypeEnum EventType
 		{
 			get { return ObjectBuilder.EventType; }
 			set
 			{
-				if (ObjectBuilder.EventType == value) return;
+				if ( ObjectBuilder.EventType == value ) return;
 				ObjectBuilder.EventType = value;
 				Changed = true;
 			}
 		}
 
-		#endregion
-
-		#region "Methods"
-
-		#endregion
+		#endregion "Properties"
 	}
 }

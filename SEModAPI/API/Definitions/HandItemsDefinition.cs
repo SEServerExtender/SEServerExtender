@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Sandbox.Common.ObjectBuilders;
+﻿using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using SEModAPI.Support;
 using VRageMath;
 
 namespace SEModAPI.API.Definitions

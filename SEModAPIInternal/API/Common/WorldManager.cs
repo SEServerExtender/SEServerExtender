@@ -1,13 +1,9 @@
 ﻿using System;
-
+using System.Threading;
 using Sandbox.Common.ObjectBuilders;
-
 using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.Support;
-
 using VRage;
-
-using System.Threading;
 
 namespace SEModAPIInternal.API.Common
 {
@@ -51,18 +47,18 @@ namespace SEModAPIInternal.API.Common
 		public static string SandboxGameGetGameStatsInstance = "9FADFDED60BE5D614F2CA2DB13B753DE";
 		public static string SandboxGameGetUpdatesPerSecondField = "87D39FAEA45F9E56D966C7580B2E42B7";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		protected WorldManager()
+		protected WorldManager( )
 		{
 			m_instance = this;
 
-			Console.WriteLine("Finished loading WorldManager");
+			Console.WriteLine( "Finished loading WorldManager" );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -70,8 +66,8 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				if (m_instance == null)
-					m_instance = new WorldManager();
+				if ( m_instance == null )
+					m_instance = new WorldManager( );
 
 				return m_instance;
 			}
@@ -81,7 +77,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldManagerNamespace, WorldManagerClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldManagerNamespace, WorldManagerClass );
 				return type;
 			}
 		}
@@ -92,13 +88,13 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					Object worldManager = BaseObject.GetStaticFieldValue(InternalType, WorldManagerInstanceField);
+					Object worldManager = BaseObject.GetStaticFieldValue( InternalType, WorldManagerInstanceField );
 
 					return worldManager;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return null;
 				}
 			}
@@ -108,7 +104,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				string name = (string)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerGetSessionNameMethod);
+				string name = (string)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetSessionNameMethod );
 
 				return name;
 			}
@@ -122,20 +118,20 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
-        public MyObjectBuilder_SessionSettings SessionSettings
+		public MyObjectBuilder_SessionSettings SessionSettings
 		{
 			get
 			{
 				try
 				{
-                    MyObjectBuilder_SessionSettings sessionSettings = (MyObjectBuilder_SessionSettings)BaseObject.GetEntityFieldValue(BackingObject, WorldManagerSessionSettingsField);
+					MyObjectBuilder_SessionSettings sessionSettings = (MyObjectBuilder_SessionSettings)BaseObject.GetEntityFieldValue( BackingObject, WorldManagerSessionSettingsField );
 
 					return sessionSettings;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
-                    return new MyObjectBuilder_SessionSettings();
+					LogManager.ErrorLog.WriteLine( ex );
+					return new MyObjectBuilder_SessionSettings( );
 				}
 			}
 		}
@@ -144,7 +140,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				MyObjectBuilder_Checkpoint checkpoint = (MyObjectBuilder_Checkpoint)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerGetCheckpointMethod, new object[] { Name });
+				MyObjectBuilder_Checkpoint checkpoint = (MyObjectBuilder_Checkpoint)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetCheckpointMethod, new object[ ] { Name } );
 
 				return checkpoint;
 			}
@@ -154,58 +150,57 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				MyObjectBuilder_Sector sector = (MyObjectBuilder_Sector)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerGetSectorMethod);
+				MyObjectBuilder_Sector sector = (MyObjectBuilder_Sector)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetSectorMethod );
 
 				return sector;
 			}
 		}
 
-
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
-				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldManagerNamespace, WorldManagerClass);
-				if (type1 == null)
-					throw new Exception("Could not find internal type for WorldManager");
+				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldManagerNamespace, WorldManagerClass );
+				if ( type1 == null )
+					throw new Exception( "Could not find internal type for WorldManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type1, WorldManagerGetPlayerManagerMethod);
-				Type[] argTypes = new Type[1];
-				argTypes[0] = typeof(string);
-				result &= BaseObject.HasMethod(type1, WorldManagerSaveWorldMethod, argTypes);
-				result &= BaseObject.HasMethod(type1, WorldManagerGetCheckpointMethod);
-				result &= BaseObject.HasMethod(type1, WorldManagerGetSectorMethod);
-				result &= BaseObject.HasMethod(type1, WorldManagerGetSessionNameMethod);
-				result &= BaseObject.HasField(type1, WorldManagerInstanceField);
-				result &= BaseObject.HasField(type1, WorldManagerFactionManagerField);
-				result &= BaseObject.HasField(type1, WorldManagerSessionSettingsField);
+				result &= BaseObject.HasMethod( type1, WorldManagerGetPlayerManagerMethod );
+				Type[ ] argTypes = new Type[ 1 ];
+				argTypes[ 0 ] = typeof( string );
+				result &= BaseObject.HasMethod( type1, WorldManagerSaveWorldMethod, argTypes );
+				result &= BaseObject.HasMethod( type1, WorldManagerGetCheckpointMethod );
+				result &= BaseObject.HasMethod( type1, WorldManagerGetSectorMethod );
+				result &= BaseObject.HasMethod( type1, WorldManagerGetSessionNameMethod );
+				result &= BaseObject.HasField( type1, WorldManagerInstanceField );
+				result &= BaseObject.HasField( type1, WorldManagerFactionManagerField );
+				result &= BaseObject.HasField( type1, WorldManagerSessionSettingsField );
 
-				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldResourceManagerNamespace, WorldResourceManagerClass);
-				if (type2 == null)
-					throw new Exception("Could not find world resource manager type for WorldManager");
-				result &= BaseObject.HasField(type2, WorldResourceManagerResourceLockField);
+				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldResourceManagerNamespace, WorldResourceManagerClass );
+				if ( type2 == null )
+					throw new Exception( "Could not find world resource manager type for WorldManager" );
+				result &= BaseObject.HasField( type2, WorldResourceManagerResourceLockField );
 
-				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldSnapshotNamespace, WorldSnapshotStaticClass);
-				if (type3 == null)
-					throw new Exception("Could not find world snapshot type for WorldManager");
-				result &= BaseObject.HasMethod(type3, WorldSnapshotSaveMethod);
+				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
+				if ( type3 == null )
+					throw new Exception( "Could not find world snapshot type for WorldManager" );
+				result &= BaseObject.HasMethod( type3, WorldSnapshotSaveMethod );
 
-				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(SandboxGameNamespace, SandboxGameGameStatsClass);
-				if (type4 == null)
-					throw new Exception("Count not find type for SandboxGameStats");
+				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( SandboxGameNamespace, SandboxGameGameStatsClass );
+				if ( type4 == null )
+					throw new Exception( "Count not find type for SandboxGameStats" );
 
-				result &= BaseObject.HasMethod(type4, SandboxGameGetGameStatsInstance);
-				result &= BaseObject.HasField(type4, SandboxGameGetUpdatesPerSecondField);
+				result &= BaseObject.HasMethod( type4, SandboxGameGetGameStatsInstance );
+				result &= BaseObject.HasField( type4, SandboxGameGetUpdatesPerSecondField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
@@ -216,39 +211,39 @@ namespace SEModAPIInternal.API.Common
 		public static string SandboxGameGetGameStatsInstance = "9FADFDED60BE5D614F2CA2DB13B753DE";
 		public static string SandboxGameGetUpdatesPerSecondField = "87D39FAEA45F9E56D966C7580B2E42B7";
 		 */
- 
-		public static long GetUpdatesPerSecond()
+
+		public static long GetUpdatesPerSecond( )
 		{
 			long result = 0L;
 
 			try
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(SandboxGameNamespace, SandboxGameGameStatsClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( SandboxGameNamespace, SandboxGameGameStatsClass );
 
-				object gameStatsObject = BaseObject.InvokeStaticMethod(type, SandboxGameGetGameStatsInstance);
-				result = (long)BaseObject.GetEntityFieldValue(gameStatsObject, SandboxGameGetUpdatesPerSecondField);
+				object gameStatsObject = BaseObject.InvokeStaticMethod( type, SandboxGameGetGameStatsInstance );
+				result = (long)BaseObject.GetEntityFieldValue( gameStatsObject, SandboxGameGetUpdatesPerSecondField );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			return result;
 		}
 
-		public void SaveWorld()
+		public void SaveWorld( )
 		{
-			if (m_isSaving)
+			if ( m_isSaving )
 				return;
 
 			m_isSaving = true;
 			Action action = InternalSaveWorld;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		public void AsynchronousSaveWorld()
+		public void AsynchronousSaveWorld( )
 		{
-			if (m_isSaving)
+			if ( m_isSaving )
 				return;
 
 			m_isSaving = true;
@@ -257,47 +252,47 @@ namespace SEModAPIInternal.API.Common
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
+				ThreadPool.QueueUserWorkItem( new WaitCallback( ( object state ) =>
 					{
-						SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+						SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 							{
-								Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldSnapshotNamespace, WorldSnapshotStaticClass);
-								BaseObject.InvokeStaticMethod(type, WorldSnapshotSaveMethod, new object[] { new Action(() =>
+								Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
+								BaseObject.InvokeStaticMethod( type, WorldSnapshotSaveMethod, new object[ ] { new Action(() =>
 									{
 										LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Setup Started: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
-									}) 
-								});
-							});
+									})
+								} );
+							} );
 
 						// Ugly -- Get rid of this?
 						DateTime start = DateTime.Now;
-						FastResourceLock saveLock = InternalGetResourceLock();
-						while (!saveLock.Owned)
+						FastResourceLock saveLock = InternalGetResourceLock( );
+						while ( !saveLock.Owned )
 						{
-							if(DateTime.Now - start > TimeSpan.FromMilliseconds(20000))
+							if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
 								return;
 
-							Thread.Sleep(1);
+							Thread.Sleep( 1 );
 						}
 
-						while (saveLock.Owned)
+						while ( saveLock.Owned )
 						{
-							if (DateTime.Now - start > TimeSpan.FromMilliseconds(60000))
+							if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
 								return;
 
-							Thread.Sleep(1);
+							Thread.Sleep( 1 );
 						}
 
-						LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Completed: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
-						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+						LogManager.APILog.WriteLineAndConsole( string.Format( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds ) );
+						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 						newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
 						newEvent.timestamp = DateTime.Now;
 						newEvent.entity = null;
 						newEvent.priority = 0;
-						EntityEventManager.Instance.AddEvent(newEvent);						
-					}));
+						EntityEventManager.Instance.AddEvent( newEvent );
+					} ) );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
 			}
 			finally
@@ -305,13 +300,12 @@ namespace SEModAPIInternal.API.Common
 				m_isSaving = false;
 			}
 
-
 			/*
 			try
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				// It looks like keen as an overloaded save function that returns the WorldResourceManager after setting up a save, and then 
+				// It looks like keen as an overloaded save function that returns the WorldResourceManager after setting up a save, and then
 				// allows you to write to disk from a separate thread?  Why aren't they using this on normal saves?!
 				bool result = false;
 				String arg0 = null;
@@ -333,7 +327,7 @@ namespace SEModAPIInternal.API.Common
 					result = (bool)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerSaveWorldMethod, parameters, paramTypes);
 				});
 
-			 * 
+			 *
 				// Write to disk on a different thread using the WorldResourceManagerClass in the parameter
 				ThreadPool.QueueUserWorkItem(new WaitCallback((object state) =>
 				{
@@ -375,79 +369,79 @@ namespace SEModAPIInternal.API.Common
 			{
 				m_isSaving = false;
 			}
-			 */ 
+			 */
 		}
 
-		internal Object InternalGetFactionManager()
+		internal Object InternalGetFactionManager( )
 		{
 			try
 			{
-				Object worldManager = BaseObject.GetEntityFieldValue(BackingObject, WorldManagerFactionManagerField);
+				Object worldManager = BaseObject.GetEntityFieldValue( BackingObject, WorldManagerFactionManagerField );
 
 				return worldManager;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		internal Object InternalGetPlayerManager()
+		internal Object InternalGetPlayerManager( )
 		{
-			Object playerManager = BaseObject.InvokeEntityMethod(BackingObject, WorldManagerGetPlayerManagerMethod);
+			Object playerManager = BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetPlayerManagerMethod );
 
 			return playerManager;
 		}
 
-		internal FastResourceLock InternalGetResourceLock()
+		internal FastResourceLock InternalGetResourceLock( )
 		{
 			try
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldResourceManagerNamespace, WorldResourceManagerClass);
-				FastResourceLock result = (FastResourceLock)BaseObject.GetStaticFieldValue(type, WorldResourceManagerResourceLockField);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldResourceManagerNamespace, WorldResourceManagerClass );
+				FastResourceLock result = (FastResourceLock)BaseObject.GetStaticFieldValue( type, WorldResourceManagerResourceLockField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		internal void InternalSaveWorld()
+		internal void InternalSaveWorld( )
 		{
 			try
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				Type type = BackingObject.GetType();
-				Type[] argTypes = new Type[1];
-				argTypes[0] = typeof(string);
-				bool result = (bool)BaseObject.InvokeEntityMethod(BackingObject, WorldManagerSaveWorldMethod, new object[] { null }, argTypes);
+				Type type = BackingObject.GetType( );
+				Type[ ] argTypes = new Type[ 1 ];
+				argTypes[ 0 ] = typeof( string );
+				bool result = (bool)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerSaveWorldMethod, new object[ ] { null }, argTypes );
 
-				if (result)
+				if ( result )
 				{
 					TimeSpan timeToSave = DateTime.Now - saveStartTime;
-					LogManager.APILog.WriteLineAndConsole("Save complete and took " + timeToSave.TotalSeconds + " seconds");
+					LogManager.APILog.WriteLineAndConsole( "Save complete and took " + timeToSave.TotalSeconds + " seconds" );
 					m_isSaving = false;
 
-					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 					newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
 					newEvent.timestamp = DateTime.Now;
 					newEvent.entity = null;
 					newEvent.priority = 0;
-					EntityEventManager.Instance.AddEvent(newEvent);
+					EntityEventManager.Instance.AddEvent( newEvent );
 				}
 				else
 				{
-					LogManager.APILog.WriteLineAndConsole("Save failed!");
+					LogManager.APILog.WriteLineAndConsole( "Save failed!" );
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 			finally
 			{
@@ -455,6 +449,6 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

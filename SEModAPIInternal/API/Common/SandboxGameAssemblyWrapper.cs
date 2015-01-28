@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-
-using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.Support;
-
-using VRage.Common.Utils;
-using SEModAPIInternal.API.Entity;
-
 using System.Threading;
+using Sandbox.Common.ObjectBuilders;
+using SEModAPIInternal.API.Entity;
+using SEModAPIInternal.Support;
+using VRage.Common.Utils;
 
 namespace SEModAPIInternal.API.Common
 {
@@ -21,9 +17,6 @@ namespace SEModAPIInternal.API.Common
 		private Assembly m_assembly;
 
 		protected static SandboxGameAssemblyWrapper m_instance;
-		protected static bool m_isDebugging;
-		protected static bool m_isUsingCommonProgramData;
-		protected static bool m_isInSafeMode;
 		protected static bool m_gatewayInitialzed;
 		protected static Thread m_gameThread;
 		protected static string m_instanceName;
@@ -68,7 +61,7 @@ namespace SEModAPIInternal.API.Common
 		public static string ConfigContainerClass = "EB0B0448CDB2C619C686429C597589BC";
 
 		//public static string ConfigContainerGetConfigDataMethod = "4DD64FD1D45E514D01C925D07B69B3BE";
-        public static string ConfigContainerGetConfigDataMethod = "Load";
+		public static string ConfigContainerGetConfigDataMethod = "Load";
 
 		public static string ConfigContainerDedicatedDataField = "44A1510B70FC1BBE3664969D47820439";
 
@@ -86,35 +79,35 @@ namespace SEModAPIInternal.API.Common
 		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "85DD00A89AFE64DF0A1B3FD4A5139A04";
 
 		////////////////////////////////////////////////////////////////////////////////
-		private static string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-		private static string MyAPIGatewayClass = "4C1ED56341F07A7D73298D03926F04DE";
-		private static string MyAPIGatewayInitMethod = "0DE98737B4717615E252D27A4F3A2B44";
+		private const string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
 
+		private const string MyAPIGatewayClass = "4C1ED56341F07A7D73298D03926F04DE";
+		private const string MyAPIGatewayInitMethod = "0DE98737B4717615E252D27A4F3A2B44";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		protected SandboxGameAssemblyWrapper()
+		protected SandboxGameAssemblyWrapper( )
 		{
 			m_instance = this;
-			m_isDebugging = false;
-			m_isUsingCommonProgramData = false;
-			m_isInSafeMode = false;
+			IsDebugging = false;
+			UseCommonProgramData = false;
+			IsInSafeMode = false;
 			m_gatewayInitialzed = false;
 			m_gameThread = null;
 
-			string assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll");
-			m_assembly = Assembly.UnsafeLoadFrom(assemblyPath);
+			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll" );
+			m_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
 
 			m_lastProfilingOutput = DateTime.Now;
 			m_countQueuedActions = 0;
 			m_averageQueuedActions = 0;
 
-			Console.WriteLine("Finished loading SandboxGameAssemblyWrapper");
+			Console.WriteLine( "Finished loading SandboxGameAssemblyWrapper" );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -122,62 +115,26 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				if (m_instance == null)
+				if ( m_instance == null )
 				{
-					m_instance = new SandboxGameAssemblyWrapper();
+					m_instance = new SandboxGameAssemblyWrapper( );
 				}
 
 				return m_instance;
 			}
 		}
 
-		public static bool IsDebugging
-		{
-			get
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				return m_isDebugging;
-			}
-			set
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				m_isDebugging = value;
-			}
-		}
+		public static bool IsDebugging { get; set; }
 
-		public static bool UseCommonProgramData
-		{
-			get
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				return m_isUsingCommonProgramData;
-			}
-			set
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				m_isUsingCommonProgramData = value;
-			}
-		}
+		public static bool UseCommonProgramData { get; set; }
 
-		public static bool IsInSafeMode
-		{
-			get
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				return m_isInSafeMode;
-			}
-			set
-			{
-				var inst = SandboxGameAssemblyWrapper.Instance;
-				m_isInSafeMode = value;
-			}
-		}
+		public static bool IsInSafeMode { get; set; }
 
 		public static Type MainGameType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MainGameNamespace, MainGameClass);
+				Type type = Instance.GetAssemblyType( MainGameNamespace, MainGameClass );
 				return type;
 			}
 		}
@@ -186,7 +143,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ServerCoreNamespace, ServerCoreClass);
+				Type type = Instance.GetAssemblyType( ServerCoreNamespace, ServerCoreClass );
 				return type;
 			}
 		}
@@ -195,7 +152,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(GameConstantsNamespace, GameConstantsClass);
+				Type type = Instance.GetAssemblyType( GameConstantsNamespace, GameConstantsClass );
 				return type;
 			}
 		}
@@ -204,7 +161,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ConfigContainerNamespace, ConfigContainerClass);
+				Type type = Instance.GetAssemblyType( ConfigContainerNamespace, ConfigContainerClass );
 				return type;
 			}
 		}
@@ -213,7 +170,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CubeBlockObjectFactoryNamespace, CubeBlockObjectFactoryClass);
+				Type type = Instance.GetAssemblyType( CubeBlockObjectFactoryNamespace, CubeBlockObjectFactoryClass );
 				return type;
 			}
 		}
@@ -222,7 +179,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(EntityBaseObjectFactoryNamespace, EntityBaseObjectFactoryClass);
+				Type type = Instance.GetAssemblyType( EntityBaseObjectFactoryNamespace, EntityBaseObjectFactoryClass );
 				return type;
 			}
 		}
@@ -233,13 +190,13 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					Object mainGame = BaseObject.GetStaticFieldValue(MainGameType, MainGameInstanceField);
+					Object mainGame = BaseObject.GetStaticFieldValue( MainGameType, MainGameInstanceField );
 
 					return mainGame;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return null;
 				}
 			}
@@ -249,25 +206,25 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MyAPIGatewayNamespace, MyAPIGatewayClass);
+				Type type = Instance.GetAssemblyType( MyAPIGatewayNamespace, MyAPIGatewayClass );
 				return type;
 			}
 		}
 
-		public static void InitAPIGateway()
+		public static void InitAPIGateway( )
 		{
 			try
 			{
-				if (m_gatewayInitialzed)
+				if ( m_gatewayInitialzed )
 					return;
 
-				BaseObject.InvokeStaticMethod(APIGatewayType, MyAPIGatewayInitMethod);
-				LogManager.APILog.WriteLineAndConsole("MyAPIGateway Initialized");
+				BaseObject.InvokeStaticMethod( APIGatewayType, MyAPIGatewayInitMethod );
+				LogManager.APILog.WriteLineAndConsole( "MyAPIGateway Initialized" );
 				m_gatewayInitialzed = true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
@@ -277,13 +234,13 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					if (MainGame == null)
+					if ( MainGame == null )
 						return false;
 
-					if (!m_isGameLoaded)
+					if ( !m_isGameLoaded )
 					{
-						bool someValue = (bool)BaseObject.GetEntityFieldValue(MainGame, MainGameIsLoadedField);
-						if (someValue)
+						bool someValue = (bool)BaseObject.GetEntityFieldValue( MainGame, MainGameIsLoadedField );
+						if ( someValue )
 						{
 							m_isGameLoaded = true;
 
@@ -295,9 +252,9 @@ namespace SEModAPIInternal.API.Common
 
 					return true;
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 					return false;
 				}
 			}
@@ -309,366 +266,367 @@ namespace SEModAPIInternal.API.Common
 			set { m_instanceName = value; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		private void EntitiesLoadedEvent()
+		private void EntitiesLoadedEvent( )
 		{
 			try
 			{
-				LogManager.APILog.WriteLineAndConsole("MainGameEvent - Entity loading complete");
+				LogManager.APILog.WriteLineAndConsole( "MainGameEvent - Entity loading complete" );
 
 				//TODO - Do stuff
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		private Object GetServerConfigContainer()
+		private Object GetServerConfigContainer( )
 		{
 			try
 			{
-				Object configObject = BaseObject.GetEntityFieldValue(MainGame, MainGameConfigContainerField);
+				Object configObject = BaseObject.GetEntityFieldValue( MainGame, MainGameConfigContainerField );
 
 				return configObject;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = MainGameType;
-				if (type == null)
-					throw new Exception("Could not find internal type for MainGame");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for MainGame" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type, MainGameEnqueueActionMethod);
-				result &= BaseObject.HasMethod(type, MainGameGetTimeMillisMethod);
-				result &= BaseObject.HasMethod(type, MainGameExitMethod);
-				result &= BaseObject.HasMethod(type, MainGameDisposeMethod);
-				result &= BaseObject.HasField(type, MainGameInstanceField);
-				result &= BaseObject.HasField(type, MainGameConfigContainerField);
-				result &= BaseObject.HasField(type, MainGameIsLoadedField);
-				result &= BaseObject.HasField(type, MainGameLoadingCompleteActionField);
-				result &= BaseObject.HasField(type, MainGameMyLogField);
+				result &= BaseObject.HasMethod( type, MainGameEnqueueActionMethod );
+				result &= BaseObject.HasMethod( type, MainGameGetTimeMillisMethod );
+				result &= BaseObject.HasMethod( type, MainGameExitMethod );
+				result &= BaseObject.HasMethod( type, MainGameDisposeMethod );
+				result &= BaseObject.HasField( type, MainGameInstanceField );
+				result &= BaseObject.HasField( type, MainGameConfigContainerField );
+				result &= BaseObject.HasField( type, MainGameIsLoadedField );
+				result &= BaseObject.HasField( type, MainGameLoadingCompleteActionField );
+				result &= BaseObject.HasField( type, MainGameMyLogField );
 
 				Type type2 = ServerCoreType;
-				if (type2 == null)
-					throw new Exception("Could not find physics manager type for ServerCore");
-				result &= BaseObject.HasField(type2, ServerCoreNullRenderField);
+				if ( type2 == null )
+					throw new Exception( "Could not find physics manager type for ServerCore" );
+				result &= BaseObject.HasField( type2, ServerCoreNullRenderField );
 
 				Type type3 = GameConstantsType;
-				if (type3 == null)
-					throw new Exception("Could not find physics manager type for GameConstants");
+				if ( type3 == null )
+					throw new Exception( "Could not find physics manager type for GameConstants" );
 
 				Type type4 = ConfigContainerType;
-				if (type4 == null)
-					throw new Exception("Could not find physics manager type for ConfigContainer");
-				result &= BaseObject.HasMethod(type4, ConfigContainerGetConfigDataMethod);
-				result &= BaseObject.HasField(type4, ConfigContainerDedicatedDataField);
+				if ( type4 == null )
+					throw new Exception( "Could not find physics manager type for ConfigContainer" );
+				result &= BaseObject.HasMethod( type4, ConfigContainerGetConfigDataMethod );
+				result &= BaseObject.HasField( type4, ConfigContainerDedicatedDataField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public MyObjectBuilder_CubeBlock GetCubeBlockObjectBuilderFromEntity(Object entity)
+		public MyObjectBuilder_CubeBlock GetCubeBlockObjectBuilderFromEntity( Object entity )
 		{
 			try
 			{
-				MyObjectBuilder_CubeBlock newObjectBuilder = (MyObjectBuilder_CubeBlock)BaseObject.InvokeStaticMethod(CubeBlockObjectFactoryType, CubeBlockObjectFactoryGetBuilderFromEntityMethod, new object[] { entity });
+				MyObjectBuilder_CubeBlock newObjectBuilder = (MyObjectBuilder_CubeBlock)BaseObject.InvokeStaticMethod( CubeBlockObjectFactoryType, CubeBlockObjectFactoryGetBuilderFromEntityMethod, new[ ] { entity } );
 
 				return newObjectBuilder;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public MyObjectBuilder_EntityBase GetEntityBaseObjectBuilderFromEntity(Object entity)
+		public MyObjectBuilder_EntityBase GetEntityBaseObjectBuilderFromEntity( Object entity )
 		{
 			try
 			{
-				MyObjectBuilder_EntityBase newObjectBuilder = (MyObjectBuilder_EntityBase)BaseObject.InvokeStaticMethod(EntityBaseObjectFactoryType, EntityBaseObjectFactoryGetBuilderFromEntityMethod, new object[] { entity });
+				MyObjectBuilder_EntityBase newObjectBuilder = (MyObjectBuilder_EntityBase)BaseObject.InvokeStaticMethod( EntityBaseObjectFactoryType, EntityBaseObjectFactoryGetBuilderFromEntityMethod, new[ ] { entity } );
 
 				return newObjectBuilder;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public bool EnqueueMainGameAction(Action action)
+		public bool EnqueueMainGameAction( Action action )
 		{
 			try
 			{
-				if (Thread.CurrentThread == m_gameThread)
+				if ( Thread.CurrentThread == m_gameThread )
 				{
-					action();
+					action( );
 					return true;
 				}
 
-				BaseObject.InvokeEntityMethod(MainGame, MainGameEnqueueActionMethod, new object[] { action });
+				BaseObject.InvokeEntityMethod( MainGame, MainGameEnqueueActionMethod, new object[ ] { action } );
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if ( IsDebugging )
 				{
-					UpdateProfile();
+					UpdateProfile( );
 				}
 
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		private void UpdateProfile()
+		private void UpdateProfile( )
 		{
 			m_countQueuedActions++;
 
 			TimeSpan timeSinceLastProfilingOutput = DateTime.Now - m_lastProfilingOutput;
-			if (timeSinceLastProfilingOutput.TotalSeconds > 60)
+			if ( timeSinceLastProfilingOutput.TotalSeconds > 60 )
 			{
 				m_averageQueuedActions = m_countQueuedActions / timeSinceLastProfilingOutput.TotalSeconds;
 
-				LogManager.APILog.WriteLine("Average actions queued per second: " + Math.Round(m_averageQueuedActions, 2).ToString());
+				LogManager.APILog.WriteLine( "Average actions queued per second: " + Math.Round( m_averageQueuedActions, 2 ) );
 
 				m_countQueuedActions = 0;
 				m_lastProfilingOutput = DateTime.Now;
 			}
 		}
 
-		public delegate void GameActionCallback(Object state);
-		public bool BeginGameAction(Action action, GameActionCallback callback, Object state)
+		public delegate void GameActionCallback( Object state );
+
+		public bool BeginGameAction( Action action, GameActionCallback callback, Object state )
 		{
 			try
 			{
-				ThreadPool.QueueUserWorkItem(new WaitCallback(delegate(Object arg)
-				{
-					AutoResetEvent e = new AutoResetEvent(false);
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
-					{
-						if (m_gameThread == null)
-							m_gameThread = Thread.CurrentThread;
+				ThreadPool.QueueUserWorkItem( o =>
+											  {
+												  AutoResetEvent e = new AutoResetEvent( false );
+												  Instance.EnqueueMainGameAction( ( ) =>
+																				  {
+																					  if ( m_gameThread == null )
+																					  {
+																						  m_gameThread = Thread.CurrentThread;
+																					  }
 
-						action();
-						e.Set();
-					}));
-					e.WaitOne();
+																					  action( );
+																					  e.Set( );
+																				  } );
+												  e.WaitOne( );
 
-					if (callback != null)
-						callback(state);
-				}));
+												  if ( callback != null )
+												  {
+													  callback( state );
+												  }
+											  } );
 
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public bool GameAction(Action action)
+		public bool GameAction( Action action )
 		{
 			try
 			{
-				AutoResetEvent e = new AutoResetEvent(false);
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(new Action(delegate()
-					{
-						if (m_gameThread == null)
-							m_gameThread = Thread.CurrentThread;
+				AutoResetEvent e = new AutoResetEvent( false );
+				Instance.EnqueueMainGameAction( ( ) =>
+												{
+													if ( m_gameThread == null )
+													{
+														m_gameThread = Thread.CurrentThread;
+													}
 
-						action();
-						e.Set();
-					}));
-				e.WaitOne();
+													action( );
+													e.Set( );
+												} );
+				e.WaitOne( );
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
-
 			}
 		}
 
-		public void ExitGame()
+		public void ExitGame( )
 		{
 			try
 			{
-				LogManager.APILog.WriteLine("Exiting");
-				System.Threading.AutoResetEvent e = new System.Threading.AutoResetEvent(false);
+				LogManager.APILog.WriteLine( "Exiting" );
 				/*
 				GameAction(new Action(delegate()
 				{
 					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
 				}));
-				 */ 
+				 */
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public MyConfigDedicatedData GetServerConfig()
+		public MyConfigDedicatedData GetServerConfig( )
 		{
 			try
 			{
-				Object configContainer = GetServerConfigContainer();
-				MyConfigDedicatedData config = (MyConfigDedicatedData)BaseObject.GetEntityFieldValue(configContainer, ConfigContainerDedicatedDataField);
-				if (config == null)
+				Object configContainer = GetServerConfigContainer( );
+				MyConfigDedicatedData config = (MyConfigDedicatedData)BaseObject.GetEntityFieldValue( configContainer, ConfigContainerDedicatedDataField );
+				if ( config == null )
 				{
-					BaseObject.InvokeEntityMethod(configContainer, ConfigContainerGetConfigDataMethod);
-					config = (MyConfigDedicatedData)BaseObject.GetEntityFieldValue(configContainer, ConfigContainerDedicatedDataField);
+					BaseObject.InvokeEntityMethod( configContainer, ConfigContainerGetConfigDataMethod );
+					config = (MyConfigDedicatedData)BaseObject.GetEntityFieldValue( configContainer, ConfigContainerDedicatedDataField );
 				}
 
 				return config;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public void SetNullRender(bool nullRender)
+		public void SetNullRender( bool nullRender )
 		{
 			try
 			{
-				BaseObject.SetStaticFieldValue(ServerCoreType, ServerCoreNullRenderField, nullRender);
+				BaseObject.SetStaticFieldValue( ServerCoreType, ServerCoreNullRenderField, nullRender );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return;
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		public Type GetAssemblyType(string namespaceName, string className)
+		public Type GetAssemblyType( string namespaceName, string className )
 		{
 			try
 			{
-				Type type = m_assembly.GetType(namespaceName + "." + className);
+				Type type = m_assembly.GetType( namespaceName + "." + className );
 
 				return type;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		public int GetMainGameMilliseconds()
+		public int GetMainGameMilliseconds( )
 		{
 			try
 			{
-				int gameTimeMillis = (int)BaseObject.InvokeStaticMethod(MainGameType, MainGameGetTimeMillisMethod);
+				int gameTimeMillis = (int)BaseObject.InvokeStaticMethod( MainGameType, MainGameGetTimeMillisMethod );
 
 				return gameTimeMillis;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return 0;
 			}
 		}
 
-		public String GetUserDataPath(string instanceName = "")
+		public String GetUserDataPath( string instanceName = "" )
 		{
-			string userDataPath = "";
-			if (SandboxGameAssemblyWrapper.UseCommonProgramData && instanceName != "")
+			string userDataPath;
+			if ( UseCommonProgramData && instanceName != string.Empty )
 			{
-				userDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SpaceEngineersDedicated", instanceName);
+				userDataPath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ), "SpaceEngineersDedicated", instanceName );
 			}
 			else
 			{
-				userDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineersDedicated");
+				userDataPath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "SpaceEngineersDedicated" );
 			}
 
 			return userDataPath;
 		}
 
-		public void InitMyFileSystem(string instanceName = "", bool reset = true)
+		public void InitMyFileSystem( string instanceName = "", bool reset = true )
 		{
-			string contentPath = Path.Combine(new FileInfo(MyFileSystem.ExePath).Directory.FullName, "Content");
-			string userDataPath = SandboxGameAssemblyWrapper.Instance.GetUserDataPath(instanceName);
+			string contentPath = Path.Combine( new FileInfo( MyFileSystem.ExePath ).Directory.FullName, "Content" );
+			string userDataPath = Instance.GetUserDataPath( instanceName );
 
-			if (reset)
+			if ( reset )
 			{
-				MyFileSystem.Reset();
+				MyFileSystem.Reset( );
 			}
 			else
 			{
 				try
 				{
-					if (!string.IsNullOrWhiteSpace(MyFileSystem.ContentPath))
+					if ( !string.IsNullOrWhiteSpace( MyFileSystem.ContentPath ) )
 						return;
-					if (!string.IsNullOrWhiteSpace(MyFileSystem.UserDataPath))
+					if ( !string.IsNullOrWhiteSpace( MyFileSystem.UserDataPath ) )
 						return;
 				}
-				catch (Exception)
+				catch ( Exception )
 				{
 					//Do nothing
 				}
 			}
 
-			MyFileSystem.Init(contentPath, userDataPath);
-			MyFileSystem.InitUserSpecific((string)null);
-
-			string debugContentPath = MyFileSystem.ContentPath;
-			string debugUserDataPath = MyFileSystem.UserDataPath;
+			MyFileSystem.Init( contentPath, userDataPath );
+			MyFileSystem.InitUserSpecific( null );
 
 			m_instanceName = instanceName;
 		}
 
-		public List<string> GetCommonInstanceList()
+		public List<string> GetCommonInstanceList( )
 		{
-			List<string> result = new List<string>();
+			List<string> result = new List<string>( );
 
 			try
 			{
-				string commonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SpaceEngineersDedicated");
-				if (Directory.Exists(commonPath))
+				string commonPath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ), "SpaceEngineersDedicated" );
+				if ( Directory.Exists( commonPath ) )
 				{
-					string[] subDirectories = Directory.GetDirectories(commonPath);
-					foreach (string fullInstancePath in subDirectories)
+					string[ ] subDirectories = Directory.GetDirectories( commonPath );
+					foreach ( string fullInstancePath in subDirectories )
 					{
-						string[] directories = fullInstancePath.Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
-						string instanceName = directories[directories.Length - 1];
+						string[ ] directories = fullInstancePath.Split( new[ ] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar } );
+						string instanceName = directories[ directories.Length - 1 ];
 
-						result.Add(instanceName);
+						result.Add( instanceName );
 					}
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex.ToString());
+				Console.WriteLine( ex.ToString( ) );
 			}
 
 			return result;
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

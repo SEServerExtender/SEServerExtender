@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
-using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "CargoContainerEntityProxy")]
+	[DataContract( Name = "CargoContainerEntityProxy" )]
 	public class CargoContainerEntity : TerminalBlockEntity
 	{
 		#region "Attributes"
@@ -26,38 +18,38 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string CargoContainerGetInventoryMethod = "GetInventory";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CargoContainerEntity(CubeGridEntity parent, MyObjectBuilder_CargoContainer definition)
-			: base(parent, definition)
+		public CargoContainerEntity( CubeGridEntity parent, MyObjectBuilder_CargoContainer definition )
+			: base( parent, definition )
 		{
-			m_Inventory = new InventoryEntity(definition.Inventory);
+			m_Inventory = new InventoryEntity( definition.Inventory );
 		}
 
-		public CargoContainerEntity(CubeGridEntity parent, MyObjectBuilder_CargoContainer definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public CargoContainerEntity( CubeGridEntity parent, MyObjectBuilder_CargoContainer definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
-			m_Inventory = new InventoryEntity(definition.Inventory, InternalGetContainerInventory());
+			m_Inventory = new InventoryEntity( definition.Inventory, InternalGetContainerInventory( ) );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Cargo Container")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Cargo Container" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_CargoContainer ObjectBuilder
 		{
 			get
 			{
 				MyObjectBuilder_CargoContainer objectBuilder = (MyObjectBuilder_CargoContainer)base.ObjectBuilder;
-				if (objectBuilder == null)
+				if ( objectBuilder == null )
 				{
-					objectBuilder = new MyObjectBuilder_CargoContainer();
+					objectBuilder = new MyObjectBuilder_CargoContainer( );
 					ObjectBuilder = objectBuilder;
 				}
 
@@ -70,8 +62,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Cargo Container")]
-		[Browsable(false)]
+		[Category( "Cargo Container" )]
+		[Browsable( false )]
 		public InventoryEntity Inventory
 		{
 			get
@@ -85,13 +77,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Cargo Container")]
+		[Category( "Cargo Container" )]
 		public long ItemCount
 		{
 			get
 			{
 				long count = 0;
-				foreach (var item in ObjectBuilder.Inventory.Items)
+				foreach ( MyObjectBuilder_InventoryItem item in ObjectBuilder.Inventory.Items )
 				{
 					count += item.Amount.RawValue;
 				}
@@ -100,7 +92,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Cargo Container")]
+		[Category( "Cargo Container" )]
 		public float ItemMass
 		{
 			get
@@ -115,7 +107,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Cargo Container")]
+		[Category( "Cargo Container" )]
 		public float ItemVolume
 		{
 			get
@@ -129,31 +121,31 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
 		#region "Internal"
 
-		protected Object InternalGetContainerInventory()
+		protected Object InternalGetContainerInventory( )
 		{
 			try
 			{
 				Object baseObject = BackingObject;
-				Object actualObject = GetActualObject();
-				Object inventory = InvokeEntityMethod(actualObject, CargoContainerGetInventoryMethod, new object[] { 0 });
+				Object actualObject = GetActualObject( );
+				Object inventory = InvokeEntityMethod( actualObject, CargoContainerGetInventoryMethod, new object[ ] { 0 } );
 
 				return inventory;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 }

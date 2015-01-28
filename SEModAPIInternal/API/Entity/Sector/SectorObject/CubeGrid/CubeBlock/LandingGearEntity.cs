@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
 
 using SEModAPIInternal.API.Common;
@@ -13,7 +9,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "LandingGearEntityProxy")]
+	[DataContract( Name = "LandingGearEntityProxy" )]
 	public class LandingGearEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -38,49 +34,49 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string LandingGearNetManagerField = "4D9CE737B011256C0232620C5234AAD4";
 		public static string LandingGearGetAutoLockField = "B7C2D3F7EF52B638640C0DDB419A1DB4";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public LandingGearEntity(CubeGridEntity parent, MyObjectBuilder_LandingGear definition)
-			: base(parent, definition)
+		public LandingGearEntity( CubeGridEntity parent, MyObjectBuilder_LandingGear definition )
+			: base( parent, definition )
 		{
 			m_isLocked = definition.IsLocked;
 			m_autoLockEnabled = definition.AutoLock;
 			m_brakeForce = definition.BrakeForce;
 		}
 
-		public LandingGearEntity(CubeGridEntity parent, MyObjectBuilder_LandingGear definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public LandingGearEntity( CubeGridEntity parent, MyObjectBuilder_LandingGear definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 			m_isLocked = definition.IsLocked;
 			m_autoLockEnabled = definition.AutoLock;
 			m_brakeForce = definition.BrakeForce;
 
-			m_landingNetManager = new LandingGearNetworkManager(this, GetLandingGearNetManager());
+			m_landingNetManager = new LandingGearNetworkManager( this, GetLandingGearNetManager( ) );
 		}
 
-		#endregion
+		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Landing Gear")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Landing Gear" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(LandingGearNamespace, LandingGearClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( LandingGearNamespace, LandingGearClass );
 				return type;
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Landing Gear")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Landing Gear" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_LandingGear ObjectBuilder
 		{
 			get { return (MyObjectBuilder_LandingGear)base.ObjectBuilder; }
@@ -91,82 +87,82 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Landing Gear")]
+		[Category( "Landing Gear" )]
 		public bool IsLocked
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.IsLocked;
 
-				return GetIsLocked();
+				return GetIsLocked( );
 			}
 			set
 			{
-				if (ObjectBuilder.IsLocked == value) return;
+				if ( ObjectBuilder.IsLocked == value ) return;
 				ObjectBuilder.IsLocked = value;
 				Changed = true;
 
 				m_isLocked = value;
 
-				if (BackingObject != null && ActualObject != null)
+				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateIsLocked;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Landing Gear")]
+		[Category( "Landing Gear" )]
 		public bool AutoLock
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.AutoLock;
 
-				return GetAutoLockEnabled();
+				return GetAutoLockEnabled( );
 			}
 			set
 			{
-				if (ObjectBuilder.AutoLock == value) return;
+				if ( ObjectBuilder.AutoLock == value ) return;
 				ObjectBuilder.AutoLock = value;
 				Changed = true;
 
 				m_autoLockEnabled = value;
 
-				if (BackingObject != null && ActualObject != null)
+				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateAutoLockEnabled;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Landing Gear")]
+		[Category( "Landing Gear" )]
 		public float BrakeForce
 		{
 			get
 			{
-				if (BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.BrakeForce;
 
-				return GetBrakeForce();
+				return GetBrakeForce( );
 			}
 			set
 			{
-				if (ObjectBuilder.BrakeForce == value) return;
+				if ( ObjectBuilder.BrakeForce == value ) return;
 				ObjectBuilder.BrakeForce = value;
 				Changed = true;
 
 				m_brakeForce = value;
 
-				if (BackingObject != null && ActualObject != null)
+				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateBrakeForce;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
@@ -177,109 +173,109 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			get { return m_landingNetManager; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(LandingGearNamespace, LandingGearClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for LandingGearEntity");
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( LandingGearNamespace, LandingGearClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for LandingGearEntity" );
 
 				//result &= HasMethod(type, LandingGearGetAutoLockMethod);
-				result &= HasMethod(type, LandingGearSetAutoLockMethod);
-				result &= HasMethod(type, LandingGearGetBrakeForceMethod);
-				result &= HasMethod(type, LandingGearSetBrakeForceMethod);
+				result &= HasMethod( type, LandingGearSetAutoLockMethod );
+				result &= HasMethod( type, LandingGearGetBrakeForceMethod );
+				result &= HasMethod( type, LandingGearSetBrakeForceMethod );
 
-				result &= HasField(type, LandingGearGetAutoLockField);
-				result &= HasField(type, LandingGearIsLockedField);
-				result &= HasField(type, LandingGearNetManagerField);
+				result &= HasField( type, LandingGearGetAutoLockField );
+				result &= HasField( type, LandingGearIsLockedField );
+				result &= HasField( type, LandingGearNetManagerField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected Object GetLandingGearNetManager()
+		protected Object GetLandingGearNetManager( )
 		{
-			Object result = GetEntityFieldValue(ActualObject, LandingGearNetManagerField);
+			Object result = GetEntityFieldValue( ActualObject, LandingGearNetManagerField );
 			return result;
 		}
 
-		protected bool GetIsLocked()
+		protected bool GetIsLocked( )
 		{
 			try
 			{
-				bool result = (bool)GetEntityFieldValue(ActualObject, LandingGearIsLockedField);
+				bool result = (bool)GetEntityFieldValue( ActualObject, LandingGearIsLockedField );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return m_isLocked;
 			}
 		}
 
-		protected bool GetAutoLockEnabled()
+		protected bool GetAutoLockEnabled( )
 		{
 			try
 			{
 				//bool result = (bool)InvokeEntityMethod(ActualObject, LandingGearGetAutoLockMethod);
-				bool result = (bool)GetEntityFieldValue(ActualObject, LandingGearGetAutoLockField);
+				bool result = (bool)GetEntityFieldValue( ActualObject, LandingGearGetAutoLockField );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return m_autoLockEnabled;
 			}
 		}
 
-		protected float GetBrakeForce()
+		protected float GetBrakeForce( )
 		{
 			try
 			{
-				float result = (float)InvokeEntityMethod(ActualObject, LandingGearGetBrakeForceMethod);
+				float result = (float)InvokeEntityMethod( ActualObject, LandingGearGetBrakeForceMethod );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return m_brakeForce;
 			}
 		}
 
-		protected void InternalUpdateIsLocked()
+		protected void InternalUpdateIsLocked( )
 		{
-			SetEntityFieldValue(ActualObject, LandingGearIsLockedField, m_isLocked);
+			SetEntityFieldValue( ActualObject, LandingGearIsLockedField, m_isLocked );
 
-			LandingGearNetManager.BroadcastIsLocked();
+			LandingGearNetManager.BroadcastIsLocked( );
 		}
 
-		protected void InternalUpdateAutoLockEnabled()
+		protected void InternalUpdateAutoLockEnabled( )
 		{
-			InvokeEntityMethod(ActualObject, LandingGearSetAutoLockMethod, new object[] { m_autoLockEnabled });
+			InvokeEntityMethod( ActualObject, LandingGearSetAutoLockMethod, new object[ ] { m_autoLockEnabled } );
 
-			LandingGearNetManager.BroadcastAutoLock();
+			LandingGearNetManager.BroadcastAutoLock( );
 		}
 
-		protected void InternalUpdateBrakeForce()
+		protected void InternalUpdateBrakeForce( )
 		{
-			InvokeEntityMethod(ActualObject, LandingGearSetBrakeForceMethod, new object[] { m_brakeForce });
+			InvokeEntityMethod( ActualObject, LandingGearSetBrakeForceMethod, new object[ ] { m_brakeForce } );
 
-			LandingGearNetManager.BroadcastBrakeForce();
+			LandingGearNetManager.BroadcastBrakeForce( );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class LandingGearNetworkManager
@@ -296,17 +292,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string LandingGearNetworkManagerBroadcastAutoLockMethod = "EE7AB0648967FCDF7B20E1C359BC67E0";
 		public static string LandingGearNetworkManagerBroadcastBrakeForceMethod = "78A3CD1FD04B6E57EB1053EE5E3F1CF7";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public LandingGearNetworkManager(LandingGearEntity parent, Object backingObject)
+		public LandingGearNetworkManager( LandingGearEntity parent, Object backingObject )
 		{
 			m_parent = parent;
 			m_backingObject = backingObject;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -319,52 +315,52 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			get
 			{
-				Type type = LandingGearEntity.InternalType.GetNestedType(LandingGearNetworkManagerClass, BindingFlags.Public | BindingFlags.NonPublic);
+				Type type = LandingGearEntity.InternalType.GetNestedType( LandingGearNetworkManagerClass, BindingFlags.Public | BindingFlags.NonPublic );
 				return type;
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for LandingGearNetworkManager");
-				result &= BaseObject.HasMethod(type, LandingGearNetworkManagerBroadcastIsLockedMethod);
-				result &= BaseObject.HasMethod(type, LandingGearNetworkManagerBroadcastAutoLockMethod);
-				result &= BaseObject.HasMethod(type, LandingGearNetworkManagerBroadcastBrakeForceMethod);
+				if ( type == null )
+					throw new Exception( "Could not find internal type for LandingGearNetworkManager" );
+				result &= BaseObject.HasMethod( type, LandingGearNetworkManagerBroadcastIsLockedMethod );
+				result &= BaseObject.HasMethod( type, LandingGearNetworkManagerBroadcastAutoLockMethod );
+				result &= BaseObject.HasMethod( type, LandingGearNetworkManagerBroadcastBrakeForceMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public void BroadcastIsLocked()
+		public void BroadcastIsLocked( )
 		{
-			BaseObject.InvokeEntityMethod(BackingObject, LandingGearNetworkManagerBroadcastIsLockedMethod, new object[] { m_parent.IsLocked });
+			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastIsLockedMethod, new object[ ] { m_parent.IsLocked } );
 		}
 
-		public void BroadcastAutoLock()
+		public void BroadcastAutoLock( )
 		{
-			BaseObject.InvokeEntityMethod(BackingObject, LandingGearNetworkManagerBroadcastAutoLockMethod, new object[] { m_parent.AutoLock });
+			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastAutoLockMethod, new object[ ] { m_parent.AutoLock } );
 		}
 
-		public void BroadcastBrakeForce()
+		public void BroadcastBrakeForce( )
 		{
-			BaseObject.InvokeEntityMethod(BackingObject, LandingGearNetworkManagerBroadcastBrakeForceMethod, new object[] { m_parent.BrakeForce });
+			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastBrakeForceMethod, new object[ ] { m_parent.BrakeForce } );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

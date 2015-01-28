@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.Serializer;
 using Sandbox.Definitions;
 
@@ -16,13 +13,13 @@ using VRage;
 
 namespace SEServerExtender
 {
+	using VRage.Collections;
+
 	public partial class InventoryItemDialog : Form
 	{
 		#region "Attributes"
 
-		private static List<MyDefinitionId> m_idList;
-
-		private InventoryEntity m_container;
+		private static List<MyDefinitionId> _idList;
 
 		#endregion
 
@@ -31,28 +28,41 @@ namespace SEServerExtender
 		public InventoryItemDialog()
 		{
 			//Populate the static list with the ids from the items
-			if (m_idList == null)
+			if (_idList == null)
 			{
-				m_idList = new List<MyDefinitionId>();
+				_idList = new List<MyDefinitionId>();
 
-				foreach (MyPhysicalItemDefinition def in Enumerable.OfType<MyPhysicalItemDefinition>((IEnumerable)MyDefinitionManager.Static.GetAllDefinitions()))
+				DictionaryValuesReader<MyDefinitionId, MyDefinitionBase> allDefinitions = MyDefinitionManager.Static.GetAllDefinitions();
+				foreach ( MyDefinitionBase definition in allDefinitions )
 				{
-					m_idList.Add(def.Id);
+					MyPhysicalItemDefinition def = definition as MyPhysicalItemDefinition;
+					if ( def != null )
+					{
+						_idList.Add( def.Id );
+					}
 				}
-				foreach (MyComponentDefinition def in Enumerable.OfType<MyComponentDefinition>((IEnumerable)MyDefinitionManager.Static.GetAllDefinitions()))
+				foreach ( MyDefinitionBase definition in allDefinitions )
 				{
-					m_idList.Add(def.Id);
+					MyComponentDefinition def = definition as MyComponentDefinition;
+					if ( def != null )
+					{
+						_idList.Add( def.Id );
+					}
 				}
-				foreach (MyAmmoMagazineDefinition def in Enumerable.OfType<MyAmmoMagazineDefinition>((IEnumerable)MyDefinitionManager.Static.GetAllDefinitions()))
+				foreach ( MyDefinitionBase definition in allDefinitions )
 				{
-					m_idList.Add(def.Id);
+					MyAmmoMagazineDefinition def = definition as MyAmmoMagazineDefinition;
+					if ( def != null )
+					{
+						_idList.Add( def.Id );
+					}
 				}
 			}
 
 			InitializeComponent();
 
 			CMB_ItemType.BeginUpdate();
-			foreach (var entry in m_idList)
+			foreach (var entry in _idList)
 			{
 				CMB_ItemType.Items.Add(entry);
 			}
@@ -65,11 +75,7 @@ namespace SEServerExtender
 
 		#region "Properties"
 
-		public InventoryEntity InventoryContainer
-		{
-			get { return m_container; }
-			set { m_container = value; }
-		}
+		public InventoryEntity InventoryContainer { get; set; }
 
 		public MyDefinitionId SelectedType
 		{
@@ -114,7 +120,7 @@ namespace SEServerExtender
 
 				InventoryContainer.NewEntry(newItem);
 
-				this.Close();
+				Close();
 			}
 			catch (Exception ex)
 			{

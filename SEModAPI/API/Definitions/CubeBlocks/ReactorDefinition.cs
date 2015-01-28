@@ -42,7 +42,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_ReactorDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_ReactorDefinition)m_baseDefinition;
+			return (MyObjectBuilder_ReactorDefinition)BaseDefinition;
 		}
 
 		#endregion

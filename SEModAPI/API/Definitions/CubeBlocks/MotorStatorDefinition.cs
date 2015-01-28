@@ -59,7 +59,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		public new virtual MyObjectBuilder_MotorStatorDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_MotorStatorDefinition)m_baseDefinition;
+			return (MyObjectBuilder_MotorStatorDefinition)BaseDefinition;
 		}
 
 		#endregion

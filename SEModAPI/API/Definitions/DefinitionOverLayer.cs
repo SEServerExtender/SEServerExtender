@@ -1,17 +1,6 @@
-﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Reflection;
-using ProtoBuf;
+﻿using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPI.Support;
 
 namespace SEModAPI.API.Definitions
 {
@@ -22,7 +11,13 @@ namespace SEModAPI.API.Definitions
 	{
 		#region "Attributes"
 
-		protected MyObjectBuilder_DefinitionBase m_baseDefinition;
+		/// <summary>
+		/// Gets the Internal data of the object
+		/// </summary>
+		[Browsable(false)]
+		[ReadOnly(true)]
+		[Description("Internal data of the object")]
+		protected MyObjectBuilder_DefinitionBase BaseDefinition;
 
 		#endregion
 
@@ -30,7 +25,7 @@ namespace SEModAPI.API.Definitions
 
 		protected DefinitionOverLayer(MyObjectBuilder_DefinitionBase baseDefinition)
 		{
-			m_baseDefinition = baseDefinition;
+			BaseDefinition = baseDefinition;
 		}
 
 		#endregion
@@ -52,16 +47,6 @@ namespace SEModAPI.API.Definitions
 		[Description("The formatted name of the object")]
 		public abstract string Name { get; }
 
-		/// <summary>
-		/// Gets the Internal data of the object
-		/// </summary>
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("Internal data of the object")]
-		protected MyObjectBuilder_DefinitionBase BaseDefinition
-		{
-			get { return m_baseDefinition; }
-		}
 
 		/// <summary>
 		/// Gets the internal data of the object
@@ -71,7 +56,7 @@ namespace SEModAPI.API.Definitions
 		[Description("The value ID representing the type of the object")]
 		public MyObjectBuilderType TypeId
 		{
-			get { return m_baseDefinition.TypeId; }
+			get { return BaseDefinition.TypeId; }
 		}
 
 		/// <summary>
@@ -81,11 +66,12 @@ namespace SEModAPI.API.Definitions
 		[Description("The Id as SerializableDefinitionId that represent the Object representation")]
 		public SerializableDefinitionId Id
 		{
-			get { return m_baseDefinition.Id; }
+			get { return BaseDefinition.Id; }
 			set
 			{
-				if (m_baseDefinition.Id.ToString() == value.ToString()) return;
-				m_baseDefinition.Id = value;
+				if (BaseDefinition.Id.ToString() == value.ToString())
+					return;
+				BaseDefinition.Id = value;
 				Changed = true;
 			}
 		}
@@ -97,11 +83,11 @@ namespace SEModAPI.API.Definitions
 		[Description("Represents the description of the object")]
 		public string Description
 		{
-			get { return m_baseDefinition.Description; }
+			get { return BaseDefinition.Description; }
 			set
 			{
-				if (m_baseDefinition.Description == value) return;
-				m_baseDefinition.Description = value;
+				if (BaseDefinition.Description == value) return;
+				BaseDefinition.Description = value;
 				Changed = true;
 			}
 		}

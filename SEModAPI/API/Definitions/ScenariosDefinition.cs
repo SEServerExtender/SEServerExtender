@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using SEModAPI.Support;
 
 namespace SEModAPI.API.Definitions
 {
@@ -10,7 +7,7 @@ namespace SEModAPI.API.Definitions
 	{
 		#region "Attributes"
 
-		private AsteroidClustersConfig m_asteroidClustersConfig;
+		private readonly AsteroidClustersConfig _asteroidClustersConfig;
 
 		#endregion
 
@@ -19,7 +16,7 @@ namespace SEModAPI.API.Definitions
 		public ScenariosDefinition(MyObjectBuilder_ScenarioDefinition definition)
 			: base(definition)
 		{
-			m_asteroidClustersConfig = new AsteroidClustersConfig(definition.AsteroidClusters);
+			_asteroidClustersConfig = new AsteroidClustersConfig(definition.AsteroidClusters);
 		}
 
 		#endregion
@@ -33,7 +30,7 @@ namespace SEModAPI.API.Definitions
 
 		public AsteroidClustersConfig AsteroidClusters
 		{
-			get { return m_asteroidClustersConfig; }
+			get { return _asteroidClustersConfig; }
 		}
 
 		#endregion

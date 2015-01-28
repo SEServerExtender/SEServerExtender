@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 using Sandbox.Definitions;
-
-using SEModAPI.API.Definitions;
-using SEModAPI.API.Definitions.CubeBlocks;
-using SEModAPI.Support;
-
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.Support;
@@ -27,11 +14,11 @@ using VRageMath;
 
 namespace SEServerExtender
 {
+	using VRage.Collections;
+
 	public partial class CubeBlockDialog : Form
 	{
 		#region "Attributes"
-
-		private CubeGridEntity m_parent;
 
 		#endregion
 
@@ -57,11 +44,7 @@ namespace SEServerExtender
 
 		#region "Properties"
 
-		public CubeGridEntity ParentCubeGrid
-		{
-			get { return m_parent; }
-			set { m_parent = value; }
-		}
+		public CubeGridEntity ParentCubeGrid { get; set; }
 
 		public KeyValuePair<Type, Type> SelectedType
 		{
@@ -83,11 +66,11 @@ namespace SEServerExtender
 			{
 				try
 				{
-					int pos_x = int.Parse(TXT_Position_X.Text);
-					int pos_y = int.Parse(TXT_Position_Y.Text);
-					int pos_z = int.Parse(TXT_Position_Z.Text);
+					int posX = int.Parse(TXT_Position_X.Text);
+					int posY = int.Parse(TXT_Position_Y.Text);
+					int posZ = int.Parse(TXT_Position_Z.Text);
 
-					return new Vector3I(pos_x, pos_y, pos_z);
+					return new Vector3I(posX, posY, posZ);
 				}
 				catch (Exception ex)
 				{
@@ -115,7 +98,7 @@ namespace SEServerExtender
 				CubeBlockEntity cubeBlock = (CubeBlockEntity) Activator.CreateInstance(SelectedType.Value, new object[] { Parent, objectBuilder });
 				ParentCubeGrid.AddCubeBlock(cubeBlock);
 
-				this.Close();
+				Close();
 			}
 			catch (Exception ex)
 			{
@@ -127,11 +110,17 @@ namespace SEServerExtender
 		{
 			CMB_BlockSubType.BeginUpdate();
 			CMB_BlockSubType.Items.Clear();
-			foreach (MyCubeBlockDefinition cubeBlockDefinition in Enumerable.OfType<MyCubeBlockDefinition>((IEnumerable)MyDefinitionManager.Static.GetAllDefinitions()))
+			DictionaryValuesReader<MyDefinitionId, MyDefinitionBase> allDefinitions = MyDefinitionManager.Static.GetAllDefinitions( );
+			foreach ( MyDefinitionBase o in allDefinitions )
 			{
-				if (cubeBlockDefinition.Id.TypeId == SelectedType.Key)
+				MyCubeBlockDefinition cubeBlockDefinition = o as MyCubeBlockDefinition;
+				if ( cubeBlockDefinition == null )
 				{
-					CMB_BlockSubType.Items.Add(cubeBlockDefinition.Id.SubtypeName);					
+					continue;
+				}
+				if ( cubeBlockDefinition.Id.TypeId == SelectedType.Key )
+				{
+					CMB_BlockSubType.Items.Add( cubeBlockDefinition.Id.SubtypeName );
 				}
 			}
 			CMB_BlockSubType.EndUpdate();

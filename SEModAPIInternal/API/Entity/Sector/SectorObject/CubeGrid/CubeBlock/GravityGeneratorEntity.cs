@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.VRageData;
 
 using SEModAPI.API;
@@ -19,7 +13,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "GravityGeneratorEntityProxy")]
+	[DataContract( Name = "GravityGeneratorEntityProxy" )]
 	public class GravityGeneratorEntity : GravityBaseEntity
 	{
 		#region "Attributes"
@@ -29,28 +23,28 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string GravityGeneratorSetFieldSizeMethod = "79D354AC704AAF4576B6F44487097505";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public GravityGeneratorEntity(CubeGridEntity parent, MyObjectBuilder_GravityGenerator definition)
-			: base(parent, definition)
+		public GravityGeneratorEntity( CubeGridEntity parent, MyObjectBuilder_GravityGenerator definition )
+			: base( parent, definition )
 		{
 		}
 
-		public GravityGeneratorEntity(CubeGridEntity parent, MyObjectBuilder_GravityGenerator definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public GravityGeneratorEntity( CubeGridEntity parent, MyObjectBuilder_GravityGenerator definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Gravity Generator")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Gravity Generator" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_GravityGenerator ObjectBuilder
 		{
 			get
@@ -66,61 +60,61 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Gravity Generator")]
-		[TypeConverter(typeof(Vector3TypeConverter))]
+		[Category( "Gravity Generator" )]
+		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public SerializableVector3 FieldSize
 		{
 			get { return ObjectBuilder.FieldSize; }
 			set
 			{
-				if (ObjectBuilder.FieldSize.Equals(value)) return;
+				if ( ObjectBuilder.FieldSize.Equals( value ) ) return;
 				ObjectBuilder.FieldSize = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateFieldSize;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(GravityGeneratorNamespace, GravityGeneratorClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for GravityGeneratorEntity");
-				result &= HasMethod(type, GravityGeneratorSetFieldSizeMethod);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GravityGeneratorNamespace, GravityGeneratorClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for GravityGeneratorEntity" );
+				result &= HasMethod( type, GravityGeneratorSetFieldSizeMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected void InternalUpdateFieldSize()
+		protected void InternalUpdateFieldSize( )
 		{
 			try
 			{
-				InvokeEntityMethod(ActualObject, GravityGeneratorSetFieldSizeMethod, new object[] { (Vector3)FieldSize });
+				InvokeEntityMethod( ActualObject, GravityGeneratorSetFieldSizeMethod, new object[ ] { (Vector3)FieldSize } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

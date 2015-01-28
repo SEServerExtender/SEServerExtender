@@ -1,12 +1,5 @@
 ﻿using System;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using System.Collections.Generic;
-using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-using SEModAPI.Support;
-using System.Xml;
-using System.IO;
 
 namespace SEModAPI.API.Definitions
 {
@@ -20,10 +13,6 @@ namespace SEModAPI.API.Definitions
 
 		#region "Constructors and Initializers"
 
-		public ConfigurationDefinition()
-		{
-
-		}
 
 		#endregion
 

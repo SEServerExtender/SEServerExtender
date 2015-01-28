@@ -1,6 +1,6 @@
 ﻿namespace SEServerExtender
 {
-	partial class SEServerExtender
+	sealed partial class SEServerExtender
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -84,7 +84,7 @@
 			this.PG_Plugins = new System.Windows.Forms.PropertyGrid();
 			this.TAB_Utilities_Page = new System.Windows.Forms.TabPage();
 			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.floatingObjectControlGroupBox = new System.Windows.Forms.GroupBox();
 			this.TXT_Utilities_FloatingObjectAmount = new SEModAPI.Support.NumericTextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.BTN_Utilities_ClearFloatingObjectsNow = new System.Windows.Forms.Button();
@@ -154,7 +154,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
-			this.groupBox1.SuspendLayout();
+			this.floatingObjectControlGroupBox.SuspendLayout();
 			this.SS_Bottom.SuspendLayout();
 			this.TAB_Statistics.SuspendLayout();
 			this.SuspendLayout();
@@ -844,23 +844,23 @@
 			// 
 			// splitContainer4.Panel1
 			// 
-			this.splitContainer4.Panel1.Controls.Add(this.groupBox1);
+			this.splitContainer4.Panel1.Controls.Add(this.floatingObjectControlGroupBox);
 			this.splitContainer4.Size = new System.Drawing.Size(943, 543);
 			this.splitContainer4.SplitterDistance = 240;
 			this.splitContainer4.TabIndex = 0;
 			// 
-			// groupBox1
+			// floatingObjectControlGroupBox
 			// 
-			this.groupBox1.Controls.Add(this.TXT_Utilities_FloatingObjectAmount);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.BTN_Utilities_ClearFloatingObjectsNow);
-			this.groupBox1.Controls.Add(this.CHK_Utilities_FloatingObjectAutoClean);
-			this.groupBox1.Location = new System.Drawing.Point(3, 17);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(211, 152);
-			this.groupBox1.TabIndex = 5;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Floating Object Control";
+			this.floatingObjectControlGroupBox.Controls.Add(this.TXT_Utilities_FloatingObjectAmount);
+			this.floatingObjectControlGroupBox.Controls.Add(this.label1);
+			this.floatingObjectControlGroupBox.Controls.Add(this.BTN_Utilities_ClearFloatingObjectsNow);
+			this.floatingObjectControlGroupBox.Controls.Add(this.CHK_Utilities_FloatingObjectAutoClean);
+			this.floatingObjectControlGroupBox.Location = new System.Drawing.Point(3, 17);
+			this.floatingObjectControlGroupBox.Name = "floatingObjectControlGroupBox";
+			this.floatingObjectControlGroupBox.Size = new System.Drawing.Size(211, 152);
+			this.floatingObjectControlGroupBox.TabIndex = 5;
+			this.floatingObjectControlGroupBox.TabStop = false;
+			this.floatingObjectControlGroupBox.Text = "Floating Object Control";
 			// 
 			// TXT_Utilities_FloatingObjectAmount
 			// 
@@ -1010,8 +1010,8 @@
 			this.splitContainer4.Panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
 			this.splitContainer4.ResumeLayout(false);
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
+			this.floatingObjectControlGroupBox.ResumeLayout(false);
+			this.floatingObjectControlGroupBox.PerformLayout();
 			this.SS_Bottom.ResumeLayout(false);
 			this.SS_Bottom.PerformLayout();
 			this.TAB_Statistics.ResumeLayout(false);
@@ -1062,7 +1062,7 @@
 		private System.Windows.Forms.CheckBox CHK_Control_CommonDataPath;
 		private System.Windows.Forms.TabPage TAB_Utilities_Page;
 		private System.Windows.Forms.SplitContainer splitContainer4;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox floatingObjectControlGroupBox;
 		private SEModAPI.Support.NumericTextBox TXT_Utilities_FloatingObjectAmount;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button BTN_Utilities_ClearFloatingObjectsNow;

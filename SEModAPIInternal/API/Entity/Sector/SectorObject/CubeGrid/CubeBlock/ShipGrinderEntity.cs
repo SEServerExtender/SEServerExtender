@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "ShipGrinderEntityProxy")]
+	[DataContract( Name = "ShipGrinderEntityProxy" )]
 	public class ShipGrinderEntity : ShipToolBaseEntity
 	{
 		#region "Attributes"
@@ -20,26 +12,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string ShipGrinderNamespace = "";
 		public static string ShipGrinderClass = "";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Intializers"
 
-		public ShipGrinderEntity(CubeGridEntity parent, MyObjectBuilder_ShipGrinder definition)
-			: base(parent, definition)
+		public ShipGrinderEntity( CubeGridEntity parent, MyObjectBuilder_ShipGrinder definition )
+			: base( parent, definition )
 		{
 		}
 
-		public ShipGrinderEntity(CubeGridEntity parent, MyObjectBuilder_ShipGrinder definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public ShipGrinderEntity( CubeGridEntity parent, MyObjectBuilder_ShipGrinder definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 		}
 
-		#endregion
-
-		#region "Properties"
-		#endregion
-
-		#region "Methods"
-		#endregion
+		#endregion "Constructors and Intializers"
 	}
 }

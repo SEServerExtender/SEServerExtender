@@ -1,25 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
-using SEModAPI.API;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
-using VRageMath;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "GravityBaseEntityProxy")]
+	[DataContract( Name = "GravityBaseEntityProxy" )]
 	public class GravityBaseEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -31,30 +19,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static string GravityBaseSetAccelerationMethod = "F73ED856331E83CE2A7A37C0FA54AFB9";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public GravityBaseEntity(CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition)
-			: base(parent, definition)
+		public GravityBaseEntity( CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition )
+			: base( parent, definition )
 		{
 			m_acceleration = 9.81f;
 		}
 
-		public GravityBaseEntity(CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public GravityBaseEntity( CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 			m_acceleration = 9.81f;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Gravity Base")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Gravity Base" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_FunctionalBlock ObjectBuilder
 		{
 			get
@@ -70,60 +58,60 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Gravity Base")]
+		[Category( "Gravity Base" )]
 		public float GravityAcceleration
 		{
 			get { return m_acceleration; }
 			set
 			{
-				if (m_acceleration == value) return;
+				if ( m_acceleration == value ) return;
 				m_acceleration = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateGravityAcceleration;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(GravityBaseNamespace, GravityBaseClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for GravityBaseEntity");
-				result &= HasMethod(type, GravityBaseSetAccelerationMethod);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GravityBaseNamespace, GravityBaseClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for GravityBaseEntity" );
+				result &= HasMethod( type, GravityBaseSetAccelerationMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected void InternalUpdateGravityAcceleration()
+		protected void InternalUpdateGravityAcceleration( )
 		{
 			try
 			{
-				InvokeEntityMethod(ActualObject, GravityBaseSetAccelerationMethod, new object[] { GravityAcceleration });
+				InvokeEntityMethod( ActualObject, GravityBaseSetAccelerationMethod, new object[ ] { GravityAcceleration } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

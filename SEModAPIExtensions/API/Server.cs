@@ -2,159 +2,62 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.ExceptionServices;
 using System.Security;
 
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
 using SEModAPI.API;
 using SEModAPI.API.Definitions;
-using SEModAPI.Support;
-
-using SEModAPIInternal.API;
 using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
-
-using VRage.Common.Utils;
 using SEModAPIExtensions.API.IPC;
 using System.ServiceModel.Web;
-using System.IdentityModel.Selectors;
-using System.ServiceModel.Security;
 
 namespace SEModAPIExtensions.API
 {
-	public struct CommandLineArgs
-	{
-		public bool autoStart;
-		public string worldName;
-		public string instanceName;
-		public bool noGUI;
-		public bool noConsole;
-		public bool debug;
-		public string gamePath;
-		public bool noWCF;
-		public ushort wcfPort;
-		public int autosave;
-		public string path;
-		public bool closeOnCrash;
-		public bool autoSaveSync;
-		public bool restartOnCrash;
-		public bool worldRequestReplace;
-		public bool worldDataModify;
-		public string args;
-	}
+	using System.Diagnostics;
+	using System.Timers;
 
-	[ServiceContract]
-	public interface IServerServiceContract
-	{
-		[OperationContract]
-		Server GetServer();
-
-		[OperationContract]
-		void StartServer();
-
-		[OperationContract]
-		void StopServer();
-
-		[OperationContract]
-		void LoadServerConfig();
-
-		[OperationContract]
-		void SaveServerConfig();
-
-		[OperationContract]
-		void SetAutosaveInterval(double interval);
-	}
-
-	[ServiceBehavior(
-		ConcurrencyMode = ConcurrencyMode.Single,
-		IncludeExceptionDetailInFaults = true,
-		IgnoreExtensionDataObject = true
-	)]
-	public class ServerService : IServerServiceContract
-	{
-		public Server GetServer()
-		{
-			return Server.Instance;
-		}
-
-		public void StartServer()
-		{
-			Server.Instance.StartServer();
-		}
-
-		public void StopServer()
-		{
-			Server.Instance.StopServer();
-		}
-
-		public void LoadServerConfig()
-		{
-			Server.Instance.LoadServerConfig();
-		}
-
-		public void SaveServerConfig()
-		{
-			Server.Instance.SaveServerConfig();
-		}
-
-		public void SetAutosaveInterval(double interval)
-		{
-			Server.Instance.AutosaveInterval = interval;
-		}
-	}
-
-	[DataContract(
-		Name = "ServerProxy",
-		IsReference = true
-	)]
+	[DataContract(Name = "ServerProxy",IsReference = true)]
 	public class Server
 	{
 		#region "Attributes"
 
-		private static Server m_instance;
-		private static bool m_isInitialized;
-		private static Thread m_runServerThread;
-		private static bool m_isServerRunning;
-		private static bool m_serverRan;
-		private static DateTime m_lastRestart;
-		private static int m_restartLimit;
-		private static bool m_isWCFEnabled;
-		private static FileSystemWatcher m_cfgWatch;
+		private static Server _instance;
+		private static bool _isInitialized;
+		private static Thread _runServerThread;
+		private static bool _isServerRunning;
+		private static bool _serverRan;
+		private static int _restartLimit;
+		private static bool _isWcfEnabled;
+		private static FileSystemWatcher _cfgWatch;
 
-		private CommandLineArgs m_commandLineArgs;
-		private DedicatedConfigDefinition m_dedicatedConfigDefinition;
-		private GameInstallationInfo m_gameInstallationInfo;
-		private ServiceHost m_serverHost;
-		private ServiceHost m_baseHost;
-		private WebServiceHost m_webHost;
+		private CommandLineArgs _commandLineArgs;
+		private DedicatedConfigDefinition _dedicatedConfigDefinition;
+		private GameInstallationInfo _gameInstallationInfo;
+		private ServiceHost _serverHost;
+		private ServiceHost _baseHost;
+		private WebServiceHost _webHost;
 
 		//Managers
-		private PluginManager m_pluginManager;
-		private SandboxGameAssemblyWrapper m_gameAssemblyWrapper;
-		private FactionsManager m_factionsManager;
-		private ServerAssemblyWrapper m_serverWrapper;
-		private LogManager m_logManager;
-		private EntityEventManager m_entityEventManager;
-		private ChatManager m_chatManager;
-		private SessionManager m_sessionManager;
+		private PluginManager _pluginManager;
+		private SandboxGameAssemblyWrapper _gameAssemblyWrapper;
+		private FactionsManager _factionsManager;
+		private ServerAssemblyWrapper _serverWrapper;
+		private LogManager _logManager;
+		private EntityEventManager _entityEventManager;
+		private ChatManager _chatManager;
+		private SessionManager _sessionManager;
 
 		//Timers
-		private System.Timers.Timer m_pluginMainLoop;
-		private System.Timers.Timer m_autosaveTimer;
+		private readonly Timer _pluginMainLoop;
+		private readonly Timer _autosaveTimer;
 
 		#endregion
 
@@ -162,21 +65,18 @@ namespace SEModAPIExtensions.API
 
 		protected Server()
 		{
-			if (m_isInitialized)
+			if ( _isInitialized )
 				return;
 
-			m_lastRestart = DateTime.Now;
-			m_restartLimit = 3;
+			_restartLimit = 3;
 
-			m_pluginMainLoop = new System.Timers.Timer();
-			m_pluginMainLoop.Interval = 200;
-			m_pluginMainLoop.Elapsed += PluginManagerMain;
+			_pluginMainLoop = new Timer { Interval = 200 };
+			_pluginMainLoop.Elapsed += PluginManagerMain;
 
-			m_autosaveTimer = new System.Timers.Timer();
-			m_autosaveTimer.Interval = 300000;
-			m_autosaveTimer.Elapsed += AutoSaveMain;
+			_autosaveTimer = new Timer { Interval = 300000 };
+			_autosaveTimer.Elapsed += AutoSaveMain;
 
-			m_isWCFEnabled = true;
+			_isWcfEnabled = true;
 
 			Console.WriteLine("Finished creating server!");
 		}
@@ -185,13 +85,13 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				m_serverHost = CreateServiceHost(typeof(ServerService), typeof(IServerServiceContract), "Server/", "ServerService");
-				m_serverHost.Open();
+				_serverHost = CreateServiceHost( typeof( ServerService ), typeof( IServerServiceContract ), "Server/", "ServerService" );
+				_serverHost.Open( );
 			}
 			catch (CommunicationException ex)
 			{
 				LogManager.ErrorLog.WriteLineAndConsole("An exception occurred: " + ex.Message);
-				m_serverHost.Abort();
+				_serverHost.Abort( );
 				return false;
 			}
 
@@ -202,13 +102,13 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				m_baseHost = CreateServiceHost(typeof(InternalService), typeof(IInternalServiceContract), "", "InternalService");
-				m_baseHost.Open();
+				_baseHost = CreateServiceHost( typeof( InternalService ), typeof( IInternalServiceContract ), "", "InternalService" );
+				_baseHost.Open( );
 			}
 			catch (CommunicationException ex)
 			{
 				LogManager.ErrorLog.WriteLineAndConsole("An exception occurred: " + ex.Message);
-				m_baseHost.Abort();
+				_baseHost.Abort( );
 				return false;
 			}
 
@@ -217,24 +117,24 @@ namespace SEModAPIExtensions.API
 
 		private bool SetupWebService()
 		{
-			Uri webServiceAddress = new Uri("http://localhost:" + WCFPort.ToString() + "/SEServerExtender/Web/");
-			m_webHost = new WebServiceHost(typeof(WebService), webServiceAddress);
+			Uri webServiceAddress = new Uri( "http://localhost:" + WCFPort + "/SEServerExtender/Web/" );
+			_webHost = new WebServiceHost( typeof( WebService ), webServiceAddress );
 			try
 			{
 				//WebHttpBinding binding = new WebHttpBinding(WebHttpSecurityMode.TransportCredentialOnly);
 				//binding.Security.Mode = WebHttpSecurityMode.TransportCredentialOnly;
 				//binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Windows;
-				//ServiceEndpoint endpoint = m_webHost.AddServiceEndpoint(typeof(IWebServiceContract), binding, "WebService");
-				//m_webHost.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
-				//m_webHost.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new UserNameValidator();
+				//ServiceEndpoint endpoint = _webHost.AddServiceEndpoint(typeof(IWebServiceContract), binding, "WebService");
+				//_webHost.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
+				//_webHost.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new UserNameValidator();
 				EnableCorsBehavior ecb = new EnableCorsBehavior();
-				m_webHost.Description.Behaviors.Add(ecb);
-				m_webHost.Open();
+				_webHost.Description.Behaviors.Add( ecb );
+				_webHost.Open( );
 			}
 			catch (CommunicationException ex)
 			{
 				Console.WriteLine("An exception occurred: {0}", ex.Message);
-				m_webHost.Abort();
+				_webHost.Abort( );
 				return false;
 			}
 
@@ -245,16 +145,16 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				string gamePath = m_commandLineArgs.gamePath;
+				string gamePath = _commandLineArgs.GamePath;
 				if (gamePath.Length > 0)
 				{
 					if (!GameInstallationInfo.IsValidGamePath(gamePath))
 						return false;
-					m_gameInstallationInfo = new GameInstallationInfo(gamePath);
+					_gameInstallationInfo = new GameInstallationInfo( gamePath );
 				}
 				else
 				{
-					m_gameInstallationInfo = new GameInstallationInfo();
+					_gameInstallationInfo = new GameInstallationInfo( );
 				}
 			}
 			catch (Exception ex)
@@ -262,7 +162,7 @@ namespace SEModAPIExtensions.API
 				LogManager.ErrorLog.WriteLine(ex);
 			}
 
-			if (m_gameInstallationInfo != null)
+			if ( _gameInstallationInfo != null )
 				return true;
 			else
 				return false;
@@ -270,14 +170,14 @@ namespace SEModAPIExtensions.API
 
 		private bool SetupManagers()
 		{
-			m_serverWrapper = ServerAssemblyWrapper.Instance;
-			m_pluginManager = PluginManager.Instance;
-			m_gameAssemblyWrapper = SandboxGameAssemblyWrapper.Instance;
-			m_factionsManager = FactionsManager.Instance;
-			m_logManager = LogManager.Instance;
-			m_entityEventManager = EntityEventManager.Instance;
-			m_chatManager = ChatManager.Instance;
-			m_sessionManager = SessionManager.Instance;
+			_serverWrapper = ServerAssemblyWrapper.Instance;
+			_pluginManager = PluginManager.Instance;
+			_gameAssemblyWrapper = SandboxGameAssemblyWrapper.Instance;
+			_factionsManager = FactionsManager.Instance;
+			_logManager = LogManager.Instance;
+			_entityEventManager = EntityEventManager.Instance;
+			_chatManager = ChatManager.Instance;
+			_sessionManager = SessionManager.Instance;
 
 			return true;
 		}
@@ -286,56 +186,56 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				if (m_commandLineArgs.autoStart)
+				if ( _commandLineArgs.AutoStart )
 				{
 					Console.WriteLine("Auto-Start enabled");
 				}
-				if (m_commandLineArgs.instanceName.Length != 0)
+				if ( _commandLineArgs.InstanceName.Length != 0 )
 				{
-					Console.WriteLine("Common instance pre-selected: '" + m_commandLineArgs.instanceName + "'");
+					Console.WriteLine( "Common instance pre-selected: '" + _commandLineArgs.InstanceName + "'" );
 				}
-				if (m_commandLineArgs.noGUI)
+				if ( _commandLineArgs.NoGui )
 				{
 					Console.WriteLine("GUI disabled");
 				}
-				if (m_commandLineArgs.debug)
+				if ( _commandLineArgs.Debug )
 				{
 					Console.WriteLine("Debugging enabled");
 					SandboxGameAssemblyWrapper.IsDebugging = true;
 				}
-				if (m_commandLineArgs.noWCF)
+				if ( _commandLineArgs.NoWcf )
 				{
 					Console.WriteLine("WCF disabled");
 				}
-				if (m_commandLineArgs.wcfPort > 0)
+				if ( _commandLineArgs.WcfPort > 0 )
 				{
-					Console.WriteLine("WCF port: " + m_commandLineArgs.wcfPort.ToString());
+					Console.WriteLine( "WCF port: " + _commandLineArgs.WcfPort );
 				}
-				if (m_commandLineArgs.autosave > 0)
+				if ( _commandLineArgs.Autosave > 0 )
 				{
-					Console.WriteLine("Autosave interval: " + m_commandLineArgs.autosave.ToString());
+					Console.WriteLine( "Autosave interval: " + _commandLineArgs.Autosave );
 				}
-				if (m_commandLineArgs.closeOnCrash)
+				if ( _commandLineArgs.CloseOnCrash )
 				{
 					Console.WriteLine("Close On Crash: Enabled");
 				}
-				if (m_commandLineArgs.autoSaveSync)
+				if ( _commandLineArgs.AutoSaveSync )
 				{
 					Console.WriteLine("Synchronous Save: Enabled");
 				}
-				if (m_commandLineArgs.path.Length != 0)
+				if ( _commandLineArgs.Path.Length != 0 )
 				{
-					Console.WriteLine("Full path pre-selected: '" + m_commandLineArgs.path + "'");
+					Console.WriteLine( "Full path pre-selected: '" + _commandLineArgs.Path + "'" );
 				}
-				if (m_commandLineArgs.restartOnCrash)
+				if ( _commandLineArgs.RestartOnCrash )
 				{
 					Console.WriteLine("Restart On Crash: Enabled");
 				}
-				if (m_commandLineArgs.autoSaveSync)
+				if ( _commandLineArgs.AutoSaveSync )
 				{
 					Console.WriteLine("Synchronous Autosave: Enabled");
 				}
-				if (m_commandLineArgs.worldRequestReplace)
+				if ( _commandLineArgs.WorldRequestReplace )
 				{
 					Console.WriteLine("World Request Replace: Enabled");
 				}
@@ -356,19 +256,13 @@ namespace SEModAPIExtensions.API
 		[IgnoreDataMember]
 		public static Server Instance
 		{
-			get
-			{
-				if (m_instance == null)
-					m_instance = new Server();
-
-				return m_instance;
-			}
+			get { return _instance ?? ( _instance = new Server( ) ); }
 		}
 
 		[DataMember]
 		public bool IsRunning
 		{
-			get { return m_isServerRunning; }
+			get { return _isServerRunning; }
 			private set
 			{
 				//Do nothing!
@@ -378,29 +272,29 @@ namespace SEModAPIExtensions.API
 		[DataMember]
 		public bool ServerHasRan
 		{
-			get { return m_serverRan; }
-			set { m_serverRan = value;}
+			get { return _serverRan; }
+			set { _serverRan = value; }
 		}
 
 		[DataMember]
 		public CommandLineArgs CommandLineArgs
 		{
-			get { return m_commandLineArgs; }
-			set { m_commandLineArgs = value; }
+			get { return _commandLineArgs; }
+			set { _commandLineArgs = value; }
 		}
 
 		[IgnoreDataMember]
 		public DedicatedConfigDefinition Config
 		{
-			get { return m_dedicatedConfigDefinition; }
-			set { m_dedicatedConfigDefinition = value; }		
+			get { return _dedicatedConfigDefinition; }
+			set { _dedicatedConfigDefinition = value; }
 		}
 
 		[DataMember]
 		public string InstanceName
 		{
-			get { return m_commandLineArgs.instanceName; }
-			set { m_commandLineArgs.instanceName = value; }
+			get { return _commandLineArgs.InstanceName; }
+			set { _commandLineArgs.InstanceName = value; }
 		}
 
 		[DataMember]
@@ -408,46 +302,46 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				m_commandLineArgs.autosave = (int)Math.Round(m_autosaveTimer.Interval / 60000.0);
-				return m_autosaveTimer.Interval;
+				_commandLineArgs.Autosave = (int)Math.Round( _autosaveTimer.Interval / 60000.0 );
+				return _autosaveTimer.Interval;
 			}
 			set
 			{
-				m_autosaveTimer.Interval = value;
+				_autosaveTimer.Interval = value;
 
-				if (m_autosaveTimer.Interval <= 0)
-					m_autosaveTimer.Interval = 300000;
+				if ( _autosaveTimer.Interval <= 0 )
+					_autosaveTimer.Interval = 300000;
 
-				m_commandLineArgs.autosave = (int)Math.Round(m_autosaveTimer.Interval / 60000.0);
+				_commandLineArgs.Autosave = (int)Math.Round( _autosaveTimer.Interval / 60000.0 );
 			}
 		}
 
 		[IgnoreDataMember]
 		public bool IsWCFEnabled
 		{
-			get { return m_isWCFEnabled; }
+			get { return _isWcfEnabled; }
 			set
 			{
-				if (m_isWCFEnabled == value) return;
-				m_isWCFEnabled = value;
+				if ( _isWcfEnabled == value ) return;
+				_isWcfEnabled = value;
 
-				if (m_isWCFEnabled)
+				if ( _isWcfEnabled )
 				{
-					if (m_serverHost != null)
-						m_serverHost.Open();
-					if (m_webHost != null)
-						m_webHost.Open();
-					if (m_baseHost != null)
-						m_baseHost.Open();
+					if ( _serverHost != null )
+						_serverHost.Open( );
+					if ( _webHost != null )
+						_webHost.Open( );
+					if ( _baseHost != null )
+						_baseHost.Open( );
 				}
 				else
 				{
-					if(m_serverHost != null)
-						m_serverHost.Close();
-					if (m_webHost != null)
-						m_webHost.Close();
-					if (m_baseHost != null)
-						m_baseHost.Close();
+					if ( _serverHost != null )
+						_serverHost.Close( );
+					if ( _webHost != null )
+						_webHost.Close( );
+					if ( _baseHost != null )
+						_baseHost.Close( );
 				}
 			}
 		}
@@ -457,13 +351,13 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				ushort port = m_commandLineArgs.wcfPort;
+				ushort port = _commandLineArgs.WcfPort;
 				if (port == 0)
 					port = 8000;
 
 				return port;
 			}
-			set { m_commandLineArgs.wcfPort = value; }
+			set { _commandLineArgs.WcfPort = value; }
 		}
 
 		[IgnoreDataMember]
@@ -471,26 +365,26 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				string path = m_commandLineArgs.path;
-				if (path == null || string.IsNullOrEmpty(path))
+				string path = _commandLineArgs.Path;
+				if ( string.IsNullOrEmpty( path ) )
 				{
 					if (InstanceName.Length != 0)
 					{
 						SandboxGameAssemblyWrapper.UseCommonProgramData = true;
 						SandboxGameAssemblyWrapper.Instance.InitMyFileSystem(InstanceName, false);
 					}
-					path = m_gameAssemblyWrapper.GetUserDataPath(InstanceName);
+					path = _gameAssemblyWrapper.GetUserDataPath( InstanceName );
 				}
 
 				return path;
 			}
-			set { m_commandLineArgs.path = value; }
+			set { _commandLineArgs.Path = value; }
 		}
 
 		[IgnoreDataMember]
 		public Thread ServerThread
 		{
-			get { return m_runServerThread; }
+			get { return _runServerThread; }
 		}
 
 		#endregion
@@ -501,35 +395,32 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				Uri baseAddress = new Uri("http://localhost:" + Server.Instance.WCFPort.ToString() + "/SEServerExtender/" + urlExtension);
+				Uri baseAddress = new Uri( string.Format( "http://localhost:{0}/SEServerExtender/{1}", Instance.WCFPort, urlExtension ) );
 				ServiceHost selfHost = new ServiceHost(serviceType, baseAddress);
 
-				WSHttpBinding binding = new WSHttpBinding();
-				binding.Security.Mode = SecurityMode.Message;
-				binding.Security.Message.ClientCredentialType = MessageCredentialType.Windows;
+				WSHttpBinding binding = new WSHttpBinding { Security = { Mode = SecurityMode.Message, Message = { ClientCredentialType = MessageCredentialType.Windows } } };
 				selfHost.AddServiceEndpoint(contractType, binding, name);
 
-				ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
-				smb.HttpGetEnabled = true;
+				ServiceMetadataBehavior smb = new ServiceMetadataBehavior { HttpGetEnabled = true };
 				selfHost.Description.Behaviors.Add(smb);
 
 				if (SandboxGameAssemblyWrapper.IsDebugging)
 				{
-					Console.WriteLine("Created WCF service at '" + baseAddress.ToString() + "'");
+					Console.WriteLine( "Created WCF service at '{0}'", baseAddress );
 				}
 
 				return selfHost;
 			}
 			catch (CommunicationException ex)
 			{
-				LogManager.ErrorLog.WriteLineAndConsole("An exception occurred: " + ex.Message);
+				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
 				return null;
 			}
 		}
 
 		public void Init()
 		{
-			if (m_isInitialized)
+			if ( _isInitialized )
 				return;
 
 			bool setupResult = true;
@@ -544,8 +435,8 @@ namespace SEModAPIExtensions.API
 				SetupWebService();
 			}
 
-			if(m_commandLineArgs.autosave > 0)
-				m_autosaveTimer.Interval = m_commandLineArgs.autosave * 60000;
+			if ( _commandLineArgs.Autosave > 0 )
+				_autosaveTimer.Interval = _commandLineArgs.Autosave * 60000;
 
 			if (!setupResult)
 			{
@@ -553,44 +444,41 @@ namespace SEModAPIExtensions.API
 				return;
 			}
 
-			m_isInitialized = true;
-			m_serverRan = false;
+			_isInitialized = true;
+			_serverRan = false;
 		}
 
 		private void PluginManagerMain(object sender, EventArgs e)
 		{
-			if (!Server.Instance.IsRunning)
+			if ( !Instance.IsRunning )
 			{
-				m_pluginMainLoop.Stop();
+				_pluginMainLoop.Stop( );
 				return;
 			}
 
-			if (m_pluginManager == null)
+			if ( _pluginManager == null )
 			{
-				m_pluginMainLoop.Stop();
+				_pluginMainLoop.Stop( );
 				return;
 			}
 
-			if (!m_pluginManager.Initialized && !m_pluginManager.Loaded)
+			if ( !_pluginManager.Initialized && !_pluginManager.Loaded )
 			{
 				if (SandboxGameAssemblyWrapper.Instance.IsGameStarted)
 				{
-					if (CommandLineArgs.worldRequestReplace)
+					if ( CommandLineArgs.WorldRequestReplace )
 						ServerNetworkManager.Instance.ReplaceWorldJoin();
 
-					if (CommandLineArgs.worldDataModify)
+					if ( CommandLineArgs.WorldDataModify )
 						ServerNetworkManager.Instance.ReplaceWorldData();
 
 					SandboxGameAssemblyWrapper.InitAPIGateway();
-					m_pluginManager.LoadPlugins();
-					m_pluginManager.Init();
+					_pluginManager.LoadPlugins( );
+					_pluginManager.Init( );
 
-					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
-					{
-						AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
-					});
+					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
 
-					AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+					AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					//AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					Application.ThreadException += Application_ThreadException;
 					Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -602,13 +490,13 @@ namespace SEModAPIExtensions.API
 				List<string> messages = ChatManager.Instance.ChatMessages;
 
 				//Run the plugin update
-				m_pluginManager.Update();
+				_pluginManager.Update( );
 			}
 		}
 
 		static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
-			Console.WriteLine("Renewed Application.ThreadException - " + e.Exception.ToString());
+			Console.WriteLine( "Renewed Application.ThreadException - {0}", e.Exception );
 
 			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
 			{
@@ -624,7 +512,7 @@ namespace SEModAPIExtensions.API
 
 		static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			Console.WriteLine("Renewed - AppDomain.UnhandledException - " + ((Exception)e.ExceptionObject).ToString());
+			Console.WriteLine( "Renewed - AppDomain.UnhandledException - {0}", e.ExceptionObject );
 
 			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
 			{
@@ -640,13 +528,13 @@ namespace SEModAPIExtensions.API
 
 		private void AutoSaveMain(object sender, EventArgs e)
 		{
-			if (!Server.Instance.IsRunning)
+			if ( !Instance.IsRunning )
 			{
-				m_autosaveTimer.Stop();
+				_autosaveTimer.Stop( );
 				return;
 			}
 
-			if (CommandLineArgs.autoSaveSync)
+			if ( CommandLineArgs.AutoSaveSync )
 				WorldManager.Instance.SaveWorld();
 			else
 				WorldManager.Instance.AsynchronousSaveWorld();
@@ -656,41 +544,39 @@ namespace SEModAPIExtensions.API
 		[SecurityCritical]
 		private void RunServer()
 		{
-			if (m_restartLimit < 0)
+			if ( _restartLimit < 0 )
 				return;
-
-			m_lastRestart = DateTime.Now;
 
 			try
 			{
 				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
-				m_serverWrapper = ServerAssemblyWrapper.Instance;
-				bool result = m_serverWrapper.StartServer(m_commandLineArgs.instanceName, m_commandLineArgs.path, !m_commandLineArgs.noConsole);
+				_serverWrapper = ServerAssemblyWrapper.Instance;
+				bool result = _serverWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.Path, !_commandLineArgs.NoConsole );
 				Console.WriteLine("Server has stopped running");
 
-				m_isServerRunning = false;
+				_isServerRunning = false;
 
-				m_pluginMainLoop.Stop();
-				m_autosaveTimer.Stop();
+				_pluginMainLoop.Stop( );
+				_autosaveTimer.Stop( );
 
-				m_pluginManager.Shutdown();
+				_pluginManager.Shutdown( );
 
-				if (!result && m_commandLineArgs.closeOnCrash)
+				if ( !result && _commandLineArgs.CloseOnCrash )
 				{
 					Thread.Sleep(5000);
 					Environment.Exit(1);
 				}
 
-				if (!result && m_commandLineArgs.restartOnCrash)
+				if ( !result && _commandLineArgs.RestartOnCrash )
 				{
 					Thread.Sleep(5000);
 
-					String restartText = "timeout /t 20\r\n";
-					restartText += String.Format("cd /d \"{0}\"\r\n", System.IO.Path.GetDirectoryName(Application.ExecutablePath));
-					restartText += System.IO.Path.GetFileName(Application.ExecutablePath) + " " + m_commandLineArgs.args + "\r\n";
+					string restartText = "timeout /t 20\r\n";
+					restartText += string.Format( "cd /d \"{0}\"\r\n", System.IO.Path.GetDirectoryName( Application.ExecutablePath ) );
+					restartText += string.Format( "{0} {1}\r\n", System.IO.Path.GetFileName( Application.ExecutablePath ), _commandLineArgs.Args );
 
 					File.WriteAllText("RestartApp.bat", restartText);
-					System.Diagnostics.Process.Start("RestartApp.bat");
+					Process.Start( "RestartApp.bat" );
 					Environment.Exit(1);
 				}
 
@@ -703,15 +589,15 @@ namespace SEModAPIExtensions.API
 
 					//Reset the restart limit if the server has been running for more than 5 minutes before the crash
 					if (timeSinceLastRestart.TotalMinutes > 5)
-						m_restartLimit = 3;
+						_restartLimit = 3;
 
-					m_restartLimit--;
+					_restartLimit--;
 
-					m_isServerRunning = true;
+					_isServerRunning = true;
 					SectorObjectManager.Instance.IsShutDown = false;
 
-					m_runServerThread = new Thread(new ThreadStart(this.RunServer));
-					m_runServerThread.Start();
+					_runServerThread = new Thread(new ThreadStart(this.RunServer));
+					_runServerThread.Start();
 				}*/
 			}
 			catch (Exception ex)
@@ -721,7 +607,7 @@ namespace SEModAPIExtensions.API
 			}
 			finally
 			{
-				m_serverWrapper = null;
+				_serverWrapper = null;
 			}
 		}
 
@@ -729,29 +615,28 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				if (!m_isInitialized)
+				if ( !_isInitialized )
 					return;
-				if (m_isServerRunning)
+				if ( _isServerRunning )
 					return;
 
-				if (m_dedicatedConfigDefinition == null)
+				if ( _dedicatedConfigDefinition == null )
 					LoadServerConfig();
 
-				m_sessionManager.UpdateSessionSettings();
-				m_pluginMainLoop.Start();
-				m_autosaveTimer.Start();
+				_sessionManager.UpdateSessionSettings( );
+				_pluginMainLoop.Start( );
+				_autosaveTimer.Start( );
 
-				m_isServerRunning = true;
-				m_serverRan = true;
+				_isServerRunning = true;
+				_serverRan = true;
 
-				m_runServerThread = new Thread(new ThreadStart(this.RunServer));
-				m_runServerThread.IsBackground = true;
-				m_runServerThread.Start();
+				_runServerThread = new Thread( RunServer ) { IsBackground = true };
+				_runServerThread.Start( );
 			}
 			catch (Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
-				m_isServerRunning = false;
+				_isServerRunning = false;
 			}
 		}
 
@@ -760,16 +645,16 @@ namespace SEModAPIExtensions.API
 			LogManager.APILog.WriteLine("StopServer()");
 			SandboxGameAssemblyWrapper.Instance.ExitGame();
 
-			m_pluginMainLoop.Stop();
-			m_autosaveTimer.Stop();
-			m_pluginManager.Shutdown();
+			_pluginMainLoop.Stop( );
+			_autosaveTimer.Stop( );
+			_pluginManager.Shutdown( );
 
-			//m_runServerThread.Interrupt();
-			//m_serverWrapper.StopServer();
-			//m_runServerThread.Abort();
-			m_runServerThread.Interrupt();
+			//_runServerThread.Interrupt();
+			//_serverWrapper.StopServer();
+			//_runServerThread.Abort();
+			_runServerThread.Interrupt( );
 
-			m_isServerRunning = false;
+			_isServerRunning = false;
 
 			Console.WriteLine("Server has been stopped");
 		}
@@ -787,11 +672,11 @@ namespace SEModAPIExtensions.API
 			if (fileInfo.Exists)
 			{
 				MyConfigDedicatedData config = DedicatedConfigDefinition.Load(fileInfo);
-				m_dedicatedConfigDefinition = new DedicatedConfigDefinition(config);
-				m_cfgWatch = new FileSystemWatcher(Path, "*.cfg");
-				m_cfgWatch.Changed += Config_Changed;
-				m_cfgWatch.NotifyFilter = NotifyFilters.Size;
-				m_cfgWatch.EnableRaisingEvents = true;
+				_dedicatedConfigDefinition = new DedicatedConfigDefinition( config );
+				_cfgWatch = new FileSystemWatcher( Path, "*.cfg" );
+				_cfgWatch.Changed += Config_Changed;
+				_cfgWatch.NotifyFilter = NotifyFilters.Size;
+				_cfgWatch.EnableRaisingEvents = true;
 				return config;
 			}
 			else
@@ -812,7 +697,7 @@ namespace SEModAPIExtensions.API
 				if (restartFileInfo.Exists)				
 					config = DedicatedConfigDefinition.Load(restartFileInfo);
 	
-				m_dedicatedConfigDefinition = new DedicatedConfigDefinition(config);
+				_dedicatedConfigDefinition = new DedicatedConfigDefinition(config);
 				return config;
 			}
 			else
@@ -825,7 +710,7 @@ namespace SEModAPIExtensions.API
 			if (!e.Name.Contains("SpaceEngineers-Dedicated.cfg") || e.Name.Contains("SpaceEngineers-Dedicated.cfg.restart"))
 				return;
 
-			if (!m_serverRan)
+			if ( !_serverRan )
 				return;
 
 			if (e.ChangeType == WatcherChangeTypes.Changed)
@@ -857,7 +742,7 @@ namespace SEModAPIExtensions.API
 				}
 				catch (Exception ex)
 				{
-					LogManager.APILog.WriteLineAndConsole(string.Format("Error on configuration change ({1}): {0}", e.FullPath, ex.ToString()));
+					LogManager.APILog.WriteLineAndConsole( string.Format( "Error on configuration change ({1}): {0}", e.FullPath, ex ) );
 				}
 			}
 		}
@@ -866,42 +751,13 @@ namespace SEModAPIExtensions.API
 		{
 			FileInfo fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg");
 
-			if (m_serverRan)
+			if ( _serverRan )
 				fileInfo = new FileInfo(Path + @"\SpaceEngineers-Dedicated.cfg.restart");
 			
-			if (m_dedicatedConfigDefinition != null)
-				m_dedicatedConfigDefinition.Save(fileInfo);
+			if ( _dedicatedConfigDefinition != null )
+				_dedicatedConfigDefinition.Save( fileInfo );
 		}
 
 		#endregion
-	}
-
-	static class ServerExtensions
-	{
-		public static void ClearEventInvocations(this object obj, string eventName)
-		{
-			var fi = obj.GetType().GetEventField(eventName);
-			if (fi == null) return;
-			fi.SetValue(obj, null);
-		}
-
-		private static FieldInfo GetEventField(this Type type, string eventName)
-		{
-			FieldInfo field = null;
-			while (type != null)
-			{
-				/* Find events defined as field */
-				field = type.GetField(eventName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-				if (field != null && (field.FieldType == typeof(MulticastDelegate) || field.FieldType.IsSubclassOf(typeof(MulticastDelegate))))
-					break;
-
-				/* Find events defined as property { add; remove; } */
-				field = type.GetField("EVENT_" + eventName.ToUpper(), BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
-				if (field != null)
-					break;
-				type = type.BaseType;
-			}
-			return field;
-		}
 	}
 }

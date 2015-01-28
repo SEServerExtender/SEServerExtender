@@ -93,7 +93,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		new public MyObjectBuilder_LightingBlockDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_LightingBlockDefinition)m_baseDefinition;
+			return (MyObjectBuilder_LightingBlockDefinition)BaseDefinition;
 		}
 
 		#endregion

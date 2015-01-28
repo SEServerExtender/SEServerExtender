@@ -42,7 +42,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		new public MyObjectBuilder_CargoContainerDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_CargoContainerDefinition)m_baseDefinition;
+			return (MyObjectBuilder_CargoContainerDefinition)BaseDefinition;
 		}
 
 		#endregion

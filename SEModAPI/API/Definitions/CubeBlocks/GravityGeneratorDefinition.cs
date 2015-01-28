@@ -42,7 +42,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns>The casted instance into the class type</returns>
 		new public MyObjectBuilder_GravityGeneratorDefinition GetSubTypeDefinition()
 		{
-			return (MyObjectBuilder_GravityGeneratorDefinition)m_baseDefinition;
+			return (MyObjectBuilder_GravityGeneratorDefinition)BaseDefinition;
 		}
 
 		#endregion

@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-
-using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-
+using Sandbox.ModAPI;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "FunctionalBlockEntityProxy")]
+	[DataContract( Name = "FunctionalBlockEntityProxy" )]
 	public class FunctionalBlockEntity : TerminalBlockEntity
 	{
 		#region "Attributes"
@@ -28,53 +20,56 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string FunctionalBlockClass = "7085736D64DCC58ED5DCA05FFEEA9664";
 
 		//public static string FunctionalBlockGetEnabledMethod = "89B34B01DCC6C8596E80023078BB9541";
-        public static string FunctionalBlockGetEnabledMethod = "get_Enabled";
-		public static string FunctionalBlockSetEnabledMethod = "97EC0047E8B562F4590B905BD8571F51";
-		//public static string FunctionalBlockBroadcastEnabledMethod = "D979DB9AA474782929587EC7DE5E53AA";
-        public static string FunctionalBlockBroadcastEnabledMethod = "RequestEnable";
-		public static string FunctionalBlockGetPowerReceiverMethod = "get_PowerReceiver";
-        public static string FunctionalBlockCheckIsWorkingMethod = "CheckIsWorking";
+		public static string FunctionalBlockGetEnabledMethod = "get_Enabled";
 
-		#endregion
+		public static string FunctionalBlockSetEnabledMethod = "97EC0047E8B562F4590B905BD8571F51";
+
+		//public static string FunctionalBlockBroadcastEnabledMethod = "D979DB9AA474782929587EC7DE5E53AA";
+		public static string FunctionalBlockBroadcastEnabledMethod = "RequestEnable";
+
+		public static string FunctionalBlockGetPowerReceiverMethod = "get_PowerReceiver";
+		public static string FunctionalBlockCheckIsWorkingMethod = "CheckIsWorking";
+
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public FunctionalBlockEntity(CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition)
-			: base(parent, definition)
+		public FunctionalBlockEntity( CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition )
+			: base( parent, definition )
 		{
 			m_enabled = definition.Enabled;
 		}
 
-		public FunctionalBlockEntity(CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public FunctionalBlockEntity( CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 			m_enabled = definition.Enabled;
 
-			m_powerReceiver = new PowerReceiver(ActualObject, Parent.PowerManager, InternalGetPowerReceiver(), new Func<float>(InternalPowerReceiverCallback));
+			m_powerReceiver = new PowerReceiver( ActualObject, Parent.PowerManager, InternalGetPowerReceiver( ), new Func<float>( InternalPowerReceiverCallback ) );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Functional Block")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Functional Block" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_FunctionalBlock ObjectBuilder
 		{
 			get
 			{
 				try
 				{
-					if (m_objectBuilder == null)
-						m_objectBuilder = new MyObjectBuilder_FunctionalBlock();
+					if ( m_objectBuilder == null )
+						m_objectBuilder = new MyObjectBuilder_FunctionalBlock( );
 
 					return (MyObjectBuilder_FunctionalBlock)base.ObjectBuilder;
 				}
-				catch (Exception)
+				catch ( Exception )
 				{
-					return new MyObjectBuilder_FunctionalBlock();
+					return new MyObjectBuilder_FunctionalBlock( );
 				}
 			}
 			set
@@ -84,34 +79,34 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember]
-		[Category("Functional Block")]
+		[Category( "Functional Block" )]
 		public bool Enabled
 		{
 			get
 			{
-				if(BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.Enabled;
 
-				return GetFunctionalBlockEnabled();
+				return GetFunctionalBlockEnabled( );
 			}
 			set
 			{
-				if (Enabled == value) return;
+				if ( Enabled == value ) return;
 				ObjectBuilder.Enabled = value;
 				m_enabled = value;
 				Changed = true;
 
-				if (BackingObject != null && ActualObject != null)
+				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateFunctionalBlock;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Functional Block")]
-		[ReadOnly(true)]
+		[Category( "Functional Block" )]
+		[ReadOnly( true )]
 		public float CurrentInput
 		{
 			get
@@ -125,107 +120,107 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Functional Block")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Functional Block" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal PowerReceiver PowerReceiver
 		{
 			get { return m_powerReceiver; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(FunctionalBlockNamespace, FunctionalBlockClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for FunctionalBlockEntity");
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FunctionalBlockNamespace, FunctionalBlockClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for FunctionalBlockEntity" );
 
-				result &= HasMethod(type, FunctionalBlockGetEnabledMethod);
-				result &= HasMethod(type, FunctionalBlockSetEnabledMethod);
-				result &= HasMethod(type, FunctionalBlockBroadcastEnabledMethod);
-                result &= HasMethod(type, FunctionalBlockCheckIsWorkingMethod);
+				result &= HasMethod( type, FunctionalBlockGetEnabledMethod );
+				result &= HasMethod( type, FunctionalBlockSetEnabledMethod );
+				result &= HasMethod( type, FunctionalBlockBroadcastEnabledMethod );
+				result &= HasMethod( type, FunctionalBlockCheckIsWorkingMethod );
 				//result &= HasMethod(type, FunctionalBlockGetPowerReceiverMethod);
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected bool GetFunctionalBlockEnabled()
+		protected bool GetFunctionalBlockEnabled( )
 		{
-			Object rawResult = InvokeEntityMethod(ActualObject, FunctionalBlockGetEnabledMethod);
-			if (rawResult == null)
+			Object rawResult = InvokeEntityMethod( ActualObject, FunctionalBlockGetEnabledMethod );
+			if ( rawResult == null )
 				return false;
 			bool result = (bool)rawResult;
 			return result;
 		}
 
-		protected void InternalUpdateFunctionalBlock()
+		protected void InternalUpdateFunctionalBlock( )
 		{
-			InvokeEntityMethod(ActualObject, FunctionalBlockSetEnabledMethod, new object[] { m_enabled });
-			InvokeEntityMethod(ActualObject, FunctionalBlockBroadcastEnabledMethod, new object[] { m_enabled });
+			InvokeEntityMethod( ActualObject, FunctionalBlockSetEnabledMethod, new object[ ] { m_enabled } );
+			InvokeEntityMethod( ActualObject, FunctionalBlockBroadcastEnabledMethod, new object[ ] { m_enabled } );
 		}
 
-		public static void SetState(IMyEntity entity, bool enabled)
+		public static void SetState( IMyEntity entity, bool enabled )
 		{
-			if(!(entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock))
+			if ( !( entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock ) )
 				return;
 
-			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+			SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 			{
-				InvokeEntityMethod(entity, FunctionalBlockSetEnabledMethod, new object[] { enabled });
-				InvokeEntityMethod(entity, FunctionalBlockBroadcastEnabledMethod, new object[] { enabled });
-			});
+				InvokeEntityMethod( entity, FunctionalBlockSetEnabledMethod, new object[ ] { enabled } );
+				InvokeEntityMethod( entity, FunctionalBlockBroadcastEnabledMethod, new object[ ] { enabled } );
+			} );
 		}
 
-		public static bool GetState(IMyEntity entity)
+		public static bool GetState( IMyEntity entity )
 		{
-			if (!(entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock))
+			if ( !( entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock ) )
 				return false;
 
-			Object rawResult = InvokeEntityMethod(entity, FunctionalBlockGetEnabledMethod);
-			if (rawResult == null)
+			Object rawResult = InvokeEntityMethod( entity, FunctionalBlockGetEnabledMethod );
+			if ( rawResult == null )
 				return false;
 			bool result = (bool)rawResult;
 			return result;
 		}
 
-		protected virtual float InternalPowerReceiverCallback()
+		protected virtual float InternalPowerReceiverCallback( )
 		{
 			return 0;
 		}
 
-		protected virtual Object InternalGetPowerReceiver()
+		protected virtual Object InternalGetPowerReceiver( )
 		{
 			bool oldDebuggingSetting = SandboxGameAssemblyWrapper.IsDebugging;
 			SandboxGameAssemblyWrapper.IsDebugging = false;
-			bool hasPowerReceiver = HasMethod(ActualObject.GetType(), FunctionalBlockGetPowerReceiverMethod);
+			bool hasPowerReceiver = HasMethod( ActualObject.GetType( ), FunctionalBlockGetPowerReceiverMethod );
 			SandboxGameAssemblyWrapper.IsDebugging = oldDebuggingSetting;
-			if (!hasPowerReceiver)
+			if ( !hasPowerReceiver )
 				return null;
 
-			return InvokeEntityMethod(ActualObject, FunctionalBlockGetPowerReceiverMethod);
+			return InvokeEntityMethod( ActualObject, FunctionalBlockGetPowerReceiverMethod );
 		}
 
-        public bool CheckIsWorking()
-        {
-            object rawResult = InvokeEntityMethod(ActualObject, FunctionalBlockCheckIsWorkingMethod);
-            if (rawResult == null)
-                return false;
-            return (bool)rawResult;
-        }
+		public bool CheckIsWorking( )
+		{
+			object rawResult = InvokeEntityMethod( ActualObject, FunctionalBlockCheckIsWorkingMethod );
+			if ( rawResult == null )
+				return false;
+			return (bool)rawResult;
+		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

@@ -2,9 +2,6 @@
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.ServiceModel.Web;
 using System.ServiceProcess;
 using System.Linq;
 
@@ -14,7 +11,6 @@ using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 using SEModAPIExtensions.API;
-using SEModAPIExtensions.API.IPC;
 
 namespace SEServerExtender
 {
@@ -22,331 +18,331 @@ namespace SEServerExtender
 	{
 		public class WindowsService : ServiceBase
 		{
-			public WindowsService()
+			public WindowsService( )
 			{
-				this.ServiceName = "SEServerExtender";
-				this.CanPauseAndContinue = false;
-				this.CanStop = true;	
-				this.AutoLog = true;
+				ServiceName = "SEServerExtender";
+				CanPauseAndContinue = false;
+				CanStop = true;
+				AutoLog = true;
 			}
 
-			protected override void OnStart(string[] args)
+			protected override void OnStart( string[ ] args )
 			{
-				LogManager.APILog.WriteLine("Starting SEServerExtender Service with " + args.Length.ToString() + " arguments ...");
+				LogManager.APILog.WriteLine( string.Format( "Starting SEServerExtender Service with {0} arguments ...", args.Length ) );
 
-				Program.Start(args);
+				Start( args );
 			}
 
-			protected override void OnStop()
+			protected override void OnStop( )
 			{
-				LogManager.APILog.WriteLine("Stopping SEServerExtender Service...");
+				LogManager.APILog.WriteLine( "Stopping SEServerExtender Service..." );
 
-				Program.Stop();
+				Program.Stop( );
 			}
 		}
 
-		static SEServerExtender m_serverExtenderForm;
-		static Server m_server;
+		static SEServerExtender _serverExtenderForm;
+		static Server _server;
 
 		/// <summary>
 		/// Main entry point of the application
 		/// </summary>
-		static void Main(string[] args)
+		static void Main( string[ ] args )
 		{
-			if (!Environment.UserInteractive)
+			if ( !Environment.UserInteractive )
 			{
-				using (var service = new WindowsService())
+				using ( var service = new WindowsService( ) )
 				{
-					ServiceBase.Run(service);
+					ServiceBase.Run( service );
 				}
 			}
 			else
 			{
-				Start(args);
+				Start( args );
 			}
 		}
 
-		private static void Start(string[] args)
+		private static void Start( string[ ] args )
 		{
 			//Setup error handling for unmanaged exceptions
 			AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
-			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+			Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
 
 			//AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
 
-			LogManager.APILog.WriteLine("Starting SEServerExtender with " + args.Length.ToString() + " arguments ...");
+			LogManager.APILog.WriteLine( string.Format( "Starting SEServerExtender with {0} arguments ...", args.Length ) );
 
-			CommandLineArgs extenderArgs = new CommandLineArgs();
+			CommandLineArgs extenderArgs = new CommandLineArgs
+										   {
+											   AutoStart = false,
+											   WorldName = string.Empty,
+											   InstanceName = string.Empty,
+											   NoGui = false,
+											   NoConsole = false,
+											   Debug = false,
+											   GamePath = string.Empty,
+											   NoWcf = false,
+											   Autosave = 0,
+											   WcfPort = 0,
+											   Path = string.Empty,
+											   CloseOnCrash = false,
+											   RestartOnCrash = false,
+											   Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
+										   };
 
 			//Setup the default args
-			extenderArgs.autoStart = false;
-			extenderArgs.worldName = "";
-			extenderArgs.instanceName = "";
-			extenderArgs.noGUI = false;
-			extenderArgs.noConsole = false;
-			extenderArgs.debug = false;
-			extenderArgs.gamePath = "";
-			extenderArgs.noWCF = false;
-			extenderArgs.autosave = 0;
-			extenderArgs.wcfPort = 0;
-			extenderArgs.path = "";
-			extenderArgs.closeOnCrash = false;
-			extenderArgs.restartOnCrash = false;
-			extenderArgs.args = string.Join(" ", args.Select(x => "\"" + x + "\""));
 
 			//Process the args
-			foreach (string arg in args)
+			foreach ( string arg in args )
 			{
-				if (arg.Split('=').Length > 1)
+				if ( arg.Split( '=' ).Length > 1 )
 				{
-					string argName = arg.Split('=')[0];
-					string argValue = arg.Split('=')[1];
+					string argName = arg.Split( '=' )[ 0 ];
+					string argValue = arg.Split( '=' )[ 1 ];
 
-					if (argName.ToLower().Equals("instance"))
+					if ( argName.ToLower( ).Equals( "instance" ) )
 					{
-						if (argValue[argValue.Length - 1] == '"')
-							argValue = argValue.Substring(0, argValue.Length - 1);
-						extenderArgs.instanceName = argValue;
+						if ( argValue[ argValue.Length - 1 ] == '"' )
+							argValue = argValue.Substring( 0, argValue.Length - 1 );
+						extenderArgs.InstanceName = argValue;
 					}
-					else if (argName.ToLower().Equals("gamepath"))
+					else if ( argName.ToLower( ).Equals( "gamepath" ) )
 					{
-						if (argValue[argValue.Length - 1] == '"')
-							argValue = argValue.Substring(0, argValue.Length - 1);
-						extenderArgs.gamePath = argValue;
+						if ( argValue[ argValue.Length - 1 ] == '"' )
+							argValue = argValue.Substring( 0, argValue.Length - 1 );
+						extenderArgs.GamePath = argValue;
 					}
-					else if (argName.ToLower().Equals("autosave"))
+					else if ( argName.ToLower( ).Equals( "autosave" ) )
 					{
 						try
 						{
-							extenderArgs.autosave = int.Parse(argValue);
+							extenderArgs.Autosave = int.Parse( argValue );
 						}
-						catch (Exception)
+						catch
 						{
 							//Do nothing
 						}
 					}
-					else if (argName.ToLower().Equals("wcfport"))
+					else if ( argName.ToLower( ).Equals( "wcfport" ) )
 					{
 						try
 						{
-							extenderArgs.wcfPort = ushort.Parse(argValue);
+							extenderArgs.WcfPort = ushort.Parse( argValue );
 						}
-						catch (Exception)
+						catch
 						{
 							//Do nothing
 						}
 					}
-					else if (argName.ToLower().Equals("path"))
+					else if ( argName.ToLower( ).Equals( "path" ) )
 					{
-						if (argValue[argValue.Length - 1] == '"')
-							argValue = argValue.Substring(0, argValue.Length - 1);
-						extenderArgs.path = argValue;
+						if ( argValue[ argValue.Length - 1 ] == '"' )
+							argValue = argValue.Substring( 0, argValue.Length - 1 );
+						extenderArgs.Path = argValue;
 					}
 				}
 				else
 				{
-					if (arg.ToLower().Equals("autostart"))
+					if ( arg.ToLower( ).Equals( "autostart" ) )
 					{
-						extenderArgs.autoStart = true;
+						extenderArgs.AutoStart = true;
 					}
-					if (arg.ToLower().Equals("nogui"))
+					if ( arg.ToLower( ).Equals( "nogui" ) )
 					{
-						extenderArgs.noGUI = true;
+						extenderArgs.NoGui = true;
 
 						//Implies autostart
-						extenderArgs.autoStart = true;
+						extenderArgs.AutoStart = true;
 					}
-					if (arg.ToLower().Equals("noconsole"))
+					if ( arg.ToLower( ).Equals( "noconsole" ) )
 					{
-						extenderArgs.noConsole = true;
+						extenderArgs.NoConsole = true;
 
 						//Implies nogui and autostart
-						extenderArgs.noGUI = true;
-						extenderArgs.autoStart = true;
+						extenderArgs.NoGui = true;
+						extenderArgs.AutoStart = true;
 					}
-					if (arg.ToLower().Equals("debug"))
+					if ( arg.ToLower( ).Equals( "debug" ) )
 					{
-						extenderArgs.debug = true;
+						extenderArgs.Debug = true;
 					}
-					if (arg.ToLower().Equals("nowcf"))
+					if ( arg.ToLower( ).Equals( "nowcf" ) )
 					{
-						extenderArgs.noWCF = true;
+						extenderArgs.NoWcf = true;
 					}
-					if (arg.ToLower().Equals("closeoncrash"))
+					if ( arg.ToLower( ).Equals( "closeoncrash" ) )
 					{
-						extenderArgs.closeOnCrash = true;
+						extenderArgs.CloseOnCrash = true;
 					}
-					if (arg.ToLower().Equals("autosaveasync"))
+					if ( arg.ToLower( ).Equals( "autosaveasync" ) )
 					{
-						extenderArgs.autoSaveSync = false;
+						extenderArgs.AutoSaveSync = false;
 					}
-					if (arg.ToLower().Equals("autosavesync"))
+					if ( arg.ToLower( ).Equals( "autosavesync" ) )
 					{
-						extenderArgs.autoSaveSync = true;
+						extenderArgs.AutoSaveSync = true;
 					}
-					if (arg.ToLower().Equals("restartoncrash"))
+					if ( arg.ToLower( ).Equals( "restartoncrash" ) )
 					{
-						extenderArgs.restartOnCrash = true;
+						extenderArgs.RestartOnCrash = true;
 					}
-					if (arg.ToLower().Equals("wrr"))
+					if ( arg.ToLower( ).Equals( "wrr" ) )
 					{
-						extenderArgs.worldRequestReplace = true;
+						extenderArgs.WorldRequestReplace = true;
 					}
-					if (arg.ToLower().Equals("wrm"))
+					if ( arg.ToLower( ).Equals( "wrm" ) )
 					{
-						extenderArgs.worldDataModify = true;
+						extenderArgs.WorldDataModify = true;
 					}
 				}
 			}
 
-			if (extenderArgs.noWCF)
-				extenderArgs.wcfPort = 0;
+			if ( extenderArgs.NoWcf )
+				extenderArgs.WcfPort = 0;
 
-			if (!string.IsNullOrEmpty(extenderArgs.path))
+			if ( !string.IsNullOrEmpty( extenderArgs.Path ) )
 			{
-				extenderArgs.instanceName = "";
+				extenderArgs.InstanceName = string.Empty;
 			}
 
-			if (!Environment.UserInteractive)
+			if ( !Environment.UserInteractive )
 			{
-				extenderArgs.noConsole = true;
-				extenderArgs.noGUI = true;
-				extenderArgs.autoStart = true;
+				extenderArgs.NoConsole = true;
+				extenderArgs.NoGui = true;
+				extenderArgs.AutoStart = true;
 			}
 
-			if (extenderArgs.debug)
+			if ( extenderArgs.Debug )
 				SandboxGameAssemblyWrapper.IsDebugging = true;
 
 			try
 			{
-				bool unitTestResult = BasicUnitTestManager.Instance.Run();
-				if (!unitTestResult)
+				bool unitTestResult = BasicUnitTestManager.Instance.Run( );
+				if ( !unitTestResult )
 					SandboxGameAssemblyWrapper.IsInSafeMode = true;
 
-				m_server = Server.Instance;
-				m_server.CommandLineArgs = extenderArgs;
-				m_server.IsWCFEnabled = !extenderArgs.noWCF;
-				m_server.WCFPort = extenderArgs.wcfPort;
-				m_server.Init();
+				_server = Server.Instance;
+				_server.CommandLineArgs = extenderArgs;
+				_server.IsWCFEnabled = !extenderArgs.NoWcf;
+				_server.WCFPort = extenderArgs.WcfPort;
+				_server.Init( );
 
-				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand();
-				guiCommand.command = "gui";
-				guiCommand.callback = ChatCommand_GUI;
-				ChatManager.Instance.RegisterChatCommand(guiCommand);
+				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand { Command = "gui", Callback = ChatCommand_GUI };
+				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
-				if (extenderArgs.autoStart)
+				if ( extenderArgs.AutoStart )
 				{
-					m_server.StartServer();
+					_server.StartServer( );
 				}
 
-				if (!extenderArgs.noGUI)
+				if ( !extenderArgs.NoGui )
 				{
-					Thread uiThread = new Thread(new ThreadStart(StartGUI));
-					uiThread.SetApartmentState(ApartmentState.STA);
-					uiThread.Start();
+					Thread uiThread = new Thread( StartGui );
+					uiThread.SetApartmentState( ApartmentState.STA );
+					uiThread.Start( );
 				}
-				else if(Environment.UserInteractive)
-					Console.ReadLine();
+				else if ( Environment.UserInteractive )
+					Console.ReadLine( );
 			}
-			catch (AutoException eEx)
+			catch ( AutoException eEx )
 			{
-				if (!extenderArgs.noConsole)
-					Console.WriteLine("AutoException - " + eEx.AdditionnalInfo + "\n\r" + eEx.GetDebugString());
-				if (!extenderArgs.noGUI)
-					MessageBox.Show(eEx.AdditionnalInfo + "\n\r" + eEx.GetDebugString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				if ( !extenderArgs.NoConsole )
+					Console.WriteLine( "AutoException - {0}\n\r{1}", eEx.AdditionnalInfo, eEx.GetDebugString( ) );
+				if ( !extenderArgs.NoGui )
+					MessageBox.Show( string.Format( "{0}\n\r{1}", eEx.AdditionnalInfo, eEx.GetDebugString( ) ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
-				if (extenderArgs.noConsole && extenderArgs.noGUI)
-					throw eEx.GetBaseException();
+				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
+					throw eEx.GetBaseException( );
 			}
-			catch (TargetInvocationException ex)
+			catch ( TargetInvocationException ex )
 			{
-				if (!extenderArgs.noConsole)
-					Console.WriteLine("TargetInvocationException - " + ex.ToString() + "\n\r" + ex.InnerException.ToString());
-				if (!extenderArgs.noGUI)
-					MessageBox.Show(ex.ToString() + "\n\r" + ex.InnerException.ToString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				if ( !extenderArgs.NoConsole )
+					Console.WriteLine( "TargetInvocationException - {0}\n\r{1}", ex, ex.InnerException );
+				if ( !extenderArgs.NoGui )
+					MessageBox.Show( string.Format( "{0}\n\r{1}", ex, ex.InnerException ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
-				if (extenderArgs.noConsole && extenderArgs.noGUI)
-					throw ex;
+				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
+					throw;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				if (!extenderArgs.noConsole)
-					Console.WriteLine("Exception - " + ex.ToString());
-				if (!extenderArgs.noGUI)
-					MessageBox.Show(ex.ToString(), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				if ( !extenderArgs.NoConsole )
+					Console.WriteLine( "Exception - {0}", ex );
+				if ( !extenderArgs.NoGui )
+					MessageBox.Show( ex.ToString( ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
-				if (extenderArgs.noConsole && extenderArgs.noGUI)
-					throw ex;
+				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
+					throw;
 			}
 		}
 
-		private static void Stop()
+		private static void Stop( )
 		{
-			if(m_server != null && m_server.IsRunning)
-				m_server.StopServer();
-			if (m_serverExtenderForm != null && m_serverExtenderForm.Visible == true)
-				m_serverExtenderForm.Close();
+			if ( _server != null && _server.IsRunning )
+				_server.StopServer( );
+			if ( _serverExtenderForm != null && _serverExtenderForm.Visible )
+				_serverExtenderForm.Close( );
 
-			if (m_server.ServerThread != null)
+			if ( _server.ServerThread != null )
 			{
-				m_server.ServerThread.Join(20000);
+				_server.ServerThread.Join( 20000 );
 			}
 		}
 
-		public static void Application_ThreadException(Object sender, ThreadExceptionEventArgs e)
+		public static void Application_ThreadException( Object sender, ThreadExceptionEventArgs e )
 		{
-			Console.WriteLine("Application.ThreadException - " + e.Exception.ToString());
+			Console.WriteLine( "Application.ThreadException - {0}", e.Exception );
 
-			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
+			if ( LogManager.APILog != null && LogManager.APILog.LogEnabled )
 			{
-				LogManager.APILog.WriteLine("Application.ThreadException");
-				LogManager.APILog.WriteLine(e.Exception);
+				LogManager.APILog.WriteLine( "Application.ThreadException" );
+				LogManager.APILog.WriteLine( e.Exception );
 			}
-			if (LogManager.ErrorLog != null && LogManager.ErrorLog.LogEnabled)
+			if ( LogManager.ErrorLog != null && LogManager.ErrorLog.LogEnabled )
 			{
-				LogManager.ErrorLog.WriteLine("Application.ThreadException");
-				LogManager.ErrorLog.WriteLine(e.Exception);
+				LogManager.ErrorLog.WriteLine( "Application.ThreadException" );
+				LogManager.ErrorLog.WriteLine( e.Exception );
 			}
 		}
 
-		public static void AppDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+		public static void AppDomain_UnhandledException( Object sender, UnhandledExceptionEventArgs e )
 		{
-			Console.WriteLine("AppDomain.UnhandledException - " + ((Exception)e.ExceptionObject).ToString());
+			Console.WriteLine( "AppDomain.UnhandledException - {0}", e.ExceptionObject );
 
-			if (LogManager.APILog != null && LogManager.APILog.LogEnabled)
+			if ( LogManager.APILog != null && LogManager.APILog.LogEnabled )
 			{
-				LogManager.APILog.WriteLine("AppDomain.UnhandledException");
-				LogManager.APILog.WriteLine((Exception)e.ExceptionObject);
+				LogManager.APILog.WriteLine( "AppDomain.UnhandledException" );
+				LogManager.APILog.WriteLine( (Exception)e.ExceptionObject );
 			}
-			if (LogManager.ErrorLog != null && LogManager.ErrorLog.LogEnabled)
+			if ( LogManager.ErrorLog != null && LogManager.ErrorLog.LogEnabled )
 			{
-				LogManager.ErrorLog.WriteLine("AppDomain.UnhandledException");
-				LogManager.ErrorLog.WriteLine((Exception)e.ExceptionObject);
+				LogManager.ErrorLog.WriteLine( "AppDomain.UnhandledException" );
+				LogManager.ErrorLog.WriteLine( (Exception)e.ExceptionObject );
 			}
 		}
 
-		static void ChatCommand_GUI(ChatManager.ChatEvent chatEvent)
+		static void ChatCommand_GUI( ChatManager.ChatEvent chatEvent )
 		{
-			Thread uiThread = new Thread(new ThreadStart(StartGUI));
-			uiThread.SetApartmentState(ApartmentState.STA);
-			uiThread.Start();
+			Thread uiThread = new Thread( StartGui );
+			uiThread.SetApartmentState( ApartmentState.STA );
+			uiThread.Start( );
 		}
 
 		[STAThread]
-		static void StartGUI()
+		static void StartGui( )
 		{
-			if (!Environment.UserInteractive)
+			if ( !Environment.UserInteractive )
 				return;
 
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			if (m_serverExtenderForm == null || m_serverExtenderForm.IsDisposed)
-				m_serverExtenderForm = new SEServerExtender(m_server);
-			else if (m_serverExtenderForm.Visible)
+			Application.EnableVisualStyles( );
+			Application.SetCompatibleTextRenderingDefault( false );
+			if ( _serverExtenderForm == null || _serverExtenderForm.IsDisposed )
+				_serverExtenderForm = new SEServerExtender( _server );
+			else if ( _serverExtenderForm.Visible )
 				return;
 
-			Application.Run(m_serverExtenderForm);
+			Application.Run( _serverExtenderForm );
 		}
 	}
 }

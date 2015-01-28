@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.VRageData;
-using Sandbox.Definitions;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract(Name = "DoorEntityProxy")]
+	[DataContract( Name = "DoorEntityProxy" )]
 	public class DoorEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -29,30 +21,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string DoorSetStateMethod = "2A0572A89EB6003FDC46A6D8420ECF79";
 		public static string DoorBroadcastStateMethod = "89F6DE95D0A6749BEC3F5A2D5C1F451C";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public DoorEntity(CubeGridEntity parent, MyObjectBuilder_Door definition)
-			: base(parent, definition)
+		public DoorEntity( CubeGridEntity parent, MyObjectBuilder_Door definition )
+			: base( parent, definition )
 		{
 			m_state = definition.State;
 		}
 
-		public DoorEntity(CubeGridEntity parent, MyObjectBuilder_Door definition, Object backingObject)
-			: base(parent, definition, backingObject)
+		public DoorEntity( CubeGridEntity parent, MyObjectBuilder_Door definition, Object backingObject )
+			: base( parent, definition, backingObject )
 		{
 			m_state = definition.State;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Door")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Door" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_Door ObjectBuilder
 		{
 			get
@@ -68,96 +60,96 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[IgnoreDataMember]
-		[Category("Door")]
-		[ReadOnly(true)]
+		[Category( "Door" )]
+		[ReadOnly( true )]
 		public float Opening
 		{
 			get { return ObjectBuilder.Opening; }
 		}
 
 		[DataMember]
-		[Category("Door")]
+		[Category( "Door" )]
 		public bool State
 		{
 			get
 			{
-				if(BackingObject == null || ActualObject == null)
+				if ( BackingObject == null || ActualObject == null )
 					return ObjectBuilder.State;
 
-				return GetDoorState();
+				return GetDoorState( );
 			}
 			set
 			{
-				if (State == value) return;
+				if ( State == value ) return;
 				m_state = value;
 				ObjectBuilder.State = value;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateDoor;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				bool result = true;
 
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(DoorNamespace, DoorClass);
-				if (type == null)
-					throw new Exception("Could not find internal type for DoorEntity");
-				result &= HasMethod(type, DoorGetStateMethod);
-				result &= HasMethod(type, DoorSetStateMethod);
-				result &= HasMethod(type, DoorBroadcastStateMethod);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( DoorNamespace, DoorClass );
+				if ( type == null )
+					throw new Exception( "Could not find internal type for DoorEntity" );
+				result &= HasMethod( type, DoorGetStateMethod );
+				result &= HasMethod( type, DoorSetStateMethod );
+				result &= HasMethod( type, DoorBroadcastStateMethod );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
 		#region "Internal"
 
-		protected bool GetDoorState()
+		protected bool GetDoorState( )
 		{
 			try
 			{
-				bool result = (bool)InvokeEntityMethod(ActualObject, DoorGetStateMethod);
+				bool result = (bool)InvokeEntityMethod( ActualObject, DoorGetStateMethod );
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return m_state;
 			}
 		}
 
-		protected void InternalUpdateDoor()
+		protected void InternalUpdateDoor( )
 		{
 			try
 			{
-				InvokeEntityMethod(ActualObject, DoorSetStateMethod, new object[] { m_state });
-				InvokeEntityMethod(ActualObject, DoorBroadcastStateMethod, new object[] { m_state });
+				InvokeEntityMethod( ActualObject, DoorSetStateMethod, new object[ ] { m_state } );
+				InvokeEntityMethod( ActualObject, DoorBroadcastStateMethod, new object[ ] { m_state } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 }

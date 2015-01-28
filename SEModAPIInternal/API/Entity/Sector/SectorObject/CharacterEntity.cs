@@ -1,23 +1,17 @@
-﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization;
-
+using Microsoft.Xml.Serialization.GeneratedAssembly;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Game.Weapons;
-using Sandbox.Common;
-
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
-using System.Reflection;
-
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract(Name = "CharacterEntityProxy")]
+	[DataContract( Name = "CharacterEntityProxy" )]
 	public class CharacterEntity : BaseEntity
 	{
 		#region "Attributes"
@@ -30,8 +24,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public static string CharacterClass = "3B71F31E6039CAE9D8706B5F32FE468D";
 
 		public static string CharacterGetHealthMethod = "7047AFF5D44FC8A44572E92DBAD13011";
-//		public static string CharacterDamageCharacterMethod = "DoDamage"; //
+
+		//		public static string CharacterDamageCharacterMethod = "DoDamage"; //
 		public static string CharacterDamageCharacterMethod = "CF6EEF37B5AE4047E65CA4A0BB43F774";
+
 		public static string CharacterSetHealthMethod = "92A0500FD8772AB1AC3A6F79FD2A1C72";
 		public static string CharacterGetBatteryMethod = "CF72A89940254CB8F535F177150FC743";
 		public static string CharacterGetInventoryMethod = "GetInventory";
@@ -49,81 +45,81 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public static string CharacterBatteryCapacityField = "0BAEC0F968A4BEAE30E7C46D9406765C";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CharacterEntity(FileInfo characterFile)
-			: base(null)
+		public CharacterEntity( FileInfo characterFile )
+			: base( null )
 		{
-			MyObjectBuilder_Character character = BaseObjectManager.LoadContentFile<MyObjectBuilder_Character, MyObjectBuilder_CharacterSerializer>(characterFile);
+			MyObjectBuilder_Character character = BaseObjectManager.LoadContentFile<MyObjectBuilder_Character, MyObjectBuilder_CharacterSerializer>( characterFile );
 			ObjectBuilder = character;
 
-			m_inventory = new InventoryEntity(character.Inventory);
+			m_inventory = new InventoryEntity( character.Inventory );
 		}
 
-		public CharacterEntity(MyObjectBuilder_Character definition)
-			: base(definition)
+		public CharacterEntity( MyObjectBuilder_Character definition )
+			: base( definition )
 		{
-			m_inventory = new InventoryEntity(definition.Inventory);
+			m_inventory = new InventoryEntity( definition.Inventory );
 		}
 
-		public CharacterEntity(MyObjectBuilder_Character definition, Object backingObject)
-			: base(definition, backingObject)
+		public CharacterEntity( MyObjectBuilder_Character definition, Object backingObject )
+			: base( definition, backingObject )
 		{
-			m_inventory = new InventoryEntity(definition.Inventory, InternalGetCharacterInventory());
-			m_networkManager = new CharacterEntityNetworkManager(this, GetCharacterNetworkManager());
+			m_inventory = new InventoryEntity( definition.Inventory, InternalGetCharacterInventory( ) );
+			m_networkManager = new CharacterEntityNetworkManager( this, GetCharacterNetworkManager( ) );
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCharacterCreated;
 			newEvent.timestamp = DateTime.Now;
 			newEvent.entity = this;
 			newEvent.priority = 1;
-			EntityEventManager.Instance.AddEvent(newEvent);
+			EntityEventManager.Instance.AddEvent( newEvent );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
 			get
 			{
-				if (m_internalType == null)
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CharacterNamespace, CharacterClass);
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterNamespace, CharacterClass );
 				return m_internalType;
 			}
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public override string Name
 		{
 			get
 			{
-				if(BackingObject == null || SteamId == 0)
+				if ( BackingObject == null || SteamId == 0 )
 					return DisplayName;
 
-				string name = PlayerMap.Instance.GetPlayerNameFromSteamId(SteamId);
+				string name = PlayerMap.Instance.GetPlayerNameFromSteamId( SteamId );
 				return name;
 			}
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[ReadOnly( true )]
 		public override string DisplayName
 		{
 			get { return ObjectBuilder.DisplayName; }
 			set
 			{
-				if (ObjectBuilder.DisplayName == value) return;
+				if ( ObjectBuilder.DisplayName == value ) return;
 				ObjectBuilder.DisplayName = value;
 				Changed = true;
 
@@ -132,9 +128,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_Character ObjectBuilder
 		{
 			get
@@ -142,7 +138,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				MyObjectBuilder_Character character = (MyObjectBuilder_Character)base.ObjectBuilder;
 
 				//Make sure the inventory is up-to-date
-				Inventory.RefreshInventory();
+				Inventory.RefreshInventory( );
 				character.Inventory = Inventory.ObjectBuilder;
 
 				return character;
@@ -154,66 +150,66 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Character")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public MyObjectBuilder_Battery Battery
 		{
 			get { return ObjectBuilder.Battery; }
 			set
 			{
-				if (ObjectBuilder.Battery == value) return;
+				if ( ObjectBuilder.Battery == value ) return;
 				ObjectBuilder.Battery = value;
 				Changed = true;
 			}
 		}
 
 		[DataMember]
-		[Category("Character")]
+		[Category( "Character" )]
 		public float BatteryLevel
 		{
 			get
 			{
 				float originalValue = Battery.CurrentCapacity;
-				float percentageValue = (float)Math.Round(originalValue * 10000000, 2);
+				float percentageValue = (float)Math.Round( originalValue * 10000000, 2 );
 				return percentageValue;
 			}
 			set
 			{
 				float originalValue = Battery.CurrentCapacity;
-				float percentageValue = (float)Math.Round(originalValue * 10000000, 2);
-				if (percentageValue == value) return;
+				float percentageValue = (float)Math.Round( originalValue * 10000000, 2 );
+				if ( percentageValue == value ) return;
 				Battery.CurrentCapacity = value / 10000000;
 				Changed = true;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalUpdateBatteryLevel;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 			}
 		}
 
 		[DataMember]
-		[Category("Character")]
+		[Category( "Character" )]
 		public float Health
 		{
 			get
 			{
-				float health = ObjectBuilder.Health.GetValueOrDefault(-1);
-				if (BackingObject != null)
-					if (health <= 0)
-						health = InternalGetCharacterHealth();
+				float health = ObjectBuilder.Health.GetValueOrDefault( -1 );
+				if ( BackingObject != null )
+					if ( health <= 0 )
+						health = InternalGetCharacterHealth( );
 				return health;
 			}
 			set
 			{
-				if (Health == value) return;
+				if ( Health == value ) return;
 
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
 					Action action = InternalDamageCharacter;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 				}
 
 				ObjectBuilder.Health = value;
@@ -222,9 +218,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[IgnoreDataMember]
-		[Category("Character")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public InventoryEntity Inventory
 		{
 			get
@@ -234,9 +230,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public bool DampenersEnabled
 		{
 			get { return ObjectBuilder.DampenersEnabled; }
@@ -247,9 +243,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public bool JetpackEnabled
 		{
 			get { return ObjectBuilder.JetpackEnabled; }
@@ -260,9 +256,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public bool LightEnabled
 		{
 			get { return ObjectBuilder.LightEnabled; }
@@ -273,176 +269,176 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		}
 
 		[DataMember]
-		[Category("Character")]
-		[Browsable(true)]
-		[ReadOnly(true)]
+		[Category( "Character" )]
+		[Browsable( true )]
+		[ReadOnly( true )]
 		public ulong SteamId
 		{
-			get { return PlayerMap.Instance.GetSteamId(EntityId); }
+			get { return PlayerMap.Instance.GetSteamId( EntityId ); }
 			private set
 			{
 				//Do nothing!
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for CharacterEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for CharacterEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type, CharacterGetHealthMethod);
-				result &= BaseObject.HasMethod(type, CharacterDamageCharacterMethod);
-				result &= BaseObject.HasMethod(type, CharacterSetHealthMethod);
-				result &= BaseObject.HasMethod(type, CharacterGetBatteryMethod);
-				result &= BaseObject.HasMethod(type, CharacterGetInventoryMethod);
-				result &= BaseObject.HasMethod(type, CharacterGetDisplayNameMethod);
-				result &= BaseObject.HasMethod(type, CharacterGetNetworkManagerMethod);
-				result &= BaseObject.HasField(type, CharacterItemListField);
+				result &= BaseObject.HasMethod( type, CharacterGetHealthMethod );
+				result &= BaseObject.HasMethod( type, CharacterDamageCharacterMethod );
+				result &= BaseObject.HasMethod( type, CharacterSetHealthMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetBatteryMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetInventoryMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetDisplayNameMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetNetworkManagerMethod );
+				result &= BaseObject.HasField( type, CharacterItemListField );
 
-				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CharacterBatteryNamespace, CharacterBatteryClass);
-				if (type2 == null)
-					throw new Exception("Could not find battery type for CharacterEntity");
-				result &= BaseObject.HasMethod(type2, CharacterBatterySetBatteryCapacityMethod);
-				result &= BaseObject.HasField(type2, CharacterBatteryCapacityField);
+				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterBatteryNamespace, CharacterBatteryClass );
+				if ( type2 == null )
+					throw new Exception( "Could not find battery type for CharacterEntity" );
+				result &= BaseObject.HasMethod( type2, CharacterBatterySetBatteryCapacityMethod );
+				result &= BaseObject.HasField( type2, CharacterBatteryCapacityField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public override void Dispose()
+		public override void Dispose( )
 		{
 			m_isDisposed = true;
 
-			LogManager.APILog.WriteLine("Disposing CharacterEntity '" + Name + "'");
+			LogManager.APILog.WriteLine( "Disposing CharacterEntity '" + Name + "'" );
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent();
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCharacterDeleted;
 			newEvent.timestamp = DateTime.Now;
 			newEvent.entity = this;
 			newEvent.priority = 1;
-			EntityEventManager.Instance.AddEvent(newEvent);
+			EntityEventManager.Instance.AddEvent( newEvent );
 
-			base.Dispose();
+			base.Dispose( );
 		}
 
-		public override void Export(FileInfo fileInfo)
+		public override void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_Character, MyObjectBuilder_CharacterSerializer>(ObjectBuilder, fileInfo);
+			BaseObjectManager.SaveContentFile<MyObjectBuilder_Character, MyObjectBuilder_CharacterSerializer>( ObjectBuilder, fileInfo );
 		}
 
 		#region "Internal"
 
-		protected Object GetCharacterNetworkManager()
+		protected Object GetCharacterNetworkManager( )
 		{
-			Object result = InvokeEntityMethod(BackingObject, CharacterGetNetworkManagerMethod);
+			Object result = InvokeEntityMethod( BackingObject, CharacterGetNetworkManagerMethod );
 			return result;
 		}
 
-		protected string InternalGetDisplayName()
+		protected string InternalGetDisplayName( )
 		{
 			try
 			{
-				string name = (string)InvokeEntityMethod(BackingObject, CharacterGetDisplayNameMethod, new object[] { });
+				string name = (string)InvokeEntityMethod( BackingObject, CharacterGetDisplayNameMethod, new object[ ] { } );
 
 				return name;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return "";
 			}
 		}
 
-		protected float InternalGetCharacterHealth()
+		protected float InternalGetCharacterHealth( )
 		{
 			try
 			{
-				float health = (float)InvokeEntityMethod(BackingObject, CharacterGetHealthMethod, new object[] { });
+				float health = (float)InvokeEntityMethod( BackingObject, CharacterGetHealthMethod, new object[ ] { } );
 
 				return health;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return -1;
 			}
 		}
 
-		protected void InternalDamageCharacter()
+		protected void InternalDamageCharacter( )
 		{
 			try
 			{
-				float damage = InternalGetCharacterHealth() - Health;
+				float damage = InternalGetCharacterHealth( ) - Health;
 				MyDamageType damageType = MyDamageType.Unknown;
-				if (Health <= 0)
+				if ( Health <= 0 )
 					damageType = MyDamageType.Suicide;
-				InvokeEntityMethod(BackingObject, CharacterDamageCharacterMethod, new object[] { damage, damageType, true });
+				InvokeEntityMethod( BackingObject, CharacterDamageCharacterMethod, new object[ ] { damage, damageType, true } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected Object InternalGetCharacterBattery()
+		protected Object InternalGetCharacterBattery( )
 		{
 			try
 			{
-				Object battery = InvokeEntityMethod(BackingObject, CharacterGetBatteryMethod, new object[] { });
+				Object battery = InvokeEntityMethod( BackingObject, CharacterGetBatteryMethod, new object[ ] { } );
 
 				return battery;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		protected void InternalUpdateBatteryLevel()
+		protected void InternalUpdateBatteryLevel( )
 		{
 			try
 			{
 				float capacity = Battery.CurrentCapacity;
-				Object battery = InternalGetCharacterBattery();
-				InvokeEntityMethod(battery, CharacterBatterySetBatteryCapacityMethod, new object[] { capacity });
+				Object battery = InternalGetCharacterBattery( );
+				InvokeEntityMethod( battery, CharacterBatterySetBatteryCapacityMethod, new object[ ] { capacity } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected Object InternalGetCharacterInventory()
+		protected Object InternalGetCharacterInventory( )
 		{
 			try
 			{
-				Object inventory = InvokeEntityMethod(BackingObject, CharacterGetInventoryMethod, new object[] { 0 });
+				Object inventory = InvokeEntityMethod( BackingObject, CharacterGetInventoryMethod, new object[ ] { 0 } );
 
 				return inventory;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return null;
 			}
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	public class CharacterEntityNetworkManager
@@ -467,20 +463,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		//7415
 		//7416
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public CharacterEntityNetworkManager(CharacterEntity parent, Object backingObject)
+		public CharacterEntityNetworkManager( CharacterEntity parent, Object backingObject )
 		{
 			m_parent = parent;
 			m_backingObject = backingObject;
 
 			Action action = RegisterPacketHandlers;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -488,7 +484,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(CharacterNetManagerNamespace, CharacterNetManagerClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterNetManagerNamespace, CharacterNetManagerClass );
 				return type;
 			}
 		}
@@ -498,34 +494,34 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			get { return m_backingObject; }
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for CharacterEntityNetworkManager");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for CharacterEntityNetworkManager" );
 				bool result = true;
 				//result &= BaseObject.HasMethod(type, CharacterGetHealthMethod);
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected static void RegisterPacketHandlers()
+		protected static void RegisterPacketHandlers( )
 		{
 			try
 			{
-				if (m_isRegistered)
+				if ( m_isRegistered )
 					return;
 
 				bool result = true;
@@ -542,57 +538,57 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				method = typeof(CharacterEntityNetworkManager).GetMethod("ReceiveSpawnPacket", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 				result &= NetworkManager.RegisterCustomPacketHandler(PacketRegistrationType.Static, packetType, method, InternalType);
 				*/
-				if (!result)
+				if ( !result )
 					return;
 
 				m_isRegistered = true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected static void ReceiveMainDataPacket<T>(Object instanceNetManager, ref T packet, Object masterNetManager) where T : struct
+		protected static void ReceiveMainDataPacket<T>( Object instanceNetManager, ref T packet, Object masterNetManager ) where T : struct
 		{
 			try
 			{
-				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod(InternalType, "4055A1176BF0FA0C554491A3206CD656");
-				basePacketHandlerMethod.Invoke(null, new object[] { instanceNetManager, packet, masterNetManager });
+				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, "4055A1176BF0FA0C554491A3206CD656" );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { instanceNetManager, packet, masterNetManager } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected static void ReceiveOrientationPacket<T>(Object instanceNetManager, ref T packet, Object masterNetManager) where T : struct
+		protected static void ReceiveOrientationPacket<T>( Object instanceNetManager, ref T packet, Object masterNetManager ) where T : struct
 		{
 			try
 			{
-				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod(InternalType, "F990CA0A818DDC8A56001B3D630EE54C");
-				basePacketHandlerMethod.Invoke(null, new object[] { instanceNetManager, packet, masterNetManager });
+				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, "F990CA0A818DDC8A56001B3D630EE54C" );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { instanceNetManager, packet, masterNetManager } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		protected static void ReceiveSpawnPacket<T>(ref T packet, Object masterNetManager) where T : struct
+		protected static void ReceiveSpawnPacket<T>( ref T packet, Object masterNetManager ) where T : struct
 		{
 			try
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType("AAC05F537A6F0F6775339593FBDFC564", "7B40EEB62BF9EBADF967050BFA3976CA");
-				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod(type, "364216D779218E8D22F3991B8FBA170A");
-				basePacketHandlerMethod.Invoke(null, new object[] { packet, masterNetManager });
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( "AAC05F537A6F0F6775339593FBDFC564", "7B40EEB62BF9EBADF967050BFA3976CA" );
+				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( type, "364216D779218E8D22F3991B8FBA170A" );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { packet, masterNetManager } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }

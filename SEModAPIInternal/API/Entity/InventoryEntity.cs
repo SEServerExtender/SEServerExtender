@@ -2,20 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
-
 using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Common.ObjectBuilders.Serializer;
-
-using SEModAPI.API;
-using SEModAPI.API.Definitions;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-
-using VRage;
 using Sandbox.Definitions;
 using Sandbox.ModAPI;
+using SEModAPIInternal.API.Common;
+using SEModAPIInternal.Support;
+using VRage;
+
 //using Sandbox.ModAPI.Interfaces;
 
 namespace SEModAPIInternal.API.Entity
@@ -28,8 +22,8 @@ namespace SEModAPIInternal.API.Entity
 	}
 
 	// IMyInventory
-	[DataContract(Name = "InventoryEntityProxy")]
-	[KnownType(typeof(InventoryItemEntity))]
+	[DataContract( Name = "InventoryEntityProxy" )]
+	[KnownType( typeof( InventoryItemEntity ) )]
 	public class InventoryEntity : BaseObject
 	{
 		#region "Attributes"
@@ -50,12 +44,12 @@ namespace SEModAPIInternal.API.Entity
 		public static string InventoryAddItemAmountMethod = "FB009222ACFCEACDC546801B06DDACB6";
 		public static string InventoryRemoveItemAmountMethod = "623B0AC0E7D9C30410680C76A55F0C6B";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public InventoryEntity(MyObjectBuilder_Inventory definition)
-			: base(definition)
+		public InventoryEntity( MyObjectBuilder_Inventory definition )
+			: base( definition )
 		{
 			/*
 			m_itemManager = new InventoryItemManager(this);
@@ -68,48 +62,48 @@ namespace SEModAPIInternal.API.Entity
 				itemList.Add(newItem);
 			}
 			m_itemManager.Load(itemList);
-			 */ 
-			m_itemDeltaQueue = new Queue<InventoryDelta>();
+			 */
+			m_itemDeltaQueue = new Queue<InventoryDelta>( );
 		}
 
-		public InventoryEntity(MyObjectBuilder_Inventory definition, Object backingObject)
-			: base(definition, backingObject)
+		public InventoryEntity( MyObjectBuilder_Inventory definition, Object backingObject )
+			: base( definition, backingObject )
 		{
 			//m_itemManager = new InventoryItemManager(this, backingObject, InventoryGetItemListMethod);
 			//m_itemManager.Refresh();
-			m_itemDeltaQueue = new Queue<InventoryDelta>();
+			m_itemDeltaQueue = new Queue<InventoryDelta>( );
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		[IgnoreDataMember]
-		[Category("Container Inventory")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Container Inventory" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal static Type InternalType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(InventoryNamespace, InventoryClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( InventoryNamespace, InventoryClass );
 				return type;
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Inventory")]
-		[ReadOnly(true)]
+		[Category( "Container Inventory" )]
+		[ReadOnly( true )]
 		public override string Name
 		{
 			get { return "Inventory"; }
 		}
 
 		[IgnoreDataMember]
-		[Category("Object")]
-		[Browsable(false)]
-		[ReadOnly(true)]
-		[Description("Object builder data of the object")]
+		[Category( "Object" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		[Description( "Object builder data of the object" )]
 		internal new MyObjectBuilder_Inventory ObjectBuilder
 		{
 			get
@@ -125,67 +119,67 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Inventory")]
-		[ReadOnly(true)]
+		[Category( "Container Inventory" )]
+		[ReadOnly( true )]
 		public uint NextItemId
 		{
-			get 
+			get
 			{
 				uint result = 0;
-				if (BackingObject != null)
+				if ( BackingObject != null )
 				{
-					SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+					SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 					{
 						IMyInventory inventory = (IMyInventory)BackingObject;
-						result = (uint)inventory.GetItems().Count;
-					}));
+						result = (uint)inventory.GetItems( ).Count;
+					} ) );
 				}
 
 				return result;
 				/*
                 MyObjectBuilder_Inventory inventory = (MyObjectBuilder_Inventory)InvokeEntityMethod(BackingObject, InventoryGetObjectBuilderMethod);
                 ObjectBuilder = inventory;
-                return ObjectBuilder.nextItemId; 
-				 */ 
-            }
+                return ObjectBuilder.nextItemId;
+				 */
+			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Inventory")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Container Inventory" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public List<InventoryItemEntity> Items
 		{
 			get
 			{
 				try
 				{
-					List<InventoryItemEntity> newList = new List<InventoryItemEntity>();
+					List<InventoryItemEntity> newList = new List<InventoryItemEntity>( );
 
-					SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+					SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 						{
-							if (BackingObject != null)
+							if ( BackingObject != null )
 							{
 								IMyInventory myInventory = (IMyInventory)BackingObject;
-								foreach (Sandbox.ModAPI.Interfaces.IMyInventoryItem item in myInventory.GetItems())
+								foreach ( Sandbox.ModAPI.Interfaces.IMyInventoryItem item in myInventory.GetItems( ) )
 								{
-									InventoryItemEntity newItem = new InventoryItemEntity(item, this);
-									newList.Add(newItem);
+									InventoryItemEntity newItem = new InventoryItemEntity( item, this );
+									newList.Add( newItem );
 								}
 							}
-						}));
+						} ) );
 
 					return newList;
 
 					/*
 					List<InventoryItemEntity> newList = m_itemManager.GetTypedInternalData<InventoryItemEntity>();
 					return newList;
-					 */ 
+					 */
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
-					return new List<InventoryItemEntity>();
+					LogManager.ErrorLog.WriteLine( ex );
+					return new List<InventoryItemEntity>( );
 				}
 			}
 			private set
@@ -194,49 +188,48 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for InventoryEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for InventoryEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type, InventoryCalculateMassVolumeMethod);
-				result &= BaseObject.HasMethod(type, InventoryGetTotalVolumeMethod);
-				result &= BaseObject.HasMethod(type, InventoryGetTotalMassMethod);
-				result &= BaseObject.HasMethod(type, InventorySetFromObjectBuilderMethod);
-				result &= BaseObject.HasMethod(type, InventoryGetObjectBuilderMethod);
-				result &= BaseObject.HasMethod(type, InventoryCleanUpMethod);
-				result &= BaseObject.HasMethod(type, InventoryGetItemListMethod);
-				result &= BaseObject.HasMethod(type, InventoryAddItemAmountMethod);
+				result &= BaseObject.HasMethod( type, InventoryCalculateMassVolumeMethod );
+				result &= BaseObject.HasMethod( type, InventoryGetTotalVolumeMethod );
+				result &= BaseObject.HasMethod( type, InventoryGetTotalMassMethod );
+				result &= BaseObject.HasMethod( type, InventorySetFromObjectBuilderMethod );
+				result &= BaseObject.HasMethod( type, InventoryGetObjectBuilderMethod );
+				result &= BaseObject.HasMethod( type, InventoryCleanUpMethod );
+				result &= BaseObject.HasMethod( type, InventoryGetItemListMethod );
+				result &= BaseObject.HasMethod( type, InventoryAddItemAmountMethod );
 
-				Type[] argTypes = new Type[3];
-				argTypes[0] = typeof(MyFixedPoint);
-				argTypes[1] = typeof(MyObjectBuilder_PhysicalObject);
-				argTypes[2] = typeof(bool);
-				result &= BaseObject.HasMethod(type, InventoryRemoveItemAmountMethod, argTypes);
+				Type[ ] argTypes = new Type[ 3 ];
+				argTypes[ 0 ] = typeof( MyFixedPoint );
+				argTypes[ 1 ] = typeof( MyObjectBuilder_PhysicalObject );
+				argTypes[ 2 ] = typeof( bool );
+				result &= BaseObject.HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public InventoryItemEntity NewEntry()
+		public InventoryItemEntity NewEntry( )
 		{
 			/*
 			MyObjectBuilder_InventoryItem defaults = new MyObjectBuilder_InventoryItem();
 			SerializableDefinitionId itemTypeId = new SerializableDefinitionId(typeof(MyObjectBuilder_Ore), "Stone");
 
-            
 			//defaults.PhysicalContent = (MyObjectBuilder_PhysicalObject)MyObjectBuilder_PhysicalObject.CreateNewObject(itemTypeId);
             defaults.PhysicalContent = (MyObjectBuilder_PhysicalObject)MyObjectBuilderSerializer.CreateNewObject(itemTypeId);
 			defaults.Amount = 1;
@@ -255,7 +248,7 @@ namespace SEModAPIInternal.API.Entity
 			return null;
 		}
 
-		public bool NewEntry(InventoryItemEntity source)
+		public bool NewEntry( InventoryItemEntity source )
 		{
 			/*
 			m_itemManager.AddEntry<InventoryItemEntity>(NextItemId, source);
@@ -268,27 +261,27 @@ namespace SEModAPIInternal.API.Entity
 			RefreshInventory();
 			*/
 
-			if (BackingObject != null)
+			if ( BackingObject != null )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 					{
 						IMyInventory inventory = (IMyInventory)BackingObject;
-						inventory.AddItems((MyFixedPoint)source.Amount, source.PhysicalContent);
-					}));
+						inventory.AddItems( (MyFixedPoint)source.Amount, source.PhysicalContent );
+					} ) );
 			}
 
 			return true;
 		}
 
-		public bool DeleteEntry(InventoryItemEntity source)
+		public bool DeleteEntry( InventoryItemEntity source )
 		{
-			if (BackingObject != null)
+			if ( BackingObject != null )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 				{
 					IMyInventory myInventory = (IMyInventory)BackingObject;
-					myInventory.RemoveItems(source.ItemId);
-				}));
+					myInventory.RemoveItems( source.ItemId );
+				} ) );
 			}
 
 			return true;
@@ -297,10 +290,10 @@ namespace SEModAPIInternal.API.Entity
 			bool result = m_itemManager.DeleteEntry(source);
 			RefreshInventory();
 			return result;
-			 */ 
+			 */
 		}
 
-		public void RefreshInventory()
+		public void RefreshInventory( )
 		{
 			try
 			{
@@ -324,34 +317,34 @@ namespace SEModAPIInternal.API.Entity
 					}
 					m_itemManager.Load(itemList);
 				}
-				 */ 
+				 */
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
 		[Obsolete]
-		public void UpdateItemAmount(InventoryItemEntity item, Decimal newAmount)
+		public void UpdateItemAmount( InventoryItemEntity item, Decimal newAmount )
 		{
-			UpdateItemAmount(item, (float)newAmount);
+			UpdateItemAmount( item, (float)newAmount );
 		}
 
-		public void UpdateItemAmount(InventoryItemEntity item, float newAmount)
+		public void UpdateItemAmount( InventoryItemEntity item, float newAmount )
 		{
-			if (BackingObject != null)
+			if ( BackingObject != null )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 				{
 					IMyInventory myInventory = (IMyInventory)BackingObject;
-					if (newAmount == 0)
-						myInventory.RemoveItems(item.ItemId);
-					else if (newAmount > item.Amount)
-						myInventory.AddItems((MyFixedPoint)(newAmount - item.Amount), item.PhysicalContent, (int)item.ItemId);
-					else if (newAmount < item.Amount)
-						myInventory.RemoveItemsAt((int)item.ItemId, (MyFixedPoint)(item.Amount - newAmount), true);
-				}));
+					if ( newAmount == 0 )
+						myInventory.RemoveItems( item.ItemId );
+					else if ( newAmount > item.Amount )
+						myInventory.AddItems( (MyFixedPoint)( newAmount - item.Amount ), item.PhysicalContent, (int)item.ItemId );
+					else if ( newAmount < item.Amount )
+						myInventory.RemoveItemsAt( (int)item.ItemId, (MyFixedPoint)( item.Amount - newAmount ), true );
+				} ) );
 			}
 
 			/*
@@ -364,12 +357,12 @@ namespace SEModAPIInternal.API.Entity
 
 			Action action = InternalUpdateItemAmount;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
-			 */ 
+			 */
 		}
 
 		#region "Internal"
 
-		protected void InternalUpdateItemAmount()
+		protected void InternalUpdateItemAmount( )
 		{
 			try
 			{
@@ -408,21 +401,21 @@ namespace SEModAPIInternal.API.Entity
 
 					InvokeEntityMethod(BackingObject, InventoryRemoveItemAmountMethod, parameters, argTypes);
 				}
-				 */ 
+				 */
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Internal"
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	// IMyInventoryItem
-	[DataContract(Name = "InventoryItemEntityProxy")]
+	[DataContract( Name = "InventoryItemEntityProxy" )]
 	public class InventoryItemEntity : BaseObject
 	{
 		#region "Attributes"
@@ -436,41 +429,41 @@ namespace SEModAPIInternal.API.Entity
 
 		public static string InventoryItemItemIdField = "33FDC4CADA8125F411D1F07103A65358";
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public InventoryItemEntity(MyObjectBuilder_InventoryItem definition)
-			: base(definition)
+		public InventoryItemEntity( MyObjectBuilder_InventoryItem definition )
+			: base( definition )
 		{
-			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition(PhysicalContent);
+			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition( PhysicalContent );
 			m_definitionId = m_definition.Id;
 		}
 
-		public InventoryItemEntity(MyObjectBuilder_InventoryItem definition, Object backingObject)
-			: base(definition, backingObject)
+		public InventoryItemEntity( MyObjectBuilder_InventoryItem definition, Object backingObject )
+			: base( definition, backingObject )
 		{
-			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition(PhysicalContent);
+			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition( PhysicalContent );
 			m_definitionId = m_definition.Id;
 		}
 
-		public InventoryItemEntity(Object backingObject, InventoryEntity parent)
+		public InventoryItemEntity( Object backingObject, InventoryEntity parent )
 		{
 			m_backingObject = backingObject;
 			m_parentContainer = parent;
 
 			Sandbox.ModAPI.Interfaces.IMyInventoryItem item = (Sandbox.ModAPI.Interfaces.IMyInventoryItem)backingObject;
-			MyObjectBuilder_InventoryItem newItem = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>();
+			MyObjectBuilder_InventoryItem newItem = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>( );
 			newItem.Amount = item.Amount;
 			newItem.Content = item.Content;
 			newItem.ItemId = item.ItemId;
 			m_objectBuilder = newItem;
 
-			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition(item.Content.GetId());
+			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition( item.Content.GetId( ) );
 			m_definitionId = m_definition.Id;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
@@ -480,16 +473,16 @@ namespace SEModAPIInternal.API.Entity
 			get
 			{
 				Sandbox.ModAPI.Interfaces.IMyInventoryItem item = null;
-				if (BackingObject == null)
+				if ( BackingObject == null )
 				{
-					if (m_parentContainer != null)
+					if ( m_parentContainer != null )
 					{
-						SandboxGameAssemblyWrapper.Instance.GameAction(new Action(delegate()
+						SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 						{
 							IMyInventory inventory = (IMyInventory)m_parentContainer.BackingObject;
-							item = inventory.GetItemByID(ObjectBuilder.ItemId);
+							item = inventory.GetItemByID( ObjectBuilder.ItemId );
 							BackingObject = item;
-						}));
+						} ) );
 					}
 				}
 				else
@@ -502,26 +495,26 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal static Type InternalType
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(InventoryItemNamespace, InventoryItemClass);
+				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( InventoryItemNamespace, InventoryItemClass );
 				return type;
 			}
 		}
 
 		[DataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		public override string Name
 		{
 			get
-			{				
+			{
 				MyPhysicalItemDefinition def = Definition;
-				if (def == null)
+				if ( def == null )
 					return base.Name;
 
 				return def.Id.SubtypeName;
@@ -529,9 +522,9 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Item")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_InventoryItem ObjectBuilder
 		//internal MyObjectBuilder_PhysicalObject ObjectBuilder
 		{
@@ -546,8 +539,8 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		new public MyPhysicalItemDefinition Definition
 		{
 			get
@@ -557,8 +550,8 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Item")]
-		[Browsable(false)]
+		[Category( "Container Item" )]
+		[Browsable( false )]
 		public InventoryEntity Container
 		{
 			get { return m_parentContainer; }
@@ -566,16 +559,16 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[DataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		public uint ItemId
 		{
-			get 			
+			get
 			{
-				if (InventoryInterface != null)
+				if ( InventoryInterface != null )
 					return InventoryInterface.ItemId;
 
-				return ObjectBuilder.ItemId; 
+				return ObjectBuilder.ItemId;
 			}
 			/*set
 			{
@@ -586,20 +579,20 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[DataMember]
-		[Category("Container Item")]
+		[Category( "Container Item" )]
 		public float Amount
 		{
-			get 
+			get
 			{
-				if (InventoryInterface != null)
+				if ( InventoryInterface != null )
 					return (float)InventoryInterface.Amount;
 
-				return (float)ObjectBuilder.Amount; 
+				return (float)ObjectBuilder.Amount;
 			}
 			set
 			{
-				if (Container != null)
-					Container.UpdateItemAmount(this, value);
+				if ( Container != null )
+					Container.UpdateItemAmount( this, value );
 
 				m_backingObject = null;
 				/*
@@ -611,22 +604,22 @@ namespace SEModAPIInternal.API.Entity
 
 				baseEntity.Amount = (MyFixedPoint)value;
 				Changed = true;
-				 */ 
+				 */
 			}
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Item")]
-		[Browsable(false)]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		public MyObjectBuilder_PhysicalObject PhysicalContent
 		{
-			get 			
+			get
 			{
-				if (InventoryInterface != null)
+				if ( InventoryInterface != null )
 					return InventoryInterface.Content;
 
-				return ObjectBuilder.PhysicalContent; 
+				return ObjectBuilder.PhysicalContent;
 			}
 
 			/*set
@@ -638,13 +631,13 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		public float TotalMass
 		{
 			get
 			{
-				if (InventoryInterface != null)
+				if ( InventoryInterface != null )
 					return (float)InventoryInterface.Amount * Mass;
 
 				return (float)ObjectBuilder.Amount * Mass;
@@ -652,27 +645,27 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[IgnoreDataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		public float TotalVolume
 		{
-			get 
+			get
 			{
-				if (InventoryInterface != null)
+				if ( InventoryInterface != null )
 					return (float)InventoryInterface.Amount * Volume;
 
-				return (float)ObjectBuilder.Amount * Volume; 
+				return (float)ObjectBuilder.Amount * Volume;
 			}
 		}
 
 		[DataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		public float Mass
 		{
 			get
 			{
-				if (Definition == null)
+				if ( Definition == null )
 					return 0;
 
 				return Definition.Mass;
@@ -684,13 +677,13 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[DataMember]
-		[Category("Container Item")]
-		[ReadOnly(true)]
+		[Category( "Container Item" )]
+		[ReadOnly( true )]
 		public float Volume
 		{
 			get
 			{
-				if (Definition == null)
+				if ( Definition == null )
 					return 0;
 
 				return Definition.Volume;
@@ -701,51 +694,51 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		#endregion
+		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest()
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type = InternalType;
-				if (type == null)
-					throw new Exception("Could not find internal type for InventoryItemEntity");
+				if ( type == null )
+					throw new Exception( "Could not find internal type for InventoryItemEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod(type, InventoryItemGetObjectBuilderMethod);
-				result &= BaseObject.HasField(type, InventoryItemItemIdField);
+				result &= BaseObject.HasMethod( type, InventoryItemGetObjectBuilderMethod );
+				result &= BaseObject.HasField( type, InventoryItemItemIdField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine(ex);
+				LogManager.APILog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public static uint GetInventoryItemId(object item)
+		public static uint GetInventoryItemId( object item )
 		{
 			try
-			{				
-				uint result = (uint)GetEntityFieldValue(item, InventoryItemItemIdField);
-				return result;
-			} 			
-			catch(Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				uint result = (uint)GetEntityFieldValue( item, InventoryItemItemIdField );
+				return result;
+			}
+			catch ( Exception ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
 				return 0;
 			}
 		}
 
-		public override void Dispose()
+		public override void Dispose( )
 		{
 			Amount = 0;
-			base.Dispose();
+			base.Dispose( );
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 
 	//IMyInventoryOwner
@@ -755,42 +748,42 @@ namespace SEModAPIInternal.API.Entity
 
 		private InventoryEntity m_parent;
 
-		#endregion
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
-		public InventoryItemManager(InventoryEntity parent)
+		public InventoryItemManager( InventoryEntity parent )
 		{
 			m_parent = parent;
 		}
 
-		public InventoryItemManager(InventoryEntity parent, Object backingSource, string backingSourceMethodName)
-			: base(backingSource, backingSourceMethodName, InternalBackingType.List)
+		public InventoryItemManager( InventoryEntity parent, Object backingSource, string backingSourceMethodName )
+			: base( backingSource, backingSourceMethodName, InternalBackingType.List )
 		{
 			m_parent = parent;
 		}
 
-		#endregion
+		#endregion "Constructors and Initializers"
 
 		#region "Methods"
 
-		protected override bool IsValidEntity(Object entity)
+		protected override bool IsValidEntity( Object entity )
 		{
 			try
 			{
-				if (entity == null)
+				if ( entity == null )
 					return false;
 
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
 		}
 
-		protected override void LoadDynamic()
+		protected override void LoadDynamic( )
 		{
 			try
 			{
@@ -850,14 +843,14 @@ namespace SEModAPIInternal.API.Entity
 						LogManager.ErrorLog.WriteLine(ex);
 					}
 				}
-				 */ 
+				 */
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 		}
 
-		#endregion
+		#endregion "Methods"
 	}
 }
