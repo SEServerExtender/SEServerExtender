@@ -420,25 +420,26 @@ namespace SEModAPIInternal.API.Common
 			try
 			{
 				ThreadPool.QueueUserWorkItem( o =>
-											  {
-												  AutoResetEvent e = new AutoResetEvent( false );
-												  Instance.EnqueueMainGameAction( ( ) =>
-																				  {
-																					  if ( m_gameThread == null )
-																					  {
-																						  m_gameThread = Thread.CurrentThread;
-																					  }
+				{
+					AutoResetEvent e = new AutoResetEvent( false );
+					Instance.EnqueueMainGameAction( ( ) =>
+					{
+						if ( m_gameThread == null )
+						{
+							m_gameThread = Thread.CurrentThread;
+						}
 
-																					  action( );
-																					  e.Set( );
-																				  } );
-												  e.WaitOne( );
+						action( );
+						e.Set( );
+					} );
 
-												  if ( callback != null )
-												  {
-													  callback( state );
-												  }
-											  } );
+					e.WaitOne( );
+
+					if ( callback != null )
+					{
+						callback( state );
+					}
+				} );
 
 				return true;
 			}
@@ -455,15 +456,16 @@ namespace SEModAPIInternal.API.Common
 			{
 				AutoResetEvent e = new AutoResetEvent( false );
 				Instance.EnqueueMainGameAction( ( ) =>
-												{
-													if ( m_gameThread == null )
-													{
-														m_gameThread = Thread.CurrentThread;
-													}
+				{
+					if ( m_gameThread == null )
+					{
+						m_gameThread = Thread.CurrentThread;
+					}
 
-													action( );
-													e.Set( );
-												} );
+					action( );
+					e.Set( );
+				} );
+
 				e.WaitOne( );
 				return true;
 			}

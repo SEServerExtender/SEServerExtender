@@ -380,8 +380,7 @@ namespace SEModAPIExtensions.API
 				}
 
 				//Send a loopback chat event for server-sent messages
-				ChatEvent selfChatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, 0, message, 0 );
-
+				ChatEvent selfChatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, 0, 0, message, 0 );
 				Instance.AddEvent( selfChatEvent );
 
 				m_resourceLock.AcquireExclusive( );

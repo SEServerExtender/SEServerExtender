@@ -1,5 +1,5 @@
-﻿using Sandbox.Common.Localization;
-using Sandbox.Common.ObjectBuilders.Definitions;
+﻿using Sandbox.Common.ObjectBuilders.Definitions;
+using VRage.Common;
 
 namespace SEModAPI.API.Definitions
 {
@@ -80,20 +80,21 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
-		public MyTextsWrapperEnum IconSymbol
+		/*
+		public MyTexts IconSymbol
 		{
 		    get
             {
-                    return m_baseDefinition.IconSymbol.GetValueOrDefault(MyTextsWrapperEnum.IconSymbol_Stone);
+                    //return m_baseDefinition.IconSymbol.GetValueOrDefault(MyTexts.IconSymbol_Stone);
             } 
 			set
 			{
-                if (m_baseDefinition.IconSymbol == value) return;
-                m_baseDefinition.IconSymbol = value;
-				Changed = true;
+                //if (m_baseDefinition.IconSymbol == value) return;
+                //m_baseDefinition.IconSymbol = value;
+				//Changed = true;
 			}
 		}
-
+		*/
 		#endregion
 
         #region "Methods"

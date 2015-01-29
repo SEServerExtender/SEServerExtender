@@ -41,7 +41,7 @@ namespace SEModAPIInternal.API.Common
             {
                 name = (string)BaseObject.GetEntityFieldValue(source, "1FB9EB403295AA9F17329DAB808AACC8");
                 model = (string)BaseObject.GetEntityFieldValue(source, "98D5685D557109787E8C5BC033A1863F");
-                playerId = (long)BaseObject.GetEntityFieldValue(source, "FAD55A6A12E7F83E9FF832AA1BBD1830");
+				playerId = (long)BaseObject.GetEntityFieldValue(source, "AFB0FA8889365232B6E34B6F527B304A");
                 entityId = 0;
             }
         }

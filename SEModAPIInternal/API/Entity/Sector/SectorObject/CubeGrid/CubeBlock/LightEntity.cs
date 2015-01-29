@@ -30,6 +30,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string LightNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string LightNetworkManagerClass = "0F8EE1AD651CB822CB9635B463AE6CD5";
 
+		// Need to find this method update again, lights changed completely
 		public static string LightNetworkManagerSendUpdateMethod = "582447224E2B03FA4EAB3D6C2DDD48D9";	//Color, Radius, Falloff, Intensity
 
 		#endregion "Attributes"

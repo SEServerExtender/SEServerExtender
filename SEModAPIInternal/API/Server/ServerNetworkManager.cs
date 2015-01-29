@@ -46,11 +46,11 @@ namespace SEModAPIInternal.API.Server
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "66D936F540BB82C045C7C6E73B6366C1";
-		//public static string ServerNetworkManagerKickPlayerMethod = "E75B971CA048922F222AD31E0B96E9D3";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "A1D43D902F566E9D86BC71281A25C039";
+		//public static string ServerNetworkManagerKickPlayerMethod = "2209BCB73EC13FEAC99CB9E69EDBDAFE";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "A1D43D902F566E9D86BC71281A25C039";
-		public static string ServerNetworkManagerKickPlayerMethod = "2209BCB73EC13FEAC99CB9E69EDBDAFE"; 
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "1D194CE472672BF6ACA1B23B38A1D636";
+		public static string ServerNetworkManagerKickPlayerMethod = "BEC07A39744483E94041083EA34DFE40"; 
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -102,6 +102,11 @@ namespace SEModAPIInternal.API.Server
 		private static string RespawnMsgMedicalRoom = "979224CC53178892C95097C126832539";
 		private static string RespawnMsgRespawnShipId = "EA3E01C01EE14785DE672E6899318CA4";
 		private static string RespawnMsgPlayerSerialId = "221D28591CBBCE26D7F0FC462FFB53E4";
+
+		private static string CharacterClass = "FA70B722FFD1F55F5A5019DA2499E60B";
+		private static string AttachMsg = "40523128EAA280C3B469E3C07BC9AA59";
+		private static string AttachCharacterId = "42A1FAB6988564AD174FAFE32427AF1F";
+		private static string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
 
 		#endregion
 
@@ -361,6 +366,22 @@ namespace SEModAPIInternal.API.Server
 			respawnMsgPlayerSerialId.SetValue(respawnMsg, 0);
 
 			SendMessage(respawnMsg, userId, respawnMsgType, 3);
+		}
+
+		public static void AttachToCockpit(long characterId, long cockpitId, ulong steamId)
+		{
+			Type syncCharacterClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, CharacterClass);
+			Type attachMsgType = syncCharacterClassType.GetNestedType(AttachMsg, BindingFlags.NonPublic | BindingFlags.Public);
+
+			FieldInfo attachCharacterId = attachMsgType.GetField(AttachCharacterId);
+			FieldInfo attachCockpitId = attachMsgType.GetField(AttachCockpitId);
+
+			object attachMsg = Activator.CreateInstance(attachMsgType);
+
+			attachCharacterId.SetValue(attachMsg, characterId);
+			attachCockpitId.SetValue(attachMsg, cockpitId);
+
+			SendMessage(attachMsg, steamId, attachMsgType, 1);
 		}
 
 		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA

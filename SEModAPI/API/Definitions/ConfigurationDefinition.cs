@@ -36,6 +36,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+		/*
 		public float MediumCubeSize
 		{
 			get { return m_baseDefinition.CubeSizes.Medium; }
@@ -47,6 +48,7 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
+		*/
 
 		public float SmallCubeSize
 		{
@@ -82,6 +84,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+		/*
 		public string MediumDynamic
 		{
 			get { return m_baseDefinition.BaseBlockPrefabs.MediumDynamic; }
@@ -92,7 +95,9 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
+		*/
 
+		/*
 		public string MediumStatic
 		{
 			get { return m_baseDefinition.BaseBlockPrefabs.MediumStatic; }
@@ -103,6 +108,7 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
+		*/
 
 		public string LargeDynamic
 		{
