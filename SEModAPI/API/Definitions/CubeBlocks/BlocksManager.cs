@@ -102,7 +102,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		}
 
 		/// <summary>
-		/// Get the container for LightingBlocks
+		/// Get the container for MotorStators
 		/// </summary>
 		public List<MotorStatorDefinition> MotorStators
 		{
@@ -142,7 +142,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		}
 
 		/// <summary>
-		/// Get the container for ShipDrills
+		/// Get the container for SolarPanels
 		/// </summary>
 		public List<SolarPanelDefinition> SolarPanels
 		{
@@ -150,7 +150,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		}
 
 		/// <summary>
-		/// Get the container for ShipDrills
+		/// Get the container for Thrusters
 		/// </summary>
 		public List<ThrusterDefinition> Thrusters
 		{
@@ -158,7 +158,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		}
 
 		/// <summary>
-		/// Get the container for ShipDrills
+		/// Get the container for VirtualMasses
 		/// </summary>
 		public List<VirtualMassDefinition> VirtualMasses
 		{
@@ -170,7 +170,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		#region "Methods"
 
 		/// <summary>
-		/// Method that scan definitions for changes
+		/// Method that scans definitions for changes
 		/// </summary>
 		/// <returns></returns>
 		public bool FindChangesInDefinitions()
