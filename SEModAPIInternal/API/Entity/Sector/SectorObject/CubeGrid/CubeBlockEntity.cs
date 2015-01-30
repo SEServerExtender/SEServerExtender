@@ -507,7 +507,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 		public override void Dispose( )
 		{
-			m_isDisposed = true;
+			MIsDisposed = true;
 
 			Parent.DeleteCubeBlock( this );
 

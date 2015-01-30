@@ -437,7 +437,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			//Broadcast the removal to the clients just to save processing time for the clients
 			BaseNetworkManager.RemoveEntity( );
 
-			m_isDisposed = true;
+			MIsDisposed = true;
 
 			if ( EntityId != 0 )
 			{

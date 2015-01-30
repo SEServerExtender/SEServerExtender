@@ -319,7 +319,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public override void Dispose( )
 		{
-			m_isDisposed = true;
+			MIsDisposed = true;
 
 			LogManager.APILog.WriteLine( "Disposing CharacterEntity '" + Name + "'" );
 

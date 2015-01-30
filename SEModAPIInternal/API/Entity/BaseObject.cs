@@ -12,7 +12,6 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity
 {
-	[DataContract( Name = "BaseObjectProxy" )]
 	[KnownType( typeof( BaseEntity ) )]
 	[KnownType( typeof( CharacterEntity ) )]
 	[KnownType( typeof( CubeGridEntity ) )]
@@ -23,12 +22,12 @@ namespace SEModAPIInternal.API.Entity
 	{
 		#region "Attributes"
 
-		protected MyObjectBuilder_Base m_objectBuilder;
-		protected MyDefinitionId m_definitionId;
-		protected MyDefinitionBase m_definition;
-		protected Object m_backingObject;
+		protected MyObjectBuilder_Base MObjectBuilder;
+		protected MyDefinitionId MDefinitionId;
+		protected MyDefinitionBase MDefinition;
+		protected Object MBackingObject;
 
-		protected bool m_isDisposed = false;
+		protected bool MIsDisposed = false;
 
 		#endregion "Attributes"
 
@@ -40,14 +39,14 @@ namespace SEModAPIInternal.API.Entity
 
 		public BaseObject( MyObjectBuilder_Base baseEntity )
 		{
-			m_objectBuilder = baseEntity;
+			MObjectBuilder = baseEntity;
 
-			m_definitionId = new MyDefinitionId( m_objectBuilder.TypeId, m_objectBuilder.SubtypeId.ToString( ) );
-			if ( !string.IsNullOrEmpty( m_objectBuilder.SubtypeName ) )
+			MDefinitionId = new MyDefinitionId( MObjectBuilder.TypeId, MObjectBuilder.SubtypeId.ToString( ) );
+			if ( !string.IsNullOrEmpty( MObjectBuilder.SubtypeName ) )
 			{
 				try
 				{
-					m_definition = MyDefinitionManager.Static.GetDefinition( m_definitionId );
+					MDefinition = MyDefinitionManager.Static.GetDefinition( MDefinitionId );
 				}
 				catch ( Exception )
 				{
@@ -58,15 +57,15 @@ namespace SEModAPIInternal.API.Entity
 
 		public BaseObject( MyObjectBuilder_Base baseEntity, Object backingObject )
 		{
-			m_objectBuilder = baseEntity;
-			m_backingObject = backingObject;
+			MObjectBuilder = baseEntity;
+			MBackingObject = backingObject;
 
-			m_definitionId = new MyDefinitionId( m_objectBuilder.TypeId, m_objectBuilder.SubtypeId.ToString( ) );
-			if ( !string.IsNullOrEmpty( m_objectBuilder.SubtypeName ) )
+			MDefinitionId = new MyDefinitionId( MObjectBuilder.TypeId, MObjectBuilder.SubtypeId.ToString( ) );
+			if ( !string.IsNullOrEmpty( MObjectBuilder.SubtypeName ) )
 			{
 				try
 				{
-					m_definition = MyDefinitionManager.Static.GetDefinition( m_definitionId );
+					MDefinition = MyDefinitionManager.Static.GetDefinition( MDefinitionId );
 				}
 				catch ( Exception )
 				{
@@ -109,11 +108,11 @@ namespace SEModAPIInternal.API.Entity
 		[Description( "Object builder data of the object" )]
 		internal MyObjectBuilder_Base ObjectBuilder
 		{
-			get { return m_objectBuilder; }
+			get { return MObjectBuilder; }
 			set
 			{
-				if ( m_objectBuilder == value ) return;
-				m_objectBuilder = value;
+				if ( MObjectBuilder == value ) return;
+				MObjectBuilder = value;
 
 				Changed = true;
 			}
@@ -128,10 +127,10 @@ namespace SEModAPIInternal.API.Entity
 		[Description( "Internal, in-game object that matches to this object" )]
 		public Object BackingObject
 		{
-			get { return m_backingObject; }
+			get { return MBackingObject; }
 			set
 			{
-				m_backingObject = value;
+				MBackingObject = value;
 				Changed = true;
 			}
 		}
@@ -148,11 +147,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				return m_definitionId;
-			}
-			private set
-			{
-				//Do nothing!
+				return MDefinitionId;
 			}
 		}
 
@@ -165,11 +160,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				return m_definition;
-			}
-			private set
-			{
-				//Do nothing!
+				return MDefinition;
 			}
 		}
 
@@ -181,11 +172,7 @@ namespace SEModAPIInternal.API.Entity
 		[Obsolete]
 		public MyObjectBuilderType TypeId
 		{
-			get { return m_objectBuilder.TypeId; }
-			private set
-			{
-				//Do nothing!
-			}
+			get { return MObjectBuilder.TypeId; }
 		}
 
 		[IgnoreDataMember]
@@ -194,14 +181,7 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly( true )]
 		[Description( "The value ID representing the sub-type of the object" )]
 		[Obsolete]
-		public string Subtype
-		{
-			get { return m_objectBuilder.SubtypeName; }
-			private set
-			{
-				//Do nothing!
-			}
-		}
+		public string Subtype { get { return MObjectBuilder.SubtypeName; } }
 
 		[DataMember]
 		[Category( "Object" )]
@@ -209,11 +189,7 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly( true )]
 		public bool IsDisposed
 		{
-			get { return m_isDisposed; }
-			private set
-			{
-				//Do nothing!
-			}
+			get { return MIsDisposed; }
 		}
 
 		#endregion "Properties"
@@ -230,7 +206,7 @@ namespace SEModAPIInternal.API.Entity
 				//Do stuff
 			}
 
-			m_isDisposed = true;
+			MIsDisposed = true;
 		}
 
 		public virtual void Export( FileInfo fileInfo )
@@ -321,7 +297,7 @@ namespace SEModAPIInternal.API.Entity
 
 				return true;
 			}
-			catch (AmbiguousMatchException aex)
+			catch ( AmbiguousMatchException aex )
 			{
 				return true;
 			}
@@ -362,22 +338,22 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		public static bool HasNestedType(Type objectType, string nestedTypeName)
+		public static bool HasNestedType( Type objectType, string nestedTypeName )
 		{
 			try
 			{
-				if(string.IsNullOrEmpty(nestedTypeName))
+				if ( string.IsNullOrEmpty( nestedTypeName ) )
 					return false;
 
-				Type type = objectType.GetNestedType(nestedTypeName, BindingFlags.Public | BindingFlags.NonPublic);
+				Type type = objectType.GetNestedType( nestedTypeName, BindingFlags.Public | BindingFlags.NonPublic );
 				return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLineAndConsole(string.Format( "Failed to find nested type '{0}' in type '{1}': {2}", nestedTypeName, objectType.FullName, ex.Message ));
+				if ( SandboxGameAssemblyWrapper.IsDebugging )
+					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find nested type '{0}' in type '{1}': {2}", nestedTypeName, objectType.FullName, ex.Message ) );
 
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 
 			}

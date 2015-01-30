@@ -436,20 +436,20 @@ namespace SEModAPIInternal.API.Entity
 		public InventoryItemEntity( MyObjectBuilder_InventoryItem definition )
 			: base( definition )
 		{
-			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition( PhysicalContent );
-			m_definitionId = m_definition.Id;
+			MDefinition = MyDefinitionManager.Static.GetPhysicalItemDefinition( PhysicalContent );
+			MDefinitionId = MDefinition.Id;
 		}
 
 		public InventoryItemEntity( MyObjectBuilder_InventoryItem definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition( PhysicalContent );
-			m_definitionId = m_definition.Id;
+			MDefinition = MyDefinitionManager.Static.GetPhysicalItemDefinition( PhysicalContent );
+			MDefinitionId = MDefinition.Id;
 		}
 
 		public InventoryItemEntity( Object backingObject, InventoryEntity parent )
 		{
-			m_backingObject = backingObject;
+			MBackingObject = backingObject;
 			m_parentContainer = parent;
 
 			Sandbox.ModAPI.Interfaces.IMyInventoryItem item = (Sandbox.ModAPI.Interfaces.IMyInventoryItem)backingObject;
@@ -457,10 +457,10 @@ namespace SEModAPIInternal.API.Entity
 			newItem.Amount = item.Amount;
 			newItem.Content = item.Content;
 			newItem.ItemId = item.ItemId;
-			m_objectBuilder = newItem;
+			MObjectBuilder = newItem;
 
-			m_definition = MyDefinitionManager.Static.GetPhysicalItemDefinition( item.Content.GetId( ) );
-			m_definitionId = m_definition.Id;
+			MDefinition = MyDefinitionManager.Static.GetPhysicalItemDefinition( item.Content.GetId( ) );
+			MDefinitionId = MDefinition.Id;
 		}
 
 		#endregion "Constructors and Initializers"
@@ -594,7 +594,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( Container != null )
 					Container.UpdateItemAmount( this, value );
 
-				m_backingObject = null;
+				MBackingObject = null;
 				/*
 				var baseEntity = ObjectBuilder;
 				if ((float)baseEntity.Amount == value) return;
