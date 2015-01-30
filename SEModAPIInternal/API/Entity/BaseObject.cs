@@ -1,23 +1,26 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Definitions;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.Support;
-
-namespace SEModAPIInternal.API.Entity
+﻿namespace SEModAPIInternal.API.Entity
 {
+	using System;
+	using System.ComponentModel;
+	using System.IO;
+	using System.Reflection;
+	using System.Runtime.Serialization;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Definitions;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity.Sector;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.Support;
+
 	[KnownType( typeof( BaseEntity ) )]
-	[KnownType( typeof( CharacterEntity ) )]
-	[KnownType( typeof( CubeGridEntity ) )]
-	[KnownType( typeof( FloatingObject ) )]
-	[KnownType( typeof( Meteor ) )]
-	[KnownType( typeof( VoxelMap ) )]
+	[KnownType( typeof( BlockGroup ) )]
+	[KnownType( typeof( ConveyorLine ) )]
+	[KnownType( typeof( CubeBlockEntity ) )]
+	[KnownType( typeof( Event ) )]
+	[KnownType( typeof( InventoryEntity ) )]
+	[KnownType( typeof( InventoryItemEntity ) )]
+	[KnownType( typeof( SectorEntity ) )]
 	public class BaseObject : IDisposable
 	{
 		#region "Attributes"
@@ -230,7 +233,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( fieldName == null || fieldName.Length == 0 )
+				if ( string.IsNullOrEmpty( fieldName ) )
 					return false;
 				FieldInfo field = objectType.GetField( fieldName );
 				if ( field == null )
@@ -263,7 +266,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( methodName == null || methodName.Length == 0 )
+				if ( string.IsNullOrEmpty( methodName ) )
 					return false;
 
 				if ( argTypes == null )
@@ -314,7 +317,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( propertyName == null || propertyName.Length == 0 )
+				if ( string.IsNullOrEmpty( propertyName ) )
 					return false;
 				PropertyInfo property = objectType.GetProperty( propertyName );
 				if ( property == null )
@@ -450,11 +453,11 @@ namespace SEModAPIInternal.API.Entity
 					return GetStaticMethod( objectType, methodName );
 
 				if ( string.IsNullOrEmpty( methodName ) )
-					throw new Exception( "Method name was empty" );
+					throw new ArgumentException( "Method name was empty", "methodName" );
 				MethodInfo method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
 				if ( method == null )
 				{
-					//Recurse up through the class heirarchy to try to find the method
+					//Recurse up through the class hierarchy to try to find the method
 					Type type = objectType;
 					while ( type != typeof( Object ) )
 					{
@@ -466,7 +469,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 				}
 				if ( method == null )
-					throw new Exception( "Method not found" );
+					throw new ArgumentException( "Method not found", "methodName" );
 				return method;
 			}
 			catch ( Exception ex )
@@ -484,13 +487,13 @@ namespace SEModAPIInternal.API.Entity
 			try
 			{
 				if ( gameEntity == null )
-					throw new Exception( "Game entity was null" );
+					throw new ArgumentException( "Game entity was null", "gameEntity" );
 				if ( string.IsNullOrEmpty( methodName ) )
-					throw new Exception( "Method name was empty" );
+					throw new ArgumentException( "Method name was empty", "methodName" );
 				MethodInfo method = gameEntity.GetType( ).GetMethod( methodName );
 				if ( method == null )
 				{
-					//Recurse up through the class heirarchy to try to find the method
+					//Recurse up through the class hierarchy to try to find the method
 					Type type = gameEntity.GetType( );
 					while ( type != typeof( Object ) )
 					{
@@ -502,7 +505,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 				}
 				if ( method == null )
-					throw new Exception( "Method not found" );
+					throw new ArgumentException( "Method not found", "methodName" );
 				return method;
 			}
 			catch ( Exception ex )
@@ -523,9 +526,9 @@ namespace SEModAPIInternal.API.Entity
 					return GetEntityMethod( gameEntity, methodName );
 
 				if ( gameEntity == null )
-					throw new Exception( "Game entity was null" );
-				if ( methodName == null || methodName.Length == 0 )
-					throw new Exception( "Method name was empty" );
+					throw new ArgumentException( "Game entity was null", "gameEntity" );
+				if ( string.IsNullOrEmpty( methodName ) )
+					throw new ArgumentException( "Method name was empty", "methodName" );
 				MethodInfo method = gameEntity.GetType( ).GetMethod( methodName, argTypes );
 				if ( method == null )
 				{
@@ -541,7 +544,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 				}
 				if ( method == null )
-					throw new Exception( "Method not found" );
+					throw new ArgumentException( "Method not found", "methodName" );
 				return method;
 			}
 			catch ( Exception ex )
@@ -629,7 +632,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				MethodInfo method = GetStaticMethod( objectType, methodName );
 				if ( method == null )
-					throw new Exception( "Method is empty" );
+					throw new ArgumentException( "Method is empty", "methodName" );
 				Object result = method.Invoke( null, parameters );
 
 				return result;
@@ -660,7 +663,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				MethodInfo method = GetEntityMethod( gameEntity, methodName, argTypes );
 				if ( method == null )
-					throw new Exception( "Method is empty" );
+					throw new ArgumentException( "Method is empty", "methodName" );
 				Object result = method.Invoke( gameEntity, parameters );
 
 				return result;
