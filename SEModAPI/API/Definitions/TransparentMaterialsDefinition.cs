@@ -49,14 +49,15 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+		/// <exception cref="ArgumentOutOfRangeException" accessor="set">If Emissivity less than 0</exception>
 		public float Emissivity
 		{
 			get { return m_baseDefinition.Emissivity; }
 			set
 			{
 				if (value < 0)
-					throw new ArgumentOutOfRangeException();
-				if (m_baseDefinition.Emissivity == value) return;
+					throw new ArgumentOutOfRangeException( "value", "Emissivity must be greater than or equal to zero" );
+				if ( m_baseDefinition.Emissivity == value ) return;
 				m_baseDefinition.Emissivity = value;
 				Changed = true;
 			}
@@ -73,14 +74,15 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+		/// <exception cref="ArgumentOutOfRangeException" accessor="set">If SoftParticleDistanceScale less than 0</exception>
 		public float SoftParticleDistanceScale
 		{
 			get { return m_baseDefinition.SoftParticleDistanceScale; }
 			set
 			{
 				if (value < 0)
-					throw new ArgumentOutOfRangeException();
-				if (m_baseDefinition.SoftParticleDistanceScale == value) return;
+					throw new ArgumentOutOfRangeException( "value", "SoftParticleDistanceScale must be greater than or equal to zero" );
+				if ( m_baseDefinition.SoftParticleDistanceScale == value ) return;
 				m_baseDefinition.SoftParticleDistanceScale = value;
 				Changed = true;
 			}
