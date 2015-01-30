@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-// Assembly versionning
 [assembly: AssemblyTitle("SEModAPI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -26,5 +25,4 @@ using System.Runtime.InteropServices;
 //
 // You can specify each value or set default values with '*', like showed below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.3.0.1")]
-[assembly: AssemblyFileVersion("0.3.0.1")]
+
