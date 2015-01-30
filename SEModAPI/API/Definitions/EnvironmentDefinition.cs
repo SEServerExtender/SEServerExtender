@@ -4,11 +4,13 @@ using VRageMath;
 
 namespace SEModAPI.API.Definitions
 {
-    public class EnvironmentDefinition
+	using System;
+
+	public class EnvironmentDefinition
 	{
 		#region "Attributes"
 
-		MyObjectBuilder_EnvironmentDefinition m_baseDefinition;
+		MyObjectBuilder_EnvironmentDefinition _baseDefinition;
 
 		#endregion
 
@@ -26,36 +28,36 @@ namespace SEModAPI.API.Definitions
 
 		public Vector3 SunDirection
 		{
-			get { return m_baseDefinition.SunDirection; }
+			get { return _baseDefinition.SunDirection; }
 			set
 			{
-				if (m_baseDefinition.SunDirection == value) return;
-				m_baseDefinition.SunDirection = value;
+				if (_baseDefinition.SunDirection == value) return;
+				_baseDefinition.SunDirection = value;
 				Changed = true;
 			}
 		}
 
 		public string EnvironmentTexture
 		{
-			get { return m_baseDefinition.EnvironmentTexture; }
+			get { return _baseDefinition.EnvironmentTexture; }
 			set
 			{
-				if (m_baseDefinition.EnvironmentTexture == value) return;
-				m_baseDefinition.EnvironmentTexture = value;
+				if (_baseDefinition.EnvironmentTexture == value) return;
+				_baseDefinition.EnvironmentTexture = value;
 				Changed = true;
 			}
 		}
 
 		public MyOrientation EnvironmentOrientation
 		{
-			get { return m_baseDefinition.EnvironmentOrientation; }
+			get { return _baseDefinition.EnvironmentOrientation; }
 			set
 			{
-				if (m_baseDefinition.EnvironmentOrientation.Pitch == value.Pitch &&
-					m_baseDefinition.EnvironmentOrientation.Roll == value.Roll &&
-					m_baseDefinition.EnvironmentOrientation.Yaw == value.Yaw) 
+				if (_baseDefinition.EnvironmentOrientation.Pitch == value.Pitch &&
+					_baseDefinition.EnvironmentOrientation.Roll == value.Roll &&
+					_baseDefinition.EnvironmentOrientation.Yaw == value.Yaw) 
 					return;
-				m_baseDefinition.EnvironmentOrientation = value;
+				_baseDefinition.EnvironmentOrientation = value;
 				Changed = true;
 			}
 		}
