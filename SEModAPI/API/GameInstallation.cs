@@ -33,7 +33,7 @@ namespace SEModAPI.API
 		/// <summary>
 		/// <para>Create a new instance of GameInstallationInfo with the automatically detected game path.</para>
 		/// <para>
-		/// It is not recommanded to purely rely on this function since if the game is not found,
+		/// It is not recommended to purely rely on this function since if the game is not found,
 		/// the API will not be able to work
 		/// </para>
 		/// </summary>
