@@ -11,6 +11,8 @@ using Sandbox.Common.ObjectBuilders.Definitions;
 
 namespace SEModAPI.API.Definitions
 {
+	using System.Configuration;
+
 	/// <summary>
 	/// This class is only intended for easy data access and management. It is a wrapper around all MyObjectBuilder_Definitions children sub type
 	/// </summary>
@@ -577,6 +579,7 @@ namespace SEModAPI.API.Definitions
 			return matchingField;
 		}
 
+		/// <exception cref="ConfigurationErrorsException">Failed to find matching definitions field in the specified file.</exception>
 		public void Load(FileInfo sourceFile)
 		{
 			m_fileInfo = sourceFile;
@@ -584,8 +587,8 @@ namespace SEModAPI.API.Definitions
 			//Get the definitions content from the file
 			MyObjectBuilder_Definitions definitionsContainer = LoadContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>(m_fileInfo);
 
-			if (m_definitionsContainerField == null)
-				throw new SEConfigurationException(SEConfigurationExceptionState.InvalidConfigurationFile, "Failed to find matching definitions field in the specified file.");
+			if ( m_definitionsContainerField == null )
+				throw new ConfigurationErrorsException( "Failed to find matching definitions field in the specified file." );
 
 			//Get the data from the definitions container
 			T[] baseDefinitions = (T[])m_definitionsContainerField.GetValue(definitionsContainer);
