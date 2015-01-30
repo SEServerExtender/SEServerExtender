@@ -18,10 +18,10 @@ namespace SEModAPI.API.Definitions
 		}
 
 		/// <summary>
-		/// This method is intended to verify of the given configFileInfo is valid
+		/// This method is intended to verify of the given <paramref name="configFileInfo"/> is valid
 		/// </summary>
-		/// <param name="configFileInfo">The valid FileInfo that points to a valid [config file name].sbc file</param>
-		/// <param name="defaultName">Defines if the file has the defaultName: [config file name].sbc</param>
+		/// <param name="configFileInfo">The valid <see cref="FileInfo"/> that points to a valid [config file name].sbc file</param>
+		/// <param name="defaultName">Defines if the file has the <paramref name="defaultName"/>: [config file name].sbc</param>
 		private static void EnsureFileInfoValidity(FileInfo configFileInfo, bool defaultName = true)
 		{
 			if (configFileInfo == null)
