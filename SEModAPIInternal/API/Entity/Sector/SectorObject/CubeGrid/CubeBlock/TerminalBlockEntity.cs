@@ -69,8 +69,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				try
 				{
-					if ( m_objectBuilder == null )
-						m_objectBuilder = new MyObjectBuilder_TerminalBlock( );
+					if ( MObjectBuilder == null )
+						MObjectBuilder = new MyObjectBuilder_TerminalBlock( );
 
 					return (MyObjectBuilder_TerminalBlock)base.ObjectBuilder;
 				}

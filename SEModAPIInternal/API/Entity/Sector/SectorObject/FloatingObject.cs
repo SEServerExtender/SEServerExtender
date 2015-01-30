@@ -124,7 +124,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			FloatingObjectManager.Instance.RemoveFloatingObject( this );
 
-			m_isDisposed = true;
+			MIsDisposed = true;
 		}
 
 		protected void InternalUpdateItem( )

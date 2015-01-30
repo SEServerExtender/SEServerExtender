@@ -7,7 +7,7 @@ namespace SEModAPI.API.Definitions
 	{
 		#region "Attributes"
 
-		private MyObjectBuilder_Configuration m_baseDefinition;
+		private MyObjectBuilder_Configuration _baseDefinition;
 
 		#endregion
 
@@ -24,14 +24,19 @@ namespace SEModAPI.API.Definitions
 			private set;
 		}
 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <see cref="LargeCubeSize"/> cannot be less than 0f.
+		/// </exception>
 		public float LargeCubeSize
 		{
-			get { return m_baseDefinition.CubeSizes.Large; }
+			get { return _baseDefinition.CubeSizes.Large; }
 			set
 			{
-				if (value < 0) throw new ArgumentOutOfRangeException();
-				if (m_baseDefinition.CubeSizes.Large == value) return;
-				m_baseDefinition.CubeSizes.Large = value;
+				if (value < 0)
+					throw new ArgumentOutOfRangeException();
+				if (Math.Abs( _baseDefinition.CubeSizes.Large - value ) < Single.Epsilon)
+					return;
+				_baseDefinition.CubeSizes.Large = value;
 				Changed = true;
 			}
 		}
@@ -50,36 +55,43 @@ namespace SEModAPI.API.Definitions
 		}
 		*/
 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <see cref="SmallCubeSize"/> cannot be less than 0f.
+		/// </exception>
 		public float SmallCubeSize
 		{
-			get { return m_baseDefinition.CubeSizes.Small; }
+			get { return _baseDefinition.CubeSizes.Small; }
 			set
 			{
-				if (value < 0) throw new ArgumentOutOfRangeException();
-				if (m_baseDefinition.CubeSizes.Small == value) return;
-				m_baseDefinition.CubeSizes.Small = value;
+				if (value < 0)
+					throw new ArgumentOutOfRangeException();
+				if (Math.Abs( _baseDefinition.CubeSizes.Small - value ) < Single.Epsilon)
+					return;
+				_baseDefinition.CubeSizes.Small = value;
 				Changed = true;
 			}
 		}
 
 		public string SmallDynamic
 		{
-			get { return m_baseDefinition.BaseBlockPrefabs.SmallDynamic; }
+			get { return _baseDefinition.BaseBlockPrefabs.SmallDynamic; }
 			set
 			{
-				if (m_baseDefinition.BaseBlockPrefabs.SmallDynamic == value) return;
-				m_baseDefinition.BaseBlockPrefabs.SmallDynamic = value;
+				if (_baseDefinition.BaseBlockPrefabs.SmallDynamic == value)
+					return;
+				_baseDefinition.BaseBlockPrefabs.SmallDynamic = value;
 				Changed = true;
 			}
 		}
 
 		public string SmallStatic
 		{
-			get { return m_baseDefinition.BaseBlockPrefabs.SmallStatic; }
+			get { return _baseDefinition.BaseBlockPrefabs.SmallStatic; }
 			set
 			{
-				if (m_baseDefinition.BaseBlockPrefabs.SmallStatic == value) return;
-				m_baseDefinition.BaseBlockPrefabs.SmallStatic = value;
+				if (_baseDefinition.BaseBlockPrefabs.SmallStatic == value)
+					return;
+				_baseDefinition.BaseBlockPrefabs.SmallStatic = value;
 				Changed = true;
 			}
 		}
@@ -112,22 +124,24 @@ namespace SEModAPI.API.Definitions
 
 		public string LargeDynamic
 		{
-			get { return m_baseDefinition.BaseBlockPrefabs.LargeDynamic; }
+			get { return _baseDefinition.BaseBlockPrefabs.LargeDynamic; }
 			set
 			{
-				if (m_baseDefinition.BaseBlockPrefabs.LargeDynamic == value) return;
-				m_baseDefinition.BaseBlockPrefabs.LargeDynamic = value;
+				if (_baseDefinition.BaseBlockPrefabs.LargeDynamic == value)
+					return;
+				_baseDefinition.BaseBlockPrefabs.LargeDynamic = value;
 				Changed = true;
 			}
 		}
 
 		public string LargeStatic
 		{
-			get { return m_baseDefinition.BaseBlockPrefabs.LargeStatic; }
+			get { return _baseDefinition.BaseBlockPrefabs.LargeStatic; }
 			set
 			{
-				if (m_baseDefinition.BaseBlockPrefabs.LargeStatic == value) return;
-				m_baseDefinition.BaseBlockPrefabs.LargeStatic = value;
+				if (_baseDefinition.BaseBlockPrefabs.LargeStatic == value)
+					return;
+				_baseDefinition.BaseBlockPrefabs.LargeStatic = value;
 				Changed = true;
 			}
 		}
