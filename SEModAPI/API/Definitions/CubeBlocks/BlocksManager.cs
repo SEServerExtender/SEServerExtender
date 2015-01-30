@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using Sandbox.Common.ObjectBuilders.Definitions;
 
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
+	using System.Linq;
+
 	/// <summary>
-	/// This class is intended to manage the modification and persistente of CubeBlocks.sbc
+	/// This class is intended to manage the modification and persistence of CubeBlocks.sbc
 	/// </summary>
 	public class BlocksManager
 	{
 		#region "Attributes"
 
-		private const string DefaultFileName = "CubeBlocks.sbc";
 		private readonly ConfigFileSerializer _configFileSerializer;
 		private MyObjectBuilder_Definitions _definitions;
 
@@ -175,14 +175,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		/// <returns></returns>
 		public bool FindChangesInDefinitions()
 		{
-			foreach (BlockDefinition block in ExtractDefinitionsFromContainers())
-			{
-				if (block.Changed)
-				{
-					return true;
-				}
-			}
-			return false;
+			return ExtractDefinitionsFromContainers( ).Any( block => block.Changed );
 		}
 
 		/// <summary>
