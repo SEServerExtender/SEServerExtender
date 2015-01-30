@@ -3,8 +3,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
  * This file is intended to contains all exception classes of the API
- * They must inheritate from IExceptionState and must retain the form
- * of GameInstallationExceptionInfo for standardisation.
+ * They must inherit from IExceptionState and must retain the form
+ * of GameInstallationExceptionInfo for standardization.
  * 
  * */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
