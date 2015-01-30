@@ -7,7 +7,7 @@ namespace SEModAPI.Support
     public class NumericTextBox : TextBox
     {
         private System.ComponentModel.IContainer components;
-        bool _allowSpace = false;
+        bool allowSpace = false;
 
         // Restricts the entry of characters to digits (including hex), the negative sign,
         // the decimal point, and editing keystrokes (backspace).
@@ -15,7 +15,7 @@ namespace SEModAPI.Support
         {
             base.OnKeyPress(e);
 
-            NumberFormatInfo numberFormatInfo = CultureInfo.CurrentCulture.NumberFormat;
+            NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
             string decimalSeparator = numberFormatInfo.NumberDecimalSeparator;
             string groupSeparator = numberFormatInfo.NumberGroupSeparator;
             string negativeSign = numberFormatInfo.NegativeSign;
@@ -39,7 +39,7 @@ namespace SEModAPI.Support
             //    {
             //     // Let the edit control handle control and alt key combinations
             //    }
-            else if (_allowSpace && e.KeyChar == ' ')
+            else if (this.allowSpace && e.KeyChar == ' ')
             {
 
             }
@@ -55,7 +55,7 @@ namespace SEModAPI.Support
         {
             get
             {
-                return Int32.Parse(Text);
+                return Int32.Parse(this.Text);
             }
         }
 
@@ -63,7 +63,7 @@ namespace SEModAPI.Support
         {
             get
             {
-                return Decimal.Parse(Text);
+                return Decimal.Parse(this.Text);
             }
         }
 
@@ -71,19 +71,19 @@ namespace SEModAPI.Support
         {
             set
             {
-                _allowSpace = value;
+                this.allowSpace = value;
             }
 
             get
             {
-                return _allowSpace;
+                return this.allowSpace;
             }
         }
 
         private void InitializeComponent()
         {
-            SuspendLayout();
-            ResumeLayout(false);
+            this.SuspendLayout();
+            this.ResumeLayout(false);
 
         }
     }

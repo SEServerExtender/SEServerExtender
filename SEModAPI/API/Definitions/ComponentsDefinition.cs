@@ -2,8 +2,6 @@
 
 namespace SEModAPI.API.Definitions
 {
-	using System;
-
 	public class ComponentsDefinition : ObjectOverLayerDefinition<MyObjectBuilder_ComponentDefinition>
 	{
 		#region "Constructors and Initializers"
@@ -20,8 +18,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.DisplayName; }
 			set
 			{
-				if (m_baseDefinition.DisplayName == value)
-					return;
+				if (m_baseDefinition.DisplayName == value) return;
 				m_baseDefinition.DisplayName = value;
 				Changed = true;
 			}
@@ -32,8 +29,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.Size; }
 			set
 			{
-				if (m_baseDefinition.Size == value)
-					return;
+				if (m_baseDefinition.Size == value) return;
 				m_baseDefinition.Size = value;
 				Changed = true;
 			}
@@ -44,8 +40,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.Mass; }
 			set
 			{
-				if (Math.Abs( m_baseDefinition.Mass - value ) < Single.Epsilon)
-					return;
+				if (m_baseDefinition.Mass == value) return;
 				m_baseDefinition.Mass = value;
 				Changed = true;
 			}
@@ -56,8 +51,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.Volume.GetValueOrDefault(0); }
 			set
 			{
-				if (m_baseDefinition.Volume == value)
-					return;
+				if (m_baseDefinition.Volume == value) return;
 				m_baseDefinition.Volume = value;
 				Changed = true;
 			}
@@ -68,8 +62,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.Model; }
 			set
 			{
-				if (m_baseDefinition.Model == value)
-					return;
+				if (m_baseDefinition.Model == value) return;
 				m_baseDefinition.Model = value;
 				Changed = true;
 			}
@@ -80,8 +73,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.Icon; }
 			set
 			{
-				if (m_baseDefinition.Icon == value)
-					return;
+				if (m_baseDefinition.Icon == value) return;
 				m_baseDefinition.Icon = value;
 				Changed = true;
 			}
@@ -92,8 +84,7 @@ namespace SEModAPI.API.Definitions
 			get { return m_baseDefinition.MaxIntegrity; }
 			set
 			{
-                if (m_baseDefinition.MaxIntegrity == value)
-					return;
+                if (m_baseDefinition.MaxIntegrity == value) return;
                 m_baseDefinition.MaxIntegrity = value;
 				Changed = true;
 			}
@@ -104,8 +95,7 @@ namespace SEModAPI.API.Definitions
             get { return m_baseDefinition.DropProbability; }
 			set
 			{
-                if (Math.Abs( m_baseDefinition.DropProbability - value ) < Single.Epsilon)
-					return;
+                if (m_baseDefinition.DropProbability == value) return;
                 m_baseDefinition.DropProbability = value;
 				Changed = true;
 			}
