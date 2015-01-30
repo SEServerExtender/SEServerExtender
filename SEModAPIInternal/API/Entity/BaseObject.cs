@@ -272,7 +272,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( field == null )
 				{
 					if ( SandboxGameAssemblyWrapper.IsDebugging )
-						LogManager.ErrorLog.WriteLineAndConsole( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
+						LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find field '{0}' in type '{1}'", fieldName, objectType.FullName ) );
 					return false;
 				}
 				return true;
@@ -280,7 +280,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
+					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find field '{0}' in type '{1}': {2}", fieldName, objectType.FullName, ex.Message ) );
 				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
@@ -308,7 +308,7 @@ namespace SEModAPIInternal.API.Entity
 					if ( method == null )
 					{
 						if ( SandboxGameAssemblyWrapper.IsDebugging )
-							LogManager.ErrorLog.WriteLineAndConsole( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
+							LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find method '{0}' in type '{1}'", methodName, objectType.FullName ) );
 						return false;
 					}
 				}
@@ -322,7 +322,7 @@ namespace SEModAPIInternal.API.Entity
 					if ( method == null )
 					{
 						if ( SandboxGameAssemblyWrapper.IsDebugging )
-							LogManager.ErrorLog.WriteLineAndConsole( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
+							LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find method '{0}' in type '{1}'", methodName, objectType.FullName ) );
 						return false;
 					}
 				}
@@ -336,7 +336,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message );
+					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find method '{0}' in type '{1}': {2}", methodName, objectType.FullName, ex.Message ) );
 				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
@@ -356,7 +356,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( property == null )
 				{
 					if ( SandboxGameAssemblyWrapper.IsDebugging )
-						LogManager.ErrorLog.WriteLineAndConsole( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "'" );
+						LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find property '{0}' in type '{1}'", propertyName, objectType.FullName ) );
 					return false;
 				}
 				return true;
@@ -364,7 +364,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "': " + ex.Message );
+					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find property '{0}' in type '{1}': {2}", propertyName, objectType.FullName, ex.Message ) );
 				LogManager.ErrorLog.WriteLine( ex );
 				return false;
 			}
@@ -383,7 +383,7 @@ namespace SEModAPIInternal.API.Entity
 			catch (Exception ex)
 			{
 				if (SandboxGameAssemblyWrapper.IsDebugging)
-					LogManager.ErrorLog.WriteLineAndConsole("Failed to find nested type '" + nestedTypeName + "' in type '" + objectType.FullName + "': " + ex.Message);
+					LogManager.ErrorLog.WriteLineAndConsole(string.Format( "Failed to find nested type '{0}' in type '{1}': {2}", nestedTypeName, objectType.FullName, ex.Message ));
 
 				LogManager.ErrorLog.WriteLine(ex);
 				return false;
@@ -402,7 +402,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get static field '" + fieldName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get static field '{0}'", fieldName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -432,7 +432,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get entity field '" + fieldName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get entity field '{0}'", fieldName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -444,8 +444,8 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( methodName == null || methodName.Length == 0 )
-					throw new Exception( "Method name was empty" );
+				if ( string.IsNullOrEmpty( methodName ) )
+					throw new ArgumentException( "Method name was empty", "methodName" );
 				MethodInfo method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( method == null )
 				{
@@ -461,12 +461,12 @@ namespace SEModAPIInternal.API.Entity
 					}
 				}
 				if ( method == null )
-					throw new Exception( "Method not found" );
+					throw new ArgumentException( "Method not found", "methodName" );
 				return method;
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get static method '" + methodName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get static method '{0}'", methodName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -481,7 +481,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( argTypes == null || argTypes.Length == 0 )
 					return GetStaticMethod( objectType, methodName );
 
-				if ( methodName == null || methodName.Length == 0 )
+				if ( string.IsNullOrEmpty( methodName ) )
 					throw new Exception( "Method name was empty" );
 				MethodInfo method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
 				if ( method == null )
@@ -503,7 +503,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get static method '" + methodName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get static method '{0}'", methodName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -517,7 +517,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				if ( gameEntity == null )
 					throw new Exception( "Game entity was null" );
-				if ( methodName == null || methodName.Length == 0 )
+				if ( string.IsNullOrEmpty( methodName ) )
 					throw new Exception( "Method name was empty" );
 				MethodInfo method = gameEntity.GetType( ).GetMethod( methodName );
 				if ( method == null )
@@ -539,7 +539,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get entity method '" + methodName + "': " + ex.Message );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get entity method '{0}': {1}", methodName, ex.Message ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -578,7 +578,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get entity method '" + methodName + "': " + ex.Message );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get entity method '{0}': {1}", methodName, ex.Message ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -668,7 +668,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to invoke static method '" + methodName + "': " + ex.Message );
+				LogManager.APILog.WriteLine( string.Format( "Failed to invoke static method '{0}': {1}", methodName, ex.Message ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -699,7 +699,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to invoke entity method '" + methodName + "' on type '" + gameEntity.GetType( ).FullName + "': " + ex.Message );
+				LogManager.APILog.WriteLine( string.Format( "Failed to invoke entity method '{0}' on type '{1}': {2}", methodName, gameEntity.GetType( ).FullName, ex.Message ) );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
@@ -721,7 +721,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get entity property '" + propertyName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get entity property '{0}'", propertyName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -742,7 +742,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to get entity property value '" + propertyName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to get entity property value '{0}'", propertyName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -762,7 +762,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to set entity property value '" + propertyName + "'" );
+				LogManager.APILog.WriteLine( string.Format( "Failed to set entity property value '{0}'", propertyName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
 				LogManager.ErrorLog.WriteLine( ex );
@@ -1110,7 +1110,7 @@ namespace SEModAPIInternal.API.Entity
 					if ( timeSinceLastProfilingOutput.TotalSeconds > 30 )
 					{
 						m_lastProfilingOutput = DateTime.Now;
-						LogManager.APILog.WriteLine( "ObjectManager - Average of " + Math.Round( m_averageRefreshDataTime, 2 ).ToString( ) + "ms to refresh API data" );
+						LogManager.APILog.WriteLine( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( m_averageRefreshDataTime, 2 ).ToString( ) ) );
 					}
 				}
 			}
