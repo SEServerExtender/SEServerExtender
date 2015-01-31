@@ -7,6 +7,7 @@ using Sandbox.Common.ObjectBuilders;
 using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.Support;
 using VRage.Common.Utils;
+using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Common
 {
@@ -422,7 +423,20 @@ namespace SEModAPIInternal.API.Common
 				ThreadPool.QueueUserWorkItem( o =>
 				{
 					AutoResetEvent e = new AutoResetEvent( false );
-					Instance.EnqueueMainGameAction( ( ) =>
+
+					/*
+					MyAPIGateway.Utilities.InvokeOnGameThread(() =>
+					{
+						if (m_gameThread == null)
+						{
+							m_gameThread = Thread.CurrentThread;
+						}
+
+						action();
+						e.Set();
+					});
+					 */ 
+					Instance.EnqueueMainGameAction(() =>
 					{
 						if ( m_gameThread == null )
 						{
@@ -432,7 +446,7 @@ namespace SEModAPIInternal.API.Common
 						action( );
 						e.Set( );
 					} );
-
+					
 					e.WaitOne( );
 
 					if ( callback != null )
@@ -455,6 +469,19 @@ namespace SEModAPIInternal.API.Common
 			try
 			{
 				AutoResetEvent e = new AutoResetEvent( false );
+				/*
+				MyAPIGateway.Utilities.InvokeOnGameThread(() =>
+				{
+					if (m_gameThread == null)
+					{
+						m_gameThread = Thread.CurrentThread;
+					}
+
+					action();
+					e.Set();
+				});
+				*/
+
 				Instance.EnqueueMainGameAction( ( ) =>
 				{
 					if ( m_gameThread == null )
