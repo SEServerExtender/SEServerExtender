@@ -21,6 +21,7 @@
 	[KnownType( typeof( InventoryEntity ) )]
 	[KnownType( typeof( InventoryItemEntity ) )]
 	[KnownType( typeof( SectorEntity ) )]
+	[DataContract]
 	public class BaseObject : IDisposable
 	{
 		#region "Attributes"
