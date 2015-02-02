@@ -114,15 +114,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static SandboxGameAssemblyWrapper Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-				{
-					m_instance = new SandboxGameAssemblyWrapper( );
-				}
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new SandboxGameAssemblyWrapper( ) ); }
 		}
 
 		public static bool IsDebugging { get; set; }

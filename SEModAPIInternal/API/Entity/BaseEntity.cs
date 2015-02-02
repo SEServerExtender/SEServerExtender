@@ -152,12 +152,7 @@ namespace SEModAPIInternal.API.Entity
 		[ReadOnly( true )]
 		internal static Type InternalType
 		{
-			get
-			{
-				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( BaseEntityNamespace, BaseEntityClass );
-				return m_internalType;
-			}
+			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( BaseEntityNamespace, BaseEntityClass ) ); }
 		}
 
 		[DataMember]
@@ -958,15 +953,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public Object NetworkManager
 		{
-			get
-			{
-				if ( m_networkManager == null )
-				{
-					m_networkManager = BaseEntity.GetEntityNetworkManager( m_parent.BackingObject );
-				}
-
-				return m_networkManager;
-			}
+			get { return m_networkManager ?? ( m_networkManager = BaseEntity.GetEntityNetworkManager( m_parent.BackingObject ) ); }
 		}
 
 		#endregion "Properties"

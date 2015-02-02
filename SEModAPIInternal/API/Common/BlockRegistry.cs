@@ -103,13 +103,7 @@ namespace SEModAPIInternal.API.Common
 
 		new public static BlockRegistry Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new BlockRegistry( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new BlockRegistry( ) ); }
 		}
 
 		#endregion "Properties"

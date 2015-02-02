@@ -176,13 +176,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static PlayerMap Instance
 		{
-			get
-			{
-				if (m_instance == null)
-					m_instance = new PlayerMap();
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new PlayerMap( ) ); }
 		}
 
 		public Object BackingObject
@@ -784,13 +778,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static PlayerManager Instance
 		{
-			get
-			{
-				if (m_instance == null)
-					m_instance = new PlayerManager();
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new PlayerManager( ) ); }
 		}
 
 		public Object BackingObject

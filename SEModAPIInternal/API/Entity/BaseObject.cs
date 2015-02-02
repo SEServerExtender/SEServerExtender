@@ -236,11 +236,9 @@
 			{
 				if ( string.IsNullOrEmpty( fieldName ) )
 					return false;
-				FieldInfo field = objectType.GetField( fieldName );
-				if ( field == null )
-					field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-				if ( field == null )
-					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				FieldInfo field = ( objectType.GetField( fieldName ) ??
+				                    objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy ) ) ??
+				                  objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( field == null )
 				{
 					if ( SandboxGameAssemblyWrapper.IsDebugging )
@@ -272,9 +270,8 @@
 
 				if ( argTypes == null )
 				{
-					MethodInfo method = objectType.GetMethod( methodName );
-					if ( method == null )
-						method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+					MethodInfo method = objectType.GetMethod( methodName ) ??
+					                    objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 					if ( method == null && objectType.BaseType != null )
 						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 					if ( method == null )
@@ -286,9 +283,8 @@
 				}
 				else
 				{
-					MethodInfo method = objectType.GetMethod( methodName, argTypes );
-					if ( method == null )
-						method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
+					MethodInfo method = objectType.GetMethod( methodName, argTypes ) ??
+					                    objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
 					if ( method == null && objectType.BaseType != null )
 						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
 					if ( method == null )
@@ -320,11 +316,9 @@
 			{
 				if ( string.IsNullOrEmpty( propertyName ) )
 					return false;
-				PropertyInfo property = objectType.GetProperty( propertyName );
-				if ( property == null )
-					property = objectType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-				if ( property == null )
-					property = objectType.BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				PropertyInfo property = ( objectType.GetProperty( propertyName ) ??
+				                          objectType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy ) ) ??
+				                        objectType.BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( property == null )
 				{
 					if ( SandboxGameAssemblyWrapper.IsDebugging )
@@ -367,9 +361,8 @@
 		{
 			try
 			{
-				FieldInfo field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-				if ( field == null )
-					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				FieldInfo field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy ) ??
+				                  objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				return field;
 			}
 			catch ( Exception ex )
@@ -685,9 +678,8 @@
 		{
 			try
 			{
-				PropertyInfo property = gameEntity.GetType( ).GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-				if ( property == null )
-					property = gameEntity.GetType( ).BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				PropertyInfo property = gameEntity.GetType( ).GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy ) ??
+				                        gameEntity.GetType( ).BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 
 				return property;
 			}

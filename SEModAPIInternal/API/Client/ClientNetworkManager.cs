@@ -20,13 +20,7 @@ namespace SEModAPIInternal.API.Client
 
 		new public static ClientNetworkManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new ClientNetworkManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new ClientNetworkManager( ) ); }
 		}
 
 		#endregion "Properties"

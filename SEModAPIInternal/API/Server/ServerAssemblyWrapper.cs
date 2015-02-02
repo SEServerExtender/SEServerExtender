@@ -66,13 +66,7 @@ namespace SEModAPIInternal.API.Server
 
 		public static ServerAssemblyWrapper Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new ServerAssemblyWrapper( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new ServerAssemblyWrapper( ) ); }
 		}
 
 		public static Type InternalType

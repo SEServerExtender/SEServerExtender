@@ -46,12 +46,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get
-			{
-				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectNamespace, FloatingObjectClass );
-				return m_internalType;
-			}
+			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectNamespace, FloatingObjectClass ) ); }
 		}
 
 		[DataMember]
@@ -171,23 +166,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		internal static Type InternalType
 		{
-			get
-			{
-				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectManagerNamespace, FloatingObjectManagerClass );
-				return m_internalType;
-			}
+			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectManagerNamespace, FloatingObjectManagerClass ) ); }
 		}
 
 		public static FloatingObjectManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new FloatingObjectManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new FloatingObjectManager( ) ); }
 		}
 
 		#endregion "Properties"

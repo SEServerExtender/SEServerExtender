@@ -150,12 +150,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		[ReadOnly( true )]
 		internal static Type InternalType
 		{
-			get
-			{
-				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeBlockNamespace, CubeBlockClass );
-				return m_internalType;
-			}
+			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeBlockNamespace, CubeBlockClass ) ); }
 		}
 
 		[IgnoreDataMember]
