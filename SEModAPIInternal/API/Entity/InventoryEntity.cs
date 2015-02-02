@@ -128,11 +128,11 @@ namespace SEModAPIInternal.API.Entity
 				uint result = 0;
 				if ( BackingObject != null )
 				{
-					SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-					{
-						IMyInventory inventory = (IMyInventory)BackingObject;
-						result = (uint)inventory.GetItems( ).Count;
-					} ) );
+					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+					                                                {
+						                                                IMyInventory inventory = (IMyInventory) BackingObject;
+						                                                result = (uint) inventory.GetItems( ).Count;
+					                                                } );
 				}
 
 				return result;
@@ -156,18 +156,18 @@ namespace SEModAPIInternal.API.Entity
 				{
 					List<InventoryItemEntity> newList = new List<InventoryItemEntity>( );
 
-					SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-						{
-							if ( BackingObject != null )
-							{
-								IMyInventory myInventory = (IMyInventory)BackingObject;
-								foreach ( Sandbox.ModAPI.Interfaces.IMyInventoryItem item in myInventory.GetItems( ) )
-								{
-									InventoryItemEntity newItem = new InventoryItemEntity( item, this );
-									newList.Add( newItem );
-								}
-							}
-						} ) );
+					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+					                                                {
+						                                                if ( BackingObject != null )
+						                                                {
+							                                                IMyInventory myInventory = (IMyInventory) BackingObject;
+							                                                foreach ( Sandbox.ModAPI.Interfaces.IMyInventoryItem item in myInventory.GetItems( ) )
+							                                                {
+								                                                InventoryItemEntity newItem = new InventoryItemEntity( item, this );
+								                                                newList.Add( newItem );
+							                                                }
+						                                                }
+					                                                } );
 
 					return newList;
 
@@ -263,11 +263,11 @@ namespace SEModAPIInternal.API.Entity
 
 			if ( BackingObject != null )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-					{
-						IMyInventory inventory = (IMyInventory)BackingObject;
-						inventory.AddItems( (MyFixedPoint)source.Amount, source.PhysicalContent );
-					} ) );
+				SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+				                                                {
+					                                                IMyInventory inventory = (IMyInventory) BackingObject;
+					                                                inventory.AddItems( (MyFixedPoint) source.Amount, source.PhysicalContent );
+				                                                } );
 			}
 
 			return true;
@@ -277,11 +277,11 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( BackingObject != null )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-				{
-					IMyInventory myInventory = (IMyInventory)BackingObject;
-					myInventory.RemoveItems( source.ItemId );
-				} ) );
+				SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+				                                                {
+					                                                IMyInventory myInventory = (IMyInventory) BackingObject;
+					                                                myInventory.RemoveItems( source.ItemId );
+				                                                } );
 			}
 
 			return true;
@@ -335,16 +335,22 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( BackingObject != null )
 			{
-				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-				{
-					IMyInventory myInventory = (IMyInventory)BackingObject;
-					if ( newAmount == 0 )
-						myInventory.RemoveItems( item.ItemId );
-					else if ( newAmount > item.Amount )
-						myInventory.AddItems( (MyFixedPoint)( newAmount - item.Amount ), item.PhysicalContent, (int)item.ItemId );
-					else if ( newAmount < item.Amount )
-						myInventory.RemoveItemsAt( (int)item.ItemId, (MyFixedPoint)( item.Amount - newAmount ), true );
-				} ) );
+				SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+				                                                {
+					                                                IMyInventory myInventory = (IMyInventory) BackingObject;
+					                                                if ( newAmount == 0 )
+					                                                {
+						                                                myInventory.RemoveItems( item.ItemId );
+					                                                }
+					                                                else if ( newAmount > item.Amount )
+					                                                {
+						                                                myInventory.AddItems( (MyFixedPoint) ( newAmount - item.Amount ), item.PhysicalContent, (int) item.ItemId );
+					                                                }
+					                                                else if ( newAmount < item.Amount )
+					                                                {
+						                                                myInventory.RemoveItemsAt( (int) item.ItemId, (MyFixedPoint) ( item.Amount - newAmount ), true );
+					                                                }
+				                                                } );
 			}
 
 			/*
@@ -477,12 +483,12 @@ namespace SEModAPIInternal.API.Entity
 				{
 					if ( m_parentContainer != null )
 					{
-						SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-						{
-							IMyInventory inventory = (IMyInventory)m_parentContainer.BackingObject;
-							item = inventory.GetItemByID( ObjectBuilder.ItemId );
-							BackingObject = item;
-						} ) );
+						SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+						                                                {
+							                                                IMyInventory inventory = (IMyInventory) m_parentContainer.BackingObject;
+							                                                item = inventory.GetItemByID( ObjectBuilder.ItemId );
+							                                                BackingObject = item;
+						                                                } );
 					}
 				}
 				else
