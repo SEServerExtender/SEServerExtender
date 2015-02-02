@@ -250,7 +250,7 @@ namespace SEModAPIInternal.API.Common
             List<IMyPlayer> players = new List<IMyPlayer>();
             //collection.GetPlayers(players, x => x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
 			collection.GetPlayers(players, x => x.Controller != null && x.Controller.ControlledEntity != null && x.Controller.ControlledEntity.Entity != null && x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
-            if (players != null && players.Count > 0)
+            if (players.Count > 0)
             {
                 return players.First().SteamUserId;
             }
