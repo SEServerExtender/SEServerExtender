@@ -7,20 +7,20 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "TurretBaseEntityProxy" )]
+	[DataContract]
 	public class TurretBaseEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
 
-		private TurretNetworkManager m_turretNetworkManager;
+		private readonly TurretNetworkManager _turretNetworkManager;
 
-		private InventoryEntity m_inventory;
-		private BaseObject m_target;
-		private float m_shootingRange;
-		private float m_searchingRange;
-		private bool m_targetMeteors;
-		private bool m_targetMoving;
-		private bool m_targetMissiles;
+		private readonly InventoryEntity _inventory;
+		private BaseObject _target;
+		private float _shootingRange;
+		private float _searchingRange;
+		private bool _targetMeteors;
+		private bool _targetMoving;
+		private bool _targetMissiles;
 
 		public static string TurretNamespace = "Sandbox.Game.Weapons";
 		public static string TurretClass = "MyLargeTurretBase";
@@ -33,7 +33,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string TurretShootMethod = "Shoot";
 		public static string TurretGetRemainingAmmoMethod = "GetAmmunitionAmount";
 
-		public static string TurretSearchingRangeField = "m_searchingRange";
+		public static string TurretSearchingRangeField = "_searchingRange";
 		public static string TurretInventoryField = "m_ammoInventory";
 
 		public static string TurretTargetProperty = "Target";
@@ -50,28 +50,28 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public TurretBaseEntity( CubeGridEntity parent, MyObjectBuilder_TurretBase definition )
 			: base( parent, definition )
 		{
-			m_inventory = new InventoryEntity( definition.Inventory );
+			_inventory = new InventoryEntity( definition.Inventory );
 
-			m_shootingRange = definition.Range;
-			m_searchingRange = m_shootingRange + 100;
+			_shootingRange = definition.Range;
+			_searchingRange = _shootingRange + 100;
 
-			m_targetMeteors = definition.TargetMeteors;
-			m_targetMissiles = definition.TargetMissiles;
-			m_targetMoving = definition.TargetMoving;
+			_targetMeteors = definition.TargetMeteors;
+			_targetMissiles = definition.TargetMissiles;
+			_targetMoving = definition.TargetMoving;
 		}
 
 		public TurretBaseEntity( CubeGridEntity parent, MyObjectBuilder_TurretBase definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			m_turretNetworkManager = new TurretNetworkManager( this, GetNetworkManager( ) );
-			m_inventory = new InventoryEntity( definition.Inventory, GetTurretInventory( ) );
+			_turretNetworkManager = new TurretNetworkManager( this, GetNetworkManager( ) );
+			_inventory = new InventoryEntity( definition.Inventory, GetTurretInventory( ) );
 
-			m_shootingRange = definition.Range;
-			m_searchingRange = m_shootingRange + 100;
+			_shootingRange = definition.Range;
+			_searchingRange = _shootingRange + 100;
 
-			m_targetMeteors = definition.TargetMeteors;
-			m_targetMissiles = definition.TargetMissiles;
-			m_targetMoving = definition.TargetMoving;
+			_targetMeteors = definition.TargetMeteors;
+			_targetMissiles = definition.TargetMissiles;
+			_targetMoving = definition.TargetMoving;
 		}
 
 		#endregion "Constructors and Intializers"
@@ -104,7 +104,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			set
 			{
-				m_shootingRange = value;
+				_shootingRange = value;
 
 				Action action = SetShootingRange;
 				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -125,7 +125,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			set
 			{
-				m_searchingRange = value;
+				_searchingRange = value;
 
 				Action action = SetSearchingRange;
 				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -141,29 +141,29 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				try
 				{
 					if ( BackingObject == null || ActualObject == null )
-						return m_target;
+						return _target;
 
 					Object target = GetTarget( );
 					if ( target == null )
 						return null;
 
-					if ( m_target == null )
+					if ( _target == null )
 					{
 						long entityId = BaseEntity.GetEntityId( target );
-						m_target = GameEntityManager.GetEntity( entityId );
+						_target = GameEntityManager.GetEntity( entityId );
 					}
 
-					return m_target;
+					return _target;
 				}
 				catch ( Exception ex )
 				{
 					LogManager.ErrorLog.WriteLine( ex );
-					return m_target;
+					return _target;
 				}
 			}
 			set
 			{
-				m_target = value;
+				_target = value;
 
 				Action action = SetTarget;
 				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -203,7 +203,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			set
 			{
 				ObjectBuilder.TargetMeteors = value;
-				m_targetMeteors = value;
+				_targetMeteors = value;
 
 				SetTargetMeteors( );
 			}
@@ -223,7 +223,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			set
 			{
 				ObjectBuilder.TargetMissiles = value;
-				m_targetMissiles = value;
+				_targetMissiles = value;
 
 				SetTargetMissiles( );
 			}
@@ -242,7 +242,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			set
 			{
-				m_targetMoving = value;
+				_targetMoving = value;
 
 				SetTargetMoving( );
 			}
@@ -272,7 +272,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[Browsable( false )]
 		public InventoryEntity Inventory
 		{
-			get { return m_inventory; }
+			get { return _inventory; }
 		}
 
 		[IgnoreDataMember]
@@ -280,7 +280,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[Browsable( false )]
 		internal TurretNetworkManager TurretNetManager
 		{
-			get { return m_turretNetworkManager; }
+			get { return _turretNetworkManager; }
 		}
 
 		#endregion "Properties"
@@ -382,7 +382,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
-				Object result = InvokeEntityMethod( ActualObject, TurretGetNearestVisibleTargetMethod, new object[ ] { m_searchingRange, false } );
+				Object result = InvokeEntityMethod( ActualObject, TurretGetNearestVisibleTargetMethod, new object[ ] { _searchingRange, false } );
 				return result;
 			}
 			catch ( Exception ex )
@@ -406,10 +406,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void SetTarget( )
 		{
-			if ( m_target == null )
+			if ( _target == null )
 				return;
 
-			SetEntityPropertyValue( ActualObject, TurretTargetProperty, m_target.BackingObject );
+			SetEntityPropertyValue( ActualObject, TurretTargetProperty, _target.BackingObject );
 
 			TurretNetManager.BroadcastTargetId( );
 		}
@@ -422,7 +422,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void SetShootingRange( )
 		{
-			SetEntityPropertyValue( ActualObject, TurretShootingRangeProperty, m_shootingRange );
+			SetEntityPropertyValue( ActualObject, TurretShootingRangeProperty, _shootingRange );
 
 			TurretNetManager.BroadcastRange( );
 		}
@@ -437,13 +437,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
-				return m_searchingRange;
+				return _searchingRange;
 			}
 		}
 
 		protected void SetSearchingRange( )
 		{
-			SetEntityFieldValue( ActualObject, TurretSearchingRangeField, m_searchingRange );
+			SetEntityFieldValue( ActualObject, TurretSearchingRangeField, _searchingRange );
 		}
 
 		protected bool GetTargetMeteors( )
@@ -454,7 +454,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void SetTargetMeteors( )
 		{
-			SetEntityPropertyValue( ActualObject, TurretTargetMeteorsProperty, m_targetMeteors );
+			SetEntityPropertyValue( ActualObject, TurretTargetMeteorsProperty, _targetMeteors );
 
 			TurretNetManager.BroadcastTargettingFlags( );
 		}
@@ -467,7 +467,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void SetTargetMissiles( )
 		{
-			SetEntityPropertyValue( ActualObject, TurretTargetMissilesProperty, m_targetMissiles );
+			SetEntityPropertyValue( ActualObject, TurretTargetMissilesProperty, _targetMissiles );
 
 			TurretNetManager.BroadcastTargettingFlags( );
 		}
@@ -480,7 +480,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void SetTargetMoving( )
 		{
-			SetEntityPropertyValue( ActualObject, TurretTargetMovingProperty, m_targetMoving );
+			SetEntityPropertyValue( ActualObject, TurretTargetMovingProperty, _targetMoving );
 
 			TurretNetManager.BroadcastTargettingFlags( );
 		}
@@ -494,95 +494,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		protected void InternalTurretShoot( )
 		{
 			InvokeEntityMethod( ActualObject, TurretShootMethod );
-		}
-
-		#endregion "Methods"
-	}
-
-	public class TurretNetworkManager
-	{
-		#region "Attributes"
-
-		private TurretBaseEntity m_parent;
-		private Object m_backingObject;
-
-		//Packets
-		//686 - Target ID
-		//687 - Range
-		//688 - Target settings (meteor on/off, missile on/off, moving on/off)
-
-		public static string TurretNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string TurretNetworkManagerClass = "D29C33B546169292854A4DECCDB53895";
-
-		public static string TurretNetworkManagerBroadcastTargetIdMethod = "8E250BEF8500A92D96D13554C31D4EFA";
-		public static string TurretNetworkManagerBroadcastRangeMethod = "8F298724F106679C0229CD9F9763EA90";
-		public static string TurretNetworkManagerBroadcastTargettingFlagsMethod = "70D4690C2D4A199ABB3EB37364BE0595";
-
-		#endregion "Attributes"
-
-		#region "Constructors and Intializers"
-
-		public TurretNetworkManager( TurretBaseEntity parent, Object backingObject )
-		{
-			m_parent = parent;
-			m_backingObject = backingObject;
-		}
-
-		#endregion "Constructors and Intializers"
-
-		#region "Properties"
-
-		internal Object BackingObject
-		{
-			get { return m_backingObject; }
-			set { m_backingObject = value; }
-		}
-
-		#endregion "Properties"
-
-		#region "Methods"
-
-		public static bool ReflectionUnitTest( )
-		{
-			try
-			{
-				bool result = true;
-
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( TurretNetworkManagerNamespace, TurretNetworkManagerClass );
-				if ( type == null )
-					throw new Exception( "Could not find internal type for TurretNetworkManager" );
-
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargetIdMethod );
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastRangeMethod );
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargettingFlagsMethod );
-
-				return result;
-			}
-			catch ( Exception ex )
-			{
-				Console.WriteLine( ex );
-				return false;
-			}
-		}
-
-		public void BroadcastTargetId( )
-		{
-			long entityId = BaseEntity.GetEntityId( m_parent.ActualObject );
-			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargetIdMethod, new object[ ] { entityId, false } );
-		}
-
-		public void BroadcastRange( )
-		{
-			float range = m_parent.ShootingRange;
-			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastRangeMethod, new object[ ] { range } );
-		}
-
-		public void BroadcastTargettingFlags( )
-		{
-			bool targetMeteors = m_parent.TargetMeteors;
-			bool targetMoving = m_parent.TargetMoving;
-			bool targetMissiles = m_parent.TargetMissiles;
-			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargettingFlagsMethod, new object[ ] { targetMeteors, targetMoving, targetMissiles } );
 		}
 
 		#endregion "Methods"
