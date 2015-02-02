@@ -71,18 +71,31 @@ namespace SEModAPIInternal.API.Common
 			return result;
 		}
 
+		/// <summary>
+		/// Adds the specified <paramref name="entity" /> to the <see cref="GameEntityManager"/>
+		/// </summary>
+		/// <param name="entityId">The numeric ID of the entity to add.</param>
+		/// <param name="entity">The entity to add.</param>
+		/// <exception cref="ArgumentNullException">The value of 'entity' cannot be null. </exception>
+		/// <exception cref="ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Generic.Dictionary`2" />.</exception>
+		/// <remarks>Until a locking mechanism is respected, duplicate keys are still technically possible.</remarks>
 		internal static void AddEntity( long entityId, BaseObject entity )
 		{
 			//_resourceLock.AcquireExclusive();
 
-			if ( _entityMap.ContainsKey( entityId ) )
-				return;
+			if ( entity == null )
+				throw new ArgumentNullException( "entity", "Specified entity cannot be null." );
 
-			_entityMap.Add( entityId, entity );
+			if ( !_entityMap.ContainsKey( entityId ) )
+				_entityMap.Add( entityId, entity );
 
 			//_resourceLock.ReleaseExclusive();
 		}
 
+		/// <summary>
+		/// Removes an entity from the <see cref="GameEntityManager"/> by numeric id.
+		/// </summary>
+		/// <param name="entityId">The numeric id of the entity to remove.</param>
 		internal static void RemoveEntity( long entityId )
 		{
 			//_resourceLock.AcquireExclusive();
