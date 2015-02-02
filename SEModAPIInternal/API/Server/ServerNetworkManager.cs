@@ -64,36 +64,36 @@
 
 		///////////// All these need testing /////////////
 
-		private static string MultiplayerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
+		private const string MultiplayerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 
-		private static string SendCloseClass = "48D79F8E3C8922F14D85F6D98237314C";
-		private static string SendCloseClosedMsg = "4038C6AE0CB130E41455232470357263";
-		private static string SendCloseClosedMsgEntityId = "3E16AD760B497CC0921CDE99D46348D9";
+		private const string SendCloseClass = "48D79F8E3C8922F14D85F6D98237314C";
+		private const string SendCloseClosedMsg = "4038C6AE0CB130E41455232470357263";
+		private const string SendCloseClosedMsgEntityId = "3E16AD760B497CC0921CDE99D46348D9";
 
-		private static string SendCreateClass = "8EFE49A46AB934472427B7D117FD3C64";
-		private static string SendCreateRelativeCompressedMsg = "4DFD818DC1531F7E40ED1E5D94A2B650";
-		private static string SendCreateCompressedMsg = "9163D0037A92C9B6DBF801EF5D53998E";
+		private const string SendCreateClass = "8EFE49A46AB934472427B7D117FD3C64";
+		private const string SendCreateRelativeCompressedMsg = "4DFD818DC1531F7E40ED1E5D94A2B650";
+		private const string SendCreateCompressedMsg = "9163D0037A92C9B6DBF801EF5D53998E";
 
-		private static string SendCreateRelativeCompressedMsgCreateMessage = "21859045930ACEE4A31D6391A0937D87";
-		private static string SendCreateRelativeCompressedMsgBaseEntity = "EE1F27FD35F85E8CD38338A0D8AB4AC8";
-		private static string SendCreateRelativeCompressedMsgRelativeVelocity = "A4DD67802385CCB3335B898BA717910B";
+		private const string SendCreateRelativeCompressedMsgCreateMessage = "21859045930ACEE4A31D6391A0937D87";
+		private const string SendCreateRelativeCompressedMsgBaseEntity = "EE1F27FD35F85E8CD38338A0D8AB4AC8";
+		private const string SendCreateRelativeCompressedMsgRelativeVelocity = "A4DD67802385CCB3335B898BA717910B";
 
-		private static string SendCreateCompressedMsgObjectBuilders = "75490843CC702E3F6857E0CF65C5E908";
-		private static string SendCreateCompressedMsgBuilderLengths = "DADA09BE16684760302EB5A06A68A7C4";
+		private const string SendCreateCompressedMsgObjectBuilders = "75490843CC702E3F6857E0CF65C5E908";
+		private const string SendCreateCompressedMsgBuilderLengths = "DADA09BE16684760302EB5A06A68A7C4";
 
-		private static string PlayerCollectionClass = "E4C2964159826A46D102C2D7FDDC0733";
+		private const string PlayerCollectionClass = "E4C2964159826A46D102C2D7FDDC0733";
 
-		private static string RespawnMsg = "0375BD13880985CF806BF38D80ABE4DB";
-		private static string RespawnMsgJoinGame = "3091FD2824A71EAAD2D74C723BF1EE19";
-		private static string RespawnMsgNewIdentity = "31F31D5F94108B5AF5DB5BFC01287B6A";
-		private static string RespawnMsgMedicalRoom = "979224CC53178892C95097C126832539";
-		private static string RespawnMsgRespawnShipId = "EA3E01C01EE14785DE672E6899318CA4";
-		private static string RespawnMsgPlayerSerialId = "221D28591CBBCE26D7F0FC462FFB53E4";
+		private const string RespawnMsg = "0375BD13880985CF806BF38D80ABE4DB";
+		private const string RespawnMsgJoinGame = "3091FD2824A71EAAD2D74C723BF1EE19";
+		private const string RespawnMsgNewIdentity = "31F31D5F94108B5AF5DB5BFC01287B6A";
+		private const string RespawnMsgMedicalRoom = "979224CC53178892C95097C126832539";
+		private const string RespawnMsgRespawnShipId = "EA3E01C01EE14785DE672E6899318CA4";
+		private const string RespawnMsgPlayerSerialId = "221D28591CBBCE26D7F0FC462FFB53E4";
 
-		private static string CharacterClass = "FA70B722FFD1F55F5A5019DA2499E60B";
-		private static string AttachMsg = "40523128EAA280C3B469E3C07BC9AA59";
-		private static string AttachCharacterId = "42A1FAB6988564AD174FAFE32427AF1F";
-		private static string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
+		private const string CharacterClass = "FA70B722FFD1F55F5A5019DA2499E60B";
+		private const string AttachMsg = "40523128EAA280C3B469E3C07BC9AA59";
+		private const string AttachCharacterId = "42A1FAB6988564AD174FAFE32427AF1F";
+		private const string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
 
 		#endregion
 
