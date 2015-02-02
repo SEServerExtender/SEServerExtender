@@ -198,22 +198,22 @@ namespace SEModAPIInternal.API.Entity
 			{
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for InventoryEntity" );
+					throw new NotSupportedException( "Could not find internal type for InventoryEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, InventoryCalculateMassVolumeMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetTotalVolumeMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetTotalMassMethod );
-				result &= BaseObject.HasMethod( type, InventorySetFromObjectBuilderMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetObjectBuilderMethod );
-				result &= BaseObject.HasMethod( type, InventoryCleanUpMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetItemListMethod );
-				result &= BaseObject.HasMethod( type, InventoryAddItemAmountMethod );
+				result &= HasMethod( type, InventoryCalculateMassVolumeMethod );
+				result &= HasMethod( type, InventoryGetTotalVolumeMethod );
+				result &= HasMethod( type, InventoryGetTotalMassMethod );
+				result &= HasMethod( type, InventorySetFromObjectBuilderMethod );
+				result &= HasMethod( type, InventoryGetObjectBuilderMethod );
+				result &= HasMethod( type, InventoryCleanUpMethod );
+				result &= HasMethod( type, InventoryGetItemListMethod );
+				result &= HasMethod( type, InventoryAddItemAmountMethod );
 
 				Type[ ] argTypes = new Type[ 3 ];
 				argTypes[ 0 ] = typeof( MyFixedPoint );
 				argTypes[ 1 ] = typeof( MyObjectBuilder_PhysicalObject );
 				argTypes[ 2 ] = typeof( bool );
-				result &= BaseObject.HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
+				result &= HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
 
 				return result;
 			}
@@ -706,8 +706,8 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for InventoryItemEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, InventoryItemGetObjectBuilderMethod );
-				result &= BaseObject.HasField( type, InventoryItemItemIdField );
+				result &= HasMethod( type, InventoryItemGetObjectBuilderMethod );
+				result &= HasField( type, InventoryItemItemIdField );
 
 				return result;
 			}
