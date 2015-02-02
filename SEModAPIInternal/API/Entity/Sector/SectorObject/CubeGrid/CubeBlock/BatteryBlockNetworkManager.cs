@@ -9,12 +9,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private BatteryBlockEntity m_parent;
-		private Object m_backingObject;
+		private readonly BatteryBlockEntity _parent;
+		private readonly Object _backingObject;
 
-		private static bool m_isRegistered;
+		private static bool _isRegistered;
 
-		public static string BatteryBlockNetworkManagerNamespace = BatteryBlockEntity.BatteryBlockNamespace + "." + BatteryBlockEntity.BatteryBlockClass;
+		public static string BatteryBlockNetworkManagerNamespace = string.Format( "{0}.{1}", BatteryBlockEntity.BatteryBlockNamespace, BatteryBlockEntity.BatteryBlockClass );
 		public static string BatteryBlockNetworkManagerClass = "6704740496C47C5FDE69887798D17883";
 
 		public static string BatteryBlockNetManagerBroadcastProducerEnabledMethod = "280D7AE8C0F523FF089618970C13B55B";
@@ -42,8 +42,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public BatteryBlockNetworkManager( BatteryBlockEntity parent, Object backingObject )
 		{
-			m_parent = parent;
-			m_backingObject = backingObject;
+			_parent = parent;
+			_backingObject = backingObject;
 
 			Action action = RegisterPacketHandlers;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -55,7 +55,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		internal Object BackingObject
 		{
-			get { return m_backingObject; }
+			get { return _backingObject; }
 		}
 
 		public static Type InternalType
@@ -102,24 +102,24 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public void BroadcastProducerEnabled( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastProducerEnabledMethod, new object[ ] { m_parent.ProducerEnabled } );
+			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastProducerEnabledMethod, new object[ ] { _parent.ProducerEnabled } );
 		}
 
 		public void BroadcastCurrentStoredPower( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod, new object[ ] { m_parent.CurrentStoredPower } );
+			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod, new object[ ] { _parent.CurrentStoredPower } );
 		}
 
 		public void BroadcastSemiautoEnabled( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod, new object[ ] { m_parent.SemiautoEnabled } );
+			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod, new object[ ] { _parent.SemiautoEnabled } );
 		}
 
 		protected static void RegisterPacketHandlers( )
 		{
 			try
 			{
-				if ( m_isRegistered )
+				if ( _isRegistered )
 					return;
 
 				Type packetType = InternalType.GetNestedType( BatteryBlockNetManagerCurrentStoredPowerPacketClass, BindingFlags.Public | BindingFlags.NonPublic );
@@ -128,7 +128,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( !result )
 					return;
 
-				m_isRegistered = true;
+				_isRegistered = true;
 			}
 			catch ( Exception ex )
 			{
@@ -162,8 +162,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				BaseObject.SetEntityFieldValue( packet, BatteryBlockNetManagerCurrentStoredPowerPacketValueField, battery.CurrentStoredPower );
 
 				Type refPacketType = packet.GetType( ).MakeByRefType( );
-				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, BatteryBlockNetManagerCurrentPowerPacketReceiver, new Type[ ] { refPacketType, netManager.GetType( ) } );
-				basePacketHandlerMethod.Invoke( null, new object[ ] { packet, netManager } );
+				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, BatteryBlockNetManagerCurrentPowerPacketReceiver, new[ ] { refPacketType, netManager.GetType( ) } );
+				basePacketHandlerMethod.Invoke( null, new[ ] { packet, netManager } );
 			}
 			catch ( Exception ex )
 			{
