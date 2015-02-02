@@ -184,11 +184,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			get
 			{
 				String name = Id.SubtypeName;
-				if ( name == null || name == "" )
+				if ( string.IsNullOrEmpty( name ) )
 					name = Id.TypeId.ToString( );
-				if ( name == null || name == "" )
+				if ( string.IsNullOrEmpty( name ) )
 					name = EntityId.ToString( );
-				if ( name == null || name == "" )
+				if ( string.IsNullOrEmpty( name ) )
 					name = "Cube Block";
 				return name;
 			}
