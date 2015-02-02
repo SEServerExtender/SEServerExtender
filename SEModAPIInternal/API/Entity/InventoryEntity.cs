@@ -12,22 +12,13 @@ using VRage;
 
 namespace SEModAPIInternal.API.Entity
 {
-	public struct InventoryDelta
-	{
-		public InventoryItemEntity item;
-		public float oldAmount;
-		public float newAmount;
-	}
-
-	// IMyInventory
-	[DataContract( Name = "InventoryEntityProxy" )]
+	[DataContract]
 	[KnownType( typeof( InventoryItemEntity ) )]
 	public class InventoryEntity : BaseObject
 	{
 		#region "Attributes"
 
 		private InventoryItemManager m_itemManager;
-		private Queue<InventoryDelta> m_itemDeltaQueue;
 
 		public static string InventoryNamespace = "33FB6E717989660631E6772B99F502AD";
 		public static string InventoryClass = "DE48496EE9812E665B802D5FE9E7AD77";
@@ -61,7 +52,6 @@ namespace SEModAPIInternal.API.Entity
 			}
 			m_itemManager.Load(itemList);
 			 */
-			m_itemDeltaQueue = new Queue<InventoryDelta>( );
 		}
 
 		public InventoryEntity( MyObjectBuilder_Inventory definition, Object backingObject )
@@ -69,7 +59,6 @@ namespace SEModAPIInternal.API.Entity
 		{
 			//m_itemManager = new InventoryItemManager(this, backingObject, InventoryGetItemListMethod);
 			//m_itemManager.Refresh();
-			m_itemDeltaQueue = new Queue<InventoryDelta>( );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -417,8 +406,4 @@ namespace SEModAPIInternal.API.Entity
 
 		#endregion "Methods"
 	}
-
-	// IMyInventoryItem
-
-	//IMyInventoryOwner
 }
