@@ -543,7 +543,7 @@
 				{
 					DateTime start = DateTime.Now;
 					LogManager.APILog.WriteLineAndConsole(string.Format("...responding to user: {0}", steamId));
-					SendPreemble(steamId, 1);
+					SendPreamble(steamId, 1);
 					SendFlush(steamId);
 
 					// Let's sleep for 5 seconds and let plugins know we're online -- let's not after all, causing sync issues
@@ -682,7 +682,7 @@
 			return type;
 		}
 
-		private static void SendPreemble(ulong steamId, int num)
+		private static void SendPreamble(ulong steamId, int num)
 		{
 			//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
 			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreemble, new object[] { steamId, num });
