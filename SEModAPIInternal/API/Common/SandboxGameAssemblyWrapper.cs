@@ -550,7 +550,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				Type type = m_assembly.GetType( namespaceName + "." + className );
+				Type type = m_assembly.GetType( string.Format( "{0}.{1}", namespaceName, className ) );
 
 				return type;
 			}

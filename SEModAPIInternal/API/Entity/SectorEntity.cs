@@ -389,17 +389,17 @@ namespace SEModAPIInternal.API.Entity
 				if ( !CanRefresh )
 					return;
 
-				m_rawDataHashSetResourceLock.AcquireExclusive( );
+				RawDataHashSetResourceLock.AcquireExclusive( );
 
 				object rawValue = BaseObject.InvokeStaticMethod( InternalType, ObjectManagerGetEntityHashSet );
 				if ( rawValue == null )
 					return;
 
 				//Create/Clear the hash set
-				if ( m_rawDataHashSet == null )
-					m_rawDataHashSet = new HashSet<object>( );
+				if ( RawDataHashSet == null )
+					RawDataHashSet = new HashSet<object>( );
 				else
-					m_rawDataHashSet.Clear( );
+					RawDataHashSet.Clear( );
 
 				//Only allow valid entities in the hash set
 				foreach ( object entry in UtilityFunctions.ConvertHashSet( rawValue ) )
@@ -407,16 +407,16 @@ namespace SEModAPIInternal.API.Entity
 					if ( !IsValidEntity( entry ) )
 						continue;
 
-					m_rawDataHashSet.Add( entry );
+					RawDataHashSet.Add( entry );
 				}
 
-				m_rawDataHashSetResourceLock.ReleaseExclusive( );
+				RawDataHashSetResourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
-				if ( m_rawDataHashSetResourceLock.Owned )
-					m_rawDataHashSetResourceLock.ReleaseExclusive( );
+				if ( RawDataHashSetResourceLock.Owned )
+					RawDataHashSetResourceLock.ReleaseExclusive( );
 			}
 		}
 
