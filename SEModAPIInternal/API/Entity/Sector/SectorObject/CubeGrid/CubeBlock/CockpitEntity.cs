@@ -7,7 +7,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "CockpitEntityProxy" )]
+	[DataContract]
 	public class CockpitEntity : ShipControllerEntity
 	{
 		#region "Attributes"
@@ -56,10 +56,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					return true;
 
 				return false;
-			}
-			private set
-			{
-				//Do nothing!
 			}
 		}
 
@@ -133,16 +129,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				bool result = true;
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CockpitEntityNamespace, CockpitEntityClass );
 				if ( type == null )
-					throw new Exception( "Could not find type for CockpitEntity" );
+					throw new TypeLoadException( "Could not find type for CockpitEntity" );
 
 				//result &= BaseEntity.HasMethod(type, CockpitGetPilotEntityMethod);
 
-				result &= BaseEntity.HasMethod( type, CockpitSetPilotEntityMethod );
-				result &= BaseEntity.HasField( type, CockpitGetPilotEntityField );
+				result &= HasMethod( type, CockpitSetPilotEntityMethod );
+				result &= HasField( type, CockpitGetPilotEntityField );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
@@ -161,7 +157,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			if ( _pilot == null || _pilot.BackingObject == null )
 				return;
 
-			BaseObject.InvokeEntityMethod( ActualObject, CockpitSetPilotEntityMethod, new object[ ] { _pilot.BackingObject, Type.Missing, Type.Missing } );
+			InvokeEntityMethod( ActualObject, CockpitSetPilotEntityMethod, new [ ] { _pilot.BackingObject, Type.Missing, Type.Missing } );
 		}
 
 		public void FireWeapons( )
