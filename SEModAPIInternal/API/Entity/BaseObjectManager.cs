@@ -2,12 +2,15 @@ namespace SEModAPIInternal.API.Entity
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Configuration;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
+	using System.Runtime.InteropServices;
 	using System.Runtime.Serialization;
 	using System.Security;
 	using System.Xml;
+	using System.Xml.Serialization;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
@@ -454,6 +457,7 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Serializers"
 
+		/// <exception cref="ConfigurationErrorsException">Configuration file empty, corrupted, or not found.</exception>
 		public static T LoadContentFile<T, TS>( FileInfo fileInfo ) where TS : XmlSerializer1
 		{
 			object fileContent = null;
@@ -462,7 +466,7 @@ namespace SEModAPIInternal.API.Entity
 
 			if ( !File.Exists( filePath ) )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileMissing, filePath );
+				throw new ConfigurationErrorsException( "Configuration file not found." );
 			}
 
 			try
@@ -472,12 +476,12 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
+				throw new ConfigurationErrorsException( "Configuration file corrupted.", ex );
 			}
 
 			if ( fileContent == null )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
+				throw new ConfigurationErrorsException( "Configuration file empty." );
 			}
 
 			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
@@ -487,6 +491,7 @@ namespace SEModAPIInternal.API.Entity
 			return (T)fileContent;
 		}
 
+		/// <exception cref="ConfigurationErrorsException">Error writing configuration file.  Configuration file possibly corrupted.</exception>
 		public static void SaveContentFile<T, TS>( T fileContent, FileInfo fileInfo ) where TS : XmlSerializer1
 		{
 			string filePath = fileInfo.FullName;
@@ -500,14 +505,14 @@ namespace SEModAPIInternal.API.Entity
 			{
 				WriteSpaceEngineersFile<T, TS>( fileContent, filePath );
 			}
-			catch
+			catch ( Exception exception )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
+				throw new ConfigurationErrorsException( "Error writing configuration file.  Configuration file possibly corrupted.", exception );
 			}
 
 			if ( fileContent == null )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
+				throw new ConfigurationErrorsException( "Configuration file empty." );
 			}
 
 			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
@@ -515,6 +520,17 @@ namespace SEModAPIInternal.API.Entity
 			// Report a friendly error if this load fails.
 		}
 
+		/// <exception cref="FileNotFoundException">The file specified cannot be found.</exception>
+		/// <exception cref="UriFormatException">The file location format is not correct.</exception>
+		/// <exception cref="MethodAccessException">The caller does not have permission to call this constructor. </exception>
+		/// <exception cref="TypeLoadException"><typeparamref name="T"/> is not a valid type. </exception>
+		/// <exception cref="MissingMethodException">No matching public constructor was found. </exception>
+		/// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism. </exception>
+		/// <exception cref="TargetInvocationException">The constructor being called throws an exception. </exception>
+		/// <exception cref="COMException"><typeparamref name="T" /> is a COM object but the class identifier used to obtain the type is invalid, or the identified class is not registered. </exception>
+		/// <exception cref="InvalidComObjectException">The COM type was not obtained through <see cref="Overload:System.Type.GetTypeFromProgID" /> or <see cref="Overload:System.Type.GetTypeFromCLSID" />. </exception>
+		/// <exception cref="NotSupportedException"><typeparamref name="T" /> cannot be a <see cref="T:System.Reflection.Emit.TypeBuilder" />.-or- Creation of <see cref="T:System.TypedReference" />, <see cref="T:System.ArgIterator" />, <see cref="T:System.Void" />, and <see cref="T:System.RuntimeArgumentHandle" /> types, or arrays of those types, is not supported.-or-The assembly that contains <typeparamref name="T" /> is a dynamic assembly that was created with <see cref="F:System.Reflection.Emit.AssemblyBuilderAccess.Save" />. </exception>
+		/// <exception cref="ArgumentException"><typeparamref name="T" /> is not a RuntimeType. -or-<typeparamref name="T" /> is an open generic type (that is, the <see cref="P:System.Type.ContainsGenericParameters" /> property returns true).</exception>
 		public static T ReadSpaceEngineersFile<T, TS>( string filename )
 			where TS : XmlSerializer1
 		{
@@ -538,12 +554,19 @@ namespace SEModAPIInternal.API.Entity
 			return (T)obj;
 		}
 
+		/// <exception cref="InvalidOperationException">An error occurred during deserialization.</exception>
+		/// <exception cref="ArgumentNullException">The <paramref name="xml" /> parameter is null. </exception>
 		protected T Deserialize<T>( string xml )
 		{
 			using ( StringReader textReader = new StringReader( xml ) )
 			{
-				return (T)( new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Deserialize( textReader ) );
+				XmlSerializer xmlSerializer = new XmlSerializerContract( ).GetSerializer( typeof( T ) );
+				if ( xmlSerializer != null )
+				{
+					return (T)( xmlSerializer.Deserialize( textReader ) );
+				}
 			}
+			throw new InvalidOperationException("Failed to deserialize XML.");
 		}
 
 		protected string Serialize<T>( object item )
@@ -616,20 +639,20 @@ namespace SEModAPIInternal.API.Entity
 			{
 				ResourceLock.AcquireShared( );
 
-				List<T> newList = new List<T>( );
-				foreach ( BaseObject def in GetInternalData( ).Values )
-				{
-					if ( !( def is T ) )
-						continue;
-
-					newList.Add( (T)def );
-				}
+				List<T> newList = GetInternalData( ).Values.OfType<T>( ).ToList( );
 
 				ResourceLock.ReleaseShared( );
 
 				Refresh( );
 
 				return newList;
+			}
+			catch ( KeyNotFoundException ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
+				if ( ResourceLock.Owned )
+					ResourceLock.ReleaseShared( );
+				return new List<T>( );
 			}
 			catch ( Exception ex )
 			{
@@ -655,7 +678,7 @@ namespace SEModAPIInternal.API.Entity
 			return newEntry;
 		}
 
-		[Obsolete]
+		[Obsolete("Will be removed in version 0.3.2.0")]
 		public T NewEntry<T>( MyObjectBuilder_Base source ) where T : BaseObject
 		{
 			if ( !IsMutable ) return default( T );
@@ -769,6 +792,8 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "SaveContent"
 
+		/// <exception cref="ConfigurationErrorsException">Error saving configuration.</exception>
+		/// <exception cref="FieldAccessException">The caller does not have permission to access a field on a reflected object.</exception>
 		public bool Save( )
 		{
 			if ( !Changed ) return false;
@@ -778,7 +803,7 @@ namespace SEModAPIInternal.API.Entity
 			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions( );
 
 			if ( _definitionsContainerField == null )
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.Invalid, "Failed to find matching definitions field in the given file." );
+				throw new ConfigurationErrorsException( "Error saving configuration.", new ConfigurationErrorsException( "Failed to find matching definitions field in the given file." ) );
 
 			List<MyObjectBuilder_Base> baseDefs = new List<MyObjectBuilder_Base>( );
 			foreach ( BaseObject baseObject in GetInternalData( ).Values )
