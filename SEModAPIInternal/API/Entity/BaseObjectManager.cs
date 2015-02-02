@@ -65,7 +65,7 @@ namespace SEModAPIInternal.API.Entity
 		protected Dictionary<Object, MyObjectBuilder_Base> RawDataObjectBuilderList = new Dictionary<object, MyObjectBuilder_Base>( );
 
 		//Clean data stores
-		private Dictionary<long, BaseObject> _definitions = new Dictionary<long, BaseObject>( );
+		private readonly Dictionary<long, BaseObject> _definitions = new Dictionary<long, BaseObject>( );
 
 		#endregion "Attributes"
 
