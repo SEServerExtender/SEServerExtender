@@ -32,40 +32,40 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Attributes"
 
-		private FileInfo m_fileInfo;
-		private readonly FieldInfo m_definitionsContainerField;
-		private Object m_backingObject;
-		private string m_backingSourceMethod;
-		private InternalBackingType m_backingSourceType;
-		private DateTime m_lastLoadTime;
-		private double m_refreshInterval;
+		private FileInfo _fileInfo;
+		private readonly FieldInfo _definitionsContainerField;
+		private Object _backingObject;
+		private string _backingSourceMethod;
+		private InternalBackingType _backingSourceType;
+		private DateTime _lastLoadTime;
+		private double _refreshInterval;
 
-		private static double m_averageRefreshDataTime;
-		private static DateTime m_lastProfilingOutput;
-		private static DateTime m_lastInternalProfilingOutput;
+		private static double _averageRefreshDataTime;
+		private static DateTime _lastProfilingOutput;
+		private static DateTime _lastInternalProfilingOutput;
 
-		private static int m_staticRefreshCount;
-		private static Dictionary<Type, int> m_staticRefreshCountMap;
+		private static int _staticRefreshCount;
+		private static Dictionary<Type, int> _staticRefreshCountMap;
 
-		protected FastResourceLock m_resourceLock = new FastResourceLock( );
-		protected FastResourceLock m_rawDataHashSetResourceLock = new FastResourceLock( );
-		protected FastResourceLock m_rawDataListResourceLock = new FastResourceLock( );
-		protected FastResourceLock m_rawDataObjectBuilderListResourceLock = new FastResourceLock( );
+		protected FastResourceLock ResourceLock = new FastResourceLock( );
+		protected FastResourceLock RawDataHashSetResourceLock = new FastResourceLock( );
+		protected FastResourceLock RawDataListResourceLock = new FastResourceLock( );
+		protected FastResourceLock RawDataObjectBuilderListResourceLock = new FastResourceLock( );
 
 		//Flags
-		private bool m_isMutable = true;
+		private bool _isMutable;
 
-		private bool m_changed = false;
-		private bool m_isDynamic = false;
+		private bool _changed = false;
+		private bool _isDynamic = false;
 
 		//Raw data stores
-		protected HashSet<Object> m_rawDataHashSet = new HashSet<object>( );
+		protected HashSet<Object> RawDataHashSet = new HashSet<object>( );
 
-		protected List<Object> m_rawDataList = new List<object>( );
-		protected Dictionary<Object, MyObjectBuilder_Base> m_rawDataObjectBuilderList = new Dictionary<object, MyObjectBuilder_Base>( );
+		protected List<Object> RawDataList = new List<object>( );
+		protected Dictionary<Object, MyObjectBuilder_Base> RawDataObjectBuilderList = new Dictionary<object, MyObjectBuilder_Base>( );
 
 		//Clean data stores
-		private Dictionary<long, BaseObject> m_definitions = new Dictionary<long, BaseObject>( );
+		private Dictionary<long, BaseObject> _definitions = new Dictionary<long, BaseObject>( );
 
 		#endregion "Attributes"
 
@@ -73,71 +73,71 @@ namespace SEModAPIInternal.API.Entity
 
 		public BaseObjectManager( )
 		{
-			m_fileInfo = null;
-			m_changed = false;
-			m_isMutable = true;
+			_fileInfo = null;
+			_changed = false;
+			_isMutable = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
+			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
-			m_backingSourceType = InternalBackingType.Hashset;
+			_backingSourceType = InternalBackingType.Hashset;
 
-			m_lastLoadTime = DateTime.Now;
+			_lastLoadTime = DateTime.Now;
 
-			if ( m_lastProfilingOutput == null )
-				m_lastProfilingOutput = DateTime.Now;
-			if ( m_lastInternalProfilingOutput == null )
-				m_lastInternalProfilingOutput = DateTime.Now;
+			if ( _lastProfilingOutput == null )
+				_lastProfilingOutput = DateTime.Now;
+			if ( _lastInternalProfilingOutput == null )
+				_lastInternalProfilingOutput = DateTime.Now;
 
-			if ( m_staticRefreshCountMap == null )
-				m_staticRefreshCountMap = new Dictionary<Type, int>( );
+			if ( _staticRefreshCountMap == null )
+				_staticRefreshCountMap = new Dictionary<Type, int>( );
 
-			m_refreshInterval = 250;
+			_refreshInterval = 250;
 		}
 
 		public BaseObjectManager( Object backingSource, string backingMethodName, InternalBackingType backingSourceType )
 		{
-			m_fileInfo = null;
-			m_changed = false;
-			m_isMutable = true;
-			m_isDynamic = true;
+			_fileInfo = null;
+			_changed = false;
+			_isMutable = true;
+			_isDynamic = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
+			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
-			m_backingObject = backingSource;
-			m_backingSourceMethod = backingMethodName;
-			m_backingSourceType = backingSourceType;
+			_backingObject = backingSource;
+			_backingSourceMethod = backingMethodName;
+			_backingSourceType = backingSourceType;
 
-			m_lastLoadTime = DateTime.Now;
+			_lastLoadTime = DateTime.Now;
 
-			if ( m_lastProfilingOutput == null )
-				m_lastProfilingOutput = DateTime.Now;
-			if ( m_lastInternalProfilingOutput == null )
-				m_lastInternalProfilingOutput = DateTime.Now;
+			if ( _lastProfilingOutput == null )
+				_lastProfilingOutput = DateTime.Now;
+			if ( _lastInternalProfilingOutput == null )
+				_lastInternalProfilingOutput = DateTime.Now;
 
-			if ( m_staticRefreshCountMap == null )
-				m_staticRefreshCountMap = new Dictionary<Type, int>( );
+			if ( _staticRefreshCountMap == null )
+				_staticRefreshCountMap = new Dictionary<Type, int>( );
 
-			m_refreshInterval = 250;
+			_refreshInterval = 250;
 		}
 
 		public BaseObjectManager( BaseObject[ ] baseDefinitions )
 		{
-			m_fileInfo = null;
-			m_changed = false;
-			m_isMutable = true;
+			_fileInfo = null;
+			_changed = false;
+			_isMutable = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
+			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
 			Load( baseDefinitions );
 		}
 
 		public BaseObjectManager( List<BaseObject> baseDefinitions )
 		{
-			m_fileInfo = null;
-			m_changed = false;
-			m_isMutable = true;
+			_fileInfo = null;
+			_changed = false;
+			_isMutable = true;
 
-			m_definitionsContainerField = GetMatchingDefinitionsContainerField( );
+			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
 			Load( baseDefinitions );
 		}
@@ -148,15 +148,15 @@ namespace SEModAPIInternal.API.Entity
 
 		public bool IsMutable
 		{
-			get { return m_isMutable; }
-			set { m_isMutable = value; }
+			get { return _isMutable; }
+			set { _isMutable = value; }
 		}
 
 		protected bool Changed
 		{
 			get
 			{
-				if ( m_changed ) return true;
+				if ( _changed ) return true;
 				foreach ( BaseObject def in GetInternalData( ).Values )
 				{
 					if ( def.Changed )
@@ -168,24 +168,24 @@ namespace SEModAPIInternal.API.Entity
 
 		public FileInfo FileInfo
 		{
-			get { return m_fileInfo; }
-			set { m_fileInfo = value; }
+			get { return _fileInfo; }
+			set { _fileInfo = value; }
 		}
 
 		public bool IsDynamic
 		{
-			get { return m_isDynamic; }
-			set { m_isDynamic = value; }
+			get { return _isDynamic; }
+			set { _isDynamic = value; }
 		}
 
 		public bool IsResourceLocked
 		{
-			get { return m_resourceLock.Owned; }
+			get { return ResourceLock.Owned; }
 		}
 
 		public bool IsInternalResourceLocked
 		{
-			get { return ( m_rawDataHashSetResourceLock.Owned || m_rawDataListResourceLock.Owned || m_rawDataObjectBuilderListResourceLock.Owned ); }
+			get { return ( RawDataHashSetResourceLock.Owned || RawDataListResourceLock.Owned || RawDataObjectBuilderListResourceLock.Owned ); }
 		}
 
 		public bool CanRefresh
@@ -215,7 +215,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public int Count
 		{
-			get { return m_definitions.Count; }
+			get { return _definitions.Count; }
 		}
 
 		#endregion "Properties"
@@ -224,11 +224,11 @@ namespace SEModAPIInternal.API.Entity
 
 		public void SetBackingProperties( Object backingObject, string backingMethod, InternalBackingType backingType )
 		{
-			m_isDynamic = true;
+			_isDynamic = true;
 
-			m_backingObject = backingObject;
-			m_backingSourceMethod = backingMethod;
-			m_backingSourceType = backingType;
+			_backingObject = backingObject;
+			_backingSourceMethod = backingMethod;
+			_backingSourceType = backingType;
 		}
 
 		private FieldInfo GetMatchingDefinitionsContainerField( )
@@ -259,22 +259,22 @@ namespace SEModAPIInternal.API.Entity
 
 		protected Dictionary<long, BaseObject> GetInternalData( )
 		{
-			return m_definitions;
+			return _definitions;
 		}
 
 		protected HashSet<Object> GetBackingDataHashSet( )
 		{
-			return m_rawDataHashSet;
+			return RawDataHashSet;
 		}
 
 		protected List<Object> GetBackingDataList( )
 		{
-			return m_rawDataList;
+			return RawDataList;
 		}
 
 		protected Dictionary<object, MyObjectBuilder_Base> GetObjectBuilderMap( )
 		{
-			return m_rawDataObjectBuilderList;
+			return RawDataObjectBuilderList;
 		}
 
 		#endregion "GetDataSource"
@@ -286,25 +286,25 @@ namespace SEModAPIInternal.API.Entity
 			if ( !CanRefresh )
 				return;
 
-			TimeSpan timeSinceLastLoad = DateTime.Now - m_lastLoadTime;
-			if ( timeSinceLastLoad.TotalMilliseconds < m_refreshInterval )
+			TimeSpan timeSinceLastLoad = DateTime.Now - _lastLoadTime;
+			if ( timeSinceLastLoad.TotalMilliseconds < _refreshInterval )
 				return;
-			m_lastLoadTime = DateTime.Now;
+			_lastLoadTime = DateTime.Now;
 
 			//Run the refresh
 			Action action = RefreshData;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 
 			//Update the refresh counts
-			if ( !m_staticRefreshCountMap.ContainsKey( this.GetType( ) ) )
-				m_staticRefreshCountMap.Add( this.GetType( ), 1 );
+			if ( !_staticRefreshCountMap.ContainsKey( this.GetType( ) ) )
+				_staticRefreshCountMap.Add( this.GetType( ), 1 );
 			else
-				m_staticRefreshCountMap[ this.GetType( ) ]++;
-			int typeRefreshCount = m_staticRefreshCountMap[ this.GetType( ) ];
-			m_staticRefreshCount++;
+				_staticRefreshCountMap[ this.GetType( ) ]++;
+			int typeRefreshCount = _staticRefreshCountMap[ this.GetType( ) ];
+			_staticRefreshCount++;
 
 			//Adjust the refresh interval based on percentage of total refreshes for this type
-			m_refreshInterval = ( typeRefreshCount / m_staticRefreshCount ) * 850 + 250;
+			_refreshInterval = ( typeRefreshCount / _staticRefreshCount ) * 850 + 250;
 		}
 
 		private void RefreshData( )
@@ -316,43 +316,43 @@ namespace SEModAPIInternal.API.Entity
 			{
 				DateTime startRefreshTime = DateTime.Now;
 
-				if ( m_backingSourceType == InternalBackingType.Hashset )
+				if ( _backingSourceType == InternalBackingType.Hashset )
 					InternalRefreshBackingDataHashSet( );
-				if ( m_backingSourceType == InternalBackingType.List )
+				if ( _backingSourceType == InternalBackingType.List )
 					InternalRefreshBackingDataList( );
 
 				//Lock the main data
-				m_resourceLock.AcquireExclusive( );
+				ResourceLock.AcquireExclusive( );
 
 				//Lock all of the raw data
-				if ( m_backingSourceType == InternalBackingType.Hashset )
-					m_rawDataHashSetResourceLock.AcquireShared( );
-				if ( m_backingSourceType == InternalBackingType.List )
-					m_rawDataListResourceLock.AcquireShared( );
-				m_rawDataObjectBuilderListResourceLock.AcquireShared( );
+				if ( _backingSourceType == InternalBackingType.Hashset )
+					RawDataHashSetResourceLock.AcquireShared( );
+				if ( _backingSourceType == InternalBackingType.List )
+					RawDataListResourceLock.AcquireShared( );
+				RawDataObjectBuilderListResourceLock.AcquireShared( );
 
 				//Refresh the main data
 				LoadDynamic( );
 
 				//Unlock the main data
-				m_resourceLock.ReleaseExclusive( );
+				ResourceLock.ReleaseExclusive( );
 
 				//Unlock all of the raw data
-				if ( m_backingSourceType == InternalBackingType.Hashset )
-					m_rawDataHashSetResourceLock.ReleaseShared( );
-				if ( m_backingSourceType == InternalBackingType.List )
-					m_rawDataListResourceLock.ReleaseShared( );
-				m_rawDataObjectBuilderListResourceLock.ReleaseShared( );
+				if ( _backingSourceType == InternalBackingType.Hashset )
+					RawDataHashSetResourceLock.ReleaseShared( );
+				if ( _backingSourceType == InternalBackingType.List )
+					RawDataListResourceLock.ReleaseShared( );
+				RawDataObjectBuilderListResourceLock.ReleaseShared( );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
 					TimeSpan timeToRefresh = DateTime.Now - startRefreshTime;
-					m_averageRefreshDataTime = ( m_averageRefreshDataTime + timeToRefresh.TotalMilliseconds ) / 2;
-					TimeSpan timeSinceLastProfilingOutput = DateTime.Now - m_lastProfilingOutput;
+					_averageRefreshDataTime = ( _averageRefreshDataTime + timeToRefresh.TotalMilliseconds ) / 2;
+					TimeSpan timeSinceLastProfilingOutput = DateTime.Now - _lastProfilingOutput;
 					if ( timeSinceLastProfilingOutput.TotalSeconds > 30 )
 					{
-						m_lastProfilingOutput = DateTime.Now;
-						LogManager.APILog.WriteLine( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( m_averageRefreshDataTime, 2 ).ToString( ) ) );
+						_lastProfilingOutput = DateTime.Now;
+						LogManager.APILog.WriteLine( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( _averageRefreshDataTime, 2 ).ToString( ) ) );
 					}
 				}
 			}
@@ -374,19 +374,19 @@ namespace SEModAPIInternal.API.Entity
 				if ( !CanRefresh )
 					return;
 
-				m_rawDataHashSetResourceLock.AcquireExclusive( );
+				RawDataHashSetResourceLock.AcquireExclusive( );
 
-				if ( m_backingObject == null )
+				if ( _backingObject == null )
 					return;
-				object rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
+				object rawValue = BaseObject.InvokeEntityMethod( _backingObject, _backingSourceMethod );
 				if ( rawValue == null )
 					return;
 
 				//Create/Clear the hash set
-				if ( m_rawDataHashSet == null )
-					m_rawDataHashSet = new HashSet<object>( );
+				if ( RawDataHashSet == null )
+					RawDataHashSet = new HashSet<object>( );
 				else
-					m_rawDataHashSet.Clear( );
+					RawDataHashSet.Clear( );
 
 				//Only allow valid entities in the hash set
 				foreach ( object entry in UtilityFunctions.ConvertHashSet( rawValue ) )
@@ -394,16 +394,16 @@ namespace SEModAPIInternal.API.Entity
 					if ( !IsValidEntity( entry ) )
 						continue;
 
-					m_rawDataHashSet.Add( entry );
+					RawDataHashSet.Add( entry );
 				}
 
-				m_rawDataHashSetResourceLock.ReleaseExclusive( );
+				RawDataHashSetResourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
-				if ( m_rawDataHashSetResourceLock.Owned )
-					m_rawDataHashSetResourceLock.ReleaseExclusive( );
+				if ( RawDataHashSetResourceLock.Owned )
+					RawDataHashSetResourceLock.ReleaseExclusive( );
 			}
 		}
 
@@ -414,19 +414,19 @@ namespace SEModAPIInternal.API.Entity
 				if ( !CanRefresh )
 					return;
 
-				m_rawDataListResourceLock.AcquireExclusive( );
+				RawDataListResourceLock.AcquireExclusive( );
 
-				if ( m_backingObject == null )
+				if ( _backingObject == null )
 					return;
-				object rawValue = BaseObject.InvokeEntityMethod( m_backingObject, m_backingSourceMethod );
+				object rawValue = BaseObject.InvokeEntityMethod( _backingObject, _backingSourceMethod );
 				if ( rawValue == null )
 					return;
 
 				//Create/Clear the list
-				if ( m_rawDataList == null )
-					m_rawDataList = new List<object>( );
+				if ( RawDataList == null )
+					RawDataList = new List<object>( );
 				else
-					m_rawDataList.Clear( );
+					RawDataList.Clear( );
 
 				//Only allow valid entities in the list
 				foreach ( object entry in UtilityFunctions.ConvertList( rawValue ) )
@@ -434,16 +434,16 @@ namespace SEModAPIInternal.API.Entity
 					if ( !IsValidEntity( entry ) )
 						continue;
 
-					m_rawDataList.Add( entry );
+					RawDataList.Add( entry );
 				}
 
-				m_rawDataListResourceLock.ReleaseExclusive( );
+				RawDataListResourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
-				if ( m_rawDataListResourceLock.Owned )
-					m_rawDataListResourceLock.ReleaseExclusive( );
+				if ( RawDataListResourceLock.Owned )
+					RawDataListResourceLock.ReleaseExclusive( );
 			}
 		}
 
@@ -623,7 +623,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				m_resourceLock.AcquireShared( );
+				ResourceLock.AcquireShared( );
 
 				List<T> newList = new List<T>( );
 				foreach ( BaseObject def in GetInternalData( ).Values )
@@ -634,7 +634,7 @@ namespace SEModAPIInternal.API.Entity
 					newList.Add( (T)def );
 				}
 
-				m_resourceLock.ReleaseShared( );
+				ResourceLock.ReleaseShared( );
 
 				Refresh( );
 
@@ -643,8 +643,8 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
-				if ( m_resourceLock.Owned )
-					m_resourceLock.ReleaseShared( );
+				if ( ResourceLock.Owned )
+					ResourceLock.ReleaseShared( );
 				return new List<T>( );
 			}
 		}
@@ -658,8 +658,8 @@ namespace SEModAPIInternal.API.Entity
 			if ( !IsMutable ) return default( T );
 			MyObjectBuilder_Base newBase = MyObjectBuilderSerializer.CreateNewObject( typeof( MyObjectBuilder_EntityBase ) );
 			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { newBase } );
-			GetInternalData( ).Add( m_definitions.Count, newEntry );
-			m_changed = true;
+			GetInternalData( ).Add( _definitions.Count, newEntry );
+			_changed = true;
 
 			return newEntry;
 		}
@@ -670,8 +670,8 @@ namespace SEModAPIInternal.API.Entity
 			if ( !IsMutable ) return default( T );
 
 			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source } );
-			GetInternalData( ).Add( m_definitions.Count, newEntry );
-			m_changed = true;
+			GetInternalData( ).Add( _definitions.Count, newEntry );
+			_changed = true;
 
 			return newEntry;
 		}
@@ -681,8 +681,8 @@ namespace SEModAPIInternal.API.Entity
 			if ( !IsMutable ) return default( T );
 
 			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source.ObjectBuilder } );
-			GetInternalData( ).Add( m_definitions.Count, newEntry );
-			m_changed = true;
+			GetInternalData( ).Add( _definitions.Count, newEntry );
+			_changed = true;
 
 			return newEntry;
 		}
@@ -692,7 +692,7 @@ namespace SEModAPIInternal.API.Entity
 			if ( !IsMutable ) return;
 
 			GetInternalData( ).Add( key, entry );
-			m_changed = true;
+			_changed = true;
 		}
 
 		#endregion "NewContent"
@@ -708,7 +708,7 @@ namespace SEModAPIInternal.API.Entity
 				BaseObject entry = GetInternalData( )[ id ];
 				GetInternalData( ).Remove( id );
 				entry.Dispose( );
-				m_changed = true;
+				_changed = true;
 				return true;
 			}
 
@@ -719,7 +719,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return false;
 
-			foreach ( KeyValuePair<long, BaseObject> def in m_definitions )
+			foreach ( KeyValuePair<long, BaseObject> def in _definitions )
 			{
 				if ( def.Value.Equals( entry ) )
 				{
@@ -786,7 +786,7 @@ namespace SEModAPIInternal.API.Entity
 
 			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions( );
 
-			if ( m_definitionsContainerField == null )
+			if ( _definitionsContainerField == null )
 				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.Invalid, "Failed to find matching definitions field in the given file." );
 
 			List<MyObjectBuilder_Base> baseDefs = new List<MyObjectBuilder_Base>( );
@@ -796,10 +796,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 
 			//Save the source data into the definitions container
-			m_definitionsContainerField.SetValue( definitionsContainer, baseDefs.ToArray( ) );
+			_definitionsContainerField.SetValue( definitionsContainer, baseDefs.ToArray( ) );
 
 			//Save the definitions container out to the file
-			SaveContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>( definitionsContainer, m_fileInfo );
+			SaveContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>( definitionsContainer, _fileInfo );
 
 			return true;
 		}
