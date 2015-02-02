@@ -14,10 +14,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private BatteryBlockNetworkManager m_batteryBlockNetManager;
+		private BatteryBlockNetworkManager _batteryBlockNetManager;
 
-		private float m_maxPowerOutput;
-		private float m_maxStoredPower;
+		private float _maxPowerOutput;
+		private float _maxStoredPower;
 
 		//Internal class
 		public static string BatteryBlockNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
@@ -56,10 +56,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public BatteryBlockEntity( CubeGridEntity parent, MyObjectBuilder_BatteryBlock definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			m_maxPowerOutput = 0;
-			m_maxStoredPower = definition.MaxStoredPower;
+			_maxPowerOutput = 0;
+			_maxStoredPower = definition.MaxStoredPower;
 
-			m_batteryBlockNetManager = new BatteryBlockNetworkManager( this, InternalGetNetManager( ) );
+			_batteryBlockNetManager = new BatteryBlockNetworkManager( this, InternalGetNetManager( ) );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -89,7 +89,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				MyObjectBuilder_BatteryBlock batteryBlock = (MyObjectBuilder_BatteryBlock)base.ObjectBuilder;
 
-				batteryBlock.MaxStoredPower = m_maxStoredPower;
+				batteryBlock.MaxStoredPower = _maxStoredPower;
 
 				return batteryBlock;
 			}
@@ -132,15 +132,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				}
 				else
 				{
-					maxStoredPower = m_maxStoredPower;
+					maxStoredPower = _maxStoredPower;
 				}
 
 				return maxStoredPower;
 			}
 			set
 			{
-				if ( m_maxStoredPower == value ) return;
-				m_maxStoredPower = value;
+				if ( _maxStoredPower == value ) return;
+				_maxStoredPower = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -206,11 +206,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[Category( "Battery Block" )]
 		public float MaxPowerOutput
 		{
-			get { return m_maxPowerOutput; }
+			get { return _maxPowerOutput; }
 			set
 			{
-				if ( m_maxPowerOutput == value ) return;
-				m_maxPowerOutput = value;
+				if ( _maxPowerOutput == value ) return;
+				_maxPowerOutput = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -226,7 +226,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[ReadOnly( true )]
 		internal BatteryBlockNetworkManager BatteryNetManager
 		{
-			get { return m_batteryBlockNetManager; }
+			get { return _batteryBlockNetManager; }
 		}
 
 		#endregion "Properties"
@@ -315,7 +315,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
-				InvokeEntityMethod( ActualObject, BatteryBlockSetMaxStoredPowerMethod, new object[ ] { m_maxStoredPower } );
+				InvokeEntityMethod( ActualObject, BatteryBlockSetMaxStoredPowerMethod, new object[ ] { _maxStoredPower } );
 			}
 			catch ( Exception ex )
 			{
