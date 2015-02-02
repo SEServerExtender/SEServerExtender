@@ -344,7 +344,7 @@ namespace SEModAPIInternal.API.Entity
 					if ( timeSinceLastProfilingOutput.TotalSeconds > 30 )
 					{
 						_lastProfilingOutput = DateTime.Now;
-						LogManager.APILog.WriteLine( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( _averageRefreshDataTime, 2 ).ToString( ) ) );
+						LogManager.APILog.WriteLine( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( _averageRefreshDataTime, 2 ) ) );
 					}
 				}
 			}
@@ -649,7 +649,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return default( T );
 			MyObjectBuilder_Base newBase = MyObjectBuilderSerializer.CreateNewObject( typeof( MyObjectBuilder_EntityBase ) );
-			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { newBase } );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), newBase );
 			GetInternalData( ).Add( _definitions.Count, newEntry );
 			_changed = true;
 
@@ -661,7 +661,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return default( T );
 
-			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source } );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), source );
 			GetInternalData( ).Add( _definitions.Count, newEntry );
 			_changed = true;
 
@@ -672,7 +672,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( !IsMutable ) return default( T );
 
-			T newEntry = (T)Activator.CreateInstance( typeof( T ), new object[ ] { source.ObjectBuilder } );
+			T newEntry = (T)Activator.CreateInstance( typeof( T ), source.ObjectBuilder );
 			GetInternalData( ).Add( _definitions.Count, newEntry );
 			_changed = true;
 
