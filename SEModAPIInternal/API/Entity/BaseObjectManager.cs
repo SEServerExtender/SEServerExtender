@@ -272,6 +272,7 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "RefreshDataSource"
 
+		/// <exception cref="KeyNotFoundException">Thrown if GetType returns a type not found in the <see cref="_staticRefreshCountMap"/> dictionary.</exception>
 		public void Refresh( )
 		{
 			if ( !CanRefresh )
@@ -287,11 +288,11 @@ namespace SEModAPIInternal.API.Entity
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 
 			//Update the refresh counts
-			if ( !_staticRefreshCountMap.ContainsKey( this.GetType( ) ) )
-				_staticRefreshCountMap.Add( this.GetType( ), 1 );
+			if ( !_staticRefreshCountMap.ContainsKey( GetType( ) ) )
+				_staticRefreshCountMap.Add( GetType( ), 1 );
 			else
-				_staticRefreshCountMap[ this.GetType( ) ]++;
-			int typeRefreshCount = _staticRefreshCountMap[ this.GetType( ) ];
+				_staticRefreshCountMap[ GetType( ) ]++;
+			int typeRefreshCount = _staticRefreshCountMap[ GetType( ) ];
 			_staticRefreshCount++;
 
 			//Adjust the refresh interval based on percentage of total refreshes for this type
@@ -771,9 +772,9 @@ namespace SEModAPIInternal.API.Entity
 
 		public bool Save( )
 		{
-			if ( !this.Changed ) return false;
-			if ( !this.IsMutable ) return false;
-			if ( this.FileInfo == null ) return false;
+			if ( !Changed ) return false;
+			if ( !IsMutable ) return false;
+			if ( FileInfo == null ) return false;
 
 			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions( );
 
