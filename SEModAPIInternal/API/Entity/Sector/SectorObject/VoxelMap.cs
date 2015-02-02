@@ -18,11 +18,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	{
 		#region "Attributes"
 
-		private static Type m_internalType;
+		private static Type _internalType;
 
-		private VoxelMapMaterialManager m_materialManager;
-		private MyStorageDataCache m_cache;
-		private Dictionary<MyVoxelMaterialDefinition, float> m_materialTotals;
+		private VoxelMapMaterialManager _materialManager;
+		private MyStorageDataCache _cache;
+		private Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
 
 		public static string VoxelMapNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string VoxelMapClass = "6EC806B54BA319767DA878841A56ECD8";
@@ -57,8 +57,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public VoxelMap( MyObjectBuilder_VoxelMap definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			//m_materialManager = new VoxelMapMaterialManager(this, GetMaterialManager());
-			m_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
+			//_materialManager = new VoxelMapMaterialManager(this, GetMaterialManager());
+			_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
 			//RefreshCache();
 		}
 
@@ -72,7 +72,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( VoxelMapNamespace, VoxelMapClass ) ); }
+			get { return _internalType ?? ( _internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( VoxelMapNamespace, VoxelMapClass ) ); }
 		}
 
 		[DataMember]
@@ -138,10 +138,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				if ( m_cache == null )
+				if ( _cache == null )
 					return 0;
 
-				return m_cache.Data.Length;
+				return _cache.Data.Length;
 			}
 			private set
 			{
@@ -181,12 +181,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( BackingObject == null )
 					return null;
 
-				if ( m_cache == null )
+				if ( _cache == null )
 				{
 					RefreshCache( );
 				}
 
-				return m_materialTotals;
+				return _materialTotals;
 			}
 		}
 
@@ -196,7 +196,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		internal VoxelMapMaterialManager MaterialManager
 		{
-			get { return m_materialManager; }
+			get { return _materialManager; }
 		}
 
 		#endregion "Properties"
@@ -265,17 +265,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		protected void RefreshCache( )
 		{
 			IMyVoxelMap voxelMap = (IMyVoxelMap)BackingObject;
-			m_cache = new MyStorageDataCache( );
+			_cache = new MyStorageDataCache( );
 			Vector3I size = voxelMap.Storage.Size;
-			m_cache.Resize( size );
+			_cache.Resize( size );
 
 			//			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
 			//			{
-			voxelMap.Storage.ReadRange( m_cache, MyStorageDataTypeFlags.Material, 0, Vector3I.Zero, size - 1 );
-			//voxelMap.Storage.ReadRange(m_cache, MyStorageDataTypeFlags.Material, Vector3I.Zero, size - 1);
+			voxelMap.Storage.ReadRange( _cache, MyStorageDataTypeFlags.Material, 0, Vector3I.Zero, size - 1 );
+			//voxelMap.Storage.ReadRange(_cache, MyStorageDataTypeFlags.Material, Vector3I.Zero, size - 1);
 			//			});
 
-			foreach ( byte materialIndex in m_cache.Data )
+			foreach ( byte materialIndex in _cache.Data )
 			{
 				try
 				{
@@ -283,10 +283,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 					if ( material == null )
 						continue;
 
-					if ( !m_materialTotals.ContainsKey( material ) )
-						m_materialTotals.Add( material, 1 );
+					if ( !_materialTotals.ContainsKey( material ) )
+						_materialTotals.Add( material, 1 );
 					else
-						m_materialTotals[ material ]++;
+						_materialTotals[ material ]++;
 				}
 				catch ( Exception ex )
 				{
