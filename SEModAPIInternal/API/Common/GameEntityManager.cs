@@ -45,12 +45,12 @@ namespace SEModAPIInternal.API.Common
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for GameEntityManager" );
+					throw new TypeLoadException( "Could not find internal type for GameEntityManager" );
 				//result &= BaseObject.HasMethod(type, GameEntityManagerGetEntityByIdTypeMethod);
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
