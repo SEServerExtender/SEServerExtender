@@ -477,10 +477,7 @@ namespace SEModAPIInternal.API.Server
 				MethodInfo removeMethod = controlHandlerField.GetType().GetMethod("Remove");
 				removeMethod.Invoke(controlHandlerField, new object[] { 0 });
 
-				ThreadPool.QueueUserWorkItem((state) =>
-				{
-					OnWorldRequestReplace(state);
-				});
+				ThreadPool.QueueUserWorkItem(OnWorldRequestReplace);
 
 				// Garbage is below as I tried to create a generic delegate and put it into the command handling dictionary.  It's not
 				// as straightforward as it seems.  I can get the type, object, generic types, but I can't seem to create a delegate
