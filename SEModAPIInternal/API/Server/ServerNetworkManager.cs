@@ -233,8 +233,8 @@
 		{
 			try
 			{
-				var netManager = GetNetworkManager();
-				var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
+				object netManager = GetNetworkManager();
+				object mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
 				MethodInfo[] methods = mySyncLayer.GetType().GetMethods();
 				MethodInfo sendMessageMethod = methods.FirstOrDefault(x => x.Name == MySyncLayerSendMessage);
 				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
@@ -370,8 +370,8 @@
 		{
 			try
 			{
-				var netManager = GetNetworkManager();
-				var controlHandlerField = BaseObject.GetEntityFieldValue(netManager, NetworkManagerControlHandlerField);
+				object netManager = GetNetworkManager();
+				object controlHandlerField = BaseObject.GetEntityFieldValue(netManager, NetworkManagerControlHandlerField);
 				Dictionary<int, object> controlHandlers = UtilityFunctions.ConvertDictionary<int>(controlHandlerField);
 				MethodInfo removeMethod = controlHandlerField.GetType().GetMethod("Remove");
 				removeMethod.Invoke(controlHandlerField, new object[] { 0 });
@@ -646,7 +646,7 @@
 					}
 				}
 
-				var myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, (int)array.Length, steamId, 1, size });
+				object myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, (int)array.Length, steamId, 1, size });
 				while ((bool)BaseObject.InvokeEntityMethod(myMultipartSender, MyMultipartSenderSendPart))
 				{
 					Thread.Sleep(2 + count);
@@ -687,9 +687,9 @@
 
 		private static void SendFlush(ulong steamId)
 		{
-			var netManager = GetNetworkManager();
-			var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
-			var myTransportLayer = BaseObject.GetEntityFieldValue(mySyncLayer, MyTransportLayerField);
+			object netManager = GetNetworkManager();
+			object mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
+			object myTransportLayer = BaseObject.GetEntityFieldValue(mySyncLayer, MyTransportLayerField);
 			BaseObject.InvokeEntityMethod(myTransportLayer, MyTransportLayerClearMethod, new object[] { steamId });
 		}
 
