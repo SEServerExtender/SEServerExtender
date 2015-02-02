@@ -84,6 +84,7 @@
     <Compile Include="API\Common\RadioManager.cs" />
     <Compile Include="API\Common\WorldManager.cs" />
     <Compile Include="API\Entity\BaseEntity.cs" />
+    <Compile Include="API\Entity\BaseEntityNetworkManager.cs" />
     <Compile Include="API\Entity\BaseObject.cs" />
     <Compile Include="API\Entity\BaseObjectManager.cs" />
     <Compile Include="API\Entity\PowerProducer.cs" />
