@@ -91,7 +91,7 @@ namespace SEModAPIInternal.API.Entity
 		[Description( "The formatted name of the object" )]
 		public override string Name
 		{
-			get { return "SANDBOX_" + this.Position.X + "_" + this.Position.Y + "_" + this.Position.Z + "_"; }
+			get { return "SANDBOX_" + Position.X + "_" + Position.Y + "_" + Position.Z + "_"; }
 		}
 
 		[Category( "Sector" )]
@@ -361,7 +361,7 @@ namespace SEModAPIInternal.API.Entity
 					return false;
 
 				//Skip disposed entities
-				bool isDisposed = (bool)BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetIsDisposedMethod );
+				bool isDisposed = (bool)BaseObject.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetIsDisposedMethod );
 				if ( isDisposed )
 					return false;
 
@@ -370,7 +370,7 @@ namespace SEModAPIInternal.API.Entity
 					return false;
 
 				//Skip entities that don't have a position-orientation matrix defined
-				if ( BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetOrientationMatrixMethod ) == null )
+				if ( BaseObject.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetOrientationMatrixMethod ) == null )
 					return false;
 
 				return true;
@@ -532,23 +532,23 @@ namespace SEModAPIInternal.API.Entity
 
 				//Create the backing object
 				Type entityType = entityToAdd.GetType( );
-				Type internalType = (Type)BaseEntity.InvokeStaticMethod( entityType, "get_InternalType" );
+				Type internalType = (Type)BaseObject.InvokeStaticMethod( entityType, "get_InternalType" );
 				if ( internalType == null )
 					throw new Exception( "Could not get internal type of entity" );
 				entityToAdd.BackingObject = Activator.CreateInstance( internalType );
 
 				//Initialize the backing object
-				BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, "Init", new object[ ] { entityToAdd.ObjectBuilder } );
+				BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, "Init", new object[ ] { entityToAdd.ObjectBuilder } );
 
 				//Add the backing object to the main game object manager
-				BaseEntity.InvokeStaticMethod( InternalType, ObjectManagerAddEntity, new object[ ] { entityToAdd.BackingObject, true } );
+				BaseObject.InvokeStaticMethod( InternalType, ObjectManagerAddEntity, new object[ ] { entityToAdd.BackingObject, true } );
 
 				if ( entityToAdd is FloatingObject )
 				{
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
 						//TODO - Do stuff
 
 						entityToAdd.ObjectBuilder = baseEntity;
@@ -564,9 +564,9 @@ namespace SEModAPIInternal.API.Entity
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
 						Type someManager = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( EntityBaseNetManagerNamespace, EntityBaseNetManagerClass );
-						BaseEntity.InvokeStaticMethod( someManager, EntityBaseNetManagerSendEntity, new object[ ] { baseEntity } );
+						BaseObject.InvokeStaticMethod( someManager, EntityBaseNetManagerSendEntity, new object[ ] { baseEntity } );
 
 						entityToAdd.ObjectBuilder = baseEntity;
 					}
@@ -625,7 +625,7 @@ namespace SEModAPIInternal.API.Entity
 			FileInfo = fileInfo;
 
 			//Read in the sector data
-			MyObjectBuilder_Sector data = ReadSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( this.FileInfo.FullName );
+			MyObjectBuilder_Sector data = ReadSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( FileInfo.FullName );
 
 			//And instantiate the sector with the data
 			m_Sector = new SectorEntity( data );
@@ -633,7 +633,7 @@ namespace SEModAPIInternal.API.Entity
 
 		new public bool Save( )
 		{
-			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( m_Sector.ObjectBuilder, this.FileInfo.FullName );
+			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( m_Sector.ObjectBuilder, FileInfo.FullName );
 		}
 
 		#endregion "Methods"

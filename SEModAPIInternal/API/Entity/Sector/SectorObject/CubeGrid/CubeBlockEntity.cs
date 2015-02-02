@@ -863,7 +863,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 						if ( !IsValidEntity( entity ) )
 							continue;
 
-						MyObjectBuilder_CubeBlock baseEntity = (MyObjectBuilder_CubeBlock)CubeBlockEntity.InvokeEntityMethod( entity, CubeBlockEntity.CubeBlockGetObjectBuilderMethod );
+						MyObjectBuilder_CubeBlock baseEntity = (MyObjectBuilder_CubeBlock)BaseObject.InvokeEntityMethod( entity, CubeBlockEntity.CubeBlockGetObjectBuilderMethod );
 						if ( baseEntity == null )
 							continue;
 
