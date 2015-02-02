@@ -21,16 +21,16 @@
 	public class ServerNetworkManager : NetworkManager
 	{
 		#region "Attributes"
-		new protected static ServerNetworkManager m_instance;
+		new protected static ServerNetworkManager _instance;
 
-		private static MulticastDelegate m_onWorldRequest;
-		private static Type m_onWorldRequestType;
+		private static MulticastDelegate _onWorldRequest;
+		private static Type _onWorldRequestType;
 		private static int[] m_speeds = { 512, 256, 128, 128 };
-		private static bool replaceData = false;
-		private static List<ulong> m_responded = new List<ulong>();
-		private static List<ulong> m_clearResponse = new List<ulong>();
-		private static List<ulong> m_inGame = new List<ulong>();
-		private static Dictionary<ulong, Tuple<DateTime, int>> m_slowDown = new Dictionary<ulong, Tuple<DateTime, int>>();
+		private static bool _replaceData = false;
+		private static List<ulong> _responded = new List<ulong>();
+		private static List<ulong> _clearResponse = new List<ulong>();
+		private static List<ulong> _inGame = new List<ulong>();
+		private static Dictionary<ulong, Tuple<DateTime, int>> _slowDown = new Dictionary<ulong, Tuple<DateTime, int>>();
 
 		public static string ServerNetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
@@ -104,7 +104,7 @@
 
 		new public static ServerNetworkManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new ServerNetworkManager( ) ); }
+			get { return _instance ?? ( _instance = new ServerNetworkManager( ) ); }
 		}
 
 		#endregion
@@ -402,8 +402,8 @@
 
 				//MulticastDelegate action = (MulticastDelegate)worldJoinDelegateField.GetValue(worldJoinField);
 				//action.Method = typeof(NetworkManager).GetMethod("WorldTest", BindingFlags.Public);
-				//m_onWorldRequest = action;
-				//m_onWorldRequestType = worldJoinDelegateField.FieldType.GetGenericArguments()[0];
+				//_onWorldRequest = action;
+				//_onWorldRequestType = worldJoinDelegateField.FieldType.GetGenericArguments()[0];
 				//action.Method = 
 				// this.RegisterControlMessage<MyControlWorldRequestMsg>(MyControlMessageEnum.WorldRequest, new ControlMessageHandler<MyControlWorldRequestMsg>(this.OnWorldRequest));
 
@@ -431,7 +431,7 @@
 
 		public void ReplaceWorldData()
 		{
-			replaceData = true;
+			_replaceData = true;
 		}
 
 		/// <summary>
@@ -451,42 +451,42 @@
 				{
 					DateTime start = DateTime.Now;
 					List<ulong> connectedList = PlayerManager.Instance.ConnectedPlayers;
-					for (int r = m_clearResponse.Count - 1; r >= 0; r--)
+					for (int r = _clearResponse.Count - 1; r >= 0; r--)
 					{
-						ulong player = m_clearResponse[r];
+						ulong player = _clearResponse[r];
 
 						if (!connectedList.Contains(player))
 						{
 							LogManager.APILog.WriteLineAndConsole("Removing User - Clear Response");
-							m_clearResponse.Remove(player);
+							_clearResponse.Remove(player);
 							continue;
 						}
-						m_clearResponse.Remove(player);
+						_clearResponse.Remove(player);
 
-						lock (m_inGame)
-							m_inGame.Add(player);
+						lock (_inGame)
+							_inGame.Add(player);
 
 						ThreadPool.QueueUserWorkItem((ns) =>
 						{
 							try
 							{
 								bool shouldSlowDown = false;
-								if (m_slowDown.ContainsKey(player))
+								if (_slowDown.ContainsKey(player))
 								{
-									shouldSlowDown = (DateTime.Now - m_slowDown[player].Item1).TotalSeconds < 240;
+									shouldSlowDown = (DateTime.Now - _slowDown[player].Item1).TotalSeconds < 240;
 								}
 
 								LogManager.APILog.WriteLineAndConsole(string.Format("Sending world data.  Throttle: {0}", shouldSlowDown));
 								SendWorldData(player);
 
-								lock (m_slowDown)
+								lock (_slowDown)
 								{
-									if (!m_slowDown.ContainsKey(player))
-										m_slowDown.Add(player, new Tuple<DateTime, int>(DateTime.Now, 1));
+									if (!_slowDown.ContainsKey(player))
+										_slowDown.Add(player, new Tuple<DateTime, int>(DateTime.Now, 1));
 									else
 									{
-										int count = m_slowDown[player].Item2;
-										m_slowDown[player] = new Tuple<DateTime, int>(DateTime.Now, count + 1);
+										int count = _slowDown[player].Item2;
+										_slowDown[player] = new Tuple<DateTime, int>(DateTime.Now, count + 1);
 									}
 								}
 							}
@@ -502,22 +502,22 @@
 						if (player.ToString().StartsWith("9009"))
 							continue;
 
-						if (!m_responded.Contains(player) && !m_clearResponse.Contains(player) && !m_inGame.Contains(player))
+						if (!_responded.Contains(player) && !_clearResponse.Contains(player) && !_inGame.Contains(player))
 						{
-							m_clearResponse.Add(player);
+							_clearResponse.Add(player);
 						}
 					}
 
-					lock (m_inGame)
+					lock (_inGame)
 					{
-						for (int r = m_inGame.Count - 1; r >= 0; r--)
+						for (int r = _inGame.Count - 1; r >= 0; r--)
 						{
-							ulong player = m_inGame[r];
+							ulong player = _inGame[r];
 
 							if (!connectedList.Contains(player))
 							{
 								LogManager.APILog.WriteLineAndConsole("Removing user - Ingame / Downloading");
-								m_inGame.Remove(player);
+								_inGame.Remove(player);
 								continue;
 							}
 						}
@@ -549,9 +549,9 @@
 					// Let's sleep for 5 seconds and let plugins know we're online -- let's not after all, causing sync issues
 					//Thread.Sleep(5000);
 					MyObjectBuilder_World myObjectBuilderWorld = null;
-					lock (m_inGame)
+					lock (_inGame)
 					{
-						if (!m_inGame.Contains(steamId))
+						if (!_inGame.Contains(steamId))
 						{
 							LogManager.APILog.WriteLineAndConsole(string.Format("Cancelled send to user: {0}", steamId));
 							return;
@@ -564,7 +564,7 @@
 						myObjectBuilderWorld = MyAPIGateway.Session.GetWorld();
 					});
 
-					if (replaceData)
+					if (_replaceData)
 					{
 						for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
 						{
@@ -633,18 +633,18 @@
 				int count = 0;
 				int position = 0;
 
-				lock (m_slowDown)
+				lock (_slowDown)
 				{
-					if (m_slowDown.ContainsKey(steamId))
+					if (_slowDown.ContainsKey(steamId))
 					{
-						if (DateTime.Now - m_slowDown[steamId].Item1 > TimeSpan.FromMinutes(4))
+						if (DateTime.Now - _slowDown[steamId].Item1 > TimeSpan.FromMinutes(4))
 						{
-							//size = m_speeds[Math.Min(3, m_slowDown[steamId].Item2)];
-							count = 10 * Math.Max(0, (m_slowDown[steamId].Item2 - 3));
+							//size = m_speeds[Math.Min(3, _slowDown[steamId].Item2)];
+							count = 10 * Math.Max(0, (_slowDown[steamId].Item2 - 3));
 						}
 						else
 						{
-							m_slowDown[steamId] = new Tuple<DateTime, int>(DateTime.Now, 0);
+							_slowDown[steamId] = new Tuple<DateTime, int>(DateTime.Now, 0);
 						}
 					}
 				}
@@ -655,9 +655,9 @@
 					Thread.Sleep(2 + count);
 
 					position++;
-					lock (m_inGame)
+					lock (_inGame)
 					{
-						if (!m_inGame.Contains(steamId))
+						if (!_inGame.Contains(steamId))
 						{
 							LogManager.APILog.WriteLineAndConsole(string.Format("Interrupted send to user: {0} ({1} - {2})", steamId, size, count));
 							break;
@@ -665,7 +665,7 @@
 					}
 				}
 
-				if (m_inGame.Contains(steamId))
+				if (_inGame.Contains(steamId))
 					TriggerWorldSendEvent(steamId);
 
 				LogManager.APILog.WriteLineAndConsole(string.Format("World Snapshot Send -> {0} ({2} - {3}): {1}ms", steamId, (DateTime.Now - start).TotalMilliseconds, size, count));
