@@ -7,8 +7,7 @@
 	{
 		#region "Attributes"
 
-		private TurretBaseEntity m_parent;
-		private Object m_backingObject;
+		private readonly TurretBaseEntity _parent;
 
 		//Packets
 		//686 - Target ID
@@ -20,7 +19,7 @@
 
 		public static string TurretNetworkManagerBroadcastTargetIdMethod = "8E250BEF8500A92D96D13554C31D4EFA";
 		public static string TurretNetworkManagerBroadcastRangeMethod = "8F298724F106679C0229CD9F9763EA90";
-		public static string TurretNetworkManagerBroadcastTargettingFlagsMethod = "70D4690C2D4A199ABB3EB37364BE0595";
+		public static string TurretNetworkManagerBroadcastTargetingFlagsMethod = "70D4690C2D4A199ABB3EB37364BE0595";
 
 		#endregion "Attributes"
 
@@ -28,19 +27,15 @@
 
 		public TurretNetworkManager( TurretBaseEntity parent, Object backingObject )
 		{
-			m_parent = parent;
-			m_backingObject = backingObject;
+			_parent = parent;
+			BackingObject = backingObject;
 		}
 
 		#endregion "Constructors and Intializers"
 
 		#region "Properties"
 
-		internal Object BackingObject
-		{
-			get { return m_backingObject; }
-			set { m_backingObject = value; }
-		}
+		internal Object BackingObject { get; set; }
 
 		#endregion "Properties"
 
@@ -58,7 +53,7 @@
 
 				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargetIdMethod );
 				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastRangeMethod );
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargettingFlagsMethod );
+				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargetingFlagsMethod );
 
 				return result;
 			}
@@ -71,22 +66,22 @@
 
 		public void BroadcastTargetId( )
 		{
-			long entityId = BaseEntity.GetEntityId( m_parent.ActualObject );
+			long entityId = BaseEntity.GetEntityId( _parent.ActualObject );
 			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargetIdMethod, new object[ ] { entityId, false } );
 		}
 
 		public void BroadcastRange( )
 		{
-			float range = m_parent.ShootingRange;
+			float range = _parent.ShootingRange;
 			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastRangeMethod, new object[ ] { range } );
 		}
 
 		public void BroadcastTargettingFlags( )
 		{
-			bool targetMeteors = m_parent.TargetMeteors;
-			bool targetMoving = m_parent.TargetMoving;
-			bool targetMissiles = m_parent.TargetMissiles;
-			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargettingFlagsMethod, new object[ ] { targetMeteors, targetMoving, targetMissiles } );
+			bool targetMeteors = _parent.TargetMeteors;
+			bool targetMoving = _parent.TargetMoving;
+			bool targetMissiles = _parent.TargetMissiles;
+			BaseObject.InvokeEntityMethod( BackingObject, TurretNetworkManagerBroadcastTargetingFlagsMethod, new object[ ] { targetMeteors, targetMoving, targetMissiles } );
 		}
 
 		#endregion "Methods"
