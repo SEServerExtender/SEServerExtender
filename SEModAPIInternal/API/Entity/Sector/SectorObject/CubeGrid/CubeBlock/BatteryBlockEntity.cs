@@ -66,6 +66,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		#region "Properties"
 
+		/// <summary>
+		/// Gets a reference to the <see cref="BatteryBlockEntity"/> type.
+		/// </summary>
 		[IgnoreDataMember]
 		[Category( "Battery Block" )]
 		[Browsable( false )]
@@ -241,7 +244,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( BatteryBlockNamespace, BatteryBlockClass );
 				if ( type == null )
-					throw new Exception( "Could not find internal type for BatteryBlockEntity" );
+					throw new TypeLoadException( "Could not find internal type for BatteryBlockEntity" );
 
 				result &= HasMethod( type, BatteryBlockGetCurrentStoredPowerMethod );
 				result &= HasMethod( type, BatteryBlockSetCurrentStoredPowerMethod );
@@ -261,7 +264,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
