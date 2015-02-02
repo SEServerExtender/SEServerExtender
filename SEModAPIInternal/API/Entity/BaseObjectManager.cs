@@ -106,10 +106,8 @@ namespace SEModAPIInternal.API.Entity
 
 			_lastLoadTime = DateTime.Now;
 
-			if ( _lastProfilingOutput == null )
-				_lastProfilingOutput = DateTime.Now;
-			if ( _lastInternalProfilingOutput == null )
-				_lastInternalProfilingOutput = DateTime.Now;
+			_lastProfilingOutput = DateTime.Now;
+			_lastInternalProfilingOutput = DateTime.Now;
 
 			if ( _staticRefreshCountMap == null )
 				_staticRefreshCountMap = new Dictionary<Type, int>( );
