@@ -221,7 +221,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( BackingObject == null )
 					return m_entityId;
 
-				long entityId = BaseEntity.GetEntityId( BackingObject );
+				long entityId = GetEntityId( BackingObject );
 				if ( entityId == 0 )
 					return m_entityId;
 
@@ -500,7 +500,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( BackingObject == null )
 					return null;
 
-				return BaseEntity.GetRigidBody( BackingObject );
+				return GetRigidBody( BackingObject );
 			}
 		}
 
@@ -547,7 +547,7 @@ namespace SEModAPIInternal.API.Entity
 			if ( BackingObject != null )
 			{
 				//Only remove if the backing object isn't already disposed
-				bool isDisposed = (bool)BaseEntity.InvokeEntityMethod( BackingObject, BaseEntity.BaseEntityGetIsDisposedMethod );
+				bool isDisposed = (bool)InvokeEntityMethod( BackingObject, BaseEntityGetIsDisposedMethod );
 				if ( !isDisposed )
 				{
 					m_networkManager.RemoveEntity( );
@@ -689,7 +689,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public static MyObjectBuilder_EntityBase GetObjectBuilder( Object entity )
 		{
-			MyObjectBuilder_EntityBase objectBuilder = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+			MyObjectBuilder_EntityBase objectBuilder = (MyObjectBuilder_EntityBase)InvokeEntityMethod( entity, BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
 			return objectBuilder;
 		}
 
@@ -740,7 +740,7 @@ namespace SEModAPIInternal.API.Entity
 				Vector3D newPosition = m_positionOrientation.Position;
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine( this.GetType( ).Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition( ).ToString( ) + "' to '" + newPosition.ToString( ) + "'" );
+					LogManager.APILog.WriteLine( GetType( ).Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition( ).ToString( ) + "' to '" + newPosition.ToString( ) + "'" );
 				}
 
 				entity.SetPosition( newPosition );
@@ -779,7 +779,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine( this.GetType( ).Name + " - Changing linear velocity of '" + Name + "' from '" + havokBody.LinearVelocity.ToString( ) + "' to '" + m_linearVelocity.ToString( ) + "'" );
+					LogManager.APILog.WriteLine( GetType( ).Name + " - Changing linear velocity of '" + Name + "' from '" + havokBody.LinearVelocity.ToString( ) + "' to '" + m_linearVelocity.ToString( ) + "'" );
 				}
 
 				havokBody.LinearVelocity = m_linearVelocity;
@@ -800,7 +800,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine( this.GetType( ).Name + " - Changing angular velocity of '" + Name + "' from '" + havokBody.AngularVelocity.ToString( ) + "' to '" + m_angularVelocity.ToString( ) + "'" );
+					LogManager.APILog.WriteLine( GetType( ).Name + " - Changing angular velocity of '" + Name + "' from '" + havokBody.AngularVelocity.ToString( ) + "' to '" + m_angularVelocity.ToString( ) + "'" );
 				}
 
 				havokBody.AngularVelocity = m_angularVelocity;
@@ -816,9 +816,9 @@ namespace SEModAPIInternal.API.Entity
 			try
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.APILog.WriteLine( this.GetType( ).Name + " '" + Name + "': Calling 'Close' to remove entity" );
+					LogManager.APILog.WriteLine( GetType( ).Name + " '" + Name + "': Calling 'Close' to remove entity" );
 
-				BaseObject.InvokeEntityMethod( BackingObject, "Close" );
+				InvokeEntityMethod( BackingObject, "Close" );
 			}
 			catch ( Exception ex )
 			{
@@ -934,7 +934,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public static void BroadcastRemoveEntity( IMyEntity entity, bool safe = true )
 		{
-			Object result = BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetNetManagerMethod );
+			Object result = BaseObject.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetNetManagerMethod );
 			if ( result == null )
 				return;
 
@@ -942,12 +942,12 @@ namespace SEModAPIInternal.API.Entity
 			{
 				SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 				{
-					BaseEntity.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
+					BaseObject.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
 				} );
 			}
 			else
 			{
-				BaseEntity.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
+				BaseObject.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
 			}
 		}
 
