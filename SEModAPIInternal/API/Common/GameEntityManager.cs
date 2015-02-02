@@ -12,8 +12,8 @@ namespace SEModAPIInternal.API.Common
 	{
 		#region "Attributes"
 
-		private static FastResourceLock m_resourceLock = new FastResourceLock( );
-		private static Dictionary<long, BaseObject> m_entityMap = new Dictionary<long, BaseObject>( );
+		private static FastResourceLock _resourceLock = new FastResourceLock( );
+		private static Dictionary<long, BaseObject> _entityMap = new Dictionary<long, BaseObject>( );
 
 		public static string GameEntityManagerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string GameEntityManagerClass = "CAF1EB435F77C7B77580E2E16F988BED";
@@ -45,12 +45,12 @@ namespace SEModAPIInternal.API.Common
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for GameEntityManager" );
+					throw new TypeLoadException( "Could not find internal type for GameEntityManager" );
 				//result &= BaseObject.HasMethod(type, GameEntityManagerGetEntityByIdTypeMethod);
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -59,40 +59,53 @@ namespace SEModAPIInternal.API.Common
 
 		public static BaseObject GetEntity( long entityId )
 		{
-			//m_resourceLock.AcquireShared();
+			//_resourceLock.AcquireShared();
 
-			if ( !m_entityMap.ContainsKey( entityId ) )
+			if ( !_entityMap.ContainsKey( entityId ) )
 				return null;
 
-			BaseObject result = m_entityMap[ entityId ];
+			BaseObject result = _entityMap[ entityId ];
 
-			//m_resourceLock.ReleaseShared();
+			//_resourceLock.ReleaseShared();
 
 			return result;
 		}
 
+		/// <summary>
+		/// Adds the specified <paramref name="entity" /> to the <see cref="GameEntityManager"/>
+		/// </summary>
+		/// <param name="entityId">The numeric ID of the entity to add.</param>
+		/// <param name="entity">The entity to add.</param>
+		/// <exception cref="ArgumentNullException">The value of 'entity' cannot be null. </exception>
+		/// <exception cref="ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Generic.Dictionary`2" />.</exception>
+		/// <remarks>Until a locking mechanism is respected, duplicate keys are still technically possible.</remarks>
 		internal static void AddEntity( long entityId, BaseObject entity )
 		{
-			//m_resourceLock.AcquireExclusive();
+			//_resourceLock.AcquireExclusive();
 
-			if ( m_entityMap.ContainsKey( entityId ) )
-				return;
+			if ( entity == null )
+				throw new ArgumentNullException( "entity", "Specified entity cannot be null." );
 
-			m_entityMap.Add( entityId, entity );
+			if ( !_entityMap.ContainsKey( entityId ) )
+				_entityMap.Add( entityId, entity );
 
-			//m_resourceLock.ReleaseExclusive();
+			//_resourceLock.ReleaseExclusive();
 		}
 
+		/// <summary>
+		/// Removes an entity from the <see cref="GameEntityManager"/> by numeric id.
+		/// </summary>
+		/// <param name="entityId">The numeric id of the entity to remove.</param>
 		internal static void RemoveEntity( long entityId )
 		{
-			//m_resourceLock.AcquireExclusive();
+			//_resourceLock.AcquireExclusive();
 
-			if ( !m_entityMap.ContainsKey( entityId ) )
+			if ( !_entityMap.ContainsKey( entityId ) )
 				return;
 
-			m_entityMap.Remove( entityId );
+			_entityMap.Remove( entityId );
 
-			//m_resourceLock.ReleaseExclusive();
+			//_resourceLock.ReleaseExclusive();
 		}
 
 		public static Object GetGameEntity( long entityId, Type entityType )
