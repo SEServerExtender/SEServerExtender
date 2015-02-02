@@ -53,7 +53,6 @@ namespace SEModAPIInternal.API.Entity
 		protected FastResourceLock RawDataObjectBuilderListResourceLock = new FastResourceLock( );
 
 		//Flags
-		private bool _isMutable;
 
 		private bool _changed = false;
 		private bool _isDynamic = false;
@@ -75,7 +74,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			_fileInfo = null;
 			_changed = false;
-			_isMutable = true;
+			IsMutable = true;
 
 			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
@@ -96,7 +95,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			_fileInfo = null;
 			_changed = false;
-			_isMutable = true;
+			IsMutable = true;
 			_isDynamic = true;
 
 			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
@@ -122,7 +121,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			_fileInfo = null;
 			_changed = false;
-			_isMutable = true;
+			IsMutable = true;
 
 			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
@@ -133,7 +132,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			_fileInfo = null;
 			_changed = false;
-			_isMutable = true;
+			IsMutable = true;
 
 			_definitionsContainerField = GetMatchingDefinitionsContainerField( );
 
@@ -144,11 +143,7 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Properties"
 
-		public bool IsMutable
-		{
-			get { return _isMutable; }
-			set { _isMutable = value; }
-		}
+		public bool IsMutable { get; set; }
 
 		protected bool Changed
 		{
