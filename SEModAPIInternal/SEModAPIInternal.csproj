@@ -87,6 +87,8 @@
     <Compile Include="API\Entity\BaseEntityNetworkManager.cs" />
     <Compile Include="API\Entity\BaseObject.cs" />
     <Compile Include="API\Entity\BaseObjectManager.cs" />
+    <Compile Include="API\Entity\InventoryItemEntity.cs" />
+    <Compile Include="API\Entity\InventoryItemManager.cs" />
     <Compile Include="API\Entity\PowerProducer.cs" />
     <Compile Include="API\Entity\PowerReceiver.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridEntity.cs" />
