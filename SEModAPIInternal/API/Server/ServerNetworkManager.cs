@@ -6,6 +6,7 @@
 	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.ExceptionServices;
+	using System.Runtime.InteropServices;
 	using System.Security;
 	using System.Threading;
 	using Sandbox.Common.ObjectBuilders;
@@ -262,7 +263,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLineAndConsole(string.Format("SendCloseEntity({1}): {0}", ex.ToString(), pos));
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("SendCloseEntity({1}): {0}", ex, pos));
 			}
 		}
 
@@ -276,7 +277,7 @@
 
 			MemoryStream memoryStream = new MemoryStream();
 			MyObjectBuilderSerializer.SerializeXML(memoryStream, entity, MyObjectBuilderSerializer.XmlCompression.Gzip, typeof(MyObjectBuilder_EntityBase));
-			if (memoryStream.Length > (long)2147483647)
+			if (memoryStream.Length > 2147483647)
 			{
 				return;
 			}
@@ -309,7 +310,7 @@
 			Matrix matrix = value.GetMatrix() * grid.PositionComp.WorldMatrixNormalizedInv;
 			entity.PositionAndOrientation = new MyPositionAndOrientation?(new MyPositionAndOrientation(matrix));
 			MyObjectBuilderSerializer.SerializeXML(memoryStream, entity, MyObjectBuilderSerializer.XmlCompression.Gzip, typeof(MyObjectBuilder_EntityBase));
-			if (memoryStream.Length > (long)2147483647)
+			if (memoryStream.Length > 2147483647)
 			{
 				return;
 			}
@@ -524,7 +525,7 @@
 				}
 				catch (Exception ex)
 				{
-					LogManager.ErrorLog.WriteLineAndConsole(string.Format("World Request Response Error: {0}", ex.ToString()));
+					LogManager.ErrorLog.WriteLineAndConsole(string.Format("World Request Response Error: {0}", ex));
 				}
 			}
 		}
@@ -565,7 +566,7 @@
 					{
 						for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
 						{
-							MyObjectBuilder_EntityBase entity = (MyObjectBuilder_EntityBase)myObjectBuilderWorld.Sector.SectorObjects[r];
+							MyObjectBuilder_EntityBase entity = myObjectBuilderWorld.Sector.SectorObjects[r];
 							/*
 							if (!(entity is MyObjectBuilder_CubeGrid))// && !(entity is MyObjectBuilder_VoxelMap))
 								continue;
@@ -599,7 +600,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.APILog.WriteLineAndConsole(string.Format("SendWorldData Error: {0}", ex.ToString()));
+				LogManager.APILog.WriteLineAndConsole(string.Format("SendWorldData Error: {0}", ex));
 			}
 		}
 
@@ -646,7 +647,7 @@
 					}
 				}
 
-				object myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, (int)array.Length, steamId, 1, size });
+				object myMultipartSender = Activator.CreateInstance(MyMultipartSenderType(), new object[] { array, array.Length, steamId, 1, size });
 				while ((bool)BaseObject.InvokeEntityMethod(myMultipartSender, MyMultipartSenderSendPart))
 				{
 					Thread.Sleep(2 + count);
@@ -669,7 +670,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.APILog.WriteLineAndConsole(string.Format("TransferWorld Error: {0}", ex.ToString()));
+				LogManager.APILog.WriteLineAndConsole(string.Format("TransferWorld Error: {0}", ex));
 			}
 		}
 
