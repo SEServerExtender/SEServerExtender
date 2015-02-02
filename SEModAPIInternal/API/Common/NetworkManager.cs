@@ -160,15 +160,13 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				bool result = true;
-
 				Type type = NetworkManagerType;
 				if (type == null)
-					throw new Exception("Could not find internal type for NetworkManager");
+					throw new TypeLoadException("Could not find internal type for NetworkManager");
 
-				return result;
+				return true;
 			}
-			catch (Exception ex)
+			catch (TypeLoadException ex)
 			{
 				Console.WriteLine(ex);
 				return false;
