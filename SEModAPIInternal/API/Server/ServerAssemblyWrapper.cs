@@ -200,9 +200,7 @@ namespace SEModAPIInternal.API.Server
 				MyFileSystem.Reset( );
 
 				//Prepare the parameters
-				bool isUsingInstance = false;
-				if ( instanceName != "" )
-					isUsingInstance = true;
+				bool isUsingInstance = instanceName != string.Empty;
 				object[ ] methodParams = new object[ ]
 				{
 					instanceName,
