@@ -131,13 +131,7 @@ namespace SEModAPIInternal.API.Server
 
 		new public static ServerNetworkManager Instance
 		{
-			get
-			{
-				if (m_instance == null)
-					m_instance = new ServerNetworkManager();
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new ServerNetworkManager( ) ); }
 		}
 
 		#endregion

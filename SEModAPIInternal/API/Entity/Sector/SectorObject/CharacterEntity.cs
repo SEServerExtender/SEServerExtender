@@ -87,12 +87,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get
-			{
-				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterNamespace, CharacterClass );
-				return m_internalType;
-			}
+			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterNamespace, CharacterClass ) ); }
 		}
 
 		[DataMember]

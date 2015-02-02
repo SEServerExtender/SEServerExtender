@@ -370,13 +370,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static FactionsManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new FactionsManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new FactionsManager( ) ); }
 		}
 
 		public Object BackingObject

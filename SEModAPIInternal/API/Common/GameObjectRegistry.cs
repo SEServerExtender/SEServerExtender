@@ -57,13 +57,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static GameObjectRegistry Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new GameObjectRegistry( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new GameObjectRegistry( ) ); }
 		}
 
 		public Dictionary<Type, Type> TypeMap

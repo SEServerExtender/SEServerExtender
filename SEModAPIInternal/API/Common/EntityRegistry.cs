@@ -30,13 +30,7 @@ namespace SEModAPIInternal.API.Common
 
 		new public static EntityRegistry Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new EntityRegistry( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new EntityRegistry( ) ); }
 		}
 
 		#endregion "Properties"

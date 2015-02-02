@@ -287,13 +287,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public static SectorObjectManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new SectorObjectManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new SectorObjectManager( ) ); }
 		}
 
 		public static Type InternalType

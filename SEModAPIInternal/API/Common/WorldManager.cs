@@ -64,13 +64,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static WorldManager Instance
 		{
-			get
-			{
-				if ( m_instance == null )
-					m_instance = new WorldManager( );
-
-				return m_instance;
-			}
+			get { return m_instance ?? ( m_instance = new WorldManager( ) ); }
 		}
 
 		public static Type InternalType
