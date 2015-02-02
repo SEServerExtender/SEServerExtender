@@ -3,8 +3,10 @@ namespace SEModAPIInternal.API.Entity
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using System.Security;
 	using System.Xml;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
@@ -147,13 +149,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if ( _changed ) return true;
-				foreach ( BaseObject def in GetInternalData( ).Values )
-				{
-					if ( def.Changed )
-						return true;
-				}
-				return false;
+				return _changed || GetInternalData( ).Values.Any( def => def.Changed );
 			}
 		}
 
@@ -443,6 +439,9 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Static"
 
+		/// <exception cref="SecurityException">The caller does not have the required permission. </exception>
+		/// <exception cref="UnauthorizedAccessException">Access to <paramref name="configName" /> is denied. </exception>
+		/// <exception cref="PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters. </exception>
 		public static FileInfo GetContentDataFile( string configName )
 		{
 			string filePath = Path.Combine( Path.Combine( GameInstallationInfo.GamePath, @"Content\Data" ), configName );
