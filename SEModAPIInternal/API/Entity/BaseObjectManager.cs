@@ -54,8 +54,8 @@ namespace SEModAPIInternal.API.Entity
 
 		//Flags
 
-		private bool _changed = false;
-		private bool _isDynamic = false;
+		private bool _changed;
+		private bool _isDynamic;
 
 		//Raw data stores
 		protected HashSet<Object> RawDataHashSet = new HashSet<object>( );
