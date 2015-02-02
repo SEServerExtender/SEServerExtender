@@ -80,19 +80,23 @@ namespace SEModAPIInternal.API.Entity
 				}
 				else
 				{
-					_positionOrientation = new MyPositionAndOrientation( );
-					_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3D( -500000, -500000, -500000 ), new Vector3D( 500000, 500000, 500000 ) );
-					_positionOrientation.Forward = new Vector3( 0, 0, 1 );
-					_positionOrientation.Up = new Vector3( 0, 1, 0 );
+					_positionOrientation = new MyPositionAndOrientation
+					                       {
+						                       Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3D( -500000, -500000, -500000 ), new Vector3D( 500000, 500000, 500000 ) ),
+						                       Forward = new Vector3( 0, 0, 1 ),
+						                       Up = new Vector3( 0, 1, 0 )
+					                       };
 				}
 			}
 			else
 			{
 				_entityId = 0;
-				_positionOrientation = new MyPositionAndOrientation( );
-				_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) );
-				_positionOrientation.Forward = new Vector3( 0, 0, 1 );
-				_positionOrientation.Up = new Vector3( 0, 1, 0 );
+				_positionOrientation = new MyPositionAndOrientation
+				                       {
+					                       Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) ),
+					                       Forward = new Vector3( 0, 0, 1 ),
+					                       Up = new Vector3( 0, 1, 0 )
+				                       };
 			}
 
 			_linearVelocity = new Vector3( 0, 0, 0 );
@@ -112,19 +116,23 @@ namespace SEModAPIInternal.API.Entity
 				}
 				else
 				{
-					_positionOrientation = new MyPositionAndOrientation( );
-					_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) );
-					_positionOrientation.Forward = new Vector3( 0, 0, 1 );
-					_positionOrientation.Up = new Vector3( 0, 1, 0 );
+					_positionOrientation = new MyPositionAndOrientation
+					                       {
+						                       Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) ),
+						                       Forward = new Vector3( 0, 0, 1 ),
+						                       Up = new Vector3( 0, 1, 0 )
+					                       };
 				}
 			}
 			else
 			{
 				_entityId = 0;
-				_positionOrientation = new MyPositionAndOrientation( );
-				_positionOrientation.Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) );
-				_positionOrientation.Forward = new Vector3( 0, 0, 1 );
-				_positionOrientation.Up = new Vector3( 0, 1, 0 );
+				_positionOrientation = new MyPositionAndOrientation
+				                       {
+					                       Position = UtilityFunctions.GenerateRandomBorderPosition( new Vector3( -500000, -500000, -500000 ), new Vector3( 500000, 500000, 500000 ) ),
+					                       Forward = new Vector3( 0, 0, 1 ),
+					                       Up = new Vector3( 0, 1, 0 )
+				                       };
 			}
 
 			_networkManager = new BaseEntityNetworkManager( this, GetEntityNetworkManager( BackingObject ) );
@@ -562,11 +570,7 @@ namespace SEModAPIInternal.API.Entity
 				GameEntityManager.RemoveEntity( EntityId );
 			}
 
-			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-			newEvent.type = EntityEventManager.EntityEventType.OnBaseEntityDeleted;
-			newEvent.timestamp = DateTime.Now;
-			newEvent.entity = this;
-			newEvent.priority = 1;
+			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent { type = EntityEventManager.EntityEventType.OnBaseEntityDeleted, timestamp = DateTime.Now, entity = this, priority = 1 };
 			EntityEventManager.Instance.AddEvent( newEvent );
 		}
 
