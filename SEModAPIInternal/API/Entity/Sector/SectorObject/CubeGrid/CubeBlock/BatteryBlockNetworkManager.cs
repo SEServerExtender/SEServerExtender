@@ -79,7 +79,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for BatteryBlockNetworkManager" );
+					throw new TypeLoadException( "Could not find internal type for BatteryBlockNetworkManager" );
 				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastProducerEnabledMethod );
 				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod );
 				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod );
@@ -93,7 +93,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
+			{
+				Console.WriteLine( ex );
+				return false;
+			}
+			catch ( ArgumentNullException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
