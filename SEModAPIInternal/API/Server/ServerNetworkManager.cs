@@ -114,7 +114,7 @@
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ServerNetworkManagerNamespace, ServerNetworkManagerClass);
 				if (type1 == null)
-					throw new Exception("Could not find internal type for ServerNetworkManager");
+					throw new TypeLoadException("Could not find internal type for ServerNetworkManager");
 				bool result = true;
 				result &= BaseObject.HasMethod(type1, ServerNetworkManagerSetPlayerBannedMethod);
 				result &= BaseObject.HasMethod(type1, ServerNetworkManagerDisconnectPlayerMethod);
@@ -123,46 +123,46 @@
 
 				Type type2 = NetworkManagerType;
 				if (type2 == null)
-					throw new Exception("Could not find internal type for NetworkManager");
+					throw new TypeLoadException( "Could not find internal type for NetworkManager" );
 				result &= BaseObject.HasField(type2, MySyncLayerField);
 
 				Type syncLayer = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, MySyncLayerClass);
 				if (syncLayer == null)
-					throw new Exception("Could not find internal type for SyncLayer");
+					throw new TypeLoadException( "Could not find internal type for SyncLayer" );
 				result &= BaseObject.HasMethod(syncLayer, MySyncLayerSendMessage);
 
 				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, SendCloseClass);
 				if (type3 == null)
-					throw new Exception("Could not find internal type for SendCloseClass");
+					throw new TypeLoadException( "Could not find internal type for SendCloseClass" );
 
 				result &= BaseObject.HasNestedType(type3, SendCloseClosedMsg);
 
 				Type nestedClosedMsgType = type3.GetNestedType(SendCloseClosedMsg, BindingFlags.NonPublic | BindingFlags.Public);
 				if(nestedClosedMsgType == null)
-					throw new Exception("Could not find internal NestedClosedMsgType");
+					throw new TypeLoadException( "Could not find internal NestedClosedMsgType" );
 
 				result &= BaseObject.HasField(nestedClosedMsgType, SendCloseClosedMsgEntityId);
 
 				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, SendCreateClass);
 				if (type4 == null)
-					throw new Exception("Could not find internal type for SendCreateClass");
+					throw new TypeLoadException( "Could not find internal type for SendCreateClass" );
 
 				result &= BaseObject.HasNestedType(type4, SendCreateCompressedMsg);
 
 				Type nestedCreateType = type4.GetNestedType(SendCreateCompressedMsg, BindingFlags.Public | BindingFlags.NonPublic);
 				if(nestedCreateType == null)
-					throw new Exception("Could not find internal type for SendCreateCompressedMsg");
+					throw new TypeLoadException( "Could not find internal type for SendCreateCompressedMsg" );
 
 				result &= BaseObject.HasField(nestedCreateType, SendCreateCompressedMsgObjectBuilders);
 				result &= BaseObject.HasField(nestedCreateType, SendCreateCompressedMsgBuilderLengths);
 
 				Type type5 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, PlayerCollectionClass);
 				if (type5 == null)
-					throw new Exception("Could not find internal type for PlayerCollectionClass");
+					throw new TypeLoadException( "Could not find internal type for PlayerCollectionClass" );
 
 				Type respawnMsgType = type5.GetNestedType(RespawnMsg, BindingFlags.NonPublic | BindingFlags.Public);
 				if (respawnMsgType == null)
-					throw new Exception("Could not find internal type for RespawnMsg");
+					throw new TypeLoadException( "Could not find internal type for RespawnMsg" );
 
 
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgJoinGame);
