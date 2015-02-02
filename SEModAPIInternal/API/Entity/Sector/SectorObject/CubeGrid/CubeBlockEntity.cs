@@ -15,18 +15,17 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
-	[DataContract( Name = "CubeBlockEntityProxy" )]
-	[KnownType( "KnownTypes" )]
+	[DataContract]
 	public class CubeBlockEntity : BaseObject
 	{
 		#region "Attributes"
 
-		private CubeGridEntity m_parent;
-		private static Type m_internalType;
-		private float m_buildPercent;
-		private float m_integrityPercent;
-		private long m_owner;
-		private MyOwnershipShareModeEnum m_shareMode;
+		private readonly CubeGridEntity _parent;
+		private static Type _internalType;
+		private float _buildPercent;
+		private float _integrityPercent;
+		private long _owner;
+		private MyOwnershipShareModeEnum _shareMode;
 
 		public static string CubeBlockNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
 		public static string CubeBlockClass = "54A8BE425EAC4A11BFF922CFB5FF89D0";
@@ -98,24 +97,24 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		public CubeBlockEntity( CubeGridEntity parent, MyObjectBuilder_CubeBlock definition )
 			: base( definition )
 		{
-			m_parent = parent;
+			_parent = parent;
 
-			m_buildPercent = definition.BuildPercent;
-			m_integrityPercent = definition.IntegrityPercent;
-			m_owner = definition.Owner;
-			m_shareMode = definition.ShareMode;
+			_buildPercent = definition.BuildPercent;
+			_integrityPercent = definition.IntegrityPercent;
+			_owner = definition.Owner;
+			_shareMode = definition.ShareMode;
 		}
 
 		public CubeBlockEntity( CubeGridEntity parent, MyObjectBuilder_CubeBlock definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			m_parent = parent;
+			_parent = parent;
 
 			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCubeBlockCreated;
 			newEvent.timestamp = DateTime.Now;
 			newEvent.entity = this;
-			if ( m_parent.IsLoading )
+			if ( _parent.IsLoading )
 			{
 				newEvent.priority = 10;
 			}
@@ -134,10 +133,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				GameEntityManager.AddEntity( EntityId, this );
 			}
 
-			m_buildPercent = definition.BuildPercent;
-			m_integrityPercent = definition.IntegrityPercent;
-			m_owner = definition.Owner;
-			m_shareMode = definition.ShareMode;
+			_buildPercent = definition.BuildPercent;
+			_integrityPercent = definition.IntegrityPercent;
+			_owner = definition.Owner;
+			_shareMode = definition.ShareMode;
 		}
 
 		#endregion "Constructors and Initializers"
@@ -150,7 +149,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		[ReadOnly( true )]
 		internal static Type InternalType
 		{
-			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeBlockNamespace, CubeBlockClass ) ); }
+			get { return _internalType ?? ( _internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeBlockNamespace, CubeBlockClass ) ); }
 		}
 
 		[IgnoreDataMember]
@@ -350,11 +349,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			{
 				if ( BuildPercent == value ) return;
 				ObjectBuilder.BuildPercent = value;
-				m_buildPercent = value;
+				_buildPercent = value;
 				Changed = true;
 
 				ObjectBuilder.IntegrityPercent = value;
-				m_integrityPercent = value;
+				_integrityPercent = value;
 
 				if ( BackingObject != null )
 				{
@@ -379,11 +378,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			{
 				if ( IntegrityPercent == value ) return;
 				ObjectBuilder.IntegrityPercent = value;
-				m_integrityPercent = value;
+				_integrityPercent = value;
 				Changed = true;
 
 				ObjectBuilder.BuildPercent = value;
-				m_buildPercent = value;
+				_buildPercent = value;
 
 				if ( BackingObject != null )
 				{
@@ -408,7 +407,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			{
 				if ( Owner == value ) return;
 				ObjectBuilder.Owner = value;
-				m_owner = value;
+				_owner = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -434,7 +433,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			{
 				if ( ShareMode == value ) return;
 				ObjectBuilder.ShareMode = value;
-				m_shareMode = value;
+				_shareMode = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -464,7 +463,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		[ReadOnly( true )]
 		public CubeGridEntity Parent
 		{
-			get { return m_parent; }
+			get { return _parent; }
 		}
 
 		[IgnoreDataMember]
@@ -701,8 +700,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		{
 			try
 			{
-				InvokeEntityMethod( ActualObject, ActualCubeBlockSetFactionsDataMethod, new object[ ] { m_owner, m_shareMode } );
-				m_parent.NetworkManager.BroadcastCubeBlockFactionData( this );
+				InvokeEntityMethod( ActualObject, ActualCubeBlockSetFactionsDataMethod, new object[ ] { _owner, _shareMode } );
+				_parent.NetworkManager.BroadcastCubeBlockFactionData( this );
 			}
 			catch ( Exception ex )
 			{
@@ -717,8 +716,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				//Update construction manager details
 				Object constructionManager = GetConstructionManager( );
 				float maxIntegrity = (float)InvokeEntityMethod( constructionManager, ConstructionManagerGetMaxIntegrityMethod );
-				float integrity = m_integrityPercent * maxIntegrity;
-				float build = m_buildPercent * maxIntegrity;
+				float integrity = _integrityPercent * maxIntegrity;
+				float build = _buildPercent * maxIntegrity;
 
 				InvokeEntityMethod( constructionManager, ConstructionManagerSetIntegrityBuildValuesMethod, new object[ ] { build, integrity } );
 
@@ -925,7 +924,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 					newEvent.type = EntityEventManager.EntityEventType.OnCubeGridLoaded;
 					newEvent.timestamp = DateTime.Now;
-					newEvent.entity = this.m_parent;
+					newEvent.entity = m_parent;
 					newEvent.priority = 1;
 					EntityEventManager.Instance.AddEvent( newEvent );
 
