@@ -9,12 +9,12 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "BatteryBlockEntityProxy" )]
+	[DataContract]
 	public class BatteryBlockEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
 
-		private BatteryBlockNetworkManager _batteryBlockNetManager;
+		private readonly BatteryBlockNetworkManager _batteryBlockNetManager;
 
 		private float _maxPowerOutput;
 		private float _maxStoredPower;
