@@ -46,7 +46,7 @@
 		public static string NetworkingOnWorldRequestField = "FAD031AB4FED05B9FE273ACD199496EE";
 
 		public static string MyMultipartMessageClass = "7B6560DE2B6A29DE7F0157E9CDFFCC37";
-		public static string MyMultipartMessagePreemble = "7AEDE70A5F16434A660FC187077FC86F";
+		public static string MyMultipartMessagePreamble = "7AEDE70A5F16434A660FC187077FC86F";
 
 		public static string MySyncLayerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
 		public static string MySyncLayerField = "E863C8EAD57B154571B7A487C6A39AC6";
@@ -85,7 +85,7 @@
 
 		private static string RespawnMsg = "0375BD13880985CF806BF38D80ABE4DB";
 		private static string RespawnMsgJoinGame = "3091FD2824A71EAAD2D74C723BF1EE19";
-		private static string RespawnMsgNewIdenity = "31F31D5F94108B5AF5DB5BFC01287B6A";
+		private static string RespawnMsgNewIdentity = "31F31D5F94108B5AF5DB5BFC01287B6A";
 		private static string RespawnMsgMedicalRoom = "979224CC53178892C95097C126832539";
 		private static string RespawnMsgRespawnShipId = "EA3E01C01EE14785DE672E6899318CA4";
 		private static string RespawnMsgPlayerSerialId = "221D28591CBBCE26D7F0FC462FFB53E4";
@@ -166,7 +166,7 @@
 
 
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgJoinGame);
-				result &= BaseObject.HasField(respawnMsgType, RespawnMsgNewIdenity);
+				result &= BaseObject.HasField(respawnMsgType, RespawnMsgNewIdentity);
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgMedicalRoom);
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgRespawnShipId);
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgPlayerSerialId);
@@ -333,7 +333,7 @@
 			Type respawnMsgType = playerCollectionType.GetNestedType(RespawnMsg, BindingFlags.NonPublic | BindingFlags.Public);
 
 			FieldInfo respawnMsgJoinGame = respawnMsgType.GetField(RespawnMsgJoinGame);
-			FieldInfo respawnMsgNewIdentity = respawnMsgType.GetField(RespawnMsgNewIdenity);
+			FieldInfo respawnMsgNewIdentity = respawnMsgType.GetField(RespawnMsgNewIdentity);
 			FieldInfo respawnMsgMedicalRoom = respawnMsgType.GetField(RespawnMsgMedicalRoom);
 			FieldInfo respawnMsgRespawnShipId = respawnMsgType.GetField(RespawnMsgRespawnShipId);
 			FieldInfo respawnMsgPlayerSerialId = respawnMsgType.GetField(RespawnMsgPlayerSerialId);
@@ -682,7 +682,7 @@
 		private static void SendPreamble(ulong steamId, int num)
 		{
 			//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
-			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreemble, new object[] { steamId, num });
+			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreamble, new object[] { steamId, num });
 		}
 
 		private static void SendFlush(ulong steamId)
