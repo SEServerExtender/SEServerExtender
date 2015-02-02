@@ -1,34 +1,23 @@
-﻿using SteamSDK;
-
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Collections;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading;
-using System.IO;
-using System.Runtime.ExceptionServices;
-using System.Security;
-
-using Sandbox.ModAPI;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Serializer;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPIInternal.Support;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.API.Common;
-using System.Linq.Expressions;
-
-using VRageMath;
-
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-
-namespace SEModAPIInternal.API.Server
+﻿namespace SEModAPIInternal.API.Server
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.ExceptionServices;
+	using System.Security;
+	using System.Threading;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Serializer;
+	using Sandbox.ModAPI;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using SteamSDK;
+	using VRageMath;
+
 	public class ServerNetworkManager : NetworkManager
 	{
 		#region "Attributes"
@@ -47,11 +36,11 @@ namespace SEModAPIInternal.API.Server
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "C178AB3C7C41D149FB33E5474D93D180";
-		//public static string ServerNetworkManagerKickPlayerMethod = "77193F523EB956D24AE88E5C41CD5CD0";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "1D194CE472672BF6ACA1B23B38A1D636";
+		//public static string ServerNetworkManagerKickPlayerMethod = "BEC07A39744483E94041083EA34DFE40";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "65EBA33998084A213E56F6A1DC52B4EA";
-		public static string ServerNetworkManagerKickPlayerMethod = "75A3BD06D62D91C869B800B9DFB273CC";         
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "A8A49328E3FFD567430E9B954E1B0DA7";
+		public static string ServerNetworkManagerKickPlayerMethod = "6CEE84A422E05D33ED5E8180C70DF19C";         
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -72,7 +61,6 @@ namespace SEModAPIInternal.API.Server
 		public static string MyMultipartSenderSendPart = "A822BAC1F661C682C78230403DDF5670";
 
 		public static string MySyncLayerSendMessage = "358D29D15C14B49FEA47651E0DE22024";
-		public static string MySyncLayerSendMessageToServer = "161C8D41497D2D26777646EE58FE2841";
 
 		public static string MyControlMessageCallbackClass = "C42525D7DE28CE4CFB44651F3D03A50D";
 		public static string MyControlMessageHandlerClass = "69BCF201AF4FAC4108B36AFA089FE230";
@@ -110,21 +98,6 @@ namespace SEModAPIInternal.API.Server
 		private static string AttachCharacterId = "42A1FAB6988564AD174FAFE32427AF1F";
 		private static string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
 
-		private static string ControllableClass = "13C872C66F0BD2DC78D3D80ECAF6DD0E";
-		private static string UseRequest = "580BEBFBA2193A07A867968A00F933D1";
-		private static string UseMsg = "B9061E64FCAE2676D7C8BB0CBEB2B558";
-		private static string UseMsgEntityId = "B8FB60B21AA9E31FBE1BE03977FBB5C4";
-		private static string UseMsgUsedByEntityId = "1EDCD7F5F272CEC95910B9BD327F8159";
-		private static string UseMsgUseAction = "D1AB76CECD107930E4CED6045B5EE206";
-		private static string UseMsgActionResult = "184D262E162762B50FBAF1A443AE3F48";
-
-		private static string ModAPINamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-		private static string ModAPIHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
-		private static string SendDataMessageClass = "CC6EB6677E764BA0BB8C9E3F219B7FB6";
-		private static string SendReliableMsg = "94BA33CF24FDB04C5858133B9CA10B65";
-		private static string SendReliableMsgId = "A1065D4F4F78592D380E3EBA7517D263";
-		private static string SendReliableMsgData = "EFAAFF2EF963935E2CE19D55C6C98DD1";
-			
 		#endregion
 
 		#region "Properties"
@@ -269,29 +242,13 @@ namespace SEModAPIInternal.API.Server
 				MethodInfo sendMessageMethod = methods.FirstOrDefault(x => x.Name == MySyncLayerSendMessage);
 				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
 				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, userId, flag });
+
 			}
 			catch (Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
 			}
 		}
-
-		private static void SendMessageToServer(object msg, Type msgType, int flag)
-		{
-			try
-			{
-				var netManager = GetNetworkManager();
-				var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
-				MethodInfo sendMessageMethod = mySyncLayer.GetType().GetMethod(MySyncLayerSendMessageToServer);
-				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
-				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, flag });
-			}
-			catch (Exception ex)
-			{
-				LogManager.ErrorLog.WriteLine(ex);
-			}
-		}
-
 
 		public static void SendCloseEntity(ulong userId, long entityId)
 		{
@@ -409,61 +366,6 @@ namespace SEModAPIInternal.API.Server
 			attachCockpitId.SetValue(attachMsg, cockpitId);
 
 			SendMessage(attachMsg, steamId, attachMsgType, 1);
-		}
-
-		public static void UseCockpit(long characterId, long cockpitId)
-		{
-			Type syncControllableClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, ControllableClass);
-			Type useMsgType = syncControllableClassType.GetNestedType(UseMsg, BindingFlags.Public | BindingFlags.NonPublic);
-
-			FieldInfo useMsgEntityId = useMsgType.GetField(UseMsgEntityId);
-			FieldInfo useMsgUsedByEntityId = useMsgType.GetField(UseMsgUsedByEntityId);
-			FieldInfo useMsgUseAction = useMsgType.GetField(UseMsgUseAction);
-
-			object useMsg = Activator.CreateInstance(useMsgType);
-
-			useMsgEntityId.SetValue(useMsg, cockpitId);
-			useMsgUsedByEntityId.SetValue(useMsg, characterId);
-			useMsgUseAction.SetValue(useMsg, 1);
-
-			SendMessageToServer(useMsg, useMsgType, 1);
-		}
-
-		public static void SendUseCockpitSuccess(long characterId, long cockpitId, ulong steamId)
-		{
-			Type syncControllableClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, ControllableClass);
-			Type useMsgType = syncControllableClassType.GetNestedType(UseMsg, BindingFlags.Public | BindingFlags.NonPublic);
-
-			FieldInfo useMsgEntityId = useMsgType.GetField(UseMsgEntityId);
-			FieldInfo useMsgUsedByEntityId = useMsgType.GetField(UseMsgUsedByEntityId);
-			FieldInfo useMsgUseAction = useMsgType.GetField(UseMsgUseAction);
-			FieldInfo useMsgUseActionResult = useMsgType.GetField(UseMsgActionResult);
-
-			object useMsg = Activator.CreateInstance(useMsgType);
-
-			useMsgEntityId.SetValue(useMsg, cockpitId);
-			useMsgUsedByEntityId.SetValue(useMsg, characterId);
-			useMsgUseAction.SetValue(useMsg, 1);
-			useMsgUseActionResult.SetValue(useMsg, 0);
-
-			SendMessage(useMsg, steamId, useMsgType, 2);
-		}
-
-		public static void SendDataMessage(ushort dataId, byte[] data, ulong steamId)
-		{
-			Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ModAPINamespace, ModAPIHelperClass);
-			Type sendDataMessageClassType = modAPIHelperClassType.GetNestedType(SendDataMessageClass, BindingFlags.Public | BindingFlags.NonPublic);
-			Type sendReliableMsgType = sendDataMessageClassType.GetNestedType(SendReliableMsg, BindingFlags.Public | BindingFlags.NonPublic);
-
-			FieldInfo sendReliableMsgId = sendReliableMsgType.GetField(SendReliableMsgId);
-			FieldInfo sendReliableMsgData = sendReliableMsgType.GetField(SendReliableMsgData);
-
-			object sendReliableMsg = Activator.CreateInstance(sendReliableMsgType);
-
-			sendReliableMsgId.SetValue(sendReliableMsg, dataId);
-			sendReliableMsgData.SetValue(sendReliableMsg, data);
-
-			SendMessage(sendReliableMsg, steamId, sendReliableMsgType, 2);
 		}
 
 		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
@@ -641,7 +543,7 @@ namespace SEModAPIInternal.API.Server
 				{
 					DateTime start = DateTime.Now;
 					LogManager.APILog.WriteLineAndConsole(string.Format("...responding to user: {0}", steamId));
-					SendPreamble(steamId, 1);
+					SendPreemble(steamId, 1);
 					SendFlush(steamId);
 
 					// Let's sleep for 5 seconds and let plugins know we're online -- let's not after all, causing sync issues
@@ -667,86 +569,25 @@ namespace SEModAPIInternal.API.Server
 						for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
 						{
 							MyObjectBuilder_EntityBase entity = (MyObjectBuilder_EntityBase)myObjectBuilderWorld.Sector.SectorObjects[r];
-							
-							if (!(entity is MyObjectBuilder_CubeGrid) && !(entity is MyObjectBuilder_VoxelMap))
+							/*
+							if (!(entity is MyObjectBuilder_CubeGrid))// && !(entity is MyObjectBuilder_VoxelMap))
 								continue;
 
-							if ((entity is MyObjectBuilder_CubeGrid) && ((MyObjectBuilder_CubeGrid)entity).DisplayName.Contains("CommRelay"))
-								continue;							
+							if ((entity is MyObjectBuilder_CubeGrid) && (entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
+								continue;
 
-							/*
+							 */
+
 							if (!(entity is MyObjectBuilder_CubeGrid))
 								continue;
 
 							if ((entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
 								continue;
-							*/
 
 							myObjectBuilderWorld.Sector.SectorObjects.RemoveAt(r);
 						}
 
-						myObjectBuilderWorld.Sector.Encounters = null;
-
-						myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
-						myObjectBuilderWorld.Checkpoint.Settings.ProceduralDensity = 0f;
-						myObjectBuilderWorld.Checkpoint.Settings.ProceduralSeed = 0;
-
-						// Check if this is OK?
-						//myObjectBuilderWorld.Checkpoint.ConnectedPlayers.Dictionary.Clear();
-						myObjectBuilderWorld.Checkpoint.DisconnectedPlayers.Dictionary.Clear();
-
-						long playerId = PlayerMap.Instance.GetFastPlayerIdFromSteamId(steamId);
-				
-						MyObjectBuilder_Toolbar blankToolbar = new MyObjectBuilder_Toolbar();
-						foreach(KeyValuePair<MyObjectBuilder_Checkpoint.PlayerId, MyObjectBuilder_Player> p in myObjectBuilderWorld.Checkpoint.AllPlayersData.Dictionary)
-						{
-							if (p.Value.EntityCameraData != null)
-								p.Value.EntityCameraData.Clear();
-
-							if (p.Value.CameraData != null)
-								p.Value.CameraData.Dictionary.Clear();
-
-							if (p.Key.ClientId == steamId)
-							{
-								continue;
-							}
-
-							p.Value.Toolbar = null;
-							p.Value.CharacterCameraData = null;
-						}
-
-						for (int r = myObjectBuilderWorld.Checkpoint.Gps.Dictionary.Count - 1; r >= 0; r--)
-						{
-							KeyValuePair<long, MyObjectBuilder_Gps> p = myObjectBuilderWorld.Checkpoint.Gps.Dictionary.ElementAt(r);
-
-							if (p.Key == playerId)
-								continue;
-
-							myObjectBuilderWorld.Checkpoint.Gps.Dictionary.Remove(p.Key);
-						}
-
-						myObjectBuilderWorld.Checkpoint.ChatHistory.RemoveAll(x => x.IdentityId != playerId);
-
-						long factionId = 0;
-						if (myObjectBuilderWorld.Checkpoint.Factions.Players.Dictionary.ContainsKey(playerId))
-						{
-							factionId = myObjectBuilderWorld.Checkpoint.Factions.Players.Dictionary[playerId];
-							myObjectBuilderWorld.Checkpoint.FactionChatHistory.RemoveAll(x => x.FactionId1 != factionId && x.FactionId2 != factionId);
-							myObjectBuilderWorld.Checkpoint.Factions.Requests.RemoveAll(x => x.FactionId != factionId);
-						}
-						else
-						{
-							myObjectBuilderWorld.Checkpoint.FactionChatHistory.Clear();
-							myObjectBuilderWorld.Checkpoint.Factions.Requests.Clear();						
-						}
-
-						foreach (MyObjectBuilder_Faction faction in myObjectBuilderWorld.Checkpoint.Factions.Factions)
-						{
-							if (faction.FactionId != factionId)
-							{
-								faction.PrivateInfo = "";
-							}
-						}
+						//myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
 					}
 
 					MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
@@ -754,16 +595,7 @@ namespace SEModAPIInternal.API.Server
 					checkpoint.CharacterToolbar = null;
 					DateTime cs = DateTime.Now;
 					MyObjectBuilderSerializer.SerializeXML(ms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
-
-					/*
-					MemoryStream vms = new MemoryStream();
-					MyObjectBuilderSerializer.SerializeXML(vms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Uncompressed, null);
-					FileStream file = new FileStream("e:\\temp\\test.txt", FileMode.Create);
-					vms.WriteTo(file);
-					file.Close();
-					*/
-
-					LogManager.APILog.WriteLineAndConsole(string.Format("...response construction took {0}ms (cp - {1}ms) size - {2} bytes", (DateTime.Now - start).TotalMilliseconds, (DateTime.Now - cs).TotalMilliseconds, ms.Length));
+					LogManager.APILog.WriteLineAndConsole(string.Format("...response construction took {0}ms (cp - {1}ms)", (DateTime.Now - start).TotalMilliseconds, (DateTime.Now - cs).TotalMilliseconds));
 				}
 
 				TransferWorld(ms, steamId);
@@ -850,7 +682,7 @@ namespace SEModAPIInternal.API.Server
 			return type;
 		}
 
-		private static void SendPreamble(ulong steamId, int num)
+		private static void SendPreemble(ulong steamId, int num)
 		{
 			//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
 			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreemble, new object[] { steamId, num });
