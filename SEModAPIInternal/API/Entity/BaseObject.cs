@@ -583,7 +583,7 @@
 			}
 		}
 
-		public static Object GetEntityFieldValue( Object gameEntity, string fieldName )
+		public static object GetEntityFieldValue( Object gameEntity, string fieldName )
 		{
 			try
 			{
