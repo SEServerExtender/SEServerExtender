@@ -231,7 +231,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				bool result = (bool)GetEntityFieldValue( ActualObject, LandingGearGetAutoLockField );
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( InvalidCastException ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 				return _autoLockEnabled;
@@ -245,7 +245,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				float result = (float)InvokeEntityMethod( ActualObject, LandingGearGetBrakeForceMethod );
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( InvalidCastException ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 				return _brakeForce;
