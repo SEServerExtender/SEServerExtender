@@ -7,8 +7,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private LandingGearEntity m_parent;
-		private Object m_backingObject;
+		private readonly LandingGearEntity _parent;
 
 		public static string LandingGearNetworkManagerNamespace = LandingGearEntity.LandingGearNamespace + "." + LandingGearEntity.LandingGearClass;
 		public static string LandingGearNetworkManagerClass = "26556F6F0AE7CF1827348C8BE3041E52";
@@ -23,18 +22,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public LandingGearNetworkManager( LandingGearEntity parent, Object backingObject )
 		{
-			m_parent = parent;
-			m_backingObject = backingObject;
+			_parent = parent;
+			BackingObject = backingObject;
 		}
 
 		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
-		internal Object BackingObject
-		{
-			get { return m_backingObject; }
-		}
+		internal Object BackingObject { get; private set; }
 
 		public static Type InternalType
 		{
@@ -57,14 +53,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for LandingGearNetworkManager" );
+					throw new TypeLoadException( "Could not find internal type for LandingGearNetworkManager" );
 				result &= BaseObject.HasMethod( type, LandingGearNetworkManagerBroadcastIsLockedMethod );
 				result &= BaseObject.HasMethod( type, LandingGearNetworkManagerBroadcastAutoLockMethod );
 				result &= BaseObject.HasMethod( type, LandingGearNetworkManagerBroadcastBrakeForceMethod );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -73,17 +69,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public void BroadcastIsLocked( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastIsLockedMethod, new object[ ] { m_parent.IsLocked } );
+			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastIsLockedMethod, new object[ ] { _parent.IsLocked } );
 		}
 
 		public void BroadcastAutoLock( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastAutoLockMethod, new object[ ] { m_parent.AutoLock } );
+			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastAutoLockMethod, new object[ ] { _parent.AutoLock } );
 		}
 
 		public void BroadcastBrakeForce( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastBrakeForceMethod, new object[ ] { m_parent.BrakeForce } );
+			BaseObject.InvokeEntityMethod( BackingObject, LandingGearNetworkManagerBroadcastBrakeForceMethod, new object[ ] { _parent.BrakeForce } );
 		}
 
 		#endregion "Methods"
