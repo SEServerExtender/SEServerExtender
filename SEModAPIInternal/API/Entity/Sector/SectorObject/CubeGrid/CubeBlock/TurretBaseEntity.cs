@@ -33,7 +33,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string TurretShootMethod = "Shoot";
 		public static string TurretGetRemainingAmmoMethod = "GetAmmunitionAmount";
 
-		public static string TurretSearchingRangeField = "_searchingRange";
+		public static string TurretSearchingRangeField = "m_searchingRange";
 		public static string TurretInventoryField = "m_ammoInventory";
 
 		public static string TurretTargetProperty = "Target";
