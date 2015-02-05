@@ -136,10 +136,12 @@ namespace SEModAPIInternal.API.Server
 		{
 			try
 			{
+				/*
 				if ( MyGuiGameControlsHelpers.GetGameControlHelper( MyGameControlEnums.FORWARD ) != null )
 				{
 					//MyGuiGameControlsHelpers.UnloadContent( );
 				}
+				 */ 
 			}
 			catch ( Exception )
 			{
