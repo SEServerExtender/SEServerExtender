@@ -86,6 +86,11 @@
     <Compile Include="API\ServerExtensionMethods.cs" />
     <Compile Include="API\ServerService.cs" />
     <Compile Include="API\SessionManager.cs" />
+    <Compile Include="AssemblyFileVersion.cs">
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +140,12 @@
       <Project>{94E6C913-9456-408D-BDEE-56B48B5397D4}</Project>
       <Name>SEModAPI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
