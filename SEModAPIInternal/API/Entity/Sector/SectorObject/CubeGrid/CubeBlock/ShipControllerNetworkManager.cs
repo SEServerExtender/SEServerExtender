@@ -9,7 +9,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		#region "Attributes"
 
 		private object _networkManager;
-		private ShipControllerEntity _parent;
+		//private ShipControllerEntity _parent;
 
 		private static bool _isRegistered;
 
@@ -67,13 +67,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				bool result = true;
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find type for ShipControllerNetworkManager" );
+					throw new TypeLoadException( "Could not find type for ShipControllerNetworkManager" );
 
 				result &= BaseObject.HasMethod( type, ShipControllerNetworkManagerBroadcastDampenersStatus );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
@@ -87,8 +87,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected static void RegisterPacketHandlers( )
 		{
-			try
-			{
+			//try
+			//{
 				if ( _isRegistered )
 					return;
 				/*
@@ -99,24 +99,24 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					return;
 				*/
 				_isRegistered = true;
-			}
-			catch ( Exception ex )
-			{
-				LogManager.ErrorLog.WriteLine( ex );
-			}
+			//}
+			//catch ( Exception ex )
+			//{
+			//	LogManager.ErrorLog.WriteLine( ex );
+			//}
 		}
 
 		protected static void ReceivePositionOrientationPacket<T>( Object instanceNetManager, ref T packet, Object masterNetManager ) where T : struct
 		{
-			try
-			{
-				//For now we ignore any inbound packets that set the positionorientation
-				//This prevents the clients from having any control over the actual ship position
-			}
-			catch ( Exception ex )
-			{
-				LogManager.ErrorLog.WriteLine( ex );
-			}
+			//try
+			//{
+			//	//For now we ignore any inbound packets that set the positionorientation
+			//	//This prevents the clients from having any control over the actual ship position
+			//}
+			//catch ( Exception ex )
+			//{
+			//	LogManager.ErrorLog.WriteLine( ex );
+			//}
 		}
 
 		#endregion "Methods"
