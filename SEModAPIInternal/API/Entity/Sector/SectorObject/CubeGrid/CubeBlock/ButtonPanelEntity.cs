@@ -6,12 +6,12 @@ using SEModAPIInternal.API.Common;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "ButtonPanelEntityProxy" )]
+	[DataContract]
 	public class ButtonPanelEntity : ShipControllerEntity
 	{
 		#region "Attributes"
 
-		private long m_currentPlayerId;
+		//private long _currentPlayerId;
 
 		public static string ButtonPanelNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string ButtonPanelClass = "5DEDA5C87D33D807688382FE6D4BFF68";
@@ -26,13 +26,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public ButtonPanelEntity( CubeGridEntity parent, MyObjectBuilder_RemoteControl definition )
 			: base( parent, definition )
 		{
-			//			m_currentPlayerId = definition.CurrentPlayerId.GetValueOrDefault(0);
+			//			_currentPlayerId = definition.CurrentPlayerId.GetValueOrDefault(0);
 		}
 
 		public ButtonPanelEntity( CubeGridEntity parent, MyObjectBuilder_RemoteControl definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			//			m_currentPlayerId = definition.CurrentPlayerId.GetValueOrDefault(0);
+			//			_currentPlayerId = definition.CurrentPlayerId.GetValueOrDefault(0);
 		}
 
 		#endregion "Constructors and Initializers"
@@ -84,7 +84,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				if (CurrentPlayerId == value) return;
 				ObjectBuilder.CurrentPlayerId = value;
-				m_currentPlayerId = value;
+				_currentPlayerId = value;
 				Changed = true;
 
 				if (BackingObject != null && ActualObject != null)
@@ -108,14 +108,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for ButtonPanelEntity" );
+					throw new TypeLoadException( "Could not find internal type for ButtonPanelEntity" );
 
 				//result &= HasMethod(type, ButtonPanelGetCurrentPlayerIdMethod);
 				//result &= HasMethod(type, ButtonPanelSetCurrentPlayerIdMethod);
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -134,7 +134,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void InternalUpdateCurrentPlayerId()
 		{
-			InvokeEntityMethod(ActualObject, ButtonPanelSetCurrentPlayerIdMethod, new object[] { m_currentPlayerId });
+			InvokeEntityMethod(ActualObject, ButtonPanelSetCurrentPlayerIdMethod, new object[] { _currentPlayerId });
 		}
 		*/
 
