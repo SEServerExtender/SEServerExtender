@@ -8,7 +8,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private object _networkManager;
+		private readonly object _networkManager;
 		//private ShipControllerEntity _parent;
 
 		private static bool _isRegistered;
@@ -32,7 +32,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public ShipControllerNetworkManager( Object networkManager, ShipControllerEntity parent )
 		{
 			_networkManager = networkManager;
-			_parent = parent;
+			//_parent = parent;
 
 			Action action = RegisterPacketHandlers;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
