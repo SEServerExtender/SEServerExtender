@@ -7,14 +7,14 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "ShipControllerEntityProxy" )]
+	[DataContract]
 	public class ShipControllerEntity : TerminalBlockEntity
 	{
 		#region "Attributes"
 
-		private ShipControllerNetworkManager m_networkManager;
-		private CharacterEntity m_pilot;
-		private bool m_weaponStatus;
+		private readonly ShipControllerNetworkManager _networkManager;
+		//private CharacterEntity _pilot;
+		//private bool _weaponStatus;
 
 		public static string ShipControllerEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string ShipControllerEntityClass = "12BACAB3471C8707CE7420AE0465548C";
@@ -38,7 +38,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public ShipControllerEntity( CubeGridEntity parent, MyObjectBuilder_ShipController definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			m_networkManager = new ShipControllerNetworkManager( GetShipControllerNetworkManager( ), this );
+			_networkManager = new ShipControllerNetworkManager( GetShipControllerNetworkManager( ), this );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -131,12 +131,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					if (backingPilot == null)
 						return null;
 
-					if (m_pilot == null)
+					if (_pilot == null)
 					{
 						try
 						{
 							MyObjectBuilder_Character objectBuilder = (MyObjectBuilder_Character)BaseEntity.GetObjectBuilder(backingPilot);
-							m_pilot = new CharacterEntity(objectBuilder, backingPilot);
+							_pilot = new CharacterEntity(objectBuilder, backingPilot);
 						}
 						catch (Exception ex)
 						{
@@ -144,15 +144,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 						}
 					}
 
-					if (m_pilot != null)
+					if (_pilot != null)
 					{
 						try
 						{
-							if (m_pilot.BackingObject != backingPilot)
+							if (_pilot.BackingObject != backingPilot)
 							{
 								MyObjectBuilder_Character objectBuilder = (MyObjectBuilder_Character)BaseEntity.GetObjectBuilder(backingPilot);
-								m_pilot.BackingObject = backingPilot;
-								m_pilot.ObjectBuilder = objectBuilder;
+								_pilot.BackingObject = backingPilot;
+								_pilot.ObjectBuilder = objectBuilder;
 							}
 						}
 						catch (Exception ex)
@@ -161,11 +161,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 						}
 					}
 
-					return m_pilot;
+					return _pilot;
 				}
 				set
 				{
-					m_pilot = value;
+					_pilot = value;
 					Changed = true;
 
 					if (BackingObject != null && ActualObject != null)
@@ -183,7 +183,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[ReadOnly( true )]
 		internal ShipControllerNetworkManager NetworkManager
 		{
-			get { return m_networkManager; }
+			get { return _networkManager; }
 		}
 
 		#endregion "Properties"
@@ -198,7 +198,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ShipControllerEntityNamespace, ShipControllerEntityClass );
 				if ( type == null )
-					throw new Exception( "Could not find type for ShipControllerEntity" );
+					throw new TypeLoadException( "Could not find type for ShipControllerEntity" );
 
 				result &= BaseObject.HasMethod( type, ShipControllerEntityGetNetworkManager );
 				//				result &= BaseObject.HasMethod(type, ShipControllerEntityGetPilotEntityMethod);
@@ -206,7 +206,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
@@ -228,10 +228,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void InternalUpdatePilotEntity()
 		{
-			if (m_pilot == null || m_pilot.BackingObject == null)
+			if (_pilot == null || _pilot.BackingObject == null)
 				return;
 
-			BaseObject.InvokeEntityMethod(ActualObject, ShipControllerEntitySetPilotEntityMethod, new object[] { m_pilot.BackingObject, Type.Missing, Type.Missing });
+			BaseObject.InvokeEntityMethod(ActualObject, ShipControllerEntitySetPilotEntityMethod, new object[] { _pilot.BackingObject, Type.Missing, Type.Missing });
 		}
 		*/
 
