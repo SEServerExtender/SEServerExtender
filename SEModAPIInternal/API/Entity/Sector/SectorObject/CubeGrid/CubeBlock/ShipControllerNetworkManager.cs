@@ -8,10 +8,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private Object m_networkManager;
-		private ShipControllerEntity m_parent;
+		private object _networkManager;
+		private ShipControllerEntity _parent;
 
-		private static bool m_isRegistered;
+		private static bool _isRegistered;
 
 		//Packets
 		//2480 - Pilot Relative World PositionOrientation
@@ -31,8 +31,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public ShipControllerNetworkManager( Object networkManager, ShipControllerEntity parent )
 		{
-			m_networkManager = networkManager;
-			m_parent = parent;
+			_networkManager = networkManager;
+			_parent = parent;
 
 			Action action = RegisterPacketHandlers;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -44,7 +44,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public Object BackingObject
 		{
-			get { return m_networkManager; }
+			get { return _networkManager; }
 		}
 
 		public static Type InternalType
@@ -89,7 +89,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
-				if ( m_isRegistered )
+				if ( _isRegistered )
 					return;
 				/*
 				Type packetType = InternalType.GetNestedType("8368ACD3E728CDA04FE741CDC05B1D16", BindingFlags.Public | BindingFlags.NonPublic);
@@ -98,7 +98,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if (!result)
 					return;
 				*/
-				m_isRegistered = true;
+				_isRegistered = true;
 			}
 			catch ( Exception ex )
 			{
