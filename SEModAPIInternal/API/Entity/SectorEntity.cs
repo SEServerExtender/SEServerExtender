@@ -14,14 +14,14 @@ namespace SEModAPIInternal.API.Entity
 		#region "Attributes"
 
 		//Sector Events
-		private BaseObjectManager _eventManager;
+		private readonly BaseObjectManager _eventManager;
 
 		//Sector Objects
-		private BaseObjectManager _cubeGridManager;
+		private readonly BaseObjectManager _cubeGridManager;
 
-		private BaseObjectManager _voxelMapManager;
-		private BaseObjectManager _floatingObjectManager;
-		private BaseObjectManager _meteorManager;
+		private readonly BaseObjectManager _voxelMapManager;
+		private readonly BaseObjectManager _floatingObjectManager;
+		private readonly BaseObjectManager _meteorManager;
 
 		#endregion "Attributes"
 
