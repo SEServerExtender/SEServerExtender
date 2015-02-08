@@ -22,9 +22,9 @@ namespace SEModAPIInternal.API.Server
 	{
 		#region "Attributes"
 
-		private static ServerAssemblyWrapper m_instance;
-		private static Assembly m_assembly;
-		private static AppDomain m_domain;
+		private static ServerAssemblyWrapper _instance;
+		private static Assembly _assembly;
+		private static AppDomain _domain;
 
 		public static string DedicatedServerNamespace = "83BCBFA49B3A2A6EC1BC99583DA2D399";
 		public static string DedicatedServerClass = "49BCFF86BA276A9C7C0D269C2924DE2D";
@@ -35,18 +35,24 @@ namespace SEModAPIInternal.API.Server
 
 		#region "Constructors and Initializers"
 
+		/// <exception cref="SecurityException">A codebase that does not start with "file://" was specified without the required <see cref="T:System.Net.WebPermission" />. </exception>
+		/// <exception cref="BadImageFormatException">Not a valid assembly. -or- assembly was compiled with a later version of the common language runtime than the version that is currently loaded.</exception>
+		/// <exception cref="FileLoadException">A file that was found could not be loaded. </exception>
+		/// <exception cref="FileNotFoundException">Assembly is not found, or the module you are trying to load does not specify a filename extension. </exception>
+		/// <exception cref="PathTooLongException">The assembly name is longer than MAX_PATH characters.</exception>
+		/// <exception cref="AppDomainUnloadedException">The operation is attempted on an unloaded application domain. </exception>
 		protected ServerAssemblyWrapper( )
 		{
-			m_instance = this;
+			_instance = this;
 
 			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineersDedicated.exe" );
-			m_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
+			_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
 
 			/*
 			byte[] b = File.ReadAllBytes(assemblyPath);
 			Assembly rawServerAssembly = Assembly.Load(b);
-			m_domain = AppDomain.CreateDomain("Server Domain");
-			m_assembly = m_domain.Load(rawServerAssembly.GetName());
+			_domain = AppDomain.CreateDomain("Server Domain");
+			_assembly = _domain.Load(rawServerAssembly.GetName());
 			*/
 
 			Console.WriteLine( "Finished loading ServerAssemblyWrapper" );
@@ -60,26 +66,26 @@ namespace SEModAPIInternal.API.Server
 		{
 			get
 			{
-				return m_domain;
+				return _domain;
 			}
 		}
 
 		public static ServerAssemblyWrapper Instance
 		{
-			get { return m_instance ?? ( m_instance = new ServerAssemblyWrapper( ) ); }
+			get { return _instance ?? ( _instance = new ServerAssemblyWrapper( ) ); }
 		}
 
 		public static Type InternalType
 		{
 			get
 			{
-				if ( m_assembly == null )
+				if ( _assembly == null )
 				{
 					byte[ ] b = File.ReadAllBytes( "SpaceEngineersDedicated.exe" );
-					m_assembly = Assembly.Load( b );
+					_assembly = Assembly.Load( b );
 				}
 
-				Type dedicatedServerType = m_assembly.GetType( DedicatedServerNamespace + "." + DedicatedServerClass );
+				Type dedicatedServerType = _assembly.GetType( DedicatedServerNamespace + "." + DedicatedServerClass );
 				return dedicatedServerType;
 			}
 		}
@@ -264,11 +270,11 @@ namespace SEModAPIInternal.API.Server
 			/*
 		finally
 		{
-			m_instance = null;
+			_instance = null;
 			Reset();
-			if (m_domain != null)
+			if (_domain != null)
 			{
-				AppDomain.Unload(m_domain);
+				AppDomain.Unload(_domain);
 			}
 
 			GC.Collect();
@@ -295,8 +301,8 @@ namespace SEModAPIInternal.API.Server
 
 				/*
 				Reset();
-				AppDomain.Unload(m_domain);
-				m_domain = null;
+				AppDomain.Unload(_domain);
+				_domain = null;
 				 */
 			}
 			catch ( Exception ex )
