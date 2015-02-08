@@ -537,6 +537,10 @@
 									}
 									Monitor.Exit( SlowDown );
 								}
+								else
+								{
+									throw new SynchronizationLockException( );
+								}
 
 								LogManager.APILog.WriteLineAndConsole(string.Format("Sending world data.  Throttle: {0}", shouldSlowDown));
 								SendWorldData(player);
@@ -544,13 +548,17 @@
 								if ( Monitor.TryEnter( SlowDown, 17 ) )
 								{
 									if ( !SlowDown.ContainsKey( player ) )
-										SlowDown.Add(player, new Tuple<DateTime, int>(DateTime.Now, 1));
+										SlowDown.Add( player, new Tuple<DateTime, int>( DateTime.Now, 1 ) );
 									else
 									{
-										int count = SlowDown[player].Item2;
-										SlowDown[player] = new Tuple<DateTime, int>(DateTime.Now, count + 1);
+										int count = SlowDown[ player ].Item2;
+										SlowDown[ player ] = new Tuple<DateTime, int>( DateTime.Now, count + 1 );
 									}
 									Monitor.Exit( SlowDown );
+								}
+								else
+								{
+									throw new SynchronizationLockException( );
 								}
 							}
 							catch
