@@ -69,11 +69,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		/// <summary>
 		/// Gets a reference to the <see cref="BatteryBlockEntity"/> type.
 		/// </summary>
-		[IgnoreDataMember]
-		[Category( "Battery Block" )]
-		[Browsable( false )]
-		[ReadOnly( true )]
-		new internal static Type InternalType
+		[IgnoreDataMember, Category( "Battery Block" ), Browsable( false ), ReadOnly( true )]
+		internal new static Type InternalType
 		{
 			get
 			{
@@ -82,28 +79,21 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[IgnoreDataMember]
-		[Category( "Battery Block" )]
-		[Browsable( false )]
-		[ReadOnly( true )]
+		[IgnoreDataMember, Category( "Battery Block" ), Browsable( false ), ReadOnly( true )]
 		internal new MyObjectBuilder_BatteryBlock ObjectBuilder
 		{
 			get
 			{
-				MyObjectBuilder_BatteryBlock batteryBlock = (MyObjectBuilder_BatteryBlock)base.ObjectBuilder;
+				MyObjectBuilder_BatteryBlock batteryBlock = (MyObjectBuilder_BatteryBlock) base.ObjectBuilder;
 
 				batteryBlock.MaxStoredPower = _maxStoredPower;
 
 				return batteryBlock;
 			}
-			set
-			{
-				base.ObjectBuilder = value;
-			}
+			set { base.ObjectBuilder = value; }
 		}
 
-		[DataMember]
-		[Category( "Battery Block" )]
+		[DataMember, Category( "Battery Block" )]
 		public float CurrentStoredPower
 		{
 			get { return ObjectBuilder.CurrentStoredPower; }
@@ -121,8 +111,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember]
-		[Category( "Battery Block" )]
+		[DataMember, Category( "Battery Block" )]
 		public float MaxStoredPower
 		{
 			get
@@ -131,7 +120,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( ActualObject != null )
 				{
-					maxStoredPower = (float)InvokeEntityMethod( ActualObject, BatteryBlockGetMaxStoredPowerMethod );
+					maxStoredPower = (float) InvokeEntityMethod( ActualObject, BatteryBlockGetMaxStoredPowerMethod );
 				}
 				else
 				{
@@ -154,8 +143,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember]
-		[Category( "Battery Block" )]
+		[DataMember, Category( "Battery Block" )]
 		public bool ProducerEnabled
 		{
 			get { return ObjectBuilder.ProducerEnabled; }
@@ -173,8 +161,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember]
-		[Category( "Battery Block" )]
+		[DataMember, Category( "Battery Block" )]
 		public bool SemiautoEnabled
 		{
 			get { return ObjectBuilder.SemiautoEnabled; }
@@ -192,8 +179,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember]
-		[Category( "Battery Block" )]
+		[DataMember, Category( "Battery Block" )]
 		public float RequiredPowerInput
 		{
 			get { return PowerReceiver.MaxRequiredInput; }
@@ -205,8 +191,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember]
-		[Category( "Battery Block" )]
+		[DataMember, Category( "Battery Block" )]
 		public float MaxPowerOutput
 		{
 			get { return _maxPowerOutput; }
@@ -224,19 +209,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[IgnoreDataMember]
-		[Browsable( false )]
-		[ReadOnly( true )]
-		internal BatteryBlockNetworkManager BatteryNetManager
-		{
-			get { return _batteryBlockNetManager; }
-		}
+		[IgnoreDataMember, Browsable( false ), ReadOnly( true )]
+		internal BatteryBlockNetworkManager BatteryNetManager { get { return _batteryBlockNetManager; } }
 
 		#endregion "Properties"
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest( )
+		public new static bool ReflectionUnitTest( )
 		{
 			try
 			{
