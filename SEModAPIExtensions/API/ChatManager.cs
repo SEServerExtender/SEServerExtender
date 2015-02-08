@@ -1410,13 +1410,13 @@ namespace SEModAPIExtensions.API
 				{
 					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
-					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.name  ) );
+					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.Name  ) );
 
 					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
 				}
 
-				steamId = playerItems[ 0 ].steamId;
+				steamId = playerItems[ 0 ].SteamId;
 				if ( steamId == 0 )
 					return;
 			}
@@ -1428,7 +1428,7 @@ namespace SEModAPIExtensions.API
 			}
 
 			PlayerManager.Instance.KickPlayer( steamId );
-			SendPrivateChatMessage( remoteUserId, string.Format( "Kicked player '{0}' off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) ) );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Kicked player '{0}' off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].Name ) ) );
 		}
 
 		protected void Command_Ban( ChatEvent chatEvent )
@@ -1465,13 +1465,13 @@ namespace SEModAPIExtensions.API
 				{
 					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
-					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.name ) );
+					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.Name ) );
 
 					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
 				}
 
-				steamId = playerItems[ 0 ].steamId;
+				steamId = playerItems[ 0 ].SteamId;
 				if ( steamId == 0 )
 					return;
 			}
@@ -1484,7 +1484,7 @@ namespace SEModAPIExtensions.API
 
 			PlayerManager.Instance.BanPlayer( steamId );
 
-			SendPrivateChatMessage( remoteUserId, string.Format( "Banned '{0}' and kicked them off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) ) );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Banned '{0}' and kicked them off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].Name ) ) );
 		}
 
 		protected void Command_Unban( ChatEvent chatEvent )
@@ -1521,20 +1521,20 @@ namespace SEModAPIExtensions.API
 				{
 					SendPrivateChatMessage( remoteUserId, "There is more than one player with the specified name;" );
 
-					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.name ) );
+					string playersString = playerItems.Aggregate( string.Empty, ( current, playeritem ) => string.Format( "{0}{1} ", current, playeritem.Name ) );
 
 					SendPrivateChatMessage( remoteUserId, playersString );
 					return;
 				}
 
-				steamId = playerItems[ 0 ].steamId;
+				steamId = playerItems[ 0 ].SteamId;
 				if ( steamId == 0 )
 					return;
 			}
 
 			PlayerManager.Instance.UnBanPlayer( steamId );
 
-			SendPrivateChatMessage( remoteUserId, string.Format( "Unbanned '{0}'", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].name ) ) );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Unbanned '{0}'", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].Name ) ) );
 		}
 
 		#endregion

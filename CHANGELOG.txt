@@ -1,2 +1,5 @@
+1.68.8.52-alpha:
+Externally visible types SEModAPIInternal.API.Common.PlayerMap.InternalIdentityItem and SEModAPIInternal.API.Common.PlayerMap.InternalPlayerItem had their public members' names changed. This is a potential breaking change for external code dependent on these types.
+
 0.3.1.22-alpha:
 -Add: Changelog added.
