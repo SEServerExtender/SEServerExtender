@@ -67,7 +67,8 @@ namespace SEModAPIInternal.API.Common
 			get { return _broadcastRadius; }
 			set
 			{
-				if ( _broadcastRadius == value ) return;
+				if ( _broadcastRadius == value )
+					return;
 				_broadcastRadius = value;
 
 				if ( BackingObject != null )
@@ -85,7 +86,8 @@ namespace SEModAPIInternal.API.Common
 			get { return _linkedEntity; }
 			set
 			{
-				if ( _linkedEntity == value ) return;
+				if ( _linkedEntity == value )
+					return;
 				_linkedEntity = value;
 
 				if ( BackingObject != null )
@@ -102,7 +104,8 @@ namespace SEModAPIInternal.API.Common
 			get { return _isEnabled; }
 			set
 			{
-				if ( _isEnabled == value ) return;
+				if ( _isEnabled == value )
+					return;
 				_isEnabled = value;
 
 				if ( BackingObject != null )
@@ -119,7 +122,8 @@ namespace SEModAPIInternal.API.Common
 			get { return _aabbTreeId; }
 			set
 			{
-				if ( _aabbTreeId == value ) return;
+				if ( _aabbTreeId == value )
+					return;
 				_aabbTreeId = value;
 
 				if ( BackingObject != null )
