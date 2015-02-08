@@ -406,7 +406,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLineAndConsole(string.Format("RemovePlayer(): {0}", ex.ToString()));
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("RemovePlayer(): {0}", ex));
 			}
 		}
 
@@ -427,7 +427,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLineAndConsole(string.Format("ClearCameraData(): {0}", ex.ToString()));
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("ClearCameraData(): {0}", ex));
 			}
 		}
 
@@ -559,7 +559,7 @@ namespace SEModAPIInternal.API.Common
 //			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
 //			{
 				MyAPIGateway.Players.GetPlayers(players);
-				MyAPIGateway.Players.GetAllIdentites(identities);
+				MyAPIGateway.Players.GetAllIdentities(identities);
 //			});
 
 			allSteamList = new Dictionary<long, InternalClientItem>();
