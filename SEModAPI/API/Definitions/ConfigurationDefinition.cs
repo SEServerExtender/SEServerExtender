@@ -5,18 +5,7 @@ namespace SEModAPI.API.Definitions
 {
 	public class ConfigurationDefinition
 	{
-		#region "Attributes"
-
 		private MyObjectBuilder_Configuration _baseDefinition;
-
-		#endregion
-
-		#region "Constructors and Initializers"
-
-
-		#endregion
-
-		#region "Properties"
 
 		public bool Changed
 		{
@@ -145,11 +134,5 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
-
-		#endregion
-
-		#region "Methods"
-
-		#endregion
 	}
 }
