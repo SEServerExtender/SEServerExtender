@@ -26,8 +26,8 @@ namespace SEModAPIInternal.API.Common
 		public static string RadioManagerSetLinkedEntityMethod = "1C653F74AF87659F7AA9B39E35D789CE";
 		public static string RadioManagerGetEnabledMethod = "78F34EF54782BBB097110F15BB3F5CC7";
 		public static string RadioManagerSetEnabledMethod = "5DCB378F714DC1A82AF40135BBE08BE1";
-		public static string RadioManagerGetAABBTreeIdMethod = "20FCED684DEC4EA0CCEE92D67DB109F1";
-		public static string RadioManagerSetAABBTreeIdMethod = "10D69A54D5F2CE65056EBB10BCF3D8B3";
+		public static string RadioManagerGetAabbTreeIdMethod = "20FCED684DEC4EA0CCEE92D67DB109F1";
+		public static string RadioManagerSetAabbTreeIdMethod = "10D69A54D5F2CE65056EBB10BCF3D8B3";
 
 		public static string RadioManagerNetworkManagerField = "74012B9403A8C0F8C32FE86DA34CA0F6";
 
@@ -45,7 +45,7 @@ namespace SEModAPIInternal.API.Common
 				_broadcastRadius = (float)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetBroadcastRadiusMethod );
 				_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
 				_isEnabled = (bool)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetEnabledMethod );
-				_aabbTreeId = (int)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetAABBTreeIdMethod );
+				_aabbTreeId = (int)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetAabbTreeIdMethod );
 			}
 			catch ( Exception ex )
 			{
@@ -144,7 +144,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( RadioManagerNamespace, RadioManagerClass );
 				if ( type1 == null )
-					throw new Exception( "Could not find internal type for RadioManager" );
+					throw new TypeLoadException( "Could not find internal type for RadioManager" );
 				bool result = true;
 				result &= BaseObject.HasMethod( type1, RadioManagerGetBroadcastRadiusMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerSetBroadcastRadiusMethod );
@@ -152,13 +152,13 @@ namespace SEModAPIInternal.API.Common
 				result &= BaseObject.HasMethod( type1, RadioManagerSetLinkedEntityMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerGetEnabledMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerSetEnabledMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerGetAABBTreeIdMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerSetAABBTreeIdMethod );
+				result &= BaseObject.HasMethod( type1, RadioManagerGetAabbTreeIdMethod );
+				result &= BaseObject.HasMethod( type1, RadioManagerSetAabbTreeIdMethod );
 				result &= BaseObject.HasField( type1, RadioManagerNetworkManagerField );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -198,7 +198,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalUpdateTreeId( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetAABBTreeIdMethod, new object[ ] { TreeId } );
+			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetAabbTreeIdMethod, new object[ ] { TreeId } );
 		}
 
 		#endregion "Methods"
