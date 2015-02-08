@@ -18,14 +18,14 @@ namespace SEModAPIInternal.API.Entity
 		#region "Attributes"
 
 		//Sector Events
-		private BaseObjectManager m_eventManager;
+		private BaseObjectManager _eventManager;
 
 		//Sector Objects
-		private BaseObjectManager m_cubeGridManager;
+		private BaseObjectManager _cubeGridManager;
 
-		private BaseObjectManager m_voxelMapManager;
-		private BaseObjectManager m_floatingObjectManager;
-		private BaseObjectManager m_meteorManager;
+		private BaseObjectManager _voxelMapManager;
+		private BaseObjectManager _floatingObjectManager;
+		private BaseObjectManager _meteorManager;
 
 		#endregion "Attributes"
 
@@ -34,11 +34,11 @@ namespace SEModAPIInternal.API.Entity
 		public SectorEntity( MyObjectBuilder_Sector definition )
 			: base( definition )
 		{
-			m_eventManager = new BaseObjectManager( );
-			m_cubeGridManager = new BaseObjectManager( );
-			m_voxelMapManager = new BaseObjectManager( );
-			m_floatingObjectManager = new BaseObjectManager( );
-			m_meteorManager = new BaseObjectManager( );
+			_eventManager = new BaseObjectManager( );
+			_cubeGridManager = new BaseObjectManager( );
+			_voxelMapManager = new BaseObjectManager( );
+			_floatingObjectManager = new BaseObjectManager( );
+			_meteorManager = new BaseObjectManager( );
 
 			List<Event> events = new List<Event>( );
 			foreach ( MyObjectBuilder_GlobalEventBase sectorEvent in definition.SectorEvents.Events )
@@ -71,11 +71,11 @@ namespace SEModAPIInternal.API.Entity
 			}
 
 			//Build the managers from the lists
-			m_eventManager.Load( events );
-			m_cubeGridManager.Load( cubeGrids );
-			m_voxelMapManager.Load( voxelMaps );
-			m_floatingObjectManager.Load( floatingObjects );
-			m_meteorManager.Load( meteors );
+			_eventManager.Load( events );
+			_cubeGridManager.Load( cubeGrids );
+			_voxelMapManager.Load( voxelMaps );
+			_floatingObjectManager.Load( floatingObjects );
+			_meteorManager.Load( meteors );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -107,26 +107,26 @@ namespace SEModAPIInternal.API.Entity
 				{
 					//Update the events in the base definition
 					baseSector.SectorEvents.Events.Clear( );
-					foreach ( Event item in m_eventManager.GetTypedInternalData<Event>( ) )
+					foreach ( Event item in _eventManager.GetTypedInternalData<Event>( ) )
 					{
 						baseSector.SectorEvents.Events.Add( item.ObjectBuilder );
 					}
 
 					//Update the sector objects in the base definition
 					baseSector.SectorObjects.Clear( );
-					foreach ( CubeGridEntity item in m_cubeGridManager.GetTypedInternalData<CubeGridEntity>( ) )
+					foreach ( CubeGridEntity item in _cubeGridManager.GetTypedInternalData<CubeGridEntity>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( VoxelMap item in m_voxelMapManager.GetTypedInternalData<VoxelMap>( ) )
+					foreach ( VoxelMap item in _voxelMapManager.GetTypedInternalData<VoxelMap>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( FloatingObject item in m_floatingObjectManager.GetTypedInternalData<FloatingObject>( ) )
+					foreach ( FloatingObject item in _floatingObjectManager.GetTypedInternalData<FloatingObject>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( Meteor item in m_meteorManager.GetTypedInternalData<Meteor>( ) )
+					foreach ( Meteor item in _meteorManager.GetTypedInternalData<Meteor>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
@@ -161,7 +161,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				List<Event> newList = m_eventManager.GetTypedInternalData<Event>( );
+				List<Event> newList = _eventManager.GetTypedInternalData<Event>( );
 				return newList;
 			}
 		}
@@ -172,7 +172,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				List<CubeGridEntity> newList = m_cubeGridManager.GetTypedInternalData<CubeGridEntity>( );
+				List<CubeGridEntity> newList = _cubeGridManager.GetTypedInternalData<CubeGridEntity>( );
 				return newList;
 			}
 		}
@@ -183,7 +183,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				List<VoxelMap> newList = m_voxelMapManager.GetTypedInternalData<VoxelMap>( );
+				List<VoxelMap> newList = _voxelMapManager.GetTypedInternalData<VoxelMap>( );
 				return newList;
 			}
 		}
@@ -194,7 +194,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				List<FloatingObject> newList = m_floatingObjectManager.GetTypedInternalData<FloatingObject>( );
+				List<FloatingObject> newList = _floatingObjectManager.GetTypedInternalData<FloatingObject>( );
 				return newList;
 			}
 		}
@@ -205,7 +205,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				List<Meteor> newList = m_meteorManager.GetTypedInternalData<Meteor>( );
+				List<Meteor> newList = _meteorManager.GetTypedInternalData<Meteor>( );
 				return newList;
 			}
 		}
@@ -217,13 +217,13 @@ namespace SEModAPIInternal.API.Entity
 		public BaseObject NewEntry( Type newType )
 		{
 			if ( newType == typeof( CubeGridEntity ) )
-				return m_cubeGridManager.NewEntry<CubeGridEntity>( );
+				return _cubeGridManager.NewEntry<CubeGridEntity>( );
 			if ( newType == typeof( VoxelMap ) )
-				return m_voxelMapManager.NewEntry<VoxelMap>( );
+				return _voxelMapManager.NewEntry<VoxelMap>( );
 			if ( newType == typeof( FloatingObject ) )
-				return m_floatingObjectManager.NewEntry<FloatingObject>( );
+				return _floatingObjectManager.NewEntry<FloatingObject>( );
 			if ( newType == typeof( Meteor ) )
-				return m_meteorManager.NewEntry<Meteor>( );
+				return _meteorManager.NewEntry<Meteor>( );
 
 			return null;
 		}
@@ -232,13 +232,13 @@ namespace SEModAPIInternal.API.Entity
 		{
 			Type deleteType = source.GetType( );
 			if ( deleteType == typeof( CubeGridEntity ) )
-				return m_cubeGridManager.DeleteEntry( (CubeGridEntity)source );
+				return _cubeGridManager.DeleteEntry( (CubeGridEntity)source );
 			if ( deleteType == typeof( VoxelMap ) )
-				return m_voxelMapManager.DeleteEntry( (VoxelMap)source );
+				return _voxelMapManager.DeleteEntry( (VoxelMap)source );
 			if ( deleteType == typeof( FloatingObject ) )
-				return m_floatingObjectManager.DeleteEntry( (FloatingObject)source );
+				return _floatingObjectManager.DeleteEntry( (FloatingObject)source );
 			if ( deleteType == typeof( Meteor ) )
-				return m_meteorManager.DeleteEntry( (Meteor)source );
+				return _meteorManager.DeleteEntry( (Meteor)source );
 
 			return false;
 		}
@@ -250,8 +250,8 @@ namespace SEModAPIInternal.API.Entity
 	{
 		#region "Attributes"
 
-		private static SectorObjectManager m_instance;
-		private static Queue<BaseEntity> m_addEntityQueue = new Queue<BaseEntity>( );
+		private static SectorObjectManager _instance;
+		private static Queue<BaseEntity> _addEntityQueue = new Queue<BaseEntity>( );
 
 		public static string ObjectManagerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string ObjectManagerClass = "CAF1EB435F77C7B77580E2E16F988BED";
@@ -278,7 +278,7 @@ namespace SEModAPIInternal.API.Entity
 		public SectorObjectManager( )
 		{
 			IsDynamic = true;
-			m_instance = this;
+			_instance = this;
 		}
 
 		#endregion "Constructors and Initializers"
@@ -287,7 +287,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public static SectorObjectManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new SectorObjectManager( ) ); }
+			get { return _instance ?? ( _instance = new SectorObjectManager( ) ); }
 		}
 
 		public static Type InternalType
@@ -303,7 +303,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if ( m_addEntityQueue.Count >= 25 )
+				if ( _addEntityQueue.Count >= 25 )
 					return true;
 
 				return false;
@@ -499,7 +499,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( m_addEntityQueue.Count >= 25 )
+				if ( _addEntityQueue.Count >= 25 )
 				{
 					throw new Exception( "AddEntity queue is full. Cannot add more entities yet" );
 				}
@@ -507,7 +507,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					Console.WriteLine( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
 
-				m_addEntityQueue.Enqueue( entity );
+				_addEntityQueue.Enqueue( entity );
 
 				Action action = InternalAddEntity;
 				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -522,10 +522,10 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( m_addEntityQueue.Count == 0 )
+				if ( _addEntityQueue.Count == 0 )
 					return;
 
-				BaseEntity entityToAdd = m_addEntityQueue.Dequeue( );
+				BaseEntity entityToAdd = _addEntityQueue.Dequeue( );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					Console.WriteLine( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
@@ -596,7 +596,7 @@ namespace SEModAPIInternal.API.Entity
 	{
 		#region "Attributes"
 
-		private SectorEntity m_Sector;
+		private SectorEntity _Sector;
 
 		#endregion "Attributes"
 
@@ -612,7 +612,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public SectorEntity Sector
 		{
-			get { return m_Sector; }
+			get { return _Sector; }
 		}
 
 		#endregion "Properties"
@@ -628,12 +628,12 @@ namespace SEModAPIInternal.API.Entity
 			MyObjectBuilder_Sector data = ReadSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( FileInfo.FullName );
 
 			//And instantiate the sector with the data
-			m_Sector = new SectorEntity( data );
+			_Sector = new SectorEntity( data );
 		}
 
 		new public bool Save( )
 		{
-			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( m_Sector.ObjectBuilder, FileInfo.FullName );
+			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( _Sector.ObjectBuilder, FileInfo.FullName );
 		}
 
 		#endregion "Methods"
