@@ -155,13 +155,13 @@ namespace SEModAPIInternal.API.Utility
 			return dataSet;
 		}
 
-		public static Dictionary<T, Object> ConvertEntityDictionary<T, U>( IEnumerable<KeyValuePair<T, U>> source )
+		public static Dictionary<T, Object> ConvertEntityDictionary<T, TU>( IEnumerable<KeyValuePair<T, TU>> source )
 		{
 			Dictionary<T, Object> dataSet = new Dictionary<T, Object>( );
 
 			try
 			{
-				foreach ( KeyValuePair<T, U> rawEntity in source )
+				foreach ( KeyValuePair<T, TU> rawEntity in source )
 				{
 					dataSet.Add( rawEntity.Key, rawEntity.Value );
 				}
@@ -174,13 +174,13 @@ namespace SEModAPIInternal.API.Utility
 			return dataSet;
 		}
 
-		public static Dictionary<Object, T> ConvertEntityDictionaryReverse<U, T>( IEnumerable<KeyValuePair<U, T>> source )
+		public static Dictionary<Object, TU1> ConvertEntityDictionaryReverse<T1, TU1>( IEnumerable<KeyValuePair<T1, TU1>> source )
 		{
-			Dictionary<Object, T> dataSet = new Dictionary<Object, T>( );
+			Dictionary<Object, TU1> dataSet = new Dictionary<Object, TU1>( );
 
 			try
 			{
-				foreach ( KeyValuePair<U, T> rawEntity in source )
+				foreach ( KeyValuePair<T1, TU1> rawEntity in source )
 				{
 					dataSet.Add( rawEntity.Key, rawEntity.Value );
 				}
