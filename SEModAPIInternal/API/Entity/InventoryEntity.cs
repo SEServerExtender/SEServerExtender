@@ -18,7 +18,7 @@ namespace SEModAPIInternal.API.Entity
 	{
 		#region "Attributes"
 
-		private InventoryItemManager m_itemManager;
+		//private InventoryItemManager m_itemManager;
 
 		public static string InventoryNamespace = "33FB6E717989660631E6772B99F502AD";
 		public static string InventoryClass = "DE48496EE9812E665B802D5FE9E7AD77";
