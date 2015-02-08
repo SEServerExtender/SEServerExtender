@@ -187,7 +187,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalUpdateLinkedEntity( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetLinkedEntityMethod, new object[ ] { LinkedEntity } );
+			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetLinkedEntityMethod, new[ ] { LinkedEntity } );
 		}
 
 		protected void InternalUpdateEnabled( )

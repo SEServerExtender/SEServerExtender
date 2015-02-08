@@ -246,7 +246,7 @@
 				MethodInfo[] methods = mySyncLayer.GetType().GetMethods();
 				MethodInfo sendMessageMethod = methods.FirstOrDefault(x => x.Name == MySyncLayerSendMessage);
 				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
-				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, userId, flag });
+				sendMessageMethod.Invoke(mySyncLayer, new[] { msg, userId, flag });
 			}
 			catch (Exception ex)
 			{
@@ -262,7 +262,7 @@
 				var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
 				MethodInfo sendMessageMethod = mySyncLayer.GetType().GetMethod(MySyncLayerSendMessageToServer);
 				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
-				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, flag });
+				sendMessageMethod.Invoke(mySyncLayer, new[] { msg, flag });
 			}
 			catch (Exception ex)
 			{
@@ -308,7 +308,7 @@
 			object createMessage = Activator.CreateInstance(sendCreateCompressedMsgType);
 
 			createObjectBuilders.SetValue(createMessage, memoryStream.ToArray());
-			createBuilderLengths.SetValue(createMessage, new int[] { (int)memoryStream.Length });
+			createBuilderLengths.SetValue(createMessage, new[] { (int)memoryStream.Length });
 
 			SendMessage(createMessage, userId, sendCreateCompressedMsgType, 1);
 		}
@@ -343,7 +343,7 @@
 			object createMessage = createMessageField.GetValue(relativeMessage);
 
 			createObjectBuilders.SetValue(createMessage, memoryStream.ToArray());
-			createBuilderLengths.SetValue(createMessage, new int[] { (int)memoryStream.Length });
+			createBuilderLengths.SetValue(createMessage, new[] { (int)memoryStream.Length });
 
 			createBaseEntity.SetValue(relativeMessage, entity.EntityId);
 			createRelativeVelocity.SetValue(relativeMessage, relativeVelocity);

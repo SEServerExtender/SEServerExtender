@@ -549,7 +549,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, "4055A1176BF0FA0C554491A3206CD656" );
-				basePacketHandlerMethod.Invoke( null, new object[ ] { instanceNetManager, packet, masterNetManager } );
+				basePacketHandlerMethod.Invoke( null, new[ ] { instanceNetManager, packet, masterNetManager } );
 			}
 			catch ( Exception ex )
 			{
@@ -562,7 +562,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, "F990CA0A818DDC8A56001B3D630EE54C" );
-				basePacketHandlerMethod.Invoke( null, new object[ ] { instanceNetManager, packet, masterNetManager } );
+				basePacketHandlerMethod.Invoke( null, new[ ] { instanceNetManager, packet, masterNetManager } );
 			}
 			catch ( Exception ex )
 			{
@@ -576,7 +576,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( "AAC05F537A6F0F6775339593FBDFC564", "7B40EEB62BF9EBADF967050BFA3976CA" );
 				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( type, "364216D779218E8D22F3991B8FBA170A" );
-				basePacketHandlerMethod.Invoke( null, new object[ ] { packet, masterNetManager } );
+				basePacketHandlerMethod.Invoke( null, new[ ] { packet, masterNetManager } );
 			}
 			catch ( Exception ex )
 			{

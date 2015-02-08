@@ -587,7 +587,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 			//NOTE - We don't broadcast the removal because the game internals take care of that by broadcasting the removal delta lists every frame update
 
-			InvokeEntityMethod( BackingObject, CubeGridRemoveCubeBlockMethod, new object[ ] { _cubeBlockToAddRemove.BackingObject, Type.Missing } );
+			InvokeEntityMethod( BackingObject, CubeGridRemoveCubeBlockMethod, new[ ] { _cubeBlockToAddRemove.BackingObject, Type.Missing } );
 
 			_cubeBlockToAddRemove = null;
 		}

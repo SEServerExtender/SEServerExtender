@@ -78,7 +78,7 @@
 				return;
 
 			Object backingObject = m_floatingObjectToChange.BackingObject;
-			BaseObject.InvokeStaticMethod( InternalType, FloatingObjectManagerRemoveFloatingObjectMethod, new object[ ] { backingObject } );
+			BaseObject.InvokeStaticMethod( InternalType, FloatingObjectManagerRemoveFloatingObjectMethod, new[ ] { backingObject } );
 
 			m_floatingObjectToChange = null;
 		}

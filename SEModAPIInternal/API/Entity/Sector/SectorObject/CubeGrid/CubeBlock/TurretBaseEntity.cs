@@ -325,25 +325,25 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public bool IsTarget( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetMethod, new object[ ] { gameEntity.BackingObject } );
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetMethod, new[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
 		public bool IsTargetVisible( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetVisibleMethod, new object[ ] { gameEntity.BackingObject } );
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetVisibleMethod, new[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
 		public bool IsTargetInView( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetInViewMethod, new object[ ] { gameEntity.BackingObject } );
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetInViewMethod, new[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
 		public bool IsTargetEnemy( BaseObject gameEntity )
 		{
-			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetEnemyMethod, new object[ ] { gameEntity.BackingObject } );
+			bool result = (bool)InvokeEntityMethod( ActualObject, TurretIsTargetEnemyMethod, new[ ] { gameEntity.BackingObject } );
 			return result;
 		}
 
