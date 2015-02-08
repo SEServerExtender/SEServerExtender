@@ -23,6 +23,7 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Methods"
 
+		/// <exception cref="FileNotFoundException">The file specified cannot be found.</exception>
 		public void Load( FileInfo fileInfo )
 		{
 			//Save the file info to the property
