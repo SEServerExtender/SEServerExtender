@@ -6,7 +6,6 @@
 	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.ExceptionServices;
-	using System.Runtime.InteropServices;
 	using System.Security;
 	using System.Threading;
 	using Sandbox.Common.ObjectBuilders;
@@ -34,11 +33,11 @@
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "1D194CE472672BF6ACA1B23B38A1D636";
-		//public static string ServerNetworkManagerKickPlayerMethod = "BEC07A39744483E94041083EA34DFE40";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "4419D9BF0A6276FC19212DDF70052AAA";
+		//public static string ServerNetworkManagerKickPlayerMethod = "CC3BEF5062A57E71360866E1DD526CCD";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "A8A49328E3FFD567430E9B954E1B0DA7";
-		public static string ServerNetworkManagerKickPlayerMethod = "6CEE84A422E05D33ED5E8180C70DF19C";         
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "AACFFC237D6203BFC7E5DCDD12E2D6AD";
+		public static string ServerNetworkManagerKickPlayerMethod = "2A9EE410B60717775BE1D19BAD193FE5";         
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -59,6 +58,7 @@
 		public static string MyMultipartSenderSendPart = "A822BAC1F661C682C78230403DDF5670";
 
 		public static string MySyncLayerSendMessage = "358D29D15C14B49FEA47651E0DE22024";
+		public static string MySyncLayerSendMessageToServer = "161C8D41497D2D26777646EE58FE2841";
 
 		public static string MyControlMessageCallbackClass = "C42525D7DE28CE4CFB44651F3D03A50D";
 		public static string MyControlMessageHandlerClass = "69BCF201AF4FAC4108B36AFA089FE230";
@@ -95,6 +95,14 @@
 		private const string AttachMsg = "40523128EAA280C3B469E3C07BC9AA59";
 		private const string AttachCharacterId = "42A1FAB6988564AD174FAFE32427AF1F";
 		private const string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
+
+		private const string ControllableClass = "13C872C66F0BD2DC78D3D80ECAF6DD0E";
+		private const string UseRequest = "580BEBFBA2193A07A867968A00F933D1";
+		private const string UseMsg = "B9061E64FCAE2676D7C8BB0CBEB2B558";
+		private const string UseMsgEntityId = "B8FB60B21AA9E31FBE1BE03977FBB5C4";
+		private const string UseMsgUsedByEntityId = "1EDCD7F5F272CEC95910B9BD327F8159";
+		private const string UseMsgUseAction = "D1AB76CECD107930E4CED6045B5EE206";
+		private const string UseMsgActionResult = "184D262E162762B50FBAF1A443AE3F48";
 
 		#endregion
 
@@ -240,13 +248,29 @@
 				MethodInfo sendMessageMethod = methods.FirstOrDefault(x => x.Name == MySyncLayerSendMessage);
 				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
 				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, userId, flag });
-
 			}
 			catch (Exception ex)
 			{
 				LogManager.ErrorLog.WriteLine(ex);
 			}
 		}
+
+		private static void SendMessageToServer(object msg, Type msgType, int flag)
+		{
+			try
+			{
+				var netManager = GetNetworkManager();
+				var mySyncLayer = BaseObject.GetEntityFieldValue(netManager, MySyncLayerField);
+				MethodInfo sendMessageMethod = mySyncLayer.GetType().GetMethod(MySyncLayerSendMessageToServer);
+				sendMessageMethod = sendMessageMethod.MakeGenericMethod(msgType);
+				sendMessageMethod.Invoke(mySyncLayer, new object[] { msg, flag });
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+			}
+		}
+
 
 		public static void SendCloseEntity(ulong userId, long entityId)
 		{
@@ -364,6 +388,44 @@
 			attachCockpitId.SetValue(attachMsg, cockpitId);
 
 			SendMessage(attachMsg, steamId, attachMsgType, 1);
+		}
+
+		public static void UseCockpit(long characterId, long cockpitId)
+		{
+			Type syncControllableClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, ControllableClass);
+			Type useMsgType = syncControllableClassType.GetNestedType(UseMsg, BindingFlags.Public | BindingFlags.NonPublic);
+
+			FieldInfo useMsgEntityId = useMsgType.GetField(UseMsgEntityId);
+			FieldInfo useMsgUsedByEntityId = useMsgType.GetField(UseMsgUsedByEntityId);
+			FieldInfo useMsgUseAction = useMsgType.GetField(UseMsgUseAction);
+
+			object useMsg = Activator.CreateInstance(useMsgType);
+
+			useMsgEntityId.SetValue(useMsg, cockpitId);
+			useMsgUsedByEntityId.SetValue(useMsg, characterId);
+			useMsgUseAction.SetValue(useMsg, 1);
+
+			SendMessageToServer(useMsg, useMsgType, 1);
+		}
+
+		public static void SendUseCockpitSuccess(long characterId, long cockpitId, ulong steamId)
+		{
+			Type syncControllableClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, ControllableClass);
+			Type useMsgType = syncControllableClassType.GetNestedType(UseMsg, BindingFlags.Public | BindingFlags.NonPublic);
+
+			FieldInfo useMsgEntityId = useMsgType.GetField(UseMsgEntityId);
+			FieldInfo useMsgUsedByEntityId = useMsgType.GetField(UseMsgUsedByEntityId);
+			FieldInfo useMsgUseAction = useMsgType.GetField(UseMsgUseAction);
+			FieldInfo useMsgUseActionResult = useMsgType.GetField(UseMsgActionResult);
+
+			object useMsg = Activator.CreateInstance(useMsgType);
+
+			useMsgEntityId.SetValue(useMsg, cockpitId);
+			useMsgUsedByEntityId.SetValue(useMsg, characterId);
+			useMsgUseAction.SetValue(useMsg, 1);
+			useMsgUseActionResult.SetValue(useMsg, 0);
+
+			SendMessage(useMsgType, steamId, useMsgType, 2);
 		}
 
 		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
