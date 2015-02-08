@@ -219,13 +219,11 @@ namespace SEModAPIInternal.API.Entity
 						}
 						else
 						{
-							BaseEntity newEntity = null;
-
 							//Get the matching API type from the registry
 							Type apiType = EntityRegistry.Instance.GetAPIType( baseEntity.TypeId );
 
 							//Create a new API entity
-							newEntity = (BaseEntity)Activator.CreateInstance( apiType, new object[ ] { baseEntity, entity } );
+							BaseEntity newEntity = (BaseEntity)Activator.CreateInstance( apiType, baseEntity, entity );
 
 							if ( newEntity != null )
 								AddEntry( newEntity.EntityId, newEntity );
@@ -267,7 +265,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					Console.WriteLine( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
+					Console.WriteLine( "{0} '{1}' is being added...", entity.GetType( ).Name, entity.Name );
 
 				AddEntityQueue.Enqueue( entity );
 
@@ -290,7 +288,7 @@ namespace SEModAPIInternal.API.Entity
 				BaseEntity entityToAdd = AddEntityQueue.Dequeue( );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					Console.WriteLine( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
+					Console.WriteLine( "{0} '{0}': Adding to scene...", entityToAdd.GetType( ).Name );
 
 				//Create the backing object
 				Type entityType = entityToAdd.GetType( );
@@ -303,14 +301,14 @@ namespace SEModAPIInternal.API.Entity
 				BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, "Init", new object[ ] { entityToAdd.ObjectBuilder } );
 
 				//Add the backing object to the main game object manager
-				BaseObject.InvokeStaticMethod( InternalType, ObjectManagerAddEntity, new object[ ] { entityToAdd.BackingObject, true } );
+				BaseObject.InvokeStaticMethod( InternalType, ObjectManagerAddEntity, new[ ] { entityToAdd.BackingObject, true } );
 
 				if ( entityToAdd is FloatingObject )
 				{
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new[ ] { Type.Missing } );
 						//TODO - Do stuff
 
 						entityToAdd.ObjectBuilder = baseEntity;
@@ -326,7 +324,7 @@ namespace SEModAPIInternal.API.Entity
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseObject.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new[ ] { Type.Missing } );
 						Type someManager = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( EntityBaseNetManagerNamespace, EntityBaseNetManagerClass );
 						BaseObject.InvokeStaticMethod( someManager, EntityBaseNetManagerSendEntity, new object[ ] { baseEntity } );
 
@@ -342,7 +340,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
 					Type type = entityToAdd.GetType( );
-					Console.WriteLine( type.Name + " '" + entityToAdd.Name + "': Finished adding to scene" );
+					Console.WriteLine( "{0} '{1}': Finished adding to scene", type.Name, entityToAdd.Name );
 				}
 			}
 			catch ( Exception ex )
