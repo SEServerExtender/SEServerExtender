@@ -87,7 +87,7 @@ namespace SEModAPIInternal.API.Entity
 		[Description( "The formatted name of the object" )]
 		public override string Name
 		{
-			get { return "SANDBOX_" + Position.X + "_" + Position.Y + "_" + Position.Z + "_"; }
+			get { return string.Format( "SANDBOX_{0}_{1}_{2}_", Position.X, Position.Y, Position.Z ); }
 		}
 
 		[Category( "Sector" )]
