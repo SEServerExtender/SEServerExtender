@@ -10,8 +10,7 @@ namespace SEModAPIInternal.API.Common
 	{
 		#region "Attributes"
 
-		private Object _backingObject;
-		private RadioManagerNetworkManager _networkManager;
+		private readonly RadioManagerNetworkManager _networkManager;
 
 		private float _broadcastRadius;
 		private Object _linkedEntity;
@@ -40,7 +39,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				_backingObject = backingObject;
+				BackingObject = backingObject;
 				_networkManager = new RadioManagerNetworkManager( this );
 
 				_broadcastRadius = (float)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetBroadcastRadiusMethod );
@@ -60,10 +59,7 @@ namespace SEModAPIInternal.API.Common
 
 		[Category( "Radio Manager" )]
 		[Browsable( false )]
-		public Object BackingObject
-		{
-			get { return _backingObject; }
-		}
+		public Object BackingObject { get; private set; }
 
 		[Category( "Radio Manager" )]
 		public float BroadcastRadius
