@@ -92,6 +92,8 @@
     <Compile Include="API\Entity\InventoryItemManager.cs" />
     <Compile Include="API\Entity\PowerProducer.cs" />
     <Compile Include="API\Entity\PowerReceiver.cs" />
+    <Compile Include="API\Entity\SectorManager.cs" />
+    <Compile Include="API\Entity\SectorObjectManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridManagerManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridNetworkManager.cs" />
