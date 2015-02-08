@@ -16,25 +16,53 @@ namespace SEModAPIInternal.API.Common
 		public class InternalPlayerItem
 		{
 			public string Name;
+			[Obsolete( "Will be removed by version 1.70. Use Name before 1.70." )]
+			public string name { get { return Name; } set { Name = value; } }
+
 			public bool IsDead;
+			[Obsolete( "Will be removed by version 1.70. Use IsDead before 1.70." )]
+			public bool isDead { get { return IsDead; } set { IsDead = value; } }
+
 			public ulong SteamId;
+			[Obsolete( "Will be removed by version 1.70. Use SteamId before 1.70." )]
+			public ulong steamId { get { return SteamId; } set { SteamId = value; } }
+
 			public string Model;
+			[Obsolete( "Will be removed by version 1.70. Use Model before 1.70." )]
+			public string model { get { return Model; } set { Model = value; } }
+
 			public long PlayerId;
+			[Obsolete( "Will be removed by version 1.70. Use PlayerId before 1.70." )]
+			public long playerId { get { return PlayerId; } set { PlayerId = value; } }
+
 			public long EntityId;
+			[Obsolete( "Will be removed by version 1.70. Use EntityId before 1.70." )]
+			public long entityId { get { return EntityId; } set { EntityId = value; } }
 		}
 
 		public class InternalIdentityItem
 		{
 			public string Name;
-			public string Model;
-			public long PlayerId;
-			public long EntityId;
+			[Obsolete( "Will be removed by version 1.70. Use Name before 1.70." )]
+			public string name { get { return Name; } set { Name = value; } }
 
-			public InternalIdentityItem(Object source)
+			public string Model;
+			[Obsolete( "Will be removed by version 1.70. Use Model before 1.70." )]
+			public string model { get { return Model; } set { Model = value; } }
+
+			public long PlayerId;
+			[Obsolete( "Will be removed by version 1.70. Use PlayerId before 1.70." )]
+			public long playerId { get { return PlayerId; } set { PlayerId = value; } }
+
+			public long EntityId;
+			[Obsolete( "Will be removed by version 1.70. Use EntityId before 1.70." )]
+			public long entityId { get { return EntityId; } set { EntityId = value; } }
+
+			public InternalIdentityItem( Object source )
 			{
-				Name = (string)BaseObject.GetEntityFieldValue(source, "1FB9EB403295AA9F17329DAB808AACC8");
-				Model = (string)BaseObject.GetEntityFieldValue(source, "98D5685D557109787E8C5BC033A1863F");
-				PlayerId = (long)BaseObject.GetEntityFieldValue(source, "AFB0FA8889365232B6E34B6F527B304A");
+				Name = (string)BaseObject.GetEntityFieldValue( source, "1FB9EB403295AA9F17329DAB808AACC8" );
+				Model = (string)BaseObject.GetEntityFieldValue( source, "98D5685D557109787E8C5BC033A1863F" );
+				PlayerId = (long)BaseObject.GetEntityFieldValue( source, "AFB0FA8889365232B6E34B6F527B304A" );
 				EntityId = 0;
 			}
 		}
@@ -44,70 +72,70 @@ namespace SEModAPIInternal.API.Common
 			public readonly ulong SteamId;
 			public readonly int SerialId;
 
-			public InternalClientItem(Object source)
+			public InternalClientItem( Object source )
 			{
-				SteamId = (ulong)BaseObject.GetEntityFieldValue(source, "5FCD9FCE67409E4C896AAA6B61A0C33B");
-				SerialId = (int)BaseObject.GetEntityFieldValue(source, "BC639949E46A6E11FEBEDF9BD08068A9");
+				SteamId = (ulong)BaseObject.GetEntityFieldValue( source, "5FCD9FCE67409E4C896AAA6B61A0C33B" );
+				SerialId = (int)BaseObject.GetEntityFieldValue( source, "BC639949E46A6E11FEBEDF9BD08068A9" );
 			}
 
-			public InternalClientItem(IMyPlayer player)
+			public InternalClientItem( IMyPlayer player )
 			{
 				SteamId = player.SteamUserId;
 				SerialId = 0;
 			}
 
-			public int CompareTo(InternalClientItem item)
+			public int CompareTo( InternalClientItem item )
 			{
-				if (SteamId < item.SteamId)
+				if ( SteamId < item.SteamId )
 				{
 					return -1;
 				}
-				if (SteamId > item.SteamId)
+				if ( SteamId > item.SteamId )
 				{
 					return 1;
 				}
-				if (SerialId < item.SerialId)
+				if ( SerialId < item.SerialId )
 				{
 					return -1;
 				}
-				if (SerialId > item.SerialId)
+				if ( SerialId > item.SerialId )
 				{
 					return 1;
 				}
 				return 0;
 			}
 
-			public override bool Equals(object item)
+			public override bool Equals( object item )
 			{
-				if (!(item is InternalClientItem))
+				if ( !( item is InternalClientItem ) )
 				{
 					return false;
 				}
 				return (InternalClientItem)item == this;
 			}
 
-			public override int GetHashCode()
+			public override int GetHashCode( )
 			{
-				return SteamId.GetHashCode() * 571 ^ SerialId.GetHashCode();
+				return SteamId.GetHashCode( ) * 571 ^ SerialId.GetHashCode( );
 			}
 
-			public static bool operator ==(InternalClientItem item1, InternalClientItem item2)
+			public static bool operator ==( InternalClientItem item1, InternalClientItem item2 )
 			{
-				if (item1.SteamId != item2.SteamId)
+				if ( item1.SteamId != item2.SteamId )
 				{
 					return false;
 				}
 				return item1.SerialId == item2.SerialId;
 			}
 
-			public static bool operator !=(InternalClientItem item1, InternalClientItem item2)
+			public static bool operator !=( InternalClientItem item1, InternalClientItem item2 )
 			{
-				return !(item1 == item2);
+				return !( item1 == item2 );
 			}
 
-			public override string ToString()
+			public override string ToString( )
 			{
-				return string.Concat(SteamId.ToString(), ":", SerialId.ToString());
+				return string.Concat( SteamId.ToString( ), ":", SerialId.ToString( ) );
 			}
 		}
 
@@ -144,11 +172,11 @@ namespace SEModAPIInternal.API.Common
 
 		#region "Constructors and Initializers"
 
-		protected PlayerMap()
+		protected PlayerMap( )
 		{
 			_instance = this;
 
-			Console.WriteLine("Finished loading PlayerMap");
+			Console.WriteLine( "Finished loading PlayerMap" );
 		}
 
 		#endregion
@@ -164,7 +192,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				Object backingObject = PlayerManager.Instance.InternalGetPlayerMap();
+				Object backingObject = PlayerManager.Instance.InternalGetPlayerMap( );
 				return backingObject;
 			}
 		}
@@ -173,68 +201,68 @@ namespace SEModAPIInternal.API.Common
 
 		#region "Methods"
 
-		public static bool ReflectionUnitTest()
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
-				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapClass);
-				if (type1 == null)
+				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PlayerMapNamespace, PlayerMapClass );
+				if ( type1 == null )
 					throw new TypeLoadException( "Could not find internal type for PlayerMap" );
 				bool result = true;
-				result &= BaseObject.HasField(type1, PlayerMapGetPlayerItemMappingField);
-				result &= BaseObject.HasField(type1, PlayerMapGetSteamItemMappingField);
-				result &= BaseObject.HasMethod(type1, PlayerMapGetFastPlayerIdFromSteamIdMethod);
-								
-				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapCameraDataClass);
-				if (type2 == null)
+				result &= BaseObject.HasField( type1, PlayerMapGetPlayerItemMappingField );
+				result &= BaseObject.HasField( type1, PlayerMapGetSteamItemMappingField );
+				result &= BaseObject.HasMethod( type1, PlayerMapGetFastPlayerIdFromSteamIdMethod );
+
+				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PlayerMapNamespace, PlayerMapCameraDataClass );
+				if ( type2 == null )
 					throw new TypeLoadException( "Could not find camera data type for PlayerMap" );
-				result &= BaseObject.HasField(type2, PlayerMapGetCameraDataField);
+				result &= BaseObject.HasField( type2, PlayerMapGetCameraDataField );
 
 				Type type3 = WorldManager.InternalType;
-				if(type3 == null)
-					throw new TypeLoadException("Could not find world manager type for PlayerMap");
-				result &= BaseObject.HasField(type3, PlayerMapSessionCameraField);
+				if ( type3 == null )
+					throw new TypeLoadException( "Could not find world manager type for PlayerMap" );
+				result &= BaseObject.HasField( type3, PlayerMapSessionCameraField );
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
 
-		public string GetPlayerNameFromSteamId(ulong steamId)
+		public string GetPlayerNameFromSteamId( ulong steamId )
 		{
-			if (steamId.ToString().StartsWith("9009"))
+			if ( steamId.ToString( ).StartsWith( "9009" ) )
 				return "Server";
 
-			string playerName = steamId.ToString();
+			string playerName = steamId.ToString( );
 
-			Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
+			Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary( );
 			InternalPlayerItem item;
-			if (steamDictionary.TryGetValue( steamId, out item ))
+			if ( steamDictionary.TryGetValue( steamId, out item ) )
 				return item.Name;
 
 			return playerName;
 		}
 
-		public ulong GetSteamId(long playerEntityId)
+		public ulong GetSteamId( long playerEntityId )
 		{
-			if (BackingObject == null)
+			if ( BackingObject == null )
 				return 0;
 
-			if(!(BackingObject is IMyPlayerCollection))
+			if ( !( BackingObject is IMyPlayerCollection ) )
 				return 0;
 
 			IMyPlayerCollection collection = (IMyPlayerCollection)BackingObject;
 
-			List<IMyPlayer> players = new List<IMyPlayer>();
+			List<IMyPlayer> players = new List<IMyPlayer>( );
 			//collection.GetPlayers(players, x => x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
-			collection.GetPlayers(players, x => x.Controller != null && x.Controller.ControlledEntity != null && x.Controller.ControlledEntity.Entity != null && x.Controller.ControlledEntity.Entity.EntityId == playerEntityId);
-			if (players.Count > 0)
+			collection.GetPlayers( players, x => x.Controller != null && x.Controller.ControlledEntity != null && x.Controller.ControlledEntity.Entity != null && x.Controller.ControlledEntity.Entity.EntityId == playerEntityId );
+			if ( players.Count > 0 )
 			{
-				return players.First().SteamUserId;
+				return players.First( ).SteamUserId;
 			}
 
 			return 0;
@@ -246,167 +274,167 @@ namespace SEModAPIInternal.API.Common
 		/// </summary>
 		/// <param name="playerName"> the name of the player</param>
 		/// <returns>returns a list of matches</returns>
-		public List<InternalPlayerItem> GetPlayerItemsFromPlayerName(string playerName)
+		public List<InternalPlayerItem> GetPlayerItemsFromPlayerName( string playerName )
 		{
-			string lowerName = playerName.ToLower();
+			string lowerName = playerName.ToLower( );
 
-			var playerItemstoReturn = new List<InternalPlayerItem>();
+			var playerItemstoReturn = new List<InternalPlayerItem>( );
 
-			foreach (var playerItem in InternalGetSteamDictionary().Values)
+			foreach ( var playerItem in InternalGetSteamDictionary( ).Values )
 			{
-				if (playerItem.Name.ToLower().Contains(lowerName))
+				if ( playerItem.Name.ToLower( ).Contains( lowerName ) )
 				{
 					// if the playeritem occurs more than once, replace it.
-					if (playerItemstoReturn.Exists(x => x.Name.ToLower() == playerItem.Name.ToLower()))
+					if ( playerItemstoReturn.Exists( x => x.Name.ToLower( ) == playerItem.Name.ToLower( ) ) )
 					{
-						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItemstoReturn.First(x => x.Name.ToLower() == playerItem.Name.ToLower()))] = playerItem;
+						playerItemstoReturn[ playerItemstoReturn.IndexOf( playerItemstoReturn.First( x => x.Name.ToLower( ) == playerItem.Name.ToLower( ) ) ) ] = playerItem;
 					}
 					else
-						playerItemstoReturn.Add(playerItem);
+						playerItemstoReturn.Add( playerItem );
 				}
 			}
 			return playerItemstoReturn;
 		}
 
-		public MyObjectBuilder_Checkpoint.PlayerItem GetPlayerItemFromPlayerId(long playerId)
-		{            
-			MyObjectBuilder_Checkpoint.PlayerItem playerItem = new MyObjectBuilder_Checkpoint.PlayerItem();
+		public MyObjectBuilder_Checkpoint.PlayerItem GetPlayerItemFromPlayerId( long playerId )
+		{
+			MyObjectBuilder_Checkpoint.PlayerItem playerItem = new MyObjectBuilder_Checkpoint.PlayerItem( );
 
 			try
 			{
-				Dictionary<long, InternalPlayerItem> playerDictionary = InternalGetPlayerDictionary();
-				if (!playerDictionary.ContainsKey(playerId))
+				Dictionary<long, InternalPlayerItem> playerDictionary = InternalGetPlayerDictionary( );
+				if ( !playerDictionary.ContainsKey( playerId ) )
 					return playerItem;
 
-				InternalPlayerItem item = playerDictionary[playerId];
+				InternalPlayerItem item = playerDictionary[ playerId ];
 				playerItem.PlayerId = item.PlayerId;
 				playerItem.SteamId = item.SteamId;
 				playerItem.Name = item.Name;
 				playerItem.Model = item.Model;
 				playerItem.IsDead = item.IsDead;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			return playerItem;
 		}
 
-		public ulong GetSteamIdFromPlayerName(string playerName, bool partial = false)
+		public ulong GetSteamIdFromPlayerName( string playerName, bool partial = false )
 		{
 			ulong steamId = 0;
-			Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
-			if(!partial)
-				steamId = steamDictionary.FirstOrDefault(x => x.Value.Name == playerName && x.Value.SteamId != 0).Key;
+			Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary( );
+			if ( !partial )
+				steamId = steamDictionary.FirstOrDefault( x => x.Value.Name == playerName && x.Value.SteamId != 0 ).Key;
 			else
-				steamId = steamDictionary.FirstOrDefault(x => x.Value.Name.ToLower().Contains(playerName.ToLower()) && x.Value.SteamId != 0).Key;
+				steamId = steamDictionary.FirstOrDefault( x => x.Value.Name.ToLower( ).Contains( playerName.ToLower( ) ) && x.Value.SteamId != 0 ).Key;
 
-			if (steamId == 0)
+			if ( steamId == 0 )
 			{
 				try
 				{
-					steamId = ulong.Parse(playerName);
+					steamId = ulong.Parse( playerName );
 				}
-				catch (Exception ex)
+				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					LogManager.ErrorLog.WriteLine( ex );
 				}
 			}
 
 			return steamId;
 		}
 
-		public ulong GetSteamIdFromPlayerId(long playerId)
+		public ulong GetSteamIdFromPlayerId( long playerId )
 		{
-			Dictionary<long, InternalPlayerItem> allPlayers = InternalGetPlayerDictionary();
+			Dictionary<long, InternalPlayerItem> allPlayers = InternalGetPlayerDictionary( );
 			InternalPlayerItem item;
-			if (allPlayers.TryGetValue( playerId, out item ))
+			if ( allPlayers.TryGetValue( playerId, out item ) )
 				return item.SteamId;
 
 			return 0;
 		}
 
-		public long GetPlayerEntityId(ulong steamId)
+		public long GetPlayerEntityId( ulong steamId )
 		{
 			long result = 0;
 			try
 			{
 				IMyPlayerCollection collection = (IMyPlayerCollection)BackingObject;
 
-				List<IMyPlayer> players = new List<IMyPlayer>();
-				collection.GetPlayers(players, x => x.SteamUserId == steamId);
+				List<IMyPlayer> players = new List<IMyPlayer>( );
+				collection.GetPlayers( players, x => x.SteamUserId == steamId );
 
-				if (players.Count > 0)
+				if ( players.Count > 0 )
 				{
-					IMyPlayer player = players.FirstOrDefault();
-					if (player != null)
+					IMyPlayer player = players.FirstOrDefault( );
+					if ( player != null )
 					{
-						if (player.Controller != null && player.Controller.ControlledEntity != null && player.Controller.ControlledEntity.Entity != null)
+						if ( player.Controller != null && player.Controller.ControlledEntity != null && player.Controller.ControlledEntity.Entity != null )
 							result = player.Controller.ControlledEntity.Entity.EntityId;
 					}
 				}
 			}
-			catch(Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex.ToString());
+				LogManager.ErrorLog.WriteLine( ex.ToString( ) );
 			}
 			return result;
 		}
 
-		public List<long> GetPlayerIdsFromSteamId(ulong steamId, bool ignoreDead = true)
+		public List<long> GetPlayerIdsFromSteamId( ulong steamId, bool ignoreDead = true )
 		{
-			List<long> matchingPlayerIds = new List<long>();
+			List<long> matchingPlayerIds = new List<long>( );
 
 			try
 			{
-				if (ignoreDead)
+				if ( ignoreDead )
 				{
-					Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
+					Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary( );
 					InternalPlayerItem item;
-					if (steamDictionary.TryGetValue( steamId, out item ))
-						matchingPlayerIds.Add(item.PlayerId);
+					if ( steamDictionary.TryGetValue( steamId, out item ) )
+						matchingPlayerIds.Add( item.PlayerId );
 				}
 				else
 				{
-					foreach (InternalPlayerItem item in InternalGetPlayerList())
+					foreach ( InternalPlayerItem item in InternalGetPlayerList( ) )
 					{
-						if (item.SteamId == steamId)
-							matchingPlayerIds.Add(item.PlayerId);
+						if ( item.SteamId == steamId )
+							matchingPlayerIds.Add( item.PlayerId );
 					}
 				}
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				LogManager.ErrorLog.WriteLine( ex );
 			}
 
 			return matchingPlayerIds;
 		}
 
-		public List<long> GetPlayerIds()
+		public List<long> GetPlayerIds( )
 		{
-			return InternalGetPlayerList().Select(x => x.PlayerId).ToList();
+			return InternalGetPlayerList( ).Select( x => x.PlayerId ).ToList( );
 		}
 
-		public long GetFastPlayerIdFromSteamId(ulong steamId)
+		public long GetFastPlayerIdFromSteamId( ulong steamId )
 		{
 			int num = 0;
-			long result = (long)BaseObject.InvokeEntityMethod(BackingObject, PlayerMapGetFastPlayerIdFromSteamIdMethod, new object[] {steamId, num });
+			long result = (long)BaseObject.InvokeEntityMethod( BackingObject, PlayerMapGetFastPlayerIdFromSteamIdMethod, new object[ ] { steamId, num } );
 			return result;
 		}
 
-		public void RemovePlayer(long playerId)
+		public void RemovePlayer( long playerId )
 		{
 			try
 			{
-				Object rawPlayerItemMapping = BaseObject.GetEntityFieldValue(BackingObject, PlayerMapGetPlayerItemMappingField);
-				MethodInfo removeMethod = rawPlayerItemMapping.GetType().GetMethod("Remove");
-				removeMethod.Invoke(rawPlayerItemMapping, new object[] { playerId });
+				Object rawPlayerItemMapping = BaseObject.GetEntityFieldValue( BackingObject, PlayerMapGetPlayerItemMappingField );
+				MethodInfo removeMethod = rawPlayerItemMapping.GetType( ).GetMethod( "Remove" );
+				removeMethod.Invoke( rawPlayerItemMapping, new object[ ] { playerId } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole(string.Format("RemovePlayer(): {0}", ex));
+				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "RemovePlayer(): {0}", ex ) );
 			}
 		}
 
@@ -415,142 +443,142 @@ namespace SEModAPIInternal.API.Common
 		public static string PlayerMapGetCameraDataClass = "1363E4575A0EAB9C07E1CC9EE70B0711";
 		public static string PlayerMapGetCameraDataField = "3A4EC5D20D8A9F113F78FC05516F0D8B";
 		 */
- 
-		public void ClearCameraData()
+
+		public void ClearCameraData( )
 		{
 			try
 			{
-				Object cameraDataObject = BaseObject.GetEntityFieldValue(WorldManager.Instance.BackingObject, PlayerMapSessionCameraField);
-				Object cameraDictionaryObject = BaseObject.GetEntityFieldValue(cameraDataObject, PlayerMapGetCameraDataField);
-				MethodInfo removeMethod = cameraDictionaryObject.GetType().GetMethod("Clear");
-				removeMethod.Invoke(cameraDictionaryObject, new object[] { });				
+				Object cameraDataObject = BaseObject.GetEntityFieldValue( WorldManager.Instance.BackingObject, PlayerMapSessionCameraField );
+				Object cameraDictionaryObject = BaseObject.GetEntityFieldValue( cameraDataObject, PlayerMapGetCameraDataField );
+				MethodInfo removeMethod = cameraDictionaryObject.GetType( ).GetMethod( "Clear" );
+				removeMethod.Invoke( cameraDictionaryObject, new object[ ] { } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole(string.Format("ClearCameraData(): {0}", ex));
+				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "ClearCameraData(): {0}", ex ) );
 			}
 		}
 
 		// --
-		protected Dictionary<long, Object> InternalGetPlayerItemMapping()
+		protected Dictionary<long, Object> InternalGetPlayerItemMapping( )
 		{
 			try
 			{
-				Object rawPlayerItemMapping = BaseObject.GetEntityFieldValue(BackingObject, PlayerMapGetPlayerItemMappingField);
-				Dictionary<long, Object> allPlayersMapping = UtilityFunctions.ConvertDictionary<long>(rawPlayerItemMapping);
+				Object rawPlayerItemMapping = BaseObject.GetEntityFieldValue( BackingObject, PlayerMapGetPlayerItemMappingField );
+				Dictionary<long, Object> allPlayersMapping = UtilityFunctions.ConvertDictionary<long>( rawPlayerItemMapping );
 				return allPlayersMapping;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return new Dictionary<long, Object>();
+				LogManager.ErrorLog.WriteLine( ex );
+				return new Dictionary<long, Object>( );
 			}
 		}
 
-		protected Dictionary<object, long> InternalGetSteamIdMapping()
+		protected Dictionary<object, long> InternalGetSteamIdMapping( )
 		{
 			try
 			{
-				object rawPlayerItemMapping = BaseObject.GetEntityFieldValue(BackingObject, PlayerMapGetSteamItemMappingField);
-				Dictionary<object, long> allSteamPlayersMapping = UtilityFunctions.ConvertDictionaryReverse<long>(rawPlayerItemMapping);
+				object rawPlayerItemMapping = BaseObject.GetEntityFieldValue( BackingObject, PlayerMapGetSteamItemMappingField );
+				Dictionary<object, long> allSteamPlayersMapping = UtilityFunctions.ConvertDictionaryReverse<long>( rawPlayerItemMapping );
 				return allSteamPlayersMapping;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex);
-				return new Dictionary<object, long>();
+				LogManager.ErrorLog.WriteLine( ex );
+				return new Dictionary<object, long>( );
 			}
 		}
 
-		protected Dictionary<long, InternalPlayerItem> InternalGetPlayerDictionary()
+		protected Dictionary<long, InternalPlayerItem> InternalGetPlayerDictionary( )
 		{
-			Dictionary<long, InternalPlayerItem> result = new Dictionary<long, InternalPlayerItem>();
+			Dictionary<long, InternalPlayerItem> result = new Dictionary<long, InternalPlayerItem>( );
 
 			Dictionary<long, InternalClientItem> allSteamList;
 			Dictionary<long, InternalIdentityItem> allPlayerList;
-			InternalGetReferenceLists(out allSteamList, out allPlayerList);
+			InternalGetReferenceLists( out allSteamList, out allPlayerList );
 
-			foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
+			foreach ( KeyValuePair<long, InternalIdentityItem> p in allPlayerList )
 			{
 				InternalPlayerItem item = new InternalPlayerItem { IsDead = false, Model = p.Value.Model, Name = p.Value.Name, PlayerId = p.Value.PlayerId, SteamId = 0 };
 				InternalClientItem clientItem;
-				if (allSteamList.TryGetValue( p.Value.PlayerId, out clientItem ))
+				if ( allSteamList.TryGetValue( p.Value.PlayerId, out clientItem ) )
 					item.SteamId = clientItem.SteamId;
 
-				if (result.ContainsKey(item.PlayerId))
-					result[item.PlayerId] = item;
+				if ( result.ContainsKey( item.PlayerId ) )
+					result[ item.PlayerId ] = item;
 				else
-					result.Add(item.PlayerId, item);
+					result.Add( item.PlayerId, item );
 			}
 
 			return result;
 		}
 
-		protected Dictionary<ulong, InternalPlayerItem> InternalGetSteamDictionary()
+		protected Dictionary<ulong, InternalPlayerItem> InternalGetSteamDictionary( )
 		{
-			Dictionary<ulong, InternalPlayerItem> result = new Dictionary<ulong, InternalPlayerItem>();
+			Dictionary<ulong, InternalPlayerItem> result = new Dictionary<ulong, InternalPlayerItem>( );
 
 			Dictionary<long, InternalClientItem> allSteamList;
 			Dictionary<long, InternalIdentityItem> allPlayerList;
-			InternalGetReferenceLists(out allSteamList, out allPlayerList);
+			InternalGetReferenceLists( out allSteamList, out allPlayerList );
 
-			foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
+			foreach ( KeyValuePair<long, InternalIdentityItem> p in allPlayerList )
 			{
 				InternalPlayerItem item = new InternalPlayerItem { IsDead = false, Model = p.Value.Model, Name = p.Value.Name, PlayerId = p.Value.PlayerId, SteamId = 0 };
 				InternalClientItem clientItem;
-				if (allSteamList.TryGetValue( p.Value.PlayerId, out clientItem ))
+				if ( allSteamList.TryGetValue( p.Value.PlayerId, out clientItem ) )
 					item.SteamId = clientItem.SteamId;
 
-				if (result.ContainsKey(item.SteamId))
-					result[item.SteamId] = item;
+				if ( result.ContainsKey( item.SteamId ) )
+					result[ item.SteamId ] = item;
 				else
-					result.Add(item.SteamId, item);
+					result.Add( item.SteamId, item );
 			}
 
 			return result;
 		}
 
-		protected List<InternalPlayerItem> InternalGetPlayerList()
+		protected List<InternalPlayerItem> InternalGetPlayerList( )
 		{
 			try
 			{
 				Dictionary<long, InternalClientItem> allSteamList;
 				Dictionary<long, InternalIdentityItem> allPlayerList;
-				InternalGetReferenceLists(out allSteamList, out allPlayerList);
+				InternalGetReferenceLists( out allSteamList, out allPlayerList );
 
-				List<InternalPlayerItem> result = new List<InternalPlayerItem>();
-				foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
+				List<InternalPlayerItem> result = new List<InternalPlayerItem>( );
+				foreach ( KeyValuePair<long, InternalIdentityItem> p in allPlayerList )
 				{
-					for (int x = 0; x < result.Count; x++)
+					for ( int x = 0; x < result.Count; x++ )
 					{
-						InternalPlayerItem test = result[x];
-						if (test.Name == p.Value.Name)
+						InternalPlayerItem test = result[ x ];
+						if ( test.Name == p.Value.Name )
 							test.IsDead = true;
 					}
 
 					InternalPlayerItem item = new InternalPlayerItem { IsDead = false, Model = p.Value.Model, Name = p.Value.Name, PlayerId = p.Value.PlayerId, SteamId = 0 };
 					InternalClientItem clientItem;
-					if (allSteamList.TryGetValue( p.Value.PlayerId, out clientItem ))
+					if ( allSteamList.TryGetValue( p.Value.PlayerId, out clientItem ) )
 						item.SteamId = clientItem.SteamId;
 
-					result.Add(item);
+					result.Add( item );
 				}
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine(ex.ToString());
-				return new List<InternalPlayerItem>();
+				LogManager.ErrorLog.WriteLine( ex.ToString( ) );
+				return new List<InternalPlayerItem>( );
 			}
 		}
 
-		private void InternalGetReferenceLists(out Dictionary<long, InternalClientItem> allSteamList, out Dictionary<long, InternalIdentityItem> allPlayerList)
-		{			
-			if (MyAPIGateway.Players == null)
+		private void InternalGetReferenceLists( out Dictionary<long, InternalClientItem> allSteamList, out Dictionary<long, InternalIdentityItem> allPlayerList )
+		{
+			if ( MyAPIGateway.Players == null )
 			{
-				allSteamList = new Dictionary<long, InternalClientItem>();
-				allPlayerList = new Dictionary<long, InternalIdentityItem>();
+				allSteamList = new Dictionary<long, InternalClientItem>( );
+				allPlayerList = new Dictionary<long, InternalIdentityItem>( );
 				return;
 			}
 			/*
@@ -575,21 +603,21 @@ namespace SEModAPIInternal.API.Common
 				InternalIdentityItem item = new InternalIdentityItem(identity);
 				allPlayerList.Add(identity.PlayerId, item);
 			}
-			 */ 
-			Dictionary<object, long> steamList = InternalGetSteamIdMapping();
-			allSteamList = new Dictionary<long, InternalClientItem>();
-			foreach (KeyValuePair<object, long> p in steamList)
+			 */
+			Dictionary<object, long> steamList = InternalGetSteamIdMapping( );
+			allSteamList = new Dictionary<long, InternalClientItem>( );
+			foreach ( KeyValuePair<object, long> p in steamList )
 			{
-				InternalClientItem item = new InternalClientItem(p.Key);
-				allSteamList.Add(p.Value, item);
+				InternalClientItem item = new InternalClientItem( p.Key );
+				allSteamList.Add( p.Value, item );
 			}
-			
-			Dictionary<long, Object> playerList = InternalGetPlayerItemMapping();
-			allPlayerList = new Dictionary<long, InternalIdentityItem>();
-			foreach (KeyValuePair<long, object> p in playerList)
+
+			Dictionary<long, Object> playerList = InternalGetPlayerItemMapping( );
+			allPlayerList = new Dictionary<long, InternalIdentityItem>( );
+			foreach ( KeyValuePair<long, object> p in playerList )
 			{
-				InternalIdentityItem item = new InternalIdentityItem(p.Value);
-				allPlayerList.Add(p.Key, item);
+				InternalIdentityItem item = new InternalIdentityItem( p.Value );
+				allPlayerList.Add( p.Key, item );
 			}
 		}
 
