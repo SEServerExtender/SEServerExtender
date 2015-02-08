@@ -41,8 +41,8 @@ namespace SEModAPIInternal.API.Common
 
 		public struct InternalClientItem : IComparable<InternalClientItem>
 		{
-			public ulong SteamId;
-			public int SerialId;
+			public readonly ulong SteamId;
+			public readonly int SerialId;
 
 			public InternalClientItem(Object source)
 			{
