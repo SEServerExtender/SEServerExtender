@@ -13,7 +13,7 @@ namespace SEModAPIInternal.API.Entity
 		#region "Attributes"
 
 		private static SectorObjectManager _instance;
-		private static Queue<BaseEntity> _addEntityQueue = new Queue<BaseEntity>( );
+		private static readonly Queue<BaseEntity> AddEntityQueue = new Queue<BaseEntity>( );
 
 		public static string ObjectManagerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string ObjectManagerClass = "CAF1EB435F77C7B77580E2E16F988BED";
@@ -65,7 +65,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if ( _addEntityQueue.Count >= 25 )
+				if ( AddEntityQueue.Count >= 25 )
 					return true;
 
 				return false;
@@ -82,23 +82,23 @@ namespace SEModAPIInternal.API.Entity
 			{
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for SectorObjectManager" );
+					throw new TypeLoadException( "Could not find internal type for SectorObjectManager" );
 				bool result = true;
 				result &= BaseObject.HasMethod( type, ObjectManagerGetEntityHashSet );
 				result &= BaseObject.HasMethod( type, ObjectManagerAddEntity );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ObjectFactoryNamespace, ObjectFactoryClass );
 				if ( type2 == null )
-					throw new Exception( "Could not find object factory type for SectorObjectManager" );
+					throw new TypeLoadException( "Could not find object factory type for SectorObjectManager" );
 
 				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( EntityBaseNetManagerNamespace, EntityBaseNetManagerClass );
 				if ( type3 == null )
-					throw new Exception( "Could not find entity base network manager type for SectorObjectManager" );
+					throw new TypeLoadException( "Could not find entity base network manager type for SectorObjectManager" );
 				result &= BaseObject.HasMethod( type3, EntityBaseNetManagerSendEntity );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
@@ -261,7 +261,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( _addEntityQueue.Count >= 25 )
+				if ( AddEntityQueue.Count >= 25 )
 				{
 					throw new Exception( "AddEntity queue is full. Cannot add more entities yet" );
 				}
@@ -269,7 +269,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					Console.WriteLine( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
 
-				_addEntityQueue.Enqueue( entity );
+				AddEntityQueue.Enqueue( entity );
 
 				Action action = InternalAddEntity;
 				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
@@ -284,10 +284,10 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( _addEntityQueue.Count == 0 )
+				if ( AddEntityQueue.Count == 0 )
 					return;
 
-				BaseEntity entityToAdd = _addEntityQueue.Dequeue( );
+				BaseEntity entityToAdd = AddEntityQueue.Dequeue( );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 					Console.WriteLine( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
