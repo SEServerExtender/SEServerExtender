@@ -6,12 +6,13 @@ using System.Reflection;
 
 namespace SEModAPIInternal.API.Common
 {
+	using System.Linq;
+
 	public class PlayerManager
 	{
 		#region "Attributes"
 
-		private static PlayerManager m_instance;
-        private static Type m_internalType;
+		private static PlayerManager _instance;
 
 		//public static string PlayerManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		//public static string PlayerManagerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
@@ -31,7 +32,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected PlayerManager()
 		{
-			m_instance = this;
+			_instance = this;
 
 			Console.WriteLine("Finished loading PlayerManager");
 		}
@@ -42,7 +43,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static PlayerManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new PlayerManager( ) ); }
+			get { return _instance ?? ( _instance = new PlayerManager( ) ); }
 		}
 
 		public Object BackingObject
@@ -80,13 +81,13 @@ namespace SEModAPIInternal.API.Common
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerManagerNamespace, PlayerManagerClass);
 				if (type1 == null)
-					throw new Exception("Could not find internal type for PlayerManager");
+					throw new TypeLoadException("Could not find internal type for PlayerManager");
 				bool result = true;
                 result &= BaseObject.HasMethod(type1, PlayerManagerPlayerMapField);
 
 				return result;
 			}
-			catch (Exception ex)
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine(ex);
 				return false;
@@ -119,19 +120,9 @@ namespace SEModAPIInternal.API.Common
 
 		public bool IsUserAdmin(ulong remoteUserId)
 		{
-			bool result = false;
-
 			List<string> adminUsers = SandboxGameAssemblyWrapper.Instance.GetServerConfig().Administrators;
-			foreach (string userId in adminUsers)
-			{
-				if (remoteUserId.ToString().Equals(userId))
-				{
-					result = true;
-					break;
-				}
-			}
 
-			return result;
+			return adminUsers.Any( userId => remoteUserId.ToString( ).Equals( userId ) );
 		}
 
 		#endregion
