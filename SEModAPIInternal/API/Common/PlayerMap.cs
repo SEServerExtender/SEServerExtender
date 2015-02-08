@@ -91,12 +91,6 @@ namespace SEModAPIInternal.API.Common
 				return SteamId.GetHashCode() * 571 ^ SerialId.GetHashCode();
 			}
 
-			public static InternalClientItem operator --(InternalClientItem item)
-			{
-				item.SerialId = item.SerialId - 1;
-				return item;
-			}
-
 			public static bool operator ==(InternalClientItem item1, InternalClientItem item2)
 			{
 				if (item1.SteamId != item2.SteamId)
@@ -104,12 +98,6 @@ namespace SEModAPIInternal.API.Common
 					return false;
 				}
 				return item1.SerialId == item2.SerialId;
-			}
-
-			public static InternalClientItem operator ++(InternalClientItem item)
-			{
-				item.SerialId = item.SerialId + 1;
-				return item;
 			}
 
 			public static bool operator !=(InternalClientItem item1, InternalClientItem item2)
