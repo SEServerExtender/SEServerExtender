@@ -489,12 +489,7 @@ namespace SEModAPIInternal.API.Common
 
             foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
             {
-                InternalPlayerItem item = new InternalPlayerItem();
-                item.isDead = false;
-                item.model = p.Value.model;
-                item.name = p.Value.name;
-                item.playerId = p.Value.playerId;
-                item.steamId = 0;
+	            InternalPlayerItem item = new InternalPlayerItem { isDead = false, model = p.Value.model, name = p.Value.name, playerId = p.Value.playerId, steamId = 0 };
 	            InternalClientItem clientItem;
 	            if (allSteamList.TryGetValue( p.Value.playerId, out clientItem ))
                     item.steamId = clientItem.SteamId;
@@ -518,12 +513,7 @@ namespace SEModAPIInternal.API.Common
 
             foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
             {
-                InternalPlayerItem item = new InternalPlayerItem();
-                item.isDead = false;
-                item.model = p.Value.model;
-                item.name = p.Value.name;
-                item.playerId = p.Value.playerId;
-                item.steamId = 0;
+	            InternalPlayerItem item = new InternalPlayerItem { isDead = false, model = p.Value.model, name = p.Value.name, playerId = p.Value.playerId, steamId = 0 };
 	            InternalClientItem clientItem;
 	            if (allSteamList.TryGetValue( p.Value.playerId, out clientItem ))
                     item.steamId = clientItem.SteamId;
@@ -555,12 +545,7 @@ namespace SEModAPIInternal.API.Common
                             test.isDead = true;
                     }
 
-                    InternalPlayerItem item = new InternalPlayerItem();
-                    item.isDead = false;
-                    item.model = p.Value.model;
-                    item.name = p.Value.name;
-                    item.playerId = p.Value.playerId;
-                    item.steamId = 0;
+	                InternalPlayerItem item = new InternalPlayerItem { isDead = false, model = p.Value.model, name = p.Value.name, playerId = p.Value.playerId, steamId = 0 };
 	                InternalClientItem clientItem;
 	                if (allSteamList.TryGetValue( p.Value.playerId, out clientItem ))
                         item.steamId = clientItem.SteamId;
