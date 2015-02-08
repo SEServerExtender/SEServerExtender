@@ -10,13 +10,13 @@ namespace SEModAPIInternal.API.Common
 	{
 		#region "Attributes"
 
-		private Object m_backingObject;
-		private RadioManagerNetworkManager m_networkManager;
+		private Object _backingObject;
+		private RadioManagerNetworkManager _networkManager;
 
-		private float m_broadcastRadius;
-		private Object m_linkedEntity;
-		private bool m_isEnabled;
-		private int m_aabbTreeId;
+		private float _broadcastRadius;
+		private Object _linkedEntity;
+		private bool _isEnabled;
+		private int _aabbTreeId;
 
 		public static string RadioManagerNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
 		public static string RadioManagerClass = "994372BD682BE5E79F2F32E79BE318F5";
@@ -40,13 +40,13 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				m_backingObject = backingObject;
-				m_networkManager = new RadioManagerNetworkManager( this );
+				_backingObject = backingObject;
+				_networkManager = new RadioManagerNetworkManager( this );
 
-				m_broadcastRadius = (float)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetBroadcastRadiusMethod );
-				m_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
-				m_isEnabled = (bool)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetEnabledMethod );
-				m_aabbTreeId = (int)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetAABBTreeIdMethod );
+				_broadcastRadius = (float)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetBroadcastRadiusMethod );
+				_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
+				_isEnabled = (bool)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetEnabledMethod );
+				_aabbTreeId = (int)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetAABBTreeIdMethod );
 			}
 			catch ( Exception ex )
 			{
@@ -62,17 +62,17 @@ namespace SEModAPIInternal.API.Common
 		[Browsable( false )]
 		public Object BackingObject
 		{
-			get { return m_backingObject; }
+			get { return _backingObject; }
 		}
 
 		[Category( "Radio Manager" )]
 		public float BroadcastRadius
 		{
-			get { return m_broadcastRadius; }
+			get { return _broadcastRadius; }
 			set
 			{
-				if ( m_broadcastRadius == value ) return;
-				m_broadcastRadius = value;
+				if ( _broadcastRadius == value ) return;
+				_broadcastRadius = value;
 
 				if ( BackingObject != null )
 				{
@@ -86,11 +86,11 @@ namespace SEModAPIInternal.API.Common
 		[Browsable( false )]
 		public Object LinkedEntity
 		{
-			get { return m_linkedEntity; }
+			get { return _linkedEntity; }
 			set
 			{
-				if ( m_linkedEntity == value ) return;
-				m_linkedEntity = value;
+				if ( _linkedEntity == value ) return;
+				_linkedEntity = value;
 
 				if ( BackingObject != null )
 				{
@@ -103,11 +103,11 @@ namespace SEModAPIInternal.API.Common
 		[Category( "Radio Manager" )]
 		public bool Enabled
 		{
-			get { return m_isEnabled; }
+			get { return _isEnabled; }
 			set
 			{
-				if ( m_isEnabled == value ) return;
-				m_isEnabled = value;
+				if ( _isEnabled == value ) return;
+				_isEnabled = value;
 
 				if ( BackingObject != null )
 				{
@@ -120,11 +120,11 @@ namespace SEModAPIInternal.API.Common
 		[Category( "Radio Manager" )]
 		public int TreeId
 		{
-			get { return m_aabbTreeId; }
+			get { return _aabbTreeId; }
 			set
 			{
-				if ( m_aabbTreeId == value ) return;
-				m_aabbTreeId = value;
+				if ( _aabbTreeId == value ) return;
+				_aabbTreeId = value;
 
 				if ( BackingObject != null )
 				{
@@ -181,7 +181,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalUpdateBroadcastRadius( )
 		{
-			m_networkManager.BroadcastRadius( );
+			_networkManager.BroadcastRadius( );
 			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetBroadcastRadiusMethod, new object[ ] { BroadcastRadius } );
 		}
 
@@ -192,7 +192,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalUpdateEnabled( )
 		{
-			m_networkManager.BroadcastEnabled( );
+			_networkManager.BroadcastEnabled( );
 			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetEnabledMethod, new object[ ] { Enabled } );
 		}
 
