@@ -889,7 +889,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 								Type apiType = BlockRegistry.Instance.GetAPIType( baseEntity.TypeId );
 
 								//Create a new API cube block
-								newCubeBlock = (CubeBlockEntity)Activator.CreateInstance( apiType, new object[ ] { m_parent, baseEntity, entity } );
+								newCubeBlock = (CubeBlockEntity)Activator.CreateInstance( apiType, new[ ] { m_parent, baseEntity, entity } );
 							}
 
 							if ( newCubeBlock == null )

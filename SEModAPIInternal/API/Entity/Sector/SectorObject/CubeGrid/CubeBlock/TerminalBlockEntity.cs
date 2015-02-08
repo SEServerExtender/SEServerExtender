@@ -152,7 +152,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				StringBuilder newCustomName = new StringBuilder( m_customName );
 
 				//InvokeEntityMethod(ActualObject, TerminalBlockSetCustomNameMethod, new object[] { newCustomName });
-				InvokeStaticMethod( ActualObject.GetType( ), TerminalBlockBroadcastCustomNameMethod, new object[ ] { ActualObject, newCustomName } );
+				InvokeStaticMethod( ActualObject.GetType( ), TerminalBlockBroadcastCustomNameMethod, new[ ] { ActualObject, newCustomName } );
 			}
 			catch ( Exception ex )
 			{
