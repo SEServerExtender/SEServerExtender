@@ -24,7 +24,7 @@ namespace SEModAPIInternal.API.Server
 
 		private static ServerAssemblyWrapper _instance;
 		private static Assembly _assembly;
-		private static AppDomain _domain;
+		//private static AppDomain _domain;
 
 		public static string DedicatedServerNamespace = "83BCBFA49B3A2A6EC1BC99583DA2D399";
 		public static string DedicatedServerClass = "49BCFF86BA276A9C7C0D269C2924DE2D";
@@ -62,13 +62,13 @@ namespace SEModAPIInternal.API.Server
 
 		#region "Properties"
 
-		public static AppDomain ServerDomain
-		{
-			get
-			{
-				return _domain;
-			}
-		}
+		//public static AppDomain ServerDomain
+		//{
+		//	get
+		//	{
+		//		return _domain;
+		//	}
+		//}
 
 		public static ServerAssemblyWrapper Instance
 		{
