@@ -11,7 +11,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private InventoryEntity m_Inventory;
+		private InventoryEntity _inventory;
 
 		public static string CargoContainerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string CargoContainerClass = "0B52AF23069247D1A6D57F957ED070E3";
@@ -25,13 +25,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public CargoContainerEntity( CubeGridEntity parent, MyObjectBuilder_CargoContainer definition )
 			: base( parent, definition )
 		{
-			m_Inventory = new InventoryEntity( definition.Inventory );
+			_inventory = new InventoryEntity( definition.Inventory );
 		}
 
 		public CargoContainerEntity( CubeGridEntity parent, MyObjectBuilder_CargoContainer definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			m_Inventory = new InventoryEntity( definition.Inventory, InternalGetContainerInventory( ) );
+			_inventory = new InventoryEntity( definition.Inventory, InternalGetContainerInventory( ) );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -68,7 +68,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			get
 			{
-				return m_Inventory;
+				return _inventory;
 			}
 			private set
 			{
