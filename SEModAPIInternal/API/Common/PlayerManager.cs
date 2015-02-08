@@ -196,7 +196,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapClass);
 				if (type1 == null)
-					throw new Exception("Could not find internal type for PlayerMap");
+					throw new TypeLoadException( "Could not find internal type for PlayerMap" );
 				bool result = true;
                 result &= BaseObject.HasField(type1, PlayerMapGetPlayerItemMappingField);
                 result &= BaseObject.HasField(type1, PlayerMapGetSteamItemMappingField);
@@ -204,12 +204,12 @@ namespace SEModAPIInternal.API.Common
 								
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapCameraDataClass);
 				if (type2 == null)
-					throw new Exception("Could not find camera data type for PlayerMap");
+					throw new TypeLoadException( "Could not find camera data type for PlayerMap" );
 				result &= BaseObject.HasField(type2, PlayerMapGetCameraDataField);
 
 				Type type3 = WorldManager.InternalType;
 				if(type3 == null)
-					throw new Exception("Could not find world manager type for PlayerMap");
+					throw new TypeLoadException("Could not find world manager type for PlayerMap");
 				result &= BaseObject.HasField(type3, PlayerMapSessionCameraField);
 
 				return result;
@@ -229,8 +229,9 @@ namespace SEModAPIInternal.API.Common
             string playerName = steamId.ToString();
 
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
-            if (steamDictionary.ContainsKey(steamId))
-                return steamDictionary[steamId].name;
+	        InternalPlayerItem item;
+	        if (steamDictionary.TryGetValue( steamId, out item ))
+                return item.name;
 
             return playerName;
         }
@@ -336,8 +337,9 @@ namespace SEModAPIInternal.API.Common
 		public ulong GetSteamIdFromPlayerId(long playerId)
 		{
 			Dictionary<long, InternalPlayerItem> allPlayers = InternalGetPlayerDictionary();
-			if (allPlayers.ContainsKey(playerId))
-				return allPlayers[playerId].steamId;
+			InternalPlayerItem item;
+			if (allPlayers.TryGetValue( playerId, out item ))
+				return item.steamId;
 
 			return 0;
 		}
@@ -378,8 +380,9 @@ namespace SEModAPIInternal.API.Common
                 if (ignoreDead)
                 {
                     Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
-                    if (steamDictionary.ContainsKey(steamId))
-                        matchingPlayerIds.Add(steamDictionary[steamId].playerId);
+	                InternalPlayerItem item;
+	                if (steamDictionary.TryGetValue( steamId, out item ))
+                        matchingPlayerIds.Add(item.playerId);
                 }
                 else
                 {
@@ -492,8 +495,9 @@ namespace SEModAPIInternal.API.Common
                 item.name = p.Value.name;
                 item.playerId = p.Value.playerId;
                 item.steamId = 0;
-                if (allSteamList.ContainsKey(p.Value.playerId))
-                    item.steamId = allSteamList[p.Value.playerId].SteamId;
+	            InternalClientItem clientItem;
+	            if (allSteamList.TryGetValue( p.Value.playerId, out clientItem ))
+                    item.steamId = clientItem.SteamId;
 
                 if (result.ContainsKey(item.playerId))
                     result[item.playerId] = item;
@@ -520,8 +524,9 @@ namespace SEModAPIInternal.API.Common
                 item.name = p.Value.name;
                 item.playerId = p.Value.playerId;
                 item.steamId = 0;
-                if (allSteamList.ContainsKey(p.Value.playerId))
-                    item.steamId = allSteamList[p.Value.playerId].SteamId;
+	            InternalClientItem clientItem;
+	            if (allSteamList.TryGetValue( p.Value.playerId, out clientItem ))
+                    item.steamId = clientItem.SteamId;
 
                 if (result.ContainsKey(item.steamId))
                     result[item.steamId] = item;
@@ -556,8 +561,9 @@ namespace SEModAPIInternal.API.Common
                     item.name = p.Value.name;
                     item.playerId = p.Value.playerId;
                     item.steamId = 0;
-                    if (allSteamList.ContainsKey(p.Value.playerId))
-                        item.steamId = allSteamList[p.Value.playerId].SteamId;
+	                InternalClientItem clientItem;
+	                if (allSteamList.TryGetValue( p.Value.playerId, out clientItem ))
+                        item.steamId = clientItem.SteamId;
 
                     result.Add(item);
                 }
