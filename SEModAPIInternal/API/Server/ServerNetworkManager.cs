@@ -13,7 +13,6 @@
 	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
-	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
 	using SteamSDK;
 	using VRageMath;
@@ -21,7 +20,7 @@
 	public class ServerNetworkManager : NetworkManager
 	{
 		#region "Attributes"
-		new protected static ServerNetworkManager _instance;
+		protected static ServerNetworkManager _instance;
 
 		private static bool _replaceData = false;
 		private static readonly List<ulong> Responded = new List<ulong>();
@@ -435,7 +434,6 @@
 			{
 				object netManager = GetNetworkManager();
 				object controlHandlerField = BaseObject.GetEntityFieldValue(netManager, NetworkManagerControlHandlerField);
-				Dictionary<int, object> controlHandlers = UtilityFunctions.ConvertDictionary<int>(controlHandlerField);
 				MethodInfo removeMethod = controlHandlerField.GetType().GetMethod("Remove");
 				removeMethod.Invoke(controlHandlerField, new object[] { 0 });
 
@@ -531,9 +529,13 @@
 							try
 							{
 								bool shouldSlowDown = false;
-								if (SlowDown.ContainsKey(player))
+								if ( Monitor.TryEnter( SlowDown, 17 ) )
 								{
-									shouldSlowDown = (DateTime.Now - SlowDown[player].Item1).TotalSeconds < 240;
+									if ( SlowDown.ContainsKey( player ) )
+									{
+										shouldSlowDown = ( DateTime.Now - SlowDown[ player ].Item1 ).TotalSeconds < 240;
+									}
+									Monitor.Exit( SlowDown );
 								}
 
 								LogManager.APILog.WriteLineAndConsole(string.Format("Sending world data.  Throttle: {0}", shouldSlowDown));
