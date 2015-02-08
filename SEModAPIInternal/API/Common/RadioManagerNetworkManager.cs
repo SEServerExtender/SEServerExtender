@@ -7,7 +7,7 @@ namespace SEModAPIInternal.API.Common
 	{
 		#region "Attributes"
 
-		private RadioManager m_parent;
+		private readonly RadioManager _parent;
 
 		public static string RadioManagerNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string RadioManagerNetManagerClass = "1CE6F03E36FA552A8223DEBF0554411C";
@@ -21,18 +21,18 @@ namespace SEModAPIInternal.API.Common
 
 		public RadioManagerNetworkManager( RadioManager parent )
 		{
-			m_parent = parent;
+			_parent = parent;
 		}
 
 		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
-		public Object BackingObject
+		public object BackingObject
 		{
 			get
 			{
-				Object result = m_parent.GetNetworkManager( );
+				object result = _parent.GetNetworkManager( );
 				return result;
 			}
 		}
@@ -47,14 +47,14 @@ namespace SEModAPIInternal.API.Common
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( RadioManagerNetManagerNamespace, RadioManagerNetManagerClass );
 				if ( type1 == null )
-					throw new Exception( "Could not find internal type for RadioManagerNetworkManager" );
+					throw new TypeLoadException( "Could not find internal type for RadioManagerNetworkManager" );
 				bool result = true;
 				result &= BaseObject.HasMethod( type1, RadioManagerNetManagerBroadcastRadiusMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerNetManagerBroadcastEnabledMethod );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -77,12 +77,12 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalBroadcastRadius( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerNetManagerBroadcastRadiusMethod, new object[ ] { m_parent.BroadcastRadius, true } );
+			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerNetManagerBroadcastRadiusMethod, new object[ ] { _parent.BroadcastRadius, true } );
 		}
 
 		protected void InternalBroadcastEnabled( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerNetManagerBroadcastEnabledMethod, new object[ ] { m_parent.Enabled } );
+			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerNetManagerBroadcastEnabledMethod, new object[ ] { _parent.Enabled } );
 		}
 
 		#endregion "Internal"
