@@ -6,7 +6,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "CargoContainerEntityProxy" )]
+	[DataContract]
 	public class CargoContainerEntity : TerminalBlockEntity
 	{
 		#region "Attributes"
@@ -131,7 +131,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
-				Object baseObject = BackingObject;
 				Object actualObject = GetActualObject( );
 				Object inventory = InvokeEntityMethod( actualObject, CargoContainerGetInventoryMethod, new object[ ] { 0 } );
 
