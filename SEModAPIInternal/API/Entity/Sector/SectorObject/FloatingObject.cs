@@ -9,13 +9,13 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract( Name = "FloatingObjectProxy" )]
+	[DataContract]
 	public class FloatingObject : BaseEntity
 	{
 		#region "Attributes"
 
-		private static Type m_internalType;
-		private InventoryItemEntity m_item;
+		private static Type _internalType;
+		private InventoryItemEntity _item;
 
 		public static string FloatingObjectNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string FloatingObjectClass = "60663B6C2E735862064C925471BD4138";
@@ -27,13 +27,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public FloatingObject( MyObjectBuilder_FloatingObject definition )
 			: base( definition )
 		{
-			m_item = new InventoryItemEntity( definition.Item );
+			_item = new InventoryItemEntity( definition.Item );
 		}
 
 		public FloatingObject( MyObjectBuilder_FloatingObject definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			m_item = new InventoryItemEntity( definition.Item );
+			_item = new InventoryItemEntity( definition.Item );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -46,7 +46,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectNamespace, FloatingObjectClass ) ); }
+			get { return _internalType ?? ( _internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectNamespace, FloatingObjectClass ) ); }
 		}
 
 		[DataMember]
@@ -78,11 +78,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[Browsable( false )]
 		public InventoryItemEntity Item
 		{
-			get { return m_item; }
+			get { return _item; }
 			set
 			{
-				if ( m_item == value ) return;
-				m_item = value;
+				if ( _item == value ) return;
+				_item = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -103,12 +103,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for FloatingObject" );
-				bool result = true;
+					throw new TypeLoadException( "Could not find internal type for FloatingObject" );
+				const bool result = true;
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
