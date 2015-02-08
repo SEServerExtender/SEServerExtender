@@ -113,7 +113,7 @@ namespace SEModAPIInternal.API.Common
 
 		#region "Attributes"
 
-		private static PlayerMap m_instance;
+		private static PlayerMap _instance;
 
 		public static string PlayerMapNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string PlayerMapClass = "E4C2964159826A46D102C2D7FDDC0733";
@@ -146,7 +146,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected PlayerMap()
 		{
-			m_instance = this;
+			_instance = this;
 
 			Console.WriteLine("Finished loading PlayerMap");
 		}
@@ -157,7 +157,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static PlayerMap Instance
 		{
-			get { return m_instance ?? ( m_instance = new PlayerMap( ) ); }
+			get { return _instance ?? ( _instance = new PlayerMap( ) ); }
 		}
 
 		public Object BackingObject
