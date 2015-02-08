@@ -8,23 +8,15 @@ namespace SEModAPIInternal.API.Entity
 	{
 		#region "Attributes"
 
-		private SectorEntity _Sector;
+		private SectorEntity _sector;
 
 		#endregion "Attributes"
-
-		#region "Constructors and Initializers"
-
-		public SectorManager( )
-		{
-		}
-
-		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
 		public SectorEntity Sector
 		{
-			get { return _Sector; }
+			get { return _sector; }
 		}
 
 		#endregion "Properties"
@@ -40,12 +32,12 @@ namespace SEModAPIInternal.API.Entity
 			MyObjectBuilder_Sector data = ReadSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( FileInfo.FullName );
 
 			//And instantiate the sector with the data
-			_Sector = new SectorEntity( data );
+			_sector = new SectorEntity( data );
 		}
 
 		new public bool Save( )
 		{
-			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( _Sector.ObjectBuilder, FileInfo.FullName );
+			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( _sector.ObjectBuilder, FileInfo.FullName );
 		}
 
 		#endregion "Methods"
