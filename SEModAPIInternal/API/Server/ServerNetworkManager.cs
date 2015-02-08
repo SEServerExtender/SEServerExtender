@@ -531,9 +531,10 @@
 								bool shouldSlowDown = false;
 								if ( Monitor.TryEnter( SlowDown, 17 ) )
 								{
-									if ( SlowDown.ContainsKey( player ) )
+									Tuple<DateTime, int> value;
+									if ( SlowDown.TryGetValue( player, out value ) )
 									{
-										shouldSlowDown = ( DateTime.Now - SlowDown[ player ].Item1 ).TotalSeconds < 240;
+										shouldSlowDown = ( DateTime.Now - value.Item1 ).TotalSeconds < 240;
 									}
 									Monitor.Exit( SlowDown );
 								}
@@ -547,11 +548,12 @@
 
 								if ( Monitor.TryEnter( SlowDown, 17 ) )
 								{
-									if ( !SlowDown.ContainsKey( player ) )
+									Tuple<DateTime, int> value;
+									if ( !SlowDown.TryGetValue( player, out value ) )
 										SlowDown.Add( player, new Tuple<DateTime, int>( DateTime.Now, 1 ) );
 									else
 									{
-										int count = SlowDown[ player ].Item2;
+										int count = value.Item2;
 										SlowDown[ player ] = new Tuple<DateTime, int>( DateTime.Now, count + 1 );
 									}
 									Monitor.Exit( SlowDown );
