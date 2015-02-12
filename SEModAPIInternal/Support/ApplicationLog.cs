@@ -82,6 +82,7 @@ namespace SEModAPIInternal.Support
 		/// <summary>
 		/// Writes a friendly message and an optional exception to the log file only.
 		/// </summary>
+		/// <param name="msg">A friendly message describing what is happening.</param>
 		/// <param name="ex">An exception to log. Will log a stack trace.</param>
 		public void WriteLine( string msg, Exception ex = null )
 		{
