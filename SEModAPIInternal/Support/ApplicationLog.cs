@@ -157,12 +157,7 @@ namespace SEModAPIInternal.Support
 
 			lock ( LogMutex )
 			{
-				_stringBuilder.Clear( );
-				AppendDateAndTime( _stringBuilder );
-				_stringBuilder.Append( " - " );
-				_stringBuilder.Append( msg );
-				Console.WriteLine( _stringBuilder.ToString( ) );
-				_stringBuilder.Clear( );
+				Console.WriteLine( "{0} - {1}", DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ), msg );
 			}
 		}
 
@@ -186,30 +181,6 @@ namespace SEModAPIInternal.Support
 					WriteLine( ioex );
 				}
 			}
-		}
-
-		private static void AppendDateAndTime( StringBuilder sb )
-		{
-			try
-			{
-				DateTimeOffset now = DateTimeOffset.Now;
-				sb.Concat( now.Year, 4U, '0', 10U, false ).Append( '-' );
-				sb.Concat( now.Month, 2U ).Append( '-' );
-				sb.Concat( now.Day, 2U ).Append( ' ' );
-				sb.Concat( now.Hour, 2U ).Append( ':' );
-				sb.Concat( now.Minute, 2U ).Append( ':' );
-				sb.Concat( now.Second, 2U ).Append( '.' );
-				sb.Concat( now.Millisecond, 3U );
-			}
-			catch ( Exception ex )
-			{
-				Console.WriteLine( ex.ToString( ) );
-			}
-		}
-
-		private static void AppendThreadInfo( StringBuilder sb )
-		{
-			sb.AppendFormat( "Thread: {0}", GetThreadId( ) );
 		}
 
 		private static int GetThreadId( )
