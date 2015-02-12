@@ -195,12 +195,12 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
-		private int GetThreadId( )
+		private static int GetThreadId( )
 		{
 			return Thread.CurrentThread.ManagedThreadId;
 		}
 
-		private void AppendDateAndTime( StringBuilder sb )
+		private static void AppendDateAndTime( StringBuilder sb )
 		{
 			try
 			{
@@ -219,7 +219,7 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
-		private void AppendThreadInfo( StringBuilder sb )
+		private static void AppendThreadInfo( StringBuilder sb )
 		{
 			sb.Append( "Thread: " + GetThreadId( ).ToString( ) );
 		}
