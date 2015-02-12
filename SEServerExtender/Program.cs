@@ -228,7 +228,7 @@ namespace SEServerExtender
 				_server.WCFPort = extenderArgs.WcfPort;
 				_server.Init( );
 
-				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand { Command = "gui", Callback = ChatCommand_GUI };
+				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
 				if ( extenderArgs.AutoStart )
