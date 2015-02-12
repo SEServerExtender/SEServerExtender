@@ -12,7 +12,6 @@ namespace SEModAPIInternal.Support
 	public class ApplicationLog
 	{
 		private static readonly object LogMutex = new object( );
-		private readonly StringBuilder _stringBuilder;
 		private readonly bool _useInstancePath;
 		private StringBuilder _appVersion;
 		private FileInfo _filePath;
@@ -41,8 +40,6 @@ namespace SEModAPIInternal.Support
 					Directory.CreateDirectory( _libraryPath.ToString( ) );
 				}
 			}
-
-			_stringBuilder = new StringBuilder( );
 		}
 
 		public bool LogEnabled { get { return _filePath != null; } }
@@ -102,15 +99,12 @@ namespace SEModAPIInternal.Support
 			{
 				lock ( LogMutex )
 				{
-					_stringBuilder.Clear( );
-					_stringBuilder.AppendFormat( "{0} - Thread: {1} -> {2}",
-					                             DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-					                             GetThreadId( ),
-					                             msg );
 					TextWriter m_Writer = new StreamWriter( _filePath.ToString( ), true );
-					TextWriter.Synchronized( m_Writer ).WriteLine( _stringBuilder.ToString( ) );
+					TextWriter.Synchronized( m_Writer ).WriteLine( "{0} - Thread: {1} -> {2}",
+												 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+												 GetThreadId( ),
+												 msg );
 					m_Writer.Close( );
-					_stringBuilder.Clear( );
 				}
 			}
 			catch ( Exception ex )
