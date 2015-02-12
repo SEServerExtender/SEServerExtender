@@ -99,12 +99,12 @@ namespace SEModAPIInternal.Support
 			{
 				lock ( LogMutex )
 				{
-					TextWriter m_Writer = new StreamWriter( _filePath.ToString( ), true );
-					TextWriter.Synchronized( m_Writer ).WriteLine( "{0} - Thread: {1} -> {2}",
+					TextWriter writer = new StreamWriter( _filePath.ToString( ), true );
+					TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}",
 												 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
 												 GetThreadId( ),
 												 msg );
-					m_Writer.Close( );
+					writer.Close( );
 				}
 			}
 			catch ( Exception ex )
