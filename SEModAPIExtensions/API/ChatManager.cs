@@ -32,7 +32,7 @@ namespace SEModAPIExtensions.API
 
 	public class ChatManager
 	{
-		public struct ChatCommand
+		public class ChatCommand
 		{
 			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
 			{
@@ -51,7 +51,7 @@ namespace SEModAPIExtensions.API
 			OnChatSent,
 		}
 
-		public struct ChatEvent
+		public class ChatEvent
 		{
 			public ChatEvent( ChatEventType type, DateTime timestamp, ulong sourceUserId, ulong remoteUserId, string message, ushort priority )
 			{
