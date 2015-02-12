@@ -81,17 +81,17 @@ namespace SEModAPIInternal.Support
 			if ( m_filePath.Exists )
 			{
 				DateTime lastWriteTime = m_filePath.LastWriteTime;
-				string modifiedTimestamp = lastWriteTime.Year.ToString( ) + "_" + lastWriteTime.Month.ToString( ) + "_" + lastWriteTime.Day.ToString( ) + "_" + lastWriteTime.Hour.ToString( ) + "_" + lastWriteTime.Minute.ToString( ) + "_" + lastWriteTime.Second.ToString( );
+				string modifiedTimestamp = lastWriteTime.Year + "_" + lastWriteTime.Month + "_" + lastWriteTime.Day + "_" + lastWriteTime.Hour + "_" + lastWriteTime.Minute + "_" + lastWriteTime.Second;
 				string fileNameWithoutExtension = m_filePath.Name.Remove( m_filePath.Name.Length - m_filePath.Extension.Length );
 				string newFileName = fileNameWithoutExtension + "_" + modifiedTimestamp + m_filePath.Extension;
 
-				File.Move( m_filePath.ToString( ), Path.Combine( m_libraryPath.ToString( ), newFileName ).ToString( ) );
+				File.Move( m_filePath.ToString( ), Path.Combine( m_libraryPath.ToString( ), newFileName ) );
 			}
 
 			int num = (int)Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
 
 			WriteLine( "Log Started" );
-			WriteLine( "Timezone (local - UTC): " + num.ToString( ) + "h" );
+			WriteLine( "Timezone (local - UTC): " + num + "h" );
 			WriteLine( "App Version: " + m_appVersion );
 		}
 
@@ -127,7 +127,7 @@ namespace SEModAPIInternal.Support
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( "Failed to write to log: " + ex.ToString( ) );
+				Console.WriteLine( "Failed to write to log: " + ex );
 			}
 		}
 
@@ -221,7 +221,7 @@ namespace SEModAPIInternal.Support
 
 		private static void AppendThreadInfo( StringBuilder sb )
 		{
-			sb.Append( "Thread: " + GetThreadId( ).ToString( ) );
+			sb.Append( "Thread: " + GetThreadId( ) );
 		}
 
 		#endregion "Methods"
