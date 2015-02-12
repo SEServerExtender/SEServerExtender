@@ -13,14 +13,14 @@ namespace SEModAPIInternal.Support
 	{
 		#region "Attributes"
 
-		private bool _useInstancePath;
+		private readonly bool _useInstancePath;
 		private bool _instanceMode;
 		private string _logFileName;
 		private StringBuilder _appVersion;
 		private DirectoryInfo _libraryPath;
 		private FileInfo _filePath;
-		private StringBuilder _stringBuilder;
-		private static readonly object _logLock = new object( );
+		private readonly StringBuilder _stringBuilder;
+		private static readonly object LogMutex = new object( );
 
 		#endregion "Attributes"
 
@@ -111,7 +111,7 @@ namespace SEModAPIInternal.Support
 
 			try
 			{
-				lock ( _logLock )
+				lock ( LogMutex )
 				{
 					_stringBuilder.Clear( );
 					AppendDateAndTime( _stringBuilder );
@@ -159,7 +159,7 @@ namespace SEModAPIInternal.Support
 
 			WriteLine( msg );
 
-			lock ( _logLock )
+			lock ( LogMutex )
 			{
 				_stringBuilder.Clear( );
 				AppendDateAndTime( _stringBuilder );
@@ -177,7 +177,7 @@ namespace SEModAPIInternal.Support
 
 			WriteLine( ex );
 
-			lock ( _logLock )
+			lock ( LogMutex )
 			{
 				_stringBuilder.Clear( );
 				AppendDateAndTime( _stringBuilder );
