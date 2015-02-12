@@ -126,9 +126,9 @@ namespace SEModAPIExtensions.API
 						foreach ( MyObjectBuilder_CubeBlock cubeBlock in cubeGrid.BaseCubeBlocks )
 						{
 							//Set the beacon names
-							if ( cubeBlock.TypeId == typeof( MyObjectBuilder_Beacon ) )
+							MyObjectBuilder_Beacon beacon = cubeBlock as MyObjectBuilder_Beacon;
+							if ( beacon != null )
 							{
-								MyObjectBuilder_Beacon beacon = (MyObjectBuilder_Beacon)cubeBlock;
 								beacon.CustomName = entry.BeaconText;
 							}
 
@@ -146,7 +146,7 @@ namespace SEModAPIExtensions.API
 
 				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Cargo group '{0}' spawned with {1} ships at {2}", randomSpawnGroup.DisplayNameText, randomSpawnGroup.Prefabs.Count, startPosition ) );
 			}
-			catch ( Exception ex )
+			catch ( ArgumentOutOfRangeException ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 			}
