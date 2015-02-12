@@ -11,14 +11,14 @@ namespace SEModAPIInternal.Support
 
 	public class ApplicationLog
 	{
-		private readonly bool _useInstancePath;
-		private bool _instanceMode;
-		private string _logFileName;
-		private StringBuilder _appVersion;
-		private DirectoryInfo _libraryPath;
-		private FileInfo _filePath;
-		private readonly StringBuilder _stringBuilder;
 		private static readonly object LogMutex = new object( );
+		private readonly StringBuilder _stringBuilder;
+		private readonly bool _useInstancePath;
+		private StringBuilder _appVersion;
+		private FileInfo _filePath;
+		private bool _instanceMode;
+		private DirectoryInfo _libraryPath;
+		private string _logFileName;
 
 		public ApplicationLog( bool useGamePath = false )
 		{
@@ -37,21 +37,22 @@ namespace SEModAPIInternal.Support
 				string path = Uri.UnescapeDataString( uri.Path );
 				_libraryPath = new DirectoryInfo( Path.Combine( Path.GetDirectoryName( path ), "Logs" ) );
 				if ( !_libraryPath.Exists )
+				{
 					Directory.CreateDirectory( _libraryPath.ToString( ) );
+				}
 			}
 
 			_stringBuilder = new StringBuilder( );
 		}
 
-		public bool LogEnabled
-		{
-			get { return _filePath != null; }
-		}
+		public bool LogEnabled { get { return _filePath != null; } }
 
 		public string GetFilePath( )
 		{
 			if ( _filePath == null )
+			{
 				return "";
+			}
 
 			return _filePath.ToString( );
 		}
@@ -74,7 +75,7 @@ namespace SEModAPIInternal.Support
 				File.Move( _filePath.ToString( ), Path.Combine( _libraryPath.ToString( ), newFileName ) );
 			}
 
-			int num = (int)Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
+			int num = (int) Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
 
 			WriteLine( "Log Started" );
 			WriteLine( "Timezone (local - UTC): " + num + "h" );
@@ -84,7 +85,9 @@ namespace SEModAPIInternal.Support
 		public void WriteLine( string msg )
 		{
 			if ( _filePath == null )
+			{
 				return;
+			}
 
 			if ( _useInstancePath && !_instanceMode && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
 			{
@@ -125,15 +128,21 @@ namespace SEModAPIInternal.Support
 		public void WriteLine( Exception ex )
 		{
 			if ( _filePath == null )
+			{
 				return;
+			}
 
 			if ( ex == null )
+			{
 				return;
+			}
 
 			WriteLine( ex.ToString( ) );
 
 			if ( ex.InnerException == null )
+			{
 				return;
+			}
 
 			WriteLine( ex.InnerException );
 		}
@@ -141,7 +150,9 @@ namespace SEModAPIInternal.Support
 		public void WriteLineAndConsole( string msg )
 		{
 			if ( _filePath == null )
+			{
 				return;
+			}
 
 			WriteLine( msg );
 
@@ -159,7 +170,9 @@ namespace SEModAPIInternal.Support
 		public void WriteLineAndConsole( Exception ex )
 		{
 			if ( _filePath == null )
+			{
 				return;
+			}
 
 			WriteLine( ex );
 
@@ -179,11 +192,6 @@ namespace SEModAPIInternal.Support
 				}
 				_stringBuilder.Clear( );
 			}
-		}
-
-		private static int GetThreadId( )
-		{
-			return Thread.CurrentThread.ManagedThreadId;
 		}
 
 		private static void AppendDateAndTime( StringBuilder sb )
@@ -208,6 +216,11 @@ namespace SEModAPIInternal.Support
 		private static void AppendThreadInfo( StringBuilder sb )
 		{
 			sb.Append( "Thread: " + GetThreadId( ) );
+		}
+
+		private static int GetThreadId( )
+		{
+			return Thread.CurrentThread.ManagedThreadId;
 		}
 	}
 }
