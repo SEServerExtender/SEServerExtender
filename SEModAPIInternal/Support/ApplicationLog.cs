@@ -170,6 +170,25 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
+		/// <exception cref="IOException">Can possibly throw an IOException if stdout is un-writeable.</exception>
+		public void WriteLineAndConsole( Exception ex )
+		{
+			if ( m_filePath == null )
+				return;
+
+			WriteLine( ex );
+
+			lock ( _logLock )
+			{
+				m_stringBuilder.Clear( );
+				AppendDateAndTime( m_stringBuilder );
+				m_stringBuilder.Append( " - " );
+				m_stringBuilder.Append( ex );
+				Console.WriteLine( m_stringBuilder.ToString( ) );
+				m_stringBuilder.Clear( );
+			}
+		}
+
 		private int GetThreadId( )
 		{
 			return Thread.CurrentThread.ManagedThreadId;
