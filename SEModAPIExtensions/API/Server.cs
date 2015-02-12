@@ -94,6 +94,12 @@ namespace SEModAPIExtensions.API
 				_serverHost.Abort( );
 				return false;
 			}
+			catch ( TimeoutException ex )
+			{
+				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
+				_serverHost.Abort( );
+				return false;
+			}
 
 			return true;
 		}
@@ -102,12 +108,18 @@ namespace SEModAPIExtensions.API
 		{
 			try
 			{
-				_baseHost = CreateServiceHost( typeof( InternalService ), typeof( IInternalServiceContract ), "", "InternalService" );
+				_baseHost = CreateServiceHost( typeof ( InternalService ), typeof ( IInternalServiceContract ), "", "InternalService" );
 				_baseHost.Open( );
 			}
-			catch (CommunicationException ex)
+			catch ( CommunicationException ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole("An exception occurred: " + ex.Message);
+				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
+				_baseHost.Abort( );
+				return false;
+			}
+			catch ( TimeoutException ex )
+			{
+				LogManager.ErrorLog.WriteLineAndConsole( "An exception occurred: " + ex.Message );
 				_baseHost.Abort( );
 				return false;
 			}
