@@ -205,13 +205,13 @@ namespace SEModAPIInternal.Support
 			try
 			{
 				DateTimeOffset now = DateTimeOffset.Now;
-				StringBuilderExtensions.Concat( sb, now.Year, 4U, '0', 10U, false ).Append( '-' );
-				StringBuilderExtensions.Concat( sb, now.Month, 2U ).Append( '-' );
-				StringBuilderExtensions.Concat( sb, now.Day, 2U ).Append( ' ' );
-				StringBuilderExtensions.Concat( sb, now.Hour, 2U ).Append( ':' );
-				StringBuilderExtensions.Concat( sb, now.Minute, 2U ).Append( ':' );
-				StringBuilderExtensions.Concat( sb, now.Second, 2U ).Append( '.' );
-				StringBuilderExtensions.Concat( sb, now.Millisecond, 3U );
+				sb.Concat( now.Year, 4U, '0', 10U, false ).Append( '-' );
+				sb.Concat( now.Month, 2U ).Append( '-' );
+				sb.Concat( now.Day, 2U ).Append( ' ' );
+				sb.Concat( now.Hour, 2U ).Append( ':' );
+				sb.Concat( now.Minute, 2U ).Append( ':' );
+				sb.Concat( now.Second, 2U ).Append( '.' );
+				sb.Concat( now.Millisecond, 3U );
 			}
 			catch ( Exception ex )
 			{
