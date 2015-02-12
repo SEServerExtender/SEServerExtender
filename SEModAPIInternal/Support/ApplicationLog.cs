@@ -103,11 +103,10 @@ namespace SEModAPIInternal.Support
 				lock ( LogMutex )
 				{
 					_stringBuilder.Clear( );
-					AppendDateAndTime( _stringBuilder );
-					_stringBuilder.Append( " - " );
-					AppendThreadInfo( _stringBuilder );
-					_stringBuilder.Append( " -> " );
-					_stringBuilder.Append( msg );
+					_stringBuilder.AppendFormat( "{0} - Thread: {1} -> {2}",
+					                             DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+					                             GetThreadId( ),
+					                             msg );
 					TextWriter m_Writer = new StreamWriter( _filePath.ToString( ), true );
 					TextWriter.Synchronized( m_Writer ).WriteLine( _stringBuilder.ToString( ) );
 					m_Writer.Close( );
@@ -116,7 +115,7 @@ namespace SEModAPIInternal.Support
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( "Failed to write to log: " + ex );
+				Console.WriteLine( "Failed to write to log: {0}", ex );
 			}
 		}
 
@@ -210,7 +209,7 @@ namespace SEModAPIInternal.Support
 
 		private static void AppendThreadInfo( StringBuilder sb )
 		{
-			sb.Append( "Thread: " + GetThreadId( ) );
+			sb.AppendFormat( "Thread: {0}", GetThreadId( ) );
 		}
 
 		private static int GetThreadId( )
