@@ -13,13 +13,13 @@ namespace SEModAPIInternal.Support
 	{
 		#region "Attributes"
 
-		private bool m_useInstancePath;
-		private bool m_instanceMode;
-		private string m_logFileName;
-		private StringBuilder m_appVersion;
-		private DirectoryInfo m_libraryPath;
-		private FileInfo m_filePath;
-		private StringBuilder m_stringBuilder;
+		private bool _useInstancePath;
+		private bool _instanceMode;
+		private string _logFileName;
+		private StringBuilder _appVersion;
+		private DirectoryInfo _libraryPath;
+		private FileInfo _filePath;
+		private StringBuilder _stringBuilder;
 		private static readonly object _logLock = new object( );
 
 		#endregion "Attributes"
@@ -28,25 +28,25 @@ namespace SEModAPIInternal.Support
 
 		public ApplicationLog( bool useGamePath = false )
 		{
-			m_useInstancePath = useGamePath;
+			_useInstancePath = useGamePath;
 
-			if ( m_useInstancePath && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
+			if ( _useInstancePath && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
 			{
-				m_libraryPath = new DirectoryInfo( MyFileSystem.UserDataPath );
+				_libraryPath = new DirectoryInfo( MyFileSystem.UserDataPath );
 
-				m_instanceMode = true;
+				_instanceMode = true;
 			}
 			else
 			{
 				string codeBase = Assembly.GetExecutingAssembly( ).CodeBase;
 				UriBuilder uri = new UriBuilder( codeBase );
 				string path = Uri.UnescapeDataString( uri.Path );
-				m_libraryPath = new DirectoryInfo( Path.Combine( Path.GetDirectoryName( path ), "Logs" ) );
-				if ( !m_libraryPath.Exists )
-					Directory.CreateDirectory( m_libraryPath.ToString( ) );
+				_libraryPath = new DirectoryInfo( Path.Combine( Path.GetDirectoryName( path ), "Logs" ) );
+				if ( !_libraryPath.Exists )
+					Directory.CreateDirectory( _libraryPath.ToString( ) );
 			}
 
-			m_stringBuilder = new StringBuilder( );
+			_stringBuilder = new StringBuilder( );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -55,7 +55,7 @@ namespace SEModAPIInternal.Support
 
 		public bool LogEnabled
 		{
-			get { return m_filePath != null; }
+			get { return _filePath != null; }
 		}
 
 		#endregion "Properties"
@@ -64,65 +64,65 @@ namespace SEModAPIInternal.Support
 
 		public string GetFilePath( )
 		{
-			if ( m_filePath == null )
+			if ( _filePath == null )
 				return "";
 
-			return m_filePath.ToString( );
+			return _filePath.ToString( );
 		}
 
 		public void Init( string logFileName, StringBuilder appVersionString )
 		{
-			m_logFileName = logFileName;
-			m_appVersion = appVersionString;
+			_logFileName = logFileName;
+			_appVersion = appVersionString;
 
-			m_filePath = new FileInfo( Path.Combine( m_libraryPath.ToString( ), m_logFileName ) );
+			_filePath = new FileInfo( Path.Combine( _libraryPath.ToString( ), _logFileName ) );
 
 			//If the log file already exists then archive it
-			if ( m_filePath.Exists )
+			if ( _filePath.Exists )
 			{
-				DateTime lastWriteTime = m_filePath.LastWriteTime;
+				DateTime lastWriteTime = _filePath.LastWriteTime;
 				string modifiedTimestamp = lastWriteTime.Year + "_" + lastWriteTime.Month + "_" + lastWriteTime.Day + "_" + lastWriteTime.Hour + "_" + lastWriteTime.Minute + "_" + lastWriteTime.Second;
-				string fileNameWithoutExtension = m_filePath.Name.Remove( m_filePath.Name.Length - m_filePath.Extension.Length );
-				string newFileName = fileNameWithoutExtension + "_" + modifiedTimestamp + m_filePath.Extension;
+				string fileNameWithoutExtension = _filePath.Name.Remove( _filePath.Name.Length - _filePath.Extension.Length );
+				string newFileName = fileNameWithoutExtension + "_" + modifiedTimestamp + _filePath.Extension;
 
-				File.Move( m_filePath.ToString( ), Path.Combine( m_libraryPath.ToString( ), newFileName ) );
+				File.Move( _filePath.ToString( ), Path.Combine( _libraryPath.ToString( ), newFileName ) );
 			}
 
 			int num = (int)Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
 
 			WriteLine( "Log Started" );
 			WriteLine( "Timezone (local - UTC): " + num + "h" );
-			WriteLine( "App Version: " + m_appVersion );
+			WriteLine( "App Version: " + _appVersion );
 		}
 
 		public void WriteLine( string msg )
 		{
-			if ( m_filePath == null )
+			if ( _filePath == null )
 				return;
 
-			if ( m_useInstancePath && !m_instanceMode && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
+			if ( _useInstancePath && !_instanceMode && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
 			{
-				m_libraryPath = new DirectoryInfo( MyFileSystem.UserDataPath );
+				_libraryPath = new DirectoryInfo( MyFileSystem.UserDataPath );
 
-				m_instanceMode = true;
+				_instanceMode = true;
 
-				Init( m_logFileName, m_appVersion );
+				Init( _logFileName, _appVersion );
 			}
 
 			try
 			{
 				lock ( _logLock )
 				{
-					m_stringBuilder.Clear( );
-					AppendDateAndTime( m_stringBuilder );
-					m_stringBuilder.Append( " - " );
-					AppendThreadInfo( m_stringBuilder );
-					m_stringBuilder.Append( " -> " );
-					m_stringBuilder.Append( msg );
-					TextWriter m_Writer = new StreamWriter( m_filePath.ToString( ), true );
-					TextWriter.Synchronized( m_Writer ).WriteLine( m_stringBuilder.ToString( ) );
+					_stringBuilder.Clear( );
+					AppendDateAndTime( _stringBuilder );
+					_stringBuilder.Append( " - " );
+					AppendThreadInfo( _stringBuilder );
+					_stringBuilder.Append( " -> " );
+					_stringBuilder.Append( msg );
+					TextWriter m_Writer = new StreamWriter( _filePath.ToString( ), true );
+					TextWriter.Synchronized( m_Writer ).WriteLine( _stringBuilder.ToString( ) );
 					m_Writer.Close( );
-					m_stringBuilder.Clear( );
+					_stringBuilder.Clear( );
 				}
 			}
 			catch ( Exception ex )
@@ -138,7 +138,7 @@ namespace SEModAPIInternal.Support
 
 		public void WriteLine( Exception ex )
 		{
-			if ( m_filePath == null )
+			if ( _filePath == null )
 				return;
 
 			if ( ex == null )
@@ -154,44 +154,44 @@ namespace SEModAPIInternal.Support
 
 		public void WriteLineAndConsole( string msg )
 		{
-			if ( m_filePath == null )
+			if ( _filePath == null )
 				return;
 
 			WriteLine( msg );
 
 			lock ( _logLock )
 			{
-				m_stringBuilder.Clear( );
-				AppendDateAndTime( m_stringBuilder );
-				m_stringBuilder.Append( " - " );
-				m_stringBuilder.Append( msg );
-				Console.WriteLine( m_stringBuilder.ToString( ) );
-				m_stringBuilder.Clear( );
+				_stringBuilder.Clear( );
+				AppendDateAndTime( _stringBuilder );
+				_stringBuilder.Append( " - " );
+				_stringBuilder.Append( msg );
+				Console.WriteLine( _stringBuilder.ToString( ) );
+				_stringBuilder.Clear( );
 			}
 		}
 
 		public void WriteLineAndConsole( Exception ex )
 		{
-			if ( m_filePath == null )
+			if ( _filePath == null )
 				return;
 
 			WriteLine( ex );
 
 			lock ( _logLock )
 			{
-				m_stringBuilder.Clear( );
-				AppendDateAndTime( m_stringBuilder );
-				m_stringBuilder.Append( " - " );
-				m_stringBuilder.Append( ex );
+				_stringBuilder.Clear( );
+				AppendDateAndTime( _stringBuilder );
+				_stringBuilder.Append( " - " );
+				_stringBuilder.Append( ex );
 				try
 				{
-					Console.WriteLine( m_stringBuilder.ToString( ) );
+					Console.WriteLine( _stringBuilder.ToString( ) );
 				}
 				catch ( IOException ioex )
 				{
 					WriteLine( ioex );
 				}
-				m_stringBuilder.Clear( );
+				_stringBuilder.Clear( );
 			}
 		}
 
