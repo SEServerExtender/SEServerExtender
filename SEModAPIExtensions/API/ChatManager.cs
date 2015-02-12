@@ -34,6 +34,10 @@ namespace SEModAPIExtensions.API
 	{
 		public class ChatCommand
 		{
+			public ChatCommand( )
+			{
+				
+			}
 			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
 			{
 				Command = command;
@@ -190,6 +194,18 @@ namespace SEModAPIExtensions.API
 				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
 				if ( selfHost != null )
 					selfHost.Abort( );
+			}
+			catch ( ObjectDisposedException objectDisposedException )
+			{
+				LogManager.APILog.WriteLineAndConsole( objectDisposedException );
+			}
+			catch ( TimeoutException timeoutException )
+			{
+				LogManager.APILog.WriteLineAndConsole( timeoutException );
+			}
+			catch ( InvalidOperationException invalidOperationException )
+			{
+				LogManager.APILog.WriteLineAndConsole( invalidOperationException );
 			}
 		}
 
