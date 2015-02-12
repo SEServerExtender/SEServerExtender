@@ -194,14 +194,14 @@
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ChatMessageStructNamespace, ChatMessageStructClass );
 				if ( type == null )
 				{
-					throw new Exception( "Could not find internal type for ChatMessageStruct" );
+					throw new TypeLoadException( "Could not find internal type for ChatMessageStruct" );
 				}
 				bool result = true;
 				result &= BaseObject.HasField( type, ChatMessageMessageField );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -432,9 +432,16 @@
 			}
 
 			GuidAttribute guid = (GuidAttribute) Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof ( GuidAttribute ), true )[ 0 ];
-			Guid guidValue = new Guid( guid.Value );
+			try
+			{
+				Guid guidValue = new Guid( guid.Value );
+				_chatCommands.Add( command, guidValue );
+			}
+			catch ( OverflowException overflowException )
+			{
+				LogManager.ErrorLog.WriteLineAndConsole( "Failed to register chat command.", overflowException );
+			}
 
-			_chatCommands.Add( command, guidValue );
 		}
 
 		public void UnregisterChatCommands( )
@@ -468,10 +475,12 @@
 			int paramCount = commandParts.Length - 1;
 
 			//All entities
-			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "all" ) )
+			string whatToDelete = commandParts[ 1 ].ToLower( );
+			string deleteOption = commandParts[ 2 ].ToLower( );
+			if ( paramCount > 1 && whatToDelete.Equals( "all" ) )
 			{
 				//All cube grids that have no beacon or only a beacon with no name
-				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
+				if ( deleteOption.Equals( "nobeacon" ) )
 				{
 					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
@@ -548,7 +557,7 @@
 					SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
 				}
 				//All cube grids that have no power
-				else if ( commandParts[ 2 ].ToLower( ).Equals( "nopower" ) )
+				else if ( deleteOption.Equals( "nopower" ) )
 				{
 					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 					List<CubeGridEntity> entitiesToDispose = entities.Where( entity => entity.TotalPower <= 0 ).ToList( );
@@ -560,7 +569,7 @@
 
 					SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
 				}
-				else if ( commandParts[ 2 ].ToLower( ).Equals( "floatingobjects" ) ) //All floating objects
+				else if ( deleteOption.Equals( "floatingobjects" ) ) //All floating objects
 				{
 					/*
 					List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
@@ -613,7 +622,7 @@
 					{
 						for ( int i = 3; i < commandParts.Length; i++ )
 						{
-							entityName += " " + commandParts[ i ];
+							entityName += string.Format( " {0}", commandParts[ i ] );
 						}
 					}
 
@@ -637,10 +646,10 @@
 			}
 
 			//All non-static cube grids
-			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "ship" ) )
+			if ( paramCount > 1 && whatToDelete.Equals( "ship" ) )
 			{
 				//That have no beacon or only a beacon with no name
-				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
+				if ( deleteOption.Equals( "nobeacon" ) )
 				{
 					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
@@ -679,10 +688,10 @@
 			}
 
 			//All static cube grids
-			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "station" ) )
+			if ( paramCount > 1 && whatToDelete.Equals( "station" ) )
 			{
 				//That have no beacon or only a beacon with no name
-				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
+				if ( deleteOption.Equals( "nobeacon" ) )
 				{
 					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
@@ -780,14 +789,14 @@
 			}
 			*/
 			//Prunes defunct faction entries in the faction data
-			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "faction" ) )
+			if ( paramCount > 1 && whatToDelete.Equals( "faction" ) )
 			{
 				List<Faction> factionsToRemove = new List<Faction>( );
-				if ( commandParts[ 2 ].ToLower( ).Equals( "empty" ) )
+				if ( deleteOption.Equals( "empty" ) )
 				{
 					factionsToRemove.AddRange( FactionsManager.Instance.Factions.Where( entry => entry.Members.Count == 0 ) );
 				}
-				if ( commandParts[ 2 ].ToLower( ).Equals( "nofounder" ) )
+				if ( deleteOption.Equals( "nofounder" ) )
 				{
 					foreach ( Faction entry in FactionsManager.Instance.Factions )
 					{
@@ -799,7 +808,7 @@
 						}
 					}
 				}
-				if ( commandParts[ 2 ].ToLower( ).Equals( "noleader" ) )
+				if ( deleteOption.Equals( "noleader" ) )
 				{
 					foreach ( Faction entry in FactionsManager.Instance.Factions )
 					{
@@ -1195,19 +1204,20 @@
 			{
 				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
 				{
-					if ( commandParts[ 1 ].ToLower( ).Equals( "productionqueue" ) && cubeBlock is ProductionBlockEntity )
+					string whatToClear = commandParts[ 1 ].ToLower( );
+					if ( whatToClear == "productionqueue" && cubeBlock is ProductionBlockEntity )
 					{
 						ProductionBlockEntity block = (ProductionBlockEntity) cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "refineryqueue" ) && cubeBlock is RefineryEntity )
+					if ( whatToClear == "refineryqueue" && cubeBlock is RefineryEntity )
 					{
 						RefineryEntity block = (RefineryEntity) cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "assemblerqueue" ) && cubeBlock is AssemblerEntity )
+					if ( whatToClear == "assemblerqueue" && cubeBlock is AssemblerEntity )
 					{
 						AssemblerEntity block = (AssemblerEntity) cubeBlock;
 						block.ClearQueue( );
