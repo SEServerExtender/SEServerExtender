@@ -14,16 +14,6 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIExtensions.API
 {
-	public class PluginManagerThreadParams
-	{
-		public Object Plugin;
-		public Guid Key;
-		public Dictionary<Guid, Object> Plugins;
-		public Dictionary<Guid, bool> PluginState;
-		public List<EntityEventManager.EntityEvent> Events;
-		public List<ChatManager.ChatEvent> ChatEvents;
-	}
-
 	public class PluginManager
 	{
 		#region "Attributes"
