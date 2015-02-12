@@ -85,15 +85,15 @@ namespace SEModAPIExtensions.API
 
 		#region "Attributes"
 
-		private static ChatManager m_instance;
+		private static ChatManager _instance;
 
-		private static List<string> m_chatMessages;
-		private static List<ChatEvent> m_chatHistory;
-		private static bool m_chatHandlerSetup;
-		private static FastResourceLock m_resourceLock;
+		private static List<string> _chatMessages;
+		private static List<ChatEvent> _chatHistory;
+		private static bool _chatHandlerSetup;
+		private static FastResourceLock _resourceLock;
 
-		private List<ChatEvent> m_chatEvents;
-		private Dictionary<ChatCommand, Guid> m_chatCommands;
+		private List<ChatEvent> _chatEvents;
+		private Dictionary<ChatCommand, Guid> _chatCommands;
 
 		/////////////////////////////////////////////////////////////////////////////
 
@@ -108,14 +108,14 @@ namespace SEModAPIExtensions.API
 
 		protected ChatManager( )
 		{
-			m_instance = this;
+			_instance = this;
 
-			m_chatMessages = new List<string>( );
-			m_chatHistory = new List<ChatEvent>( );
-			m_chatHandlerSetup = false;
-			m_resourceLock = new FastResourceLock( );
-			m_chatEvents = new List<ChatEvent>( );
-			m_chatCommands = new Dictionary<ChatCommand, Guid>( );
+			_chatMessages = new List<string>( );
+			_chatHistory = new List<ChatEvent>( );
+			_chatHandlerSetup = false;
+			_resourceLock = new FastResourceLock( );
+			_chatEvents = new List<ChatEvent>( );
+			_chatCommands = new Dictionary<ChatCommand, Guid>( );
 
 			ChatCommand deleteCommand = new ChatCommand( "delete", Command_Delete, true );
 
@@ -199,7 +199,7 @@ namespace SEModAPIExtensions.API
 
 		public static ChatManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new ChatManager( ) ); }
+			get { return _instance ?? ( _instance = new ChatManager( ) ); }
 		}
 
 		public List<string> ChatMessages
@@ -208,7 +208,7 @@ namespace SEModAPIExtensions.API
 			{
 				SetupChatHandlers( );
 
-				return m_chatMessages;
+				return _chatMessages;
 			}
 		}
 
@@ -218,11 +218,11 @@ namespace SEModAPIExtensions.API
 			{
 				SetupChatHandlers( );
 
-				m_resourceLock.AcquireShared( );
+				_resourceLock.AcquireShared( );
 
-				List<ChatEvent> history = new List<ChatEvent>( m_chatHistory );
+				List<ChatEvent> history = new List<ChatEvent>( _chatHistory );
 
-				m_resourceLock.ReleaseShared( );
+				_resourceLock.ReleaseShared( );
 
 				return history;
 			}
@@ -234,7 +234,7 @@ namespace SEModAPIExtensions.API
 			{
 				SetupChatHandlers( );
 
-				List<ChatEvent> copy = new List<ChatEvent>( m_chatEvents.ToArray( ) );
+				List<ChatEvent> copy = new List<ChatEvent>( _chatEvents.ToArray( ) );
 				return copy;
 			}
 		}
@@ -266,7 +266,7 @@ namespace SEModAPIExtensions.API
 
 		private void SetupChatHandlers( )
 		{
-			if ( m_chatHandlerSetup )
+			if ( _chatHandlerSetup )
 				return;
 
 			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
@@ -281,7 +281,7 @@ namespace SEModAPIExtensions.API
 				Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
 				ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
 
-				m_chatHandlerSetup = true;
+				_chatHandlerSetup = true;
 			}
 			catch ( Exception ex )
 			{
@@ -308,16 +308,16 @@ namespace SEModAPIExtensions.API
 
 			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
 			{
-				m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
+				_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
 				LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Client '{0}': {1}", playerName, message ) );
 			}
 
 			ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
 			Instance.AddEvent( chatEvent );
 
-			m_resourceLock.AcquireExclusive( );
-			m_chatHistory.Add( chatEvent );
-			m_resourceLock.ReleaseExclusive( );
+			_resourceLock.AcquireExclusive( );
+			_chatHistory.Add( chatEvent );
+			_resourceLock.ReleaseExclusive( );
 		}
 
 		public void SendPrivateChatMessage( ulong remoteUserId, string message )
@@ -335,16 +335,16 @@ namespace SEModAPIExtensions.API
 					ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
 				}
 
-				m_chatMessages.Add( string.Format( "Server: {0}", message ) );
+				_chatMessages.Add( string.Format( "Server: {0}", message ) );
 
 				LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Server: {0}", message ) );
 
 				ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
 				Instance.AddEvent( chatEvent );
 
-				m_resourceLock.AcquireExclusive( );
-				m_chatHistory.Add( chatEvent );
-				m_resourceLock.ReleaseExclusive( );
+				_resourceLock.AcquireExclusive( );
+				_chatHistory.Add( chatEvent );
+				_resourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
 			{
@@ -375,7 +375,7 @@ namespace SEModAPIExtensions.API
 						ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
 						Instance.AddEvent( chatEvent );
 					}
-					m_chatMessages.Add( string.Format( "Server: {0}", message ) );
+					_chatMessages.Add( string.Format( "Server: {0}", message ) );
 					LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Server: {0}", message ) );
 				}
 
@@ -383,9 +383,9 @@ namespace SEModAPIExtensions.API
 				ChatEvent selfChatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, 0, 0, message, 0 );
 				Instance.AddEvent( selfChatEvent );
 
-				m_resourceLock.AcquireExclusive( );
-				m_chatHistory.Add( selfChatEvent );
-				m_resourceLock.ReleaseExclusive( );
+				_resourceLock.AcquireExclusive( );
+				_chatHistory.Add( selfChatEvent );
+				_resourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
 			{
@@ -415,7 +415,7 @@ namespace SEModAPIExtensions.API
 
 				//Search for a matching, registered command
 				bool foundMatch = false;
-				foreach ( ChatCommand chatCommand in m_chatCommands.Keys )
+				foreach ( ChatCommand chatCommand in _chatCommands.Keys )
 				{
 					try
 					{
@@ -454,7 +454,7 @@ namespace SEModAPIExtensions.API
 		public void RegisterChatCommand( ChatCommand command )
 		{
 			//Check if the given command already is registered
-			if ( m_chatCommands.Keys.Any( chatCommand => chatCommand.Command.ToLower( ).Equals( command.Command.ToLower( ) ) ) )
+			if ( _chatCommands.Keys.Any( chatCommand => chatCommand.Command.ToLower( ).Equals( command.Command.ToLower( ) ) ) )
 			{
 				return;
 			}
@@ -462,7 +462,7 @@ namespace SEModAPIExtensions.API
 			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 			Guid guidValue = new Guid( guid.Value );
 
-			m_chatCommands.Add( command, guidValue );
+			_chatCommands.Add( command, guidValue );
 		}
 
 		public void UnregisterChatCommands( )
@@ -470,23 +470,23 @@ namespace SEModAPIExtensions.API
 			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 			Guid guidValue = new Guid( guid.Value );
 
-			List<ChatCommand> commandsToRemove = ( from entry in m_chatCommands
+			List<ChatCommand> commandsToRemove = ( from entry in _chatCommands
 												   where entry.Value.Equals( guidValue )
 												   select entry.Key ).ToList( );
 			foreach ( ChatCommand entry in commandsToRemove )
 			{
-				m_chatCommands.Remove( entry );
+				_chatCommands.Remove( entry );
 			}
 		}
 
 		public void AddEvent( ChatEvent newEvent )
 		{
-			m_chatEvents.Add( newEvent );
+			_chatEvents.Add( newEvent );
 		}
 
 		public void ClearEvents( )
 		{
-			m_chatEvents.Clear( );
+			_chatEvents.Clear( );
 		}
 
 		#endregion
