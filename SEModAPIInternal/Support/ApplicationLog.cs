@@ -170,7 +170,6 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
-		/// <exception cref="IOException">Can possibly throw an IOException if stdout is un-writeable.</exception>
 		public void WriteLineAndConsole( Exception ex )
 		{
 			if ( m_filePath == null )
@@ -184,7 +183,14 @@ namespace SEModAPIInternal.Support
 				AppendDateAndTime( m_stringBuilder );
 				m_stringBuilder.Append( " - " );
 				m_stringBuilder.Append( ex );
-				Console.WriteLine( m_stringBuilder.ToString( ) );
+				try
+				{
+					Console.WriteLine( m_stringBuilder.ToString( ) );
+				}
+				catch ( IOException ioex )
+				{
+					WriteLine( ioex );
+				}
 				m_stringBuilder.Clear( );
 			}
 		}
