@@ -113,11 +113,6 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
-		public void WriteLine( string message, LoggingOptions option )
-		{
-			WriteLine( message );
-		}
-
 		public void WriteLine( Exception ex )
 		{
 			if ( _filePath == null )
