@@ -11,12 +11,12 @@ namespace SEModAPIInternal.Support
 	{
 		#region "Attributes"
 
-		private static LogManager m_instance;
+		private static LogManager _instance;
 
-		private static MyLog m_gameLog;
-		private static ApplicationLog m_apiLog;
-		private static ApplicationLog m_chatLog;
-		private static ApplicationLog m_errorLog;
+		private static MyLog _gameLog;
+		private static ApplicationLog _apiLog;
+		private static ApplicationLog _chatLog;
+		private static ApplicationLog _errorLog;
 
 		#endregion "Attributes"
 
@@ -24,7 +24,7 @@ namespace SEModAPIInternal.Support
 
 		protected LogManager( )
 		{
-			m_instance = this;
+			_instance = this;
 
 			Console.WriteLine( "Finished loading LogManager" );
 		}
@@ -35,22 +35,22 @@ namespace SEModAPIInternal.Support
 
 		public static LogManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new LogManager( ) ); }
+			get { return _instance ?? ( _instance = new LogManager( ) ); }
 		}
 
-		[Obsolete]
+		[Obsolete("Will be removed by SE version 1.70")]
 		public static MyLog GameLog
 		{
 			get
 			{
-				if ( m_gameLog == null )
+				if ( _gameLog == null )
 				{
 					LogManager temp = Instance;
 
 					try
 					{
 						FieldInfo myLogField = BaseObject.GetStaticField( SandboxGameAssemblyWrapper.MainGameType, SandboxGameAssemblyWrapper.MainGameMyLogField );
-						m_gameLog = (MyLog)myLogField.GetValue( null );
+						_gameLog = (MyLog)myLogField.GetValue( null );
 					}
 					catch ( Exception ex )
 					{
@@ -58,10 +58,10 @@ namespace SEModAPIInternal.Support
 					}
 				}
 
-				if ( m_gameLog == null )
+				if ( _gameLog == null )
 					throw new Exception( "Failed to load game log!" );
 
-				return m_gameLog;
+				return _gameLog;
 			}
 		}
 
@@ -69,15 +69,15 @@ namespace SEModAPIInternal.Support
 		{
 			get
 			{
-				if ( m_apiLog == null )
+				if ( _apiLog == null )
 				{
 					LogManager temp = Instance;
 
 					try
 					{
-						m_apiLog = new ApplicationLog( true );
+						_apiLog = new ApplicationLog( true );
 						StringBuilder internalAPIAppVersion = new StringBuilder( typeof( LogManager ).Assembly.GetName( ).Version.ToString( ) );
-						m_apiLog.Init( "SEModAPIInternal.log", internalAPIAppVersion );
+						_apiLog.Init( "SEModAPIInternal.log", internalAPIAppVersion );
 					}
 					catch ( Exception ex )
 					{
@@ -85,10 +85,10 @@ namespace SEModAPIInternal.Support
 					}
 				}
 
-				if ( m_apiLog == null )
+				if ( _apiLog == null )
 					throw new Exception( "Failed to create API log!" );
 
-				return m_apiLog;
+				return _apiLog;
 			}
 		}
 
@@ -96,15 +96,15 @@ namespace SEModAPIInternal.Support
 		{
 			get
 			{
-				if ( m_chatLog == null )
+				if ( _chatLog == null )
 				{
 					LogManager temp = Instance;
 
 					try
 					{
-						m_chatLog = new ApplicationLog( true );
+						_chatLog = new ApplicationLog( true );
 						StringBuilder internalAPIAppVersion = new StringBuilder( typeof( LogManager ).Assembly.GetName( ).Version.ToString( ) );
-						m_chatLog.Init( "SEModAPIInternal_Chat.log", internalAPIAppVersion );
+						_chatLog.Init( "SEModAPIInternal_Chat.log", internalAPIAppVersion );
 					}
 					catch ( Exception ex )
 					{
@@ -112,10 +112,10 @@ namespace SEModAPIInternal.Support
 					}
 				}
 
-				if ( m_chatLog == null )
+				if ( _chatLog == null )
 					throw new Exception( "Failed to create chat log!" );
 
-				return m_chatLog;
+				return _chatLog;
 			}
 		}
 
@@ -123,15 +123,15 @@ namespace SEModAPIInternal.Support
 		{
 			get
 			{
-				if ( m_errorLog == null )
+				if ( _errorLog == null )
 				{
 					LogManager temp = Instance;
 
 					try
 					{
-						m_errorLog = new ApplicationLog( );
+						_errorLog = new ApplicationLog( );
 						StringBuilder internalAPIAppVersion = new StringBuilder( typeof( LogManager ).Assembly.GetName( ).Version.ToString( ) );
-						m_errorLog.Init( "SEModAPIInternal_Error.log", internalAPIAppVersion );
+						_errorLog.Init( "SEModAPIInternal_Error.log", internalAPIAppVersion );
 					}
 					catch ( Exception ex )
 					{
@@ -139,10 +139,10 @@ namespace SEModAPIInternal.Support
 					}
 				}
 
-				if ( m_errorLog == null )
+				if ( _errorLog == null )
 					throw new Exception( "Failed to create error log!" );
 
-				return m_errorLog;
+				return _errorLog;
 			}
 		}
 
