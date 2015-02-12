@@ -11,22 +11,16 @@ namespace SEModAPIExtensions.API
 {
 	public class BasicUnitTestManager
 	{
-		private static BasicUnitTestManager m_instance;
+		private static BasicUnitTestManager _instance;
 
 		protected BasicUnitTestManager()
 		{
-			m_instance = this;
+			_instance = this;
 		}
 
 		public static BasicUnitTestManager Instance
 		{
-			get
-			{
-				if (m_instance == null)
-					m_instance = new BasicUnitTestManager();
-
-				return m_instance;
-			}
+			get { return _instance ?? ( _instance = new BasicUnitTestManager( ) ); }
 		}
 
 		public bool Run()
