@@ -146,7 +146,14 @@ namespace SEModAPIInternal.Support
 
 			lock ( LogMutex )
 			{
-				Console.WriteLine( "{0} - {1}", DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ), msg );
+				try
+				{
+					Console.WriteLine( "{0} - {1}", DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ), msg );
+				}
+				catch ( IOException ioex )
+				{
+					WriteLine( ioex );
+				}
 			}
 		}
 
