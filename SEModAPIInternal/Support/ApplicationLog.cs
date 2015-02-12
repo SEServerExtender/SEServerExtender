@@ -75,7 +75,7 @@ namespace SEModAPIInternal.Support
 				File.Move( _filePath.ToString( ), Path.Combine( _libraryPath.ToString( ), newFileName ) );
 			}
 
-			int num = (int) Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
+			int num = (int)Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
 
 			WriteLine( "Log Started" );
 			WriteLine( "Timezone (local - UTC): " + num + "h" );
@@ -178,19 +178,14 @@ namespace SEModAPIInternal.Support
 
 			lock ( LogMutex )
 			{
-				_stringBuilder.Clear( );
-				AppendDateAndTime( _stringBuilder );
-				_stringBuilder.Append( " - " );
-				_stringBuilder.Append( ex );
 				try
 				{
-					Console.WriteLine( _stringBuilder.ToString( ) );
+					Console.WriteLine( "{0} - {1}", DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ), ex );
 				}
 				catch ( IOException ioex )
 				{
 					WriteLine( ioex );
 				}
-				_stringBuilder.Clear( );
 			}
 		}
 
