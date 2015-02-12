@@ -68,9 +68,9 @@ namespace SEModAPIInternal.Support
 			if ( _filePath.Exists )
 			{
 				DateTime lastWriteTime = _filePath.LastWriteTime;
-				string modifiedTimestamp = lastWriteTime.Year + "_" + lastWriteTime.Month + "_" + lastWriteTime.Day + "_" + lastWriteTime.Hour + "_" + lastWriteTime.Minute + "_" + lastWriteTime.Second;
+				string modifiedTimestamp = string.Format( "{0}_{1}_{2}_{3}_{4}_{5}", lastWriteTime.Year, lastWriteTime.Month, lastWriteTime.Day, lastWriteTime.Hour, lastWriteTime.Minute, lastWriteTime.Second );
 				string fileNameWithoutExtension = _filePath.Name.Remove( _filePath.Name.Length - _filePath.Extension.Length );
-				string newFileName = fileNameWithoutExtension + "_" + modifiedTimestamp + _filePath.Extension;
+				string newFileName = string.Format( "{0}_{1}{2}", fileNameWithoutExtension, modifiedTimestamp, _filePath.Extension );
 
 				File.Move( _filePath.ToString( ), Path.Combine( _libraryPath.ToString( ), newFileName ) );
 			}
