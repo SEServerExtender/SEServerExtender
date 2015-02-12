@@ -89,7 +89,7 @@ namespace SEModAPIExtensions.API
 
 				//Determine which group *will* spawn
 				randomChance = random.NextDouble( );
-				int randomShipIndex = Math.Max( 0, Math.Min( (int)Math.Round( randomChance * possibleGroups.Count, 0 ), possibleGroups.Count - 1 ) );
+				int randomShipIndex = Math.Max( 0, Math.Min( (int) Math.Round( randomChance * possibleGroups.Count, 0 ), possibleGroups.Count - 1 ) );
 				MySpawnGroupDefinition randomSpawnGroup = possibleGroups[ randomShipIndex ];
 
 				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Spawning cargo group '{0}' ...", randomSpawnGroup.DisplayNameText ) );
@@ -98,7 +98,8 @@ namespace SEModAPIExtensions.API
 				Matrix orientation = Matrix.CreateLookAt( startPosition, stopPosition, new Vector3( 0, 1, 0 ) );
 				foreach ( MySpawnGroupDefinition.SpawnGroupPrefab entry in randomSpawnGroup.Prefabs )
 				{
-					MyPrefabDefinition matchedPrefab = MyDefinitionManager.Static.GetPrefabDefinitions( ).Select( prefabEntry => prefabEntry.Value ).FirstOrDefault( prefabDefinition => prefabDefinition.Id.SubtypeId.ToString( ) == entry.SubtypeId );
+					MyPrefabDefinition matchedPrefab =
+						MyDefinitionManager.Static.GetPrefabDefinitions( ).Select( prefabEntry => prefabEntry.Value ).FirstOrDefault( prefabDefinition => prefabDefinition.Id.SubtypeId.ToString( ) == entry.SubtypeId );
 					if ( matchedPrefab == null )
 						continue;
 
@@ -144,9 +145,22 @@ namespace SEModAPIExtensions.API
 					}
 				}
 
-				ChatManager.Instance.SendPrivateChatMessage( remoteUserId, string.Format( "Cargo group '{0}' spawned with {1} ships at {2}", randomSpawnGroup.DisplayNameText, randomSpawnGroup.Prefabs.Count, startPosition ) );
+				ChatManager.Instance.SendPrivateChatMessage( remoteUserId,
+				                                             string.Format( "Cargo group '{0}' spawned with {1} ships at {2}", randomSpawnGroup.DisplayNameText, randomSpawnGroup.Prefabs.Count, startPosition ) );
 			}
 			catch ( ArgumentOutOfRangeException ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
+			}
+			catch ( ArgumentNullException ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
+			}
+			catch ( FormatException ex )
+			{
+				LogManager.ErrorLog.WriteLine( ex );
+			}
+			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 			}
