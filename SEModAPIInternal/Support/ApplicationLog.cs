@@ -179,6 +179,31 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
+		public void WriteLineAndConsole( string msg, Exception ex )
+		{
+			if ( _filePath == null )
+			{
+				return;
+			}
+
+			WriteLine( ex );
+
+			lock ( LogMutex )
+			{
+				try
+				{
+					Console.WriteLine( "{0} - {1}\r\nException: {2}",
+					                   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+					                   msg,
+					                   ex );
+				}
+				catch ( IOException ioex )
+				{
+					WriteLine( ioex );
+				}
+			}
+		}
+
 		private static int GetThreadId( )
 		{
 			return Thread.CurrentThread.ManagedThreadId;
