@@ -552,17 +552,17 @@ namespace SEModAPIExtensions.API
 
 		public void UnloadPlugin( Guid key )
 		{
+			object plugin;
 			//Skip if the plugin doesn't exist
-			if ( !Plugins.ContainsKey( key ) )
+			if ( !Plugins.TryGetValue( key, out plugin ) )
 				return;
 
 			//Skip if the plugin is already unloaded
 			if ( !PluginStates.ContainsKey( key ) )
 				return;
 
-			LogManager.APILog.WriteLineAndConsole( "Unloading plugin '" + key + "'" );
+			LogManager.APILog.WriteLineAndConsole( string.Format( "Unloading plugin '{0}'", key ) );
 
-			object plugin = Plugins[ key ];
 			try
 			{
 				MethodInfo initMethod = plugin.GetType( ).GetMethod( "Shutdown" );
@@ -580,10 +580,8 @@ namespace SEModAPIExtensions.API
 
 		public bool GetPluginState( Guid key )
 		{
-			if ( !PluginStates.ContainsKey( key ) )
-				return false;
-
-			return PluginStates[ key ];
+			bool pluginState;
+			return PluginStates.TryGetValue( key, out pluginState ) && pluginState;
 		}
 
 		#endregion
