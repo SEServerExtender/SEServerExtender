@@ -79,7 +79,11 @@ namespace SEModAPIInternal.Support
 			WriteLine( "App Version: " + _appVersion );
 		}
 
-		public void WriteLine( string msg )
+		/// <summary>
+		/// Writes a friendly message and an optional exception to the log file only.
+		/// </summary>
+		/// <param name="ex">An exception to log. Will log a stack trace.</param>
+		public void WriteLine( string msg, Exception ex = null )
 		{
 			if ( _filePath == null )
 			{
@@ -99,20 +103,34 @@ namespace SEModAPIInternal.Support
 			{
 				lock ( LogMutex )
 				{
-					TextWriter writer = new StreamWriter( _filePath.ToString( ), true );
-					TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}",
-												 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-												 GetThreadId( ),
-												 msg );
-					writer.Close( );
+					using ( TextWriter writer = new StreamWriter( _filePath.ToString( ), true ) )
+					{
+						if ( ex == null )
+							TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}",
+							                                             DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+							                                             GetThreadId( ),
+							                                             msg );
+						else
+							TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}\r\n\tException: {3}",
+							                                             DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+							                                             GetThreadId( ),
+							                                             msg,
+							                                             ex );
+							
+						writer.Close( );
+					}
 				}
 			}
-			catch ( Exception ex )
+			catch ( Exception loggingException )
 			{
-				Console.WriteLine( "Failed to write to log: {0}", ex );
+				Console.WriteLine( "Failed to write to log: {0}", loggingException );
 			}
 		}
 
+		/// <summary>
+		/// Writes an exception to the log file only.
+		/// </summary>
+		/// <param name="ex">An exception to log. Will log a stack trace.</param>
 		public void WriteLine( Exception ex )
 		{
 			if ( _filePath == null )
@@ -135,28 +153,10 @@ namespace SEModAPIInternal.Support
 			WriteLine( ex.InnerException );
 		}
 
-		public void WriteLineAndConsole( string msg )
-		{
-			if ( _filePath == null )
-			{
-				return;
-			}
-
-			WriteLine( msg );
-
-			lock ( LogMutex )
-			{
-				try
-				{
-					Console.WriteLine( "{0} - {1}", DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ), msg );
-				}
-				catch ( IOException ioex )
-				{
-					WriteLine( ioex );
-				}
-			}
-		}
-
+		/// <summary>
+		/// Writes an exception to the console and the log file.
+		/// </summary>
+		/// <param name="ex">An exception to log. Will log a stack trace.</param>
 		public void WriteLineAndConsole( Exception ex )
 		{
 			if ( _filePath == null )
@@ -179,7 +179,12 @@ namespace SEModAPIInternal.Support
 			}
 		}
 
-		public void WriteLineAndConsole( string msg, Exception ex )
+		/// <summary>
+		/// Writes a friendly message and an optional exception to the console and the log file.
+		/// </summary>
+		/// <param name="msg">A friendly message describing what is happening.</param>
+		/// <param name="ex">An optional exception to log. Will log a stack trace.</param>
+		public void WriteLineAndConsole( string msg, Exception ex = null )
 		{
 			if ( _filePath == null )
 			{
@@ -192,10 +197,15 @@ namespace SEModAPIInternal.Support
 			{
 				try
 				{
-					Console.WriteLine( "{0} - {1}\r\nException: {2}",
-					                   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-					                   msg,
-					                   ex );
+					if ( ex == null )
+						Console.WriteLine( "{0} - {1}",
+										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+										   msg );
+					else
+						Console.WriteLine( "{0} - {1}\r\n\tException: {2}",
+										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+										   msg,
+										   ex );
 				}
 				catch ( IOException ioex )
 				{
