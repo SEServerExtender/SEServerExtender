@@ -11,8 +11,6 @@ namespace SEModAPIInternal.Support
 
 	public class ApplicationLog
 	{
-		#region "Attributes"
-
 		private readonly bool _useInstancePath;
 		private bool _instanceMode;
 		private string _logFileName;
@@ -21,10 +19,6 @@ namespace SEModAPIInternal.Support
 		private FileInfo _filePath;
 		private readonly StringBuilder _stringBuilder;
 		private static readonly object LogMutex = new object( );
-
-		#endregion "Attributes"
-
-		#region "Constructors and Initializers"
 
 		public ApplicationLog( bool useGamePath = false )
 		{
@@ -49,18 +43,10 @@ namespace SEModAPIInternal.Support
 			_stringBuilder = new StringBuilder( );
 		}
 
-		#endregion "Constructors and Initializers"
-
-		#region "Properties"
-
 		public bool LogEnabled
 		{
 			get { return _filePath != null; }
 		}
-
-		#endregion "Properties"
-
-		#region "Methods"
 
 		public string GetFilePath( )
 		{
@@ -223,7 +209,5 @@ namespace SEModAPIInternal.Support
 		{
 			sb.Append( "Thread: " + GetThreadId( ) );
 		}
-
-		#endregion "Methods"
 	}
 }
