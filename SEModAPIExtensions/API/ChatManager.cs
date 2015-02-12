@@ -92,8 +92,8 @@ namespace SEModAPIExtensions.API
 		private static bool _chatHandlerSetup;
 		private static FastResourceLock _resourceLock;
 
-		private List<ChatEvent> _chatEvents;
-		private Dictionary<ChatCommand, Guid> _chatCommands;
+		private readonly List<ChatEvent> _chatEvents;
+		private readonly Dictionary<ChatCommand, Guid> _chatCommands;
 
 		/////////////////////////////////////////////////////////////////////////////
 
