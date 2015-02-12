@@ -1226,7 +1226,7 @@
 				}
 			}
 
-			SendPrivateChatMessage( remoteUserId, "Cleared the production queue of " + queueCount + " blocks" );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Cleared the production queue of {0} blocks", queueCount ) );
 		}
 
 		protected void Command_List( ChatEvent chatEvent )
@@ -1240,47 +1240,48 @@
 				return;
 			}
 
-			if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
+			string whatToList = commandParts[ 1 ].ToLower( );
+			if ( whatToList == "all" )
 			{
 				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-				LogManager.APILog.WriteLineAndConsole( "Total entities: '" + entities.Count + "'" );
+				LogManager.APILog.WriteLineAndConsole( string.Format( "Total entities: '{0}'", entities.Count ) );
 
-				SendPrivateChatMessage( remoteUserId, "Total entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Total entities: '{0}'", entities.Count ) );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "cubegrid" ) )
+			if ( whatToList == "cubegrid" )
 			{
 				List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-				LogManager.APILog.WriteLineAndConsole( "Cubegrid entities: '" + entities.Count + "'" );
+				LogManager.APILog.WriteLineAndConsole( string.Format( "Cubegrid entities: '{0}'", entities.Count ) );
 
-				SendPrivateChatMessage( remoteUserId, "Cubegrid entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Cubegrid entities: '{0}'", entities.Count ) );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "character" ) )
+			if ( whatToList == "character" )
 			{
 				List<CharacterEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>( );
-				LogManager.APILog.WriteLineAndConsole( "Character entities: '" + entities.Count + "'" );
+				LogManager.APILog.WriteLineAndConsole( string.Format( "Character entities: '{0}'", entities.Count ) );
 
-				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Character entities: '{0}'", entities.Count ) );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
+			if ( whatToList == "voxelmap" )
 			{
 				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
-				LogManager.APILog.WriteLineAndConsole( "Voxelmap entities: '" + entities.Count + "'" );
+				LogManager.APILog.WriteLineAndConsole( string.Format( "Voxelmap entities: '{0}'", entities.Count ) );
 
-				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Voxelmap entities: '{0}'", entities.Count ) );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "meteor" ) )
+			if ( whatToList == "meteor" )
 			{
 				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );
-				LogManager.APILog.WriteLineAndConsole( "Meteor entities: '" + entities.Count + "'" );
+				LogManager.APILog.WriteLineAndConsole( string.Format( "Meteor entities: '{0}'", entities.Count ) );
 
-				SendPrivateChatMessage( remoteUserId, "Meteor entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Meteor entities: '{0}'", entities.Count ) );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "floatingobject" ) )
+			if ( whatToList == "floatingobject" )
 			{
 				List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>( );
-				LogManager.APILog.WriteLineAndConsole( "Floating object entities: '" + entities.Count + "'" );
+				LogManager.APILog.WriteLineAndConsole( string.Format( "Floating object entities: '{0}'", entities.Count ) );
 
-				SendPrivateChatMessage( remoteUserId, "Floating object entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, string.Format( "Floating object entities: '{0}'", entities.Count ) );
 			}
 		}
 
@@ -1297,46 +1298,46 @@
 
 			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 			int poweredOffCount = 0;
+			string whatToShutOff = commandParts[ 1 ].ToLower( );
 			foreach ( CubeGridEntity cubeGrid in cubeGrids )
 			{
 				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
 				{
-					if ( !( cubeBlock is FunctionalBlockEntity ) )
+					FunctionalBlockEntity functionalBlock = cubeBlock as FunctionalBlockEntity;
+					if ( functionalBlock == null )
 					{
 						continue;
 					}
 
-					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity) cubeBlock;
-
-					if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
+					if ( whatToShutOff == "all" )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "production" ) && cubeBlock is ProductionBlockEntity )
+					if ( whatToShutOff == "production" && cubeBlock is ProductionBlockEntity )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "beacon" ) && cubeBlock is BeaconEntity )
+					if ( whatToShutOff == "beacon" && cubeBlock is BeaconEntity )
 					{
 						functionalBlock.Enabled = false;
 						BeaconEntity beacon = (BeaconEntity) cubeBlock;
 						beacon.BroadcastRadius = 1;
 						poweredOffCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "tools" ) && ( cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity ) )
+					if ( whatToShutOff == "tools" && ( cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity ) )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "turrets" ) && ( cubeBlock is TurretBaseEntity ) )
+					if ( whatToShutOff == "turrets" && ( cubeBlock is TurretBaseEntity ) )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
 					}
 
-					if ( commandParts[ 1 ].ToLower( ).Equals( cubeBlock.Id.SubtypeName.ToLower( ) ) )
+					if ( whatToShutOff == cubeBlock.Id.SubtypeName.ToLower( ) )
 					{
 						functionalBlock.Enabled = false;
 						poweredOffCount++;
@@ -1344,7 +1345,7 @@
 				}
 			}
 
-			SendPrivateChatMessage( remoteUserId, "Turned off " + poweredOffCount + " blocks" );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Turned off {0} blocks", poweredOffCount ) );
 		}
 
 		protected void Command_On( ChatEvent chatEvent )
