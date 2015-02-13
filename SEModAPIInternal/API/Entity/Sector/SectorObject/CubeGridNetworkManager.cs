@@ -8,6 +8,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using SEModAPIInternal.Support;
 	using VRage;
 	using VRageMath;
+	using Sandbox.ModAPI;
+	using Sandbox.Common.ObjectBuilders;
 
 	public class CubeGridNetworkManager
 	{
@@ -153,6 +155,44 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			catch ( Exception ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
+			}
+		}
+
+		public static void BroadcastCubeBlockFactionData(IMyCubeBlock block, long owner, MyOwnershipShareModeEnum shareMode)
+		{
+			try
+			{
+				IMyCubeGrid parent = (IMyCubeGrid)block.Parent;
+				object netManager = BaseObject.InvokeEntityMethod(parent, CubeGridGetNetManagerMethod);
+
+				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+				{
+					BaseObject.InvokeEntityMethod(netManager, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod, new object[] { (object)parent, (object)block, owner, shareMode });
+				});
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+			}
+		}
+
+		public static void BroadcastCubeBlockFactionData(List<IMyCubeBlock> blocks, long owner, MyOwnershipShareModeEnum shareMode)
+		{
+			try
+			{
+				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+				{
+					foreach (IMyCubeBlock block in blocks)
+					{
+						IMyCubeGrid parent = (IMyCubeGrid)block.Parent;
+						object netManager = BaseObject.InvokeEntityMethod(parent, CubeGridGetNetManagerMethod);
+						BaseObject.InvokeEntityMethod(netManager, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod, new object[] { (object)parent, (object)block, owner, shareMode });						
+					}
+				});
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
 			}
 		}
 
