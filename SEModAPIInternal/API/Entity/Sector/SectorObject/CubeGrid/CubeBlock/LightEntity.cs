@@ -296,7 +296,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( LightNetworkManagerNamespace, LightNetworkManagerClass );
 				if ( type2 == null )
 					throw new Exception( "Could not find network manager type for LightEntity" );
-				result &= HasMethod( type2, LightNetworkManagerSendUpdateMethod );
+				//result &= HasMethod( type2, LightNetworkManagerSendUpdateMethod );
 
 				return result;
 			}

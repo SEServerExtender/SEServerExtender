@@ -15,11 +15,11 @@ namespace SEModAPI.API.Definitions
 
 		public MyGlobalEventTypeEnum EventType
 		{
-			get { return m_baseDefinition.EventType; }
+			get { return MyGlobalEventTypeEnum.InvalidEventType; }
 			set
 			{
-				if (m_baseDefinition.EventType == value) return;
-				m_baseDefinition.EventType = value;
+				//if (m_baseDefinition.EventType == value) return;
+				//m_baseDefinition.EventType = value;
 				Changed = true;
 			}
 		}
