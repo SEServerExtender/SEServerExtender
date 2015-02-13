@@ -10,6 +10,7 @@
 	using System.Threading;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Serializer;
+	using Sandbox.Common.ObjectBuilders.Voxels;
 	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
