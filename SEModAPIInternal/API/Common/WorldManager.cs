@@ -80,7 +80,9 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return BaseObject.GetStaticFieldValue( InternalType, WorldManagerInstanceField );
+					Object worldManager = BaseObject.GetStaticFieldValue( InternalType, WorldManagerInstanceField );
+
+					return worldManager;
 			}
 		}
 
@@ -108,11 +110,9 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					MyObjectBuilder_SessionSettings sessionSettings = (MyObjectBuilder_SessionSettings)BaseObject.GetEntityFieldValue( BackingObject, WorldManagerSessionSettingsField );
-
-					return sessionSettings;
+					return (MyObjectBuilder_SessionSettings)BaseObject.GetEntityFieldValue( BackingObject, WorldManagerSessionSettingsField );
 				}
-				catch ( Exception ex )
+				catch ( InvalidCastException ex )
 				{
 					LogManager.ErrorLog.WriteLine( ex );
 					return new MyObjectBuilder_SessionSettings( );
