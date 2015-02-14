@@ -268,11 +268,13 @@ namespace SEModAPIInternal.API.Common
 					                              }
 
 					                              LogManager.APILog.WriteLineAndConsole( string.Format( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds ) );
-					                              EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-					                              newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
-					                              newEvent.timestamp = DateTime.Now;
-					                              newEvent.entity = null;
-					                              newEvent.priority = 0;
+					                              EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+					                                                                        {
+						                                                                        type = EntityEventManager.EntityEventType.OnSectorSaved,
+						                                                                        timestamp = DateTime.Now,
+						                                                                        entity = null,
+						                                                                        priority = 0
+					                                                                        };
 					                              EntityEventManager.Instance.AddEvent( newEvent );
 				                              } );
 			}
