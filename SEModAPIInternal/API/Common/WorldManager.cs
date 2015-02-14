@@ -374,7 +374,7 @@ namespace SEModAPIInternal.API.Common
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( InvalidCastException ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 				return null;
