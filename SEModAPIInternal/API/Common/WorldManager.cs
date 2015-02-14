@@ -405,7 +405,7 @@ namespace SEModAPIInternal.API.Common
 					LogManager.APILog.WriteLineAndConsole( "Save failed!" );
 				}
 			}
-			catch ( Exception ex )
+			catch ( InvalidCastException ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 			}
