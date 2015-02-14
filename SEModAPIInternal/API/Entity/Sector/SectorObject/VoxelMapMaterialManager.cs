@@ -27,7 +27,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		#region "Constructors and Initializers"
 
-		public VoxelMapMaterialManager( VoxelMap parent, Object backingObject )
+		[Obsolete("This constructor will be removed for SE version 1.70. Use VoxelMapMaterialManager( backingObject ) instead.", true)]
+		public VoxelMapMaterialManager( VoxelMap parent, object backingObject )
+		{
+			_backingObject = backingObject;
+
+			_resourceLock = new FastResourceLock( );
+			_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
+		}
+
+		public VoxelMapMaterialManager( object backingObject )
 		{
 			_backingObject = backingObject;
 
