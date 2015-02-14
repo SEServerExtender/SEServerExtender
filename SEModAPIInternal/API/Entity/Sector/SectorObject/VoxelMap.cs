@@ -194,14 +194,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new Exception( "Could not find internal type for VoxelMap" );
+					throw new TypeLoadException( "Could not find internal type for VoxelMap" );
 
 				result &= HasMethod( type, VoxelMapGetSizeMethod );
 				result &= HasMethod( type, VoxelMapGetVoxelMaterialManagerMethod );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
