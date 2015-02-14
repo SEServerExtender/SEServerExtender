@@ -105,10 +105,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public string Filename
 		{
 			get { return ObjectBuilder.StorageName; }
-			private set
-			{
-				//Do nothing!
-			}
 		}
 
 		[DataMember]
@@ -122,10 +118,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 					return Vector3.Zero;
 
 				return GetVoxelMapSize( );
-			}
-			private set
-			{
-				//Do nothing!
 			}
 		}
 
@@ -141,10 +133,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 					return 0;
 
 				return _cache.Data.Length;
-			}
-			private set
-			{
-				//Do nothing!
 			}
 		}
 
@@ -162,10 +150,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				//Mass is estimated based on default ratio of 1kg = 0.37 cubic meters of ore
 				//Note: This is not a realistic mass as this volume of silicate would be ~135kg
 				return Volume * 19.727f;
-			}
-			private set
-			{
-				//Do nothing!
 			}
 		}
 
