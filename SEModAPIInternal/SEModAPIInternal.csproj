@@ -108,6 +108,7 @@
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ConveyorTubeEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\GyroNetworkManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\LandingGearNetworkManager.cs" />
+    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ProductionQueueItem.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipConnectorEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\InteriorTurretEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\DoorEntity.cs" />
