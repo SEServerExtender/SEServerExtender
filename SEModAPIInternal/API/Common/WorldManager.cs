@@ -387,7 +387,6 @@ namespace SEModAPIInternal.API.Common
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				Type type = BackingObject.GetType( );
 				Type[ ] argTypes = new Type[ 1 ];
 				argTypes[ 0 ] = typeof( string );
 				bool result = (bool)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerSaveWorldMethod, new object[ ] { null }, argTypes );
