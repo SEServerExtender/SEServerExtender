@@ -371,7 +371,7 @@
 			FieldInfo respawnMsgRespawnShipId = respawnMsgType.GetField( RespawnMsgRespawnShipId );
 			FieldInfo respawnMsgPlayerSerialId = respawnMsgType.GetField( RespawnMsgPlayerSerialId );
 
-			object respawnMsg = null;
+			object respawnMsg;
 			try
 			{
 				respawnMsg = Activator.CreateInstance( respawnMsgType );
