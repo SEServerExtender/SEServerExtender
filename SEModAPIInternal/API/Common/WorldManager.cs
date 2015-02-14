@@ -278,9 +278,6 @@ namespace SEModAPIInternal.API.Common
 					                              EntityEventManager.Instance.AddEvent( newEvent );
 				                              } );
 			}
-			catch ( Exception ex )
-			{
-			}
 			finally
 			{
 				_isSaving = false;
