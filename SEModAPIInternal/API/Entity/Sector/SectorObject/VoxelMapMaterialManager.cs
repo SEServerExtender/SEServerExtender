@@ -27,7 +27,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		#region "Constructors and Initializers"
 
-		[Obsolete("This constructor will be removed for SE version 1.70. Use VoxelMapMaterialManager( backingObject ) instead.", true)]
+		[Obsolete( "This constructor will be removed for SE version 1.70. Use VoxelMapMaterialManager( backingObject ) instead.", true )]
 		public VoxelMapMaterialManager( VoxelMap parent, object backingObject )
 		{
 			_backingObject = backingObject;
@@ -91,6 +91,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 						MyVoxelMaterialDefinition material = MyDefinitionManager.Static.GetVoxelMaterialDefinition( materialIndex );
 						if ( material == null )
 							continue;
+#warning MyVoxelMaterialDefinition does not implement GetHashCode
+						//Note that MyVoxelMaterialDefinition does not override GetHashCode, so using it as a dictionary index is not advisable.
 						if ( !_materialTotals.ContainsKey( material ) )
 							_materialTotals.Add( material, 1 );
 						else
