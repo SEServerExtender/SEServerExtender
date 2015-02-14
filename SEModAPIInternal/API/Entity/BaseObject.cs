@@ -1,6 +1,7 @@
 ﻿namespace SEModAPIInternal.API.Entity
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.IO;
 	using System.Reflection;
@@ -52,9 +53,9 @@
 				{
 					MDefinition = MyDefinitionManager.Static.GetDefinition( MDefinitionId );
 				}
-				catch ( Exception )
+				catch ( KeyNotFoundException ex )
 				{
-					//Do nothing!
+					LogManager.APILog.WriteLineAndConsole( "Error constructing BaseObject...", ex );
 				}
 			}
 		}
@@ -71,9 +72,9 @@
 				{
 					MDefinition = MyDefinitionManager.Static.GetDefinition( MDefinitionId );
 				}
-				catch ( Exception )
+				catch ( KeyNotFoundException ex )
 				{
-					//Do nothing!
+					LogManager.APILog.WriteLineAndConsole( "Error constructing BaseObject...", ex );
 				}
 			}
 		}
