@@ -236,45 +236,45 @@ namespace SEModAPIInternal.API.Common
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				ThreadPool.QueueUserWorkItem( new WaitCallback( ( object state ) =>
-					{
-						SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-							{
-								Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
-								BaseObject.InvokeStaticMethod( type, WorldSnapshotSaveMethod, new object[ ] { new Action(() =>
-									{
-										LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Setup Started: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
-									})
-								} );
-							} );
+				ThreadPool.QueueUserWorkItem( state =>
+				                              {
+					                              SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+					                                                                              {
+						                                                                              Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
+						                                                                              BaseObject.InvokeStaticMethod( type, WorldSnapshotSaveMethod, new object[ ] { new Action(() =>
+						                                                                                                                                                                       {
+							                                                                                                                                                                       LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Setup Started: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
+						                                                                                                                                                                       })
+						                                                                                                                                                          } );
+					                                                                              } );
 
-						// Ugly -- Get rid of this?
-						DateTime start = DateTime.Now;
-						FastResourceLock saveLock = InternalGetResourceLock( );
-						while ( !saveLock.Owned )
-						{
-							if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
-								return;
+					                              // Ugly -- Get rid of this?
+					                              DateTime start = DateTime.Now;
+					                              FastResourceLock saveLock = InternalGetResourceLock( );
+					                              while ( !saveLock.Owned )
+					                              {
+						                              if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
+							                              return;
 
-							Thread.Sleep( 1 );
-						}
+						                              Thread.Sleep( 1 );
+					                              }
 
-						while ( saveLock.Owned )
-						{
-							if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
-								return;
+					                              while ( saveLock.Owned )
+					                              {
+						                              if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
+							                              return;
 
-							Thread.Sleep( 1 );
-						}
+						                              Thread.Sleep( 1 );
+					                              }
 
-						LogManager.APILog.WriteLineAndConsole( string.Format( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds ) );
-						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-						newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
-						newEvent.timestamp = DateTime.Now;
-						newEvent.entity = null;
-						newEvent.priority = 0;
-						EntityEventManager.Instance.AddEvent( newEvent );
-					} ) );
+					                              LogManager.APILog.WriteLineAndConsole( string.Format( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds ) );
+					                              EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
+					                              newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
+					                              newEvent.timestamp = DateTime.Now;
+					                              newEvent.entity = null;
+					                              newEvent.priority = 0;
+					                              EntityEventManager.Instance.AddEvent( newEvent );
+				                              } );
 			}
 			catch ( Exception ex )
 			{
