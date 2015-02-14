@@ -182,15 +182,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public MyVoxelMaterialDefinition GetMaterial( Vector3I voxelPosition )
 		{
-			try
-			{
-				return GetMaterialAt( voxelPosition );
-			}
-			catch ( Exception ex )
-			{
-				LogManager.ErrorLog.WriteLine( ex );
-				return null;
-			}
+			return GetMaterialAt( voxelPosition );
 		}
 
 		new public static bool ReflectionUnitTest( )
@@ -232,11 +224,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		protected MyVoxelMaterialDefinition GetMaterialAt( Vector3I voxelPosition )
 		{
-			Object rawResult = InvokeEntityMethod( BackingObject, VoxelMapGetMaterialAtPositionMethod, new object[ ] { voxelPosition } );
-			if ( rawResult == null )
-				return null;
-			MyVoxelMaterialDefinition result = (MyVoxelMaterialDefinition)rawResult;
-			return result;
+			return InvokeEntityMethod( BackingObject, VoxelMapGetMaterialAtPositionMethod, new object[ ] { voxelPosition } ) as MyVoxelMaterialDefinition;
 		}
 
 		protected void RefreshCache( )
