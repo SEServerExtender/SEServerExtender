@@ -11,10 +11,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	{
 		#region "Attributes"
 
-		private object _backingObject;
+		private readonly object _backingObject;
 		private int _voxelCount;
-		private FastResourceLock _resourceLock;
-		private Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
+		private readonly FastResourceLock _resourceLock;
+		private readonly Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
 
 		public static string VoxelMapMaterialManagerNamespace = "DC3F8F35BD18173B1D075139B475AD8E";
 		public static string VoxelMapMaterialManagerClass = "119B0A83D4E9B352826763AD3746A162";
