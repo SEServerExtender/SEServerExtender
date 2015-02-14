@@ -12,7 +12,7 @@ namespace SEModAPIInternal.API.Common
 		#region "Attributes"
 
 		private static WorldManager _instance;
-		private bool _isSaving = false;
+		private bool _isSaving;
 
 		public static string WorldManagerNamespace = "AAC05F537A6F0F6775339593FBDFC564";
 		public static string WorldManagerClass = "D580AE7552E79DAB03A3D64B1F7B67F9";
