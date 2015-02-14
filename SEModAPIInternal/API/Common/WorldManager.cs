@@ -150,7 +150,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldManagerNamespace, WorldManagerClass );
 				if ( type1 == null )
-					throw new Exception( "Could not find internal type for WorldManager" );
+					throw new TypeLoadException( "Could not find internal type for WorldManager" );
 				bool result = true;
 				result &= BaseObject.HasMethod( type1, WorldManagerGetPlayerManagerMethod );
 				Type[ ] argTypes = new Type[ 1 ];
@@ -165,24 +165,24 @@ namespace SEModAPIInternal.API.Common
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldResourceManagerNamespace, WorldResourceManagerClass );
 				if ( type2 == null )
-					throw new Exception( "Could not find world resource manager type for WorldManager" );
+					throw new TypeLoadException( "Could not find world resource manager type for WorldManager" );
 				result &= BaseObject.HasField( type2, WorldResourceManagerResourceLockField );
 
 				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
 				if ( type3 == null )
-					throw new Exception( "Could not find world snapshot type for WorldManager" );
+					throw new TypeLoadException( "Could not find world snapshot type for WorldManager" );
 				result &= BaseObject.HasMethod( type3, WorldSnapshotSaveMethod );
 
 				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( SandboxGameNamespace, SandboxGameGameStatsClass );
 				if ( type4 == null )
-					throw new Exception( "Count not find type for SandboxGameStats" );
+					throw new TypeLoadException( "Count not find type for SandboxGameStats" );
 
 				result &= BaseObject.HasMethod( type4, SandboxGameGetGameStatsInstance );
 				result &= BaseObject.HasField( type4, SandboxGameGetUpdatesPerSecondField );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -207,7 +207,7 @@ namespace SEModAPIInternal.API.Common
 				object gameStatsObject = BaseObject.InvokeStaticMethod( type, SandboxGameGetGameStatsInstance );
 				result = (long)BaseObject.GetEntityFieldValue( gameStatsObject, SandboxGameGetUpdatesPerSecondField );
 			}
-			catch ( Exception ex )
+			catch ( InvalidCastException ex )
 			{
 				LogManager.ErrorLog.WriteLine( ex );
 			}
