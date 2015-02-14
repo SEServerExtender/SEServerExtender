@@ -541,7 +541,7 @@
 				//object controlMessageHandler = 
 
 			}
-			catch ( Exception ex )
+			catch ( Exception )
 			{
 
 			}
