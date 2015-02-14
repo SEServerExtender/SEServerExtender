@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel;
+	using System.Configuration;
 	using System.IO;
 	using System.Reflection;
 	using System.Runtime.Serialization;
@@ -84,7 +85,7 @@
 		#region "Properties"
 
 		/// <summary>
-		/// Changed status of the object
+		/// Changed status of the <see cref="BaseObject"/>
 		/// </summary>
 		[IgnoreDataMember]
 		[Category( "Object" )]
@@ -94,7 +95,7 @@
 		public virtual bool Changed { get; protected set; }
 
 		/// <summary>
-		/// API formated name of the object
+		/// API formated name of the <see cref="BaseObject"/>
 		/// </summary>
 		[DataMember]
 		[Category( "Object" )]
@@ -104,7 +105,7 @@
 		public virtual string Name { get; private set; }
 
 		/// <summary>
-		/// Object builder data of the object
+		/// Object builder data of the <see cref="BaseObject"/>
 		/// </summary>
 		[IgnoreDataMember]
 		[Category( "Object" )]
@@ -124,7 +125,7 @@
 		}
 
 		/// <summary>
-		/// Internal, in-game object that matches to this object
+		/// Internal, in-game object that matches to this <see cref="BaseObject"/>
 		/// </summary>
 		[IgnoreDataMember]
 		[Category( "Object" )]
@@ -141,7 +142,7 @@
 		}
 
 		/// <summary>
-		/// Full type of the object
+		/// Full type of the <see cref="BaseObject"/>
 		/// </summary>
 		[IgnoreDataMember]
 		[Category( "Object" )]
@@ -214,6 +215,7 @@
 			MIsDisposed = true;
 		}
 
+		/// <exception cref="ConfigurationErrorsException">Error writing configuration file.  Configuration file possibly corrupted.</exception>
 		public virtual void Export( FileInfo fileInfo )
 		{
 			BaseObjectManager.SaveContentFile<MyObjectBuilder_Base, MyObjectBuilder_BaseSerializer>( ObjectBuilder, fileInfo );
