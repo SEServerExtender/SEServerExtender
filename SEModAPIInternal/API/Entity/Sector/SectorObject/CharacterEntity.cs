@@ -11,7 +11,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract( Name = "CharacterEntityProxy" )]
+	[DataContract]
 	public class CharacterEntity : BaseEntity
 	{
 		#region "Attributes"

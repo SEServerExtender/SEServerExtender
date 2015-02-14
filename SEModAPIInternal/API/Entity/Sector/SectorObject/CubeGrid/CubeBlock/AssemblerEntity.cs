@@ -4,7 +4,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "AssemblerEntityProxy" )]
+	[DataContract]
 	public class AssemblerEntity : ProductionBlockEntity
 	{
 		#region "Attributes"

@@ -5,7 +5,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "MedicalRoomEntityProxy" )]
+	[DataContract]
 	public class MedicalRoomEntity : CubeBlockEntity
 	{
 		#region "Attributes"

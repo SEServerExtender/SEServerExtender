@@ -49,7 +49,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 	}
 
-	[DataContract( Name = "ProductionBlockEntityProxy" )]
+	[DataContract]
 	public class ProductionBlockEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

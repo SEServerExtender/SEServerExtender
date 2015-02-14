@@ -13,7 +13,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "GravityGeneratorEntityProxy" )]
+	[DataContract]
 	public class GravityGeneratorEntity : GravityBaseEntity
 	{
 		#region "Attributes"

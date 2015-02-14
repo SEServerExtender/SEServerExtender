@@ -4,7 +4,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "ShipGrinderEntityProxy" )]
+	[DataContract]
 	public class ShipGrinderEntity : ShipToolBaseEntity
 	{
 		#region "Attributes"

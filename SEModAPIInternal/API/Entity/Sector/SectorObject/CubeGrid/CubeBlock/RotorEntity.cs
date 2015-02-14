@@ -7,7 +7,7 @@ using SEModAPIInternal.API.Common;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "RotorEntityProxy" )]
+	[DataContract]
 	public class RotorEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

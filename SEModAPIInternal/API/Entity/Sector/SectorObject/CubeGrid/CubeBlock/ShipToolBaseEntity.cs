@@ -6,7 +6,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "ShipToolBaseEntityProxy" )]
+	[DataContract]
 	public class ShipToolBaseEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

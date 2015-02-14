@@ -9,7 +9,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract( Name = "MeteorProxy" )]
+	[DataContract]
 	public class Meteor : BaseEntity
 	{
 		#region "Attributes"

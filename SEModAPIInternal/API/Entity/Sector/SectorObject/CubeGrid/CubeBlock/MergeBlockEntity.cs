@@ -8,7 +8,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "MergeBlockEntityProxy" )]
+	[DataContract]
 	public class MergeBlockEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
