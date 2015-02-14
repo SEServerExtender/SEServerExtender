@@ -9,7 +9,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "TerminalBlockEntityProxy" )]
+	[DataContract]
 	[KnownType( typeof( InventoryEntity ) )]
 	public class TerminalBlockEntity : CubeBlockEntity
 	{

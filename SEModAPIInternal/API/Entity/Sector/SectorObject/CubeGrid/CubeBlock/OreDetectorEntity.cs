@@ -6,7 +6,7 @@ using SEModAPIInternal.API.Common;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "OreDetectorEntityProxy" )]
+	[DataContract]
 	public class OreDetectorEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

@@ -4,7 +4,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "ReflectorLightEntityProxy" )]
+	[DataContract]
 	public class ReflectorLightEntity : LightEntity
 	{
 		#region "Attributes"

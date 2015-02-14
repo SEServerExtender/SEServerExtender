@@ -7,7 +7,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "GravitySphereEntityProxy" )]
+	[DataContract]
 	public class GravitySphereEntity : GravityBaseEntity
 	{
 		#region "Attributes"

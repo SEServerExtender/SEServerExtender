@@ -12,7 +12,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract( Name = "VoxelMapProxy" )]
+	[DataContract]
 	public class VoxelMap : BaseEntity
 	{
 		#region "Attributes"

@@ -8,7 +8,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "SmallGatlingGunEntityProxy" )]
+	[DataContract]
 	public class SmallGatlingGunEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

@@ -10,7 +10,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "LightEntityProxy" )]
+	[DataContract]
 	public class LightEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

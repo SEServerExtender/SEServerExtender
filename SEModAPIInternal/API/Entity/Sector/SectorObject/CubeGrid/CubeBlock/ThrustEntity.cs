@@ -13,7 +13,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "ThrustEntityProxy" )]
+	[DataContract]
 	public class ThrustEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

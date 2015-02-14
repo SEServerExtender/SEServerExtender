@@ -4,7 +4,7 @@ using Sandbox.Common.ObjectBuilders;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "GatlingTurretEntityProxy" )]
+	[DataContract]
 	public class GatlingTurretEntity : TurretBaseEntity
 	{
 		#region "Attributes"

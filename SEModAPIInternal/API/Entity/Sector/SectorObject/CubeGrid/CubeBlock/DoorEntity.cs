@@ -7,7 +7,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "DoorEntityProxy" )]
+	[DataContract]
 	public class DoorEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"

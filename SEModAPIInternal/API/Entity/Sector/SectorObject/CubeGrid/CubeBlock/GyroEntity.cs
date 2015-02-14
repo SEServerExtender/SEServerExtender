@@ -13,7 +13,7 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract( Name = "GyroEntityProxy" )]
+	[DataContract]
 	public class GyroEntity : FunctionalBlockEntity
 	{
 		private readonly GyroNetworkManager _networkManager;

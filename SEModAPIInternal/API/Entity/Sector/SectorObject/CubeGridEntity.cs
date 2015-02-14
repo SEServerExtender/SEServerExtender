@@ -14,7 +14,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using SEModAPIInternal.Support;
 	using VRageMath;
 
-	[DataContract( Name = "CubeGridEntityProxy" )]
+	[DataContract]
 	[KnownType( "KnownTypes" )]
 	public class CubeGridEntity : BaseEntity
 	{
