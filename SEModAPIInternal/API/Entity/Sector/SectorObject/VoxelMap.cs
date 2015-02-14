@@ -180,6 +180,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		#region "Methods"
 
+		[Obsolete("Please file an issue if this method is used or it will be removed in SE version 1.70.", true)]
 		public MyVoxelMaterialDefinition GetMaterial( Vector3I voxelPosition )
 		{
 			return GetMaterialAt( voxelPosition );
