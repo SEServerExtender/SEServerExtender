@@ -31,7 +31,7 @@
 		protected MyDefinitionBase MDefinition;
 		protected Object MBackingObject;
 
-		protected bool MIsDisposed = false;
+		protected bool MIsDisposed;
 
 		#endregion "Attributes"
 
