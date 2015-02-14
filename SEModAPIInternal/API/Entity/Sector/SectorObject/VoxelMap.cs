@@ -21,7 +21,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		private VoxelMapMaterialManager _materialManager;
 		private MyStorageDataCache _cache;
-		private Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
+		private readonly Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
 
 		public static string VoxelMapNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
 		public static string VoxelMapClass = "6EC806B54BA319767DA878841A56ECD8";
