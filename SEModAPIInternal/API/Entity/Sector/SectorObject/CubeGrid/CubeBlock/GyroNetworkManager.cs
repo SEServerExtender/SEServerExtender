@@ -8,8 +8,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private GyroEntity m_parent;
-		private Object m_backingObject;
+		private readonly GyroEntity _parent;
+		private readonly Object _backingObject;
 
 		public static string GyroNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
 		public static string GyroNetworkManagerClass = "B4646791D7A57BE4E2EE21A1F22A4364";
@@ -29,8 +29,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public GyroNetworkManager( GyroEntity parent, Object backingObject )
 		{
-			m_parent = parent;
-			m_backingObject = backingObject;
+			_parent = parent;
+			_backingObject = backingObject;
 		}
 
 		#endregion "Constructors and Initializers"
@@ -47,14 +47,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GyroNetworkManagerNamespace, GyroNetworkManagerClass );
 				if ( type == null )
-					throw new Exception( "Could not find internal type for GyroNetworkManager" );
+					throw new TypeLoadException( "Could not find internal type for GyroNetworkManager" );
 				result &= BaseObject.HasMethod( type, GyroNetworkManagerBroadcastOverrideMethod );
 				result &= BaseObject.HasMethod( type, GyroNetworkManagerBroadcastPowerMethod );
 				result &= BaseObject.HasMethod( type, GyroNetworkManagerBroadcastTargetAngularVelocityMethod );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				Console.WriteLine( ex );
 				return false;
@@ -83,18 +83,18 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected void InternalBroadcastOverride( )
 		{
-			BaseObject.InvokeEntityMethod( m_backingObject, GyroNetworkManagerBroadcastOverrideMethod, new object[ ] { m_parent.GyroOverride } );
+			BaseObject.InvokeEntityMethod( _backingObject, GyroNetworkManagerBroadcastOverrideMethod, new object[ ] { _parent.GyroOverride } );
 		}
 
 		protected void InternalBroadcastPower( )
 		{
-			BaseObject.InvokeEntityMethod( m_backingObject, GyroNetworkManagerBroadcastPowerMethod, new object[ ] { m_parent.GyroPower } );
+			BaseObject.InvokeEntityMethod( _backingObject, GyroNetworkManagerBroadcastPowerMethod, new object[ ] { _parent.GyroPower } );
 		}
 
 		protected void InternalBroadcastTargetAngularVelocity( )
 		{
-			Vector3 newTarget = (Vector3)m_parent.TargetAngularVelocity;
-			BaseObject.InvokeEntityMethod( m_backingObject, GyroNetworkManagerBroadcastTargetAngularVelocityMethod, new object[ ] { newTarget } );
+			Vector3 newTarget = _parent.TargetAngularVelocity;
+			BaseObject.InvokeEntityMethod( _backingObject, GyroNetworkManagerBroadcastTargetAngularVelocityMethod, new object[ ] { newTarget } );
 		}
 
 		#endregion "Internal"
