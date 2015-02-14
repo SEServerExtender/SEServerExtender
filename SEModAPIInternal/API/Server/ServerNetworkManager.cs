@@ -104,8 +104,8 @@
 		private const string UseMsgUseAction = "D1AB76CECD107930E4CED6045B5EE206";
 		private const string UseMsgActionResult = "184D262E162762B50FBAF1A443AE3F48";
 
-		private const string ModAPINamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-		private const string ModAPIHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
+		private const string ModApiNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
+		private const string ModApiHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
 		private const string SendDataMessageClass = "CC6EB6677E764BA0BB8C9E3F219B7FB6";
 		private const string SendReliableMsg = "94BA33CF24FDB04C5858133B9CA10B65";
 		private const string SendReliableMsgId = "A1065D4F4F78592D380E3EBA7517D263";
@@ -437,7 +437,7 @@
 
 		public static void SendDataMessage(ushort dataId, byte[] data, ulong steamId)
 		{
-			Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ModAPINamespace, ModAPIHelperClass);
+			Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ModApiNamespace, ModApiHelperClass);
 			Type sendDataMessageClassType = modAPIHelperClassType.GetNestedType(SendDataMessageClass, BindingFlags.Public | BindingFlags.NonPublic);
 			Type sendReliableMsgType = sendDataMessageClassType.GetNestedType(SendReliableMsg, BindingFlags.Public | BindingFlags.NonPublic);
 
