@@ -80,17 +80,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				try
-				{
-					Object worldManager = BaseObject.GetStaticFieldValue( InternalType, WorldManagerInstanceField );
-
-					return worldManager;
-				}
-				catch ( Exception ex )
-				{
-					LogManager.ErrorLog.WriteLine( ex );
-					return null;
-				}
+				return BaseObject.GetStaticFieldValue( InternalType, WorldManagerInstanceField );
 			}
 		}
 
