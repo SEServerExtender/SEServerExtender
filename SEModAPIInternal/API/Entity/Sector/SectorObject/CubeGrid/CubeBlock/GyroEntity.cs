@@ -106,7 +106,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3Wrapper TargetAngularVelocity
 		{
-			get { return (Vector3Wrapper)ObjectBuilder.TargetAngularVelocity; }
+			get { return ObjectBuilder.TargetAngularVelocity; }
 			set
 			{
 				if ( (Vector3)ObjectBuilder.TargetAngularVelocity == (Vector3)value ) return;
