@@ -33,11 +33,11 @@
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "AACFFC237D6203BFC7E5DCDD12E2D6AD";
-		//public static string ServerNetworkManagerKickPlayerMethod = "2A9EE410B60717775BE1D19BAD193FE5";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "386A0E242A69337DAA693226D3719573";
+		//public static string ServerNetworkManagerKickPlayerMethod = "C48B581DF5DA6D89EFB7680D4B7C6D96";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "386A0E242A69337DAA693226D3719573";
-		public static string ServerNetworkManagerKickPlayerMethod = "C48B581DF5DA6D89EFB7680D4B7C6D96";         
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "D65387B662C5ADC7B3254480B6CA0837";
+		public static string ServerNetworkManagerKickPlayerMethod = "5A3300B24D1944C76BBB2C6E92C02D96";         
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -657,10 +657,10 @@
 					}
 
 					// This is probably safe to do outside of the game instance, but let's just make sure.
-					//SandboxGameAssemblyWrapper.Instance.GameAction(() =>
-					//{
+					SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+					{
 						myObjectBuilderWorld = MyAPIGateway.Session.GetWorld();
-					//});
+					});
 
 					if (_replaceData)
 					{
@@ -671,9 +671,8 @@
 							if (!(entity is MyObjectBuilder_CubeGrid) && !(entity is MyObjectBuilder_VoxelMap))
 								continue;
 
-							if ((entity is MyObjectBuilder_CubeGrid) && (entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
-								continue;
-							
+							if ((entity is MyObjectBuilder_CubeGrid) && ((MyObjectBuilder_CubeGrid)entity).DisplayName.Contains("CommRelay"))
+								continue;							
 
 							/*
 							if (!(entity is MyObjectBuilder_CubeGrid))
