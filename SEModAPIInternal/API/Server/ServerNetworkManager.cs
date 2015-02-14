@@ -104,13 +104,13 @@
 		private const string UseMsgUseAction = "D1AB76CECD107930E4CED6045B5EE206";
 		private const string UseMsgActionResult = "184D262E162762B50FBAF1A443AE3F48";
 
-		private static string ModAPINamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-		private static string ModAPIHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
-		private static string SendDataMessageClass = "CC6EB6677E764BA0BB8C9E3F219B7FB6";
-		private static string SendReliableMsg = "94BA33CF24FDB04C5858133B9CA10B65";
-		private static string SendReliableMsgId = "A1065D4F4F78592D380E3EBA7517D263";
-		private static string SendReliableMsgData = "EFAAFF2EF963935E2CE19D55C6C98DD1";
-			
+		private const string ModAPINamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
+		private const string ModAPIHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
+		private const string SendDataMessageClass = "CC6EB6677E764BA0BB8C9E3F219B7FB6";
+		private const string SendReliableMsg = "94BA33CF24FDB04C5858133B9CA10B65";
+		private const string SendReliableMsgId = "A1065D4F4F78592D380E3EBA7517D263";
+		private const string SendReliableMsgData = "EFAAFF2EF963935E2CE19D55C6C98DD1";
+
 		#endregion
 
 		#region "Properties"
