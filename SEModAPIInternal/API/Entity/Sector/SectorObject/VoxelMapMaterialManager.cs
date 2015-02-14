@@ -11,7 +11,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	{
 		#region "Attributes"
 
-		private VoxelMap m_parent;
 		private Object m_backingObject;
 		private int m_voxelCount;
 		private FastResourceLock m_resourceLock;
@@ -30,7 +29,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public VoxelMapMaterialManager( VoxelMap parent, Object backingObject )
 		{
-			m_parent = parent;
 			m_backingObject = backingObject;
 
 			m_resourceLock = new FastResourceLock( );
