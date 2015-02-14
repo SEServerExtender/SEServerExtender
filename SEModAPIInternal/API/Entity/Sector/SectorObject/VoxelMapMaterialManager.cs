@@ -11,10 +11,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	{
 		#region "Attributes"
 
-		private Object m_backingObject;
-		private int m_voxelCount;
-		private FastResourceLock m_resourceLock;
-		private Dictionary<MyVoxelMaterialDefinition, float> m_materialTotals;
+		private object _backingObject;
+		private int _voxelCount;
+		private FastResourceLock _resourceLock;
+		private Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
 
 		public static string VoxelMapMaterialManagerNamespace = "DC3F8F35BD18173B1D075139B475AD8E";
 		public static string VoxelMapMaterialManagerClass = "119B0A83D4E9B352826763AD3746A162";
@@ -29,10 +29,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public VoxelMapMaterialManager( VoxelMap parent, Object backingObject )
 		{
-			m_backingObject = backingObject;
+			_backingObject = backingObject;
 
-			m_resourceLock = new FastResourceLock( );
-			m_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
+			_resourceLock = new FastResourceLock( );
+			_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -50,7 +50,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		internal Object BackingObject
 		{
-			get { return m_backingObject; }
+			get { return _backingObject; }
 		}
 
 		internal Dictionary<MyVoxelMaterialDefinition, float> Materials
@@ -58,16 +58,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			get
 			{
 				if ( BackingObject == null )
-					return m_materialTotals;
+					return _materialTotals;
 
 				object[ ] voxels = GetVoxels( );
-				if ( voxels.Length == m_voxelCount )
-					return m_materialTotals;
+				if ( voxels.Length == _voxelCount )
+					return _materialTotals;
 
-				m_resourceLock.AcquireExclusive( );
+				_resourceLock.AcquireExclusive( );
 
-				m_voxelCount = voxels.Length;
-				m_materialTotals.Clear( );
+				_voxelCount = voxels.Length;
+				_materialTotals.Clear( );
 
 				foreach ( object entry in voxels )
 				{
@@ -82,10 +82,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 						MyVoxelMaterialDefinition material = MyDefinitionManager.Static.GetVoxelMaterialDefinition( materialIndex );
 						if ( material == null )
 							continue;
-						if ( !m_materialTotals.ContainsKey( material ) )
-							m_materialTotals.Add( material, 1 );
+						if ( !_materialTotals.ContainsKey( material ) )
+							_materialTotals.Add( material, 1 );
 						else
-							m_materialTotals[ material ]++;
+							_materialTotals[ material ]++;
 					}
 					catch ( Exception ex )
 					{
@@ -93,15 +93,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 					}
 				}
 
-				m_resourceLock.ReleaseExclusive( );
+				_resourceLock.ReleaseExclusive( );
 
-				return m_materialTotals;
+				return _materialTotals;
 			}
 		}
 
 		internal int VoxelCount
 		{
-			get { return m_voxelCount; }
+			get { return _voxelCount; }
 		}
 
 		#endregion "Properties"
