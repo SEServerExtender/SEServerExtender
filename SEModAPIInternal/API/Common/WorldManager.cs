@@ -397,11 +397,7 @@ namespace SEModAPIInternal.API.Common
 					LogManager.APILog.WriteLineAndConsole( "Save complete and took " + timeToSave.TotalSeconds + " seconds" );
 					_isSaving = false;
 
-					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-					newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
-					newEvent.timestamp = DateTime.Now;
-					newEvent.entity = null;
-					newEvent.priority = 0;
+					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent { type = EntityEventManager.EntityEventType.OnSectorSaved, timestamp = DateTime.Now, entity = null, priority = 0 };
 					EntityEventManager.Instance.AddEvent( newEvent );
 				}
 				else
