@@ -114,10 +114,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				if ( BackingObject == null )
-					return Vector3.Zero;
-
-				return GetVoxelMapSize( );
+				return BackingObject == null ? Vector3.Zero : GetVoxelMapSize( );
 			}
 		}
 
@@ -129,10 +126,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				if ( _cache == null )
-					return 0;
-
-				return _cache.Data.Length;
+				return _cache == null ? 0 : _cache.Data.Length;
 			}
 		}
 
