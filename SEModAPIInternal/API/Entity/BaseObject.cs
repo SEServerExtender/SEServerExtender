@@ -300,7 +300,7 @@
 
 				return true;
 			}
-			catch ( AmbiguousMatchException aex )
+			catch ( AmbiguousMatchException )
 			{
 				return true;
 			}
