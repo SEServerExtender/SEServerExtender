@@ -355,26 +355,14 @@ namespace SEModAPIInternal.API.Common
 			 */
 		}
 
-		internal Object InternalGetFactionManager( )
+		internal object InternalGetFactionManager( )
 		{
-			try
-			{
-				Object worldManager = BaseObject.GetEntityFieldValue( BackingObject, WorldManagerFactionManagerField );
-
-				return worldManager;
-			}
-			catch ( Exception ex )
-			{
-				LogManager.ErrorLog.WriteLine( ex );
-				return null;
-			}
+			return BaseObject.GetEntityFieldValue( BackingObject, WorldManagerFactionManagerField );
 		}
 
-		internal Object InternalGetPlayerManager( )
+		internal object InternalGetPlayerManager( )
 		{
-			Object playerManager = BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetPlayerManagerMethod );
-
-			return playerManager;
+			return BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetPlayerManagerMethod );
 		}
 
 		internal FastResourceLock InternalGetResourceLock( )
