@@ -33,11 +33,11 @@
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "4419D9BF0A6276FC19212DDF70052AAA";
-		//public static string ServerNetworkManagerKickPlayerMethod = "CC3BEF5062A57E71360866E1DD526CCD";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "386A0E242A69337DAA693226D3719573";
+		//public static string ServerNetworkManagerKickPlayerMethod = "C48B581DF5DA6D89EFB7680D4B7C6D96";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "AACFFC237D6203BFC7E5DCDD12E2D6AD";
-		public static string ServerNetworkManagerKickPlayerMethod = "2A9EE410B60717775BE1D19BAD193FE5";         
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "D65387B662C5ADC7B3254480B6CA0837";
+		public static string ServerNetworkManagerKickPlayerMethod = "5A3300B24D1944C76BBB2C6E92C02D96";         
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -103,6 +103,13 @@
 		private const string UseMsgUsedByEntityId = "1EDCD7F5F272CEC95910B9BD327F8159";
 		private const string UseMsgUseAction = "D1AB76CECD107930E4CED6045B5EE206";
 		private const string UseMsgActionResult = "184D262E162762B50FBAF1A443AE3F48";
+
+		private const string ModAPINamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
+		private const string ModAPIHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
+		private const string SendDataMessageClass = "CC6EB6677E764BA0BB8C9E3F219B7FB6";
+		private const string SendReliableMsg = "94BA33CF24FDB04C5858133B9CA10B65";
+		private const string SendReliableMsgId = "A1065D4F4F78592D380E3EBA7517D263";
+		private const string SendReliableMsgData = "EFAAFF2EF963935E2CE19D55C6C98DD1";
 
 		#endregion
 
@@ -425,7 +432,24 @@
 			useMsgUseAction.SetValue(useMsg, 1);
 			useMsgUseActionResult.SetValue(useMsg, 0);
 
-			SendMessage(useMsgType, steamId, useMsgType, 2);
+			SendMessage(useMsg, steamId, useMsgType, 2);
+		}
+
+		public static void SendDataMessage(ushort dataId, byte[] data, ulong steamId)
+		{
+			Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ModAPINamespace, ModAPIHelperClass);
+			Type sendDataMessageClassType = modAPIHelperClassType.GetNestedType(SendDataMessageClass, BindingFlags.Public | BindingFlags.NonPublic);
+			Type sendReliableMsgType = sendDataMessageClassType.GetNestedType(SendReliableMsg, BindingFlags.Public | BindingFlags.NonPublic);
+
+			FieldInfo sendReliableMsgId = sendReliableMsgType.GetField(SendReliableMsgId);
+			FieldInfo sendReliableMsgData = sendReliableMsgType.GetField(SendReliableMsgData);
+
+			object sendReliableMsg = Activator.CreateInstance(sendReliableMsgType);
+
+			sendReliableMsgId.SetValue(sendReliableMsg, dataId);
+			sendReliableMsgData.SetValue(sendReliableMsg, data);
+
+			SendMessage(sendReliableMsg, steamId, sendReliableMsgType, 2);
 		}
 
 		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
@@ -643,25 +667,28 @@
 						for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
 						{
 							MyObjectBuilder_EntityBase entity = myObjectBuilderWorld.Sector.SectorObjects[r];
+							
+							if (!(entity is MyObjectBuilder_CubeGrid) && !(entity is MyObjectBuilder_VoxelMap))
+								continue;
+
+							if ((entity is MyObjectBuilder_CubeGrid) && ((MyObjectBuilder_CubeGrid)entity).DisplayName.Contains("CommRelay"))
+								continue;							
+
 							/*
-							if (!(entity is MyObjectBuilder_CubeGrid))// && !(entity is MyObjectBuilder_VoxelMap))
-								continue;
-
-							if ((entity is MyObjectBuilder_CubeGrid) && (entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
-								continue;
-
-							 */
-
 							if (!(entity is MyObjectBuilder_CubeGrid))
 								continue;
 
 							if ((entity.PersistentFlags & MyPersistentEntityFlags2.InScene) == MyPersistentEntityFlags2.InScene)
 								continue;
+							*/
 
 							myObjectBuilderWorld.Sector.SectorObjects.RemoveAt(r);
 						}
-
-						//myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
+						
+						myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
+						myObjectBuilderWorld.Checkpoint.Settings.ProceduralDensity = 0f;
+						myObjectBuilderWorld.Checkpoint.Settings.ProceduralSeed = 0;
+						
 					}
 
 					MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
