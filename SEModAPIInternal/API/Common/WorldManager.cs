@@ -11,8 +11,8 @@ namespace SEModAPIInternal.API.Common
 	{
 		#region "Attributes"
 
-		private static WorldManager m_instance;
-		private bool m_isSaving = false;
+		private static WorldManager _instance;
+		private bool _isSaving = false;
 
 		public static string WorldManagerNamespace = "AAC05F537A6F0F6775339593FBDFC564";
 		public static string WorldManagerClass = "D580AE7552E79DAB03A3D64B1F7B67F9";
@@ -53,7 +53,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected WorldManager( )
 		{
-			m_instance = this;
+			_instance = this;
 
 			Console.WriteLine( "Finished loading WorldManager" );
 		}
@@ -64,7 +64,7 @@ namespace SEModAPIInternal.API.Common
 
 		public static WorldManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new WorldManager( ) ); }
+			get { return _instance ?? ( _instance = new WorldManager( ) ); }
 		}
 
 		public static Type InternalType
@@ -108,7 +108,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			get
 			{
-				return m_isSaving;
+				return _isSaving;
 			}
 		}
 
@@ -227,20 +227,20 @@ namespace SEModAPIInternal.API.Common
 
 		public void SaveWorld( )
 		{
-			if ( m_isSaving )
+			if ( _isSaving )
 				return;
 
-			m_isSaving = true;
+			_isSaving = true;
 			Action action = InternalSaveWorld;
 			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
 		public void AsynchronousSaveWorld( )
 		{
-			if ( m_isSaving )
+			if ( _isSaving )
 				return;
 
-			m_isSaving = true;
+			_isSaving = true;
 
 			try
 			{
@@ -291,7 +291,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			finally
 			{
-				m_isSaving = false;
+				_isSaving = false;
 			}
 
 			/*
@@ -361,7 +361,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			finally
 			{
-				m_isSaving = false;
+				_isSaving = false;
 			}
 			 */
 		}
@@ -419,7 +419,7 @@ namespace SEModAPIInternal.API.Common
 				{
 					TimeSpan timeToSave = DateTime.Now - saveStartTime;
 					LogManager.APILog.WriteLineAndConsole( "Save complete and took " + timeToSave.TotalSeconds + " seconds" );
-					m_isSaving = false;
+					_isSaving = false;
 
 					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 					newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
@@ -439,7 +439,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			finally
 			{
-				m_isSaving = false;
+				_isSaving = false;
 			}
 		}
 
