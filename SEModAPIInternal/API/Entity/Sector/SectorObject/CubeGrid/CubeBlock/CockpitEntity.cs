@@ -80,7 +80,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 						MyObjectBuilder_Character objectBuilder = (MyObjectBuilder_Character)BaseEntity.GetObjectBuilder( backingPilot );
 						_pilot = new CharacterEntity( objectBuilder, backingPilot );
 					}
-					catch ( Exception ex )
+					catch ( InvalidCastException ex )
 					{
 						LogManager.ErrorLog.WriteLine( ex );
 					}
@@ -97,7 +97,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 							_pilot.ObjectBuilder = objectBuilder;
 						}
 					}
-					catch ( Exception ex )
+					catch ( InvalidCastException ex )
 					{
 						LogManager.ErrorLog.WriteLine( ex );
 					}
