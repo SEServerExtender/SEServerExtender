@@ -586,6 +586,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			}
 		}
 
+		/// <summary>
+		/// Repairs this <see cref="CubeBlockEntity"/> (sets <see cref="BuildPercent"/> and <see cref="IntegrityPercent"/> to 1)
+		/// </summary>
+		public void Repair( )
+		{
+			IntegrityPercent = 1;
+			BuildPercent = 1;
+		}
+
 		#region "Internal"
 
 		internal static Object GetInternalParentCubeGrid( Object backingActualBlock )

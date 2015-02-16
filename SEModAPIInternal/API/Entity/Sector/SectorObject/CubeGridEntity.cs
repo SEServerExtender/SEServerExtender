@@ -103,12 +103,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			_managerManager = new CubeGridManagerManager( this, GetManagerManager( ) );
 
 			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
-			                                          {
-				                                          type = EntityEventManager.EntityEventType.OnCubeGridCreated,
-				                                          timestamp = DateTime.Now,
-				                                          entity = this,
-				                                          priority = 1
-			                                          };
+													  {
+														  type = EntityEventManager.EntityEventType.OnCubeGridCreated,
+														  timestamp = DateTime.Now,
+														  entity = this,
+														  priority = 1
+													  };
 			EntityEventManager.Instance.AddEvent( newEvent );
 
 			_lastNameRefresh = DateTime.Now;
@@ -152,7 +152,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 						{
 							if ( cubeBlock == null )
 								continue;
-							if ( cubeBlock.TypeId != typeof ( MyObjectBuilder_Beacon ) )
+							if ( cubeBlock.TypeId != typeof( MyObjectBuilder_Beacon ) )
 							{
 								continue;
 							}
@@ -440,12 +440,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 
 			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
-			                                          {
-				                                          type = EntityEventManager.EntityEventType.OnCubeGridDeleted,
-				                                          timestamp = DateTime.Now,
-				                                          entity = this,
-				                                          priority = 1
-			                                          };
+													  {
+														  type = EntityEventManager.EntityEventType.OnCubeGridDeleted,
+														  timestamp = DateTime.Now,
+														  entity = this,
+														  priority = 1
+													  };
 			EntityEventManager.Instance.AddEvent( newEvent );
 		}
 
@@ -530,6 +530,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
+		/// <summary>
+		/// Repairs all <see cref="CubeBlockEntity">CubeBlockEntities</see> in this <see cref="CubeGridEntity"/>
+		/// </summary>
+		public void Repair( )
+		{
+			foreach ( CubeBlockEntity block in CubeBlocks )
+			{
+				block.Repair( );
+			}
+		}
+
 		#region "Internal"
 
 		protected Object GetManagerManager( )
@@ -543,12 +554,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
-				                                          {
-					                                          type = EntityEventManager.EntityEventType.OnCubeGridMoved,
-					                                          timestamp = DateTime.Now,
-					                                          entity = this,
-					                                          priority = 9
-				                                          };
+														  {
+															  type = EntityEventManager.EntityEventType.OnCubeGridMoved,
+															  timestamp = DateTime.Now,
+															  entity = this,
+															  priority = 9
+														  };
 				EntityEventManager.Instance.AddEvent( newEvent );
 			}
 			catch ( Exception ex )
