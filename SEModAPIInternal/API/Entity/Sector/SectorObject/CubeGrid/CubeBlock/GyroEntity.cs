@@ -13,6 +13,8 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
+	using SEModAPI.API.TypeConverters;
+
 	[DataContract]
 	public class GyroEntity : FunctionalBlockEntity
 	{

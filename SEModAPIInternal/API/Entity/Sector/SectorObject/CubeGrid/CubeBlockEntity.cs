@@ -15,6 +15,8 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
+	using SEModAPI.API.TypeConverters;
+
 	[DataContract]
 	public class CubeBlockEntity : BaseObject
 	{

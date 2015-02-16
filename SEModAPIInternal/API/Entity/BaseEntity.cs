@@ -15,6 +15,8 @@ using VRageMath;
 
 namespace SEModAPIInternal.API.Entity
 {
+	using SEModAPI.API.TypeConverters;
+
 	[DataContract]
 	public class BaseEntity : BaseObject
 	{
