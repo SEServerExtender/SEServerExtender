@@ -591,8 +591,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		/// </summary>
 		public void Repair( )
 		{
-			IntegrityPercent = 1;
-			BuildPercent = 1;
+			if ( IntegrityPercent < 1f )
+				IntegrityPercent = 1;
+			if ( BuildPercent < 1f )
+				BuildPercent = 1;
 		}
 
 		#region "Internal"
