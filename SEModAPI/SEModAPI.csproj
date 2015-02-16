@@ -142,7 +142,11 @@
     <Compile Include="API\Definitions\VoxelMaterialsDefinition.cs" />
     <Compile Include="API\GameInstallation.cs" />
     <Compile Include="API\SEModAPIExceptions.cs" />
-    <Compile Include="API\TypeConverters.cs" />
+    <Compile Include="API\TypeConverters\Vector3Wrapper.cs" />
+    <Compile Include="API\TypeConverters\Vector3DTypeConverter.cs" />
+    <Compile Include="API\TypeConverters\Vector3DWrapper.cs" />
+    <Compile Include="API\TypeConverters\Vector3TypeConverter.cs" />
+    <Compile Include="API\TypeConverters\Vector3ITypeConverter.cs" />
     <Compile Include="AssemblyFileVersion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
