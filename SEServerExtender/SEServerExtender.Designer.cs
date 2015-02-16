@@ -89,10 +89,11 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.BTN_Utilities_ClearFloatingObjectsNow = new System.Windows.Forms.Button();
 			this.CHK_Utilities_FloatingObjectAutoClean = new System.Windows.Forms.CheckBox();
-			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.TAB_Statistics = new System.Windows.Forms.TabPage();
 			this.TB_Statistics = new System.Windows.Forms.TextBox();
+			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.btnRepairEntity = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -155,8 +156,8 @@
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
 			this.floatingObjectControlGroupBox.SuspendLayout();
-			this.SS_Bottom.SuspendLayout();
 			this.TAB_Statistics.SuspendLayout();
+			this.SS_Bottom.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -404,6 +405,7 @@
 			// 
 			// splitContainer5.Panel2
 			// 
+			this.splitContainer5.Panel2.Controls.Add(this.btnRepairEntity);
 			this.splitContainer5.Panel2.Controls.Add(this.BTN_Entities_Export);
 			this.splitContainer5.Panel2.Controls.Add(this.BTN_Entities_New);
 			this.splitContainer5.Panel2.Controls.Add(this.BTN_Entities_Delete);
@@ -441,9 +443,9 @@
 			// BTN_Entities_Export
 			// 
 			this.BTN_Entities_Export.Enabled = false;
-			this.BTN_Entities_Export.Location = new System.Drawing.Point(10, 5);
+			this.BTN_Entities_Export.Location = new System.Drawing.Point(4, 4);
 			this.BTN_Entities_Export.Name = "BTN_Entities_Export";
-			this.BTN_Entities_Export.Size = new System.Drawing.Size(75, 23);
+			this.BTN_Entities_Export.Size = new System.Drawing.Size(53, 23);
 			this.BTN_Entities_Export.TabIndex = 2;
 			this.BTN_Entities_Export.Text = "Export";
 			this.BTN_Entities_Export.UseVisualStyleBackColor = true;
@@ -452,9 +454,9 @@
 			// BTN_Entities_New
 			// 
 			this.BTN_Entities_New.Enabled = false;
-			this.BTN_Entities_New.Location = new System.Drawing.Point(141, 5);
+			this.BTN_Entities_New.Location = new System.Drawing.Point(188, 4);
 			this.BTN_Entities_New.Name = "BTN_Entities_New";
-			this.BTN_Entities_New.Size = new System.Drawing.Size(75, 23);
+			this.BTN_Entities_New.Size = new System.Drawing.Size(53, 23);
 			this.BTN_Entities_New.TabIndex = 1;
 			this.BTN_Entities_New.Text = "New";
 			this.BTN_Entities_New.UseVisualStyleBackColor = true;
@@ -463,9 +465,9 @@
 			// BTN_Entities_Delete
 			// 
 			this.BTN_Entities_Delete.Enabled = false;
-			this.BTN_Entities_Delete.Location = new System.Drawing.Point(222, 5);
+			this.BTN_Entities_Delete.Location = new System.Drawing.Point(243, 4);
 			this.BTN_Entities_Delete.Name = "BTN_Entities_Delete";
-			this.BTN_Entities_Delete.Size = new System.Drawing.Size(75, 23);
+			this.BTN_Entities_Delete.Size = new System.Drawing.Size(53, 23);
 			this.BTN_Entities_Delete.TabIndex = 0;
 			this.BTN_Entities_Delete.Text = "Delete";
 			this.BTN_Entities_Delete.UseVisualStyleBackColor = true;
@@ -901,22 +903,6 @@
 			this.CHK_Utilities_FloatingObjectAutoClean.UseVisualStyleBackColor = true;
 			this.CHK_Utilities_FloatingObjectAutoClean.CheckedChanged += new System.EventHandler(this.CHK_Utilities_FloatingObjectAutoClean_CheckedChanged);
 			// 
-			// SS_Bottom
-			// 
-			this.SS_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-			this.SS_Bottom.Location = new System.Drawing.Point(0, 3);
-			this.SS_Bottom.Name = "SS_Bottom";
-			this.SS_Bottom.Size = new System.Drawing.Size(951, 22);
-			this.SS_Bottom.TabIndex = 0;
-			this.SS_Bottom.Text = "None";
-			// 
-			// toolStripStatusLabel1
-			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(124, 17);
-			this.toolStripStatusLabel1.Text = "Updates Per Second: 0";
-			// 
 			// TAB_Statistics
 			// 
 			this.TAB_Statistics.Controls.Add(this.TB_Statistics);
@@ -936,6 +922,33 @@
 			this.TB_Statistics.Name = "TB_Statistics";
 			this.TB_Statistics.Size = new System.Drawing.Size(937, 537);
 			this.TB_Statistics.TabIndex = 0;
+			// 
+			// SS_Bottom
+			// 
+			this.SS_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+			this.SS_Bottom.Location = new System.Drawing.Point(0, 3);
+			this.SS_Bottom.Name = "SS_Bottom";
+			this.SS_Bottom.Size = new System.Drawing.Size(951, 22);
+			this.SS_Bottom.TabIndex = 0;
+			this.SS_Bottom.Text = "None";
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(124, 17);
+			this.toolStripStatusLabel1.Text = "Updates Per Second: 0";
+			// 
+			// btnRepairEntity
+			// 
+			this.btnRepairEntity.Enabled = false;
+			this.btnRepairEntity.Location = new System.Drawing.Point(133, 4);
+			this.btnRepairEntity.Name = "btnRepairEntity";
+			this.btnRepairEntity.Size = new System.Drawing.Size(53, 23);
+			this.btnRepairEntity.TabIndex = 3;
+			this.btnRepairEntity.Text = "Repair";
+			this.btnRepairEntity.UseVisualStyleBackColor = true;
+			this.btnRepairEntity.Click += new System.EventHandler(this.btnRepairEntity_Click);
 			// 
 			// SEServerExtender
 			// 
@@ -1012,10 +1025,10 @@
 			this.splitContainer4.ResumeLayout(false);
 			this.floatingObjectControlGroupBox.ResumeLayout(false);
 			this.floatingObjectControlGroupBox.PerformLayout();
-			this.SS_Bottom.ResumeLayout(false);
-			this.SS_Bottom.PerformLayout();
 			this.TAB_Statistics.ResumeLayout(false);
 			this.TAB_Statistics.PerformLayout();
+			this.SS_Bottom.ResumeLayout(false);
+			this.SS_Bottom.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1086,5 +1099,6 @@
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.TabPage TAB_Statistics;
 		private System.Windows.Forms.TextBox TB_Statistics;
+		private System.Windows.Forms.Button btnRepairEntity;
 	}
 }
