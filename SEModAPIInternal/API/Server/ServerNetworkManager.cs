@@ -720,7 +720,9 @@
 							myObjectBuilderWorld.Sector.SectorObjects.RemoveAt( r );
 						}
 
-						myObjectBuilderWorld.VoxelMaps.Dictionary.Clear( );
+						myObjectBuilderWorld.Sector.Encounters = null;
+
+						myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
 						myObjectBuilderWorld.Checkpoint.Settings.ProceduralDensity = 0f;
 						myObjectBuilderWorld.Checkpoint.Settings.ProceduralSeed = 0;
 
