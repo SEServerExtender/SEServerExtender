@@ -15,6 +15,7 @@ using Sandbox.ModAPI;
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Serializer;
 using Sandbox.Common.ObjectBuilders.Voxels;
+using Sandbox.Common.ObjectBuilders.Definitions;
 
 using SEModAPIInternal.Support;
 using SEModAPIInternal.API.Entity;
@@ -46,11 +47,11 @@ namespace SEModAPIInternal.API.Server
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "386A0E242A69337DAA693226D3719573";
-		//public static string ServerNetworkManagerKickPlayerMethod = "C48B581DF5DA6D89EFB7680D4B7C6D96";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "D65387B662C5ADC7B3254480B6CA0837";
+		//public static string ServerNetworkManagerKickPlayerMethod = "5A3300B24D1944C76BBB2C6E92C02D96";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "D65387B662C5ADC7B3254480B6CA0837";
-		public static string ServerNetworkManagerKickPlayerMethod = "5A3300B24D1944C76BBB2C6E92C02D96";         
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "C178AB3C7C41D149FB33E5474D93D180";
+		public static string ServerNetworkManagerKickPlayerMethod = "77193F523EB956D24AE88E5C41CD5CD0";         
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -692,11 +693,69 @@ namespace SEModAPIInternal.API.Server
 
 							myObjectBuilderWorld.Sector.SectorObjects.RemoveAt(r);
 						}
-						
+
+						myObjectBuilderWorld.Sector.Encounters = null;
+
 						myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
 						myObjectBuilderWorld.Checkpoint.Settings.ProceduralDensity = 0f;
 						myObjectBuilderWorld.Checkpoint.Settings.ProceduralSeed = 0;
-						
+
+						// Check if this is OK?
+						//myObjectBuilderWorld.Checkpoint.ConnectedPlayers.Dictionary.Clear();
+						myObjectBuilderWorld.Checkpoint.DisconnectedPlayers.Dictionary.Clear();
+
+						long playerId = PlayerMap.Instance.GetFastPlayerIdFromSteamId(steamId);
+				
+						MyObjectBuilder_Toolbar blankToolbar = new MyObjectBuilder_Toolbar();
+						foreach(KeyValuePair<MyObjectBuilder_Checkpoint.PlayerId, MyObjectBuilder_Player> p in myObjectBuilderWorld.Checkpoint.AllPlayersData.Dictionary)
+						{
+							if (p.Value.EntityCameraData != null)
+								p.Value.EntityCameraData.Clear();
+
+							if (p.Value.CameraData != null)
+								p.Value.CameraData.Dictionary.Clear();
+
+							if (p.Key.ClientId == steamId)
+							{
+								continue;
+							}
+
+							p.Value.Toolbar = null;
+							p.Value.CharacterCameraData = null;
+						}
+
+						for (int r = myObjectBuilderWorld.Checkpoint.Gps.Dictionary.Count - 1; r >= 0; r--)
+						{
+							KeyValuePair<long, MyObjectBuilder_Gps> p = myObjectBuilderWorld.Checkpoint.Gps.Dictionary.ElementAt(r);
+
+							if (p.Key == playerId)
+								continue;
+
+							myObjectBuilderWorld.Checkpoint.Gps.Dictionary.Remove(p.Key);
+						}
+
+						myObjectBuilderWorld.Checkpoint.ChatHistory.RemoveAll(x => x.IdentityId != playerId);
+
+						long factionId = 0;
+						if (myObjectBuilderWorld.Checkpoint.Factions.Players.Dictionary.ContainsKey(playerId))
+						{
+							factionId = myObjectBuilderWorld.Checkpoint.Factions.Players.Dictionary[playerId];
+							myObjectBuilderWorld.Checkpoint.FactionChatHistory.RemoveAll(x => x.FactionId1 != factionId && x.FactionId2 != factionId);
+							myObjectBuilderWorld.Checkpoint.Factions.Requests.RemoveAll(x => x.FactionId != factionId);
+						}
+						else
+						{
+							myObjectBuilderWorld.Checkpoint.FactionChatHistory.Clear();
+							myObjectBuilderWorld.Checkpoint.Factions.Requests.Clear();						
+						}
+
+						foreach (MyObjectBuilder_Faction faction in myObjectBuilderWorld.Checkpoint.Factions.Factions)
+						{
+							if (faction.FactionId != factionId)
+							{
+								faction.PrivateInfo = "";
+							}
+						}
 					}
 
 					MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
@@ -704,7 +763,16 @@ namespace SEModAPIInternal.API.Server
 					checkpoint.CharacterToolbar = null;
 					DateTime cs = DateTime.Now;
 					MyObjectBuilderSerializer.SerializeXML(ms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Gzip, null);
-					LogManager.APILog.WriteLineAndConsole(string.Format("...response construction took {0}ms (cp - {1}ms)", (DateTime.Now - start).TotalMilliseconds, (DateTime.Now - cs).TotalMilliseconds));
+
+					/*
+					MemoryStream vms = new MemoryStream();
+					MyObjectBuilderSerializer.SerializeXML(vms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Uncompressed, null);
+					FileStream file = new FileStream("e:\\temp\\test.txt", FileMode.Create);
+					vms.WriteTo(file);
+					file.Close();
+					*/
+
+					LogManager.APILog.WriteLineAndConsole(string.Format("...response construction took {0}ms (cp - {1}ms) size - {2} bytes", (DateTime.Now - start).TotalMilliseconds, (DateTime.Now - cs).TotalMilliseconds, ms.Length));
 				}
 
 				TransferWorld(ms, steamId);
