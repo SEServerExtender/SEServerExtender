@@ -202,7 +202,7 @@ namespace SEServerExtender
 
 		#region "Control"
 
-		private void BTN_ServerControl_Start_Click(object sender, EventArgs e)
+		internal void BTN_ServerControl_Start_Click(object sender, EventArgs e)
 		{
 			m_entityTreeRefreshTimer.Start();
 			m_chatViewRefreshTimer.Start();
@@ -218,7 +218,7 @@ namespace SEServerExtender
 			m_server.StartServer();
 		}
 
-		private void BTN_ServerControl_Stop_Click(object sender, EventArgs e)
+		internal void BTN_ServerControl_Stop_Click(object sender, EventArgs e)
 		{
 			m_entityTreeRefreshTimer.Stop();
 			m_chatViewRefreshTimer.Stop();
@@ -268,6 +268,11 @@ namespace SEServerExtender
 		private void PG_Control_Server_Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
 		{
 			UpdateControls();
+		}
+
+		internal void ChangeConfigurationName( string configurationName )
+		{
+			CMB_Control_CommonInstanceList.SelectedItem = configurationName;
 		}
 
 		private void CMB_Control_CommonInstanceList_SelectedIndexChanged(object sender, EventArgs e)

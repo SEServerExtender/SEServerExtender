@@ -41,8 +41,8 @@ namespace SEServerExtender
 			}
 		}
 
-		static SEServerExtender _serverExtenderForm;
-		static Server _server;
+		internal static SEServerExtender ServerExtenderForm;
+		internal static Server Server;
 
 		/// <summary>
 		/// Main entry point of the application
@@ -222,18 +222,18 @@ namespace SEServerExtender
 				if ( !unitTestResult )
 					SandboxGameAssemblyWrapper.IsInSafeMode = true;
 
-				_server = Server.Instance;
-				_server.CommandLineArgs = extenderArgs;
-				_server.IsWCFEnabled = !extenderArgs.NoWcf;
-				_server.WCFPort = extenderArgs.WcfPort;
-				_server.Init( );
+				Server = Server.Instance;
+				Server.CommandLineArgs = extenderArgs;
+				Server.IsWCFEnabled = !extenderArgs.NoWcf;
+				Server.WCFPort = extenderArgs.WcfPort;
+				Server.Init( );
 
 				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
 				if ( extenderArgs.AutoStart )
 				{
-					_server.StartServer( );
+					Server.StartServer( );
 				}
 
 				if ( !extenderArgs.NoGui )
@@ -279,14 +279,14 @@ namespace SEServerExtender
 
 		private static void Stop( )
 		{
-			if ( _server != null && _server.IsRunning )
-				_server.StopServer( );
-			if ( _serverExtenderForm != null && _serverExtenderForm.Visible )
-				_serverExtenderForm.Close( );
+			if ( Server != null && Server.IsRunning )
+				Server.StopServer( );
+			if ( ServerExtenderForm != null && ServerExtenderForm.Visible )
+				ServerExtenderForm.Close( );
 
-			if ( _server.ServerThread != null )
+			if ( Server.ServerThread != null )
 			{
-				_server.ServerThread.Join( 20000 );
+				Server.ServerThread.Join( 20000 );
 			}
 		}
 
@@ -337,12 +337,12 @@ namespace SEServerExtender
 
 			Application.EnableVisualStyles( );
 			Application.SetCompatibleTextRenderingDefault( false );
-			if ( _serverExtenderForm == null || _serverExtenderForm.IsDisposed )
-				_serverExtenderForm = new SEServerExtender( _server );
-			else if ( _serverExtenderForm.Visible )
+			if ( ServerExtenderForm == null || ServerExtenderForm.IsDisposed )
+				ServerExtenderForm = new SEServerExtender( Server );
+			else if ( ServerExtenderForm.Visible )
 				return;
 
-			Application.Run( _serverExtenderForm );
+			Application.Run( ServerExtenderForm );
 		}
 	}
 }

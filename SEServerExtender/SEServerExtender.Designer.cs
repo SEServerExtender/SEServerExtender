@@ -1071,7 +1071,7 @@
 		private System.Windows.Forms.Button BTN_Control_Server_Reset;
 		private System.Windows.Forms.Button BTN_Control_Server_Save;
 		private System.Windows.Forms.Label LBL_Control_Instance;
-		private System.Windows.Forms.ComboBox CMB_Control_CommonInstanceList;
+		internal System.Windows.Forms.ComboBox CMB_Control_CommonInstanceList;
 		private System.Windows.Forms.CheckBox CHK_Control_CommonDataPath;
 		private System.Windows.Forms.TabPage TAB_Utilities_Page;
 		private System.Windows.Forms.SplitContainer splitContainer4;

@@ -139,6 +139,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerService\IServerService.cs" />
+    <Compile Include="ServerService\ServerService.cs" />
     <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -193,7 +195,6 @@
     <Folder Include="ChatService\" />
     <Folder Include="InternalService\" />
     <Folder Include="PluginService\" />
-    <Folder Include="ServerService\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SEModAPIExtensions\SEModAPIExtensions.csproj">
