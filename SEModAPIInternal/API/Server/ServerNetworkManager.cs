@@ -30,37 +30,37 @@
 		private static readonly List<ulong> InGame = new List<ulong>( );
 		private static readonly Dictionary<ulong, Tuple<DateTime, int>> SlowDown = new Dictionary<ulong, Tuple<DateTime, int>>( );
 
-		public const string ServerNetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public const string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
+		public static string ServerNetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
+		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
-		//public const string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public const string ServerNetworkManagerSetPlayerBannedMethod = "D65387B662C5ADC7B3254480B6CA0837";
-		//public const string ServerNetworkManagerKickPlayerMethod = "5A3300B24D1944C76BBB2C6E92C02D96";
-		public const string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public const string ServerNetworkManagerSetPlayerBannedMethod = "C178AB3C7C41D149FB33E5474D93D180";
-		public const string ServerNetworkManagerKickPlayerMethod = "77193F523EB956D24AE88E5C41CD5CD0";
+		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "C178AB3C7C41D149FB33E5474D93D180";
+		//public static string ServerNetworkManagerKickPlayerMethod = "77193F523EB956D24AE88E5C41CD5CD0";
+		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "65EBA33998084A213E56F6A1DC52B4EA";
+		public static string ServerNetworkManagerKickPlayerMethod = "75A3BD06D62D91C869B800B9DFB273CC";
 
-		public const string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
+		public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
 		///////////// All these need testing /////////////
 		public const string NetworkingNamespace = "36CC7CE820B9BBBE4B3FECFEEFE4AE86";
 		public const string NetworkingOnWorldRequestField = "FAD031AB4FED05B9FE273ACD199496EE";
-
+			   
 		public const string MyMultipartMessageClass = "7B6560DE2B6A29DE7F0157E9CDFFCC37";
 		public const string MyMultipartMessagePreamble = "7AEDE70A5F16434A660FC187077FC86F";
-
+			   
 		public const string MySyncLayerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
 		public const string MySyncLayerField = "E863C8EAD57B154571B7A487C6A39AC6";
-
+			   
 		public const string MyTransportLayerField = "6F79877D9F8B092082EAEF8828D69F98";
 		public const string MyTransportLayerClearMethod = "DA0F40A1E0E2E5DD9B141562B91BDDDC";
-
+			   
 		public const string MyMultipartSenderClass = "73C7CA87DB0535EFE711E10913D8ACFB";
 		public const string MyMultipartSenderSendPart = "A822BAC1F661C682C78230403DDF5670";
-
+			   
 		public const string MySyncLayerSendMessage = "358D29D15C14B49FEA47651E0DE22024";
 		public const string MySyncLayerSendMessageToServer = "161C8D41497D2D26777646EE58FE2841";
-
+			   
 		public const string MyControlMessageCallbackClass = "C42525D7DE28CE4CFB44651F3D03A50D";
 		public const string MyControlMessageHandlerClass = "69BCF201AF4FAC4108B36AFA089FE230";
 
