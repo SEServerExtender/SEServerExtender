@@ -1,40 +1,60 @@
 ﻿namespace SEServerExtender.ServerService
 {
 	using System;
+	using System.Net.Mime;
+	using System.Reflection;
 	using System.ServiceModel;
 	using SEModAPIInternal.API.Common;
 
-	[ServiceBehavior( ConcurrencyMode = ConcurrencyMode.Multiple, ConfigurationName = "ServerService", IncludeExceptionDetailInFaults = true )]
-	class ServerService : IServerService
+	[ServiceBehavior( ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.Single)]
+	public class ServerService : IServerService
 	{
+		private static readonly Version ProtocolVersion = new Version( 1, 0, 0 );
+
 		/// <summary>
 		/// Starts the SE server with the given configuration name.
 		/// </summary>
-		/// <param name="configurationName"></param>
+		/// <param name="request"></param>
 		/// <remarks>Should not be called if a server is already running for this instance of SESE.</remarks>
-		public void StartServer( string configurationName )
+		public StartServerResponse StartServer( StartServerRequest request )
 		{
 			if ( Program.ServerExtenderForm != null && Program.ServerExtenderForm.Visible )
 			{
-				Action<string> changeConfigDelegate = Program.ServerExtenderForm.ChangeConfigurationName;
-				Program.ServerExtenderForm.Invoke( changeConfigDelegate, configurationName );
-
-				Action<object, EventArgs> buttonClickDelegate = Program.ServerExtenderForm.BTN_ServerControl_Start_Click;
-				Program.ServerExtenderForm.Invoke( buttonClickDelegate, this, new EventArgs( ) );
+				//If the local GUI is running, indicate failure for that reason.
+				return new StartServerResponse
+					   {
+						   ExtenderVersion = Assembly.GetExecutingAssembly( ).GetName( ).Version,
+						   ProtocolVersion = ProtocolVersion,
+						   Status = "Not supported while GUI visible on server.",
+						   StatusCode = 500
+					   };
 			}
-			else
+			if ( Program.Server != null && Program.Server.Config != null )
 			{
-				if ( Program.Server != null && Program.Server.Config != null )
-				{
-					Program.Server.InstanceName = configurationName;
-					SandboxGameAssemblyWrapper.Instance.InitMyFileSystem( configurationName );
+				Program.Server.InstanceName = request.ConfigurationName;
+				SandboxGameAssemblyWrapper.Instance.InitMyFileSystem( request.ConfigurationName );
 
-					Program.Server.LoadServerConfig( );
-					Program.Server.SaveServerConfig( );
+				Program.Server.LoadServerConfig( );
+				Program.Server.SaveServerConfig( );
 
-					Program.Server.StartServer( );
-				}
+				Program.Server.StartServer( );
+
+				return new StartServerResponse
+					   {
+						   StatusCode = 200,
+						   Status = "OK",
+						   ExtenderVersion = Assembly.GetExecutingAssembly( ).GetName( ).Version,
+						   ProtocolVersion = ProtocolVersion
+					   };
 			}
+
+			return new StartServerResponse
+				   {
+					   ExtenderVersion = Assembly.GetExecutingAssembly( ).GetName( ).Version,
+					   ProtocolVersion = ProtocolVersion,
+					   Status = "Unknown error attempting to start server.",
+					   StatusCode = 500
+				   };
 		}
 
 		/// <summary>

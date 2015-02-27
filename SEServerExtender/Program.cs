@@ -14,6 +14,8 @@ using SEModAPIExtensions.API;
 
 namespace SEServerExtender
 {
+	using System.ServiceModel;
+
 	public static class Program
 	{
 		public class WindowsService : ServiceBase
@@ -43,6 +45,8 @@ namespace SEServerExtender
 
 		internal static SEServerExtender ServerExtenderForm;
 		internal static Server Server;
+		public static ServerService.ServerService ServerService;
+		public static ServiceHost ServerServiceHost;
 
 		/// <summary>
 		/// Main entry point of the application
@@ -275,6 +279,10 @@ namespace SEServerExtender
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
 			}
+
+			ServerService = new ServerService.ServerService( );
+			ServerServiceHost = new ServiceHost( ServerService );
+			ServerServiceHost.Open( );
 		}
 
 		private static void Stop( )
@@ -288,6 +296,7 @@ namespace SEServerExtender
 			{
 				Server.ServerThread.Join( 20000 );
 			}
+			ServerServiceHost.Close( );
 		}
 
 		public static void Application_ThreadException( Object sender, ThreadExceptionEventArgs e )
