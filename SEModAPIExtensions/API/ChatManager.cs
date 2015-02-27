@@ -6,7 +6,6 @@
 	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.InteropServices;
-	using System.ServiceModel;
 	using System.Text.RegularExpressions;
 	using System.Threading;
 	using System.Xml;
@@ -108,8 +107,6 @@
 			RegisterChatCommand( unbanCommand );
 			RegisterChatCommand( asyncSaveCommand );
 
-			SetupWcfService( );
-
 			Console.WriteLine( "Finished loading ChatManager" );
 		}
 
@@ -149,41 +146,6 @@
 
 				List<ChatEvent> copy = new List<ChatEvent>( _chatEvents.ToArray( ) );
 				return copy;
-			}
-		}
-
-		private static void SetupWcfService( )
-		{
-			if ( !Server.Instance.IsWCFEnabled )
-			{
-				return;
-			}
-
-			ServiceHost selfHost = null;
-			try
-			{
-				selfHost = Server.CreateServiceHost( typeof ( ChatService ), typeof ( IChatServiceContract ), "Chat/", "ChatService" );
-				selfHost.Open( );
-			}
-			catch ( CommunicationException ex )
-			{
-				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
-				if ( selfHost != null )
-				{
-					selfHost.Abort( );
-				}
-			}
-			catch ( ObjectDisposedException objectDisposedException )
-			{
-				LogManager.APILog.WriteLineAndConsole( objectDisposedException );
-			}
-			catch ( TimeoutException timeoutException )
-			{
-				LogManager.APILog.WriteLineAndConsole( timeoutException );
-			}
-			catch ( InvalidOperationException invalidOperationException )
-			{
-				LogManager.APILog.WriteLineAndConsole( invalidOperationException );
 			}
 		}
 

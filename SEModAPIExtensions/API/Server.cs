@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Description;
 using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.ExceptionServices;
@@ -16,7 +15,6 @@ using SEModAPI.API.Definitions;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
-using SEModAPIExtensions.API.IPC;
 using System.ServiceModel.Web;
 
 namespace SEModAPIExtensions.API
@@ -224,10 +222,6 @@ namespace SEModAPIExtensions.API
 				{
 					Console.WriteLine("WCF disabled");
 				}
-				if ( _commandLineArgs.WcfPort > 0 )
-				{
-					Console.WriteLine( "WCF port: " + _commandLineArgs.WcfPort );
-				}
 				if ( _commandLineArgs.Autosave > 0 )
 				{
 					Console.WriteLine( "Autosave interval: " + _commandLineArgs.Autosave );
@@ -361,20 +355,6 @@ namespace SEModAPIExtensions.API
 		}
 
 		[IgnoreDataMember]
-		public ushort WCFPort
-		{
-			get
-			{
-				ushort port = _commandLineArgs.WcfPort;
-				if (port == 0)
-					port = 8000;
-
-				return port;
-			}
-			set { _commandLineArgs.WcfPort = value; }
-		}
-
-		[IgnoreDataMember]
 		public string Path
 		{
 			get
@@ -404,33 +384,6 @@ namespace SEModAPIExtensions.API
 		#endregion
 
 		#region "Methods"
-
-		public static ServiceHost CreateServiceHost(Type serviceType, Type contractType, string urlExtension, string name)
-		{
-			try
-			{
-				Uri baseAddress = new Uri( string.Format( "http://localhost:{0}/SEServerExtender/{1}", Instance.WCFPort, urlExtension ) );
-				ServiceHost selfHost = new ServiceHost(serviceType, baseAddress);
-
-				WSHttpBinding binding = new WSHttpBinding { Security = { Mode = SecurityMode.Message, Message = { ClientCredentialType = MessageCredentialType.Windows } } };
-				selfHost.AddServiceEndpoint(contractType, binding, name);
-
-				ServiceMetadataBehavior smb = new ServiceMetadataBehavior { HttpGetEnabled = true };
-				selfHost.Description.Behaviors.Add(smb);
-
-				if (SandboxGameAssemblyWrapper.IsDebugging)
-				{
-					Console.WriteLine( "Created WCF service at '{0}'", baseAddress );
-				}
-
-				return selfHost;
-			}
-			catch (CommunicationException ex)
-			{
-				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
-				return null;
-			}
-		}
 
 		public void Init()
 		{

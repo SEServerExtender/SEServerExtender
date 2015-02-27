@@ -51,28 +51,7 @@ namespace SEModAPIExtensions.API
 			m_lastConnectedPlayerList = new List<ulong>( );
 			m_pluginPaths = new Dictionary<Guid, string>( );
 
-			SetupWcfService( );
-
 			Console.WriteLine( "Finished loading PluginManager" );
-		}
-
-		private static void SetupWcfService( )
-		{
-			if ( !Server.Instance.IsWCFEnabled )
-				return;
-
-			ServiceHost selfHost = null;
-			try
-			{
-				selfHost = Server.CreateServiceHost( typeof( PluginService ), typeof( IPluginServiceContract ), "Plugin/", "PluginService" );
-				selfHost.Open( );
-			}
-			catch ( CommunicationException ex )
-			{
-				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "An exception occurred: {0}", ex.Message ) );
-				if ( selfHost != null )
-					selfHost.Abort( );
-			}
 		}
 
 		#endregion

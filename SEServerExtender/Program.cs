@@ -88,7 +88,6 @@ namespace SEServerExtender
 											   GamePath = string.Empty,
 											   NoWcf = false,
 											   Autosave = 0,
-											   WcfPort = 0,
 											   Path = string.Empty,
 											   CloseOnCrash = false,
 											   RestartOnCrash = false,
@@ -122,17 +121,6 @@ namespace SEServerExtender
 						try
 						{
 							extenderArgs.Autosave = int.Parse( argValue );
-						}
-						catch
-						{
-							//Do nothing
-						}
-					}
-					else if ( argName.ToLower( ).Equals( "wcfport" ) )
-					{
-						try
-						{
-							extenderArgs.WcfPort = ushort.Parse( argValue );
 						}
 						catch
 						{
@@ -202,9 +190,6 @@ namespace SEServerExtender
 				}
 			}
 
-			if ( extenderArgs.NoWcf )
-				extenderArgs.WcfPort = 0;
-
 			if ( !string.IsNullOrEmpty( extenderArgs.Path ) )
 			{
 				extenderArgs.InstanceName = string.Empty;
@@ -229,7 +214,6 @@ namespace SEServerExtender
 				Server = Server.Instance;
 				Server.CommandLineArgs = extenderArgs;
 				Server.IsWCFEnabled = !extenderArgs.NoWcf;
-				Server.WCFPort = extenderArgs.WcfPort;
 				Server.Init( );
 
 				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
@@ -280,9 +264,12 @@ namespace SEServerExtender
 					throw;
 			}
 
-			ServerService = new ServerService.ServerService( );
-			ServerServiceHost = new ServiceHost( ServerService );
-			ServerServiceHost.Open( );
+			if ( !extenderArgs.NoWcf )
+			{
+				ServerService = new ServerService.ServerService( );
+				ServerServiceHost = new ServiceHost( ServerService );
+				ServerServiceHost.Open( );
+			}
 		}
 
 		private static void Stop( )
@@ -296,7 +283,8 @@ namespace SEServerExtender
 			{
 				Server.ServerThread.Join( 20000 );
 			}
-			ServerServiceHost.Close( );
+			if ( ServerServiceHost != null )
+				ServerServiceHost.Close( );
 		}
 
 		public static void Application_ThreadException( Object sender, ThreadExceptionEventArgs e )
