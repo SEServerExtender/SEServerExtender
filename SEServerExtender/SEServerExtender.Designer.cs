@@ -89,10 +89,10 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.BTN_Utilities_ClearFloatingObjectsNow = new System.Windows.Forms.Button();
 			this.CHK_Utilities_FloatingObjectAutoClean = new System.Windows.Forms.CheckBox();
-			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.TAB_Statistics = new System.Windows.Forms.TabPage();
 			this.TB_Statistics = new System.Windows.Forms.TextBox();
+			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -155,8 +155,8 @@
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
 			this.floatingObjectControlGroupBox.SuspendLayout();
-			this.SS_Bottom.SuspendLayout();
 			this.TAB_Statistics.SuspendLayout();
+			this.SS_Bottom.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -901,22 +901,6 @@
 			this.CHK_Utilities_FloatingObjectAutoClean.UseVisualStyleBackColor = true;
 			this.CHK_Utilities_FloatingObjectAutoClean.CheckedChanged += new System.EventHandler(this.CHK_Utilities_FloatingObjectAutoClean_CheckedChanged);
 			// 
-			// SS_Bottom
-			// 
-			this.SS_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-			this.SS_Bottom.Location = new System.Drawing.Point(0, 3);
-			this.SS_Bottom.Name = "SS_Bottom";
-			this.SS_Bottom.Size = new System.Drawing.Size(951, 22);
-			this.SS_Bottom.TabIndex = 0;
-			this.SS_Bottom.Text = "None";
-			// 
-			// toolStripStatusLabel1
-			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(124, 17);
-			this.toolStripStatusLabel1.Text = "Updates Per Second: 0";
-			// 
 			// TAB_Statistics
 			// 
 			this.TAB_Statistics.Controls.Add(this.TB_Statistics);
@@ -936,6 +920,22 @@
 			this.TB_Statistics.Name = "TB_Statistics";
 			this.TB_Statistics.Size = new System.Drawing.Size(937, 537);
 			this.TB_Statistics.TabIndex = 0;
+			// 
+			// SS_Bottom
+			// 
+			this.SS_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+			this.SS_Bottom.Location = new System.Drawing.Point(0, 3);
+			this.SS_Bottom.Name = "SS_Bottom";
+			this.SS_Bottom.Size = new System.Drawing.Size(951, 22);
+			this.SS_Bottom.TabIndex = 0;
+			this.SS_Bottom.Text = "None";
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(124, 17);
+			this.toolStripStatusLabel1.Text = "Updates Per Second: 0";
 			// 
 			// SEServerExtender
 			// 
@@ -1012,10 +1012,10 @@
 			this.splitContainer4.ResumeLayout(false);
 			this.floatingObjectControlGroupBox.ResumeLayout(false);
 			this.floatingObjectControlGroupBox.PerformLayout();
-			this.SS_Bottom.ResumeLayout(false);
-			this.SS_Bottom.PerformLayout();
 			this.TAB_Statistics.ResumeLayout(false);
 			this.TAB_Statistics.PerformLayout();
+			this.SS_Bottom.ResumeLayout(false);
+			this.SS_Bottom.PerformLayout();
 			this.ResumeLayout(false);
 
 		}

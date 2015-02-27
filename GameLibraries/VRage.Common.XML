@@ -1,0 +1,2616 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VRage.Common</name>
+    </assembly>
+    <members>
+        <member name="T:VRage.Common.Animations.AnimationClip">
+            <summary>
+            An animation clip is a set of keyframes with associated bones.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.AnimationClip.bones">
+            <summary>
+            The bones for this animation
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.AnimationClip.Name">
+            <summary>
+            Name of the animation clip
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.AnimationClip.Duration">
+            <summary>
+            Duration of the animation clip
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Animations.AnimationClip.Bones">
+            <summary>
+            The bones for this animation clip with their keyframes
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Animations.AnimationClip.Keyframe">
+            <summary>
+            An Keyframe is a rotation and translation for a moment in time.
+            It would be easy to extend this to include scaling as well.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Animations.AnimationClip.Bone">
+            <summary>
+            Keyframes are grouped per bone for an animation clip
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.AnimationClip.Bone.m_name">
+            <summary>
+            Each bone has a name so we can associate it with a runtime model
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.AnimationClip.Bone.m_keyframes">
+            <summary>
+            The keyframes for this bone
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Animations.AnimationClip.Bone.Name">
+            <summary>
+            The bone name for these keyframes
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Animations.AnimationClip.Bone.Keyframes">
+            <summary>
+            The keyframes for this bone
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Animations.ModelAnimations">
+            <summary>
+            Class that contains additional information attached to the model and
+            shared with the runtime.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.ModelAnimations.skeleton">
+            <summary>
+            The bone indices for the skeleton associated with any
+            skinned model.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Animations.ModelAnimations.clips">
+            <summary>
+            Any associated animation clips
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Animations.ModelAnimations.Skeleton">
+            <summary>
+            The bone indices for the skeleton associated with any
+            skinned model.
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Animations.ModelAnimations.Clips">
+            <summary>
+            Animation clips associated with this model
+            </summary>
+        </member>
+        <member name="P:VRageRender.IMyRenderMessage.MessageClass">
+            <summary>
+            Get message class
+            </summary>
+        </member>
+        <member name="P:VRageRender.IMyRenderMessage.MessageType">
+            <summary>
+            Gets message type
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyRenderMessageSwitchRenderSettings1">
+            <summary>
+            1 at the end is naming convention from DX, saying this is newer version (for Dx11 render).
+            </summary>
+        </member>
+        <member name="M:VRage.IMyBufferedInputSource.SwapBufferedTextInput(System.Collections.Generic.List{System.Char}@)">
+            <summary>
+            Swaps internal buffer with the one passed as argument. This swapping operation
+            must be implemented in a thread safe manner. Buffer passed into the function will
+            replaced by the internal buffer and returned in the same variable.
+            </summary>
+        </member>
+        <member name="M:VRage.IMyRenderWindow.OnModeChanged(VRageRender.MyWindowModeEnum,System.Int32,System.Int32)">
+            <summary>
+            Called by render when display mode has changed
+            </summary>
+        </member>
+        <member name="P:VRage.IMyRenderWindow.DrawEnabled">
+            <summary>
+            True when Present on device should be called (e.g. window not minimized)
+            </summary>
+        </member>
+        <member name="P:VRage.IMyRenderWindow.Handle">
+            <summary>
+            Target window handle
+            </summary>
+        </member>
+        <member name="M:VRage.MyGameRenderComponent.Start(VRage.MyGameTimer,VRage.InitHandler,System.Nullable{VRageRender.MyRenderDeviceSettings},VRageRender.MyRenderQualityEnum)">
+            <summary>
+            Creates and starts render thread
+            </summary>
+        </member>
+        <member name="M:VRage.MyGameRenderComponent.Stop">
+            <summary>
+            Stops and clears render thread
+            </summary>
+        </member>
+        <member name="T:VRage.InitHandler">
+            <summary>
+            Initializes window on render thread and returns it's handle of window/control where to draw
+            </summary>
+        </member>
+        <member name="M:VRage.MyRenderThread.Exit">
+            <summary>
+            Signals the thread to exit and waits until it does so
+            </summary>
+        </member>
+        <member name="M:VRage.MySparseGrid`2.ClearCells">
+            <summary>
+            Clears cells, but keep them preallocated
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Generics.MyDynamicObjectPool`1">
+            <summary>
+            Dynamic object pool. It's allocate new instance when necessary.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:VRage.Common.Generics.MyObjectsPool`1.AllocateOrCreate(`0@)">
+            <summary>
+            Returns true when new item was allocated
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Generics.MyWeightDictionary`1">
+            <summary>
+            Contains items of any type. Each item has weight (float value).
+            Allows to get item based on weight.
+            </summary>
+            <typeparam name="T">The item type</typeparam>
+        </member>
+        <member name="M:VRage.Common.Generics.MyWeightDictionary`1.#ctor(System.Collections.Generic.Dictionary{`0,System.Single})">
+            <summary>
+            Initializes a new instance of the MyWeightDictionary class.
+            </summary>
+            <param name="data">Dictionary with items and weights.</param>
+        </member>
+        <member name="M:VRage.Common.Generics.MyWeightDictionary`1.GetSum">
+            <summary>
+            Gets sum of weights.
+            </summary>
+            <returns>The sum of all weights.</returns>
+        </member>
+        <member name="M:VRage.Common.Generics.MyWeightDictionary`1.GetItemByWeightNormalized(System.Single)">
+            <summary>
+            Gets item based on weight.
+            </summary>
+            <param name="weightNormalized">Weight, value from 0 to 1.</param>
+            <returns>The item.</returns>
+        </member>
+        <member name="M:VRage.Common.Generics.MyWeightDictionary`1.GetItemByWeight(System.Single)">
+            <summary>
+            Gets item based on weight.
+            </summary>
+            <param name="weight">Weight, value from 0 to sum.</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Generics.MyWeightDictionary`1.GetRandomItem(System.Random)">
+            <summary>
+            Gets random item based on weight.
+            </summary>
+            <returns>The item.</returns>
+        </member>
+        <member name="M:BulletXNA.BulletCollision.BoxCollision.BT_GREATER(System.Single,System.Single)">
+            Swap numbers
+        </member>
+        <member name="M:BulletXNA.BulletCollision.GImpactBvh.Update">
+            @{
+        </member>
+        <member name="M:BulletXNA.BulletCollision.GImpactQuantizedBvh.BuildSet">
+            @{
+        </member>
+        <member name="M:BulletXNA.AabbUtil2.TestPointAgainstAabb2(BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@)">
+            conservative test for overlap between two aabbs
+        </member>
+        <member name="M:BulletXNA.AabbUtil2.TestAabbAgainstAabb2(BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@)">
+            conservative test for overlap between two aabbs
+        </member>
+        <member name="M:BulletXNA.AabbUtil2.TestTriangleAgainstAabb2(BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@,BulletXNA.LinearMath.IndexedVector3@)">
+            conservative test for overlap between triangle and aabb
+        </member>
+        <member name="M:BulletXNA.LinearMath.IndexedBasisMatrix.Diagonalize(BulletXNA.LinearMath.IndexedMatrix@,System.Single,System.Int32)">
+            @brief diagonalizes this matrix by the Jacobi method.
+            @param rot stores the rotation from the coordinate system in which the matrix is diagonal to the original
+            coordinate system, i.e., old_this = rot * new_this * rot^T. 
+            @param threshold See iteration
+            @param iteration The iteration stops when all off-diagonal elements are less than the threshold multiplied 
+            by the sum of the absolute values of the diagonal, or when maxSteps have been executed. 
+            
+            Note that this matrix is assumed to be symmetric. 
+        </member>
+        <member name="T:BulletXNA.ConvexSeparatingDistanceUtil">
+            The btConvexSeparatingDistanceUtil can help speed up convex collision detection 
+            by conservatively updating a cached separating distance/vector instead of re-calculating the closest distance
+        </member>
+        <member name="T:VRage.Common.Import.MyMaterialDescriptor">
+            <summary>
+            material params for export
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Import.MyMaterialDescriptor.ExtraData">
+            <summary>
+            Extra data (animation of holos)
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyMaterialDescriptor.#ctor(System.String)">
+            <summary>
+            c-tor
+            </summary>
+            <param name="materialName"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyMaterialDescriptor.Write(System.IO.BinaryWriter)">
+            <summary>
+            Write to binary file
+            </summary>
+            <param name="writer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadHalfVector4(System.IO.BinaryReader)">
+            <summary>
+            Read HalfVector4
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadHalfVector2(System.IO.BinaryReader)">
+            <summary>
+            Read HalfVector2
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadByte4(System.IO.BinaryReader)">
+            <summary>
+            Read Byte4
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ImportVector3(System.IO.BinaryReader)">
+            <summary>
+            ImportVector3
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ImportVector4(System.IO.BinaryReader)">
+            <summary>
+            ImportVector4
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ImportQuaternion(System.IO.BinaryReader)">
+            <summary>
+            ImportQuaternion
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ImportVector4Int(System.IO.BinaryReader)">
+            <summary>
+            ImportVector4Int
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ImportVector3Int(System.IO.BinaryReader)">
+            <summary>
+            ImportVector3Int
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ImportVector2(System.IO.BinaryReader)">
+            <summary>
+            ImportVector2
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfHalfVector4(System.IO.BinaryReader)">
+            <summary>
+            Read array of HalfVector4
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfByte4(System.IO.BinaryReader)">
+            <summary>
+            Read array of Byte4
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfHalfVector2(System.IO.BinaryReader)">
+            <summary>
+            Read array of HalfVector2
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfVector3(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfVector3
+            </summary>
+            <param name="br"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfVector4(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfVector4
+            </summary>
+            <param name="br"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfVector4Int(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfVector4
+            </summary>
+            <param name="br"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfVector3Int(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfVector3I
+            </summary>
+            <param name="br"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfVector2(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfVector2
+            </summary>
+            <param name="br"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfString(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfString
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadBoundingBox(System.IO.BinaryReader)">
+            <summary>
+            ReadBoundingBox
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadBoundingSphere(System.IO.BinaryReader)">
+            <summary>
+            ReadBoundingSphere
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadMatrix(System.IO.BinaryReader)">
+            <summary>
+            ReadMatrix
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadMeshParts(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            ReadMeshParts
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadDummies(System.IO.BinaryReader)">
+            <summary>
+            ReadDummies
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelImporter.ReadArrayOfInt(System.IO.BinaryReader)">
+            <summary>
+            ReadArrayOfInt
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="F:VRageRender.MyRenderMessageType.Draw">
+            <summary>
+            Draw message, skipped when processing multiple updates (only handled in last update before draw)
+            Draw sprite, debug draw...
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyRenderMessageType.StateChangeOnce">
+            <summary>
+            State change which can be applied only once, not applied when rendering same frame second time or more
+            Add render object, remove render object...
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyRenderMessageType.StateChangeEvery">
+            <summary>
+            State change which must be applied every time, even when drawing same frame multiple times
+            Move render object, other interpolation messages
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyRenderMessageUpdateRenderEnvironment">
+            <summary>
+            The difference between environment and RenderSettings is that environment are game play values,
+            on the other hand render settings are render internal/debugging values
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.MyCylinders">
+            <summary>
+            Noise that outputs concentric cylinders.
+            Each cylinder extends infinitely along the y axis.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Patterns.MyRing">
+            <summary>
+            Noise that outputs dounut-like ring
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Models.MyCylinder">
+            <summary>
+            Maps the output of a module onto a cylinder.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Models.MySphere">
+            <summary>
+            Maps the output of a module onto a sphere.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Modifiers.MyCurve">
+            <summary>
+            Maps the output value from a source module onto an arbitrary function curve.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Modifiers.MyExponent">
+            <summary>
+            Maps the output value from a source module onto an exponential curve.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Modifiers.MyAbs">
+            <summary>
+            Outputs the absolute value of the output value from a source module.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Modifiers.MyInvert">
+            <summary>
+            Inverts the output value from a source module.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Modifiers.MyClamp">
+            <summary>
+            Clamps the output value from a source module to a range of values.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.MyModule">
+            <summary>
+            High quality noise module that combines properties of Value noise and gradient noise.
+            Value noise is used as input for gradient function. This leads to no artifacts or zero values at integer points.
+            It's so called Value-Gradient noise.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.MyModuleFast">
+            <summary>
+            Faster version of MyModule.
+            This time we do not compute the gradient position directly but we're using gradient table lookup via permutation table.
+            This leads to more 'grid' result as the local min and max (like in Value noise) are always appearing at integer points.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Noise.Patterns.MySpheres">
+            <summary>
+            Noise that outputs concentric spheres.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.MyMultipleEnabledEnum">
+            <summary>
+            Enumeration describing Enabled state of multiple objects.
+            </summary>
+        </member>
+        <member name="T:VRage.ProfilerShort">
+            <summary>
+            Helper class, "shortcuts" to profiler
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyRenderStats">
+            <summary>
+            Draws statistics
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyFont.REPLACEMENT_CHARACTER">
+            <summary>
+            Replacement character shown when we don't have something in our texture.
+            Normally, this would be \uFFFD, but BMFontGen refuses to generate it, so I put its glyph at \u25A1 (empty square)
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyFont.Spacing">
+            <summary>
+            This is artificial spacing in between two characters (in pixels).
+            Using it we can make spaces wider or narrower
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyFont.KernEnabled">
+            <summary>
+            Enable / disable kerning of adjacent character pairs.
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyFont.Depth">
+            <summary>
+            The depth at which to draw the font
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyFont.#ctor(System.String,System.Int32)">
+            <summary>
+            Create a new font from the info in the specified font descriptor (XML) file
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyFont.LoadFontXML(System.Xml.XmlNodeList)">
+            <summary>
+            Load the font data from an XML font descriptor file
+            </summary>
+            <param name="xnl">XML node list containing the entire font descriptor file</param>
+        </member>
+        <member name="M:VRageRender.MyFont.LoadFontXML_font(System.Xml.XmlNodeList)">
+            <summary>
+            Load the data from the "font" node
+            </summary>
+            <param name="xnl">XML node list containing the "font" node's children</param>
+        </member>
+        <member name="M:VRageRender.MyFont.LoadFontXML_bitmaps(System.Xml.XmlNodeList)">
+            <summary>
+            Load the data from the "bitmaps" node
+            </summary>
+            <param name="xnl">XML node list containing the "bitmaps" node's children</param>
+        </member>
+        <member name="M:VRageRender.MyFont.LoadFontXML_glyphs(System.Xml.XmlNodeList)">
+            <summary>
+            Load the data from the "glyphs" node
+            </summary>
+            <param name="xnl">XML node list containing the "glyphs" node's children</param>
+        </member>
+        <member name="M:VRageRender.MyFont.LoadFontXML_kernpairs(System.Xml.XmlNodeList)">
+            <summary>
+            Load the data from the "kernpairs" node
+            </summary>
+            <param name="xnl">XML node list containing the "kernpairs" node's children</param>
+        </member>
+        <member name="M:VRageRender.MyFont.GetXMLAttribute(System.Xml.XmlNode,System.String)">
+            <summary>
+            Get the XML attribute value
+            </summary>
+            <param name="n">XML node</param>
+            <param name="strAttr">Attribute name</param>
+            <returns>Attribute value, or the empty string if the attribute doesn't exist</returns>
+        </member>
+        <member name="P:VRageRender.MyFont.Baseline">
+            <summary>
+            Distance from top of font to the baseline
+            </summary>
+        </member>
+        <member name="P:VRageRender.MyFont.LineHeight">
+            <summary>
+            Distance from top to bottom of the font
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyFont.MyGlyphInfo">
+            <summary>
+             Info for each glyph in the font - where to find the glyph image and other properties
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyFont.MyBitmapInfo">
+            <summary>
+            Info for each font bitmap
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyRenderQualityProfile.ShadowCascadeLODTreshold">
+            <summary>
+            Determines last index of cascade, which will use LOD0 objects. Lower cascade index means
+            closer cascade to camera. Ie. 0 means all cascaded will use LOD1 models (worst shadow quality),
+            5 means best quality, because all cascades will use LOD0 objects (we have 4 cascades currently);
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyRenderQualityProfile.ShadowMapCascadeSize">
+            <summary>
+            Size in pixels for one shadow map cascade (of 4 total). Be carefull, we are limited by 8192 in texture size on PC.
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyRenderConstants.MAX_GPU_OCCLUSION_QUERY_DISTANCE">
+            <summary>
+            Maximum distance for which a light uses occlusion an occlusion query.
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyRenderConstants.SwitchRenderQuality(VRageRender.MyRenderQualityEnum)">
+            <summary>
+            This should be called only from LoadContent
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyMessagePool">
+            <summary>
+            TODO: This should use some better sync, it could introduce delays with current state
+            1) Use spin lock
+            2) Lock only queue, not whole dictionary
+            3) Test count first and when it's insufficient, create new message, both should be safe to do out of any lock
+            4) Custom consumer/producer non-locking (except resize) queue could be better (maybe overkill)
+            </summary>
+        </member>
+        <member name="T:VRageRender.RenderFlags">
+            <summary>
+            Entity flags.
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.SkipIfTooSmall">
+            <summary>
+            Skip the object in render if detected that it is too small
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.NeedsResolveCastShadow">
+            <summary>
+            Needs resolve cast shadows flag (done by parallel raycast to sun)
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.CastShadowsResolved">
+            <summary>
+            Tells if this object is visible from sun. If not, it does not casts shadows
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.FastCastShadowResolve">
+            <summary>
+            Casts only one raycast to determine shadow casting
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.Visible">
+            <summary>
+            Specifies whether draw this entity or not.
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.Near">
+            <summary>
+            Specifies whether entity is "near", near entities are cockpit and weapons, these entities are rendered in special way
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.CastShadows">
+            <summary>
+            Tells if this object should cast shadows
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.UseCustomDrawMatrix">
+            <summary>
+            Tells if this object should use PlayerHeadMatrix as matrix for draw
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.ShadowLodBox">
+            <summary>
+            Use local AABB box for shadow LOD
+            </summary>
+        </member>
+        <member name="T:VRageRender.LightTypeEnum">
+            <summary>
+            Light type, flags, could be combined
+            </summary>
+        </member>
+        <member name="F:VRageRender.Lights.MyGlareTypeEnum.Normal">
+            <summary>
+            This is the glare that is dependent on occlusion queries.
+            Physically, this phenomenon originates in the lens.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Lights.MyGlareTypeEnum.Distant">
+            <summary>
+            This is the glare that you see even if the light itself is occluded.
+            It gives the impression of scattering in a medium (like fog).
+            </summary>
+        </member>
+        <member name="F:VRageRender.Lights.MyGlareTypeEnum.Directional">
+            <summary>
+            Like normal, but gets dimmed with camera vs. reflector angle
+            </summary>
+        </member>
+        <member name="T:VRageRender.Textures.TextureQuality">
+            <summary>
+            Reresent loading quality for textures.
+            This works only for dds textures with mipmaps. Other textures will retains their original properties.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Textures.TextureQuality.Full">
+            <summary>
+            Full quality.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Textures.TextureQuality.Half">
+            <summary>
+            1/2 quality.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Textures.TextureQuality.OneFourth">
+            <summary>
+            1/4 quality
+            </summary>
+        </member>
+        <member name="F:VRageRender.Textures.TextureQuality.OneEighth">
+            <summary>
+            1/8 quality
+            </summary>
+        </member>
+        <member name="F:VRageRender.Textures.TextureQuality.OneSixteenth">
+            <summary>
+            1/16 quality
+            </summary>
+        </member>
+        <member name="T:VRageRender.Profiler.MyRenderProfiler">
+            <summary>
+            Provides profiling capability
+            </summary>
+            <remarks>
+            Non-locking way of render profiler is used. Each thread has it's own profiler is ThreadStatic variable.
+            Data for each profiling block are of two kinds: Immediate (current frame being profiled) and History (previous finished frames)
+            Start/End locking is not necessary, because Start/Stop uses only immediate data and nothing else uses it at the moment.
+            Commit is only other place which uses Immediate data, but it must be called from same thead, no racing condition.
+            Draw and Commit both uses History data, and both can be called from different thread, so there's lock.
+            This way everything runs with no waiting, unless Draw obtains lock in which case Commit wait for Draw to finish (Start/End is still exact).
+            
+            For threads which does not call commit (background workers, parallel tasks), mechanism which calls commit automatically after each top level End should be added.
+            This way each task will be one "frame" on display
+            </remarks>
+        </member>
+        <member name="T:VRageRender.MyRenderSettings">
+            <summary>
+            Settings for whole render. To make settings per draw, use RenderSetup
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyAntialiasingMode">
+            <summary>
+            VRage.Render11 only.
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyShadowsQuality">
+            <summary>
+            VRage.Render11 only.
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyTextureQuality">
+            <summary>
+            VRage.Render11 only.
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyTextureAnisoFiltering">
+            <summary>
+            VRage.Render11 only.
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyRenderSettings1">
+            <summary>
+            Naming convention from DX. Newer version for Dx11 render.
+            Put only settings that player can control (either directly or indirectly) using options here.
+            Don't put debug crap here!
+            </summary>
+        </member>
+        <member name="P:VRageRender.MyVertexFormatVoxelSingleData2.MaterialAlphaIndex">
+            <summary>
+            For multimaterial vertex only
+            0, 1 or 2, indicates what material is on this vertex
+            </summary>
+        </member>
+        <member name="P:VRageRender.MyVertexFormatVoxelSingleData.MaterialAlphaIndex">
+            <summary>
+            For multimaterial vertex only
+            0, 1 or 2, indicates what material is on this vertex
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyCubeInstanceData.ResetBones">
+            <summary>
+            Resets bones to zero and disables skinning
+            </summary>
+        </member>
+        <member name="P:VRageRender.MyCubeInstanceData.Translation">
+            <summary>
+            Gets translation, faster than getting local matrix
+            </summary>
+        </member>
+        <member name="T:VRageRender.SpriteScissorStack">
+            <summary>
+            Stores stack of scissor rectangles where top rectangle has already
+            been cut using all the rectangles below it, so that only one
+            rectangle is checked during scissor test.
+            </summary>
+        </member>
+        <member name="M:VRageRender.SpriteScissorStack.Cut(VRageMath.RectangleF@,VRageMath.RectangleF@)">
+            <summary>
+            Cuts the destination rectangle using top of the scissor stack.
+            Source rectangle is modified using scaled change of destination
+            as well.
+            </summary>
+        </member>
+        <member name="T:VRageRender.MySharedData">
+            <summary>
+            Data shared between render and update
+            </summary>
+        </member>
+        <member name="M:VRageRender.MySharedData.BeforeUpdate">
+            <summary>
+            Refresh data from render (visible objects, render messages)
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyUpdateData.CommitUpdateFrame">
+            <summary>
+            Commits current frame as atomic operation and prepares new frame
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyUpdateData.GetRenderFrame(System.Boolean@)">
+            <summary>
+            Gets next frame for rendering, can return null in case there's nothing for rendering (no update frame submitted).
+            When isPreFrame is true, don't handle draw messages, just process update messages and call method again.
+            Pre frame must release messages and must be returned.
+            Final frame is kept unmodified in queue, in case of slower update, so we can interpolate and draw frame again.
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyUpdateData.ReturnPreFrame(VRageRender.MyUpdateFrame)">
+            <summary>
+            PreFrame must be empty in this place
+            </summary>
+        </member>
+        <member name="T:VRageRender.MyUpdateFrame">
+            <summary>
+            Contains data produced by update frame, sent to render in thread-safe manner
+            </summary>
+        </member>
+        <member name="T:VRageRender.VideoState">
+            <summary>
+            Describes the state of a video player
+            </summary>
+        </member>
+        <member name="M:VRageRender.MyRenderProxy.ChangeModel(System.UInt32,System.Int32,System.String,System.Boolean)">
+            <summary>
+            New model should have similar size to previous model because of prunning structure recalculation
+            </summary>
+            <param name="id"></param>
+            <param name="LOD"></param>
+            <param name="model"></param>
+            <param name="useForShadow"></param>
+        </member>
+        <member name="T:VRageRender.Graphics.SpriteEffects">
+            <summary>
+            Defines sprite mirroring options.
+            </summary>
+            <remarks>
+            Description is taken from original XNA <a href='http://msdn.microsoft.com/en-us/library/VRageMath.graphics.spriteeffects.aspx'>SpriteEffects</a> class.
+            </remarks>
+        </member>
+        <member name="F:VRageRender.Graphics.SpriteEffects.None">
+            <summary>
+            No rotations specified.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Graphics.SpriteEffects.FlipHorizontally">
+            <summary>
+            Rotate 180 degrees around the Y axis before rendering.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Graphics.SpriteEffects.FlipVertically">
+            <summary>
+            Rotate 180 degrees around the X axis before rendering.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Graphics.SpriteEffects.FlipBoth">
+            <summary>
+            Rotate 180 degress around both the X and Y axis before rendering.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.MyVector3ISet">
+            <summary>
+            A data structure for a set of Vector3I coordinates optimized for sets with high spatial coherence (hence the name)
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVector3ISet.Union(VRage.Common.Utils.MyVector3ISet)">
+            <summary>
+            Makes a union of this set and the other set and saves it in this set
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Utils.MyVector3ISet.Timestamp">
+            <summary>
+            For detection of modification of the set during iteration. Every modifying operation on the set should increase the timestamp
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.My5BitEncoding.#ctor">
+            <summary>
+            Initializes a new instance of the Encoding5Bit class.
+            Uses characters 0-9 and A-Z except (0,O,1,I).
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.My5BitEncoding.#ctor(System.Char[])">
+            <summary>
+            Initializes a new instance of the Encoding5Bit class.
+            </summary>
+            <param name="characters">32 characters which will be used when encoding bytes to string.</param>
+        </member>
+        <member name="M:VRage.Common.Utils.My5BitEncoding.Encode(System.Byte[])">
+            <summary>
+            Encodes data as 5bit string.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.My5BitEncoding.Decode(System.Char[])">
+            <summary>
+            Decodes 5bit string as bytes, not alligned characters may be lost.
+            Only decode strings encoded with Encode.
+            </summary>
+            <param name="encoded5BitText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertRelease(System.Boolean)">
+            <summary>
+            This "assert" is executed in DEBUG and RELEASE modes. Use it in code that that won't suffer from more work (e.g. loading), not in frequently used loops
+            </summary>
+            <param name="condition"></param>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertRelease(System.Boolean,System.String)">
+            <summary>
+            This "assert" is executed in DEBUG and RELEASE modes. Use it in code that that won't suffer from more work (e.g. loading), not in frequently used loops
+            </summary>
+            <param name="condition"></param>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertDebug(System.Boolean)">
+            <summary>
+            This "assert" is executed in DEBUG mode. Because people dont know how to use AssertRelease!
+            </summary>
+            <param name="condition"></param>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertDebug(System.Boolean,System.String)">
+            <summary>
+            This "assert" is executed in DEBUG mode. Because people dont know how to use AssertRelease!
+            </summary>
+            <param name="condition"></param>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.IsValid(System.Single)">
+            <summary>
+            Returns true if float is valid
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.IsValid(VRageMath.Vector3)">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.IsValid(VRageMath.Vector2)">
+            <summary>
+            Returns true if Vector2 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.IsValid(System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertIsValid(VRageMath.Vector3)">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertIsValid(System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertIsValid(VRageMath.Vector2)">
+            <summary>
+            Returns true if Vector2 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SysUtils.Utils.MyDebug.AssertIsValid(System.Single)">
+            <summary>
+            Returns true if float is valid
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="T:VRage.Common.Utils.MyEventSet">
+            <summary>
+            From http://www.wintellect.com/Resources CLR Via C# by Jeffrey Richter
+            </summary>
+        </member>
+        <member name="T:SysUtils.Utils.MyFileSystemUtils">
+            <summary>
+            MyFileSystemUtils
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SysUtils.Utils.MyFileSystemUtils.CreateFolder(System.String)" -->
+        <member name="T:SysUtils.Utils.MyUserFileAccess">
+            <summary>
+            Checks user access rights to specific path. Note that this only checks
+            user rights, not things like eg. whether file is open by another process.
+            </summary>
+        </member>
+        <member name="M:SysUtils.Utils.MyUserFileAccess.#ctor(System.String)">
+            <summary>
+            Convenience constructor assumes the current user.
+            </summary>
+        </member>
+        <member name="M:SysUtils.Utils.MyUserFileAccess.#ctor(System.String,System.Security.Principal.WindowsIdentity)">
+            <summary>
+            Supply the path to the file or directory and a user or group. Access checks are done
+            during instanciation to ensure we always have a valid object.
+            </summary>
+        </member>
+        <member name="T:SysUtils.MyMessageBox">
+            <summary>
+            Custom message box
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyEnumDuplicitiesTester.GetCompanyNameOfAssembly(System.Reflection.Assembly)">
+            <summary>
+            The company name of the calling assembly.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.MyUtils.LinePlaneIntersection(VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Line dir and plane normal must be normalized
+            </summary>
+        </member>
+        <member name="M:VRage.Common.MyUtils.LinePlaneIntersection(VRageMath.Vector3D,VRageMath.Vector3,VRageMath.Vector3D,VRageMath.Vector3)">
+            <summary>
+            Line dir and plane normal must be normalized
+            </summary>
+        </member>
+        <member name="M:VRage.Common.MyUtils.IsValid(System.Single)">
+            <summary>
+            Returns true if float is valid
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.MyUtils.IsValid(VRageMath.Vector3)">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.MyUtils.IsValid(System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.MyUtils.AssertIsValid(VRageMath.Vector3)">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.MyUtils.AssertIsValid(System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.MyUtils.AssertIsValid(System.Single)">
+            <summary>
+            Returns true if float is valid
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.MyUtils.FirstElement``1(System.Collections.Generic.HashSet{``0})">
+            <summary>
+            Get the first element from the HashSet.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.Normalize(VRageMath.Vector3)">
+            <summary>
+            Protected normalize with assert
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.Normalize(VRageMath.Vector3@,VRageMath.Vector3@)">
+            <summary>
+            Protected normalize with assert
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.Normalize(VRageMath.Matrix@,VRageMath.Matrix@)">
+            <summary>
+            Protected normalize with assert
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsZero(System.Single,System.Single)">
+            <summary>
+            Better comparison for zero
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsZero(VRageMath.Vector3,System.Single)">
+            <summary>
+            Better comparison for zero
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsZero(VRageMath.Quaternion,System.Single)">
+            <summary>
+            Better comparison for zero
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsZero(VRageMath.Vector4)">
+            <summary>
+            Better comparison for zero
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.GenerateQuad(VRageMath.MyQuadD@,VRageMath.Vector3D@,System.Single,System.Single,VRageMath.MatrixD@)">
+            <summary>
+            Generate oriented quad by matrix
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.GetBillboardQuadOriented(VRageMath.MyQuadD@,VRageMath.Vector3D@,System.Single,System.Single,VRageMath.Vector3@,VRageMath.Vector3@)">
+            <summary>
+            This billboard isn't facing the camera. It's always oriented in specified direction. May be used as thrusts, or inner light of reflector.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.GetRoundedVector3(VRageMath.Vector3,System.Int32)">
+            <summary>
+            This method rounds each vector component floating point value to specified number of fractional digits
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsValid(VRageMath.Vector3)">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsValid(VRageMath.Vector2)">
+            <summary>
+            Returns true if Vector2 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsValid(System.Single)">
+            <summary>
+            Returns true if float is valid
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsValid(System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.AssertIsValid(VRageMath.Vector3)">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.AssertIsValid(System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Returns true if Vector3 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.AssertIsValid(VRageMath.Vector2)">
+            <summary>
+            Returns true if Vector2 is valid
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.AssertIsValid(System.Single)">
+            <summary>
+            Returns true if float is valid
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsEqual(System.Single,System.Single)">
+            <summary>
+            Returns true if values are considered as same
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsEqual(VRageMath.Vector2,VRageMath.Vector2)">
+            <summary>
+            Returns true if values are considered as same
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsEqual(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Returns true if values are considered as same
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.IsEqual(VRageMath.Matrix,VRageMath.Matrix)">
+            <summary>
+            Returns true if values are considered as same
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.FirstElement``1(System.Collections.Generic.HashSet{``0})">
+            <summary>
+            Get the first element from the HashSet.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.GetRandomVector3">
+            <summary>
+            Returns random vector (-1,1)
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyVRageUtils.GetRandomTimeSpan(System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Returns a random TimeSpan between begin (inclusive) and end (exclusive).
+            </summary>
+        </member>
+        <member name="M:VRage.MyStringUtils.SearchStringInArray(System.String[],System.String)">
+            <summary>
+            SearchStringInArray
+            </summary>
+            <param name="strings"></param>
+            <param name="lookFor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.MyStringUtils.GetCoordAligned(VRageMath.Vector2,VRageMath.Vector2,VRage.MyGuiDrawAlignEnum)">
+            <summary>
+            Aligns rectangle, works in screen/texture/pixel coordinates, not normalized coordinates.
+            </summary>
+            <returns>Pixel coordinates for texture.</returns>
+        </member>
+        <member name="M:VRage.MyStringUtils.GetCoordAlignedFromCenter(VRageMath.Vector2,VRageMath.Vector2,VRage.MyGuiDrawAlignEnum)">
+            <summary>
+            Modifies input coordinate (in center) using alignment and
+            size of the rectangle. Result is at position inside rectangle
+            specified by alignment.
+            </summary>
+        </member>
+        <member name="M:VRage.MyStringUtils.GetCoordTopLeftFromAligned(VRageMath.Vector2,VRageMath.Vector2,VRage.MyGuiDrawAlignEnum)">
+            <summary>
+            Reverses effect of alignment to compute top-left corner coordinate.
+            </summary>
+        </member>
+        <member name="M:VRage.MyStringUtils.GetCoordTopLeftFromAligned(VRageMath.Vector2I,VRageMath.Vector2I,VRage.MyGuiDrawAlignEnum)">
+            <summary>
+            Reverses effect of alignment to compute top-left corner coordinate.
+            </summary>
+        </member>
+        <member name="M:VRage.MyStringUtils.GetCoordCenterFromAligned(VRageMath.Vector2,VRageMath.Vector2,VRage.MyGuiDrawAlignEnum)">
+            <summary>
+            Reverses effect of alignment to compute center coordinate.
+            </summary>
+        </member>
+        <member name="M:VRage.MyStringUtils.GetCoordAlignedFromRectangle(VRageMath.RectangleF@,VRage.MyGuiDrawAlignEnum)">
+            <summary>
+            Returns coordinate within given rectangle specified by draw align. Rectangle position should be
+            upper left corner. Conversion assumes that Y coordinates increase downwards.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.MakeEdgeFace(System.Int32,System.Int32,System.Int32,System.Int32,System.Object,System.Int32@)">
+            <summary>
+            Creates a new face by closing the gap between vertices vert1 and vert2 by a new edge
+            </summary>
+            <param name="vert1">Point that will be shared by the new edge and edge1</param>
+            <param name="vert2">Point that will be shared by the new edge and edge2</param>
+            <param name="edge1">Predecessor of the new edge</param>
+            <param name="edge2">Successor of the new edge</param>
+            <param name="faceUserData">User data for the newly created face</param>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.MergeEdges(System.Int32,System.Int32)">
+            <summary>
+            Merges two edges together into one. These edges have to border on the edge of the mesh (i.e. face -1)
+            Note that this also merges the corresponding vertices!
+            </summary>
+            <param name="edge1">The edge that will be merged</param>
+            <param name="edge2">The edge that will be kept</param>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.ExtrudeTriangleFromEdge(VRageMath.Vector3@,System.Int32,System.Object,System.Int32@,System.Int32@)">
+            <summary>
+            Creates a new triangle by adding a vertex to an existing edge
+            </summary>
+            <param name="newVertex">Position of the new vertex</param>
+            <param name="edge">The edge from which we want to extrude</param>
+            <param name="faceUserData">User data that will be saved in the face</param>
+            <param name="newEdgeS">Index of the new edge that follows edge "edge" in the new triangle.</param>
+            <param name="newEdgeP">Index of the new edge that precedes edge "edge" in the new triangle.</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.MakeFace(System.Object,System.Int32)">
+            <summary>
+            Makes a face by filling in the empty edge loop incident to incidentEdge
+            </summary>
+            <param name="userData"></param>
+            <param name="incidentEdge"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.CheckFreeEntryConsistency">
+            <summary>
+            Checks for loops in the meshe's tables' freed entries
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.TryGetSharedVertex(VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry@)">
+            <summary>
+            Returns -1 if there is no shared edge
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.VertexLeftFace(System.Int32)">
+            <summary>
+            Returns a face to the left when going towards the given vertex
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.VertexRightFace(System.Int32)">
+            <summary>
+            Returns a face to the right when going towards the given vertex
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.FaceSucc(System.Int32)">
+            <summary>
+            Returns the successor of this edge in the given face
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.SetFaceSucc(System.Int32,System.Int32)">
+            <summary>
+            Sets the successor of this edge in the given face
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.FacePred(System.Int32)">
+            <summary>
+            Returns the predecessor of this edge in the given face
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.SetFacePred(System.Int32,System.Int32)">
+            <summary>
+            Sets the successor of this edge in the given face
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.VertexSucc(System.Int32)">
+            <summary>
+            Gets the successor around the given vertex.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.SetVertexSucc(System.Int32,System.Int32)">
+            <summary>
+            Sets the successor around the given vertex.
+            </summary>
+            <returns>The old successor value</returns>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.VertexPred(System.Int32)">
+            <summary>
+            Gets the predecessor around the given vertex
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.SetVertexPred(System.Int32,System.Int32)">
+            <summary>
+            Sets the predecessor around the given vertex.
+            </summary>
+            <returns>The old predecessor value</returns>
+        </member>
+        <member name="P:VRage.Common.Utils.MyWingedEdgeMesh.EdgeTableEntry.NextFreeEntry">
+            <summary>
+            Only valid for empty (deallocated) table entries. In that case, it points to the next free table entry.
+            If this is -1, this entry is the last free entry.
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Utils.MyWingedEdgeMesh.VertexTableEntry.NextFreeEntry">
+            <summary>
+            Only valid for empty (deallocated) table entries. In that case, it points to the next free table entry.
+            If this is -1, this entry is the last free entry.
+            </summary>
+        </member>
+        <member name="P:VRage.Common.Utils.MyWingedEdgeMesh.FaceTableEntry.NextFreeEntry">
+            <summary>
+            Only valid for empty (deallocated) table entries. In that case, it points to the next free table entry.
+            If this is -1, this entry is the last free entry.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.MyWingedEdgeMesh.Edge">
+            <summary>
+            Note: This is invalid after the mesh changes!
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.MyWingedEdgeMesh.Face">
+            <summary>
+            Note: This is invalid after the mesh changes!
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.MyWingedEdgeMesh.EdgeEnumerator">
+            <summary>
+            Note: This is invalid after the mesh changes!
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.MyWingedEdgeMesh.VertexEnumerator">
+            <summary>
+            Note: This is invalid after the mesh changes!
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.MyBBSetSampler">
+            <summary>
+            This class allows for uniform generation of points from a set of bounding boxes.
+            
+            You start by constructing a bounding box from where the points will be sampled.
+            Then you can incrementally subtract bounding boxes and the resulting structure will allow you
+            to generate uniformly distributed points using the Sample() function.
+            </summary>
+        </member>
+        <member name="T:VRage.Common.Utils.WM">
+            <summary>
+            Windows Messages
+            Defined in winuser.h from Windows SDK v6.1
+            Documentation pulled from MSDN.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NULL">
+            <summary>
+            The WM_NULL message performs no operation. An application sends the WM_NULL message if it wants to post a message that the recipient window will ignore.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CREATE">
+            <summary>
+            The WM_CREATE message is sent when an application requests that a window be created by calling the CreateWindowEx or CreateWindow function. (The message is sent before the function returns.) The window procedure of the new window receives this message after the window is created, but before the window becomes visible.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DESTROY">
+            <summary>
+            The WM_DESTROY message is sent when a window is being destroyed. It is sent to the window procedure of the window being destroyed after the window is removed from the screen. 
+            This message is sent first to the window being destroyed and then to the child windows (if any) as they are destroyed. During the processing of the message, it can be assumed that all child windows still exist.
+            /// </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOVE">
+            <summary>
+            The WM_MOVE message is sent after a window has been moved. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SIZE">
+            <summary>
+            The WM_SIZE message is sent to a window after its size has changed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ACTIVATE">
+            <summary>
+            The WM_ACTIVATE message is sent to both the window being activated and the window being deactivated. If the windows use the same input queue, the message is sent synchronously, first to the window procedure of the top-level window being deactivated, then to the window procedure of the top-level window being activated. If the windows use different input queues, the message is sent asynchronously, so the window is activated immediately. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETFOCUS">
+            <summary>
+            The WM_SETFOCUS message is sent to a window after it has gained the keyboard focus. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.KILLFOCUS">
+            <summary>
+            The WM_KILLFOCUS message is sent to a window immediately before it loses the keyboard focus. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ENABLE">
+            <summary>
+            The WM_ENABLE message is sent when an application changes the enabled state of a window. It is sent to the window whose enabled state is changing. This message is sent before the EnableWindow function returns, but after the enabled state (WS_DISABLED style bit) of the window has changed. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETREDRAW">
+            <summary>
+            An application sends the WM_SETREDRAW message to a window to allow changes in that window to be redrawn or to prevent changes in that window from being redrawn. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETTEXT">
+            <summary>
+            An application sends a WM_SETTEXT message to set the text of a window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETTEXT">
+            <summary>
+            An application sends a WM_GETTEXT message to copy the text that corresponds to a window into a buffer provided by the caller. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETTEXTLENGTH">
+            <summary>
+            An application sends a WM_GETTEXTLENGTH message to determine the length, in characters, of the text associated with a window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PAINT">
+            <summary>
+            The WM_PAINT message is sent when the system or another application makes a request to paint a portion of an application's window. The message is sent when the UpdateWindow or RedrawWindow function is called, or by the DispatchMessage function when the application obtains a WM_PAINT message by using the GetMessage or PeekMessage function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CLOSE">
+            <summary>
+            The WM_CLOSE message is sent as a signal that a window or an application should terminate.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUERYENDSESSION">
+            <summary>
+            The WM_QUERYENDSESSION message is sent when the user chooses to end the session or when an application calls one of the system shutdown functions. If any application returns zero, the session is not ended. The system stops sending WM_QUERYENDSESSION messages as soon as one application returns zero.
+            After processing this message, the system sends the WM_ENDSESSION message with the wParam parameter set to the results of the WM_QUERYENDSESSION message.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUERYOPEN">
+            <summary>
+            The WM_QUERYOPEN message is sent to an icon when the user requests that the window be restored to its previous size and position.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ENDSESSION">
+            <summary>
+            The WM_ENDSESSION message is sent to an application after the system processes the results of the WM_QUERYENDSESSION message. The WM_ENDSESSION message informs the application whether the session is ending.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUIT">
+            <summary>
+            The WM_QUIT message indicates a request to terminate an application and is generated when the application calls the PostQuitMessage function. It causes the GetMessage function to return zero.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ERASEBKGND">
+            <summary>
+            The WM_ERASEBKGND message is sent when the window background must be erased (for example, when a window is resized). The message is sent to prepare an invalidated portion of a window for painting. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSCOLORCHANGE">
+            <summary>
+            This message is sent to all top-level windows when a change is made to a system color setting. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SHOWWINDOW">
+            <summary>
+            The WM_SHOWWINDOW message is sent to a window when the window is about to be hidden or shown.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.WININICHANGE">
+            <summary>
+            An application sends the WM_WININICHANGE message to all top-level windows after making a change to the WIN.INI file. The SystemParametersInfo function sends this message after an application uses the function to change a setting in WIN.INI.
+            Note  The WM_WININICHANGE message is provided only for compatibility with earlier versions of the system. Applications should use the WM_SETTINGCHANGE message.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETTINGCHANGE">
+            <summary>
+            An application sends the WM_WININICHANGE message to all top-level windows after making a change to the WIN.INI file. The SystemParametersInfo function sends this message after an application uses the function to change a setting in WIN.INI.
+            Note  The WM_WININICHANGE message is provided only for compatibility with earlier versions of the system. Applications should use the WM_SETTINGCHANGE message.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DEVMODECHANGE">
+            <summary>
+            The WM_DEVMODECHANGE message is sent to all top-level windows whenever the user changes device-mode settings. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ACTIVATEAPP">
+            <summary>
+            The WM_ACTIVATEAPP message is sent when a window belonging to a different application than the active window is about to be activated. The message is sent to the application whose window is being activated and to the application whose window is being deactivated.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.FONTCHANGE">
+            <summary>
+            An application sends the WM_FONTCHANGE message to all top-level windows in the system after changing the pool of font resources. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.TIMECHANGE">
+            <summary>
+            A message that is sent whenever there is a change in the system time.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CANCELMODE">
+            <summary>
+            The WM_CANCELMODE message is sent to cancel certain modes, such as mouse capture. For example, the system sends this message to the active window when a dialog box or message box is displayed. Certain functions also send this message explicitly to the specified window regardless of whether it is the active window. For example, the EnableWindow function sends this message when disabling the specified window.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETCURSOR">
+            <summary>
+            The WM_SETCURSOR message is sent to a window if the mouse causes the cursor to move within a window and mouse input is not captured. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSEACTIVATE">
+            <summary>
+            The WM_MOUSEACTIVATE message is sent when the cursor is in an inactive window and the user presses a mouse button. The parent window receives this message only if the child window passes it to the DefWindowProc function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CHILDACTIVATE">
+            <summary>
+            The WM_CHILDACTIVATE message is sent to a child window when the user clicks the window's title bar or when the window is activated, moved, or sized.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUEUESYNC">
+            <summary>
+            The WM_QUEUESYNC message is sent by a computer-based training (CBT) application to separate user-input messages from other messages sent through the WH_JOURNALPLAYBACK Hook procedure. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETMINMAXINFO">
+            <summary>
+            The WM_GETMINMAXINFO message is sent to a window when the size or position of the window is about to change. An application can use this message to override the window's default maximized size and position, or its default minimum or maximum tracking size. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PAINTICON">
+            <summary>
+            Windows NT 3.51 and earlier: The WM_PAINTICON message is sent to a minimized window when the icon is to be painted. This message is not sent by newer versions of Microsoft Windows, except in unusual circumstances explained in the Remarks.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ICONERASEBKGND">
+            <summary>
+            Windows NT 3.51 and earlier: The WM_ICONERASEBKGND message is sent to a minimized window when the background of the icon must be filled before painting the icon. A window receives this message only if a class icon is defined for the window; otherwise, WM_ERASEBKGND is sent. This message is not sent by newer versions of Windows.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NEXTDLGCTL">
+            <summary>
+            The WM_NEXTDLGCTL message is sent to a dialog box procedure to set the keyboard focus to a different control in the dialog box. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SPOOLERSTATUS">
+            <summary>
+            The WM_SPOOLERSTATUS message is sent from Print Manager whenever a job is added to or removed from the Print Manager queue. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DRAWITEM">
+            <summary>
+            The WM_DRAWITEM message is sent to the parent window of an owner-drawn button, combo box, list box, or menu when a visual aspect of the button, combo box, list box, or menu has changed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MEASUREITEM">
+            <summary>
+            The WM_MEASUREITEM message is sent to the owner window of a combo box, list box, list view control, or menu item when the control or menu is created.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DELETEITEM">
+            <summary>
+            Sent to the owner of a list box or combo box when the list box or combo box is destroyed or when items are removed by the LB_DELETESTRING, LB_RESETCONTENT, CB_DELETESTRING, or CB_RESETCONTENT message. The system sends a WM_DELETEITEM message for each deleted item. The system sends the WM_DELETEITEM message for any deleted list box or combo box item with nonzero item data.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.VKEYTOITEM">
+            <summary>
+            Sent by a list box with the LBS_WANTKEYBOARDINPUT style to its owner in response to a WM_KEYDOWN message. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CHARTOITEM">
+            <summary>
+            Sent by a list box with the LBS_WANTKEYBOARDINPUT style to its owner in response to a WM_CHAR message. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETFONT">
+            <summary>
+            An application sends a WM_SETFONT message to specify the font that a control is to use when drawing text. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETFONT">
+            <summary>
+            An application sends a WM_GETFONT message to a control to retrieve the font with which the control is currently drawing its text. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETHOTKEY">
+            <summary>
+            An application sends a WM_SETHOTKEY message to a window to associate a hot key with the window. When the user presses the hot key, the system activates the window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETHOTKEY">
+            <summary>
+            An application sends a WM_GETHOTKEY message to determine the hot key associated with a window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUERYDRAGICON">
+            <summary>
+            The WM_QUERYDRAGICON message is sent to a minimized (iconic) window. The window is about to be dragged by the user but does not have an icon defined for its class. An application can return a handle to an icon or cursor. The system displays this cursor or icon while the user drags the icon.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.COMPAREITEM">
+            <summary>
+            The system sends the WM_COMPAREITEM message to determine the relative position of a new item in the sorted list of an owner-drawn combo box or list box. Whenever the application adds a new item, the system sends this message to the owner of a combo box or list box created with the CBS_SORT or LBS_SORT style. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETOBJECT">
+            <summary>
+            Active Accessibility sends the WM_GETOBJECT message to obtain information about an accessible object contained in a server application. 
+            Applications never send this message directly. It is sent only by Active Accessibility in response to calls to AccessibleObjectFromPoint, AccessibleObjectFromEvent, or AccessibleObjectFromWindow. However, server applications handle this message. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.COMPACTING">
+            <summary>
+            The WM_COMPACTING message is sent to all top-level windows when the system detects more than 12.5 percent of system time over a 30- to 60-second interval is being spent compacting memory. This indicates that system memory is low.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.COMMNOTIFY">
+            <summary>
+            WM_COMMNOTIFY is Obsolete for Win32-Based Applications
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.WINDOWPOSCHANGING">
+            <summary>
+            The WM_WINDOWPOSCHANGING message is sent to a window whose size, position, or place in the Z order is about to change as a result of a call to the SetWindowPos function or another window-management function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.WINDOWPOSCHANGED">
+            <summary>
+            The WM_WINDOWPOSCHANGED message is sent to a window whose size, position, or place in the Z order has changed as a result of a call to the SetWindowPos function or another window-management function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.POWER">
+            <summary>
+            Notifies applications that the system, typically a battery-powered personal computer, is about to enter a suspended mode.
+            Use: POWERBROADCAST
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.COPYDATA">
+            <summary>
+            An application sends the WM_COPYDATA message to pass data to another application. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CANCELJOURNAL">
+            <summary>
+            The WM_CANCELJOURNAL message is posted to an application when a user cancels the application's journaling activities. The message is posted with a NULL window handle. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NOTIFY">
+            <summary>
+            Sent by a common control to its parent window when an event has occurred or the control requires some information. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INPUTLANGCHANGEREQUEST">
+            <summary>
+            The WM_INPUTLANGCHANGEREQUEST message is posted to the window with the focus when the user chooses a new input language, either with the hotkey (specified in the Keyboard control panel application) or from the indicator on the system taskbar. An application can accept the change by passing the message to the DefWindowProc function or reject the change (and prevent it from taking place) by returning immediately. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INPUTLANGCHANGE">
+            <summary>
+            The WM_INPUTLANGCHANGE message is sent to the topmost affected window after an application's input language has been changed. You should make any application-specific settings and pass the message to the DefWindowProc function, which passes the message to all first-level child windows. These child windows can pass the message to DefWindowProc to have it pass the message to their child windows, and so on. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.TCARD">
+            <summary>
+            Sent to an application that has initiated a training card with Microsoft Windows Help. The message informs the application when the user clicks an authorable button. An application initiates a training card by specifying the HELP_TCARD command in a call to the WinHelp function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.HELP">
+            <summary>
+            Indicates that the user pressed the F1 key. If a menu is active when F1 is pressed, WM_HELP is sent to the window associated with the menu; otherwise, WM_HELP is sent to the window that has the keyboard focus. If no window has the keyboard focus, WM_HELP is sent to the currently active window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.USERCHANGED">
+            <summary>
+            The WM_USERCHANGED message is sent to all windows after the user has logged on or off. When the user logs on or off, the system updates the user-specific settings. The system sends this message immediately after updating the settings.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NOTIFYFORMAT">
+            <summary>
+            Determines if a window accepts ANSI or Unicode structures in the WM_NOTIFY notification message. WM_NOTIFYFORMAT messages are sent from a common control to its parent window and from the parent window to the common control.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CONTEXTMENU">
+            <summary>
+            The WM_CONTEXTMENU message notifies a window that the user clicked the right mouse button (right-clicked) in the window.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.STYLECHANGING">
+            <summary>
+            The WM_STYLECHANGING message is sent to a window when the SetWindowLong function is about to change one or more of the window's styles.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.STYLECHANGED">
+            <summary>
+            The WM_STYLECHANGED message is sent to a window after the SetWindowLong function has changed one or more of the window's styles
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DISPLAYCHANGE">
+            <summary>
+            The WM_DISPLAYCHANGE message is sent to all windows when the display resolution has changed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETICON">
+            <summary>
+            The WM_GETICON message is sent to a window to retrieve a handle to the large or small icon associated with a window. The system displays the large icon in the ALT+TAB dialog, and the small icon in the window caption. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SETICON">
+            <summary>
+            An application sends the WM_SETICON message to associate a new large or small icon with a window. The system displays the large icon in the ALT+TAB dialog box, and the small icon in the window caption. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCCREATE">
+            <summary>
+            The WM_NCCREATE message is sent prior to the WM_CREATE message when a window is first created.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCDESTROY">
+            <summary>
+            The WM_NCDESTROY message informs a window that its nonclient area is being destroyed. The DestroyWindow function sends the WM_NCDESTROY message to the window following the WM_DESTROY message. WM_DESTROY is used to free the allocated memory object associated with the window. 
+            The WM_NCDESTROY message is sent after the child windows have been destroyed. In contrast, WM_DESTROY is sent before the child windows are destroyed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCCALCSIZE">
+            <summary>
+            The WM_NCCALCSIZE message is sent when the size and position of a window's client area must be calculated. By processing this message, an application can control the content of the window's client area when the size or position of the window changes.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCHITTEST">
+            <summary>
+            The WM_NCHITTEST message is sent to a window when the cursor moves, or when a mouse button is pressed or released. If the mouse is not captured, the message is sent to the window beneath the cursor. Otherwise, the message is sent to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCPAINT">
+            <summary>
+            The WM_NCPAINT message is sent to a window when its frame must be painted. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCACTIVATE">
+            <summary>
+            The WM_NCACTIVATE message is sent to a window when its nonclient area needs to be changed to indicate an active or inactive state.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETDLGCODE">
+            <summary>
+            The WM_GETDLGCODE message is sent to the window procedure associated with a control. By default, the system handles all keyboard input to the control; the system interprets certain types of keyboard input as dialog box navigation keys. To override this default behavior, the control can respond to the WM_GETDLGCODE message to indicate the types of input it wants to process itself.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYNCPAINT">
+            <summary>
+            The WM_SYNCPAINT message is used to synchronize painting while avoiding linking independent GUI threads.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCMOUSEMOVE">
+            <summary>
+            The WM_NCMOUSEMOVE message is posted to a window when the cursor is moved within the nonclient area of the window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCLBUTTONDOWN">
+            <summary>
+            The WM_NCLBUTTONDOWN message is posted when the user presses the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCLBUTTONUP">
+            <summary>
+            The WM_NCLBUTTONUP message is posted when the user releases the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCLBUTTONDBLCLK">
+            <summary>
+            The WM_NCLBUTTONDBLCLK message is posted when the user double-clicks the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCRBUTTONDOWN">
+            <summary>
+            The WM_NCRBUTTONDOWN message is posted when the user presses the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCRBUTTONUP">
+            <summary>
+            The WM_NCRBUTTONUP message is posted when the user releases the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCRBUTTONDBLCLK">
+            <summary>
+            The WM_NCRBUTTONDBLCLK message is posted when the user double-clicks the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCMBUTTONDOWN">
+            <summary>
+            The WM_NCMBUTTONDOWN message is posted when the user presses the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCMBUTTONUP">
+            <summary>
+            The WM_NCMBUTTONUP message is posted when the user releases the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCMBUTTONDBLCLK">
+            <summary>
+            The WM_NCMBUTTONDBLCLK message is posted when the user double-clicks the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCXBUTTONDOWN">
+            <summary>
+            The WM_NCXBUTTONDOWN message is posted when the user presses the first or second X button while the cursor is in the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCXBUTTONUP">
+            <summary>
+            The WM_NCXBUTTONUP message is posted when the user releases the first or second X button while the cursor is in the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCXBUTTONDBLCLK">
+            <summary>
+            The WM_NCXBUTTONDBLCLK message is posted when the user double-clicks the first or second X button while the cursor is in the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INPUT_DEVICE_CHANGE">
+            <summary>
+            The WM_INPUT_DEVICE_CHANGE message is sent to the window that registered to receive raw input. A window receives this message through its WindowProc function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INPUT">
+            <summary>
+            The WM_INPUT message is sent to the window that is getting raw input. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.KEYFIRST">
+            <summary>
+            This message filters for keyboard messages.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.KEYDOWN">
+            <summary>
+            The WM_KEYDOWN message is posted to the window with the keyboard focus when a nonsystem key is pressed. A nonsystem key is a key that is pressed when the ALT key is not pressed. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.KEYUP">
+            <summary>
+            The WM_KEYUP message is posted to the window with the keyboard focus when a nonsystem key is released. A nonsystem key is a key that is pressed when the ALT key is not pressed, or a keyboard key that is pressed when a window has the keyboard focus. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CHAR">
+            <summary>
+            The WM_CHAR message is posted to the window with the keyboard focus when a WM_KEYDOWN message is translated by the TranslateMessage function. The WM_CHAR message contains the character code of the key that was pressed. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DEADCHAR">
+            <summary>
+            The WM_DEADCHAR message is posted to the window with the keyboard focus when a WM_KEYUP message is translated by the TranslateMessage function. WM_DEADCHAR specifies a character code generated by a dead key. A dead key is a key that generates a character, such as the umlaut (double-dot), that is combined with another character to form a composite character. For example, the umlaut-O character (Ö) is generated by typing the dead key for the umlaut character, and then typing the O key. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSKEYDOWN">
+            <summary>
+            The WM_SYSKEYDOWN message is posted to the window with the keyboard focus when the user presses the F10 key (which activates the menu bar) or holds down the ALT key and then presses another key. It also occurs when no window currently has the keyboard focus; in this case, the WM_SYSKEYDOWN message is sent to the active window. The window that receives the message can distinguish between these two contexts by checking the context code in the lParam parameter. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSKEYUP">
+            <summary>
+            The WM_SYSKEYUP message is posted to the window with the keyboard focus when the user releases a key that was pressed while the ALT key was held down. It also occurs when no window currently has the keyboard focus; in this case, the WM_SYSKEYUP message is sent to the active window. The window that receives the message can distinguish between these two contexts by checking the context code in the lParam parameter. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSCHAR">
+            <summary>
+            The WM_SYSCHAR message is posted to the window with the keyboard focus when a WM_SYSKEYDOWN message is translated by the TranslateMessage function. It specifies the character code of a system character key — that is, a character key that is pressed while the ALT key is down. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSDEADCHAR">
+            <summary>
+            The WM_SYSDEADCHAR message is sent to the window with the keyboard focus when a WM_SYSKEYDOWN message is translated by the TranslateMessage function. WM_SYSDEADCHAR specifies the character code of a system dead key — that is, a dead key that is pressed while holding down the ALT key. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.UNICHAR">
+            <summary>
+            The WM_UNICHAR message is posted to the window with the keyboard focus when a WM_KEYDOWN message is translated by the TranslateMessage function. The WM_UNICHAR message contains the character code of the key that was pressed. 
+            The WM_UNICHAR message is equivalent to WM_CHAR, but it uses Unicode Transformation Format (UTF)-32, whereas WM_CHAR uses UTF-16. It is designed to send or post Unicode characters to ANSI windows and it can can handle Unicode Supplementary Plane characters.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.KEYLAST">
+            <summary>
+            This message filters for keyboard messages.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_STARTCOMPOSITION">
+            <summary>
+            Sent immediately before the IME generates the composition string as a result of a keystroke. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_ENDCOMPOSITION">
+            <summary>
+            Sent to an application when the IME ends composition. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_COMPOSITION">
+            <summary>
+            Sent to an application when the IME changes composition status as a result of a keystroke. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INITDIALOG">
+            <summary>
+            The WM_INITDIALOG message is sent to the dialog box procedure immediately before a dialog box is displayed. Dialog box procedures typically use this message to initialize controls and carry out any other initialization tasks that affect the appearance of the dialog box. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.COMMAND">
+            <summary>
+            The WM_COMMAND message is sent when the user selects a command item from a menu, when a control sends a notification message to its parent window, or when an accelerator keystroke is translated. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSCOMMAND">
+            <summary>
+            A window receives this message when the user chooses a command from the Window menu, clicks the maximize button, minimize button, restore button, close button, or moves the form. You can stop the form from moving by filtering this out.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.TIMER">
+            <summary>
+            The WM_TIMER message is posted to the installing thread's message queue when a timer expires. The message is posted by the GetMessage or PeekMessage function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.HSCROLL">
+            <summary>
+            The WM_HSCROLL message is sent to a window when a scroll event occurs in the window's standard horizontal scroll bar. This message is also sent to the owner of a horizontal scroll bar control when a scroll event occurs in the control. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.VSCROLL">
+            <summary>
+            The WM_VSCROLL message is sent to a window when a scroll event occurs in the window's standard vertical scroll bar. This message is also sent to the owner of a vertical scroll bar control when a scroll event occurs in the control. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INITMENU">
+            <summary>
+            The WM_INITMENU message is sent when a menu is about to become active. It occurs when the user clicks an item on the menu bar or presses a menu key. This allows the application to modify the menu before it is displayed. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.INITMENUPOPUP">
+            <summary>
+            The WM_INITMENUPOPUP message is sent when a drop-down menu or submenu is about to become active. This allows an application to modify the menu before it is displayed, without changing the entire menu. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MENUSELECT">
+            <summary>
+            The WM_MENUSELECT message is sent to a menu's owner window when the user selects a menu item. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MENUCHAR">
+            <summary>
+            The WM_MENUCHAR message is sent when a menu is active and the user presses a key that does not correspond to any mnemonic or accelerator key. This message is sent to the window that owns the menu. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ENTERIDLE">
+            <summary>
+            The WM_ENTERIDLE message is sent to the owner window of a modal dialog box or menu that is entering an idle state. A modal dialog box or menu enters an idle state when no messages are waiting in its queue after it has processed one or more previous messages. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MENURBUTTONUP">
+            <summary>
+            The WM_MENURBUTTONUP message is sent when the user releases the right mouse button while the cursor is on a menu item. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MENUDRAG">
+            <summary>
+            The WM_MENUDRAG message is sent to the owner of a drag-and-drop menu when the user drags a menu item. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MENUGETOBJECT">
+            <summary>
+            The WM_MENUGETOBJECT message is sent to the owner of a drag-and-drop menu when the mouse cursor enters a menu item or moves from the center of the item to the top or bottom of the item. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.UNINITMENUPOPUP">
+            <summary>
+            The WM_UNINITMENUPOPUP message is sent when a drop-down menu or submenu has been destroyed. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MENUCOMMAND">
+            <summary>
+            The WM_MENUCOMMAND message is sent when the user makes a selection from a menu. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CHANGEUISTATE">
+            <summary>
+            An application sends the WM_CHANGEUISTATE message to indicate that the user interface (UI) state should be changed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.UPDATEUISTATE">
+            <summary>
+            An application sends the WM_UPDATEUISTATE message to change the user interface (UI) state for the specified window and all its child windows.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUERYUISTATE">
+            <summary>
+            An application sends the WM_QUERYUISTATE message to retrieve the user interface (UI) state for a window.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLORMSGBOX">
+            <summary>
+            The WM_CTLCOLORMSGBOX message is sent to the owner window of a message box before Windows draws the message box. By responding to this message, the owner window can set the text and background colors of the message box by using the given display device context handle. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLOREDIT">
+            <summary>
+            An edit control that is not read-only or disabled sends the WM_CTLCOLOREDIT message to its parent window when the control is about to be drawn. By responding to this message, the parent window can use the specified device context handle to set the text and background colors of the edit control. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLORLISTBOX">
+            <summary>
+            Sent to the parent window of a list box before the system draws the list box. By responding to this message, the parent window can set the text and background colors of the list box by using the specified display device context handle. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLORBTN">
+            <summary>
+            The WM_CTLCOLORBTN message is sent to the parent window of a button before drawing the button. The parent window can change the button's text and background colors. However, only owner-drawn buttons respond to the parent window processing this message. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLORDLG">
+            <summary>
+            The WM_CTLCOLORDLG message is sent to a dialog box before the system draws the dialog box. By responding to this message, the dialog box can set its text and background colors using the specified display device context handle. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLORSCROLLBAR">
+            <summary>
+            The WM_CTLCOLORSCROLLBAR message is sent to the parent window of a scroll bar control when the control is about to be drawn. By responding to this message, the parent window can use the display context handle to set the background color of the scroll bar control. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CTLCOLORSTATIC">
+            <summary>
+            A static control, or an edit control that is read-only or disabled, sends the WM_CTLCOLORSTATIC message to its parent window when the control is about to be drawn. By responding to this message, the parent window can use the specified device context handle to set the text and background colors of the static control. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSEFIRST">
+            <summary>
+            Use WM_MOUSEFIRST to specify the first mouse message. Use the PeekMessage() Function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSEMOVE">
+            <summary>
+            The WM_MOUSEMOVE message is posted to a window when the cursor moves. If the mouse is not captured, the message is posted to the window that contains the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.LBUTTONDOWN">
+            <summary>
+            The WM_LBUTTONDOWN message is posted when the user presses the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.LBUTTONUP">
+            <summary>
+            The WM_LBUTTONUP message is posted when the user releases the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.LBUTTONDBLCLK">
+            <summary>
+            The WM_LBUTTONDBLCLK message is posted when the user double-clicks the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.RBUTTONDOWN">
+            <summary>
+            The WM_RBUTTONDOWN message is posted when the user presses the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.RBUTTONUP">
+            <summary>
+            The WM_RBUTTONUP message is posted when the user releases the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.RBUTTONDBLCLK">
+            <summary>
+            The WM_RBUTTONDBLCLK message is posted when the user double-clicks the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MBUTTONDOWN">
+            <summary>
+            The WM_MBUTTONDOWN message is posted when the user presses the middle mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MBUTTONUP">
+            <summary>
+            The WM_MBUTTONUP message is posted when the user releases the middle mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MBUTTONDBLCLK">
+            <summary>
+            The WM_MBUTTONDBLCLK message is posted when the user double-clicks the middle mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSEWHEEL">
+            <summary>
+            The WM_MOUSEWHEEL message is sent to the focus window when the mouse wheel is rotated. The DefWindowProc function propagates the message to the window's parent. There should be no internal forwarding of the message, since DefWindowProc propagates it up the parent chain until it finds a window that processes it.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.XBUTTONDOWN">
+            <summary>
+            The WM_XBUTTONDOWN message is posted when the user presses the first or second X button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.XBUTTONUP">
+            <summary>
+            The WM_XBUTTONUP message is posted when the user releases the first or second X button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.XBUTTONDBLCLK">
+            <summary>
+            The WM_XBUTTONDBLCLK message is posted when the user double-clicks the first or second X button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSEHWHEEL">
+            <summary>
+            The WM_MOUSEHWHEEL message is sent to the focus window when the mouse's horizontal scroll wheel is tilted or rotated. The DefWindowProc function propagates the message to the window's parent. There should be no internal forwarding of the message, since DefWindowProc propagates it up the parent chain until it finds a window that processes it.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSELAST">
+            <summary>
+            Use WM_MOUSELAST to specify the last mouse message. Used with PeekMessage() Function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PARENTNOTIFY">
+            <summary>
+            The WM_PARENTNOTIFY message is sent to the parent of a child window when the child window is created or destroyed, or when the user clicks a mouse button while the cursor is over the child window. When the child window is being created, the system sends WM_PARENTNOTIFY just before the CreateWindow or CreateWindowEx function that creates the window returns. When the child window is being destroyed, the system sends the message before any processing to destroy the window takes place.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ENTERMENULOOP">
+            <summary>
+            The WM_ENTERMENULOOP message informs an application's main window procedure that a menu modal loop has been entered. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.EXITMENULOOP">
+            <summary>
+            The WM_EXITMENULOOP message informs an application's main window procedure that a menu modal loop has been exited. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NEXTMENU">
+            <summary>
+            The WM_NEXTMENU message is sent to an application when the right or left arrow key is used to switch between the menu bar and the system menu. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SIZING">
+            <summary>
+            The WM_SIZING message is sent to a window that the user is resizing. By processing this message, an application can monitor the size and position of the drag rectangle and, if needed, change its size or position. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CAPTURECHANGED">
+            <summary>
+            The WM_CAPTURECHANGED message is sent to the window that is losing the mouse capture.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOVING">
+            <summary>
+            The WM_MOVING message is sent to a window that the user is moving. By processing this message, an application can monitor the position of the drag rectangle and, if needed, change its position.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.POWERBROADCAST">
+            <summary>
+            Notifies applications that a power-management event has occurred.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DEVICECHANGE">
+            <summary>
+            Notifies an application of a change to the hardware configuration of a device or the computer.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDICREATE">
+            <summary>
+            An application sends the WM_MDICREATE message to a multiple-document interface (MDI) client window to create an MDI child window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIDESTROY">
+            <summary>
+            An application sends the WM_MDIDESTROY message to a multiple-document interface (MDI) client window to close an MDI child window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIACTIVATE">
+            <summary>
+            An application sends the WM_MDIACTIVATE message to a multiple-document interface (MDI) client window to instruct the client window to activate a different MDI child window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIRESTORE">
+            <summary>
+            An application sends the WM_MDIRESTORE message to a multiple-document interface (MDI) client window to restore an MDI child window from maximized or minimized size. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDINEXT">
+            <summary>
+            An application sends the WM_MDINEXT message to a multiple-document interface (MDI) client window to activate the next or previous child window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIMAXIMIZE">
+            <summary>
+            An application sends the WM_MDIMAXIMIZE message to a multiple-document interface (MDI) client window to maximize an MDI child window. The system resizes the child window to make its client area fill the client window. The system places the child window's window menu icon in the rightmost position of the frame window's menu bar, and places the child window's restore icon in the leftmost position. The system also appends the title bar text of the child window to that of the frame window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDITILE">
+            <summary>
+            An application sends the WM_MDITILE message to a multiple-document interface (MDI) client window to arrange all of its MDI child windows in a tile format. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDICASCADE">
+            <summary>
+            An application sends the WM_MDICASCADE message to a multiple-document interface (MDI) client window to arrange all its child windows in a cascade format. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIICONARRANGE">
+            <summary>
+            An application sends the WM_MDIICONARRANGE message to a multiple-document interface (MDI) client window to arrange all minimized MDI child windows. It does not affect child windows that are not minimized. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIGETACTIVE">
+            <summary>
+            An application sends the WM_MDIGETACTIVE message to a multiple-document interface (MDI) client window to retrieve the handle to the active MDI child window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDISETMENU">
+            <summary>
+            An application sends the WM_MDISETMENU message to a multiple-document interface (MDI) client window to replace the entire menu of an MDI frame window, to replace the window menu of the frame window, or both. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ENTERSIZEMOVE">
+            <summary>
+            The WM_ENTERSIZEMOVE message is sent one time to a window after it enters the moving or sizing modal loop. The window enters the moving or sizing modal loop when the user clicks the window's title bar or sizing border, or when the window passes the WM_SYSCOMMAND message to the DefWindowProc function and the wParam parameter of the message specifies the SC_MOVE or SC_SIZE value. The operation is complete when DefWindowProc returns. 
+            The system sends the WM_ENTERSIZEMOVE message regardless of whether the dragging of full windows is enabled.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.EXITSIZEMOVE">
+            <summary>
+            The WM_EXITSIZEMOVE message is sent one time to a window, after it has exited the moving or sizing modal loop. The window enters the moving or sizing modal loop when the user clicks the window's title bar or sizing border, or when the window passes the WM_SYSCOMMAND message to the DefWindowProc function and the wParam parameter of the message specifies the SC_MOVE or SC_SIZE value. The operation is complete when DefWindowProc returns. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DROPFILES">
+            <summary>
+            Sent when the user drops a file on the window of an application that has registered itself as a recipient of dropped files.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MDIREFRESHMENU">
+            <summary>
+            An application sends the WM_MDIREFRESHMENU message to a multiple-document interface (MDI) client window to refresh the window menu of the MDI frame window. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_SETCONTEXT">
+            <summary>
+            Sent to an application when a window is activated. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_NOTIFY">
+            <summary>
+            Sent to an application to notify it of changes to the IME window. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_CONTROL">
+            <summary>
+            Sent by an application to direct the IME window to carry out the requested command. The application uses this message to control the IME window that it has created. To send this message, the application calls the SendMessage function with the following parameters.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_COMPOSITIONFULL">
+            <summary>
+            Sent to an application when the IME window finds no space to extend the area for the composition window. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_SELECT">
+            <summary>
+            Sent to an application when the operating system is about to change the current IME. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_CHAR">
+            <summary>
+            Sent to an application when the IME gets a character of the conversion result. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_REQUEST">
+            <summary>
+            Sent to an application to provide commands and request information. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_KEYDOWN">
+            <summary>
+            Sent to an application by the IME to notify the application of a key press and to keep message order. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.IME_KEYUP">
+            <summary>
+            Sent to an application by the IME to notify the application of a key release and to keep message order. A window receives this message through its WindowProc function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSEHOVER">
+            <summary>
+            The WM_MOUSEHOVER message is posted to a window when the cursor hovers over the client area of the window for the period of time specified in a prior call to TrackMouseEvent.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.MOUSELEAVE">
+            <summary>
+            The WM_MOUSELEAVE message is posted to a window when the cursor leaves the client area of the window specified in a prior call to TrackMouseEvent.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCMOUSEHOVER">
+            <summary>
+            The WM_NCMOUSEHOVER message is posted to a window when the cursor hovers over the nonclient area of the window for the period of time specified in a prior call to TrackMouseEvent.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.NCMOUSELEAVE">
+            <summary>
+            The WM_NCMOUSELEAVE message is posted to a window when the cursor leaves the nonclient area of the window specified in a prior call to TrackMouseEvent.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.WTSSESSION_CHANGE">
+            <summary>
+            The WM_WTSSESSION_CHANGE message notifies applications of changes in session state.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CUT">
+            <summary>
+            An application sends a WM_CUT message to an edit control or combo box to delete (cut) the current selection, if any, in the edit control and copy the deleted text to the clipboard in CF_TEXT format. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.COPY">
+            <summary>
+            An application sends the WM_COPY message to an edit control or combo box to copy the current selection to the clipboard in CF_TEXT format. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PASTE">
+            <summary>
+            An application sends a WM_PASTE message to an edit control or combo box to copy the current content of the clipboard to the edit control at the current caret position. Data is inserted only if the clipboard contains data in CF_TEXT format. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CLEAR">
+            <summary>
+            An application sends a WM_CLEAR message to an edit control or combo box to delete (clear) the current selection, if any, from the edit control. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.UNDO">
+            <summary>
+            An application sends a WM_UNDO message to an edit control to undo the last operation. When this message is sent to an edit control, the previously deleted text is restored or the previously added text is deleted.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.RENDERFORMAT">
+            <summary>
+            The WM_RENDERFORMAT message is sent to the clipboard owner if it has delayed rendering a specific clipboard format and if an application has requested data in that format. The clipboard owner must render data in the specified format and place it on the clipboard by calling the SetClipboardData function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.RENDERALLFORMATS">
+            <summary>
+            The WM_RENDERALLFORMATS message is sent to the clipboard owner before it is destroyed, if the clipboard owner has delayed rendering one or more clipboard formats. For the content of the clipboard to remain available to other applications, the clipboard owner must render data in all the formats it is capable of generating, and place the data on the clipboard by calling the SetClipboardData function. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DESTROYCLIPBOARD">
+            <summary>
+            The WM_DESTROYCLIPBOARD message is sent to the clipboard owner when a call to the EmptyClipboard function empties the clipboard. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DRAWCLIPBOARD">
+            <summary>
+            The WM_DRAWCLIPBOARD message is sent to the first window in the clipboard viewer chain when the content of the clipboard changes. This enables a clipboard viewer window to display the new content of the clipboard. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PAINTCLIPBOARD">
+            <summary>
+            The WM_PAINTCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and the clipboard viewer's client area needs repainting. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.VSCROLLCLIPBOARD">
+            <summary>
+            The WM_VSCROLLCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and an event occurs in the clipboard viewer's vertical scroll bar. The owner should scroll the clipboard image and update the scroll bar values. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SIZECLIPBOARD">
+            <summary>
+            The WM_SIZECLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and the clipboard viewer's client area has changed size. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.ASKCBFORMATNAME">
+            <summary>
+            The WM_ASKCBFORMATNAME message is sent to the clipboard owner by a clipboard viewer window to request the name of a CF_OWNERDISPLAY clipboard format.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CHANGECBCHAIN">
+            <summary>
+            The WM_CHANGECBCHAIN message is sent to the first window in the clipboard viewer chain when a window is being removed from the chain. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.HSCROLLCLIPBOARD">
+            <summary>
+            The WM_HSCROLLCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window. This occurs when the clipboard contains data in the CF_OWNERDISPLAY format and an event occurs in the clipboard viewer's horizontal scroll bar. The owner should scroll the clipboard image and update the scroll bar values. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.QUERYNEWPALETTE">
+            <summary>
+            This message informs a window that it is about to receive the keyboard focus, giving the window the opportunity to realize its logical palette when it receives the focus. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PALETTEISCHANGING">
+            <summary>
+            The WM_PALETTEISCHANGING message informs applications that an application is going to realize its logical palette. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PALETTECHANGED">
+            <summary>
+            This message is sent by the OS to all top-level and overlapped windows after the window with the keyboard focus realizes its logical palette. 
+            This message enables windows that do not have the keyboard focus to realize their logical palettes and update their client areas.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.HOTKEY">
+            <summary>
+            The WM_HOTKEY message is posted when the user presses a hot key registered by the RegisterHotKey function. The message is placed at the top of the message queue associated with the thread that registered the hot key. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PRINT">
+            <summary>
+            The WM_PRINT message is sent to a window to request that it draw itself in the specified device context, most commonly in a printer device context.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.PRINTCLIENT">
+            <summary>
+            The WM_PRINTCLIENT message is sent to a window to request that it draw its client area in the specified device context, most commonly in a printer device context.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.APPCOMMAND">
+            <summary>
+            The WM_APPCOMMAND message notifies a window that the user generated an application command event, for example, by clicking an application command button using the mouse or typing an application command key on the keyboard.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.THEMECHANGED">
+            <summary>
+            The WM_THEMECHANGED message is broadcast to every window following a theme change event. Examples of theme change events are the activation of a theme, the deactivation of a theme, or a transition from one theme to another.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CLIPBOARDUPDATE">
+            <summary>
+            Sent when the contents of the clipboard have changed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DWMCOMPOSITIONCHANGED">
+            <summary>
+            The system will send a window the WM_DWMCOMPOSITIONCHANGED message to indicate that the availability of desktop composition has changed.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DWMNCRENDERINGCHANGED">
+            <summary>
+            WM_DWMNCRENDERINGCHANGED is called when the non-client area rendering status of a window has changed. Only windows that have set the flag DWM_BLURBEHIND.fTransitionOnMaximized to true will get this message. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DWMCOLORIZATIONCOLORCHANGED">
+            <summary>
+            Sent to all top-level windows when the colorization color has changed. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.DWMWINDOWMAXIMIZEDCHANGE">
+            <summary>
+            WM_DWMWINDOWMAXIMIZEDCHANGE will let you know when a DWM composed window is maximized. You also have to register for this message as well. You'd have other windowd go opaque when this message is sent.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.GETTITLEBARINFOEX">
+            <summary>
+            Sent to request extended title bar information. A window receives this message through its WindowProc function.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.APP">
+            <summary>
+            The WM_APP constant is used by applications to help define private messages, usually of the form WM_APP+X, where X is an integer value. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.USER">
+            <summary>
+            The WM_USER constant is used by applications to help define private messages for use by private window classes, usually of the form WM_USER+X, where X is an integer value. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CPL_LAUNCH">
+            <summary>
+            An application sends the WM_CPL_LAUNCH message to Windows Control Panel to request that a Control Panel application be started. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.CPL_LAUNCHED">
+            <summary>
+            The WM_CPL_LAUNCHED message is sent when a Control Panel application, started by the WM_CPL_LAUNCH message, has closed. The WM_CPL_LAUNCHED message is sent to the window identified by the wParam parameter of the WM_CPL_LAUNCH message that started the application. 
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Utils.WM.SYSTIMER">
+            <summary>
+            WM_SYSTIMER is a well-known yet still undocumented message. Windows uses WM_SYSTIMER for internal actions like scrolling.
+            </summary>
+        </member>
+        <member name="F:VRage.Common.Voxels.MyCellCoord.Lod">
+            <summary>
+            0 is the most detailed.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Voxels.MyClipmap.InvalidateRange(VRageMath.Vector3I,VRageMath.Vector3I)">
+            <param name="minCellLod0">Inclusive.</param>
+            <param name="maxCellLod0">Inclusive.</param>
+        </member>
+        <member name="F:VRage.Common.Voxels.MyClipmap.LodLevel.m_fitsInFrustum">
+            <summary>
+            Indicator that LoD is too large to even render with current setttings.
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Voxels.MyClipmap.LodLevel.WasAncestorCellLoaded(VRage.Common.Voxels.MyClipmap.LodLevel,VRage.Common.Voxels.MyCellCoord@)">
+            <summary>
+            Checks ancestor nodes recursively. Typically, this checks at most 9 nodes or so (depending on settings).
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Voxels.MyClipmap.LodLevel.ChildrenWereLoaded(VRage.Common.Voxels.MyClipmap.LodLevel,VRage.Common.Voxels.MyCellCoord@)">
+            <summary>
+            Checks only immediate children (any deeper would take too long).
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Voxels.MyStorageDataCache.Resize(VRageMath.Vector3I,VRageMath.Vector3I)">
+            <param name="start">Inclusive.</param>
+            <param name="end">Inclusive.</param>
+        </member>
+        <member name="T:VRage.Common.Voxels.MyVoxelCoordSystems">
+            <summary>
+            Functions for transforming to and from various coordinate systems in voxel maps and for computing bounding boxes of various types of cells.
+            Note that local and world positions are (and should be) always in the center!
+            </summary>
+        </member>
+    </members>
+</doc>

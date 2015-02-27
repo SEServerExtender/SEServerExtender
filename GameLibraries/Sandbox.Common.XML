@@ -1,0 +1,1394 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sandbox.Common</name>
+    </assembly>
+    <members>
+        <member name="M:Sandbox.Common.Components.MyComponentContainer.Contains(System.Type)">
+            <summary>
+            Returns if any component is assignable from type
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyHierarchyComponentBase.GetTopMostParent(System.Type)">
+            <summary>
+            Return top most parent of this entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyHierarchyComponentBase.AddChild(Sandbox.ModAPI.IMyEntity,System.Boolean,System.Boolean)">
+            <summary>
+            Adds the child.
+            </summary>
+            <param name="child">The child.</param>
+            <param name="preserveWorldPos">if set to <c>true</c> [preserve absolute position].</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyHierarchyComponentBase.RemoveChild(Sandbox.ModAPI.IMyEntity,System.Boolean)">
+            <summary>
+            Adds the child.
+            </summary>
+            <param name="child">The child.</param>
+            <param name="preserveWorldPos">if set to <c>true</c> [preserve absolute position].</param>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyHierarchyComponentBase.Children">
+            <summary>
+            Gets the childs collection.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.Components.MyPhysicsComponentBase.ContactPointDelay">
+            <summary>
+            Must be set before creating rigid body
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.Components.MyPhysicsComponentBase.IsPhantom">
+            <summary>
+            Use something from Havok to detect this
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.Close">
+            <summary>
+            Initializes a new instance of the <see cref="!:MyPhysicsBody"/> class.
+            </summary>
+            <param name="entity">The entity.</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.AddForce(Sandbox.Engine.Physics.MyPhysicsForceType,System.Nullable{VRageMath.Vector3},System.Nullable{VRageMath.Vector3D},System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Applies external force to the physics object.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="force">The force.</param>
+            <param name="position">The position.</param>
+            <param name="torque">The torque.</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.ApplyImpulse(VRageMath.Vector3,VRageMath.Vector3D)">
+            <summary>
+            Applies the impulse.
+            </summary>
+            <param name="dir">The dir.</param>
+            <param name="pos">The pos.</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.ClearSpeed">
+            <summary>
+            Clears the speeds.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.Clear">
+            <summary>
+            Clear all dynamic values of physics object.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.DebugDraw">
+            <summary>
+            Debug draw of this physics object.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.Activate">
+            <summary>
+            Activates this rigid body in physics.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.Deactivate">
+            <summary>
+            Deactivates this rigid body in physics.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Sandbox.Common.Components.MyPhysicsComponentBase.ForceActivate" -->
+        <member name="M:Sandbox.Common.Components.MyPhysicsComponentBase.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.MaterialType">
+            <summary>
+            Gets or sets the type of the material.
+            </summary>
+            <value>
+            The type of the material.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.IsStatic">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="!:MyGameRigidBody"/> is static.
+            </summary>
+            <value>
+              <c>true</c> if static; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.IsKinematic">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="!:MyGameRigidBody"/> is kinematic.
+            </summary>
+            <value>
+              <c>true</c> if kinematic; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.Enabled">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="!:MyPhysicsBody"/> is enabled.
+            </summary>
+            <value>
+              <c>true</c> if enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.PlayCollisionCueEnabled">
+            <summary>
+            Gets or sets a value indicating whether [play collision cue enabled].
+            </summary>
+            <value>
+            	<c>true</c> if [play collision cue enabled]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.Mass">
+            <summary>
+            Gets or sets the mass.
+            </summary>
+            <value>
+            The mass.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.LinearVelocity">
+            <summary>
+            Gets or sets the linear velocity.
+            </summary>
+            <value>
+            The linear velocity.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.LinearDamping">
+            <summary>
+            Gets or sets the linear damping.
+            </summary>
+            <value>
+            The linear damping.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.AngularDamping">
+            <summary>
+            Gets or sets the angular damping.
+            </summary>
+            <value>
+            The angular damping.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.AngularVelocity">
+            <summary>
+            Gets or sets the angular velocity.
+            </summary>
+            <value>
+            The angular velocity.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPhysicsComponentBase.Speed">
+            <summary>
+            Gets or sets the speed.
+            </summary>
+            <value>
+            The speed.
+            </value>
+        </member>
+        <member name="F:Sandbox.Common.Components.MyPositionComponentBase.m_invalidBox">
+            <summary>
+            Internal world matrix of entity.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.Components.MyPositionComponentBase.m_localMatrix">
+            <summary>
+            Internal local matrix relative to parent of entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object)">
+            <summary>
+            Sets the world matrix.
+            </summary>
+            <param name="worldMatrix">The world matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.SetLocalMatrix(VRageMath.MatrixD,System.Object)">
+            <summary>
+            Sets the local matrix.
+            </summary>
+            <param name="localMatrix">The local matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.GetPosition">
+            <summary>
+            Gets the entity position.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.SetPosition(VRageMath.Vector3D)">
+            <summary>
+            Sets the position.
+            </summary>
+            <param name="pos">The pos.</param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.GetWorldMatrixNormalizedInv">
+            <summary>
+            Inverted world matrix of this physic object calculated on-demand (non cached).
+            Use it whenever you want to do world-matrix transformations with this physic objects.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.UpdateWorldMatrix(System.Object)">
+            <summary>
+            Updates the world matrix (change caused by this entity)
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.UpdateWorldMatrix(VRageMath.MatrixD@,System.Object)">
+            <summary>
+            Updates the world matrix (change caused by parent)
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.UpdateWorldVolume">
+            <summary>
+            Updates the volume of this entity.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.UpdateAABBHr(VRageMath.BoundingBoxD@)">
+            <summary>
+            Update volume hr and of all children.
+            </summary>
+            <param name="volume"></param>
+        </member>
+        <member name="M:Sandbox.Common.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.WorldMatrix">
+            <summary>
+            World matrix of this physic object. Use it whenever you want to do world-matrix transformations with this physic objects.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.LocalMatrix">
+            <summary>
+            Gets or sets the local matrix.
+            </summary>
+            <value>
+            The local matrix.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.WorldAABB">
+            <summary>
+            Gets the world aabb.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.WorldVolume">
+            <summary>
+            Gets the world volume.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.WorldAABBHr">
+            <summary>
+            Gets the hiearchical box in world.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.WorldVolumeHr">
+            <summary>
+            Gets the hiearchical volume in world.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.LocalAABB">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.LocalAABBHr">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.LocalVolume">
+            <summary>
+            Sets the local volume.
+            </summary>
+            <value>
+            The local volume.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyPositionComponentBase.LocalVolumeOffset">
+            <summary>
+            Gets or sets the local volume offset.
+            </summary>
+            <value>
+            The local volume offset.
+            </value>
+        </member>
+        <member name="P:Sandbox.Common.Components.MyRenderComponentBase.ModelStorage">
+            <summary>
+            Used by game to store model here. In game this is always of type MyModel.
+            Implementation should only store and return passed object.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.MySessionComponentDescriptor.Priority">
+            <summary>
+            Lower Priority is loaded before higher Priority
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.MySessionComponentBase.IsRequiredByGame">
+            <summary>
+            Indicates whether a session component should be used in current configuration.
+            Example: MyDestructionData component returns true only when game uses Havok Destruction
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.Input.MyInputSnapshot">
+            <summary>
+            Snapshot of an input state, so it can be pumped to the game for testing
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Input.MyInputSnapshot.KeyboardSnapshot">
+            <summary>
+            List of keys pressed when the frame was captured.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.Input.MyInputSnapshot.SnapshotTimestamp">
+            <summary>
+            In milliseconds.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.CalcLocalMatrix(VRageMath.Matrix@,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="localMatrix"></param>
+            <param name="currModel"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.CalculateCurrentModel(VRageMath.Matrix@)">
+            <summary>
+            Calculates model currently used by block depending on its build progress and other factors
+            </summary>
+            <param name="orientation">Model orientation</param>
+            <returns>Model path</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.DebugDraw">
+            <summary>
+            Debug only method. Effects may wary through time.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetObjectBuilderCubeBlock(System.Boolean)">
+            <summary>
+            Returns block object builder which can be serialized or added to grid
+            </summary>
+            <param name="copy">Set if creating a copy of block</param>
+            <returns>Block object builder</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetOwnerFactionTag">
+            <summary>
+            
+            </summary>
+            <returns>Tag of faction owning block</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetPlayerRelationToOwner">
+            <summary>
+            
+            </summary>
+            <returns>Relation of local player to the block</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetUserRelationToOwner(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="playerId">Id of player to check relation with (not steam id!)</param>
+            <returns>Relation of defined player to the block</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.Init">
+            <summary>
+            Reloads block model and interactive objects (doors, terminals, etc...)
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.Init(Sandbox.Common.ObjectBuilders.MyObjectBuilder_CubeBlock,Sandbox.ModAPI.IMyCubeGrid)">
+            <summary>
+            Initializes block state from object builder
+            </summary>
+            <param name="builder">Object builder of block (should correspond with block type)</param>
+            <param name="cubeGrid">Owning grid</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnBuildSuccess(System.Int64)">
+            <summary>
+            Method called when a block has been built (after adding to the grid).
+            This is called right after placing the block and it doesn't matter whether
+            it is fully built (creative mode) or is only construction site.
+            Note that it is not called for blocks which do not create FatBlock at that moment.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnDestroy">
+            <summary>
+            Called when block is destroyed before being removed from grid
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnModelChange">
+            <summary>
+            Called when the model referred by the block is changed
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnRegisteredToGridSystems">
+            <summary>
+            Called at the end of registration from grid systems (after block has been registered).
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnRemovedByCubeBuilder">
+            <summary>
+            Method called when user removes a cube block from grid. Useful when block
+            has to remove some other attached block (like motors).
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnUnregisteredFromGridSystems">
+            <summary>
+            Called at the end of unregistration from grid systems (after block has been unregistered).
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.RaycastDetectors(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Gets the name of interactive object intersected by defined line
+            </summary>
+            <param name="worldFrom">Line from point in world coordinates</param>
+            <param name="worldTo">Line to point in world coordinates</param>
+            <returns>Name of intersected detector (interactive object)</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.ReloadDetectors(System.Boolean)">
+            <summary>
+            Reloads detectors (interactive objects) in model
+            </summary>
+            <param name="refreshNetworks">ie conweyor network</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.UpdateIsWorking">
+            <summary>
+            Force refresh working state. Call if you change block state that could affect its working status.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.UpdateVisual">
+            <summary>
+            Updates block visuals (ie. block emissivity)
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.SetDamageEffect(System.Boolean)">
+            <summary>
+            Start or stop dammage effect on cube block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.CheckConnectionAllowed">
+             <summary>
+             Whether the grid should call the ConnectionAllowed method for this block 
+            (ConnectionAllowed checks mount points and other per-block requirements)
+             </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.CubeGrid">
+            <summary>
+            Grid in which the block is placed
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.DefinitionDisplayNameText">
+            <summary>
+            Definition name
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.DisassembleRatio">
+            <summary>
+            Is set in definition
+            Ratio at which is the block disassembled (grinding) 
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.DisplayNameText">
+            <summary>
+            Translated block name
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.IsFunctional">
+            <summary>
+            True if integrity is above breaking threshold
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.IsWorking">
+            <summary>
+            True if block is able to do its work depening on block type (is functional, powered, enabled, etc...)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Max">
+            <summary>
+            Maximum coordinates of grid cells occupied by this block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Min">
+            <summary>
+            Minimum coordinates of grid cells occupied by this block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.NumberInGrid">
+            <summary>
+            Order in which were the blocks of same type added to grid
+            Used in default display name
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Orientation">
+            <summary>
+            Returns block orientation in base 6 directions
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.OwnerId">
+            <summary>
+            Id of player owning block (not steam Id)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Position">
+            <summary>
+            Position in grid coordinates
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.Activate">
+            <summary>
+            Activates the building mode
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.ActivateShipCreationClipboard(Sandbox.Common.ObjectBuilders.MyObjectBuilder_CubeGrid,VRageMath.Vector3,System.Single)">
+            <summary>
+            Activates creating grids
+            </summary>
+            <param name="grid">grid to be created</param>
+            <param name="centerDeltaDirection"></param>
+            <param name="dragVectorLength"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.ActivateShipCreationClipboard(Sandbox.Common.ObjectBuilders.MyObjectBuilder_CubeGrid[],VRageMath.Vector3,System.Single)">
+            <summary>
+            Activates creating grids
+            </summary>
+            <param name="grid">grids to be created</param>
+            <param name="centerDeltaDirection"></param>
+            <param name="dragVectorLength"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.AddConstruction(Sandbox.ModAPI.IMyEntity)">
+            <summary>
+            Adds construction site of block with currently selected definition
+            </summary>
+            <param name="buildingEntity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.Deactivate">
+            <summary>
+            Deactivates all modes
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.DeactivateBlockCreation">
+            <summary>
+            Deactivates building mode
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.DeactivateCopyPaste">
+            <summary>
+            Deactivates copy pasting mode
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.DeactivateShipCreationClipboard">
+            <summary>
+            Deactivates creating grids
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.StartNewGridPlacement(Sandbox.Common.ObjectBuilders.MyCubeSize,System.Boolean)">
+            <summary>
+            Creates new grid 
+            </summary>
+            <param name="cubeSize">Grid size</param>
+            <param name="isStatic">Station = static</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.FindClosestGrid">
+            <summary>
+            Finds grid to build on
+            </summary>
+            <returns>found grid</returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.BlockCreationIsActivated">
+            <summary>
+            Returns state of building mode
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.CopyPasteIsActivated">
+            <summary>
+            Returns state of copy pasting mode
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.FreezeGizmo">
+            <summary>
+            Freezes the built object preview in current position
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.ShipCreationIsActivated">
+            <summary>
+            Current stat of grid creation mode
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.ShowRemoveGizmo">
+            <summary>
+            Shows the delete area preview
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.UseSymmetry">
+            <summary>
+            Enables synmetry block placing
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.UseTransparency">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.IsActivated">
+            <summary>
+            Is any mode active
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ApplyDestructionDeformation(Sandbox.ModAPI.IMySlimBlock)">
+            <summary>
+            Applies random deformation to given block
+            </summary>
+            <param name="block">block to be deformed</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ChangeGridOwnership(System.Int64,Sandbox.Common.ObjectBuilders.MyOwnershipShareModeEnum)">
+            <summary>
+            Changes owner of all blocks on grid
+            Call only on server!
+            </summary>
+            <param name="playerId">new owner id</param>
+            <param name="shareMode">new share mode</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ClearSymmetries">
+            <summary>
+            Clears symmetry planes
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ColorBlocks(VRageMath.Vector3I,VRageMath.Vector3I,VRageMath.Vector3)">
+            <summary>
+            Sets given color mask to range of blocks
+            </summary>
+            <param name="min">Starting coordinates of collored area</param>
+            <param name="max">End coordinates of collored area</param>
+            <param name="newHSV">new color mask (Saturation and Value are offsets)</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ConvertToDynamic">
+            <summary>
+            Converts station to ship
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.CubeExists(VRageMath.Vector3I)">
+            <summary>
+            Returns true if there is any block occupying given position
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.FixTargetCube(VRageMath.Vector3I@,VRageMath.Vector3)">
+            <summary>
+            Clamps fractional grid position to nearest cell (prefers neighboring occupied cell before empty) 
+            </summary>
+            <param name="cube">Return value</param>
+            <param name="fractionalGridPosition">Fractional position in grid space</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetClosestCorner(VRageMath.Vector3I,VRageMath.Vector3)">
+            <summary>
+            Gets position of closest cell corner
+            </summary>
+            <param name="gridPos">Cell coordinates</param>
+            <param name="position">Position to find nearest corner to. Grid space</param>
+            <returns>Fractional position of corner in grid space</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetCubeBlock(VRageMath.Vector3I)">
+            <summary>
+            Get cube block at given position
+            </summary>
+            <param name="pos">Block position</param>
+            <returns>Block or null if none is present at given position</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetLineIntersectionExactAll(VRageMath.LineD@,System.Double@,Sandbox.ModAPI.IMySlimBlock@)">
+            <summary>
+            Returns point of intersection with line
+            </summary>
+            <param name="line">Intersecting line</param>
+            <param name="distance">Distance of intersection</param>
+            <param name="intersectedBlock"></param>
+            <returns>Point of intersection</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetLineIntersectionExactGrid(VRageMath.LineD@,VRageMath.Vector3I@,System.Double@)">
+            <summary>
+            Same as GetLineIntersectionExactAll just without intersected block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GridIntegerToWorld(VRageMath.Vector3I)">
+            <summary>
+            Converts grid coordinates to world space
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.IsTouchingAnyNeighbor(VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Finds out if given area has any neighboring block
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.IsTrash">
+            <summary>
+            Algorithm used by game to define useless grids to be deleted
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.CanMergeCubes(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
+            <summary>
+            Determines if merge between grids is possible with given offset
+            </summary>
+            <param name="gridToMerge"></param>
+            <param name="gridOffset">offset to merged grid (in grid space)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.CalculateMergeTransform(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
+            <summary>
+            Transformation matrix that has to be applied to grid blocks to correctly merge it
+            used because ie. ships can be turned 90 degrees along X axis when being merged
+            </summary>
+            <param name="gridToMerge"></param>
+            <param name="gridOffset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.MergeGrid_CopyPaste(Sandbox.ModAPI.IMyCubeGrid,VRageMath.MatrixI)">
+            <summary>
+            Merge used when pasting grid into existing one
+            </summary>
+            <param name="gridToMerge"></param>
+            <param name="mergeTransform"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.MergeGrid_MergeBlock(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
+            <summary>
+            Merge used by merge blocks
+            </summary>
+            <param name="gridToMerge"></param>
+            <param name="gridOffset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RayCastBlocks(VRageMath.Vector3D,VRageMath.Vector3D)">
+            <summary>
+            Returns cell with block intersecting given line
+            </summary>
+            <param name="worldStart"></param>
+            <param name="worldEnd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RayCastCells(VRageMath.Vector3D,VRageMath.Vector3D,System.Collections.Generic.List{VRageMath.Vector3I},System.Nullable{VRageMath.Vector3I},System.Boolean)">
+            <summary>
+            Returns list of cells with blocks intersected by line
+            </summary>
+            <param name="worldStart"></param>
+            <param name="worldEnd"></param>
+            <param name="outHitPositions"></param>
+            <param name="gridSizeInflate"></param>
+            <param name="havokWorld">use physics intersection</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RazeBlock(VRageMath.Vector3I)">
+            <summary>
+            Remove block at given position
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RazeBlocks(VRageMath.Vector3I@,VRageMath.Vector3UByte@)">
+            <summary>
+            Remove blocks in given area
+            </summary>
+            <param name="pos">Starting position</param>
+            <param name="size">Area extents</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RazeBlocks(System.Collections.Generic.List{VRageMath.Vector3I})">
+            <summary>
+            Remove blocks at given positions
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RemoveBlock(Sandbox.ModAPI.IMySlimBlock,System.Boolean)">
+            <summary>
+            Removes given block
+            </summary>
+            <param name="block"></param>
+            <param name="updatePhysics">Update grid physics</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RemoveDestroyedBlock(Sandbox.ModAPI.IMySlimBlock)">
+            <summary>
+            Removes block and deformates neighboring blocks
+            </summary>
+            <param name="block"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.UpdateBlockNeighbours(Sandbox.ModAPI.IMySlimBlock)">
+            <summary>
+            Refreshes block neighbors (checks connections)
+            </summary>
+            <param name="block"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.WorldToGridInteger(VRageMath.Vector3)">
+            <summary>
+            Converts world coordinates to grid space cell coordinates
+            </summary>
+            <param name="coords"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetBlocks(System.Collections.Generic.List{Sandbox.ModAPI.IMySlimBlock},System.Func{Sandbox.ModAPI.IMySlimBlock,System.Boolean})">
+            <summary>
+            Returns blocks in grid
+            </summary>
+            <param name="blocks">List of returned blocks</param>
+            <param name="collect">Filter - function called on each block telling if it should be added to result</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetBlocksInsideSphere(VRageMath.BoundingSphereD@)">
+            <summary>
+            Returns blocks inside given sphere (world space)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.BigOwners">
+            <summary>
+            List of players with majority of blocks on grid
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.SmallOwners">
+            <summary>
+            List of players with any blocks on grid
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.GridSize">
+            <summary>
+            Grid size in meters
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.GridSizeEnum">
+            <summary>
+            Grid size enumeration
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.IsStatic">
+            <summary>
+            Station = static
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.Max">
+            <summary>
+            Maximum coordinates of blocks in grid
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeGrid.Min">
+            <summary>
+            Minimum coordinates of blocks in grid
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.EntityFlags">
+            <summary>
+            Entity flags.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.None">
+            <summary>
+            No flags
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.Visible">
+            <summary>
+            Specifies whether draw this entity or not.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.Save">
+            <summary>
+            Specifies whether save entity when saving sector or not
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.Near">
+            <summary>
+            Specifies whether entity is "near", near entities are cockpit and weapons, these entities are rendered in special way
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.NeedsUpdate">
+            <summary>
+            On this entity and its children will be called UpdateBeforeSimulation and UpdateAfterSimulation each frame
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.NeedsDraw">
+            <summary>
+            Draw method of this entity will be called when suitable
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.InvalidateOnMove">
+            <summary>
+            If object is moved, invalidate its renderobjects (update render)
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.Sync">
+            <summary>
+            Synchronize object during multiplayer
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.NeedsDrawFromParent">
+            <summary>
+            Draw method of this entity will be called when suitable and only from parent
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.ShadowBoxLod">
+            <summary>
+            Draw LOD shadow as box
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.Transparent">
+            <summary>
+            Render the entity using dithering to simulate transparency
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.EntityFlags.NeedsUpdateBeforeNextFrame">
+            <summary>
+            Entity updated once before first frame.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
+            <summary>
+            Param - limit is top
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.LeftExtend">
+            <summary>
+            Param - active
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyCameraController.HandleUse">
+            <summary>
+            Used to send "use" commands to camera controller
+            </summary>
+            <returns>
+            Return value indicates if the camera controller handled the use button.
+            If not, it should fall to ControlledObject
+            </returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.Save(System.Byte[]@)">
+            <summary>
+            Gets compressed voxel data
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.ReadRange(VRage.Common.Voxels.MyStorageDataCache,VRage.Common.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
+            </summary>
+            <param name="lodVoxelRangeMin">Inclusive.</param>
+            <param name="lodVoxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.WriteRange(VRage.Common.Voxels.MyStorageDataCache,VRage.Common.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Writes range of content and/or materials from cache to storage. Note that this can only write to LOD0 (higher LODs must be computed based on that).
+            </summary>
+            <param name="voxelRangeMin">Inclusive.</param>
+            <param name="voxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="T:Sandbox.ModAPI.MyAPIGateway">
+            <summary>
+            This is entry point for entire scripting possibilities in game
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Session">
+            <summary>
+            IMySession represents session object e.g. current world and its settings
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Entities">
+            <summary>
+            IMyEntities represents all objects that currently in world 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Players">
+            <summary>
+            IMyPlayerCollection contains all players that are in world 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.CubeBuilder">
+            <summary>
+            IMyCubeBuilder represents building hand 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.TerminalActionsHelper">
+            <summary>
+            IMyTerminalActionsHelper is helper for terminal actions and allows to access terminal 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Utilities">
+            <summary>
+            IMyUtilities is helper for loading/saving files , showing messages to players
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Multiplayer">
+            <summary>
+            IMyMultiplayer  contains multiplayer related things
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Parallel">
+            <summary>
+            IMyParallelTask allows to run tasks on baground threads 
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.MyMesh.#ctor(VRage.Common.Import.MyMeshPartInfo,System.String)">
+            <summary>
+            c-tor - generic way for collecting resources
+            </summary>
+            <param name="meshInfo"></param>
+            assetName - just for debug output
+        </member>
+        <member name="M:Sandbox.Common.MyAbstractXmlSerializer`1.#ctor">
+            <summary>
+            **DO NOT USE** This is only added to enable XML Serialization.
+            </summary>
+            <remarks>DO NOT USE THIS CONSTRUCTOR</remarks>
+        </member>
+        <member name="M:Sandbox.Common.MyAbstractXmlSerializer`1.#ctor(`0)">
+            <summary>
+            Initialises the Serializer to work with the given data.
+            </summary>
+            <param name="data">Concrete Object of the AbstractType Specified.</param>
+        </member>
+        <member name="P:Sandbox.Common.MyAbstractXmlSerializer`1.Data">
+            <summary>
+            [Concrete] Data to be stored/is stored as XML.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.MyEntityUpdateEnum.BEFORE_NEXT_FRAME">
+            <summary>
+            Separate update performed once before any other updates are called.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.Keys">
+            <summary>
+            Enumeration for virtual keys.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.ArcTanAngle(System.Single,System.Single)">
+            <summary>
+            ArcTanAngle
+            </summary>
+            <returns>ArcTan angle between x and y</returns>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.MaxComponents(VRageMath.Vector3@,VRageMath.Vector3@)">
+            <summary>
+            Return vector with each component max
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.AngleTo(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            AngleTo 
+            </summary>
+            <returns>Angle between the vector lines</returns>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.QuaternionToEuler(VRageMath.Quaternion)">
+            <summary>
+            QuaternionToEuler 
+            </summary>
+            <returns>Converted quaternion to the euler pitch, rot, yaw</returns>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.ForwardVectorProjection(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            This projection results to initial velocity of non-engine objects, which parents move in some velocity
+            We want to add only forward speed of the parent to the forward direction of the object, and if parent
+            is going backward, no speed is added.
+            </summary>
+            <param name="forwardVector"></param>
+            <param name="projectedVector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.VectorFromColor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Calculates color from vector
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.MyMath.DistanceSquaredFromLineSegment(VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Return minimum distance between line segment v-w and point p.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.Vector3Extensions">
+            <summary>
+            Usefull Vector3 extensions
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.Vector3Extensions.Project(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Calculates projection vector
+            </summary>
+            <param name="sb">The sb.</param>
+            <param name="length">The length.</param>
+        </member>
+        <member name="M:Sandbox.Common.BoundingFrustumExtensions.ToBoundingSphere(VRageMath.BoundingFrustum,VRageMath.Vector3[])">
+            <summary>
+            Creates bounding sphere from bounding frustum.
+            Implementation taken from XNA source, replace IEnumerable with array
+            </summary>
+            <param name="frustum">The bounding frustum.</param>
+            <param name="corners">Temporary memory to save corner when getting from frustum.</param>
+            <returns>BoundingSphere</returns>
+        </member>
+        <member name="T:Sandbox.Engine.Multiplayer.Container`1">
+            <summary>
+            Container class to prevent boxing in ProtoBuf
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Audio.MyAudioHelpers.CurveType">
+            <summary>
+            Enumerator of available curve types
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelBlockDefinition">
+            <summary>
+            Definition for one small grid cog wheel (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_MechanicalSubBlockDefinition">
+            <summary>
+            Definition for common subblock mechanical parts.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
+            <summary>
+            Color is used to get Color(4 bytes) as well as
+            MyStringId value for localization.
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelsBlockDefinition">
+            <summary>
+            Definition for large grid block which consists of several connected small grid cog wheel subblocks.
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_LockBlockDefinition">
+            <summary>
+            Definition for one small grid lock block (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_SwitchBlockDefinition">
+            <summary>
+            Definition for one small grid switch block (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_TorsionSpringBlockDefinition">
+            <summary>
+            Definition for one small grid torsion spring (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(Sandbox.Common.ObjectBuilders.IMyRemapHelper)">
+            <summary>
+            Remaps this entity's entityId to a new value.
+            If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
+            references and retrieve them.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_SessionSettings.WorldSizeKm">
+            <summary>
+            Size of the edge of the world area cube.
+            Don't use directly, as it is error-prone (it's km instead of m and edge size instead of half-extent)
+            Rather use MyEntities.WorldHalfExtent()
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.BlueprintItem.Amount">
+            <summary>
+            Amount of item required or produced. For discrete objects this refers to
+            pieces. For ingots and ore, this refers to volume in m^3.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
+            <summary>
+            Enum used for localization of display name. Null for player created definitions.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DescriptionEnum">
+            <summary>
+            Enum used for localization of description. Null for player created definitions.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameString">
+            <summary>
+            String name used for user created definitions which do not have localization support.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DescriptionString">
+            <summary>
+            String used for user created description which do not have localization support.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.Enabled">
+            <summary>
+            Definition can be disabled by mod, then it will be removed from definition manager
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.Public">
+            <summary>
+            Indicates if definition should be offered in Cube builder
+            </summary>
+        </member>
+        <member name="P:Sandbox.Definitions.MyDefinitionBase.DisplayNameText">
+            <summary>
+            Use this property when showing name in GUI instead of DisplayName. This takes into
+            account more complex name construction.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Definitions.MyDefinitionBase.DescriptionText">
+            <summary>
+            Use this property when showing description in GUI, as it takes into account more
+            complex description construction.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Definitions.MyDefinitionId">
+            <summary>
+            Prefer getting definition ID using object builder used to create the item.
+            If you have automatic rifle, in its Init method create new MyDefinitionId
+            using TypeId and SubtypeName of object builder.
+            Do not write specific values in code, as data comes from XML and if those
+            change, code needs to change as well.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Definitions.MyDefinitionId.GetHashCodeLong">
+            <summary>
+            Safer hash code. It is unique in more situations than GetHashCode would be,
+            but it may still require full check.
+            </summary>
+            <returns>64-bit hash code.</returns>
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Serializer.MyObjectBuilderSerializer.MemberwiseAssignment(Sandbox.Common.ObjectBuilders.MyObjectBuilder_Base,Sandbox.Common.ObjectBuilders.MyObjectBuilder_Base)">
+            <summary>
+            Performs shallow copy of data between members of the same name and type from source to target.
+            This method can be slow and inefficient, so use only when needed.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyGlobalEventTypeEnum">
+            <summary>
+            Defines the event type.
+            Each event type has its assigned handler method and data class type.
+            Multiple event definitions can have the same event type.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.IMyRemapHelper.RemapEntityId(System.Int64)">
+            <summary>
+            Returns a new entity ID for the entity with the given old entity ID.
+            The function will return the same new entityId only if the saveMapping argument is set to true.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.IMyRemapHelper.Clear">
+            <summary>
+            Clears all the saved mappings from the remap helper and gets it ready for the next remapping operation.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ShipConnector.Connected">
+            <summary>
+            When ConnectedEntityId is not null, this tells whether the connection is only approach (yellow) or locked connection (green)
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyToolbarType.Spectator">
+            <summary>
+            This is character toolbar that allows building everything.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.Result">
+            <summary>
+            THIS IS OBSOLETE
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.BaseProductionTimeInSeconds">
+            <summary>
+            Base production time in seconds, which is affected by speed increase of
+            refinery or assembler.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ProductionBlock.Inventory">
+            <summary>
+            Don't use. Backward compatibility only. Use InputInventory and OutputInventory instead.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
+            <summary>
+            Can handle old values as well.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OneDirection">
+            <summary>
+            When block has mount points only on one side, it will autorotate so that side is touching the surface.
+            Otherwise, full range of rotations is allowed.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OppositeDirections">
+            <summary>
+            When block has mount points only on two sides and those sides are opposite each other (eg. Top and Bottom),
+            it will autorotate so that one of these sides is touching the surface. Otherwise, full range of rotations
+            is allowed.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.FirstDirection">
+            <summary>
+            When block has mountpoint on at least one side, it will autorotate so that this side is touching the surface.
+            Otherwise, full range of rotations is allowed.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_InventoryItem.Content">
+            <summary>
+            Obsolete. It is here only to keep backwards compatibility with old saves
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.ElapsedGameTime">
+            <summary>
+            This is long because TimeSpan is not serialized
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.GameTime">
+            <summary>
+            Obsolete. Use ElapsedGameTime
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.HarvestMode">
+            <summary>
+            This member is obsolete. Use GameType instead.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Engine.Physics.MyPhysicsForceType">
+            <summary>
+            Force type applied to physic object.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Engine.Physics.MyPhysicsForceType.APPLY_WORLD_IMPULSE_AND_WORLD_ANGULAR_IMPULSE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Sandbox.Engine.Physics.MyPhysicsForceType.ADD_BODY_FORCE_AND_BODY_TORQUE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.Entities.MyEntityIdentifier.MarkIdUsed(System.Int64)">
+            <summary>
+            This method is used when loading existing entity IDs to track the last generated ID
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.Entities.MyEntityIdentifier.AddEntityWithId(Sandbox.ModAPI.IMyEntity)">
+            <summary>
+            Registers entity with given ID. Do not call this directly, it is called automatically
+            when EntityID is first time assigned.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Sandbox.Game.Entities.MyEntityIdentifier.AllocateId(Sandbox.Game.Entities.MyEntityIdentifier.ID_OBJECT_TYPE,Sandbox.Game.Entities.MyEntityIdentifier.ID_ALLOCATION_METHOD)">
+            <summary>
+            Allocated new entity ID (won't add to list)
+            Entity with this ID should be added immediatelly
+            </summary>
+        </member>
+        <member name="M:Sandbox.Game.Entities.MyEntityIdentifier.SwapRegisteredEntityId(Sandbox.ModAPI.IMyEntity,System.Int64,System.Int64)">
+            <summary>
+            Changes ID by which an entity is registered. Do not call this directly, it is called automatically when
+            EntityID changes.
+            </summary>
+            <param name="entity">Entity whose ID has changed.</param>
+            <param name="oldId">Old ID of the entity.</param>
+            <param name="newId">New ID of the entity.</param>
+        </member>
+        <member name="P:Sandbox.Game.Entities.MyEntityIdentifier.AllocationSuspended">
+            <summary>
+            Freezes allocating entity ids.
+            This is important, because during load, no entity cannot allocate new id, because it could allocate id which already has entity which will be loaded soon.
+            </summary>
+        </member>
+    </members>
+</doc>
