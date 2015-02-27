@@ -140,10 +140,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerService\IServerService.cs" />
     <Compile Include="ServerService\ServerService.cs" />
-    <Compile Include="ServerService\StartServerRequest.cs" />
-    <Compile Include="ServerService\StartServerResponse.cs" />
     <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -202,6 +199,10 @@
     <Folder Include="PluginService\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SEComm\SEComm.csproj">
+      <Project>{57cc6838-5ab0-4b90-9b48-ecbb87af8432}</Project>
+      <Name>SEComm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SEModAPIExtensions\SEModAPIExtensions.csproj">
       <Project>{727b1141-2124-4a31-82fa-cae218501215}</Project>
       <Name>SEModAPIExtensions</Name>

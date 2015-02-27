@@ -1,4 +1,4 @@
-namespace SEServerExtender.ServerService
+﻿namespace SEComm
 {
 	using System;
 	using System.Runtime.Serialization;

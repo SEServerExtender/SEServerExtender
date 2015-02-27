@@ -145,7 +145,7 @@ namespace SEServerExtender
 						extenderArgs.NoGui = true;
 
 						//Implies autostart
-						extenderArgs.AutoStart = true;
+						//extenderArgs.AutoStart = true;
 					}
 					if ( arg.ToLower( ).Equals( "noconsole" ) )
 					{
@@ -224,6 +224,14 @@ namespace SEServerExtender
 					Server.StartServer( );
 				}
 
+				if ( !extenderArgs.NoWcf )
+				{
+					LogManager.APILog.WriteLineAndConsole( "Opening up WCF service listener" );
+					ServerService = new ServerService.ServerService( );
+					ServerServiceHost = new ServiceHost( ServerService );
+					ServerServiceHost.Open( );
+				}
+
 				if ( !extenderArgs.NoGui )
 				{
 					Thread uiThread = new Thread( StartGui );
@@ -262,13 +270,6 @@ namespace SEServerExtender
 
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
-			}
-
-			if ( !extenderArgs.NoWcf )
-			{
-				ServerService = new ServerService.ServerService( );
-				ServerServiceHost = new ServiceHost( ServerService );
-				ServerServiceHost.Open( );
 			}
 		}
 

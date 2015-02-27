@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +14,9 @@ using System.Windows.Shapes;
 
 namespace SEServerGUI
 {
+	using System.Data;
+	using SEComm;
+
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -23,6 +25,31 @@ namespace SEServerGUI
 		public MainWindow( )
 		{
 			InitializeComponent( );
+		}
+
+		private void StopServer( object sender, RoutedEventArgs e )
+		{
+			ServerServiceProxy proxy = new ServerServiceProxy( );
+			proxy.StopServer( );
+		}
+
+		private void StartServer( object sender, RoutedEventArgs e )
+		{
+			ServerServiceProxy proxy = new ServerServiceProxy( );
+			proxy.StartServer( new StartServerRequest { ConfigurationName = "Temporal Engineering", ProtocolVersion = new Version( 1, 0, 0 ) } );
+		}
+
+		private void ExitServer( object sender, RoutedEventArgs e )
+		{
+			try
+			{
+				ServerServiceProxy proxy = new ServerServiceProxy( );
+				proxy.Exit( 0 );
+			}
+			catch ( Exception ex )
+			{
+				MessageBox.Show( ex.Message );
+			}
 		}
 	}
 }
