@@ -34,8 +34,8 @@
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "5BD41EA814E02B4E4D0F12843FEB47FC";
-		public static string ServerNetworkManagerKickPlayerMethod = "4F49605BE0CBDF17EA3E46B5FCEFB1D7"; 
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "8BCE3804ABCEC7625C4D56B74B5FF98C";
+		public static string ServerNetworkManagerKickPlayerMethod = "CCF347D895F54AB46484A67F94FF7AC2";  
 
 		public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
