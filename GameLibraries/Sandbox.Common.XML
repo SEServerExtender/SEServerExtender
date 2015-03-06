@@ -950,6 +950,144 @@
             Param - active
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelShape.GetWorldBoundary">
+            <summary>
+            Gets current world boundaries
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelShape.PeekWorldBoundary(VRageMath.Vector3D@)">
+            <summary>
+            Peeks world boundaries at given position
+            </summary>
+            <param name="targetPosition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelShape.GetIntersectionVolume(VRageMath.Vector3D@)">
+            <summary>
+            Gets volume of intersection of shape and voxel
+            </summary>
+            <param name="voxelPosition">Left bottom point of voxel</param>
+            <returns>Normalized volume of intersection</returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyVoxelShape.Transform">
+            <summary>
+            World matrix of voxel shape
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyVoxelShapeBox.Boundaries">
+            <summary>
+            Boundaries are in local space, you need to use transform property to rotate/translate shape 
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyVoxelShapeCapsule.A">
+            <summary>
+            In world Coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyVoxelShapeCapsule.B">
+            <summary>
+            In world Coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyVoxelShapeRamp.RampNormal">
+            <summary>
+            normal of the sloped plane
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyVoxelShapeSphere.Center">
+            <summary>
+            In World Space
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(Sandbox.ModAPI.IMyEntity)">
+            <summary>
+            Tracks entity with enabled position prediction
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRageMath.Vector3D,VRageMath.Vector3)">
+            <summary>
+            Tracks given target with enabled position prediction
+            </summary>
+            <param name="pos"></param>
+            <param name="velocity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(Sandbox.ModAPI.IMyEntity)">
+            <summary>
+            Tracks target without position prediction
+            </summary>
+            <param name="Entity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRageMath.Vector3D)">
+            <summary>
+            Targets given position
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncElevation">
+            <summary>
+            method used to sync elevation of turret , you need to call it to sync elevation for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncAzimuth">
+            <summary>
+            method used to sync azimuth, you need to call it to sync azimuth for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncEnableIdleRotation">
+            <summary>
+            method used to sync idle rotation and elevation, you need to call it to sync rotation and elevation for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.ResetTargetingToDefault">
+            <summary>
+            resert targeting to default values
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
+            <summary>
+            Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Azimuth">
+            <summary>
+            Sets/gets azimuth of turret, this method is not synced, you need to sync azimuth manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.EnableIdleRotation">
+            <summary>
+            enable/disable idle rotation for turret, this method is not synced, you need to sync manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.AIEnabled">
+            <summary>
+            Checks is AI is enabled for turret
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
+            <summary>
+            Will paint given material with given shape
+            </summary>
+            <param name="voxelMap"></param>
+            <param name="voxelShape"></param>
+            <param name="materialIdx"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CutOutShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape)">
+            <summary>
+            Will cut out given shape
+            </summary>
+            <param name="voxelMap"></param>
+            <param name="voxelShape"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.FillInShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
+            <summary>
+            Will fill given material with given shape
+            </summary>
+            <param name="voxelMap"></param>
+            <param name="voxelShape"></param>
+            <param name="materialIdx"></param>
+        </member>
         <member name="M:Sandbox.ModAPI.Interfaces.IMyCameraController.HandleUse">
             <summary>
             Used to send "use" commands to camera controller
@@ -1134,6 +1272,12 @@
             Enumerator of available curve types
             </summary>
         </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
+            <summary>
+            Color is used to get Color(4 bytes) as well as
+            MyStringId value for localization.
+            </summary>
+        </member>
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelBlockDefinition">
             <summary>
             Definition for one small grid cog wheel (used inside large block as mechanical subblock).
@@ -1142,12 +1286,6 @@
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_MechanicalSubBlockDefinition">
             <summary>
             Definition for common subblock mechanical parts.
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
-            <summary>
-            Color is used to get Color(4 bytes) as well as
-            MyStringId value for localization.
             </summary>
         </member>
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelsBlockDefinition">
