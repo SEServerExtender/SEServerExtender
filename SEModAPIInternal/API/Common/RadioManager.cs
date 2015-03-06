@@ -23,8 +23,8 @@ namespace SEModAPIInternal.API.Common
 
 		public static string RadioManagerGetBroadcastRadiusMethod = "CC1F306EACC95C00A05C100712656EBC";
 		public static string RadioManagerSetBroadcastRadiusMethod = "C42CAA2B50B8705C7F36262BCE8E60EA";
-		public static string RadioManagerGetLinkedEntityMethod = "7DE57FDDF37DD6219A990596E0283F01";
-		public static string RadioManagerSetLinkedEntityMethod = "1C653F74AF87659F7AA9B39E35D789CE";
+		//public static string RadioManagerGetLinkedEntityMethod = "7DE57FDDF37DD6219A990596E0283F01";
+		//public static string RadioManagerSetLinkedEntityMethod = "1C653F74AF87659F7AA9B39E35D789CE";
 		public static string RadioManagerGetEnabledMethod = "78F34EF54782BBB097110F15BB3F5CC7";
 		public static string RadioManagerSetEnabledMethod = "5DCB378F714DC1A82AF40135BBE08BE1";
 		public static string RadioManagerGetAABBTreeIdMethod = "20FCED684DEC4EA0CCEE92D67DB109F1";
@@ -44,7 +44,7 @@ namespace SEModAPIInternal.API.Common
 				m_networkManager = new RadioManagerNetworkManager( this );
 
 				m_broadcastRadius = (float)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetBroadcastRadiusMethod );
-				m_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
+				//m_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
 				m_isEnabled = (bool)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetEnabledMethod );
 				m_aabbTreeId = (int)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetAABBTreeIdMethod );
 			}
@@ -148,8 +148,8 @@ namespace SEModAPIInternal.API.Common
 				bool result = true;
 				result &= BaseObject.HasMethod( type1, RadioManagerGetBroadcastRadiusMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerSetBroadcastRadiusMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerGetLinkedEntityMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerSetLinkedEntityMethod );
+				//result &= BaseObject.HasMethod( type1, RadioManagerGetLinkedEntityMethod );
+				//result &= BaseObject.HasMethod( type1, RadioManagerSetLinkedEntityMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerGetEnabledMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerSetEnabledMethod );
 				result &= BaseObject.HasMethod( type1, RadioManagerGetAABBTreeIdMethod );
@@ -187,7 +187,7 @@ namespace SEModAPIInternal.API.Common
 
 		protected void InternalUpdateLinkedEntity( )
 		{
-			BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetLinkedEntityMethod, new object[ ] { LinkedEntity } );
+			//BaseObject.InvokeEntityMethod( BackingObject, RadioManagerSetLinkedEntityMethod, new object[ ] { LinkedEntity } );
 		}
 
 		protected void InternalUpdateEnabled( )

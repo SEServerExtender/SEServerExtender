@@ -18,12 +18,12 @@ namespace SEModAPIInternal.API.Entity
 		public static string PowerProducerNamespace = "FB8C11741B7126BD9C97FE76747E087F";
 		public static string PowerProducerClass = "7E69388ED0DB47818FB7AFF9F16C6EDA";
 
-//		public static string PowerProducerGetMaxPowerOutputMethod = "99524C50BFDBD668530973901AE333E8";
-		//public static string PowerProducerGetCurrentOutputMethod = "0270E389254E01AC5E7F604A8665767F";
-		//public static string PowerProducerSetCurrentOutputMethod = "CA1D2324AED60F6622878719DEC31D66";
-		public static string PowerProducerGetMaxPowerOutputMethod = "EE14CE9A4A4EC31170A289F0445C3EFB";
-		public static string PowerProducerGetCurrentOutputMethod = "D18B16A57B4F96C7B988C7AF8B9939D0";
-		public static string PowerProducerSetCurrentOutputMethod = "AFD1A9ED1DE4C6C93DF986D446802DEF";
+		//public static string PowerProducerGetMaxPowerOutputMethod = "EE14CE9A4A4EC31170A289F0445C3EFB";
+		//public static string PowerProducerGetCurrentOutputMethod = "D18B16A57B4F96C7B988C7AF8B9939D0";
+		//public static string PowerProducerSetCurrentOutputMethod = "AFD1A9ED1DE4C6C93DF986D446802DEF";
+		//public static string PowerProducerGetMaxPowerOutputMethod = "EE14CE9A4A4EC31170A289F0445C3EFB";
+		//public static string PowerProducerGetCurrentOutputMethod = "D18B16A57B4F96C7B988C7AF8B9939D0";
+		//public static string PowerProducerSetCurrentOutputMethod = "AFD1A9ED1DE4C6C93DF986D446802DEF";
 
 		#endregion "Attributes"
 
@@ -54,7 +54,8 @@ namespace SEModAPIInternal.API.Entity
 
 				try
 				{
-					float result = (float)BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerGetMaxPowerOutputMethod );
+					//float result = (float)BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerGetMaxPowerOutputMethod );
+					float result = 0f;
 					return result;
 				}
 				catch ( Exception ex )
@@ -74,7 +75,8 @@ namespace SEModAPIInternal.API.Entity
 
 				try
 				{
-					float result = (float)BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerGetCurrentOutputMethod );
+					//float result = (float)BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerGetCurrentOutputMethod );
+					float result = 0f;
 					return result;
 				}
 				catch ( Exception ex )
@@ -104,9 +106,10 @@ namespace SEModAPIInternal.API.Entity
 				if ( type1 == null )
 					throw new Exception( "Could not find internal type for PowerProducer" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, PowerProducerGetMaxPowerOutputMethod );
-				result &= BaseObject.HasMethod( type1, PowerProducerGetCurrentOutputMethod );
-				result &= BaseObject.HasMethod( type1, PowerProducerSetCurrentOutputMethod );
+
+				//result &= BaseObject.HasMethod( type1, PowerProducerGetMaxPowerOutputMethod );
+				//result &= BaseObject.HasMethod( type1, PowerProducerGetCurrentOutputMethod );
+				//result &= BaseObject.HasMethod( type1, PowerProducerSetCurrentOutputMethod );
 
 				return result;
 			}
@@ -119,7 +122,7 @@ namespace SEModAPIInternal.API.Entity
 
 		protected void InternalUpdatePowerOutput( )
 		{
-			BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerSetCurrentOutputMethod, new object[ ] { m_powerOutput } );
+			//BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerSetCurrentOutputMethod, new object[ ] { m_powerOutput } );
 		}
 
 		#endregion "Methods"

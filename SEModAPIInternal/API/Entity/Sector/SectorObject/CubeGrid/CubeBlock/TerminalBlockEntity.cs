@@ -7,6 +7,8 @@ using Sandbox.Common.ObjectBuilders;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
 
+using Sandbox.ModAPI;
+
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	[DataContract( Name = "TerminalBlockEntityProxy" )]
@@ -133,6 +135,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				LogManager.APILog.WriteLine( ex );
 				return false;
+			}
+		}
+
+		public static void SetCustomName(Sandbox.ModAPI.Ingame.IMyTerminalBlock terminalBlock, string text)
+		{
+			try
+			{
+				StringBuilder newCustomName = new StringBuilder(text);
+				InvokeStaticMethod(terminalBlock.GetType(), TerminalBlockBroadcastCustomNameMethod, new object[] { terminalBlock, newCustomName });
+			}
+			catch (Exception ex)
+			{
+				LogManager.APILog.WriteLineAndConsole(string.Format("SetCustomName(): {0}", ex.ToString()));				
 			}
 		}
 

@@ -30,11 +30,16 @@
         <member name="M:VRage.Algorithms.MyPathFindingSystem`1.PrepareTraversal(`0,System.Predicate{`0},System.Predicate{`0},System.Predicate{VRage.Algorithms.IMyPathEdge{`0}})">
             <summary>
             Has to be called before any traversal of the pathfinding system using enumerators.
+            
             Several predicates can be supplied to the system that change the behavior of the traversal.
             </summary>
             <param name="startingVertex">The vertex from which the traversal starts</param>
             <param name="vertexFilter">If set, this predicate is applied to the output vertices so that we only get those that we are interested in.</param>
-            <param name="vertexTraversable">This predicate allows to make vertices of the graph untraversable, blocking the paths through them.</param>
+            <param name="vertexTraversable">
+                This predicate allows to make vertices of the graph untraversable, blocking the paths through them.
+                It is guaranteed to be called only once on every vertex when enumerating the graph or finding reachable vertices, but
+                for pathfinding functions, this guarantee is no longer valid.
+            </param>
             <param name="edgeTraversable">This predicate allows to make edges untraversable, blocking the paths through them.</param>
         </member>
         <member name="T:VRage.Collections.CachingDictionary`2">

@@ -1342,6 +1342,12 @@
             <param name="incidentEdge"></param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.SortFreeFaces">
+            <summary>
+            Sorts the list of free faces. This ensures that subsequent face allocations will return increasing sequence of face indices,
+            unless interrupted by face deallocation. This can be useful in some algorithms that rely on ordering of the face indices.
+            </summary>
+        </member>
         <member name="M:VRage.Common.Utils.MyWingedEdgeMesh.CheckFreeEntryConsistency">
             <summary>
             Checks for loops in the meshe's tables' freed entries

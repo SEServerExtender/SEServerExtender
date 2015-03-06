@@ -12,6 +12,7 @@ using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Utility;
 using SEModAPIInternal.Support;
 using VRageMath;
+using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
@@ -485,6 +486,47 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 		#region "Methods"
 
+		public static void SetBuildPercent(IMySlimBlock block, float percent)
+		{
+			try
+			{
+				// Set locally
+				object constructionManager = GetEntityFieldValue(block, CubeBlockConstructionManagerField);
+				float maxIntegrity = (float)InvokeEntityMethod(constructionManager, ConstructionManagerGetMaxIntegrityMethod);
+				float integrity = percent * maxIntegrity;
+				float build = percent * maxIntegrity;
+				InvokeEntityMethod(constructionManager, ConstructionManagerSetIntegrityBuildValuesMethod, new object[] { build, integrity });
+
+				// Broadcast to players
+				Type someEnum = CubeGridEntity.InternalType.GetNestedType(CubeGridNetworkManager.CubeGridIntegrityChangeEnumClass);
+				Array someEnumValues = someEnum.GetEnumValues();
+				object enumValue = someEnumValues.GetValue(0);
+				object netManager = BaseObject.InvokeEntityMethod(block.CubeGrid, CubeGridNetworkManager.CubeGridGetNetManagerMethod);
+				BaseObject.InvokeEntityMethod(netManager, CubeGridNetworkManager.CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod, new object[] { block, enumValue, 0L });
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLineAndConsole(string.Format("SetBuildPercent(): {0}", ex.ToString()));
+			}
+
+		}
+
+		/*
+		public void BroadcastCubeBlockBuildIntegrityValues(CubeBlockEntity cubeBlock)
+		{
+			try
+			{
+				Type someEnum = CubeGridEntity.InternalType.GetNestedType(CubeGridIntegrityChangeEnumClass);
+				Array someEnumValues = someEnum.GetEnumValues();
+				Object enumValue = someEnumValues.GetValue(0);
+				BaseObject.InvokeEntityMethod(m_netManager, CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod, new object[] { cubeBlock.BackingObject, enumValue, 0L });
+			}
+			catch (Exception ex)
+			{
+				LogManager.ErrorLog.WriteLine(ex);
+			}
+		}
+		*/
 		public void FixBones( float a, float b )
 		{
 			try
