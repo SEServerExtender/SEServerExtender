@@ -43,7 +43,7 @@ namespace SEModAPIInternal.API.Common
 				_networkManager = new RadioManagerNetworkManager( this );
 
 				_broadcastRadius = (float)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetBroadcastRadiusMethod );
-				_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
+				//_linkedEntity = BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetLinkedEntityMethod );
 				_isEnabled = (bool)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetEnabledMethod );
 				_aabbTreeId = (int)BaseObject.InvokeEntityMethod( BackingObject, RadioManagerGetAabbTreeIdMethod );
 			}
