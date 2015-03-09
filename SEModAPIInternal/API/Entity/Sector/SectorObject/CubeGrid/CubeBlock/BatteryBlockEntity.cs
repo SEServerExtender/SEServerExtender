@@ -12,7 +12,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	[DataContract]
 	public class BatteryBlockEntity : FunctionalBlockEntity
 	{
-		#region "Attributes"
 
 		private readonly BatteryBlockNetworkManager _batteryBlockNetManager;
 
@@ -44,7 +43,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string BatteryBlockBatteryDefinitionField = "F0C59D70E13560B7212CEF8CF082A67B";
 		public static string BatteryBlockNetManagerField = "E93BD8EF419C322C547231F9BF991090";
 
-		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
