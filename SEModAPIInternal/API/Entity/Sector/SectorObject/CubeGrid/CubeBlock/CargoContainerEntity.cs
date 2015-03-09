@@ -7,6 +7,7 @@ using SEModAPIInternal.Support;
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System.Linq;
+	using Sandbox.ModAPI;
 
 	[DataContract]
 	public class CargoContainerEntity : TerminalBlockEntity

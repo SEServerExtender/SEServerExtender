@@ -34,11 +34,11 @@
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "8BCE3804ABCEC7625C4D56B74B5FF98C";
-		//public static string ServerNetworkManagerKickPlayerMethod = "CCF347D895F54AB46484A67F94FF7AC2";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "8E7BC1DD3210BE59E40E80F593E597DD";
-		public static string ServerNetworkManagerKickPlayerMethod = "F924262370F6E7B576D4317EE65B49A3";         
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "8E7BC1DD3210BE59E40E80F593E597DD"; //v1.72.06  (UInt64, Boolean) : Void
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "7746929EC77B732BB52EFC8FC757085D";   //v1.72.08  (UInt64, Boolean) : Void
+		//public static string ServerNetworkManagerKickPlayerMethod = "F924262370F6E7B576D4317EE65B49A3";      //v1.72.06  (UInt64) : Void
+		public static string ServerNetworkManagerKickPlayerMethod = "33F8624DFE8A8E3FA9B8CC9A2446CCB8";        //v1.72.08  (UInt64) : Void
 
 		public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
