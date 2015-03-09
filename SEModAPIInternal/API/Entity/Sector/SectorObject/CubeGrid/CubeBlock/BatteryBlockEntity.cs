@@ -110,6 +110,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember, Category( "Battery Block" )]
+		[DisplayName( "Max Stored Power (MWh)" )]
 		public float MaxStoredPower
 		{
 			get
@@ -160,6 +161,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember, Category( "Battery Block" )]
+		[DisplayName("Semi-Automatic Mode")]
 		public bool SemiautoEnabled
 		{
 			get { return ObjectBuilder.SemiautoEnabled; }
@@ -190,6 +192,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		[DataMember, Category( "Battery Block" )]
+		[DisplayName("Max Power Output (MW)")]
 		public float MaxPowerOutput
 		{
 			get { return _maxPowerOutput; }

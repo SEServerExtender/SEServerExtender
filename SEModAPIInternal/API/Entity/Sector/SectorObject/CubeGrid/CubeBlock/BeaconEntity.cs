@@ -59,6 +59,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Beacon" )]
+		[DisplayName("Broadcast Radius")]
 		public float BroadcastRadius
 		{
 			get
