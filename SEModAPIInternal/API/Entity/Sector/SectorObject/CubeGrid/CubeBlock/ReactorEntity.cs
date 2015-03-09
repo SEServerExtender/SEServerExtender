@@ -113,6 +113,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Reactor" )]
+		[DisplayName("Max Power Output (MW)")]
 		public float MaxPower
 		{
 			get { return PowerProducer.MaxPowerOutput; }
@@ -127,6 +128,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Reactor" )]
+		[DisplayName( "Current Power Output (MW)" )]
 		public float Power
 		{
 			get { return PowerProducer.PowerOutput; }
