@@ -14,7 +14,7 @@
 		/// <returns></returns>
 		[OperationContract]
 		StartServerResponse StartServer( StartServerRequest request );
-		
+
 		/// <summary>
 		/// Attempts to stop the currently running SE instance.
 		/// </summary>
@@ -31,5 +31,11 @@
 
 		[OperationContract]
 		IEnumerable<ChatUserItem> GetPlayersOnline( );
+
+		[OperationContract]
+		void KickPlayer( ulong steamId );
+
+		[OperationContract]
+		void BanPlayer( ulong steamId );
 	}
 }

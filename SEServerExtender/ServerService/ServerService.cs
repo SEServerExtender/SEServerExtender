@@ -101,14 +101,33 @@
 
 		public IEnumerable<ChatUserItem> GetPlayersOnline( )
 		{
-			OperationContext context = OperationContext.Current;
-			MessageProperties prop = context.IncomingMessageProperties;
-			RemoteEndpointMessageProperty endpoint =
-				prop[ RemoteEndpointMessageProperty.Name ] as RemoteEndpointMessageProperty;
-			string ip = endpoint.Address;
+			string ip = GetRemoteEndpoint( );
 			LogManager.APILog.WriteLineAndConsole( "Received character list request from {0}", null, ip );
 			List<ulong> playersOnline = PlayerManager.Instance.ConnectedPlayers;
 			return playersOnline.Select( remoteUserId => new ChatUserItem { Username = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId ), SteamId = remoteUserId } );
+		}
+
+		private static string GetRemoteEndpoint( )
+		{
+			OperationContext context = OperationContext.Current;
+			MessageProperties prop = context.IncomingMessageProperties;
+			RemoteEndpointMessageProperty endpoint = prop[ RemoteEndpointMessageProperty.Name ] as RemoteEndpointMessageProperty;
+			string ip = endpoint.Address;
+			return ip;
+		}
+
+		public void KickPlayer( ulong steamId )
+		{
+			string ip = GetRemoteEndpoint( );
+			LogManager.APILog.WriteLineAndConsole( "Received request to kick player {0} from {1}", null, steamId, ip );
+			PlayerManager.Instance.KickPlayer( steamId );
+		}
+
+		public void BanPlayer( ulong steamId )
+		{
+			string ip = GetRemoteEndpoint( );
+			LogManager.APILog.WriteLineAndConsole( "Received request to ban player {0} from {1}", null, steamId, ip );
+			PlayerManager.Instance.BanPlayer( steamId );
 		}
 	}
 }

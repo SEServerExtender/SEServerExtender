@@ -12,6 +12,7 @@ using System.Linq;
 namespace SEModAPI.API.Definitions
 {
 	using System.Collections.Generic;
+	using System.Configuration;
 
 	[DataContract]
 	public class DedicatedConfigDefinition
@@ -902,7 +903,9 @@ namespace SEModAPI.API.Definitions
 		/// Load the dedicated server configuration file
 		/// </summary>
 		/// <param name="fileInfo">Path to the configuration file</param>
+		/// <exception cref="FileNotFoundException">Thrown if configuration file cannot be found at the path specified.</exception>
 		/// <returns></returns>
+		/// <exception cref="ConfigurationErrorsException">Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.</exception>
 		public static MyConfigDedicatedData Load( FileInfo fileInfo )
 		{
 			object fileContent;
@@ -911,7 +914,7 @@ namespace SEModAPI.API.Definitions
 
 			if ( !File.Exists( filePath ) )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileMissing, filePath );
+				throw new FileNotFoundException( "Game configuration file not found.", filePath );
 			}
 
 			try
@@ -928,14 +931,14 @@ namespace SEModAPI.API.Definitions
 					fileContent = serializer.Deserialize( xmlReader );
 				}
 			}
-			catch
+			catch(Exception ex)
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
+				throw new ConfigurationErrorsException( "Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.", ex, filePath, -1 );
 			}
 
 			if ( fileContent == null )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
+				throw new ConfigurationErrorsException( "Configuration file empty." );
 			}
 
 			return (MyConfigDedicatedData)fileContent;
