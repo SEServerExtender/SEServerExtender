@@ -129,5 +129,12 @@
 			LogManager.APILog.WriteLineAndConsole( "Received request to ban player {0} from {1}", null, steamId, ip );
 			PlayerManager.Instance.BanPlayer( steamId );
 		}
+
+		public void UnBanPlayer( ulong steamId )
+		{
+			string ip = GetRemoteEndpoint( );
+			LogManager.APILog.WriteLineAndConsole( "Received request to un-ban player {0} from {1}", null, steamId, ip );
+			PlayerManager.Instance.UnBanPlayer( steamId );
+		}
 	}
 }

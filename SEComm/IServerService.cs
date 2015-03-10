@@ -37,5 +37,8 @@
 
 		[OperationContract]
 		void BanPlayer( ulong steamId );
+
+		[OperationContract]
+		void UnBanPlayer( ulong steamId );
 	}
 }
