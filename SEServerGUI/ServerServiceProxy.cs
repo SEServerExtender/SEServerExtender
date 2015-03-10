@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.ServiceModel;
 	using SEComm;
+	using SEModAPIInternal;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 
 	public sealed class ServerServiceProxy : ClientBase<IServerService>, IServerService
@@ -35,9 +36,24 @@
 			Channel.Exit( exitCode );
 		}
 
-		public List<CharacterEntity> GetPlayersOnline( )
+		public IEnumerable<ChatUserItem> GetPlayersOnline( )
 		{
 			return Channel.GetPlayersOnline( );
+		}
+
+		public void KickPlayer( ulong steamId )
+		{
+			Channel.KickPlayer( steamId );
+		}
+
+		public void BanPlayer( ulong steamId )
+		{
+			Channel.BanPlayer( steamId );
+		}
+
+		public void UnBanPlayer( ulong steamId )
+		{
+			Channel.UnBanPlayer( steamId );
 		}
 	}
 }
