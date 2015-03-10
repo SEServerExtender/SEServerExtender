@@ -1,5 +1,6 @@
 SE-Community-Mod-API
 ====================
+[![Build status](https://ci.appveyor.com/api/projects/status/0htx102kvcg2thrj/branch/master?svg=true)](https://ci.appveyor.com/project/dodexahedron/se-community-mod-api/branch/master)
 
 Space Engineers Server Extender and Community Modding API
 
