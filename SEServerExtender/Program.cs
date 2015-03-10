@@ -45,7 +45,6 @@ namespace SEServerExtender
 
 		internal static SEServerExtender ServerExtenderForm;
 		internal static Server Server;
-		public static ServerService.ServerService ServerService;
 		public static ServiceHost ServerServiceHost;
 
 		/// <summary>
@@ -227,8 +226,7 @@ namespace SEServerExtender
 				if ( !extenderArgs.NoWcf )
 				{
 					LogManager.APILog.WriteLineAndConsole( "Opening up WCF service listener" );
-					ServerService = new ServerService.ServerService( );
-					ServerServiceHost = new ServiceHost( ServerService );
+					ServerServiceHost = new ServiceHost( typeof ( ServerService.ServerService ) );
 					ServerServiceHost.Open( );
 				}
 

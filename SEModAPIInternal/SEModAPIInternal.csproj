@@ -170,6 +170,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ChatUserItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\ApplicationLog.cs" />
     <Compile Include="Support\EntityException.cs" />

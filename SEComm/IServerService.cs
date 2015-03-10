@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 	using System.ServiceModel;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal;
 
 	[ServiceContract]
 	public interface IServerService
@@ -30,6 +30,6 @@
 		void Exit( int exitCode );
 
 		[OperationContract]
-		List<CharacterEntity> GetPlayersOnline( );
+		IEnumerable<ChatUserItem> GetPlayersOnline( );
 	}
 }

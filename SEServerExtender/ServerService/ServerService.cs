@@ -2,15 +2,18 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Reflection;
 	using System.ServiceModel;
+	using System.ServiceModel.Channels;
 	using SEComm;
+	using SEModAPIInternal;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.Support;
 
-	[ServiceBehavior( ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.Single )]
+	[ServiceBehavior( ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.PerCall )]
 	public class ServerService : IServerService
 	{
 		private static readonly Version ProtocolVersion = new Version( 1, 0, 0 );
@@ -96,10 +99,16 @@
 			Environment.Exit( exitCode );
 		}
 
-		public List<CharacterEntity> GetPlayersOnline( )
+		public IEnumerable<ChatUserItem> GetPlayersOnline( )
 		{
-			List<CharacterEntity> characters = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>( );
-			return characters;
+			OperationContext context = OperationContext.Current;
+			MessageProperties prop = context.IncomingMessageProperties;
+			RemoteEndpointMessageProperty endpoint =
+				prop[ RemoteEndpointMessageProperty.Name ] as RemoteEndpointMessageProperty;
+			string ip = endpoint.Address;
+			LogManager.APILog.WriteLineAndConsole( "Received character list request from {0}", null, ip );
+			List<ulong> playersOnline = PlayerManager.Instance.ConnectedPlayers;
+			return playersOnline.Select( remoteUserId => new ChatUserItem { Username = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId ), SteamId = remoteUserId } );
 		}
 	}
 }

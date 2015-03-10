@@ -108,16 +108,16 @@ namespace SEModAPIInternal.Support
 					{
 						if ( ex == null )
 							TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}",
-							                                             DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-							                                             GetThreadId( ),
-							                                             msg );
+																		 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+																		 GetThreadId( ),
+																		 msg );
 						else
 							TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}\r\n\tException: {3}",
-							                                             DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-							                                             GetThreadId( ),
-							                                             msg,
-							                                             ex );
-							
+																		 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+																		 GetThreadId( ),
+																		 msg,
+																		 ex );
+
 						writer.Close( );
 					}
 				}
@@ -206,6 +206,42 @@ namespace SEModAPIInternal.Support
 						Console.WriteLine( "{0} - {1}\r\n\tException: {2}",
 										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
 										   msg,
+										   ex );
+				}
+				catch ( IOException ioex )
+				{
+					WriteLine( ioex );
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Writes a friendly message and an optional exception to the console and the log file.
+		/// </summary>
+		/// <param name="msg">A friendly message describing what is happening.</param>
+		/// <param name="ex">An optional exception to log. Will log a stack trace.</param>
+		public void WriteLineAndConsole( string msg, Exception ex = null, params object[ ] args )
+		{
+			if ( _filePath == null )
+			{
+				return;
+			}
+
+			WriteLine( ex );
+
+			lock ( LogMutex )
+			{
+				try
+				{
+					if ( ex == null )
+						Console.WriteLine( "{0} - {1}",
+										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+										   string.Format( msg, args ) );
+					else
+						Console.WriteLine( "{0} - {1}\r\n\tException: {2}",
+										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
+										   string.Format( msg, args ),
 										   ex );
 				}
 				catch ( IOException ioex )

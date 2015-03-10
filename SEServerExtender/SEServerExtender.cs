@@ -24,6 +24,7 @@ using Sandbox.Definitions;
 namespace SEServerExtender
 {
 	using Sandbox;
+	using SEModAPIInternal;
 	using Timer = System.Windows.Forms.Timer;
 
 	public sealed partial class SEServerExtender : Form
@@ -2237,16 +2238,6 @@ namespace SEServerExtender
 			BTN_Entities_New.Enabled = previousNewButtonState;
 			BTN_Entities_Delete.Enabled = previousDeleteButtonState;
 			btnRepairEntity.Enabled = true;
-		}
-	}
-
-	public class ChatUserItem
-	{
-		public ulong SteamId;
-		public string Username;
-		public override string ToString()
-		{
-			return string.Format("{0} ({1})", Username, SteamId);
 		}
 	}
 }

@@ -122,11 +122,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
-		[DataMember]
+		[IgnoreDataMember]
 		[Category( "Character" )]
 		[Browsable( false )]
 		[ReadOnly( true )]
-		internal new MyObjectBuilder_Character ObjectBuilder
+		public new MyObjectBuilder_Character ObjectBuilder
 		{
 			get
 			{
