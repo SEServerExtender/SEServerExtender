@@ -88,6 +88,210 @@
             Animation clips associated with this model
             </summary>
         </member>
+        <member name="M:VRage.Common.Import.ModelAutoRebuild.IsModelActual(System.String,System.String,System.String,System.String)">
+            <summary>
+            Checks whether that model file was build with current sources files. If current sources of this model - FBX, XML, HKT etc. were changed, this returns false.
+            </summary>
+            <param name="modelFile"></param>
+            <returns>true - if data hashes of source files are valid </returns>
+            <returns>false - if data has been changed</returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.#ctor(System.String)">
+            <summary>
+            c-tor
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.#ctor">
+            <summary>
+            c-tor
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.Dispose">
+            <summary>
+            Close
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteTag(System.String)">
+            <summary>
+            WriteTag
+            </summary>
+            <param name="tagName"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteVector(VRageMath.Vector2)">
+            <summary>
+            WriteVector2
+            </summary>
+            <param name="vct"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteVector(VRageMath.Vector3)">
+            <summary>
+            WriteVector3
+            </summary>
+            <param name="vct"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteVector(VRageMath.Vector4)">
+            <summary>
+            WriteVector4
+            </summary>
+            <param name="vct"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteMatrix(VRageMath.Matrix)">
+            <summary>
+            WriteMatrix
+            </summary>
+            <param name="matrix"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteVector(VRageMath.Vector2I)">
+            <summary>
+            WriteVector2
+            </summary>
+            <param name="vct"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteVector(VRageMath.Vector3I)">
+            <summary>
+            WriteVector3
+            </summary>
+            <param name="vct"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteVector(VRageMath.Vector4I)">
+            <summary>
+            WriteVector4
+            </summary>
+            <param name="vct"></param>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteByte4(VRageMath.PackedVector.Byte4)">
+            <summary>
+            Write Byte4
+            </summary>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRageMath.Vector3[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="vctArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRageMath.Matrix[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="vctArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRageMath.Vector2[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="vctArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRageMath.Vector4[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,System.String[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,System.Int32[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,System.Byte[])">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRage.Common.Import.MyModelInfo)">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRageMath.BoundingBox)">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,VRageMath.BoundingSphere)">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="strArr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,System.Collections.Generic.Dictionary{System.String,VRageMath.Matrix})">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="dict"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,System.Collections.Generic.List{VRage.Common.Import.MyMeshPartInfo})">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="dict"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportData(System.String,System.Collections.Generic.Dictionary{System.String,VRage.Common.Import.MyModelDummy})">
+            <summary>
+            ExportData
+            </summary>
+            <param name="tagName"></param>
+            <param name="dict"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportFloat(System.String,System.Single)">
+            <summary>
+            ExportFloat
+            </summary>
+            <param name="tagName"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.ExportBool(System.String,System.Boolean)">
+            <summary>
+            ExportFloat
+            </summary>
+            <param name="tagName"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Common.Import.MyModelExporter.WriteQuaternion(VRageMath.Quaternion)">
+            <summary>
+            WriteQuaternion
+            </summary>
+            <param name="vct"></param>
+        </member>
         <member name="P:VRageRender.IMyRenderMessage.MessageClass">
             <summary>
             Get message class

@@ -47,11 +47,11 @@ namespace SEModAPIInternal.API.Server
 		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
 
 		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "8BCE3804ABCEC7625C4D56B74B5FF98C";
-		//public static string ServerNetworkManagerKickPlayerMethod = "CCF347D895F54AB46484A67F94FF7AC2";
+		//public static string ServerNetworkManagerSetPlayerBannedMethod = "7746929EC77B732BB52EFC8FC757085D";
+		//public static string ServerNetworkManagerKickPlayerMethod = "33F8624DFE8A8E3FA9B8CC9A2446CCB8";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "8E7BC1DD3210BE59E40E80F593E597DD";
-		public static string ServerNetworkManagerKickPlayerMethod = "F924262370F6E7B576D4317EE65B49A3";         
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "7D187A6CEE2DBD3FE23ADB6FB91E3579";
+		public static string ServerNetworkManagerKickPlayerMethod = "DC4B294007760309A8804FE736C5B181";         
         
         public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
 
@@ -111,7 +111,6 @@ namespace SEModAPIInternal.API.Server
 		private static string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
 
 		private static string ControllableClass = "13C872C66F0BD2DC78D3D80ECAF6DD0E";
-		private static string UseRequest = "580BEBFBA2193A07A867968A00F933D1";
 		private static string UseMsg = "B9061E64FCAE2676D7C8BB0CBEB2B558";
 		private static string UseMsgEntityId = "B8FB60B21AA9E31FBE1BE03977FBB5C4";
 		private static string UseMsgUsedByEntityId = "1EDCD7F5F272CEC95910B9BD327F8159";
@@ -206,6 +205,44 @@ namespace SEModAPIInternal.API.Server
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgMedicalRoom);
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgRespawnShipId);
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgPlayerSerialId);
+
+				Type type6 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, CharacterClass);
+				if (type5 == null)
+					throw new Exception("Could not find internal type for CharacterClass");
+
+				Type attachMsgType = type6.GetNestedType(AttachMsg, BindingFlags.NonPublic | BindingFlags.Public);
+				if (attachMsgType == null)
+					throw new Exception("Could not find internal type for AttachMsg");
+
+				result &= BaseObject.HasField(attachMsgType, AttachCharacterId);
+				result &= BaseObject.HasField(attachMsgType, AttachCockpitId);
+
+				Type controllableClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, ControllableClass);
+				if (type5 == null)
+					throw new Exception("Could not find internal type for ControllableClassType");
+
+				Type useMsgType = controllableClassType.GetNestedType(UseMsg, BindingFlags.NonPublic | BindingFlags.Public);
+				if (useMsgType == null)
+					throw new Exception("Could not find internal type for UseMsg");
+
+				result &= BaseObject.HasField(useMsgType, UseMsgEntityId);
+				result &= BaseObject.HasField(useMsgType, UseMsgUsedByEntityId);
+				result &= BaseObject.HasField(useMsgType, UseMsgUseAction);
+
+				Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ModAPINamespace, ModAPIHelperClass);
+				if (modAPIHelperClassType == null)
+					throw new Exception("Could not find internal type for ModAPIHelperClass");
+
+				Type sendDataMessageClassType = modAPIHelperClassType.GetNestedType(SendDataMessageClass, BindingFlags.Public | BindingFlags.NonPublic);
+				if (sendDataMessageClassType == null)
+					throw new Exception("Could not find internal type for SendDataMessageClass");
+
+				Type sendReliableMsgType = sendDataMessageClassType.GetNestedType(SendReliableMsg, BindingFlags.Public | BindingFlags.NonPublic);
+				if (sendReliableMsgType == null)
+					throw new Exception("Could not find internal type for SendReliableMsg");
+
+				result &= BaseObject.HasField(sendReliableMsgType, SendReliableMsgId);
+				result &= BaseObject.HasField(sendReliableMsgType, SendReliableMsgData);
 
 				return result;
 			}

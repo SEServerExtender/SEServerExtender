@@ -140,6 +140,8 @@ namespace SEModAPIInternal.API.Common
         public static string PlayerMapGetPlayerItemMappingField = "A343C8C883753AA13761B57BF93642B5";
         public static string PlayerMapGetSteamItemMappingField = "F8D0682ABF3074A0515A99D0E537D2E1";
 		public static string PlayerMapGetFastPlayerIdFromSteamIdMethod = "664B2E5CBB958C38E24656118771D345";
+		public static string PlayerMapGetFastIdentityFromPlayerIdMethod = "B5AF02B0769E7DFC7347A31BC9E6D3D1";
+		public static string PlayerMapGetFastIdentityNameField = "1FB9EB403295AA9F17329DAB808AACC8";
 
 		public static string PlayerMapSessionNamespace = "AAC05F537A6F0F6775339593FBDFC564";
 		public static string PlayerMapSessionClass = "D580AE7552E79DAB03A3D64B1F7B67F9";
@@ -416,6 +418,31 @@ namespace SEModAPIInternal.API.Common
 			int num = 0;
 			long result = (long)BaseObject.InvokeEntityMethod(BackingObject, PlayerMapGetFastPlayerIdFromSteamIdMethod, new object[] {steamId, num });
 			return result;
+		}
+
+		public string GetFastPlayerNameFromSteamId(ulong steamId)
+		{
+			long playerId = GetFastPlayerIdFromSteamId(steamId);
+			if (playerId < 1)
+				return "";
+
+			object identity = BaseObject.InvokeEntityMethod(BackingObject, PlayerMapGetFastIdentityFromPlayerIdMethod, new object[] { playerId });
+			object result = BaseObject.GetEntityFieldValue(identity, PlayerMapGetFastIdentityNameField);
+			if (result != null)
+				return (string)result;
+			else
+				return "";
+		}
+
+		public IMyIdentity GetFastPlayerIdentityFromPlayerId(long playerId)
+		{
+			//FieldInfo identitiesInfo = BaseObject.GetEntityField(BackingObject, PlayerMapGetPlayerItemMappingField);
+			object identities = BaseObject.GetEntityFieldValue(BackingObject, PlayerMapGetPlayerItemMappingField);
+			if(identities == null)
+				return null;
+
+			//return (IMyIdentity)identitiesInfo.DeclaringType.GetMethod("get_Item").Invoke(identities, new object[] { playerId });
+			return (IMyIdentity)identities.GetType().GetMethod("get_Item").Invoke(identities, new object[] { playerId });
 		}
 
 		public void RemovePlayer(long playerId)
