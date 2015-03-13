@@ -443,7 +443,7 @@ namespace SEModAPIExtensions.API
 					_pluginManager.LoadPlugins( );
 					_pluginManager.Init( );
 
-					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
+					//SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
 
 					AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					//AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -461,6 +461,8 @@ namespace SEModAPIExtensions.API
 			}
 		}
 
+		[HandleProcessCorruptedStateExceptions]
+		[SecurityCritical]
 		static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			Console.WriteLine( "Renewed Application.ThreadException - {0}", e.Exception );
@@ -477,6 +479,8 @@ namespace SEModAPIExtensions.API
 			}
 		}
 
+		[HandleProcessCorruptedStateExceptions]
+		[SecurityCritical]
 		static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			Console.WriteLine( "Renewed - AppDomain.UnhandledException - {0}", e.ExceptionObject );
