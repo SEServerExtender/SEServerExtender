@@ -106,6 +106,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Functional Block" )]
+		[DisplayName("Current Power Input (MW)")]
 		[ReadOnly( true )]
 		public float CurrentInput
 		{
