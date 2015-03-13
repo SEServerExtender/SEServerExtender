@@ -1190,11 +1190,6 @@
             Separate update performed once before any other updates are called.
             </summary>
         </member>
-        <member name="T:Sandbox.Common.Keys">
-            <summary>
-            Enumeration for virtual keys.
-            </summary>
-        </member>
         <member name="M:Sandbox.Common.MyMath.ArcTanAngle(System.Single,System.Single)">
             <summary>
             ArcTanAngle
