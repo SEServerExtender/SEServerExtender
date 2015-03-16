@@ -38,33 +38,6 @@ namespace SEModAPIInternal.Support
 			get { return _instance ?? ( _instance = new LogManager( ) ); }
 		}
 
-		[Obsolete("Will be removed by SE version 1.70")]
-		public static MyLog GameLog
-		{
-			get
-			{
-				if ( _gameLog == null )
-				{
-					LogManager temp = Instance;
-
-					try
-					{
-						FieldInfo myLogField = BaseObject.GetStaticField( SandboxGameAssemblyWrapper.MainGameType, SandboxGameAssemblyWrapper.MainGameMyLogField );
-						_gameLog = (MyLog)myLogField.GetValue( null );
-					}
-					catch ( Exception ex )
-					{
-						Console.WriteLine( ex );
-					}
-				}
-
-				if ( _gameLog == null )
-					throw new Exception( "Failed to load game log!" );
-
-				return _gameLog;
-			}
-		}
-
 		public static ApplicationLog APILog
 		{
 			get
