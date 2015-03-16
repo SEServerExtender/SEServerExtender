@@ -41,7 +41,6 @@ namespace SEModAPIExtensions.API
 		private GameInstallationInfo _gameInstallationInfo;
 		private ServiceHost _serverHost;
 		private ServiceHost _baseHost;
-		private WebServiceHost _webHost;
 
 		//Managers
 		private PluginManager _pluginManager;
@@ -337,8 +336,6 @@ namespace SEModAPIExtensions.API
 				{
 					if ( _serverHost != null )
 						_serverHost.Open( );
-					if ( _webHost != null )
-						_webHost.Open( );
 					if ( _baseHost != null )
 						_baseHost.Open( );
 				}
@@ -346,8 +343,6 @@ namespace SEModAPIExtensions.API
 				{
 					if ( _serverHost != null )
 						_serverHost.Close( );
-					if ( _webHost != null )
-						_webHost.Close( );
 					if ( _baseHost != null )
 						_baseHost.Close( );
 				}
