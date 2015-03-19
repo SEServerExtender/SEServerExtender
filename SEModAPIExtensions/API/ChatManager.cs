@@ -23,6 +23,7 @@ using SEModAPIInternal.Support;
 using VRage;
 using VRage.Common.Utils;
 using VRageMath;
+using VRage.Library.Utils;
 
 using Sandbox.ModAPI;
 
@@ -97,10 +98,10 @@ namespace SEModAPIExtensions.API
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ChatMessageStructNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string ChatMessageStructClass = "12AEE9CB08C9FC64151B8A094D6BB668";
+		public static string ChatMessageStructNamespace = "";
+		public static string ChatMessageStructClass = "=0s41V8Fjmi5UgTia9mpcSpmVb6=";
 
-		public static string ChatMessageMessageField = "EDCBEBB604B287DFA90A5A46DC7AD28D";
+		public static string ChatMessageMessageField = "=1E7qaeCHzjZbPzDjaRW5iq5d10=";
 
 		#endregion
 

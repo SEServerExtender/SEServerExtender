@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +20,8 @@ using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 using SEModAPIInternal.Support;
 using VRageMath;
 using Sandbox.Definitions;
+using Sandbox.ModAPI;
+using VRage.Utils;
 
 namespace SEServerExtender
 {
@@ -51,6 +53,7 @@ namespace SEServerExtender
 		private Timer m_statusCheckTimer;
 		private Timer m_utilitiesCleanFloatingObjectsTimer;
 		private Timer m_statisticsTimer;
+		private Timer m_playersTimer;
 
 		//Utilities Page
 		private int m_floatingObjectsCount;
@@ -111,6 +114,11 @@ namespace SEServerExtender
 			m_statisticsTimer = new Timer { Interval = 1000 };
 			m_statisticsTimer.Tick += StatisticsRefresh;
 
+			/*
+			m_playersTimer = new Timer { Interval = 2000 };
+			m_playersTimer.Tick += PlayersRefresh;
+			*/
+
 			return true;
 		}
 
@@ -157,6 +165,7 @@ namespace SEServerExtender
 			m_statusCheckTimer.Stop();
 			m_utilitiesCleanFloatingObjectsTimer.Stop();
 			m_statisticsTimer.Stop();
+			m_playersTimer.Stop();
 		}
 
 		#endregion
@@ -170,9 +179,9 @@ namespace SEServerExtender
 			StringBuilder sb = new StringBuilder();
 			Stats.Generic.WriteTo(sb);
 			Stats.Network.WriteTo(sb);
-			Stats.Timing.WriteTo(sb);
-			
-			TB_Statistics.Text = sb.ToString();
+			Stats.Timing.WriteTo(sb);					
+
+			TB_Statistics.Text = sb.ToString();			
 		}
 
 		private void StatusCheckRefresh(object sender, EventArgs e)

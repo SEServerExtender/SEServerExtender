@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -31,18 +31,18 @@ namespace SEModAPIInternal.API.Entity
 		private InventoryItemManager m_itemManager;
 		private Queue<InventoryDelta> m_itemDeltaQueue;
 
-		public static string InventoryNamespace = "33FB6E717989660631E6772B99F502AD";
-		public static string InventoryClass = "DE48496EE9812E665B802D5FE9E7AD77";
+		public static string InventoryNamespace = "";
+		public static string InventoryClass = "=mazFMfE1HhxL19l3plK4hvEmGA=";
 
-		public static string InventoryCalculateMassVolumeMethod = "166CC20258091AEA72B666F9EF9503F4";
-		public static string InventoryGetTotalVolumeMethod = "C8CB569A2F9A58A24BAC40AB0817AD6A";
-		public static string InventoryGetTotalMassMethod = "4E701A33F8803398A50F20D8BF2E5507";
-		public static string InventorySetFromObjectBuilderMethod = "D85F2B547D9197E27D0DB9D5305D624F";
-		public static string InventoryGetObjectBuilderMethod = "EFBD3CF8717682D7B59A5878FF97E0BB";
-		public static string InventoryCleanUpMethod = "476A04917356C2C5FFE23B1CBFC11450";
-		public static string InventoryGetItemListMethod = "C43E297C0F568726D4BDD5D71B901911";
-		public static string InventoryAddItemAmountMethod = "FB009222ACFCEACDC546801B06DDACB6";
-		public static string InventoryRemoveItemAmountMethod = "623B0AC0E7D9C30410680C76A55F0C6B";
+		public static string InventoryCalculateMassVolumeMethod = "RefreshVolumeAndMass";
+		public static string InventoryGetTotalVolumeMethod = "get_CurrentVolume";
+		public static string InventoryGetTotalMassMethod = "get_CurrentMass";
+		public static string InventorySetFromObjectBuilderMethod = "Init";
+		public static string InventoryGetObjectBuilderMethod = "GetObjectBuilder";
+		public static string InventoryCleanUpMethod = "Clear";
+		public static string InventoryGetItemListMethod = "GetItems";
+		public static string InventoryAddItemAmountMethod = "AddItems";
+		public static string InventoryRemoveItemAmountMethod = "RemoveItemsOfType";
 
 		#endregion "Attributes"
 
@@ -422,12 +422,12 @@ namespace SEModAPIInternal.API.Entity
 
 		private InventoryEntity m_parentContainer;
 
-		public static string InventoryItemNamespace = "33FB6E717989660631E6772B99F502AD";
-		public static string InventoryItemClass = "555069178719BB1B546FB026B906CE00";
+		public static string InventoryItemNamespace = "";
+		public static string InventoryItemClass = "=Jm6LVWsHj1NFGuqtqTheDghSPX=";
 
-		public static string InventoryItemGetObjectBuilderMethod = "B45B0C201826847F0E087D82F9AD3DF1";
+		public static string InventoryItemGetObjectBuilderMethod = "GetObjectBuilder";
 
-		public static string InventoryItemItemIdField = "33FDC4CADA8125F411D1F07103A65358";
+		public static string InventoryItemItemIdField = "=4E6roGfagvQcqDT8xP531wSsud=";
 
 		#endregion "Attributes"
 

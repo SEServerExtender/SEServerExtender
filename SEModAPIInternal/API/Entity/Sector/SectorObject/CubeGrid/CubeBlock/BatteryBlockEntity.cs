@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -20,29 +20,29 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private float m_maxStoredPower;
 
 		//Internal class
-		public static string BatteryBlockNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
+		public static string BatteryBlockNamespace = "";
 
-		public static string BatteryBlockClass = "711CB30D2043393F07630CD237B5EFBF";
+		public static string BatteryBlockClass = "=FeVrZCRTmSBe9Id7Mx2xhOXO9=";
 
 		//Internal methods
-		public static string BatteryBlockGetCurrentStoredPowerMethod = "82DBD55631B1D9694F1DCB5BFF88AB5B";
+		public static string BatteryBlockGetCurrentStoredPowerMethod = "get_CurrentStoredPower";
 
-		public static string BatteryBlockSetCurrentStoredPowerMethod = "365694972F163426A27531B867041ABB";
-		public static string BatteryBlockGetMaxStoredPowerMethod = "1E1C89D073DDC026426B44820B1A6286";
-		public static string BatteryBlockSetMaxStoredPowerMethod = "51188413AE93A8E2B2375B7721F1A3FC";
-		public static string BatteryBlockGetProducerEnabledMethod = "36B457125A54787901017D24BD0E3346";
-		public static string BatteryBlockSetProducerEnabledMethod = "5538173B5047FC438226267C0088356E";
-		public static string BatteryBlockGetSemiautoEnabledMethod = "19312D5BF11FBC0A682B613E21621BA6";
-		public static string BatteryBlockSetSemiautoEnabledMethod = "A3BEE5A757F096951F158F9FFF5A878A";
+		public static string BatteryBlockSetCurrentStoredPowerMethod = "set_CurrentStoredPower";
+		public static string BatteryBlockGetMaxStoredPowerMethod = "get_MaxStoredPower";
+		public static string BatteryBlockSetMaxStoredPowerMethod = "set_MaxStoredPower";
+		public static string BatteryBlockGetProducerEnabledMethod = "get_ProducerEnabled";
+		public static string BatteryBlockSetProducerEnabledMethod = "set_ProducerEnabled";
+		public static string BatteryBlockGetSemiautoEnabledMethod = "get_SemiautoEnabled";
+		public static string BatteryBlockSetSemiautoEnabledMethod = "set_SemiautoEnabled";
 
 		//Internal fields
-		public static string BatteryBlockCurrentStoredPowerField = "736E72768436E8A7C1F33EF1F4396B9E";
+		public static string BatteryBlockCurrentStoredPowerField = "=qlIdp0aSUxfNBSinvM3ou1FeS7=";
 
-		public static string BatteryBlockMaxStoredPowerField = "3E888DF7D4F5C207088050DF6CA348D5";
-		public static string BatteryBlockProducerEnabledField = "5CE4521F11C6B1D64721848D226F15BF";
-		public static string BatteryBlockSemiautoEnabledField = "61505AAA6C86342099EFC9D89532BBE7";
-		public static string BatteryBlockBatteryDefinitionField = "F0C59D70E13560B7212CEF8CF082A67B";
-		public static string BatteryBlockNetManagerField = "E93BD8EF419C322C547231F9BF991090";
+		public static string BatteryBlockMaxStoredPowerField = "=kLcq0qSwgxq5vJTqTnFbDV4cqK=";
+		public static string BatteryBlockProducerEnabledField = "=WcIVqHi6XgtPM0ayYW3JkeiBsg=";
+		public static string BatteryBlockSemiautoEnabledField = "=ZqnpHhiBDtIN2SBGBYeIx7Yo7h=";
+		public static string BatteryBlockBatteryDefinitionField = "=MyI3nwWJ5yT4zDqx4XcphKgTSS=";
+		public static string BatteryBlockNetManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
 
 		#endregion "Attributes"
 
@@ -369,12 +369,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private static bool m_isRegistered;
 
 		public static string BatteryBlockNetworkManagerNamespace = BatteryBlockEntity.BatteryBlockNamespace + "." + BatteryBlockEntity.BatteryBlockClass;
-		public static string BatteryBlockNetworkManagerClass = "6704740496C47C5FDE69887798D17883";
+		public static string BatteryBlockNetworkManagerClass = "=rFysemK2skc7if3GAl3o5mrQbv=";
 
-		public static string BatteryBlockNetManagerBroadcastProducerEnabledMethod = "280D7AE8C0F523FF089618970C13B55B";
-		public static string BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod = "F512BA7EF29F6A8B7DE3D56BAAC0207B";
-		public static string BatteryBlockNetManagerBroadcastSemiautoEnabledMethod = "72CE36DE9C0BAB6FEADA5D10CF5B867A";
-		public static string BatteryBlockNetManagerCurrentPowerPacketReceiver = "F512BA7EF29F6A8B7DE3D56BAAC0207B";
+		public static string BatteryBlockNetManagerBroadcastProducerEnabledMethod = "SendProducerEnableChange";
+		public static string BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod = "CapacityChange";
+		public static string BatteryBlockNetManagerBroadcastSemiautoEnabledMethod = "SendSemiautoEnableChange";
+		public static string BatteryBlockNetManagerCurrentPowerPacketReceiver = "CapacityChange";
 
 		///////////////////////////////////////////////////////////////////////
 
@@ -387,8 +387,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "300F0FF97B3FABBCEBB539E8935D6930";
 		//public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "12133389A918B17D9822AB1721C55497";
 
-		public static string BatteryBlockNetManagerCurrentStoredPowerPacketClass = "59DE66D2ECADE0929A1C776D7FA907E2";
-		public static string BatteryBlockNetManagerCurrentStoredPowerPacketValueField = "ADC3AB91A03B31875821D57B8B718AF5";
+		public static string BatteryBlockNetManagerCurrentStoredPowerPacketClass = "=2Ng0rzVvFTPtmiEEWK6CjKFrjl=";
+		public static string BatteryBlockNetManagerCurrentStoredPowerPacketValueField = "=jSrsNPNLczO6fsavF4k89DzRMy=";
 
 		#endregion "Attributes"
 

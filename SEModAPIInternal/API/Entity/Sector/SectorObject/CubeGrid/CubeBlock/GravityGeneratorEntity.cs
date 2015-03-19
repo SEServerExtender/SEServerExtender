@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -18,10 +18,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string GravityGeneratorNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string GravityGeneratorClass = "8F510E70FE6A50C0B39D09689C2D6CF4";
+		public static string GravityGeneratorNamespace = "";
+		public static string GravityGeneratorClass = "Sandbox.Game.Entities.MyGravityGenerator";
 
-		public static string GravityGeneratorSetFieldSizeMethod = "79D354AC704AAF4576B6F44487097505";
+		public static string GravityGeneratorSetFieldSizeMethod = "set_FieldSize";
 
 		#endregion "Attributes"
 

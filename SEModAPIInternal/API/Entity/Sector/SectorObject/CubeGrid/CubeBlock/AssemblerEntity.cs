@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
 
@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string AssemblerNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string AssemblerClass = "B5257F4B8254F1D432BFCE1B5DCC1A5E";
+		public static string AssemblerNamespace = "";
+		public static string AssemblerClass = "=HEfaqb80qdXtP0YwG2EV0OQFs=";
 
 		#endregion "Attributes"
 

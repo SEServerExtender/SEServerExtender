@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -15,14 +15,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private bool m_weaponStatus;
 		private CharacterEntity m_pilot;
 
-		public static string CockpitEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string CockpitEntityClass = "0A875207E28B2C7707366CDD300684DF";
+		public static string CockpitEntityNamespace = "";
+		public static string CockpitEntityClass = "=a46pBNaH1dvgjWHyn2Az7HnXm0=";
 
 		//public static string CockpitGetPilotEntityMethod = "C9A8295457C46F4DF5FC4DDBC7276287";
 		//public static string CockpitGetPilotEntityMethod = "B0B4C9DD7231024CD14A50DB178582C8";
-		public static string CockpitSetPilotEntityMethod = "1BB7956FA537A66315E07C562677018A";
+		public static string CockpitSetPilotEntityMethod = "AttachPilot";
 
-		public static string CockpitGetPilotEntityField = "F4C4B7D4ED8271A773587195358DF435";
+		public static string CockpitGetPilotEntityField = "=0olbllUszKBbT2Web0qxywjatAD=";
 
 		#endregion "Attributes"
 

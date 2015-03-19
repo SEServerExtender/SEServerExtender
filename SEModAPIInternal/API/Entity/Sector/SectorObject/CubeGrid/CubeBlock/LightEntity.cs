@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -15,24 +15,24 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string LightNamespace = "AAD9061F948E6A3635200145188D64A9";
-		public static string LightClass = "8A6EF7294F2DD99246C9BF7574C1E26C";
+		public static string LightNamespace = "";
+		public static string LightClass = "=FS9XaTQBULhE857hF1lkq5eY89=";
 
-		public static string LightUpdateColorMethod = "4F2069E3D80C0FFC0E5594A4B0EEC9E8";
-		public static string LightUpdateIntensityMethod = "8017479AD649F97C1D60B7A69627D433";
-		public static string LightUpdateFalloffMethod = "C3366430336FC45474244C38663E85C3";
-		public static string LightUpdateRadiusMethod = "671145C348E272C8E78649055AF2073D";
+		public static string LightUpdateColorMethod = "set_Color";
+		public static string LightUpdateIntensityMethod = "set_Intensity";
+		public static string LightUpdateFalloffMethod = "set_Falloff";
+		public static string LightUpdateRadiusMethod = "set_Radius";
 
-		public static string LightNetworkManagerField = "EB495BC5B3C2335D2B8AD10C334D0928";
+		public static string LightNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
 
 		////////////////////////////////////////////////////////////////////////
 
-		public static string LightNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string LightNetworkManagerClass = "0F8EE1AD651CB822CB9635B463AE6CD5";
+		public static string LightNetworkManagerNamespace = "";
+		public static string LightNetworkManagerClass = "=KQ3UhmTVDnlgjehKAcLT0Ldkte=";
 
 		// Need to find this method update again, lights changed completely - I believe it changed to setting individual properties instead of all of them:
 		// Color, Radius, Falloff, Intensity, BlinkInterval, BlinkLength, BlinkOffset - 
-		public static string LightNetworkManagerSendUpdateMethod = "582447224E2B03FA4EAB3D6C2DDD48D9";	//Color, Radius, Falloff, Intensity
+		//public static string LightNetworkManagerSendUpdateMethod = "582447224E2B03FA4EAB3D6C2DDD48D9";	//Color, Radius, Falloff, Intensity
 
 		#endregion "Attributes"
 
@@ -337,7 +337,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				InvokeEntityMethod( actualObject, LightUpdateRadiusMethod, new object[ ] { Radius } );
 
 				Object netManager = GetLightNetworkManager( );
-				InvokeEntityMethod( netManager, LightNetworkManagerSendUpdateMethod, new object[ ] { color, Radius, Falloff, Intensity } );
+				//InvokeEntityMethod( netManager, LightNetworkManagerSendUpdateMethod, new object[ ] { color, Radius, Falloff, Intensity } );
 			}
 			catch ( Exception ex )
 			{

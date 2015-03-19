@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 using SEModAPIInternal.API.Entity;
@@ -18,19 +18,19 @@ namespace SEModAPIInternal.API.Common
 		private bool m_isEnabled;
 		private int m_aabbTreeId;
 
-		public static string RadioManagerNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string RadioManagerClass = "994372BD682BE5E79F2F32E79BE318F5";
+		public static string RadioManagerNamespace = "";
+		public static string RadioManagerClass = "=CwVM7BADbqpHpB6u9jbaBjpyXD=";
 
-		public static string RadioManagerGetBroadcastRadiusMethod = "CC1F306EACC95C00A05C100712656EBC";
-		public static string RadioManagerSetBroadcastRadiusMethod = "C42CAA2B50B8705C7F36262BCE8E60EA";
+		public static string RadioManagerGetBroadcastRadiusMethod = "get_BroadcastRadius";
+		public static string RadioManagerSetBroadcastRadiusMethod = "set_BroadcastRadius";
 		//public static string RadioManagerGetLinkedEntityMethod = "7DE57FDDF37DD6219A990596E0283F01";
 		//public static string RadioManagerSetLinkedEntityMethod = "1C653F74AF87659F7AA9B39E35D789CE";
-		public static string RadioManagerGetEnabledMethod = "78F34EF54782BBB097110F15BB3F5CC7";
-		public static string RadioManagerSetEnabledMethod = "5DCB378F714DC1A82AF40135BBE08BE1";
-		public static string RadioManagerGetAABBTreeIdMethod = "20FCED684DEC4EA0CCEE92D67DB109F1";
-		public static string RadioManagerSetAABBTreeIdMethod = "10D69A54D5F2CE65056EBB10BCF3D8B3";
+		public static string RadioManagerGetEnabledMethod = "get_Enabled";
+		public static string RadioManagerSetEnabledMethod = "set_Enabled";
+		public static string RadioManagerGetAABBTreeIdMethod = "get_RadioProxyID";
+		public static string RadioManagerSetAABBTreeIdMethod = "set_RadioProxyID";
 
-		public static string RadioManagerNetworkManagerField = "74012B9403A8C0F8C32FE86DA34CA0F6";
+		public static string RadioManagerNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
 
 		#endregion "Attributes"
 
@@ -210,11 +210,11 @@ namespace SEModAPIInternal.API.Common
 
 		private RadioManager m_parent;
 
-		public static string RadioManagerNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string RadioManagerNetManagerClass = "1CE6F03E36FA552A8223DEBF0554411C";
+		public static string RadioManagerNetManagerNamespace = "";
+		public static string RadioManagerNetManagerClass = "=VoqSmlEdXY72n1HyjX9bKJigDP=";
 
-		public static string RadioManagerNetManagerBroadcastRadiusMethod = "D98F28A89752B53473A94214E2D0E0EA";
-		public static string RadioManagerNetManagerBroadcastEnabledMethod = "CCB8371C1B91E687E88786806386E87C";
+		public static string RadioManagerNetManagerBroadcastRadiusMethod = "SendChangeRadioAntennaRequest";
+		public static string RadioManagerNetManagerBroadcastEnabledMethod = "SendChangeRadioAntennaDisplayName";
 
 		#endregion "Attributes"
 

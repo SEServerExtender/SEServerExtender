@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -253,23 +253,23 @@ namespace SEModAPIInternal.API.Entity
 		private static SectorObjectManager m_instance;
 		private static Queue<BaseEntity> m_addEntityQueue = new Queue<BaseEntity>( );
 
-		public static string ObjectManagerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ObjectManagerClass = "CAF1EB435F77C7B77580E2E16F988BED";
-		public static string ObjectManagerGetEntityHashSet = "84C54760C0F0DDDA50B0BE27B7116ED8";
-		public static string ObjectManagerAddEntity = "E5E18F5CAD1F62BB276DF991F20AE6AF";
+		public static string ObjectManagerNamespace = "";
+		public static string ObjectManagerClass = "Sandbox.Game.Entities.MyEntities";
+		public static string ObjectManagerGetEntityHashSet = "GetEntities";
+		public static string ObjectManagerAddEntity = "Add";
 
 		/////////////////////////////////////////////////////////////////
 
-		public static string ObjectFactoryNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ObjectFactoryClass = "E825333D6467D99DD83FB850C600395C";
+		public static string ObjectFactoryNamespace = "";
+		public static string ObjectFactoryClass = "=iXKU6ehmc24G5brre7PFeSWgPb=";
 
 		/////////////////////////////////////////////////////////////////
 
 		//2 Packet Types
-		public static string EntityBaseNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
+		public static string EntityBaseNetManagerNamespace = "";
 
-		public static string EntityBaseNetManagerClass = "8EFE49A46AB934472427B7D117FD3C64";
-		public static string EntityBaseNetManagerSendEntity = "A6B585C993B43E72219511726BBB0649";
+		public static string EntityBaseNetManagerClass = "=r6VaZpriOkuuKqMuT2aPUQtWow=";
+		public static string EntityBaseNetManagerSendEntity = "SendEntityCreated";
 
 		#endregion "Attributes"
 
@@ -544,7 +544,8 @@ namespace SEModAPIInternal.API.Entity
 				entityToAdd.BackingObject = Activator.CreateInstance( internalType );
 
 				//Initialize the backing object
-				BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, "Init", new object[ ] { entityToAdd.ObjectBuilder } );
+				//BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, "Init", new object[ ] { entityToAdd.ObjectBuilder } );
+				BaseEntity.InvokeEntityMethod(entityToAdd.BackingObject, "Init", new object[] { entityToAdd.ObjectBuilder }, new Type[] { typeof(MyObjectBuilder_EntityBase) });
 
 				//Add the backing object to the main game object manager
 				BaseEntity.InvokeStaticMethod( InternalType, ObjectManagerAddEntity, new object[ ] { entityToAdd.BackingObject, true } );

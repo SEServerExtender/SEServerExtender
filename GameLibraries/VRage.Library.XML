@@ -494,6 +494,16 @@
             Min Value: 0   - Transparent
             </summary>
         </member>
+        <member name="M:System.DoubleExtensions.IsValid(System.Double)">
+            <summary>
+            Returns true if double is valid
+            </summary>
+        </member>
+        <member name="M:System.FloatExtensions.IsValid(System.Single)">
+            <summary>
+            Returns true if float is not NaN or infinity.
+            </summary>
+        </member>
         <member name="M:VRage.Groups.IGroupData`1.OnCreate">
             <summary>
             Group is taken from pool
@@ -4705,27 +4715,27 @@
             Cached strings to avoid ToString() calls. These values are not readable in obfuscated builds!
             </summary>
         </member>
-        <member name="M:VRage.Common.Utils.MyFileSystem.OpenRead(System.String)">
+        <member name="M:VRage.Library.Utils.MyFileSystem.OpenRead(System.String)">
             <summary>
             Opens file for reading
             </summary>
         </member>
-        <member name="M:VRage.Common.Utils.MyFileSystem.OpenRead(System.String,System.String)">
+        <member name="M:VRage.Library.Utils.MyFileSystem.OpenRead(System.String,System.String)">
             <summary>
             Opens file for reading, convenient method with two paths to combine
             </summary>
         </member>
-        <member name="M:VRage.Common.Utils.MyFileSystem.OpenWrite(System.String,System.IO.FileMode)">
+        <member name="M:VRage.Library.Utils.MyFileSystem.OpenWrite(System.String,System.IO.FileMode)">
             <summary>
             Creates or overwrites existing file
             </summary>
         </member>
-        <member name="M:VRage.Common.Utils.MyFileSystem.OpenWrite(System.String,System.String,System.IO.FileMode)">
+        <member name="M:VRage.Library.Utils.MyFileSystem.OpenWrite(System.String,System.String,System.IO.FileMode)">
             <summary>
             Creates or overwrites existing file, convenient method with two paths to combine
             </summary>
         </member>
-        <member name="M:VRage.Common.Utils.MyFileSystem.CheckFileWriteAccess(System.String)">
+        <member name="M:VRage.Library.Utils.MyFileSystem.CheckFileWriteAccess(System.String)">
             <summary>
             Checks write access for file
             </summary>
@@ -4794,6 +4804,12 @@
         <member name="P:VRage.MyTimeSpan.TimeSpan">
             <summary>
             This may not be accurate for large values - double accuracy
+            </summary>
+        </member>
+        <member name="P:VRage.Win32.MyWindowsAPIWrapper.WorkingSet">
+            <summary>
+            Gets working set size without creating garbage, it's also faster.
+            Environment.WorkingSet create garbage.
             </summary>
         </member>
         <member name="F:VRage.Win32.WinApi.SystemCommands.SC_MAXIMIZE">

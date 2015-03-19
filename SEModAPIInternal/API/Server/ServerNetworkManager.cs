@@ -1,4 +1,4 @@
-﻿using SteamSDK;
+using SteamSDK;
 
 using System;
 using System.Collections.Generic;
@@ -43,87 +43,103 @@ namespace SEModAPIInternal.API.Server
 		private static List<ulong> m_inGame = new List<ulong>();
 		private static Dictionary<ulong, Tuple<DateTime, int>> m_slowDown = new Dictionary<ulong, Tuple<DateTime, int>>();
 
-		public static string ServerNetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string ServerNetworkManagerClass = "3B0B7A338600A7B9313DE1C3723DAD14";
+		public static string ServerNetworkManagerNamespace = "";
+		public static string ServerNetworkManagerClass = "=O1XbQ6WcY6sEbcduBcq5Wrj8ok=";
 
-		//public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
+		//public static string ServerNetworkManagerDisconnectPlayerMethod = "MyDedicatedServer_ClientLeft";
 		//public static string ServerNetworkManagerSetPlayerBannedMethod = "7746929EC77B732BB52EFC8FC757085D";
 		//public static string ServerNetworkManagerKickPlayerMethod = "33F8624DFE8A8E3FA9B8CC9A2446CCB8";
-		public static string ServerNetworkManagerDisconnectPlayerMethod = "3EA4ED71531B0189F424CC7CD66E6524";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "7D187A6CEE2DBD3FE23ADB6FB91E3579";
-		public static string ServerNetworkManagerKickPlayerMethod = "DC4B294007760309A8804FE736C5B181";         
+		public static string ServerNetworkManagerDisconnectPlayerMethod = "MyDedicatedServer_ClientLeft";
+		public static string ServerNetworkManagerSetPlayerBannedMethod = "BanClient";
+		public static string ServerNetworkManagerKickPlayerMethod = "KickClient";         
         
-        public static string ServerNetworkManagerConnectedPlayersField = "89E92B070228A8BC746EFB57A3F6D2E5";
+        public static string ServerNetworkManagerConnectedPlayersField = "=hrd2r4yATC2NCJnhqOpJBW6EOU=";
 
 		///////////// All these need testing /////////////
-		public static string NetworkingNamespace = "36CC7CE820B9BBBE4B3FECFEEFE4AE86";
-		public static string NetworkingOnWorldRequestField = "FAD031AB4FED05B9FE273ACD199496EE";
+		public static string NetworkingNamespace = "";
+		public static string NetworkingOnWorldRequestField = "=brsw3F6mys5AacUJHYIS14TVH2=";
 
-		public static string MyMultipartMessageClass = "7B6560DE2B6A29DE7F0157E9CDFFCC37";
-		public static string MyMultipartMessagePreemble = "7AEDE70A5F16434A660FC187077FC86F";
+		public static string MyMultipartMessageClass = "=cDj6WIzYFodmTa89pvnrADNanH=";
+		public static string MyMultipartMessagePreemble = "SendPreemble";
 
-		public static string MySyncLayerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
-		public static string MySyncLayerField = "E863C8EAD57B154571B7A487C6A39AC6";
+		public static string MySyncLayerClass = "=KgBTSimjVMGbRzYnmrvyNW6go7=";
+		public static string MySyncLayerField = "=CuPFQfpJpbb8r5FyAD4AIHGjwn=";
 
-		public static string MyTransportLayerField = "6F79877D9F8B092082EAEF8828D69F98";
-		public static string MyTransportLayerClearMethod = "DA0F40A1E0E2E5DD9B141562B91BDDDC";
+		public static string MyTransportLayerField = "=hh7T0u2R6UFfq7GWwBLvlXzDmY=";
+		public static string MyTransportLayerClearMethod = "SendFlush";
 
-		public static string MyMultipartSenderClass = "73C7CA87DB0535EFE711E10913D8ACFB";
-		public static string MyMultipartSenderSendPart = "A822BAC1F661C682C78230403DDF5670";
+		public static string MyMultipartSenderClass = "=mPqaTNwLBiwakf5CK3At5qdRPuP=";
+		public static string MyMultipartSenderSendPart = "SendPart";
 
-		public static string MySyncLayerSendMessage = "358D29D15C14B49FEA47651E0DE22024";
-		public static string MySyncLayerSendMessageToServer = "161C8D41497D2D26777646EE58FE2841";
+		public static string MySyncLayerSendMessage = "SendMessage";
+		public static string MySyncLayerSendMessageToServer = "SendMessageToServer";
 
-		public static string MyControlMessageCallbackClass = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string MyControlMessageHandlerClass = "69BCF201AF4FAC4108B36AFA089FE230";
+		public static string MyControlMessageCallbackClass = "";
+		public static string MyControlMessageHandlerClass = "=ejTBGKAhbRZPjUJjNkuRRlSLGh=";
 
 		///////////// All these need testing /////////////
 
-		private static string MultiplayerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
+		private static string MultiplayerNamespace = "";
 
-		private static string SendCloseClass = "48D79F8E3C8922F14D85F6D98237314C";
-		private static string SendCloseClosedMsg = "4038C6AE0CB130E41455232470357263";
-		private static string SendCloseClosedMsgEntityId = "3E16AD760B497CC0921CDE99D46348D9";
+		private static string SendCloseClass = "=uTZ4uCH8frEHtn0VfQJ0coHE2v=";
+		private static string SendCloseClosedMsg = "=gWIXWndvNVwS3ts7qLawsCo4L6=";
+		private static string SendCloseClosedMsgEntityId = "=oU1leYhaRCXt3fs7qWXtuRa3yR=";
 
-		private static string SendCreateClass = "8EFE49A46AB934472427B7D117FD3C64";
-		private static string SendCreateRelativeCompressedMsg = "4DFD818DC1531F7E40ED1E5D94A2B650";
-		private static string SendCreateCompressedMsg = "9163D0037A92C9B6DBF801EF5D53998E";
+		private static string SendCreateClass = "=r6VaZpriOkuuKqMuT2aPUQtWow=";
+		private static string SendCreateRelativeCompressedMsg = "=Jb9TlhCazLAuTwbBe9RenF4v7Q=";
+		private static string SendCreateCompressedMsg = "=P5EKdj3EJhVtTJV0b2GCB1xNHsc=";
 
-		private static string SendCreateRelativeCompressedMsgCreateMessage = "21859045930ACEE4A31D6391A0937D87";
-		private static string SendCreateRelativeCompressedMsgBaseEntity = "EE1F27FD35F85E8CD38338A0D8AB4AC8";
-		private static string SendCreateRelativeCompressedMsgRelativeVelocity = "A4DD67802385CCB3335B898BA717910B";
+		private static string SendCreateRelativeCompressedMsgCreateMessage = "=tQs567mzcxroGhjYr8lz1PqzoU=";
+		private static string SendCreateRelativeCompressedMsgBaseEntity = "=xruOKzLEhNYhebgpKfA5KhhhXQ=";
+		private static string SendCreateRelativeCompressedMsgRelativeVelocity = "=fhrdPJMxlPgyEkzKIN17aUZ71n=";
 
-		private static string SendCreateCompressedMsgObjectBuilders = "75490843CC702E3F6857E0CF65C5E908";
-		private static string SendCreateCompressedMsgBuilderLengths = "DADA09BE16684760302EB5A06A68A7C4";
+		private static string SendCreateCompressedMsgObjectBuilders = "=DH7Oztbz8DbiZ1r4yCr7zTe1nP=";
+		private static string SendCreateCompressedMsgBuilderLengths = "=5pfmIWWAOZCsIysc7YMDSWY13g=";
 
-		private static string PlayerCollectionClass = "E4C2964159826A46D102C2D7FDDC0733";
+		private static string PlayerCollectionClass = "=DRGhkayMZHgcBGswfi83RRIYcc=";
 
-		private static string RespawnMsg = "0375BD13880985CF806BF38D80ABE4DB";
-		private static string RespawnMsgJoinGame = "3091FD2824A71EAAD2D74C723BF1EE19";
-		private static string RespawnMsgNewIdenity = "31F31D5F94108B5AF5DB5BFC01287B6A";
-		private static string RespawnMsgMedicalRoom = "979224CC53178892C95097C126832539";
-		private static string RespawnMsgRespawnShipId = "EA3E01C01EE14785DE672E6899318CA4";
-		private static string RespawnMsgPlayerSerialId = "221D28591CBBCE26D7F0FC462FFB53E4";
+		private static string RespawnMsg = "=Eyig3zbAKk28MoFuUhwULbgO9h=";
+		private static string RespawnMsgJoinGame = "=A029yp2A0WBnWMZpQSa7psz5f2=";
+		private static string RespawnMsgNewIdenity = "=4Wq6erLoLZgEqlM1zSSWH2WWjO=";
+		private static string RespawnMsgMedicalRoom = "=ShCxItwZ8brXdPEkz0JNzn1Fxp=";
+		private static string RespawnMsgRespawnShipId = "=at6Sy5bwukZGZdQGJYlInzdVm8=";
+		private static string RespawnMsgPlayerSerialId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
 
-		private static string CharacterClass = "FA70B722FFD1F55F5A5019DA2499E60B";
-		private static string AttachMsg = "40523128EAA280C3B469E3C07BC9AA59";
-		private static string AttachCharacterId = "42A1FAB6988564AD174FAFE32427AF1F";
-		private static string AttachCockpitId = "92AC7F78274FB9C79B48F68D03166DC5";
+		private static string CharacterClass = "=2f1qCclG2slBN6Vw5QbX1zDIG6=";
+		private static string AttachMsg = "=XEAo5lB7RgcI6LNeKCn5RQSxUd=";
+		private static string AttachCharacterId = "=QoeTaBdFG5hLQTySy0Rra15gNK=";
+		private static string AttachCockpitId = "=KTOQgaLVpUNcBVMewWW3FM4m3y=";
 
-		private static string ControllableClass = "13C872C66F0BD2DC78D3D80ECAF6DD0E";
-		private static string UseMsg = "B9061E64FCAE2676D7C8BB0CBEB2B558";
-		private static string UseMsgEntityId = "B8FB60B21AA9E31FBE1BE03977FBB5C4";
-		private static string UseMsgUsedByEntityId = "1EDCD7F5F272CEC95910B9BD327F8159";
-		private static string UseMsgUseAction = "D1AB76CECD107930E4CED6045B5EE206";
-		private static string UseMsgActionResult = "184D262E162762B50FBAF1A443AE3F48";
+		private static string ControllableClass = "=mk2iB8SwAcxjNcwkIM1EjyAgDq=";
+		private static string UseMsg = "=teayYzvyUnChFRguXuaAzby6dA=";
+		private static string UseMsgEntityId = "=oU1leYhaRCXt3fs7qWXtuRa3yR=";
+		private static string UseMsgUsedByEntityId = "=tYrDGqpzipKWJtDSv3yh7YoVyw=";
+		private static string UseMsgUseAction = "=qQBgTP4aIaCfxhNjdeAaCPQv9fr=";
+		private static string UseMsgActionResult = "=61UFXGPQBQkmqO1WnSNBjwgqVb=";
 
-		private static string ModAPINamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-		private static string ModAPIHelperClass = "4C1ED56341F07A7D73298D03926F04DE";
-		private static string SendDataMessageClass = "CC6EB6677E764BA0BB8C9E3F219B7FB6";
-		private static string SendReliableMsg = "94BA33CF24FDB04C5858133B9CA10B65";
-		private static string SendReliableMsgId = "A1065D4F4F78592D380E3EBA7517D263";
-		private static string SendReliableMsgData = "EFAAFF2EF963935E2CE19D55C6C98DD1";
-			
+		private static string ModAPINamespace = "";
+		private static string ModAPIHelperClass = "=llwrhjftxf0UHKTxHfJpMmeCEs=";
+		private static string SendDataMessageClass = "=ccuaV71K6ms95rCYBXoWr8qjT2=";
+		private static string SendReliableMsg = "=1FUeCV7aAYZCGFd3KUhH5A0mEe=";
+		private static string SendReliableMsgId = "=uRgMOkIX0djjiF3VDo6Hr4CmJx=";
+		private static string SendReliableMsgData = "=WNLspkvjzVBe8e418uPlh3EhJN=";
+
+		private static string ControlChangedMsg = "=Py6oB722vMEMLvXlAoczDrpoOu=";
+		private static string ControlChangedMsgEntityId = "=oU1leYhaRCXt3fs7qWXtuRa3yR=";
+		private static string ControlChangedMsgSteamId = "=uj3LI43ZxE5HcfdPWFZSliFEA1=";
+		private static string ControlChangedMsgSerialId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
+
+		private static string SetPlayerDeadMsg = "=6pj8lSLelEguuqvNjgO6Hglqax=";
+		private static string SetPlayerDeadMsgSteamId = "=uj3LI43ZxE5HcfdPWFZSliFEA1=";
+		private static string SetPlayerDeadMsgSerialId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
+		private static string SetPlayerDeadMsgIsDead = "=vJoyYM9pjeoG12SSUAOQjNFTHG=";
+
+		private static string CharacterChangedMsg = "=GLzqhdD8SwqaIlodUM9kTayE7u=";
+		private static string CharacterChangedMsgCharacterEntityId = "=QoeTaBdFG5hLQTySy0Rra15gNK=";
+		private static string CharacterChangedMsgControlledEntityId = "=rZPDoWdhk5ehIChJ7JrirJmF7k=";
+		private static string CharacterChangedMsgSteamId = "=uj3LI43ZxE5HcfdPWFZSliFEA1=";
+		private static string CharacterChangedMsgClientId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
+
 		#endregion
 
 		#region "Properties"
@@ -198,7 +214,6 @@ namespace SEModAPIInternal.API.Server
 				Type respawnMsgType = type5.GetNestedType(RespawnMsg, BindingFlags.NonPublic | BindingFlags.Public);
 				if (respawnMsgType == null)
 					throw new Exception("Could not find internal type for RespawnMsg");
-
 
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgJoinGame);
 				result &= BaseObject.HasField(respawnMsgType, RespawnMsgNewIdenity);
@@ -492,6 +507,62 @@ namespace SEModAPIInternal.API.Server
 			SendMessage(useMsg, steamId, useMsgType, 2);
 		}
 
+		public static void SendControlMsgChangedSuccess(long entityId, ulong controlSteamid, ulong steamId)
+		{
+			Type playerCollectionClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, PlayerCollectionClass);
+			Type controlChangedMsgType = playerCollectionClassType.GetNestedType(ControlChangedMsg, BindingFlags.Public | BindingFlags.NonPublic);
+
+			FieldInfo controlChangedMsgEntityId = controlChangedMsgType.GetField(ControlChangedMsgEntityId);
+			FieldInfo controlChangedMsgSteamId = controlChangedMsgType.GetField(ControlChangedMsgSteamId);
+			FieldInfo controlChangedMsgSerialId = controlChangedMsgType.GetField(ControlChangedMsgSerialId);
+
+			object controlChangedMsg = Activator.CreateInstance(controlChangedMsgType);
+
+			controlChangedMsgEntityId.SetValue(controlChangedMsg, entityId);
+			controlChangedMsgSteamId.SetValue(controlChangedMsg, controlSteamid);
+			controlChangedMsgSerialId.SetValue(controlChangedMsg, 0);
+
+			SendMessage(controlChangedMsg, steamId, controlChangedMsgType, 1);
+		}
+
+		public static void SendSetPlayerDead(ulong controlSteamId, bool isDead, ulong steamId)
+		{
+			Type playerCollectionClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, PlayerCollectionClass);
+			Type setPlayerDeadMsgType = playerCollectionClassType.GetNestedType(SetPlayerDeadMsg, BindingFlags.Public | BindingFlags.NonPublic);
+
+			FieldInfo setPlayerDeadMsgSteamId = setPlayerDeadMsgType.GetField(SetPlayerDeadMsgSteamId);
+			FieldInfo setPlayerDeadMsgSerialId = setPlayerDeadMsgType.GetField(SetPlayerDeadMsgSerialId);
+			FieldInfo setPlayerDeadMsgIsDead = setPlayerDeadMsgType.GetField(SetPlayerDeadMsgIsDead);
+
+			object setPlayerDeadMsg = Activator.CreateInstance(setPlayerDeadMsgType);
+
+			setPlayerDeadMsgSteamId.SetValue(setPlayerDeadMsg, controlSteamId);
+			setPlayerDeadMsgSerialId.SetValue(setPlayerDeadMsg, 0);
+			setPlayerDeadMsgIsDead.SetValue(setPlayerDeadMsg, (BoolBlit)isDead);
+
+			SendMessage(setPlayerDeadMsg, steamId, setPlayerDeadMsgType, 2);
+		}
+
+		public static void SendCharacterChanged(long characterEntityId, long controlledEntityId, ulong controlSteamId, ulong steamId)
+		{
+			Type playerCollectionClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(MultiplayerNamespace, PlayerCollectionClass);
+			Type characterChangedMsgType = playerCollectionClassType.GetNestedType(CharacterChangedMsg, BindingFlags.Public | BindingFlags.NonPublic);
+
+			FieldInfo characterChangedMsgCharacterEntityId = characterChangedMsgType.GetField(CharacterChangedMsgCharacterEntityId);
+			FieldInfo characterChangedMsgControlledEntityId = characterChangedMsgType.GetField(CharacterChangedMsgControlledEntityId);
+			FieldInfo characterChangedMsgSteamId = characterChangedMsgType.GetField(CharacterChangedMsgSteamId);
+			FieldInfo characterChangedMsgClientId = characterChangedMsgType.GetField(CharacterChangedMsgClientId);
+
+			object characterChangeMsg = Activator.CreateInstance(characterChangedMsgType);
+
+			characterChangedMsgCharacterEntityId.SetValue(characterChangeMsg, characterEntityId);
+			characterChangedMsgControlledEntityId.SetValue(characterChangeMsg, controlledEntityId);
+			characterChangedMsgSteamId.SetValue(characterChangeMsg, controlSteamId);
+			characterChangedMsgClientId.SetValue(characterChangeMsg, 0);
+
+			SendMessage(characterChangeMsg, steamId, characterChangedMsgType, 1);
+		}
+
 		public static void SendDataMessage(ushort dataId, byte[] data, ulong steamId)
 		{
 			Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(ModAPINamespace, ModAPIHelperClass);
@@ -509,7 +580,7 @@ namespace SEModAPIInternal.API.Server
 			SendMessage(sendReliableMsg, steamId, sendReliableMsgType, 2);
 		}
 
-		//C42525D7DE28CE4CFB44651F3D03A50D.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
+		//.5B9DDD8F4DF9A88D297B3B0B3B79FBAA
 		public void ReplaceWorldJoin()
 		{
 			try
@@ -531,7 +602,7 @@ namespace SEModAPIInternal.API.Server
 
 				/*
 				var worldJoinField = controlHandlers[0];
-				//FAD031AB4FED05B9FE273ACD199496EE
+				//=brsw3F6mys5AacUJHYIS14TVH2=
 
 				FieldInfo worldJoinDelegateField = worldJoinField.GetType().GetField(NetworkingOnWorldRequestField);
 				MulticastDelegate action = (MulticastDelegate)worldJoinDelegateField.GetValue(worldJoinField);
@@ -714,7 +785,7 @@ namespace SEModAPIInternal.API.Server
 						{
 							MyObjectBuilder_EntityBase entity = (MyObjectBuilder_EntityBase)myObjectBuilderWorld.Sector.SectorObjects[r];
 							
-							if (!(entity is MyObjectBuilder_CubeGrid) && !(entity is MyObjectBuilder_VoxelMap))
+							if (!(entity is MyObjectBuilder_CubeGrid) && !(entity is MyObjectBuilder_VoxelMap) && !(entity is MyObjectBuilder_Character))
 								continue;
 
 							if ((entity is MyObjectBuilder_CubeGrid) && ((MyObjectBuilder_CubeGrid)entity).DisplayName.Contains("CommRelay"))
@@ -898,7 +969,7 @@ namespace SEModAPIInternal.API.Server
 
 		private static void SendPreamble(ulong steamId, int num)
 		{
-			//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
+			//.=cDj6WIzYFodmTa89pvnrADNanH=.SendPreemble
 			BaseObject.InvokeStaticMethod(MyMultipartMessageType(), MyMultipartMessagePreemble, new object[] { steamId, num });
 		}
 

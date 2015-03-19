@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -13,11 +13,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private bool m_isActive;
 
-		public static string CameraBlockNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string CameraBlockClass = "36C2B65B8C04A8F75A1DF888DE7B41F0";
+		public static string CameraBlockNamespace = "";
+		public static string CameraBlockClass = "=QCcadxxSGXM4pmvgJ0k26zE4nB=";
 
-		public static string CameraBlockGetIsActiveMethod = "B9A8CAA8AE60E632F1A995F9492C5626";
-		public static string CameraBlockSetIsActiveMethod = "F1C9E65ABDAB28453725C43D05F95D4E";
+		public static string CameraBlockGetIsActiveMethod = "get_IsActive";
+		public static string CameraBlockSetIsActiveMethod = "set_IsActive";
 
 		#endregion "Attributes"
 

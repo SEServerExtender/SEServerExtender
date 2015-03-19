@@ -3124,11 +3124,6 @@
             Gets and sets the translation vector of the Matrix.
             </summary>
         </member>
-        <member name="M:VRageMath.DoubleExtensions.IsValid(System.Double)">
-            <summary>
-            Returns true if double is valid
-            </summary>
-        </member>
         <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.Activate(System.Object,System.UInt64)">
             <summary>
             Called when standalone object is added to cluster
@@ -4686,11 +4681,6 @@
             </summary>
             <param name="Contains">Indicates that one bounding volume completely contains the other.</param><param name="Disjoint">Indicates there is no overlap between the bounding volumes.</param><param name="Intersects">Indicates that the bounding volumes partially overlap.</param>
         </member>
-        <member name="M:VRageMath.FloatExtensions.IsValid(System.Single)">
-            <summary>
-            Returns true if float is valid
-            </summary>
-        </member>
         <member name="M:VRageMath.MyBlockOrientation.TransformDirection(VRageMath.Base6Directions.Direction)">
             <summary>
             Returns the direction baseDirection will point to after transformation
@@ -5776,6 +5766,12 @@
             Transposes the rows and columns of a matrix.
             </summary>
             <param name="matrix">Source matrix.</param><param name="result">[OutAttribute] Transposed matrix.</param>
+        </member>
+        <member name="M:VRageMath.Matrix.TransposeRotationInPlace">
+            <summary>
+            Transposes the rows and columns of a matrix that is assumed to be rotation only in place.
+            </summary>
+            <param name="matrix">Source matrix.</param>
         </member>
         <member name="M:VRageMath.Matrix.Determinant">
             <summary>
@@ -7080,36 +7076,6 @@
             <param name="y">The y.</param>
             <param name="width">The width.</param>
             <param name="height">The height.</param>
-        </member>
-        <member name="M:VRageMath.RectangleF.Contains(System.Int32,System.Int32)">
-            <summary>
-            Checks, if specified point is inside <see cref="!:SharpDX.DrawingRectangleF"/>.
-            </summary>
-            <param name="x">X point coordinate.</param>
-            <param name="y">Y point coordinate.</param>
-            <returns><c>true</c> if point is inside <see cref="!:SharpDX.DrawingRectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:VRageMath.RectangleF.Contains(System.Single,System.Single)">
-            <summary>
-            Checks, if specified point is inside <see cref="!:SharpDX.DrawingRectangleF"/>.
-            </summary>
-            <param name="x">X point coordinate.</param>
-            <param name="y">Y point coordinate.</param>
-            <returns><c>true</c> if point is inside <see cref="!:SharpDX.DrawingRectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:VRageMath.RectangleF.Contains(VRageMath.Vector2)">
-            <summary>
-            Checks, if specified <see cref="!:SharpDX.Vector2"/> is inside <see cref="!:SharpDX.DrawingRectangleF"/>. 
-            </summary> 
-            <param name="vector2D">Coordinate <see cref="!:SharpDX.Vector2"/>.</param>
-            <returns><c>true</c> if <see cref="!:SharpDX.Vector2"/> is inside <see cref="!:SharpDX.DrawingRectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:VRageMath.RectangleF.Contains(VRageMath.Point)">
-            <summary>
-            Checks, if specified <see cref="!:SharpDX.DrawingPoint"/> is inside <see cref="!:SharpDX.DrawingRectangleF"/>. 
-            </summary>
-            <param name="point">Coordinate <see cref="!:SharpDX.DrawingPoint"/>.</param> 
-            <returns><c>true</c> if <see cref="!:SharpDX.DrawingPoint"/> is inside <see cref="!:SharpDX.DrawingRectangleF"/>, otherwise <c>false</c>.</returns>
         </member>
         <member name="F:VRageMath.RectangleF.Position">
             <summary>

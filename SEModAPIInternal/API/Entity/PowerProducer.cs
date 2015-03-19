@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
@@ -15,8 +15,8 @@ namespace SEModAPIInternal.API.Entity
 		protected float m_maxPowerOutput;
 		protected float m_powerOutput;
 
-		public static string PowerProducerNamespace = "FB8C11741B7126BD9C97FE76747E087F";
-		public static string PowerProducerClass = "7E69388ED0DB47818FB7AFF9F16C6EDA";
+		public static string PowerProducerNamespace = "";
+		public static string PowerProducerClass = "=H36sAJ3q2dwiHOAJoDFIiSAhzB=";
 
 		//public static string PowerProducerGetMaxPowerOutputMethod = "EE14CE9A4A4EC31170A289F0445C3EFB";
 		//public static string PowerProducerGetCurrentOutputMethod = "D18B16A57B4F96C7B988C7AF8B9939D0";

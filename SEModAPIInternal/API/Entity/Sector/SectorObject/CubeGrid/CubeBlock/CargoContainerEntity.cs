@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -13,8 +13,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private InventoryEntity m_Inventory;
 
-		public static string CargoContainerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string CargoContainerClass = "0B52AF23069247D1A6D57F957ED070E3";
+		public static string CargoContainerNamespace = "";
+		public static string CargoContainerClass = "=oYFCJscKDsNLb5ixFZYeII2thY=";
 
 		public static string CargoContainerGetInventoryMethod = "GetInventory";
 

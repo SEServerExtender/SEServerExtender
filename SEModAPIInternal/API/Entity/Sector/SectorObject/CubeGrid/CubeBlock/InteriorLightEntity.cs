@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
 
@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string InteriorLightNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string InteriorLightClass = "05750D6A5B237D5ABEB54E060707026B";
+		public static string InteriorLightNamespace = "";
+		public static string InteriorLightClass = "Sandbox.Game.Entities.Cube.MyInteriorLight";
 
 		#endregion "Attributes"
 

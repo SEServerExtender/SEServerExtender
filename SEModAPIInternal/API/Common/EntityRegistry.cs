@@ -1,4 +1,4 @@
-﻿using Sandbox.Common.ObjectBuilders;
+using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Voxels;
 
 using SEModAPIInternal.API.Entity.Sector.SectorObject;

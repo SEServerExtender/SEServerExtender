@@ -8,6 +8,7 @@ using SEModAPIInternal.API.Entity;
 using SEModAPIInternal.Support;
 using VRage.Common.Utils;
 using Sandbox.ModAPI;
+using VRage.Library.Utils;
 
 namespace SEModAPIInternal.API.Common
 {
@@ -30,54 +31,54 @@ namespace SEModAPIInternal.API.Common
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string MainGameNamespace = "B337879D0C82A5F9C44D51D954769590";
-		public static string MainGameClass = "B3531963E948FB4FA1D057C4340C61B4";
+		public static string MainGameNamespace = "";
+		public static string MainGameClass = "=JbLZcQ0hj347engCZ44EtlRZjA=";
 
-		public static string MainGameEnqueueActionMethod = "0172226C0BA7DAE0B1FCE0AF8BC7F735";
-		public static string MainGameGetTimeMillisMethod = "676C50EDDF93A0D8452B6BAFE7A33F32";
-		public static string MainGameExitMethod = "0541388EA6888847A38CC5AC82559144";
+		public static string MainGameEnqueueActionMethod = "Invoke";
+		public static string MainGameGetTimeMillisMethod = "get_TotalGamePlayTimeInMilliseconds";
+		public static string MainGameExitMethod = "EndLoop";
 		public static string MainGameDisposeMethod = "Dispose";
 
-		public static string MainGameInstanceField = "392503BDB6F8C1E34A232489E2A0C6D4";
-		public static string MainGameConfigContainerField = "4895ADD02F2C27ED00C63E7E506EE808";
-		public static string MainGameIsLoadedField = "76E577DA6C1683D13B1C0BE5D704C241";
-		public static string MainGameLoadingCompleteActionField = "0CAB22C866086930782A91BA5F21A936";
-		public static string MainGameMyLogField = "1976E5D4FE6E8C1BD369273DEE0025AC";
+		public static string MainGameInstanceField = "=7qTITGYD99C8zJuRX4MmJLozdJ=";
+		public static string MainGameConfigContainerField = "=2pBMOL3zIdsqp8CDhqTzegniOR=";
+		public static string MainGameIsLoadedField = "=lxpQpM8HDsUzmtXB86WSyPLJoo=";
+		public static string MainGameLoadingCompleteActionField = "=Sv41JciNGhgoQ30Av1MsYFmTDE=";
+		public static string MainGameMyLogField = "=651BcwYE08Rl3znxPmzJaTB6gmc=";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ServerCoreNamespace = "168638249D29224100DB50BB468E7C07";
-		public static string ServerCoreClass = "7BAD4AFD06B91BCD63EA57F7C0D4F408";
+		public static string ServerCoreNamespace = "";
+		public static string ServerCoreClass = "=f3Z6Ndh0u8AiCd1RYvZsU5Dv7T=";
 
-		public static string ServerCoreNullRenderField = "53A34747D8E8EDA65E601C194BECE141";
-
-		/////////////////////////////////////////////////////////////////////////////
-
-		public static string GameConstantsNamespace = "00DD5482C0A3DF0D94B151167E77A6D9";
-		public static string GameConstantsClass = "5FBC15A83966C3D53201318E6F912741";
+		public static string ServerCoreNullRenderField = "=nzs8s84ImxtauGKUXygMgIpinN=";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ConfigContainerNamespace = "00DD5482C0A3DF0D94B151167E77A6D9";
-		public static string ConfigContainerClass = "EB0B0448CDB2C619C686429C597589BC";
+		public static string GameConstantsNamespace = "";
+		public static string GameConstantsClass = "=Qf8bCAQhfztrGrjRhh0cHn7vi2=";
+
+		/////////////////////////////////////////////////////////////////////////////
+
+		public static string ConfigContainerNamespace = "";
+		public static string ConfigContainerClass = "=H1P2jEZdfoahFOXwBy7s06kFWr=";
 
 		//public static string ConfigContainerGetConfigDataMethod = "4DD64FD1D45E514D01C925D07B69B3BE";
 		public static string ConfigContainerGetConfigDataMethod = "Load";
 
-		public static string ConfigContainerDedicatedDataField = "44A1510B70FC1BBE3664969D47820439";
+		public static string ConfigContainerDedicatedDataField = "=hvY6QCkRIywBS3UbXAe445CTvK=";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string CubeBlockObjectFactoryNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string CubeBlockObjectFactoryClass = "8E009F375CE3CE0A06E67CA053084252";
+		public static string CubeBlockObjectFactoryNamespace = "";
+		public static string CubeBlockObjectFactoryClass = "=q3M4XNDkDZisDtwxMVfGjNwTcw=";
 
-		public static string CubeBlockObjectFactoryGetBuilderFromEntityMethod = "967C934A80A75642EADF86455E924134";
+		public static string CubeBlockObjectFactoryGetBuilderFromEntityMethod = "CreateObjectBuilder";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string EntityBaseObjectFactoryNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string EntityBaseObjectFactoryClass = "E825333D6467D99DD83FB850C600395C";
-		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "85DD00A89AFE64DF0A1B3FD4A5139A04";
+		public static string EntityBaseObjectFactoryNamespace = "";
+		public static string EntityBaseObjectFactoryClass = "=iXKU6ehmc24G5brre7PFeSWgPb=";
+		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "CreateObjectBuilder";
 
 		////////////////////////////////////////////////////////////////////////////////
 		private const string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";

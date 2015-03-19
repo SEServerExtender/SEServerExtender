@@ -1,4 +1,4 @@
-﻿namespace SEModAPIExtensions.API.IPC
+namespace SEModAPIExtensions.API.IPC
 {
 	using System.Collections.Generic;
 	using System.ServiceModel;

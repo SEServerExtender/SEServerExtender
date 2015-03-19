@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -16,13 +16,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private PowerReceiver m_powerReceiver;
 		private bool m_enabled;
 
-		public static string FunctionalBlockNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string FunctionalBlockClass = "7085736D64DCC58ED5DCA05FFEEA9664";
+		public static string FunctionalBlockNamespace = "";
+		public static string FunctionalBlockClass = "Sandbox.Game.Entities.Cube.MyFunctionalBlock";
 
 		//public static string FunctionalBlockGetEnabledMethod = "89B34B01DCC6C8596E80023078BB9541";
 		public static string FunctionalBlockGetEnabledMethod = "get_Enabled";
 
-		public static string FunctionalBlockSetEnabledMethod = "97EC0047E8B562F4590B905BD8571F51";
+		public static string FunctionalBlockSetEnabledMethod = "set_Enabled";
 
 		//public static string FunctionalBlockBroadcastEnabledMethod = "D979DB9AA474782929587EC7DE5E53AA";
 		public static string FunctionalBlockBroadcastEnabledMethod = "RequestEnable";

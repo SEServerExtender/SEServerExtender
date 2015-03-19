@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
 
@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string RefineryNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string RefineryClass = "D213D513B024AA8BF8DAC576FC59CB54";
+		public static string RefineryNamespace = "";
+		public static string RefineryClass = "=8SP9fGLhWKHDI8VQ7qCDMW9aEE=";
 
 		#endregion "Attributes"
 

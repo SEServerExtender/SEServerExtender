@@ -1,4 +1,4 @@
-﻿namespace SEServerGUI
+namespace SEServerGUI
 {
 	partial class SEServerGUIForm
 	{

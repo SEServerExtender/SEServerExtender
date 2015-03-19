@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -12,10 +12,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string RotorNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string RotorClass = "28EDB1838133C5D80B080389DBB2C9DB";
+		public static string RotorNamespace = "";
+		public static string RotorClass = "=6Wy9Sq1bSnd1NU3pZEtIJjR4rJ=";
 
-		public static string RotorTopBlockEntityIdField = "8B5AF0B1A3FABB9647F639CBBCEE6B9B";
+		public static string RotorTopBlockEntityIdField = "=3VfRAqLnpYlKKw2kDSOSyVqUsR=";
 
 		#endregion "Attributes"
 

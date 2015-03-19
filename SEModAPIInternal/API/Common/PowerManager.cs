@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
 using SEModAPIInternal.API.Entity;
@@ -13,19 +13,19 @@ namespace SEModAPIInternal.API.Common
 
 		protected Object m_powerManager;
 
-		public static string PowerManagerNamespace = "FB8C11741B7126BD9C97FE76747E087F";
-		public static string PowerManagerClass = "9EF82B537508DA0589AD02ADCEF4F09E";
+		public static string PowerManagerNamespace = "";
+		public static string PowerManagerClass = "=0byCEQZRaZUljJT3BnkqiceYaZ2=";
 
-		public static string PowerManagerRegisterPowerReceiverMethod = "7EC24D67D0C5C545B823312948C7C53D";
-		public static string PowerManagerUnregisterPowerReceiverMethod = "EF8CE8BD7E3A4EC649E71B15336AB6E3";
-		public static string PowerManagerRegisterPowerProducerMethod = "5E8FD2CD7A15CB64013EA628AA5A6F36";
-		public static string PowerManagerUnregisterPowerProducerMethod = "7D2580FB3DEF36528602A4087A148755";
-		public static string PowerManagerGetAvailablePowerMethod = "D807FF48CBA89A66D5325A7FE26F1CF3";
-		public static string PowerManagerGetUsedPowerPercentMethod = "AD3ACAD83021E7C4396AC6DDB26F51A9";
+		public static string PowerManagerRegisterPowerReceiverMethod = "AddConsumer";
+		public static string PowerManagerUnregisterPowerReceiverMethod = "RemoveConsumer";
+		public static string PowerManagerRegisterPowerProducerMethod = "AddProducer";
+		public static string PowerManagerUnregisterPowerProducerMethod = "RemoveProducer";
+		public static string PowerManagerGetAvailablePowerMethod = "get_TotalRequiredInput";
+		public static string PowerManagerGetUsedPowerPercentMethod = "get_RemainingFuelTime";
 
-		public static string PowerManagerPowerReceiverHashSetField = "FA93081ED4667D9B994BBD362F5BCB03";
-		public static string PowerManagerPowerProducerHashSetField = "9923D3B372EC5E98B4B3E4F043C89137";
-		public static string PowerManagerTotalPowerField = "2321C01912603DCD25560D74826632AC";
+		public static string PowerManagerPowerReceiverHashSetField = "=AEoDnX2MCH8JabbCIv82dKGgdWc=";
+		public static string PowerManagerPowerProducerHashSetField = "=OF1fWtFbtbKuBYCQZT1RwqelGD=";
+		public static string PowerManagerTotalPowerField = "=F3vjA1VbQZ6h5a0yRFs7eUEDKm=";
 
 		#endregion "Attributes"
 

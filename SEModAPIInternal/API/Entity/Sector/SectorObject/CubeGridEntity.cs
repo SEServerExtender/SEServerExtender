@@ -30,19 +30,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		private CubeBlockEntity _cubeBlockToAddRemove;
 
-		public static string CubeGridNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string CubeGridClass = "98262C3F38A1199E47F2B9338045794C";
+		public static string CubeGridNamespace = "";
+		public static string CubeGridClass = "Sandbox.Game.Entities.MyCubeGrid";
 
-		public static string CubeGridGetCubeBlocksHashSetMethod = "E38F3E9D7A76CD246B99F6AE91CC3E4A";
-		public static string CubeGridAddCubeBlockMethod = "2B757AF5C8F1CC2EC5F738B54EFBDF23";
-		public static string CubeGridRemoveCubeBlockMethod = "5980C21045AAAAEC22416165FF409455";
-		public static string CubeGridGetManagerManagerMethod = "D17C9BE5AC3B00727F465C2305BA92CE";
+		public static string CubeGridGetCubeBlocksHashSetMethod = "GetBlocks";
+		public static string CubeGridAddCubeBlockMethod = "AddCubeBlock";
+		public static string CubeGridRemoveCubeBlockMethod = "RemoveBlock";
+		public static string CubeGridGetManagerManagerMethod = "get_GridSystems";
 
-		public static string CubeGridBlockGroupsField = "24E0633A3442A1F605F37D69F241C970";
+		//public static string CubeGridBlockGroupsField = "=Pzc3AyrJQWUIjBgew6TwHdil5t=";
 
 		//////////////////////////////////////////////////////////////
 
-		public static string CubeGridPackedCubeBlockClass = "904EBABB7F499A29EBFA14472321E896";
+		public static string CubeGridPackedCubeBlockClass = ".MyBlockBuildArea";
 
 		#endregion "Attributes"
 
@@ -480,7 +480,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				result &= HasMethod( type, CubeGridAddCubeBlockMethod );
 				result &= HasMethod( type, CubeGridRemoveCubeBlockMethod );
 				result &= HasMethod( type, CubeGridGetManagerManagerMethod );
-				result &= HasField( type, CubeGridBlockGroupsField );
+				//result &= HasField( type, CubeGridBlockGroupsField );
 
 				return result;
 			}

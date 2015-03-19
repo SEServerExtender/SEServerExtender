@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -13,10 +13,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string MergeBlockNamespace = "AAD9061F948E6A3635200145188D64A9";
-		public static string MergeBlockClass = "D6D88AF33E0073B53DC2A3445C9F12EC";
+		public static string MergeBlockNamespace = "";
+		public static string MergeBlockClass = "=YK6jgjDtIbOqkG0PSaYK8OgDCm=";
 
-		public static string MergeBlockConnectedMergeBlockField = "0599F03E0870E6CBD4773A36B6866FA6";
+		public static string MergeBlockConnectedMergeBlockField = "=lx8f0RXA6W8t7SqmCKW5zoCHpf=";
 
 		#endregion "Attributes"
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -16,15 +16,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private CharacterEntity m_pilot;
 		private bool m_weaponStatus;
 
-		public static string ShipControllerEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ShipControllerEntityClass = "12BACAB3471C8707CE7420AE0465548C";
+		public static string ShipControllerEntityNamespace = "";
+		public static string ShipControllerEntityClass = "=7h87qJfPTuhTWq2FGYlI84qCpg=";
 
-		public static string ShipControllerEntityGetNetworkManager = "4D19E6CD06284069B97E08353C984ABB";
+		public static string ShipControllerEntityGetNetworkManager = "get_SyncObject";
 
 		//public static string ShipControllerEntityGetPilotEntityMethod = "19CFD162A750443F856D37B6C946BFB0";
-		public static string ShipControllerEntityGetPilotEntityMethod = "6DF6AE137CABD37D44B48CDD8802E82A";
+		public static string ShipControllerEntityGetPilotEntityMethod = "Sandbox.Game.GameSystems.Electricity.IMyRechargeSocketOwner.get_RechargeSocket";
 
-		public static string ShipControllerEntitySetPilotEntityMethod = "AC280CA879823319A66F3C71D6478297";
+		//public static string ShipControllerEntitySetPilotEntityMethod = "AC280CA879823319A66F3C71D6478297";
 
 		#endregion "Attributes"
 
@@ -254,10 +254,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//2488 - Thruster Power On/Off
 		//2489 - Motor Handbrake On/Off
 
-		public static string ShipControllerNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string ShipControllerNetworkManagerClass = "FC3A3372AD1F9E2E193FE3F7683D7DEF";
+		public static string ShipControllerNetworkManagerNamespace = "";
+		public static string ShipControllerNetworkManagerClass = "=YTP9oWvasPaCXTYBL8uGXhRmd2=";
 
-		public static string ShipControllerNetworkManagerBroadcastDampenersStatus = "7D17A6F76089A3756ED081F5CCB0E739";
+		public static string ShipControllerNetworkManagerBroadcastDampenersStatus = "SendDampenersUpdate";
 
 		#endregion "Attributes"
 

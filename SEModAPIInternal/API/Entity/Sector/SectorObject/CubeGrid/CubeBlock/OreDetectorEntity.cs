@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -14,13 +14,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private bool m_broadcastUsingAntennas;
 		private float m_detectionRadius;
 
-		public static string OreDetectorNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string OreDetectorClass = "E12CF12895FC2AA4037DD098DE6979F2";
+		public static string OreDetectorNamespace = "";
+		public static string OreDetectorClass = "=r9nrbLrgG3TFfNkdacaTuHGXN5=";
 
-		public static string OreDetectorGetUsingAntennasMethod = "A86CE4519A974D361F832EFA29F3342C";
-		public static string OreDetectorSetUsingAntennasMethod = "CBB6BC8CD97EA91D61606A387C079BD8";
-		public static string OreDetectorGetDetectionRadiusMethod = "0D25F25489E9EF61F63427ACE5AF9855";
-		public static string OreDetectorSetDetectionRadiusMethod = "375A34828B7F1E5C64132B38ECB59406";
+		public static string OreDetectorGetUsingAntennasMethod = "get_BroadcastUsingAntennas";
+		public static string OreDetectorSetUsingAntennasMethod = "set_BroadcastUsingAntennas";
+		public static string OreDetectorGetDetectionRadiusMethod = "get_Range";
+		public static string OreDetectorSetDetectionRadiusMethod = "set_Range";
 
 		#endregion "Attributes"
 

@@ -1,4 +1,4 @@
-﻿using SEModAPIInternal.API.Entity;
+using SEModAPIInternal.API.Entity;
 
 namespace SEModAPIExtensions.API.Plugin.Events
 {

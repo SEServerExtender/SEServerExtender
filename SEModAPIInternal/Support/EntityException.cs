@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using SEModAPI.Support;
 
 namespace SEModAPIInternal.Support

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -11,8 +11,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string VirtualMassNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string VirtualMassClass = "ADD99AA5F8D01EA9FCF30E8AEE011CCD";
+		public static string VirtualMassNamespace = "";
+		public static string VirtualMassClass = "Sandbox.Game.Entities.MyVirtualMass";
 
 		#endregion "Attributes"
 

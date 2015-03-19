@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -14,10 +14,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private RadioManager m_radioManager;
 
-		public static string AntennaNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string AntennaClass = "BEFE9BC9C0DE00D5CD95A054194EF6AB";
+		public static string AntennaNamespace = "";
+		public static string AntennaClass = "=Jaud2hDz8fLVTEpqsW3FMuLjLj=";
 
-		public static string AntennaGetRadioManagerMethod = "C7762F68C17313AFB9CB8A5FA0528A50";
+		public static string AntennaGetRadioManagerMethod = "get_RadioBroadcaster";
 
 		#endregion "Attributes"
 

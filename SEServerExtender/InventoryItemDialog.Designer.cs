@@ -1,4 +1,4 @@
-﻿namespace SEServerExtender
+namespace SEServerExtender
 {
 	partial class InventoryItemDialog
 	{

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -472,7 +472,7 @@ namespace SEModAPIExtensions.API
 					if ( CommandLineArgs.WorldDataModify )
 						ServerNetworkManager.Instance.ReplaceWorldData();
 
-					SandboxGameAssemblyWrapper.InitAPIGateway();
+					//SandboxGameAssemblyWrapper.InitAPIGateway();
 					_pluginManager.LoadPlugins( );
 					_pluginManager.Init( );
 

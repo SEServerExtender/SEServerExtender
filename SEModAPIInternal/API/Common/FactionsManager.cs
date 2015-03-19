@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders;
@@ -18,18 +18,18 @@ namespace SEModAPIInternal.API.Common
 		private Dictionary<long, FactionMember> m_joinRequests;
 		private long m_memberToModify;
 
-		public static string FactionNamespace = "AAC05F537A6F0F6775339593FBDFC564";
-		public static string FactionClass = "1ECF0BCA9FD77A768222E28B816597E6";
+		public static string FactionNamespace = "";
+		public static string FactionClass = "=9DUcsoJb37UyrFZNPPoFzkiQCma=";
 
-		public static string FactionGetMembersMethod = "0370D2FAE277C81EC5E86DAE00187F83";
-		public static string FactionGetJoinRequestsMethod = "6BEF546F0DE1D6950850E0E17F9B1D50";
-		public static string FactionAddApplicantMethod = "52E37DA969B098F9A64AC1CFBF0B24D0";
-		public static string FactionRemoveApplicantMethod = "A89B7D2F964A5E95158389AEAC8C4E48";
-		public static string FactionAcceptApplicantMethod = "674DD8BE4E653E63ADE2EDB5A27E38DE";
-		public static string FactionRemoveMemberMethod = "A8A9206AB10ECC19F73F4FF98E874379";
+		public static string FactionGetMembersMethod = "get_Members";
+		public static string FactionGetJoinRequestsMethod = "get_JoinRequests";
+		public static string FactionAddApplicantMethod = "AddJoinRequest";
+		public static string FactionRemoveApplicantMethod = "CancelJoinRequest";
+		public static string FactionAcceptApplicantMethod = "AcceptJoin";
+		public static string FactionRemoveMemberMethod = "KickMember";
 
-		public static string FactionMembersDictionaryField = "6C5002516CE91D083B8487A823E176DE";
-		public static string FactionJoinRequestsDictionaryField = "1395A0D694642F440B050480A4D28F06";
+		public static string FactionMembersDictionaryField = "=hrd2r4yATC2NCJnhqOpJBW6EOU=";
+		public static string FactionJoinRequestsDictionaryField = "=1xaBHU23sqENJAlqfZYI7iPsvP=";
 
 		#endregion "Attributes"
 
@@ -257,8 +257,8 @@ namespace SEModAPIInternal.API.Common
 		private MyObjectBuilder_FactionMember m_member;
 		private Faction m_parent;
 
-		public static string FactionMemberNamespace = "AAC05F537A6F0F6775339593FBDFC564";
-		public static string FactionMemberClass = "32F8947D11EDAF4D079FD54C2397A951";
+		public static string FactionMemberNamespace = "";
+		//public static string FactionMemberClass = "32F8947D11EDAF4D079FD54C2397A951";
 
 		#endregion "Attributes"
 
@@ -337,20 +337,20 @@ namespace SEModAPIInternal.API.Common
 		protected long m_factionToModify;
 		protected long m_memberToModify;
 
-		public static string FactionManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string FactionManagerClass = "17E6A2D4B9414B1D3DDA551E10938751";
+		public static string FactionManagerNamespace = "";
+		public static string FactionManagerClass = "=zCz9UXvRmT148ybvcyvkfMadCL=";
 
-		public static string FactionManagerGetFactionCollectionMethod = "C93E560F96FE606D0BE190EDE1AA5005";
-		public static string FactionManagerGetFactionByIdMethod = "A01C0785253581981A78896FFBB103E9";
-		public static string FactionManagerRemoveFactionByIdMethod = "69FBA8150E79975E21C1C8C5D7BF897D";
+		public static string FactionManagerGetFactionCollectionMethod = "GetObjectBuilder";
+		public static string FactionManagerGetFactionByIdMethod = "TryGetFactionById";
+		public static string FactionManagerRemoveFactionByIdMethod = "KickPlayerFromFaction";
 
 		//////////////////////////////////////////////////////
 
 		public static string FactionNetManagerNamespace = "";
 		public static string FactionNetManagerClass = "";
 
-		public static string FactionNetManagerRemoveFactionMethod = "01E89FED8AEDE7182CACB3F84D5748AC";
-		public static string FactionNetManagerRemoveMemberMethod = "4FDD02E48E4AAF15026A9181C13F711E";
+		public static string FactionNetManagerRemoveFactionMethod = "RemoveFaction";
+		public static string FactionNetManagerRemoveMemberMethod = "MemberLeaves";
 
 		#endregion "Attributes"
 

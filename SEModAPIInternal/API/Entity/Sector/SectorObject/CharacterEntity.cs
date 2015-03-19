@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -20,30 +20,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private InventoryEntity m_inventory;
 		private static Type m_internalType;
 
-		public static string CharacterNamespace = "F79C930F3AD8FDAF31A59E2702EECE70";
-		public static string CharacterClass = "3B71F31E6039CAE9D8706B5F32FE468D";
+		public static string CharacterNamespace = "";
+		public static string CharacterClass = "Sandbox.Game.Entities.Character.MyCharacter";
 
-		public static string CharacterGetHealthMethod = "7047AFF5D44FC8A44572E92DBAD13011";
+		public static string CharacterGetHealthMethod = "get_Health";
 
 		//		public static string CharacterDamageCharacterMethod = "DoDamage"; //
-		public static string CharacterDamageCharacterMethod = "CF6EEF37B5AE4047E65CA4A0BB43F774";
+		public static string CharacterDamageCharacterMethod = "DoDamage";
 
-		public static string CharacterSetHealthMethod = "92A0500FD8772AB1AC3A6F79FD2A1C72";
-		public static string CharacterGetBatteryMethod = "CF72A89940254CB8F535F177150FC743";
+		public static string CharacterSetHealthMethod = "AddHealth";
+		public static string CharacterGetBatteryMethod = "get_SuitBattery";
 		public static string CharacterGetInventoryMethod = "GetInventory";
-		public static string CharacterGetDisplayNameMethod = "DB913685BC5152DC19A4796E9E8CF659";
-		public static string CharacterGetNetworkManagerMethod = "7605238EEE4275E4AD5608E7BD34D9C2";
+		public static string CharacterGetDisplayNameMethod = "get_DisplayName";
+		public static string CharacterGetNetworkManagerMethod = "get_SyncObject";
 
-		public static string CharacterItemListField = "02F6468D864F3203482135334BEB58AD";
+		public static string CharacterItemListField = "m_inventoryResults";
 
 		///////////////////////////////////////////////////////////
 
-		public static string CharacterBatteryNamespace = "FB8C11741B7126BD9C97FE76747E087F";
-		public static string CharacterBatteryClass = "328929D5EC05DF770D51383F6FC0B025";
+		public static string CharacterBatteryNamespace = "";
+		public static string CharacterBatteryClass = "=5gBNkgv53FoJ8FAvzAXRggJ6nm=";
 
-		public static string CharacterBatterySetBatteryCapacityMethod = "C3BF60F3540A8A48CB8FEE0CDD3A95C6";
+		public static string CharacterBatterySetBatteryCapacityMethod = "set_RemainingCapacity";
 
-		public static string CharacterBatteryCapacityField = "0BAEC0F968A4BEAE30E7C46D9406765C";
+		public static string CharacterBatteryCapacityField = "=QeE0wGdUdldFfmabysIgxC6YCB=";
 
 		#endregion "Attributes"
 
@@ -450,8 +450,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private CharacterEntity m_parent;
 		private Object m_backingObject;
 
-		public static string CharacterNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string CharacterNetManagerClass = "FA70B722FFD1F55F5A5019DA2499E60B";
+		public static string CharacterNetManagerNamespace = "";
+		public static string CharacterNetManagerClass = "=2f1qCclG2slBN6Vw5QbX1zDIG6=";
 
 		//Packets
 		//2

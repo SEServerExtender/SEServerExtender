@@ -7,6 +7,7 @@ using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
 using SysUtils.Utils;
 using VRage.Common.Utils;
+using VRage.Library.Utils;
 
 namespace SEModAPIInternal.Support
 {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -511,12 +511,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//687 - Range
 		//688 - Target settings (meteor on/off, missile on/off, moving on/off)
 
-		public static string TurretNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string TurretNetworkManagerClass = "D29C33B546169292854A4DECCDB53895";
+		public static string TurretNetworkManagerNamespace = "";
+		public static string TurretNetworkManagerClass = "=84tFfP5aiJ9RHaU4zToO66WhUa=";
 
-		public static string TurretNetworkManagerBroadcastTargetIdMethod = "8E250BEF8500A92D96D13554C31D4EFA";
-		public static string TurretNetworkManagerBroadcastRangeMethod = "8F298724F106679C0229CD9F9763EA90";
-		public static string TurretNetworkManagerBroadcastTargettingFlagsMethod = "70D4690C2D4A199ABB3EB37364BE0595";
+		public static string TurretNetworkManagerBroadcastTargetIdMethod = "SendChangeTarget";
+		public static string TurretNetworkManagerBroadcastRangeMethod = "SendChangeRangeRequest";
+		public static string TurretNetworkManagerBroadcastTargettingFlagsMethod = "SendChangeTargetingRequest";
 
 		#endregion "Attributes"
 

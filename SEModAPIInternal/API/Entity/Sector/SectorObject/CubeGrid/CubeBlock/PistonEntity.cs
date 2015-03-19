@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -17,19 +17,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private float m_minLimit;
 		private float m_maxLimit;
 
-		public static string PistonNamespace = "AAD9061F948E6A3635200145188D64A9";
-		public static string PistonClass = "BB5F18CC2986DBE98E7199353DD42570";
+		public static string PistonNamespace = "";
+		public static string PistonClass = "=J4YBrVQFk0jMvjbPSUGFOqZOfd=";
 
 		public static string PistonGetVelocityMethod = "get_Velocity";
-		public static string PistonSetVelocityMethod = "098E60E484F608B7F8D1C596244A4AB7";
+		public static string PistonSetVelocityMethod = "set_Velocity";
 		public static string PistonGetMinLimitMethod = "get_MinLimit";
-		public static string PistonSetMinLimitMethod = "ADF5E62C4A5337CC85009531D442E921";
+		public static string PistonSetMinLimitMethod = "set_MinLimit";
 		public static string PistonGetMaxLimitMethod = "get_MaxLimit";
-		public static string PistonSetMaxLimitMethod = "2E4611FD9E17A856C250DF3C2AEC5C94";
-		public static string PistonGetNetworkManagerMethod = "E8902D9F85DF1866E02EA8A0324EFF2C";
+		public static string PistonSetMaxLimitMethod = "set_MaxLimit";
+		public static string PistonGetNetworkManagerMethod = "get_SyncObject";
 
-		public static string PistonTopBlockEntityIdField = "5565108EDC64BEE4C29B3B4880DB86AC";
-		public static string PistonCurrentPositionField = "26E8B71F377542D63B01CBAA525A237A";
+		public static string PistonTopBlockEntityIdField = "=QHgJ2u42kzi8lDx6siYzY26eT=";
+		public static string PistonCurrentPositionField = "=xY6vcuGIHueEokvIR5N2aMk5IO=";
 
 		#endregion "Attributes"
 
@@ -338,12 +338,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private PistonEntity m_parent;
 		private Object m_backingObject;
 
-		public static string PistonNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string PistonNetworkManagerClass = "1067575769BEE523EABB86ACC13B9061";
+		public static string PistonNetworkManagerNamespace = "";
+		public static string PistonNetworkManagerClass = "=mp1bKSDS8yU9iI4ahMEIi4XHAb=";
 
-		public static string PistonNetworkManagerBroadcastVelocity = "349500C6F86B02688A5C5B0A2430B083";
-		public static string PistonNetworkManagerBroadcastMinLimit = "4BDAFF5C0AD29EC5225CCE535B8C9985";
-		public static string PistonNetworkManagerBroadcastMaxLimit = "B714B58ED3739160E709EB0AA43AC9EB";
+		public static string PistonNetworkManagerBroadcastVelocity = "SetVelocity";
+		public static string PistonNetworkManagerBroadcastMinLimit = "SetMin";
+		public static string PistonNetworkManagerBroadcastMaxLimit = "SetMax";
 
 		//Packets
 		//324 - Top block id

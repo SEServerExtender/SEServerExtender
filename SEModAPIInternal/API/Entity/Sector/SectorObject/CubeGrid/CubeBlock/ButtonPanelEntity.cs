@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -13,8 +13,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private long m_currentPlayerId;
 
-		public static string ButtonPanelNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ButtonPanelClass = "5DEDA5C87D33D807688382FE6D4BFF68";
+		public static string ButtonPanelNamespace = "";
+		public static string ButtonPanelClass = "=51h1yWMOSorv3CAc61MO8nFJJ0=";
 
 		//public static string ButtonPanelGetCurrentPlayerIdMethod = "";
 		//public static string ButtonPanelSetCurrentPlayerIdMethod = "";

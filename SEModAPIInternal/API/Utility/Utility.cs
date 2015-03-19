@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Sandbox.Common.ObjectBuilders;
@@ -15,9 +15,9 @@ namespace SEModAPIInternal.API.Utility
 	{
 		#region "Attributes"
 
-		public static string UtilityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string UtilityClass = "226D9974B43A7269CDD3E322CC8110D5";
-		public static string UtilityGenerateEntityIdMethod = "3B4924802BEBD1AE13B29920376CE914";
+		public static string UtilityNamespace = "";
+		//public static string UtilityClass = "226D9974B43A7269CDD3E322CC8110D5";
+		//public static string UtilityGenerateEntityIdMethod = "3B4924802BEBD1AE13B29920376CE914";
 
 		#endregion "Attributes"
 

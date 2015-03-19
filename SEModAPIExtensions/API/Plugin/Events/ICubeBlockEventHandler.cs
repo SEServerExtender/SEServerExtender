@@ -1,4 +1,4 @@
-﻿using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 
 namespace SEModAPIExtensions.API.Plugin.Events
 {

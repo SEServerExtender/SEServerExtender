@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -10,8 +10,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string MedicalRoomNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string MedicalRoomClass = "1497FAB5CDC67F0A1CD4BC2BA9AFF5D7";
+		public static string MedicalRoomNamespace = "";
+		public static string MedicalRoomClass = "Sandbox.Game.Entities.Cube.MyMedicalRoom";
 
 		#endregion "Attributes"
 

@@ -180,6 +180,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.XML" />
+    <Reference Include="VRage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\VRage.dll</HintPath>
+    </Reference>
     <Reference Include="VRage.Common">
       <HintPath>..\GameLibraries\VRage.Common.dll</HintPath>
     </Reference>

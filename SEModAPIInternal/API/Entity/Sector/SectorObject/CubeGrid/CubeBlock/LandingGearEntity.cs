@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -20,19 +20,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private bool m_autoLockEnabled;
 		private float m_brakeForce;
 
-		public static string LandingGearNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string LandingGearClass = "5C73AAF1736F3AA9956574C6D9A2EEBE";
+		public static string LandingGearNamespace = "";
+		public static string LandingGearClass = "=AA3bC04kGQqpKYQrJeWyVBRPMo=";
 
 		//public static string LandingGearGetAutoLockMethod = "71F8F86678091875138C01C64F0C2F01";
 		//public static string LandingGearGetAutoLockMethod = "3ECDCF46AB6230B4998CE81E37A36F34";
 
-		public static string LandingGearSetAutoLockMethod = "F542ACDC0D61EB46F733A5527CFFBE14";
+		public static string LandingGearSetAutoLockMethod = "set_AutoLock";
 		public static string LandingGearGetBrakeForceMethod = "get_BreakForce";
-		public static string LandingGearSetBrakeForceMethod = "013F45FD594F8A80D5952A7AC22A931E";
+		public static string LandingGearSetBrakeForceMethod = "set_BreakForce";
 
-		public static string LandingGearIsLockedField = "00F45118D3A7F21253C28F4B11D1F70E";
-		public static string LandingGearNetManagerField = "4D9CE737B011256C0232620C5234AAD4";
-		public static string LandingGearGetAutoLockField = "B7C2D3F7EF52B638640C0DDB419A1DB4";
+		public static string LandingGearIsLockedField = "=h3HDhpaog3xY86fynaPucUKBOz=";
+		public static string LandingGearNetManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
+		public static string LandingGearGetAutoLockField = "=xd4EZB2qmsXfoSlekxOeqMRDDf=";
 
 		#endregion "Attributes"
 
@@ -286,11 +286,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private Object m_backingObject;
 
 		public static string LandingGearNetworkManagerNamespace = LandingGearEntity.LandingGearNamespace + "." + LandingGearEntity.LandingGearClass;
-		public static string LandingGearNetworkManagerClass = "26556F6F0AE7CF1827348C8BE3041E52";
+		public static string LandingGearNetworkManagerClass = "=YhSrJ3q9iN0eWxvuXLPcMVvT5U=";
 
-		public static string LandingGearNetworkManagerBroadcastIsLockedMethod = "486EB5B14ECC3CFCBB6A41DC47E8E457";
-		public static string LandingGearNetworkManagerBroadcastAutoLockMethod = "EE7AB0648967FCDF7B20E1C359BC67E0";
-		public static string LandingGearNetworkManagerBroadcastBrakeForceMethod = "78A3CD1FD04B6E57EB1053EE5E3F1CF7";
+		public static string LandingGearNetworkManagerBroadcastIsLockedMethod = "SendAttachRequest";
+		public static string LandingGearNetworkManagerBroadcastAutoLockMethod = "SendAutoLockChange";
+		public static string LandingGearNetworkManagerBroadcastBrakeForceMethod = "SendBrakeForceChange";
 
 		#endregion "Attributes"
 

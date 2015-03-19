@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -15,10 +15,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private PowerProducer m_powerProducer;
 		private float m_maxPowerOutput;
 
-		public static string SolarPanelNamespace = "AAD9061F948E6A3635200145188D64A9";
-		public static string SolarPanelClass = "6238A2EF481D720035D5BC6E545E769C";
+		public static string SolarPanelNamespace = "";
+		public static string SolarPanelClass = "=eMM44GvCk02ICnSbvGDga6Az5t=";
 
-		public static string SolarPanelSetMaxOutputMethod = "802879712B29AAC2DB4EC9F7B128C979";
+		public static string SolarPanelSetMaxOutputMethod = "set_MaxPowerOutput";
 
 		#endregion "Attributes"
 

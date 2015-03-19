@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -17,8 +17,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private static Type m_internalType;
 		private InventoryItemEntity m_item;
 
-		public static string FloatingObjectNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string FloatingObjectClass = "60663B6C2E735862064C925471BD4138";
+		public static string FloatingObjectNamespace = "";
+		public static string FloatingObjectClass = "Sandbox.Game.Entities.MyFloatingObject";
 
 		#endregion "Attributes"
 
@@ -151,10 +151,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		private FloatingObject m_floatingObjectToChange;
 
-		public static string FloatingObjectManagerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string FloatingObjectManagerClass = "66E5A072764E86AD0AC8B63304F0DC31";
+		public static string FloatingObjectManagerNamespace = "";
+		public static string FloatingObjectManagerClass = "=pMk4KQu8GhB7zVlIPCt8oVE8ts=";
 
-		public static string FloatingObjectManagerRemoveFloatingObjectMethod = "CDD52493D4DD9E7D7BDB9AFC5512A9E1";
+		public static string FloatingObjectManagerRemoveFloatingObjectMethod = "UnregisterFloatingObject";
 
 		#endregion "Attributes"
 

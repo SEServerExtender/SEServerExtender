@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using SEModAPIInternal.API.Entity;
@@ -15,10 +15,10 @@ namespace SEModAPIInternal.API.Common
 		private static FastResourceLock m_resourceLock = new FastResourceLock( );
 		private static Dictionary<long, BaseObject> m_entityMap = new Dictionary<long, BaseObject>( );
 
-		public static string GameEntityManagerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string GameEntityManagerClass = "CAF1EB435F77C7B77580E2E16F988BED";
+		public static string GameEntityManagerNamespace = "";
+		public static string GameEntityManagerClass = "Sandbox.Game.Entities.MyEntities";
 
-		public static string GameEntityManagerGetEntityByIdTypeMethod = "EB43CD3B683033145620D0931BE5041C";
+		public static string GameEntityManagerGetEntityByIdTypeMethod = "TryGetEntityById";
 
 		#endregion "Attributes"
 

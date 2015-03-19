@@ -1102,14 +1102,14 @@
             Gets compressed voxel data
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.ReadRange(VRage.Common.Voxels.MyStorageDataCache,VRage.Common.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.ReadRange(VRage.Voxels.MyStorageDataCache,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
             </summary>
             <param name="lodVoxelRangeMin">Inclusive.</param>
             <param name="lodVoxelRangeMax">Inclusive.</param>
         </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.WriteRange(VRage.Common.Voxels.MyStorageDataCache,VRage.Common.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.WriteRange(VRage.Voxels.MyStorageDataCache,VRage.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Writes range of content and/or materials from cache to storage. Note that this can only write to LOD0 (higher LODs must be computed based on that).
             </summary>
@@ -1161,7 +1161,7 @@
             IMyParallelTask allows to run tasks on baground threads 
             </summary>
         </member>
-        <member name="M:Sandbox.Common.MyMesh.#ctor(VRage.Common.Import.MyMeshPartInfo,System.String)">
+        <member name="M:Sandbox.Common.MyMesh.#ctor(VRage.Import.MyMeshPartInfo,System.String)">
             <summary>
             c-tor - generic way for collecting resources
             </summary>
@@ -1260,11 +1260,6 @@
         <member name="T:Sandbox.Engine.Multiplayer.Container`1">
             <summary>
             Container class to prevent boxing in ProtoBuf
-            </summary>
-        </member>
-        <member name="T:Sandbox.Common.ObjectBuilders.Audio.MyAudioHelpers.CurveType">
-            <summary>
-            Enumerator of available curve types
             </summary>
         </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">

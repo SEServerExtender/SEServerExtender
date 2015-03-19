@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
@@ -31,38 +31,38 @@ namespace SEModAPIInternal.API.Entity
 		private string m_displayName;
 
 		//Definition
-		public static string BaseEntityNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
+		public static string BaseEntityNamespace = "";
 
-		public static string BaseEntityClass = "F6DF01EE4159339113BB9650DEEE1913";
+		public static string BaseEntityClass = "Sandbox.Game.Entities.MyEntity";
 
 		//Methods
 		public static string BaseEntityGetObjectBuilderMethod = "GetObjectBuilder";
 
-		public static string BaseEntityGetPhysicsManagerMethod = "691FA4830C80511C934826203A251981";
+		public static string BaseEntityGetPhysicsManagerMethod = "get_Physics";
 
 		//public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
-		public static string BaseEntityCombineOnClosedEventMethod = "C1704F26C9D5D7EBE19DC78AB8923F4E";
+		public static string BaseEntityCombineOnClosedEventMethod = "add_OnClose";
 
-		public static string BaseEntityGetIsDisposedMethod = "6D8F627C1C0F9F166031C3B600FEDA60";
-		public static string BaseEntityGetOrientationMatrixMethod = "FD50436D896ACC794550210055349FE0";
+		public static string BaseEntityGetIsDisposedMethod = "get_Closed";
+		public static string BaseEntityGetOrientationMatrixMethod = "get_WorldMatrix";
 
 		//public static string BaseEntityGetNetManagerMethod = "F4456F82186EC3AE6C73294FA6C0A11D";
-		public static string BaseEntityGetNetManagerMethod = "get_SyncObject";
+		public static string BaseEntityGetNetManagerMethod = "SyncObject";
 
-		public static string BaseEntitySetEntityIdMethod = "D3D6702587D6336FEE37725E8D2C52CD";
-		public static string BaseEntityGetDisplayNameMethod = "DB913685BC5152DC19A4796E9E8CF659";
-		public static string BaseEntitySetDisplayNameMethod = "DFF609C956C433D5F03DAA6AA8814223";
+		public static string BaseEntitySetEntityIdMethod = "set_EntityId";
+		public static string BaseEntityGetDisplayNameMethod = "get_DisplayName";
+		public static string BaseEntitySetDisplayNameMethod = "set_DisplayName";
 
 		public static string BaseEntityGetPositionManagerMethod = "get_PositionComp";
 		//public static string BaseEntityCombineOnMovedEventMethod = "";
 
-		public static string BaseEntityEntityIdField = "F7E51DBA5F2FD0CCF8BBE66E3573BEAC";
+		public static string BaseEntityEntityIdField = "m_entityId";
 
 		//////////////////////////////////////////////////////////
 
-		public static string PhysicsManagerNamespace = "D1B6432AAEEF40F9D99F69835A7B23F5";
-		public static string PhysicsManagerClass = "5BAA908D4615EC702E28985E09DBEF8F";
-		public static string PhysicsManagerGetRigidBodyMethod = "634E5EC534E45874230868BD089055B1";
+		public static string PhysicsManagerNamespace = "";
+		public static string PhysicsManagerClass = "=wF2nlwFYbuUxt9MEr3pF84L4ho=";
+		public static string PhysicsManagerGetRigidBodyMethod = "get_RigidBody";
 
 		#endregion "Attributes"
 
@@ -600,11 +600,12 @@ namespace SEModAPIInternal.API.Entity
 				result &= HasMethod( type, BaseEntityCombineOnClosedEventMethod );
 				result &= HasMethod( type, BaseEntityGetIsDisposedMethod );
 				result &= HasMethod( type, BaseEntityGetOrientationMatrixMethod );
-				result &= HasMethod( type, BaseEntityGetNetManagerMethod );
+				//result &= HasMethod( type, BaseEntityGetNetManagerMethod );
+				result &= HasProperty( type, BaseEntityGetNetManagerMethod );
 				result &= HasMethod( type, BaseEntitySetEntityIdMethod );
 				result &= HasMethod( type, BaseEntityGetDisplayNameMethod );
 				result &= HasMethod( type, BaseEntitySetDisplayNameMethod );
-				result &= HasField( type, BaseEntityEntityIdField );
+				result &= HasField( type, BaseEntityEntityIdField );				
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PhysicsManagerNamespace, PhysicsManagerClass );
 				if ( type2 == null )
@@ -659,7 +660,8 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				Object result = InvokeEntityMethod( entity, BaseEntityGetNetManagerMethod );
+				Object result = GetEntityPropertyValue(entity, BaseEntityGetNetManagerMethod);
+				//Object result = InvokeEntityMethod( entity, BaseEntityGetNetManagerMethod );
 
 				return result;
 			}
@@ -901,8 +903,8 @@ namespace SEModAPIInternal.API.Entity
 		private BaseEntity m_parent;
 		private Object m_networkManager;
 
-		public static string BaseEntityNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string BaseEntityNetworkManagerClass = "48D79F8E3C8922F14D85F6D98237314C";
+		public static string BaseEntityNetworkManagerNamespace = "";
+		public static string BaseEntityNetworkManagerClass = "=uTZ4uCH8frEHtn0VfQJ0coHE2v=";
 
 		//public static string BaseEntityBroadcastRemovalMethod = "5EBE421019EACEA0F25718E2585CF3D2";
 		public static string BaseEntityBroadcastRemovalMethod = "SendCloseRequest";
@@ -939,7 +941,8 @@ namespace SEModAPIInternal.API.Entity
 
 		public static void BroadcastRemoveEntity( IMyEntity entity, bool safe = true )
 		{
-			Object result = BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetNetManagerMethod );
+			Object result = BaseEntity.GetEntityPropertyValue(entity, BaseEntity.BaseEntityGetNetManagerMethod);
+			//Object result = BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetNetManagerMethod );
 			if ( result == null )
 				return;
 

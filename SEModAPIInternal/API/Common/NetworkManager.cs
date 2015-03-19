@@ -1,4 +1,4 @@
-﻿using SteamSDK;
+using SteamSDK;
 
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 
 namespace SEModAPIInternal.API.Common
 {
-	//PacketIdEnum Attribute: C42525D7DE28CE4CFB44651F3D03A50D.4C6398741B0F8804D769E5A2E3999E1D
+	//PacketIdEnum Attribute: .4C6398741B0F8804D769E5A2E3999E1D
 
 	public enum PacketIds
 	{
@@ -44,7 +44,7 @@ namespace SEModAPIInternal.API.Common
 		GyroPower = 7586,								//..BB19174225804BB5035228F5477D82C9
 		FloatingObjectAltPositionOrientation = 10150,	//..564E654F19DA5C21E7869B4744304993
 		FloatingObjectContents = 10151,					//..0008E59AE36FA0F2E7ED91037507E4E8
-		ChatMessage = 13872,							//C42525D7DE28CE4CFB44651F3D03A50D.12AEE9CB08C9FC64151B8A094D6BB668
+		ChatMessage = 13872,							//.12AEE9CB08C9FC64151B8A094D6BB668
 		TerminalFunctionalBlockEnabled = 15268,			//..7F2B3C2BC4F8C6F50583C135CA112213
 		TerminalFunctionalBlockName = 15269,			//..721B404F9CB193B34D5353A019A57DAB
 	}
@@ -66,56 +66,56 @@ namespace SEModAPIInternal.API.Common
 		protected static MethodInfo m_registerPacketHandlerMethod3;
 
 		//This class is just a container for some basic steam game values as well as the actual network manager instance
-		public static string NetworkManagerWrapperNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string NetworkManagerWrapperClass = "8920513CC2D9F0BEBCDC74DBD637049F";
-		public static string NetworkManagerWrapperManagerInstanceField = "8E8199A1194065205F01051DC8B72DE7";
-		public static string NetworkManagerControlType = "5B9DDD8F4DF9A88D297B3B0B3B79FBAA";
+		public static string NetworkManagerWrapperNamespace = "";
+		public static string NetworkManagerWrapperClass = "=yhQOBRq7Aut6NmIMALEjdrfhpG=";
+		public static string NetworkManagerWrapperManagerInstanceField = "=7qTITGYD99C8zJuRX4MmJLozdJ=";
+		public static string NetworkManagerControlType = "=m8iVi2PqjOIPzevypouAk2W6Hq=";
 
 		//This is an abstract class that the actual network managers implement
-		public static string NetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string NetworkManagerClass = "9CDBE03D49929CA686F49B66EE307DD7";
-		public static string NetworkManagerSendStructMethod = "6D24456D3649B6393BA2AF59E656E4BF";
-		public static string NetworkManagerRegisterChatReceiverMethod = "8A73057A206BFCA00EC372183441891A";
-		public static string NetworkManagerInternalNetManagerField = "E863C8EAD57B154571B7A487C6A39AC6";
-		public static string NetworkManagerControlHandlerField = "958DE615347A2316DDEF38E8149C34EC";
+		public static string NetworkManagerNamespace = "";
+		public static string NetworkManagerClass = "=GygYZULhRyAiF3TANWoXH1JiRg=";
+		public static string NetworkManagerSendStructMethod = "SendControlMessage";
+		public static string NetworkManagerRegisterChatReceiverMethod = "add_ChatMessageReceived";
+		public static string NetworkManagerInternalNetManagerField = "=CuPFQfpJpbb8r5FyAD4AIHGjwn=";
+		public static string NetworkManagerControlHandlerField = "=NzMKuWxQ0vOXu5T6HmvC6tpUUc=";
 
-		public static string InternalNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string InternalNetManagerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
-		public static string InternalNetManagerPacketRegistryField = "6F79877D9F8B092082EAEF8828D69F98";
-		public static string InternalNetManagerSendToAllExceptMethod = "5ED378823191AF1EBAAF484B160C4CBC";
-		public static string InternalNetManagerSendToAllMethod = "88BEA4C178343A1B40A23DE1A2F8E0FF";
+		public static string InternalNetManagerNamespace = "";
+		public static string InternalNetManagerClass = "=KgBTSimjVMGbRzYnmrvyNW6go7=";
+		public static string InternalNetManagerPacketRegistryField = "=hh7T0u2R6UFfq7GWwBLvlXzDmY=";
+		public static string InternalNetManagerSendToAllExceptMethod = "SendMessageToAllButOne";
+		public static string InternalNetManagerSendToAllMethod = "SendMessageToAll";
 
-		public static string PacketRegistryNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string PacketRegistryClass = "4D0D6F8422AC35DCF2A403F1C4B70957";
-		public static string PacketRegistryTypeIdMapField = "5C5BB4D88AA04A59AB078CB70049BAC8";
+		public static string PacketRegistryNamespace = "";
+		public static string PacketRegistryClass = "=4JBu7DsRvLxNJpspmI41mb52sk=";
+		public static string PacketRegistryTypeIdMapField = "=zugV8aykXlkbgMxStoBGUhs2bp=";
 
 		//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
 
 		/////////////////////////////////////////////////
 
 		//1 Packet Type
-		public static string GravityGeneratorNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string GravityGeneratorNetManagerClass = "74AB413CFFB499A7945B3E3B84DC56CB";
+		public static string GravityGeneratorNetManagerNamespace = "";
+		public static string GravityGeneratorNetManagerClass = "=nGwdEtFYaCm6bR0Txrd3wcoHFf=";
 
 		//2 Packet Types
-		public static string TerminalFunctionalBlocksNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string TerminalFunctionalBlocksNetManagerClass = "850F199A13F4F6D5ED23E89E7F8D99CD";
+		public static string TerminalFunctionalBlocksNetManagerNamespace = "";
+		public static string TerminalFunctionalBlocksNetManagerClass = "=KCSGcFwun9p2jMN39F3QKMyUVG=";
 
 		//2+ Packet Types
-		public static string InventoryNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string InventoryNetManagerClass = "98C1408628C42B9F7FDB1DE7B8FAE776";
+		public static string InventoryNetManagerNamespace = "";
+		public static string InventoryNetManagerClass = "=VvHtMfzhu4ubefR4eLqHZvYfA4=";
 
 		//1 Packet Type
-		public static string ConveyorEnabledBlockNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string ConveyorEnabledBlockNetManagerClass = "C866709CB4D18071636E8389BEBA8508";
+		public static string ConveyorEnabledBlockNetManagerNamespace = "";
+		public static string ConveyorEnabledBlockNetManagerClass = "=WAOtB3ZL3CsDDxyGQwZtuaoRHK=";
 
 		//3 Packet Types
-		public static string FloatingObjectNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string FloatingObjectNetManagerClass = "E97FDDC1EF9C912AA82D24410983D7E8";
+		public static string FloatingObjectNetManagerNamespace = "";
+		public static string FloatingObjectNetManagerClass = "=1UtSo3i5OV66klidr9wYTmcxyS=";
 
 		//2 Packet Types
-		public static string VoxelMapNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string VoxelMapNetManagerClass = "EA51F988BB36804CAE6371053AD2602E";
+		public static string VoxelMapNetManagerNamespace = "";
+		public static string VoxelMapNetManagerClass = "=KzM2HkTyCMrBilsbQ3wAsP34Aq=";
 
 
 		#endregion
@@ -456,7 +456,7 @@ namespace SEModAPIInternal.API.Common
 				methodPtrAuxField.SetValue(action3, methodPtrAuxField.GetValue(handlerAction));
 
 				if(baseNetManagerType == null)
-					baseNetManagerType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType("5F381EA9388E0A32A8C817841E192BE8", "48D79F8E3C8922F14D85F6D98237314C");
+					baseNetManagerType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType("", "48D79F8E3C8922F14D85F6D98237314C");
 
 				//Register the new packet handler
 				MethodInfo registerMethod = null;

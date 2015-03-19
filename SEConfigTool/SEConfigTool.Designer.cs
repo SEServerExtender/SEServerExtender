@@ -1,4 +1,4 @@
-﻿using SEModAPI.Support;
+using SEModAPI.Support;
 
 namespace SEConfigTool
 {

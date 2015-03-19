@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.API.Entity;

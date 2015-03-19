@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -21,22 +21,22 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private float m_thrustOverride;
 		private ThrustNetworkManager m_networkManager;
 
-		public static string ThrustNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ThrustClass = "A52459FBA230B557AC325120832EB494";
+		public static string ThrustNamespace = "";
+		public static string ThrustClass = "=Avs8k7NfpEpYw1QyLX0wdzrIq9=";
 
-		public static string ThrustGetOverrideMethod = "1223DF2E5F66BA5F65ADACCA781A5C96";
-		public static string ThrustSetOverrideMethod = "A30205C8B7B8FBE317E86931BDFF6029";
-		public static string ThrustGetMaxThrustVectorMethod = "8243DD42600709719ECFE7B7BEA0AAE6";
-		public static string ThrustGetMaxPowerConsumptionMethod = "7C636D47F30E12E7A784FEAF91430C12";
-		public static string ThrustGetMinPowerConsumptionMethod = "A86E949F21293FFCCC0A736D01F85167";
+		public static string ThrustGetOverrideMethod = "get_ThrustOverride";
+		public static string ThrustSetOverrideMethod = "SetThrustOverride";
+		public static string ThrustGetMaxThrustVectorMethod = "get_ThrustForce";
+		public static string ThrustGetMaxPowerConsumptionMethod = "get_MaxPowerConsumption";
+		public static string ThrustGetMinPowerConsumptionMethod = "get_MinPowerConsumption";
 
-		public static string ThrustNetManagerField = "8F27FD71A1830B00FC6F01DDF7E6D795";
+		public static string ThrustNetManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
 
 		//Note: The following fields exist but are not broadcast and as such setting these on the server will do nothing client-side
-		public static string ThrustFlameColorField = "3BB80065D0377A358D2F75331BF07A6D";
+		public static string ThrustFlameColorField = "=6OD8GKOc8H2eZeBzbaPpDc8wHza=";
 
-		public static string ThrustLightField = "079E76305C1B63982C61439EDDB9D211";
-		public static string ThrustFlameScaleCoefficientField = "5912C868C1061CCE7788DC17F8FDE754";
+		public static string ThrustLightField = "=SvdAPseZczZcMSnX1q9J0bFGki=";
+		public static string ThrustFlameScaleCoefficientField = "=Ey8BUGNI8orxc8EnSAO8vkFNiB=";
 
 		//Thrust flame scale coefficient values:
 		//LargeShip-Large: 700
@@ -208,10 +208,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private float m_lastOverride;
 
-		public static string ThrustNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string ThrustNetManagerClass = "648783FEE567EB6633169761E312362D";
+		public static string ThrustNetManagerNamespace = "";
+		public static string ThrustNetManagerClass = "=JekhTXKmjFBlkT4vf3FViyIGcg=";
 
-		public static string ThrustNetManagerBroadcastOverrideMethod = "836153C49F86AF1526ABA97002D09721";
+		public static string ThrustNetManagerBroadcastOverrideMethod = "SendChangeThrustOverrideRequest";
 
 		//Packets
 		//7416 - Thrust override

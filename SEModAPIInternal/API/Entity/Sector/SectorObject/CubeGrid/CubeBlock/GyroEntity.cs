@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -20,14 +20,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private GyroNetworkManager m_networkManager;
 
-		public static string GyroNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string GyroClass = "C33277D56ED00A2772C484D143A9CB42";
+		public static string GyroNamespace = "";
+		public static string GyroClass = "=Naf3gC9AWnHHOtllqy1OLLb5BL=";
 
-		public static string GyroSetOverrideMethod = "248F13F6DFA54470FE81204B119B7DE1";
-		public static string GyroSetPowerMethod = "46001A635CDAA4591E15661BA2083B75";
-		public static string GyroSetTargetAngularVelocityMethod = "5E85AE802570A4C0028157B436BDF0B5";
+		public static string GyroSetOverrideMethod = "set_GyroOverride";
+		public static string GyroSetPowerMethod = "set_GyroPower";
+		public static string GyroSetTargetAngularVelocityMethod = "SetGyroTorque";
 
-		public static string GyroNetworkManagerField = "172E1F246A16951E55BC16D121BE2667";
+		public static string GyroNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
 
 		#endregion "Attributes"
 
@@ -205,17 +205,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private GyroEntity m_parent;
 		private Object m_backingObject;
 
-		public static string GyroNetworkManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string GyroNetworkManagerClass = "B4646791D7A57BE4E2EE21A1F22A4364";
+		public static string GyroNetworkManagerNamespace = "";
+		public static string GyroNetworkManagerClass = "=oxJceWENGF516EExThNDB8OIOS=";
 
 		//Packet ID 7587
-		public static string GyroNetworkManagerBroadcastOverrideMethod = "42AE4A855B87970C577E7D3B84925D3D";
+		public static string GyroNetworkManagerBroadcastOverrideMethod = "SendGyroOverrideRequest";
 
 		//Packet ID 7586
-		public static string GyroNetworkManagerBroadcastPowerMethod = "4D6A36FFABF6AE6DA2E92DCA0ADBB5FD";
+		public static string GyroNetworkManagerBroadcastPowerMethod = "SendChangeGyroPowerRequest";
 
 		//Packet ID 7588
-		public static string GyroNetworkManagerBroadcastTargetAngularVelocityMethod = "8948F689D38487B17CF831F240CEEF08";
+		public static string GyroNetworkManagerBroadcastTargetAngularVelocityMethod = "SendGyroTorqueRequest";
 
 		#endregion "Attributes"
 

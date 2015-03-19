@@ -1,4 +1,4 @@
-﻿namespace SEServerExtender
+namespace SEServerExtender
 {
 	sealed partial class SEServerExtender
 	{
@@ -91,6 +91,8 @@
 			this.CHK_Utilities_FloatingObjectAutoClean = new System.Windows.Forms.CheckBox();
 			this.TAB_Statistics = new System.Windows.Forms.TabPage();
 			this.TB_Statistics = new System.Windows.Forms.TextBox();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.TB_Players = new System.Windows.Forms.TextBox();
 			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -156,6 +158,7 @@
 			this.splitContainer4.SuspendLayout();
 			this.floatingObjectControlGroupBox.SuspendLayout();
 			this.TAB_Statistics.SuspendLayout();
+			this.tabPage1.SuspendLayout();
 			this.SS_Bottom.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -187,6 +190,7 @@
 			this.TAB_MainTabs.Controls.Add(this.TAB_Plugins_Page);
 			this.TAB_MainTabs.Controls.Add(this.TAB_Utilities_Page);
 			this.TAB_MainTabs.Controls.Add(this.TAB_Statistics);
+			this.TAB_MainTabs.Controls.Add(this.tabPage1);
 			this.TAB_MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TAB_MainTabs.Location = new System.Drawing.Point(0, 0);
 			this.TAB_MainTabs.Name = "TAB_MainTabs";
@@ -918,8 +922,30 @@
 			this.TB_Statistics.Location = new System.Drawing.Point(3, 3);
 			this.TB_Statistics.Multiline = true;
 			this.TB_Statistics.Name = "TB_Statistics";
+			this.TB_Statistics.ReadOnly = true;
 			this.TB_Statistics.Size = new System.Drawing.Size(937, 537);
 			this.TB_Statistics.TabIndex = 0;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.TB_Players);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(943, 543);
+			this.tabPage1.TabIndex = 7;
+			this.tabPage1.Text = "Players";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// TB_Players
+			// 
+			this.TB_Players.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TB_Players.Location = new System.Drawing.Point(3, 3);
+			this.TB_Players.Multiline = true;
+			this.TB_Players.Name = "TB_Players";
+			this.TB_Players.ReadOnly = true;
+			this.TB_Players.Size = new System.Drawing.Size(937, 537);
+			this.TB_Players.TabIndex = 1;
 			// 
 			// SS_Bottom
 			// 
@@ -1014,6 +1040,8 @@
 			this.floatingObjectControlGroupBox.PerformLayout();
 			this.TAB_Statistics.ResumeLayout(false);
 			this.TAB_Statistics.PerformLayout();
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage1.PerformLayout();
 			this.SS_Bottom.ResumeLayout(false);
 			this.SS_Bottom.PerformLayout();
 			this.ResumeLayout(false);
@@ -1086,5 +1114,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.TabPage TAB_Statistics;
 		private System.Windows.Forms.TextBox TB_Statistics;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TextBox TB_Players;
 	}
 }

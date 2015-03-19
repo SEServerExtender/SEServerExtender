@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using Sandbox.Common.ObjectBuilders.VRageData;
 
 using VRageMath;

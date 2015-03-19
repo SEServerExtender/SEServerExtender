@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,18 +57,18 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private InventoryEntity m_inputInventory;
 		private InventoryEntity m_outputInventory;
 
-		public static string ProductionBlockNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string ProductionBlockClass = "F00C92FFA6F55CD283D86570FFC332AE";
+		public static string ProductionBlockNamespace = "";
+		public static string ProductionBlockClass = "=iWpDUaii693COLkVnnyRHzjQ5G=";
 
 		public static string ProductionBlockGetInputInventoryMethod = "GetInventory";
 		public static string ProductionBlockGetOutputInventoryMethod = "GetInventory";
-		public static string ProductionBlockGetQueueMethod = "BE739740ACEA08DBE2BC8E60DCF3AD42";
-		public static string ProductionBlockSetQueueMethod = "085AE1F1D53C2471B793D78F54DD314F";
-		public static string ProductionBlockTriggerQueueChangedCallbackMethod = "443FB7A455126FFCAD9B22C5B4480376";
+		public static string ProductionBlockGetQueueMethod = "get_Queue";
+		public static string ProductionBlockSetQueueMethod = "SwapQueue";
+		public static string ProductionBlockTriggerQueueChangedCallbackMethod = "UpdatePower";
 
-		public static string ProductionBlockQueueField = "EBACD061EEA690B3C34E39E516F4EDCF";
+		public static string ProductionBlockQueueField = "=FBZBIAZYOlQe8fvktZmOnSLvpf=";
 
-		public static string ProductionBlockQueueItemStruct = "FECA2D3F1C3B34741FC4F66023C62661";
+		public static string ProductionBlockQueueItemStruct = "=Yx7EZD3DXtebnUYA0dNbNQfeKV=";
 
 		#endregion "Attributes"
 
