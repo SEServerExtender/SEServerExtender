@@ -112,7 +112,7 @@
 		{
 			
 			m_instance = this;
-			Console.WriteLine("Finished loading NetworkManager");
+			ApplicationLog.BaseLog.Info( "Finished loading NetworkManager" );
 		}
 
 		#endregion
@@ -149,7 +149,7 @@
 			}
 			catch (TypeLoadException ex)
 			{
-				Console.WriteLine(ex);
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -165,7 +165,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return null;
 			}
 		}
@@ -183,7 +183,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 			}
 		}
 
@@ -196,7 +196,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 			}
 		}
 
@@ -217,7 +217,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return null;
 			}
 		}
@@ -233,7 +233,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return null;
 			}
 		}
@@ -249,7 +249,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return new Dictionary<Type, ushort>();
 			}
 		}
@@ -280,7 +280,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return null;
 			}
 		}
@@ -322,7 +322,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 			}
 		}
 
@@ -369,7 +369,7 @@
 
 				if (matchedHandlerList.Count > 1)
 				{
-					LogManager.APILog.WriteLine("Found more than 1 packet handler match for type '" + packetType.Name + "'");
+					ApplicationLog.BaseLog.Debug( "Found more than 1 packet handler match for type '{0}'", packetType.Name );
 					return false;
 				}
 
@@ -460,7 +460,7 @@
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return false;
 			}
 		}

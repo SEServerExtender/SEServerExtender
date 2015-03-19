@@ -56,7 +56,7 @@
 				}
 				catch ( KeyNotFoundException ex )
 				{
-					LogManager.APILog.WriteLineAndConsole( "Error constructing BaseObject...", ex );
+					ApplicationLog.BaseLog.Error( "Error constructing BaseObject...", ex );
 				}
 			}
 		}
@@ -75,7 +75,7 @@
 				}
 				catch ( KeyNotFoundException ex )
 				{
-					LogManager.APILog.WriteLineAndConsole( "Error constructing BaseObject...", ex );
+					ApplicationLog.BaseLog.Error( "Error constructing BaseObject...", ex );
 				}
 			}
 		}
@@ -245,7 +245,7 @@
 				if ( field == null )
 				{
 					if ( SandboxGameAssemblyWrapper.IsDebugging )
-						LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find field '{0}' in type '{1}'", fieldName, objectType.FullName ) );
+						ApplicationLog.BaseLog.Error( "Failed to find field '{0}' in type '{1}'", fieldName, objectType.FullName );
 					return false;
 				}
 				return true;
@@ -253,8 +253,8 @@
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find field '{0}' in type '{1}': {2}", fieldName, objectType.FullName, ex.Message ) );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( "Failed to find field '{0}' in type '{1}': {2}", fieldName, objectType.FullName, ex.Message );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -280,7 +280,7 @@
 					if ( method == null )
 					{
 						if ( SandboxGameAssemblyWrapper.IsDebugging )
-							LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find method '{0}' in type '{1}'", methodName, objectType.FullName ) );
+							ApplicationLog.BaseLog.Error( "Failed to find method '{0}' in type '{1}'", methodName, objectType.FullName );
 						return false;
 					}
 				}
@@ -293,7 +293,7 @@
 					if ( method == null )
 					{
 						if ( SandboxGameAssemblyWrapper.IsDebugging )
-							LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find method '{0}' in type '{1}'", methodName, objectType.FullName ) );
+							ApplicationLog.BaseLog.Error( "Failed to find method '{0}' in type '{1}'", methodName, objectType.FullName );
 						return false;
 					}
 				}
@@ -307,8 +307,8 @@
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find method '{0}' in type '{1}': {2}", methodName, objectType.FullName, ex.Message ) );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( "Failed to find method '{0}' in type '{1}': {2}", methodName, objectType.FullName, ex.Message );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -325,7 +325,7 @@
 				if ( property == null )
 				{
 					if ( SandboxGameAssemblyWrapper.IsDebugging )
-						LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find property '{0}' in type '{1}'", propertyName, objectType.FullName ) );
+						ApplicationLog.BaseLog.Error( "Failed to find property '{0}' in type '{1}'", propertyName, objectType.FullName );
 					return false;
 				}
 				return true;
@@ -333,8 +333,8 @@
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find property '{0}' in type '{1}': {2}", propertyName, objectType.FullName, ex.Message ) );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( "Failed to find property '{0}' in type '{1}': {2}", propertyName, objectType.FullName, ex.Message );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -352,9 +352,9 @@
 			catch ( Exception ex )
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "Failed to find nested type '{0}' in type '{1}': {2}", nestedTypeName, objectType.FullName, ex.Message ) );
+					ApplicationLog.BaseLog.Error( "Failed to find nested type '{0}' in type '{1}': {2}", nestedTypeName, objectType.FullName, ex.Message );
 
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 
 			}
@@ -370,10 +370,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get static field '{0}'", fieldName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to get static field '{0}'", fieldName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -400,10 +400,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get entity field '{0}'", fieldName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to get entity field '{0}'", fieldName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -434,10 +434,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get static method '{0}'", methodName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to get static method '{0}'", methodName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -471,10 +471,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get static method '{0}'", methodName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to get static method '{0}'", methodName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -507,10 +507,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get entity method '{0}': {1}", methodName, ex.Message ) );
+				ApplicationLog.BaseLog.Error( "Failed to get entity method '{0}': {1}", methodName, ex.Message );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -546,10 +546,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get entity method '{0}': {1}", methodName, ex.Message ) );
+				ApplicationLog.BaseLog.Error( "Failed to get entity method '{0}': {1}", methodName, ex.Message );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -566,7 +566,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -582,7 +582,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -598,7 +598,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -614,7 +614,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -636,10 +636,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to invoke static method '{0}': {1}", methodName, ex.Message ) );
+				ApplicationLog.BaseLog.Error( "Failed to invoke static method '{0}': {1}", methodName, ex.Message );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -667,12 +667,12 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to invoke entity method '{0}' on type '{1}': {2}", methodName, gameEntity.GetType( ).FullName, ex.Message ) );
+				ApplicationLog.BaseLog.Error( "Failed to invoke entity method '{0}' on type '{1}': {2}", methodName, gameEntity.GetType( ).FullName, ex.Message );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -688,10 +688,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get entity property '{0}'", propertyName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to get entity property '{0}'", propertyName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -709,10 +709,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to get entity property value '{0}'", propertyName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to get entity property value '{0}'", propertyName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -729,10 +729,10 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "Failed to set entity property value '{0}'", propertyName ) );
+				ApplicationLog.BaseLog.Error( string.Format( "Failed to set entity property value '{0}'", propertyName ) );
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.ErrorLog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 				return;
 			}
 		}

@@ -22,7 +22,7 @@ namespace SEModAPIExtensions.API
 		{
 			_instance = this;
 
-			Console.WriteLine( "Finished loading CargoShipManager" );
+			ApplicationLog.BaseLog.Info( "Finished loading CargoShipManager" );
 		}
 
 		public static CargoShipManager Instance
@@ -150,19 +150,19 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( ArgumentOutOfRangeException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 			catch ( ArgumentNullException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 			catch ( FormatException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 	}

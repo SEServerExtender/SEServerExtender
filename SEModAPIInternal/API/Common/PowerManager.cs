@@ -51,7 +51,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return 0;
 				}
 			}
@@ -68,7 +68,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return 0;
 				}
 			}
@@ -100,7 +100,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

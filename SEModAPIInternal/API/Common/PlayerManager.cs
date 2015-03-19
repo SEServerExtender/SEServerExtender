@@ -7,6 +7,7 @@ using System.Reflection;
 namespace SEModAPIInternal.API.Common
 {
 	using System.Linq;
+	using SEModAPIInternal.Support;
 
 	public class PlayerManager
 	{
@@ -34,7 +35,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			_instance = this;
 
-			Console.WriteLine("Finished loading PlayerManager");
+			ApplicationLog.BaseLog.Info( "Finished loading PlayerManager" );
 		}
 
 		#endregion
@@ -89,7 +90,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine(ex);
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

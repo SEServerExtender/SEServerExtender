@@ -56,7 +56,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new HashSet<object>( );
 			}
 		}
@@ -75,7 +75,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new List<object>( );
 			}
 		}
@@ -94,7 +94,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new Dictionary<T, Object>( );
 			}
 		}
@@ -112,7 +112,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new Dictionary<Object, T>( );
 			}
 		}
@@ -130,7 +130,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return dataSet;
@@ -149,7 +149,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return dataSet;
@@ -168,7 +168,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return dataSet;
@@ -187,7 +187,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return dataSet;
@@ -205,7 +205,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return source;
 			}
 		}
@@ -226,7 +226,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return source;
 			}
 		}
@@ -239,8 +239,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Failed to generate entity id" );
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( "Failed to generate entity id", ex );
 				return 0;
 			}
 		}

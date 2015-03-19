@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Common
 {
 	using System;
 	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.Support;
 
 	public class RadioManagerNetworkManager
 	{
@@ -56,7 +57,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

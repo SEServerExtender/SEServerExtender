@@ -5,10 +5,12 @@ using Sandbox.Common.ObjectBuilders;
 using Sandbox.Common.ObjectBuilders.Definitions;
 
 using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Common
 {
+	using NLog;
+	using SEModAPIInternal.Support;
+
 	public class Faction
 	{
 		#region "Attributes"
@@ -143,7 +145,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -173,7 +175,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -352,6 +354,8 @@ namespace SEModAPIInternal.API.Common
 		public static string FactionNetManagerRemoveFactionMethod = "01E89FED8AEDE7182CACB3F84D5748AC";
 		public static string FactionNetManagerRemoveMemberMethod = "4FDD02E48E4AAF15026A9181C13F711E";
 
+		private static readonly Logger Log = LogManager.GetLogger( "BaseLog" );
+
 		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
@@ -361,7 +365,7 @@ namespace SEModAPIInternal.API.Common
 			m_instance = this;
 			m_factions = new Dictionary<long, Faction>( );
 
-			Console.WriteLine( "Finished loading FactionsManager" );
+			Log.Info( "Finished loading FactionsManager" );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -415,7 +419,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				Log.Error( ex );
 				return false;
 			}
 		}

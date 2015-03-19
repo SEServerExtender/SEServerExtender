@@ -6,6 +6,8 @@ using SEModAPIInternal.API.Common;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
+	using SEModAPIInternal.Support;
+
 	[DataContract]
 	public class ButtonPanelEntity : ShipControllerEntity
 	{
@@ -117,7 +119,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

@@ -100,7 +100,7 @@ namespace SEModAPIExtensions.API
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return false;
 				}
 			}
@@ -308,7 +308,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new List<Vector3I>( );
 			}
 		}

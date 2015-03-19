@@ -192,7 +192,7 @@ namespace SEModAPIExtensions.API.IPC
 
 		public void UpdateCubeBlock(CubeGridEntity parent, CubeBlockEntity cubeBlock)
 		{
-			LogManager.APILog.WriteLineAndConsole("WCF Service - Received cube block entity '" + cubeBlock.Name + "' with id '" + cubeBlock.EntityId + "'");
+			ApplicationLog.BaseLog.Info( "WCF Service - Received cube block entity '{0}' with id '{1}'", cubeBlock.Name, cubeBlock.EntityId );
 
 			foreach (CubeGridEntity cubeGrid in GetSectorCubeGridEntities())
 			{

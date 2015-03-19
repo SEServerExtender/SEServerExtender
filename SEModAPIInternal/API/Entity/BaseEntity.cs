@@ -616,7 +616,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -633,7 +633,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -651,7 +651,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -666,7 +666,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -682,13 +682,13 @@ namespace SEModAPIInternal.API.Entity
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 				}
 				return entityId;
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return 0;
 			}
 		}
@@ -711,7 +711,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -746,14 +746,14 @@ namespace SEModAPIInternal.API.Entity
 				Vector3D newPosition = _positionOrientation.Position;
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine( GetType( ).Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition( ).ToString( ) + "' to '" + newPosition.ToString( ) + "'" );
+					ApplicationLog.BaseLog.Debug( GetType( ).Name + " - Changing position of '" + Name + "' from '" + entity.GetPosition( ).ToString( ) + "' to '" + newPosition.ToString( ) + "'" );
 				}
 
 				entity.SetPosition( newPosition );
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -771,7 +771,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -785,14 +785,14 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine( GetType( ).Name + " - Changing linear velocity of '" + Name + "' from '" + havokBody.LinearVelocity.ToString( ) + "' to '" + _linearVelocity.ToString( ) + "'" );
+					ApplicationLog.BaseLog.Debug( GetType( ).Name + " - Changing linear velocity of '" + Name + "' from '" + havokBody.LinearVelocity.ToString( ) + "' to '" + _linearVelocity.ToString( ) + "'" );
 				}
 
 				havokBody.LinearVelocity = _linearVelocity;
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -806,14 +806,14 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
-					LogManager.APILog.WriteLine( GetType( ).Name + " - Changing angular velocity of '" + Name + "' from '" + havokBody.AngularVelocity.ToString( ) + "' to '" + _angularVelocity.ToString( ) + "'" );
+					ApplicationLog.BaseLog.Debug( GetType( ).Name + " - Changing angular velocity of '" + Name + "' from '" + havokBody.AngularVelocity.ToString( ) + "' to '" + _angularVelocity.ToString( ) + "'" );
 				}
 
 				havokBody.AngularVelocity = _angularVelocity;
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -822,14 +822,14 @@ namespace SEModAPIInternal.API.Entity
 			try
 			{
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					LogManager.APILog.WriteLine( GetType( ).Name + " '" + Name + "': Calling 'Close' to remove entity" );
+					ApplicationLog.BaseLog.Debug( GetType( ).Name + " '" + Name + "': Calling 'Close' to remove entity" );
 
 				InvokeEntityMethod( BackingObject, "Close" );
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLineAndConsole( "Failed to remove entity '" + Name + "'" );
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( "Failed to remove entity '{0}'", Name );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -842,7 +842,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -861,7 +861,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -881,7 +881,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

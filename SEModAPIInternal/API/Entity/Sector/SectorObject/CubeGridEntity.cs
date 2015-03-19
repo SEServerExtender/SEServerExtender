@@ -166,7 +166,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 						}
 						catch ( Exception ex )
 						{
-							LogManager.ErrorLog.WriteLine( ex );
+							ApplicationLog.BaseLog.Error( ex );
 						}
 					}
 				}
@@ -414,7 +414,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public override void Dispose( )
 		{
 			if ( SandboxGameAssemblyWrapper.IsDebugging )
-				LogManager.APILog.WriteLine( "Disposing CubeGridEntity '" + Name + "' ..." );
+				ApplicationLog.BaseLog.Debug( "Disposing CubeGridEntity '{0}' ...", Name );
 
 			//Dispose the cube grid by disposing all of the blocks
 			//This may be slow but it's reliable ... so far
@@ -481,7 +481,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -497,7 +497,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -564,7 +564,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -585,7 +585,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			_cubeBlockToAddRemove = null;

@@ -9,12 +9,21 @@ using SEModAPIInternal.API.Utility;
 
 namespace SEModAPIExtensions.API
 {
+	using NLog;
+	using NLog.Targets;
+
 	public class BasicUnitTestManager
 	{
 		private static BasicUnitTestManager _instance;
+		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 
 		protected BasicUnitTestManager()
 		{
+			FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
+			if ( baseLogTarget != null )
+			{
+				baseLogTarget.FileName = baseLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
+			}
 			_instance = this;
 		}
 
@@ -45,96 +54,96 @@ namespace SEModAPIExtensions.API
 			if (!SandboxGameAssemblyWrapper.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("SandboxGameAssemblyWrapper reflection validation failed!");
+				BaseLog.Warn( "SandboxGameAssemblyWrapper reflection validation failed!" );
 			}
 
 			if (!ServerAssemblyWrapper.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ServerAssemblyWrapper reflection validation failed!");
+				BaseLog.Warn( "ServerAssemblyWrapper reflection validation failed!" );
 			}
 
 			if (!NetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("NetworkManager reflection validation failed!");
+				BaseLog.Warn( "NetworkManager reflection validation failed!" );
 			}
 
 			if (!ServerNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ServerNetworkManager reflection validation failed!");
+				BaseLog.Warn( "ServerNetworkManager reflection validation failed!" );
 			}
 
 			if (!UtilityFunctions.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("UtilityFunctions reflection validation failed!");
+				BaseLog.Warn( "UtilityFunctions reflection validation failed!" );
 			}
 
 			if (!ChatManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ChatManager reflection validation failed!");
+				BaseLog.Warn( "ChatManager reflection validation failed!" );
 			}
 
 			if (!PlayerMap.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PlayerMap reflection validation failed!");
+				BaseLog.Warn( "PlayerMap reflection validation failed!" );
 			}
 
 			if (!PlayerManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PlayerManager reflection validation failed!");
+				BaseLog.Warn( "PlayerManager reflection validation failed!" );
 			}
 
 			if (!WorldManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("WorldManager reflection validation failed!");
+				BaseLog.Warn( "WorldManager reflection validation failed!" );
 			}
 
 			if (!RadioManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("RadioManager reflection validation failed!");
+				BaseLog.Warn( "RadioManager reflection validation failed!" );
 			}
 
 			if (!RadioManagerNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("RadioManagerNetworkManager reflection validation failed!");
+				BaseLog.Warn( "RadioManagerNetworkManager reflection validation failed!" );
 			}
 
 			if (!PowerManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PowerManager reflection validation failed!");
+				BaseLog.Warn( "PowerManager reflection validation failed!" );
 			}
 
 			if (!FactionsManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("FactionsManager reflection validation failed!");
+				BaseLog.Warn( "FactionsManager reflection validation failed!" );
 			}
 
 			if (!Faction.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("Faction reflection validation failed!");
+				BaseLog.Warn( "Faction reflection validation failed!" );
 			}
 
 			if (!GameEntityManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("GameEntityManager reflection validation failed!");
+				BaseLog.Warn( "GameEntityManager reflection validation failed!" );
 			}
 
 			if (result)
 			{
-				Console.WriteLine("All main types passed reflection unit tests!");
+				BaseLog.Info( "All main types passed reflection unit tests!" );
 			}
 
 			return result;
@@ -147,114 +156,114 @@ namespace SEModAPIExtensions.API
 			if (!BaseObject.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("BaseObject reflection validation failed!");
+				BaseLog.Warn("BaseObject reflection validation failed!");
 			}
 
 			if (!BaseEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("BaseEntity reflection validation failed!");
+				BaseLog.Warn("BaseEntity reflection validation failed!");
 			}
 
 			if (!BaseEntityNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("BaseEntityNetworkManager reflection validation failed!");
+				BaseLog.Warn("BaseEntityNetworkManager reflection validation failed!");
 			}
 
 			if (!CubeGridEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CubeGridEntity reflection validation failed!");
+				BaseLog.Warn("CubeGridEntity reflection validation failed!");
 			}
 
 			if (!CubeGridManagerManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CubeGridManagerManager reflection validation failed!");
+				BaseLog.Warn("CubeGridManagerManager reflection validation failed!");
 			}
 
 			if (!CubeGridNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CubeGridNetworkManager reflection validation failed!");
+				BaseLog.Warn("CubeGridNetworkManager reflection validation failed!");
 			}
 
 			if (!CubeGridThrusterManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CubeGridThrusterManager reflection validation failed!");
+				BaseLog.Warn("CubeGridThrusterManager reflection validation failed!");
 			}
 
 			if (!SectorObjectManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("SectorObjectManager reflection validation failed!");
+				BaseLog.Warn("SectorObjectManager reflection validation failed!");
 			}
 
 			if (!CharacterEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CharacterEntity reflection validation failed!");
+				BaseLog.Warn("CharacterEntity reflection validation failed!");
 			}
 
 			if (!CharacterEntityNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CharacterEntityNetworkManager reflection validation failed!");
+				BaseLog.Warn("CharacterEntityNetworkManager reflection validation failed!");
 			}
 
 			if (!FloatingObject.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("FloatingObject reflection validation failed!");
+				BaseLog.Warn("FloatingObject reflection validation failed!");
 			}
 
 			if (!FloatingObjectManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("FloatingObjectManager reflection validation failed!");
+				BaseLog.Warn("FloatingObjectManager reflection validation failed!");
 			}
 
 			if (!InventoryEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("InventoryEntity reflection validation failed!");
+				BaseLog.Warn("InventoryEntity reflection validation failed!");
 			}
 
 			if (!InventoryItemEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("InventoryItemEntity reflection validation failed!");
+				BaseLog.Warn("InventoryItemEntity reflection validation failed!");
 			}
 
 			if (!PowerProducer.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PowerProducer reflection validation failed!");
+				BaseLog.Warn("PowerProducer reflection validation failed!");
 			}
 
 			if (!PowerReceiver.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PowerReceiver reflection validation failed!");
+				BaseLog.Warn("PowerReceiver reflection validation failed!");
 			}
 
 			if (!VoxelMap.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("VoxelMap reflection validation failed!");
+				BaseLog.Warn("VoxelMap reflection validation failed!");
 			}
 
 			if (!VoxelMapMaterialManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("VoxelMapMaterialManager reflection validation failed!");
+				BaseLog.Warn("VoxelMapMaterialManager reflection validation failed!");
 			}
 
 			if (result)
 			{
-				Console.WriteLine("All entity types passed reflection unit tests!");
+				BaseLog.Info( "All entity types passed reflection unit tests!" );
 			}
 
 			return result;
@@ -267,216 +276,216 @@ namespace SEModAPIExtensions.API
 			if (!CubeBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CubeBlockEntity reflection validation failed!");
+				BaseLog.Warn("CubeBlockEntity reflection validation failed!");
 			}
 
 			if (!TerminalBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("TerminalBlockEntity reflection validation failed!");
+				BaseLog.Warn("TerminalBlockEntity reflection validation failed!");
 			}
 
 			if (!FunctionalBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("FunctionalBlockEntity reflection validation failed!");
+				BaseLog.Warn("FunctionalBlockEntity reflection validation failed!");
 			}
 
 			if (!ProductionBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ProductionBlockEntity reflection validation failed!");
+				BaseLog.Warn("ProductionBlockEntity reflection validation failed!");
 			}
 
 			if (!LightEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("LightEntity reflection validation failed!");
+				BaseLog.Warn("LightEntity reflection validation failed!");
 			}
 
 			if (!BatteryBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("BatteryBlockEntity reflection validation failed!");
+				BaseLog.Warn("BatteryBlockEntity reflection validation failed!");
 			}
 
 			if (!BatteryBlockNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("BatteryBlockNetworkManager reflection validation failed!");
+				BaseLog.Warn("BatteryBlockNetworkManager reflection validation failed!");
 			}
 
 			if (!DoorEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("DoorEntity reflection validation failed!");
+				BaseLog.Warn("DoorEntity reflection validation failed!");
 			}
 
 			if (!GravityBaseEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("GravityBaseEntity reflection validation failed!");
+				BaseLog.Warn("GravityBaseEntity reflection validation failed!");
 			}
 
 			if (!GravityGeneratorEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("GravityGeneratorEntity reflection validation failed!");
+				BaseLog.Warn("GravityGeneratorEntity reflection validation failed!");
 			}
 
 			if (!GravitySphereEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("GravitySphereEntity reflection validation failed!");
+				BaseLog.Warn("GravitySphereEntity reflection validation failed!");
 			}
 
 			if (!BeaconEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("BeaconEntity reflection validation failed!");
+				BaseLog.Warn("BeaconEntity reflection validation failed!");
 			}
 
 			if (!AntennaEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("AntennaEntity reflection validation failed!");
+				BaseLog.Warn("AntennaEntity reflection validation failed!");
 			}
 
 			if (!ThrustEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ThrustEntity reflection validation failed!");
+				BaseLog.Warn("ThrustEntity reflection validation failed!");
 			}
 
 			if (!ThrustNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ThrustNetworkManager reflection validation failed!");
+				BaseLog.Warn("ThrustNetworkManager reflection validation failed!");
 			}
 
 			if (!GyroEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("GyroEntity reflection validation failed!");
+				BaseLog.Warn("GyroEntity reflection validation failed!");
 			}
 
 			if (!GyroNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("GyroNetworkManager reflection validation failed!");
+				BaseLog.Warn("GyroNetworkManager reflection validation failed!");
 			}
 
 			if (!CockpitEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CockpitEntity reflection validation failed!");
+				BaseLog.Warn("CockpitEntity reflection validation failed!");
 			}
 
 			if (!TurretBaseEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("TurretBaseEntity reflection validation failed!");
+				BaseLog.Warn("TurretBaseEntity reflection validation failed!");
 			}
 
 			if (!TurretNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("TurretNetworkManager reflection validation failed!");
+				BaseLog.Warn("TurretNetworkManager reflection validation failed!");
 			}
 
 			if (!LandingGearEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("LandingGearEntity reflection validation failed!");
+				BaseLog.Warn("LandingGearEntity reflection validation failed!");
 			}
 
 			if (!LandingGearNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("LandingGearNetworkManager reflection validation failed!");
+				BaseLog.Warn("LandingGearNetworkManager reflection validation failed!");
 			}
 
 			if (!ReactorEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ReactorEntity reflection validation failed!");
+				BaseLog.Warn("ReactorEntity reflection validation failed!");
 			}
 
 			if (!SolarPanelEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("SolarPanelEntity reflection validation failed!");
+				BaseLog.Warn("SolarPanelEntity reflection validation failed!");
 			}
 
 			if (!SmallGatlingGunEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("SmallGatlingGunEntity reflection validation failed!");
+				BaseLog.Warn("SmallGatlingGunEntity reflection validation failed!");
 			}
 
 			if (!MergeBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("MergeBlockEntity reflection validation failed!");
+				BaseLog.Warn("MergeBlockEntity reflection validation failed!");
 			}
 
 			if (!PistonEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PistonEntity reflection validation failed!");
+				BaseLog.Warn("PistonEntity reflection validation failed!");
 			}
 
 			if (!PistonNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("PistonNetworkManager reflection validation failed!");
+				BaseLog.Warn("PistonNetworkManager reflection validation failed!");
 			}
 
 			if (!RotorEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("RotorEntity reflection validation failed!");
+				BaseLog.Warn("RotorEntity reflection validation failed!");
 			}
 
 			if (!VirtualMassEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("VirtualMassEntity reflection validation failed!");
+				BaseLog.Warn("VirtualMassEntity reflection validation failed!");
 			}
 
 			if (!CameraBlockEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("CameraBlockEntity reflection validation failed!");
+				BaseLog.Warn("CameraBlockEntity reflection validation failed!");
 			}
 
 			if (!OreDetectorEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("OreDetectorEntity reflection validation failed!");
+				BaseLog.Warn("OreDetectorEntity reflection validation failed!");
 			}
 
 			if (!ButtonPanelEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ButtonPanelEntity reflection validation failed!");
+				BaseLog.Warn("ButtonPanelEntity reflection validation failed!");
 			}
 
 			if (!ShipControllerEntity.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ShipControllerEntity reflection validation failed!");
+				BaseLog.Warn("ShipControllerEntity reflection validation failed!");
 			}
 
 			if (!ShipControllerNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
-				Console.WriteLine("ShipControllerNetworkManager reflection validation failed!");
+				BaseLog.Warn("ShipControllerNetworkManager reflection validation failed!");
 			}
 
 			if (result)
 			{
-				Console.WriteLine("All block types passed reflection unit tests!");
+				BaseLog.Info( "All block types passed reflection unit tests!" );
 			}
 
 			return result;

@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System;
 	using System.Reflection;
+	using SEModAPIInternal.Support;
 
 	public class LandingGearNetworkManager
 	{
@@ -62,7 +63,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

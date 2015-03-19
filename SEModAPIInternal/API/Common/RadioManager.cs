@@ -2,10 +2,11 @@
 using System.ComponentModel;
 
 using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Common
 {
+	using SEModAPIInternal.Support;
+
 	public class RadioManager
 	{
 		#region "Attributes"
@@ -49,7 +50,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -160,7 +161,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -174,7 +175,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}

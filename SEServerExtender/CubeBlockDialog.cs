@@ -74,7 +74,7 @@ namespace SEServerExtender
 				}
 				catch (Exception ex)
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					ApplicationLog.BaseLog.Error(ex);
 					return Vector3I.Zero;
 				}
 			}
@@ -102,7 +102,7 @@ namespace SEServerExtender
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 			}
 		}
 

@@ -1,15 +1,12 @@
 namespace SEModAPIInternal.API.Entity
 {
 	using System;
+	using NLog;
 	using SEModAPIInternal.Support;
 
 	public class InventoryItemManager : BaseObjectManager
 	{
-		#region "Attributes"
-
 		private InventoryEntity m_parent;
-
-		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
@@ -39,7 +36,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -87,7 +84,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch (Exception ex)
 					{
-						LogManager.ErrorLog.WriteLine(ex);
+						ApplicationLog.BaseLog.Error(ex);
 					}
 				}
 
@@ -101,14 +98,14 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch (Exception ex)
 					{
-						LogManager.ErrorLog.WriteLine(ex);
+						ApplicationLog.BaseLog.Error(ex);
 					}
 				}
 				 */
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

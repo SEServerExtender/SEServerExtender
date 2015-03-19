@@ -4,20 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.ServiceModel;
 using System.Threading;
 using SEModAPIExtensions.API.Plugin;
 
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.Support;
 
 namespace SEModAPIExtensions.API
 {
+	using SEModAPIInternal.Support;
+
 	public class PluginManager
 	{
-		#region "Attributes"
-
 		private static PluginManager m_instance;
 
 		private readonly Dictionary<Guid, Assembly> m_pluginAssemblies;
@@ -29,8 +27,6 @@ namespace SEModAPIExtensions.API
 		private double m_averageEvents;
 		private List<ulong> m_lastConnectedPlayerList;
 		private readonly Dictionary<Guid, String> m_pluginPaths;
-
-		#endregion
 
 		#region "Constructors and Initializers"
 
@@ -51,7 +47,7 @@ namespace SEModAPIExtensions.API
 			m_lastConnectedPlayerList = new List<ulong>( );
 			m_pluginPaths = new Dictionary<Guid, string>( );
 
-			Console.WriteLine( "Finished loading PluginManager" );
+			ApplicationLog.BaseLog.Info( "Finished loading PluginManager" );
 		}
 
 		#endregion
@@ -80,7 +76,7 @@ namespace SEModAPIExtensions.API
 			if ( Loaded && !forceLoad )
 				return;
 
-			Console.WriteLine( "Loading plugins ..." );
+			ApplicationLog.BaseLog.Info( "Loading plugins ..." );
 
 			try
 			{
@@ -88,7 +84,7 @@ namespace SEModAPIExtensions.API
 				//				m_initialized = false;   // THIS CAUSES all plugins to stop working 
 
 				string modsPath = Path.Combine( Server.Instance.Path, "Mods" );
-				Console.WriteLine( "Scanning: {0}", modsPath );
+				ApplicationLog.BaseLog.Info( "Scanning: {0}", modsPath );
 				if ( !Directory.Exists( modsPath ) )
 					return;
 
@@ -158,7 +154,7 @@ namespace SEModAPIExtensions.API
 										}
 										catch ( Exception ex )
 										{
-											LogManager.ErrorLog.WriteLine( ex );
+											ApplicationLog.BaseLog.Error( ex );
 										}
 									}
 								}
@@ -168,17 +164,17 @@ namespace SEModAPIExtensions.API
 						}
 						catch ( Exception ex )
 						{
-							LogManager.ErrorLog.WriteLine( ex );
+							ApplicationLog.BaseLog.Error( ex );
 						}
 					}
 				}
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
-			Console.WriteLine( "Finished loading plugins" );
+			ApplicationLog.BaseLog.Info( "Finished loading plugins" );
 		}
 
 		private bool IsOldPlugin( Assembly assembly )
@@ -215,7 +211,7 @@ namespace SEModAPIExtensions.API
 
 		public void Init( )
 		{
-			Console.WriteLine( "Initializing plugins ..." );
+			ApplicationLog.BaseLog.Info( "Initializing plugins ..." );
 			Initialized = true;
 
 			foreach ( Guid key in Plugins.Keys )
@@ -223,7 +219,7 @@ namespace SEModAPIExtensions.API
 				InitPlugin( key );
 			}
 
-			Console.WriteLine( "Finished initializing plugins" );
+			ApplicationLog.BaseLog.Info( "Finished initializing plugins" );
 		}
 
 		public void Update( )
@@ -242,7 +238,7 @@ namespace SEModAPIExtensions.API
 			EntityEventManager.Instance.ResourceLocked = true;
 
 			List<EntityEventManager.EntityEvent> events = EntityEventManager.Instance.EntityEvents;
-			List<ChatManager.ChatEvent> chatEvents = ChatManager.Instance.ChatEvents;
+			List<ChatEvent> chatEvents = ChatManager.Instance.ChatEvents;
 
 			//Generate the player join/leave events here
 			List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
@@ -283,7 +279,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( string.Format( "PluginManager.Update() Exception in player discovery: {0}", ex ) );
+				ApplicationLog.BaseLog.Info( "PluginManager.Update() Exception in player discovery: {0}", ex );
 			}
 			m_lastConnectedPlayerList = new List<ulong>( connectedPlayers );
 
@@ -302,7 +298,7 @@ namespace SEModAPIExtensions.API
 					                                       Plugins = Plugins,
 					                                       PluginState = PluginStates,
 					                                       Events = new List<EntityEventManager.EntityEvent>( events ),
-					                                       ChatEvents = new List<ChatManager.ChatEvent>( chatEvents )
+					                                       ChatEvents = new List<ChatEvent>( chatEvents )
 				                                       };
 
 				ThreadPool.QueueUserWorkItem( DoUpdate, parameters );
@@ -323,9 +319,9 @@ namespace SEModAPIExtensions.API
 				{
 					m_lastAverageOutput = DateTime.Now;
 
-					LogManager.APILog.WriteLine( string.Format( "PluginManager - Update interval = {0}ms", m_averageUpdateInterval ) );
-					LogManager.APILog.WriteLine( string.Format( "PluginManager - Update time = {0}ms", m_averageUpdateTime ) );
-					LogManager.APILog.WriteLine( string.Format( "PluginManager - Events per update = {0}", m_averageEvents ) );
+					ApplicationLog.BaseLog.Debug( "PluginManager - Update interval = {0}ms", m_averageUpdateInterval );
+					ApplicationLog.BaseLog.Debug( "PluginManager - Update time = {0}ms", m_averageUpdateTime );
+					ApplicationLog.BaseLog.Debug( "PluginManager - Events per update = {0}", m_averageEvents );
 				}
 			}
 
@@ -344,7 +340,7 @@ namespace SEModAPIExtensions.API
 				PluginManagerThreadParams parameters = (PluginManagerThreadParams)args;
 
 				List<EntityEventManager.EntityEvent> events = parameters.Events;
-				List<ChatManager.ChatEvent> chatEvents = parameters.ChatEvents;
+				List<ChatEvent> chatEvents = parameters.ChatEvents;
 				Object plugin = parameters.Plugin;
 				Dictionary<Guid, Object> plugins = parameters.Plugins;
 				Dictionary<Guid, bool> pluginState = parameters.PluginState;
@@ -378,7 +374,7 @@ namespace SEModAPIExtensions.API
 							}
 							catch ( Exception ex )
 							{
-								LogManager.ErrorLog.WriteLine( ex );
+								ApplicationLog.BaseLog.Error( ex );
 							}
 							break;
 						case EntityEventManager.EntityEventType.OnPlayerLeft:
@@ -394,7 +390,7 @@ namespace SEModAPIExtensions.API
 							}
 							catch ( Exception ex )
 							{
-								LogManager.ErrorLog.WriteLine( ex );
+								ApplicationLog.BaseLog.Error( ex );
 							}
 							break;
 						case EntityEventManager.EntityEventType.OnPlayerWorldSent:
@@ -410,7 +406,7 @@ namespace SEModAPIExtensions.API
 							}
 							catch ( Exception ex )
 							{
-								LogManager.ErrorLog.WriteLine( ex );
+								ApplicationLog.BaseLog.Error( ex );
 							}
 							break;
 						default:
@@ -423,14 +419,14 @@ namespace SEModAPIExtensions.API
 							}
 							catch ( Exception ex )
 							{
-								LogManager.ErrorLog.WriteLine( ex );
+								ApplicationLog.BaseLog.Error( ex );
 							}
 							break;
 					}
 				}
 
 				//Run chat events
-				foreach ( ChatManager.ChatEvent chatEvent in chatEvents )
+				foreach ( ChatEvent chatEvent in chatEvents )
 				{
 					try
 					{
@@ -447,7 +443,7 @@ namespace SEModAPIExtensions.API
 					}
 					catch ( Exception ex )
 					{
-						LogManager.ErrorLog.WriteLine( ex );
+						ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 
@@ -459,16 +455,16 @@ namespace SEModAPIExtensions.API
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 				}
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
-		public static void HookChatMessage( Object plugin, Dictionary<Guid, Object> plugins, Dictionary<Guid, bool> pluginState, ChatManager.ChatEvent chatEvent, out bool discard )
+		public static void HookChatMessage( Object plugin, Dictionary<Guid, Object> plugins, Dictionary<Guid, bool> pluginState, ChatEvent chatEvent, out bool discard )
 		{
 			discard = false;
 
@@ -505,7 +501,7 @@ namespace SEModAPIExtensions.API
 				return;
 
 			String pluginPath = m_pluginPaths[ key ];
-			LogManager.APILog.WriteLineAndConsole( String.Format( "Initializing plugin at {0} - {1}'", pluginPath, key ) );
+			ApplicationLog.BaseLog.Info( "Initializing plugin at {0} - {1}'", pluginPath, key );
 
 			try
 			{
@@ -525,7 +521,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -540,7 +536,7 @@ namespace SEModAPIExtensions.API
 			if ( !PluginStates.ContainsKey( key ) )
 				return;
 
-			LogManager.APILog.WriteLineAndConsole( string.Format( "Unloading plugin '{0}'", key ) );
+			ApplicationLog.BaseLog.Info( "Unloading plugin '{0}'", key );
 
 			try
 			{
@@ -549,7 +545,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			m_pluginAssemblies.Remove( key );

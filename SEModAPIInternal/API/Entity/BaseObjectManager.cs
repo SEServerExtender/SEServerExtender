@@ -343,13 +343,13 @@ namespace SEModAPIInternal.API.Entity
 					if ( timeSinceLastProfilingOutput.TotalSeconds > 30 )
 					{
 						_lastProfilingOutput = DateTime.Now;
-						LogManager.APILog.WriteLine( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( _averageRefreshDataTime, 2 ) ) );
+						ApplicationLog.BaseLog.Debug( string.Format( "ObjectManager - Average of {0}ms to refresh API data", Math.Round( _averageRefreshDataTime, 2 ) ) );
 					}
 				}
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -392,7 +392,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				if ( RawDataHashSetResourceLock.Owned )
 					RawDataHashSetResourceLock.ReleaseExclusive( );
 			}
@@ -432,7 +432,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				if ( RawDataListResourceLock.Owned )
 					RawDataListResourceLock.ReleaseExclusive( );
 			}
@@ -475,7 +475,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				throw new ConfigurationErrorsException( "Configuration file corrupted.", ex );
 			}
 
@@ -649,14 +649,14 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( KeyNotFoundException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				if ( ResourceLock.Owned )
 					ResourceLock.ReleaseShared( );
 				return new List<T>( );
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				if ( ResourceLock.Owned )
 					ResourceLock.ReleaseShared( );
 				return new List<T>( );

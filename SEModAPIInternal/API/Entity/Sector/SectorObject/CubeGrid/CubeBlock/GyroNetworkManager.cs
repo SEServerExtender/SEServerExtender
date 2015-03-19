@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System;
 	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
 	using VRageMath;
 
 	public class GyroNetworkManager
@@ -56,7 +57,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

@@ -12,6 +12,7 @@ using SEModAPIExtensions.API;
 
 namespace SEServerExtender
 {
+	using System.IO;
 	using System.ServiceModel;
 	using NLog;
 	using NLog.Targets;
@@ -50,6 +51,7 @@ namespace SEServerExtender
 		internal static SEServerExtender ServerExtenderForm;
 		internal static Server Server;
 		public static ServiceHost ServerServiceHost;
+		internal static CommandLineArgs CommandLineArgs;
 
 		/// <summary>
 		/// Main entry point of the application
@@ -61,6 +63,7 @@ namespace SEServerExtender
 			{
 				baseLogTarget.FileName = baseLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
 			}
+
 			if ( !Environment.UserInteractive )
 			{
 				using ( var service = new WindowsService( ) )
@@ -85,22 +88,22 @@ namespace SEServerExtender
 
 			BaseLog.Info( "Starting SEServerExtender with {0} arguments ...", args.Length );
 
-			CommandLineArgs extenderArgs = new CommandLineArgs
-										   {
-											   AutoStart = false,
-											   WorldName = string.Empty,
-											   InstanceName = string.Empty,
-											   NoGui = false,
-											   NoConsole = false,
-											   Debug = false,
-											   GamePath = string.Empty,
-											   NoWcf = false,
-											   Autosave = 0,
-											   Path = string.Empty,
-											   CloseOnCrash = false,
-											   RestartOnCrash = false,
-											   Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
-										   };
+			CommandLineArgs extenderArgs = CommandLineArgs = new CommandLineArgs
+			                  {
+				                  AutoStart = false,
+				                  WorldName = string.Empty,
+				                  InstanceName = string.Empty,
+				                  NoGui = false,
+				                  NoConsole = false,
+				                  Debug = false,
+				                  GamePath = Directory.GetParent( Directory.GetCurrentDirectory( ) ).FullName,
+				                  NoWcf = false,
+				                  Autosave = 0,
+				                  Path = string.Empty,
+				                  CloseOnCrash = false,
+				                  RestartOnCrash = false,
+				                  Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
+			                  };
 
 			//Setup the default args
 
@@ -224,7 +227,7 @@ namespace SEServerExtender
 				Server.IsWCFEnabled = !extenderArgs.NoWcf;
 				Server.Init( );
 
-				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
+				ChatCommand guiCommand = new ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
 				if ( extenderArgs.AutoStart )
@@ -305,7 +308,7 @@ namespace SEServerExtender
 			BaseLog.Error( "AppDomain.UnhandledException - {0}", e.ExceptionObject );
 		}
 
-		static void ChatCommand_GUI( ChatManager.ChatEvent chatEvent )
+		static void ChatCommand_GUI( ChatEvent chatEvent )
 		{
 			Thread uiThread = new Thread( StartGui );
 			uiThread.SetApartmentState( ApartmentState.STA );

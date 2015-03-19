@@ -5,12 +5,12 @@ using System.Reflection;
 using System.Threading;
 using Sandbox.Common.ObjectBuilders;
 using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
 using VRage.Common.Utils;
-using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Common
 {
+	using SEModAPIInternal.Support;
+
 	public class SandboxGameAssemblyWrapper
 	{
 		#region "Attributes"
@@ -105,7 +105,7 @@ namespace SEModAPIInternal.API.Common
 			m_countQueuedActions = 0;
 			m_averageQueuedActions = 0;
 
-			Console.WriteLine( "Finished loading SandboxGameAssemblyWrapper" );
+			ApplicationLog.BaseLog.Info( "Finished loading SandboxGameAssemblyWrapper" );
 		}
 
 		#endregion "Constructors and Initializers"sss
@@ -189,7 +189,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return null;
 				}
 			}
@@ -212,12 +212,12 @@ namespace SEModAPIInternal.API.Common
 					return;
 
 				BaseObject.InvokeStaticMethod( APIGatewayType, MyAPIGatewayInitMethod );
-				LogManager.APILog.WriteLineAndConsole( "MyAPIGateway Initialized" );
+				ApplicationLog.BaseLog.Info( "MyAPIGateway Initialized" );
 				m_gatewayInitialzed = true;
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -247,7 +247,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return false;
 				}
 			}
@@ -267,13 +267,13 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				LogManager.APILog.WriteLineAndConsole( "MainGameEvent - Entity loading complete" );
+				ApplicationLog.BaseLog.Info( "MainGameEvent - Entity loading complete" );
 
 				//TODO - Do stuff
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -287,7 +287,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -329,7 +329,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -344,7 +344,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -359,7 +359,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -385,7 +385,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -399,7 +399,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				m_averageQueuedActions = m_countQueuedActions / timeSinceLastProfilingOutput.TotalSeconds;
 
-				LogManager.APILog.WriteLine( "Average actions queued per second: " + Math.Round( m_averageQueuedActions, 2 ) );
+				ApplicationLog.BaseLog.Info( "Average actions queued per second: " + Math.Round( m_averageQueuedActions, 2 ) );
 
 				m_countQueuedActions = 0;
 				m_lastProfilingOutput = DateTime.Now;
@@ -451,7 +451,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -490,7 +490,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -499,7 +499,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				LogManager.APILog.WriteLine( "Exiting" );
+				ApplicationLog.BaseLog.Info( "Exiting" );
 				/*
 				GameAction(new Action(delegate()
 				{
@@ -509,7 +509,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -529,7 +529,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -542,7 +542,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -556,7 +556,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -571,7 +571,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return 0;
 			}
 		}
@@ -642,7 +642,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex.ToString( ) );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return result;

@@ -60,7 +60,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return m_maxPowerOutput;
 				}
 			}
@@ -81,7 +81,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return m_powerOutput;
 				}
 			}
@@ -115,7 +115,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( TypeLoadException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

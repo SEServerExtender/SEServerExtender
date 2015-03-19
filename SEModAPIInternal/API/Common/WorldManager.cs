@@ -55,7 +55,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			_instance = this;
 
-			Console.WriteLine( "Finished loading WorldManager" );
+			ApplicationLog.BaseLog.Info( "Finished loading WorldManager" );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -114,7 +114,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				catch ( InvalidCastException ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 					return new MyObjectBuilder_SessionSettings( );
 				}
 			}
@@ -184,7 +184,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -209,7 +209,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( InvalidCastException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return result;
@@ -243,7 +243,7 @@ namespace SEModAPIInternal.API.Common
 						                                                                              Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
 						                                                                              BaseObject.InvokeStaticMethod( type, WorldSnapshotSaveMethod, new object[ ] { new Action(() =>
 						                                                                                                                                                                       {
-							                                                                                                                                                                       LogManager.APILog.WriteLineAndConsole(string.Format("Asynchronous Save Setup Started: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds));
+																																																   ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
 						                                                                                                                                                                       })
 						                                                                                                                                                          } );
 					                                                                              } );
@@ -267,7 +267,7 @@ namespace SEModAPIInternal.API.Common
 						                              Thread.Sleep( 1 );
 					                              }
 
-					                              LogManager.APILog.WriteLineAndConsole( string.Format( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds ) );
+												  ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
 					                              EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
 					                                                                        {
 						                                                                        type = EntityEventManager.EntityEventType.OnSectorSaved,
@@ -322,7 +322,7 @@ namespace SEModAPIInternal.API.Common
 					}
 					else
 					{
-						LogManager.ErrorLog.WriteLine("Failed to save world (1)");
+						ApplicationLog.BaseLog.Error("Failed to save world (1)");
 						return;
 					}
 
@@ -332,7 +332,7 @@ namespace SEModAPIInternal.API.Common
 					}
 					else
 					{
-						LogManager.ErrorLog.WriteLine("Failed to save world (2)");
+						ApplicationLog.BaseLog.Error("Failed to save world (2)");
 						return;
 					}
 
@@ -346,7 +346,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 			}
 			finally
 			{
@@ -376,7 +376,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( InvalidCastException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -394,7 +394,7 @@ namespace SEModAPIInternal.API.Common
 				if ( result )
 				{
 					TimeSpan timeToSave = DateTime.Now - saveStartTime;
-					LogManager.APILog.WriteLineAndConsole( "Save complete and took " + timeToSave.TotalSeconds + " seconds" );
+					ApplicationLog.BaseLog.Info( "Save complete and took {0} seconds", timeToSave.TotalSeconds );
 					_isSaving = false;
 
 					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent { type = EntityEventManager.EntityEventType.OnSectorSaved, timestamp = DateTime.Now, entity = null, priority = 0 };
@@ -402,12 +402,12 @@ namespace SEModAPIInternal.API.Common
 				}
 				else
 				{
-					LogManager.APILog.WriteLineAndConsole( "Save failed!" );
+					ApplicationLog.BaseLog.Error( "Save failed!" );
 				}
 			}
 			catch ( InvalidCastException ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 			finally
 			{

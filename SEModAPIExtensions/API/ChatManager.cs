@@ -9,6 +9,8 @@
 	using System.Text.RegularExpressions;
 	using System.Threading;
 	using System.Xml;
+	using NLog;
+	using NLog.Targets;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
@@ -17,19 +19,18 @@
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 	using SEModAPIInternal.API.Server;
-	using SEModAPIInternal.Support;
 	using SteamSDK;
 	using VRage;
 	using VRage.Common.Utils;
 	using VRageMath;
 
+	public enum ChatEventType
+	{
+		OnChatReceived,
+		OnChatSent
+	}
 	public class ChatManager
 	{
-		public enum ChatEventType
-		{
-			OnChatReceived,
-			OnChatSent
-		}
 
 		private static ChatManager _instance;
 		private static List<string> _chatMessages;
@@ -43,6 +44,10 @@
 		public static string ChatMessageMessageField = "EDCBEBB604B287DFA90A5A46DC7AD28D";
 		private readonly Dictionary<ChatCommand, Guid> _chatCommands;
 		private readonly List<ChatEvent> _chatEvents;
+
+		private static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
+		private static readonly Logger ServerLog = LogManager.GetLogger( "ServerLog" );
+		private static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 
 		protected ChatManager( )
 		{
@@ -107,7 +112,24 @@
 			RegisterChatCommand( unbanCommand );
 			RegisterChatCommand( asyncSaveCommand );
 
-			Console.WriteLine( "Finished loading ChatManager" );
+			FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
+			if ( baseLogTarget != null )
+			{
+				baseLogTarget.FileName = baseLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
+			}
+			FileTarget serverLogTarget = LogManager.Configuration.FindTargetByName( "ServerLog" ) as FileTarget;
+			LogEventInfo logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now, Properties = { { "InstanceSavePath", SandboxGameAssemblyWrapper.Instance.GetUserDataPath( ) } } };
+			if ( serverLogTarget != null )
+			{
+				serverLogTarget.FileName = serverLogTarget.FileName.Render( logEventInfo );
+			}
+			FileTarget chatLogTarget = LogManager.Configuration.FindTargetByName( "ChatLog" ) as FileTarget;
+			if ( chatLogTarget != null )
+			{
+				if ( !string.IsNullOrEmpty( Server.Instance.InstanceName ) )
+					chatLogTarget.FileName = chatLogTarget.FileName.Render( logEventInfo );
+			}
+			BaseLog.Info( "Finished loading ChatManager" );
 		}
 
 		public static ChatManager Instance { get { return _instance ?? ( _instance = new ChatManager( ) ); } }
@@ -165,7 +187,7 @@
 			}
 			catch ( TypeLoadException ex )
 			{
-				Console.WriteLine( ex );
+				BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -197,7 +219,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ChatLog.Error( ex );
 			}
 		}
 
@@ -221,7 +243,7 @@
 			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
 			{
 				_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
-				LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Client '{0}': {1}", playerName, message ) );
+				ChatLog.Info( "Chat - Client '{0}': {1}", playerName, message );
 			}
 
 			ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
@@ -253,7 +275,7 @@
 
 				_chatMessages.Add( string.Format( "Server: {0}", message ) );
 
-				LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Server: {0}", message ) );
+				ChatLog.Info( "Chat - Server: {0}", message );
 
 				ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
 				Instance.AddEvent( chatEvent );
@@ -264,7 +286,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ChatLog.Error( ex );
 			}
 		}
 
@@ -298,7 +320,7 @@
 						Instance.AddEvent( chatEvent );
 					}
 					_chatMessages.Add( string.Format( "Server: {0}", message ) );
-					LogManager.ChatLog.WriteLineAndConsole( string.Format( "Chat - Server: {0}", message ) );
+					ChatLog.Info( "Chat - Server: {0}", message );
 				}
 
 				//Send a loopback chat event for server-sent messages
@@ -311,7 +333,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ChatLog.Error( ex );
 			}
 		}
 
@@ -372,7 +394,7 @@
 					}
 					catch ( Exception ex )
 					{
-						LogManager.ErrorLog.WriteLine( ex );
+						ChatLog.Error( ex );
 					}
 				}
 
@@ -380,7 +402,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ChatLog.Error( ex );
 				return false;
 			}
 		}
@@ -393,7 +415,7 @@
 				return;
 			}
 
-			GuidAttribute guid = (GuidAttribute) Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof ( GuidAttribute ), true )[ 0 ];
+			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 			try
 			{
 				Guid guidValue = new Guid( guid.Value );
@@ -401,19 +423,19 @@
 			}
 			catch ( OverflowException overflowException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Failed to register chat command.", overflowException );
+				ChatLog.Error( "Failed to register chat command.", overflowException );
 			}
 
 		}
 
 		public void UnregisterChatCommands( )
 		{
-			GuidAttribute guid = (GuidAttribute) Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof ( GuidAttribute ), true )[ 0 ];
+			GuidAttribute guid = (GuidAttribute)Assembly.GetCallingAssembly( ).GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 			Guid guidValue = new Guid( guid.Value );
 
 			List<ChatCommand> commandsToRemove = ( from entry in _chatCommands
-			                                       where entry.Value.Equals( guidValue )
-			                                       select entry.Key ).ToList( );
+												   where entry.Value.Equals( guidValue )
+												   select entry.Key ).ToList( );
 			foreach ( ChatCommand entry in commandsToRemove )
 			{
 				_chatCommands.Remove( entry );
@@ -471,7 +493,7 @@
 						{
 							if ( cubeBlock is MergeBlockEntity )
 							{
-								MergeBlockEntity block = (MergeBlockEntity) cubeBlock;
+								MergeBlockEntity block = (MergeBlockEntity)cubeBlock;
 								if ( block.IsAttached )
 								{
 									if ( !entitiesToDispose.Contains( block.AttachedCubeGrid ) )
@@ -483,7 +505,7 @@
 							}
 							if ( cubeBlock is PistonEntity )
 							{
-								PistonEntity block = (PistonEntity) cubeBlock;
+								PistonEntity block = (PistonEntity)cubeBlock;
 								CubeBlockEntity topBlock = block.TopBlock;
 								if ( topBlock != null )
 								{
@@ -496,7 +518,7 @@
 							}
 							if ( cubeBlock is RotorEntity )
 							{
-								RotorEntity block = (RotorEntity) cubeBlock;
+								RotorEntity block = (RotorEntity)cubeBlock;
 								CubeBlockEntity topBlock = block.TopBlock;
 								if ( topBlock != null )
 								{
@@ -544,36 +566,36 @@
 
 					int count = 0;
 					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-					                                                {
-						                                                HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
-						                                                MyAPIGateway.Entities.GetEntities( entities );
-						                                                List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
+																	{
+																		HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
+																		MyAPIGateway.Entities.GetEntities( entities );
+																		List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
 
-						                                                foreach ( IMyEntity entity in entities )
-						                                                {
-							                                                MyObjectBuilder_Base objectBuilder;
-							                                                try
-							                                                {
-								                                                objectBuilder = entity.GetObjectBuilder( );
-							                                                }
-							                                                catch
-							                                                {
-								                                                continue;
-							                                                }
+																		foreach ( IMyEntity entity in entities )
+																		{
+																			MyObjectBuilder_Base objectBuilder;
+																			try
+																			{
+																				objectBuilder = entity.GetObjectBuilder( );
+																			}
+																			catch
+																			{
+																				continue;
+																			}
 
-							                                                if ( objectBuilder is MyObjectBuilder_FloatingObject )
-							                                                {
-								                                                entitiesToRemove.Add( entity );
-							                                                }
-						                                                }
+																			if ( objectBuilder is MyObjectBuilder_FloatingObject )
+																			{
+																				entitiesToRemove.Add( entity );
+																			}
+																		}
 
-						                                                for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
-						                                                {
-							                                                IMyEntity entity = entitiesToRemove[ r ];
-							                                                MyAPIGateway.Entities.RemoveEntity( entity );
-							                                                count++;
-						                                                }
-					                                                } );
+																		for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
+																		{
+																			IMyEntity entity = entitiesToRemove[ r ];
+																			MyAPIGateway.Entities.RemoveEntity( entity );
+																			count++;
+																		}
+																	} );
 
 					SendPrivateChatMessage( remoteUserId, count + " floating objects have been removed" );
 				}
@@ -813,7 +835,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ChatLog.Error( ex );
 				}
 			}
 		}
@@ -859,7 +881,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ChatLog.Error( ex );
 				}
 			}
 		}
@@ -881,8 +903,8 @@
 				int entitiesStoppedCount = 0;
 				foreach ( BaseEntity entity in entities )
 				{
-					double linear = Math.Round( ( (Vector3) entity.LinearVelocity ).LengthSquared( ), 1 );
-					double angular = Math.Round( ( (Vector3) entity.AngularVelocity ).LengthSquared( ), 1 );
+					double linear = Math.Round( ( (Vector3)entity.LinearVelocity ).LengthSquared( ), 1 );
+					double angular = Math.Round( ( (Vector3)entity.AngularVelocity ).LengthSquared( ), 1 );
 
 					if ( linear > 0 || angular > 0 )
 					{
@@ -918,7 +940,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ChatLog.Error( ex );
 				}
 			}
 		}
@@ -1005,7 +1027,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ChatLog.Error( ex );
 				}
 			}
 		}
@@ -1055,7 +1077,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ChatLog.Error( ex );
 				}
 			}
 		}
@@ -1123,7 +1145,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ChatLog.Error( ex );
 				}
 			}
 		}
@@ -1169,19 +1191,19 @@
 					string whatToClear = commandParts[ 1 ].ToLower( );
 					if ( whatToClear == "productionqueue" && cubeBlock is ProductionBlockEntity )
 					{
-						ProductionBlockEntity block = (ProductionBlockEntity) cubeBlock;
+						ProductionBlockEntity block = (ProductionBlockEntity)cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
 					if ( whatToClear == "refineryqueue" && cubeBlock is RefineryEntity )
 					{
-						RefineryEntity block = (RefineryEntity) cubeBlock;
+						RefineryEntity block = (RefineryEntity)cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
 					if ( whatToClear == "assemblerqueue" && cubeBlock is AssemblerEntity )
 					{
-						AssemblerEntity block = (AssemblerEntity) cubeBlock;
+						AssemblerEntity block = (AssemblerEntity)cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
@@ -1206,42 +1228,42 @@
 			if ( whatToList == "all" )
 			{
 				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-				LogManager.APILog.WriteLineAndConsole( string.Format( "Total entities: '{0}'", entities.Count ) );
+				ServerLog.Info( "Total entities: '{0}'", entities.Count );
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Total entities: '{0}'", entities.Count ) );
 			}
 			if ( whatToList == "cubegrid" )
 			{
 				List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-				LogManager.APILog.WriteLineAndConsole( string.Format( "Cubegrid entities: '{0}'", entities.Count ) );
+				ServerLog.Info( "Cubegrid entities: '{0}'", entities.Count );
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Cubegrid entities: '{0}'", entities.Count ) );
 			}
 			if ( whatToList == "character" )
 			{
 				List<CharacterEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>( );
-				LogManager.APILog.WriteLineAndConsole( string.Format( "Character entities: '{0}'", entities.Count ) );
+				ServerLog.Info( "Character entities: '{0}'", entities.Count );
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Character entities: '{0}'", entities.Count ) );
 			}
 			if ( whatToList == "voxelmap" )
 			{
 				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
-				LogManager.APILog.WriteLineAndConsole( string.Format( "Voxelmap entities: '{0}'", entities.Count ) );
+				ServerLog.Info( "Voxelmap entities: '{0}'", entities.Count );
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Voxelmap entities: '{0}'", entities.Count ) );
 			}
 			if ( whatToList == "meteor" )
 			{
 				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );
-				LogManager.APILog.WriteLineAndConsole( string.Format( "Meteor entities: '{0}'", entities.Count ) );
+				ServerLog.Info( "Meteor entities: '{0}'", entities.Count );
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Meteor entities: '{0}'", entities.Count ) );
 			}
 			if ( whatToList == "floatingobject" )
 			{
 				List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>( );
-				LogManager.APILog.WriteLineAndConsole( string.Format( "Floating object entities: '{0}'", entities.Count ) );
+				ServerLog.Info( "Floating object entities: '{0}'", entities.Count );
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Floating object entities: '{0}'", entities.Count ) );
 			}
@@ -1284,7 +1306,7 @@
 					if ( whatToShutOff == "beacon" && cubeBlock is BeaconEntity )
 					{
 						functionalBlock.Enabled = false;
-						BeaconEntity beacon = (BeaconEntity) cubeBlock;
+						BeaconEntity beacon = (BeaconEntity)cubeBlock;
 						beacon.BroadcastRadius = 1;
 						poweredOffCount++;
 					}
@@ -1332,7 +1354,7 @@
 						continue;
 					}
 
-					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity) cubeBlock;
+					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
 
 					if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 					{
@@ -1548,54 +1570,54 @@
 			SendPrivateChatMessage( remoteUserId, string.Format( "Unbanned '{0}'", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].Name ) ) );
 		}
 
-		public class ChatCommand
+
+	}
+	public class ChatEvent
+	{
+		public string Message;
+		public ushort Priority;
+		public ulong RemoteUserId;
+		public ulong SourceUserId;
+		public DateTime Timestamp;
+		public ChatEventType Type;
+
+		public ChatEvent( ChatEventType type, DateTime timestamp, ulong sourceUserId, ulong remoteUserId, string message, ushort priority )
 		{
-			public Action<ChatEvent> Callback;
-			public string Command;
-			public bool RequiresAdmin;
-
-			public ChatCommand( )
-			{
-			}
-
-			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
-			{
-				Command = command;
-				Callback = callback;
-				RequiresAdmin = requiresAdmin;
-			}
+			Type = type;
+			Timestamp = timestamp;
+			SourceUserId = sourceUserId;
+			RemoteUserId = remoteUserId;
+			Message = message;
+			Priority = priority;
 		}
 
-		public class ChatEvent
+		public ChatEvent( DateTime timestamp, ulong remoteUserId, string message )
 		{
-			public string Message;
-			public ushort Priority;
-			public ulong RemoteUserId;
-			public ulong SourceUserId;
-			public DateTime Timestamp;
-			public ChatEventType Type;
+			Timestamp = timestamp;
+			RemoteUserId = remoteUserId;
+			Message = message;
 
-			public ChatEvent( ChatEventType type, DateTime timestamp, ulong sourceUserId, ulong remoteUserId, string message, ushort priority )
-			{
-				Type = type;
-				Timestamp = timestamp;
-				SourceUserId = sourceUserId;
-				RemoteUserId = remoteUserId;
-				Message = message;
-				Priority = priority;
-			}
+			//Defaults
+			Type = ChatEventType.OnChatReceived;
+			SourceUserId = 0;
+			Priority = 0;
+		}
+	}
+	public class ChatCommand
+	{
+		public Action<ChatEvent> Callback;
+		public string Command;
+		public bool RequiresAdmin;
 
-			public ChatEvent( DateTime timestamp, ulong remoteUserId, string message )
-			{
-				Timestamp = timestamp;
-				RemoteUserId = remoteUserId;
-				Message = message;
+		public ChatCommand( )
+		{
+		}
 
-				//Defaults
-				Type = ChatEventType.OnChatReceived;
-				SourceUserId = 0;
-				Priority = 0;
-			}
+		public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
+		{
+			Command = command;
+			Callback = callback;
+			RequiresAdmin = requiresAdmin;
 		}
 	}
 }

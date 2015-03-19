@@ -2,6 +2,6 @@
 {
 	public interface IPluginHook
 	{
-		void OnChatHook(ChatManager.ChatEvent chatEvent, object plugin, out bool discard);
+		void OnChatHook(ChatEvent chatEvent, object plugin, out bool discard);
 	}
 }

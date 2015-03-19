@@ -5,19 +5,20 @@ namespace SEModAPIInternal.Support
 	using System.Reflection;
 	using System.Text;
 	using System.Threading;
+	using NLog;
 	using SEModAPIInternal.API.Common;
-	using SysUtils.Utils;
 	using VRage.Common.Utils;
 
 	public class ApplicationLog
 	{
-		private static readonly object LogMutex = new object( );
 		private readonly bool _useInstancePath;
 		private StringBuilder _appVersion;
 		private FileInfo _filePath;
 		private bool _instanceMode;
 		private DirectoryInfo _libraryPath;
 		private string _logFileName;
+
+		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 
 		public ApplicationLog( bool useGamePath = false )
 		{
@@ -40,6 +41,21 @@ namespace SEModAPIInternal.Support
 					Directory.CreateDirectory( _libraryPath.ToString( ) );
 				}
 			}
+		}
+
+		public static void Info( string text )
+		{
+			BaseLog.Info( text );
+		}
+
+		public static void Error( string text, Exception ex )
+		{
+			BaseLog.Error( text, ex );
+		}
+
+		public static void Error( string text )
+		{
+			BaseLog.Error( text );
 		}
 
 		public bool LogEnabled { get { return _filePath != null; } }
@@ -74,181 +90,9 @@ namespace SEModAPIInternal.Support
 
 			int num = (int)Math.Round( ( DateTime.Now - DateTime.UtcNow ).TotalHours );
 
-			WriteLine( "Log Started" );
-			WriteLine( "Timezone (local - UTC): " + num + "h" );
-			WriteLine( "App Version: " + _appVersion );
-		}
-
-		/// <summary>
-		/// Writes a friendly message and an optional exception to the log file only.
-		/// </summary>
-		/// <param name="msg">A friendly message describing what is happening.</param>
-		/// <param name="ex">An exception to log. Will log a stack trace.</param>
-		public void WriteLine( string msg, Exception ex = null )
-		{
-			if ( _filePath == null )
-			{
-				return;
-			}
-
-			if ( _useInstancePath && !_instanceMode && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
-			{
-				_libraryPath = new DirectoryInfo( MyFileSystem.UserDataPath );
-
-				_instanceMode = true;
-
-				Init( _logFileName, _appVersion );
-			}
-
-			try
-			{
-				lock ( LogMutex )
-				{
-					using ( TextWriter writer = new StreamWriter( _filePath.ToString( ), true ) )
-					{
-						if ( ex == null )
-							TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}",
-																		 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-																		 GetThreadId( ),
-																		 msg );
-						else
-							TextWriter.Synchronized( writer ).WriteLine( "{0} - Thread: {1} -> {2}\r\n\tException: {3}",
-																		 DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-																		 GetThreadId( ),
-																		 msg,
-																		 ex );
-
-						writer.Close( );
-					}
-				}
-			}
-			catch ( Exception loggingException )
-			{
-				Console.WriteLine( "Failed to write to log: {0}", loggingException );
-			}
-		}
-
-		/// <summary>
-		/// Writes an exception to the log file only.
-		/// </summary>
-		/// <param name="ex">An exception to log. Will log a stack trace.</param>
-		public void WriteLine( Exception ex )
-		{
-			if ( _filePath == null )
-			{
-				return;
-			}
-
-			if ( ex == null )
-			{
-				return;
-			}
-
-			WriteLine( ex.ToString( ) );
-
-			if ( ex.InnerException == null )
-			{
-				return;
-			}
-
-			WriteLine( ex.InnerException );
-		}
-
-		/// <summary>
-		/// Writes an exception to the console and the log file.
-		/// </summary>
-		/// <param name="ex">An exception to log. Will log a stack trace.</param>
-		public void WriteLineAndConsole( Exception ex )
-		{
-			if ( _filePath == null )
-			{
-				return;
-			}
-
-			WriteLine( ex );
-
-			lock ( LogMutex )
-			{
-				try
-				{
-					Console.WriteLine( "{0} - {1}", DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ), ex );
-				}
-				catch ( IOException ioex )
-				{
-					WriteLine( ioex );
-				}
-			}
-		}
-
-		/// <summary>
-		/// Writes a friendly message and an optional exception to the console and the log file.
-		/// </summary>
-		/// <param name="msg">A friendly message describing what is happening.</param>
-		/// <param name="ex">An optional exception to log. Will log a stack trace.</param>
-		public void WriteLineAndConsole( string msg, Exception ex = null )
-		{
-			if ( _filePath == null )
-			{
-				return;
-			}
-
-			WriteLine( ex );
-
-			lock ( LogMutex )
-			{
-				try
-				{
-					if ( ex == null )
-						Console.WriteLine( "{0} - {1}",
-										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-										   msg );
-					else
-						Console.WriteLine( "{0} - {1}\r\n\tException: {2}",
-										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-										   msg,
-										   ex );
-				}
-				catch ( IOException ioex )
-				{
-					WriteLine( ioex );
-				}
-			}
-		}
-
-
-		/// <summary>
-		/// Writes a friendly message and an optional exception to the console and the log file.
-		/// </summary>
-		/// <param name="msg">A friendly message describing what is happening.</param>
-		/// <param name="ex">An optional exception to log. Will log a stack trace.</param>
-		public void WriteLineAndConsole( string msg, Exception ex = null, params object[ ] args )
-		{
-			if ( _filePath == null )
-			{
-				return;
-			}
-
-			WriteLine( ex );
-
-			lock ( LogMutex )
-			{
-				try
-				{
-					if ( ex == null )
-						Console.WriteLine( "{0} - {1}",
-										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-										   string.Format( msg, args ) );
-					else
-						Console.WriteLine( "{0} - {1}\r\n\tException: {2}",
-										   DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff" ),
-										   string.Format( msg, args ),
-										   ex );
-				}
-				catch ( IOException ioex )
-				{
-					WriteLine( ioex );
-				}
-			}
+			BaseLog.Info( "Log Started" );
+			BaseLog.Info( "Timezone (local - UTC): " + num + "h" );
+			BaseLog.Info( "App Version: " + _appVersion );
 		}
 
 		private static int GetThreadId( )

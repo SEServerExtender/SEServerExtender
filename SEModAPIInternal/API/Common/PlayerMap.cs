@@ -178,7 +178,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			_instance = this;
 
-			Console.WriteLine( "Finished loading PlayerMap" );
+			ApplicationLog.BaseLog.Info( "Finished loading PlayerMap" );
 		}
 
 		#endregion
@@ -229,7 +229,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -317,7 +317,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return playerItem;
@@ -340,7 +340,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLine( ex );
+					ApplicationLog.BaseLog.Error( ex );
 				}
 			}
 
@@ -379,7 +379,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex.ToString( ) );
+				ApplicationLog.BaseLog.Error( ex.ToString( ) );
 			}
 			return result;
 		}
@@ -408,7 +408,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 
 			return matchingPlayerIds;
@@ -461,7 +461,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "RemovePlayer(): {0}", ex ) );
+				ApplicationLog.BaseLog.Error( string.Format( "RemovePlayer(): {0}", ex ) );
 			}
 		}
 
@@ -482,7 +482,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "ClearCameraData(): {0}", ex ) );
+				ApplicationLog.BaseLog.Error( string.Format( "ClearCameraData(): {0}", ex ) );
 			}
 		}
 
@@ -497,7 +497,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new Dictionary<long, Object>( );
 			}
 		}
@@ -512,7 +512,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new Dictionary<object, long>( );
 			}
 		}
@@ -595,7 +595,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex.ToString( ) );
+				ApplicationLog.BaseLog.Error( ex.ToString( ) );
 				return new List<InternalPlayerItem>( );
 			}
 		}
@@ -660,7 +660,7 @@ namespace SEModAPIInternal.API.Common
             }
             catch (Exception ex)
             {
-                LogManager.ErrorLog.WriteLine(ex);
+                ApplicationLog.BaseLog.Error(ex);
                 return null;
             }
         }
@@ -675,7 +675,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return 0;
 			}
 		}
@@ -692,7 +692,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return 0;
 			}
 		}
@@ -706,7 +706,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return new SerializableDictionary<long, ulong>();
 			}
 		}
@@ -722,7 +722,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return new Dictionary<long, Object>();
 			}
 		}

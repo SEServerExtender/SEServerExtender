@@ -229,7 +229,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -249,7 +249,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return new List<ulong>( );
 			}
 		}
@@ -265,7 +265,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -279,7 +279,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -296,7 +296,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -312,7 +312,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -332,7 +332,7 @@
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( string.Format( "SendCloseEntity({1}): {0}", ex, pos ) );
+				ApplicationLog.BaseLog.Error( string.Format( "SendCloseEntity({1}): {0}", ex, pos ) );
 			}
 		}
 
@@ -415,32 +415,32 @@
 			}
 			catch ( TargetInvocationException targetInvocationException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to show respawn menu.", targetInvocationException );
+				ApplicationLog.BaseLog.Error( "Unable to show respawn menu.", targetInvocationException );
 				return;
 			}
 			catch ( MethodAccessException methodAccessException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to show respawn menu.", methodAccessException );
+				ApplicationLog.BaseLog.Error( "Unable to show respawn menu.", methodAccessException );
 				return;
 			}
 			catch ( MemberAccessException memberAccessException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to show respawn menu.", memberAccessException );
+				ApplicationLog.BaseLog.Error( "Unable to show respawn menu.", memberAccessException );
 				return;
 			}
 			catch ( InvalidComObjectException invalidComObjectException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to show respawn menu.", invalidComObjectException );
+				ApplicationLog.BaseLog.Error( "Unable to show respawn menu.", invalidComObjectException );
 				return;
 			}
 			catch ( COMException comException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to show respawn menu.", comException );
+				ApplicationLog.BaseLog.Error( "Unable to show respawn menu.", comException );
 				return;
 			}
 			catch ( TypeLoadException typeLoadException )
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to show respawn menu.", typeLoadException );
+				ApplicationLog.BaseLog.Error( "Unable to show respawn menu.", typeLoadException );
 				return;
 			}
 
@@ -612,7 +612,7 @@
 
 						if ( !connectedList.Contains( player ) )
 						{
-							LogManager.APILog.WriteLineAndConsole( "Removing User - Clear Response" );
+							ApplicationLog.BaseLog.Info( "Removing User - Clear Response" );
 							ClearResponse.Remove( player );
 							continue;
 						}
@@ -640,7 +640,7 @@
 									throw new SynchronizationLockException( );
 								}
 
-								LogManager.APILog.WriteLineAndConsole( string.Format( "Sending world data.  Throttle: {0}", shouldSlowDown ) );
+								ApplicationLog.BaseLog.Info( string.Format( "Sending world data.  Throttle: {0}", shouldSlowDown ) );
 								SendWorldData( player );
 
 								if ( Monitor.TryEnter( SlowDown, 17 ) )
@@ -660,9 +660,9 @@
 									throw new SynchronizationLockException( );
 								}
 							}
-							catch
+							catch(Exception ex)
 							{
-								LogManager.APILog.WriteLineAndConsole( "Error sending world data to user.  User must retry" );
+								ApplicationLog.BaseLog.Error( "Error sending world data to user.  User must retry", ex );
 							}
 						} );
 					}
@@ -686,7 +686,7 @@
 
 							if ( !connectedList.Contains( player ) )
 							{
-								LogManager.APILog.WriteLineAndConsole( "Removing user - Ingame / Downloading" );
+								ApplicationLog.BaseLog.Info( "Removing user - Ingame / Downloading" );
 								InGame.Remove( player );
 								continue;
 							}
@@ -697,7 +697,7 @@
 				}
 				catch ( Exception ex )
 				{
-					LogManager.ErrorLog.WriteLineAndConsole( string.Format( "World Request Response Error: {0}", ex ) );
+					ApplicationLog.BaseLog.Error( string.Format( "World Request Response Error: {0}", ex ) );
 				}
 			}
 		}
@@ -712,7 +712,7 @@
 				if ( MyAPIGateway.Session != null )
 				{
 					DateTime start = DateTime.Now;
-					LogManager.APILog.WriteLineAndConsole( string.Format( "...responding to user: {0}", steamId ) );
+					ApplicationLog.BaseLog.Info( "...responding to user: {0}", steamId );
 					SendPreamble( steamId, 1 );
 					SendFlush( steamId );
 
@@ -723,7 +723,7 @@
 					{
 						if ( !InGame.Contains( steamId ) )
 						{
-							LogManager.APILog.WriteLineAndConsole( string.Format( "Cancelled send to user: {0}", steamId ) );
+							ApplicationLog.BaseLog.Info( "Cancelled send to user: {0}", steamId );
 							return;
 						}
 					}
@@ -768,14 +768,14 @@
 					checkpoint.CharacterToolbar = null;
 					DateTime cs = DateTime.Now;
 					MyObjectBuilderSerializer.SerializeXML( ms, myObjectBuilderWorld, MyObjectBuilderSerializer.XmlCompression.Gzip, null );
-					LogManager.APILog.WriteLineAndConsole( string.Format( "...response construction took {0}ms (cp - {1}ms)", ( DateTime.Now - start ).TotalMilliseconds, ( DateTime.Now - cs ).TotalMilliseconds ) );
+					ApplicationLog.BaseLog.Info( "...response construction took {0}ms (cp - {1}ms)", ( DateTime.Now - start ).TotalMilliseconds, ( DateTime.Now - cs ).TotalMilliseconds );
 				}
 
 				TransferWorld( ms, steamId );
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLineAndConsole( string.Format( "SendWorldData Error: {0}", ex ) );
+				ApplicationLog.BaseLog.Error( "SendWorldData Error: {0}", ex );
 			}
 		}
 
@@ -832,7 +832,7 @@
 					{
 						if ( !InGame.Contains( steamId ) )
 						{
-							LogManager.APILog.WriteLineAndConsole( string.Format( "Interrupted send to user: {0} ({1} - {2})", steamId, size, count ) );
+							ApplicationLog.BaseLog.Warn( "Interrupted send to user: {0} ({1} - {2})", steamId, size, count );
 							break;
 						}
 					}
@@ -841,11 +841,11 @@
 				if ( InGame.Contains( steamId ) )
 					TriggerWorldSendEvent( steamId );
 
-				LogManager.APILog.WriteLineAndConsole( string.Format( "World Snapshot Send -> {0} ({2} - {3}): {1}ms", steamId, ( DateTime.Now - start ).TotalMilliseconds, size, count ) );
+				ApplicationLog.BaseLog.Info( "World Snapshot Send -> {0} ({2} - {3}): {1}ms", steamId, ( DateTime.Now - start ).TotalMilliseconds, size, count );
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLineAndConsole( string.Format( "TransferWorld Error: {0}", ex ) );
+				ApplicationLog.BaseLog.Error( "TransferWorld Error: {0}", ex );
 			}
 		}
 

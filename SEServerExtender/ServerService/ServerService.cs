@@ -25,10 +25,10 @@
 		/// <remarks>Should not be called if a server is already running for this instance of SESE.</remarks>
 		public StartServerResponse StartServer( StartServerRequest request )
 		{
-			LogManager.APILog.WriteLineAndConsole( "Received request to start server via WCF" );
+			ApplicationLog.BaseLog.Info( "Received request to start server via WCF" );
 			if ( Program.ServerExtenderForm != null && Program.ServerExtenderForm.Visible )
 			{
-				LogManager.APILog.WriteLineAndConsole( "Ignoring WCF StartServer request because GUI is active." );
+				ApplicationLog.BaseLog.Info( "Ignoring WCF StartServer request because GUI is active." );
 				//If the local GUI is running, indicate failure for that reason.
 				return new StartServerResponse
 					   {
@@ -60,12 +60,12 @@
 				}
 				else
 				{
-					LogManager.ErrorLog.WriteLineAndConsole( "Unable to start server. Config null." );
+					ApplicationLog.BaseLog.Error( "Unable to start server. Config null." );
 				}
 			}
 			else
 			{
-				LogManager.ErrorLog.WriteLineAndConsole( "Unable to start server. Server null." );
+				ApplicationLog.BaseLog.Error( "Unable to start server. Server null." );
 			}
 
 			return new StartServerResponse
@@ -82,7 +82,7 @@
 		/// </summary>
 		public void StopServer( )
 		{
-			LogManager.APILog.WriteLineAndConsole( "Received request to stop server via WCF" );
+			ApplicationLog.BaseLog.Info( "Received request to stop server via WCF" );
 			if ( Program.Server == null )
 				return;
 			if ( !Program.Server.IsRunning )
@@ -102,7 +102,7 @@
 		public IEnumerable<ChatUserItem> GetPlayersOnline( )
 		{
 			string ip = GetRemoteEndpoint( );
-			LogManager.APILog.WriteLineAndConsole( "Received character list request from {0}", null, ip );
+			ApplicationLog.BaseLog.Info( "Received character list request from {0}", null, ip );
 			List<ulong> playersOnline = PlayerManager.Instance.ConnectedPlayers;
 			return playersOnline.Select( remoteUserId => new ChatUserItem { Username = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId ), SteamId = remoteUserId } );
 		}
@@ -119,21 +119,21 @@
 		public void KickPlayer( ulong steamId )
 		{
 			string ip = GetRemoteEndpoint( );
-			LogManager.APILog.WriteLineAndConsole( "Received request to kick player {0} from {1}", null, steamId, ip );
+			ApplicationLog.BaseLog.Info( "Received request to kick player {0} from {1}", null, steamId, ip );
 			PlayerManager.Instance.KickPlayer( steamId );
 		}
 
 		public void BanPlayer( ulong steamId )
 		{
 			string ip = GetRemoteEndpoint( );
-			LogManager.APILog.WriteLineAndConsole( "Received request to ban player {0} from {1}", null, steamId, ip );
+			ApplicationLog.BaseLog.Info( "Received request to ban player {0} from {1}", null, steamId, ip );
 			PlayerManager.Instance.BanPlayer( steamId );
 		}
 
 		public void UnBanPlayer( ulong steamId )
 		{
 			string ip = GetRemoteEndpoint( );
-			LogManager.APILog.WriteLineAndConsole( "Received request to un-ban player {0} from {1}", null, steamId, ip );
+			ApplicationLog.BaseLog.Info( "Received request to un-ban player {0} from {1}", null, steamId, ip );
 			PlayerManager.Instance.UnBanPlayer( steamId );
 		}
 	}

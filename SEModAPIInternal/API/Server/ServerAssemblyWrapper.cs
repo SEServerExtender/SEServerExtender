@@ -10,7 +10,6 @@ using Sandbox.Audio;
 using Sandbox.Input;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
 using SteamSDK;
 using SysUtils.Utils;
 using VRage.Common.Plugins;
@@ -18,10 +17,13 @@ using VRage.Common.Utils;
 
 namespace SEModAPIInternal.API.Server
 {
+	using System.Threading.Tasks;
+	using NLog;
+	using NLog.Targets;
+	using SEModAPIInternal.Support;
+
 	public class ServerAssemblyWrapper
 	{
-		#region "Attributes"
-
 		private static ServerAssemblyWrapper _instance;
 		private static Assembly _assembly;
 		//private static AppDomain _domain;
@@ -30,8 +32,6 @@ namespace SEModAPIInternal.API.Server
 		public static string DedicatedServerClass = "49BCFF86BA276A9C7C0D269C2924DE2D";
 
 		public static string DedicatedServerStartupBaseMethod = "26A7ABEA729FAE1F24679E21470F8E98";
-
-		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
@@ -48,27 +48,12 @@ namespace SEModAPIInternal.API.Server
 			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineersDedicated.exe" );
 			_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
 
-			/*
-			byte[] b = File.ReadAllBytes(assemblyPath);
-			Assembly rawServerAssembly = Assembly.Load(b);
-			_domain = AppDomain.CreateDomain("Server Domain");
-			_assembly = _domain.Load(rawServerAssembly.GetName());
-			*/
-
-			Console.WriteLine( "Finished loading ServerAssemblyWrapper" );
+			ApplicationLog.BaseLog.Info( "Finished loading ServerAssemblyWrapper" );
 		}
 
 		#endregion "Constructors and Initializers"
 
 		#region "Properties"
-
-		//public static AppDomain ServerDomain
-		//{
-		//	get
-		//	{
-		//		return _domain;
-		//	}
-		//}
 
 		public static ServerAssemblyWrapper Instance
 		{
@@ -108,7 +93,7 @@ namespace SEModAPIInternal.API.Server
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -209,8 +194,7 @@ namespace SEModAPIInternal.API.Server
 
 				//Prepare the parameters
 				bool isUsingInstance = instanceName != string.Empty;
-				object[ ] methodParams = new object[ ]
-				{
+				object[ ] methodParams = {
 					instanceName,
 					overridePath,
 					isUsingInstance,
@@ -225,45 +209,25 @@ namespace SEModAPIInternal.API.Server
 			}
 			catch ( Win32Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Win32Exception - Server crashed" );
-
-				LogManager.APILog.WriteLine( ex );
-				LogManager.APILog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
-				LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 
 				return false;
 			}
 			catch ( ExternalException ex )
 			{
-				LogManager.APILog.WriteLine( "ExternalException - Server crashed" );
-
-				LogManager.APILog.WriteLine( ex );
-				LogManager.APILog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
-				LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 
 				return false;
 			}
 			catch ( TargetInvocationException ex )
 			{
-				LogManager.APILog.WriteLine( "TargetInvocationException - Server crashed" );
-
-				LogManager.APILog.WriteLine( ex );
-				LogManager.APILog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
-				LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 
 				return false;
 			}
 			catch ( Exception ex )
 			{
-				LogManager.APILog.WriteLine( "Exception - Server crashed" );
-
-				LogManager.APILog.WriteLine( ex );
-				LogManager.APILog.WriteLine( Environment.StackTrace );
-				LogManager.ErrorLog.WriteLine( ex );
-				LogManager.ErrorLog.WriteLine( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( ex );
 
 				return false;
 			}
@@ -298,16 +262,10 @@ namespace SEModAPIInternal.API.Server
 				*/
 				Object mainGame = SandboxGameAssemblyWrapper.MainGame;
 				BaseObject.InvokeEntityMethod( mainGame, "Dispose" );
-
-				/*
-				Reset();
-				AppDomain.Unload(_domain);
-				_domain = null;
-				 */
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

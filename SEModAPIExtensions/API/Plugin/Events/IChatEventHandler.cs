@@ -2,7 +2,7 @@
 {
 	public interface IChatEventHandler
 	{
-		void OnChatReceived(ChatManager.ChatEvent chatEvent);
-		void OnChatSent(ChatManager.ChatEvent chatEvent);
+		void OnChatReceived(ChatEvent chatEvent);
+		void OnChatSent(ChatEvent chatEvent);
 	}
 }

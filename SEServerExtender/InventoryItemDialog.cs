@@ -94,7 +94,7 @@ namespace SEServerExtender
 				}
 				catch (Exception ex)
 				{
-					LogManager.ErrorLog.WriteLine(ex);
+					ApplicationLog.BaseLog.Error(ex);
 					return 0;
 				}
 			}
@@ -124,7 +124,7 @@ namespace SEServerExtender
 			}
 			catch (Exception ex)
 			{
-				LogManager.ErrorLog.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 			}
 		}
 

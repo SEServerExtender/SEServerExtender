@@ -100,7 +100,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( TypeLoadException ex )
 			{
-				LogManager.APILog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -139,7 +139,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -176,7 +176,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				if ( RawDataHashSetResourceLock.Owned )
 					RawDataHashSetResourceLock.ReleaseExclusive( );
 			}
@@ -231,7 +231,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch ( Exception ex )
 					{
-						LogManager.ErrorLog.WriteLine( ex );
+						ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 
@@ -245,13 +245,13 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch ( Exception ex )
 					{
-						LogManager.ErrorLog.WriteLine( ex );
+						ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -265,7 +265,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					Console.WriteLine( "{0} '{1}' is being added...", entity.GetType( ).Name, entity.Name );
+					ApplicationLog.BaseLog.Debug( "{0} '{1}' is being added...", entity.GetType( ).Name, entity.Name );
 
 				AddEntityQueue.Enqueue( entity );
 
@@ -274,7 +274,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -288,7 +288,7 @@ namespace SEModAPIInternal.API.Entity
 				BaseEntity entityToAdd = AddEntityQueue.Dequeue( );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					Console.WriteLine( "{0} '{0}': Adding to scene...", entityToAdd.GetType( ).Name );
+					ApplicationLog.BaseLog.Debug( "{0} '{0}': Adding to scene...", entityToAdd.GetType( ).Name );
 
 				//Create the backing object
 				Type entityType = entityToAdd.GetType( );
@@ -315,8 +315,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch ( Exception ex )
 					{
-						LogManager.APILog.WriteLineAndConsole( "Failed to broadcast new floating object" );
-						LogManager.ErrorLog.WriteLine( ex );
+						ApplicationLog.BaseLog.Error( "Failed to broadcast new floating object", ex );
 					}
 				}
 				else
@@ -332,20 +331,19 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch ( Exception ex )
 					{
-						LogManager.APILog.WriteLineAndConsole( "Failed to broadcast new entity" );
-						LogManager.ErrorLog.WriteLine( ex );
+						ApplicationLog.BaseLog.Error( "Failed to broadcast new entity", ex );
 					}
 				}
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
 					Type type = entityToAdd.GetType( );
-					Console.WriteLine( "{0} '{1}': Finished adding to scene", type.Name, entityToAdd.Name );
+					ApplicationLog.BaseLog.Debug( "{0} '{1}': Finished adding to scene", type.Name, entityToAdd.Name );
 				}
 			}
 			catch ( Exception ex )
 			{
-				LogManager.ErrorLog.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
