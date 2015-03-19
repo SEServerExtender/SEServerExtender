@@ -17,9 +17,6 @@ using VRage.Common.Utils;
 
 namespace SEModAPIInternal.API.Server
 {
-	using System.Threading.Tasks;
-	using NLog;
-	using NLog.Targets;
 	using SEModAPIInternal.Support;
 
 	public class ServerAssemblyWrapper
@@ -126,7 +123,7 @@ namespace SEModAPIInternal.API.Server
 				{
 					//MyGuiGameControlsHelpers.UnloadContent( );
 				}
-				 */ 
+				 */
 			}
 			catch ( Exception )
 			{
@@ -221,7 +218,9 @@ namespace SEModAPIInternal.API.Server
 			}
 			catch ( TargetInvocationException ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//Generally, we won't log this, since it will always be thrown on server stop.
+				if ( ApplicationLog.BaseLog.IsTraceEnabled )
+					ApplicationLog.BaseLog.Trace( ex );
 
 				return false;
 			}
