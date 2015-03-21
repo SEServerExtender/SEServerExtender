@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -14,10 +14,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private RadioManager m_radioManager;
 
-		public static string BeaconNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string BeaconClass = "BF2916D43CF7F023839AD13F50F31990";
+		public static string BeaconNamespace = "";
+		public static string BeaconClass = "=TuRG2bDnpLfkPdaN8Nr22GzDoH=";
 
-		public static string BeaconGetRadioManagerMethod = "A80801D0C8F1D45AB0E81B934FB5EF90";
+		public static string BeaconGetRadioManagerMethod = "get_RadioBroadcaster";
 
 		#endregion "Attributes"
 

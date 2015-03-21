@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -17,8 +17,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private InventoryItemEntity m_item;
 		private static Type m_internalType;
 
-		public static string MeteorNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string MeteorClass = "E5A0E3F04CC6DEFB7410825523C63704";
+		public static string MeteorNamespace = "";
+		public static string MeteorClass = "Sandbox.Game.Entities.MyMeteor";
 
 		#endregion "Attributes"
 

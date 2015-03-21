@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
 
@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string ReflectorLightNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ReflectorLightClass = "21308EE2FF83128D511F35390DB03784";
+		public static string ReflectorLightNamespace = "";
+		public static string ReflectorLightClass = "=LI5taOob2o87FserNhrJciGlxO=";
 
 		#endregion "Attributes"
 

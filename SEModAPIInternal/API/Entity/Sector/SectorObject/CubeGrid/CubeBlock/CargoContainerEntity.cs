@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -6,16 +6,15 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	using System.Linq;
-	using Sandbox.ModAPI;
-
-	[DataContract]
+	[DataContract( Name = "CargoContainerEntityProxy" )]
 	public class CargoContainerEntity : TerminalBlockEntity
 	{
 		#region "Attributes"
 
-		public static string CargoContainerNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string CargoContainerClass = "0B52AF23069247D1A6D57F957ED070E3";
+		private InventoryEntity m_Inventory;
+
+		public static string CargoContainerNamespace = "";
+		public static string CargoContainerClass = "=oYFCJscKDsNLb5ixFZYeII2thY=";
 
 		public static string CargoContainerGetInventoryMethod = "GetInventory";
 
@@ -26,13 +25,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public CargoContainerEntity( CubeGridEntity parent, MyObjectBuilder_CargoContainer definition )
 			: base( parent, definition )
 		{
-			Inventory = new InventoryEntity( definition.Inventory );
+			m_Inventory = new InventoryEntity( definition.Inventory );
 		}
 
 		public CargoContainerEntity( CubeGridEntity parent, MyObjectBuilder_CargoContainer definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			Inventory = new InventoryEntity( definition.Inventory, InternalGetContainerInventory( ) );
+			m_Inventory = new InventoryEntity( definition.Inventory, InternalGetContainerInventory( ) );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -65,7 +64,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[DataMember]
 		[Category( "Cargo Container" )]
 		[Browsable( false )]
-		public InventoryEntity Inventory { get; private set; }
+		public InventoryEntity Inventory
+		{
+			get
+			{
+				return m_Inventory;
+			}
+			private set
+			{
+				//Do nothing!
+			}
+		}
 
 		[IgnoreDataMember]
 		[Category( "Cargo Container" )]
@@ -73,7 +82,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			get
 			{
-				return ObjectBuilder.Inventory.Items.Sum( item => item.Amount.RawValue );
+				long count = 0;
+				foreach ( MyObjectBuilder_InventoryItem item in ObjectBuilder.Inventory.Items )
+				{
+					count += item.Amount.RawValue;
+				}
+				return count;
 			}
 		}
 
@@ -117,6 +131,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
+				Object baseObject = BackingObject;
 				Object actualObject = GetActualObject( );
 				Object inventory = InvokeEntityMethod( actualObject, CargoContainerGetInventoryMethod, new object[ ] { 0 } );
 

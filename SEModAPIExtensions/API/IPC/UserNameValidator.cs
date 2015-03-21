@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IdentityModel.Selectors;
 using System.ServiceModel;
 

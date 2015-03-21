@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -12,10 +12,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string GravitySphereNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string GravitySphereClass = "7A213631DF7D41E1073CC5A0B88C2411";
+		public static string GravitySphereNamespace = "";
+		public static string GravitySphereClass = "=H4poEFhzHwlXDXKvslKQChDub8=";
 
-		public static string GravitySphereSetFieldRadiusMethod = "72427BC45A87B1130BF96C0306A88317";
+		public static string GravitySphereSetFieldRadiusMethod = "set_Radius";
 
 		#endregion "Attributes"
 

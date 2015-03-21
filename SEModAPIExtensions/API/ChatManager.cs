@@ -1,4 +1,33 @@
-﻿namespace SEModAPIExtensions.API
+﻿﻿using SteamSDK;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.ServiceModel;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Xml;
+
+using Sandbox.Common.ObjectBuilders;
+
+using SEModAPIInternal.API.Server;
+using SEModAPIInternal.API.Common;
+using SEModAPIInternal.API.Entity;
+using SEModAPIInternal.API.Entity.Sector.SectorObject;
+using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+using SEModAPIInternal.Support;
+
+using VRage;
+using VRage.Common.Utils;
+using VRageMath;
+using VRage.Library.Utils;
+
+using Sandbox.ModAPI;
+
+namespace SEModAPIExtensions.API
 {
 	using System;
 	using System.Collections.Generic;
@@ -39,15 +68,11 @@
 		private static FastResourceLock _resourceLock;
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ChatMessageStructNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string ChatMessageStructClass = "12AEE9CB08C9FC64151B8A094D6BB668";
-		public static string ChatMessageMessageField = "EDCBEBB604B287DFA90A5A46DC7AD28D";
-		private readonly Dictionary<ChatCommand, Guid> _chatCommands;
-		private readonly List<ChatEvent> _chatEvents;
+		public static string ChatMessageStructNamespace = "";
+		public static string ChatMessageStructClass = "=0s41V8Fjmi5UgTia9mpcSpmVb6=";
 
-		private static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
-		private static readonly Logger ServerLog = LogManager.GetLogger( "ServerLog" );
-		private static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
+		public static string ChatMessageMessageField = "=1E7qaeCHzjZbPzDjaRW5iq5d10=";
+
 
 		protected ChatManager( )
 		{

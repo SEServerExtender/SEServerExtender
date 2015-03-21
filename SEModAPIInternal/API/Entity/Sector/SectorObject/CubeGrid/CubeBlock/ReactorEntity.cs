@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -17,11 +17,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private float m_maxPowerOutput;
 		private DateTime m_lastInventoryRefresh;
 
-		public static string ReactorNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string ReactorClass = "714451095FE0D12C399607EAC612A6FE";
+		public static string ReactorNamespace = "";
+		public static string ReactorClass = "=8zjCx0ti2Bhb0pNnUuSZ3jChGV=";
 
 		public static string ReactorGetInventoryMethod = "GetInventory";
-		public static string ReactorSetMaxPowerOutputMethod = "3AE8807920F62F546CE2319D282975B2";
+		public static string ReactorSetMaxPowerOutputMethod = "set_MaxPowerOutput";
 
 		#endregion "Attributes"
 

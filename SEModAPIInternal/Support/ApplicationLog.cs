@@ -7,7 +7,7 @@ namespace SEModAPIInternal.Support
 	using System.Threading;
 	using NLog;
 	using SEModAPIInternal.API.Common;
-	using VRage.Common.Utils;
+	using VRage.Library.Utils;
 
 	public class ApplicationLog
 	{

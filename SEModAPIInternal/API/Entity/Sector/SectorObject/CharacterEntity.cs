@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -11,7 +11,7 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract]
+	[DataContract( Name = "CharacterEntityProxy" )]
 	public class CharacterEntity : BaseEntity
 	{
 		#region "Attributes"
@@ -20,30 +20,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private InventoryEntity m_inventory;
 		private static Type m_internalType;
 
-		public static string CharacterNamespace = "F79C930F3AD8FDAF31A59E2702EECE70";
-		public static string CharacterClass = "3B71F31E6039CAE9D8706B5F32FE468D";
+		public static string CharacterNamespace = "";
+		public static string CharacterClass = "Sandbox.Game.Entities.Character.MyCharacter";
 
-		public static string CharacterGetHealthMethod = "7047AFF5D44FC8A44572E92DBAD13011";
+		public static string CharacterGetHealthMethod = "get_Health";
 
 		//		public static string CharacterDamageCharacterMethod = "DoDamage"; //
-		public static string CharacterDamageCharacterMethod = "CF6EEF37B5AE4047E65CA4A0BB43F774";
+		public static string CharacterDamageCharacterMethod = "DoDamage";
 
-		public static string CharacterSetHealthMethod = "92A0500FD8772AB1AC3A6F79FD2A1C72";
-		public static string CharacterGetBatteryMethod = "CF72A89940254CB8F535F177150FC743";
+		public static string CharacterSetHealthMethod = "AddHealth";
+		public static string CharacterGetBatteryMethod = "get_SuitBattery";
 		public static string CharacterGetInventoryMethod = "GetInventory";
-		public static string CharacterGetDisplayNameMethod = "DB913685BC5152DC19A4796E9E8CF659";
-		public static string CharacterGetNetworkManagerMethod = "7605238EEE4275E4AD5608E7BD34D9C2";
+		public static string CharacterGetDisplayNameMethod = "get_DisplayName";
+		public static string CharacterGetNetworkManagerMethod = "get_SyncObject";
 
-		public static string CharacterItemListField = "02F6468D864F3203482135334BEB58AD";
+		public static string CharacterItemListField = "m_inventoryResults";
 
 		///////////////////////////////////////////////////////////
 
-		public static string CharacterBatteryNamespace = "FB8C11741B7126BD9C97FE76747E087F";
-		public static string CharacterBatteryClass = "328929D5EC05DF770D51383F6FC0B025";
+		public static string CharacterBatteryNamespace = "";
+		public static string CharacterBatteryClass = "=5gBNkgv53FoJ8FAvzAXRggJ6nm=";
 
-		public static string CharacterBatterySetBatteryCapacityMethod = "C3BF60F3540A8A48CB8FEE0CDD3A95C6";
+		public static string CharacterBatterySetBatteryCapacityMethod = "set_RemainingCapacity";
 
-		public static string CharacterBatteryCapacityField = "0BAEC0F968A4BEAE30E7C46D9406765C";
+		public static string CharacterBatteryCapacityField = "=QeE0wGdUdldFfmabysIgxC6YCB=";
 
 		#endregion "Attributes"
 
@@ -87,7 +87,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get { return m_internalType ?? ( m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterNamespace, CharacterClass ) ); }
+			get
+			{
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterNamespace, CharacterClass );
+				return m_internalType;
+			}
 		}
 
 		[DataMember]
@@ -122,11 +127,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
-		[IgnoreDataMember]
+		[DataMember]
 		[Category( "Character" )]
 		[Browsable( false )]
 		[ReadOnly( true )]
-		public new MyObjectBuilder_Character ObjectBuilder
+		internal new MyObjectBuilder_Character ObjectBuilder
 		{
 			get
 			{
@@ -288,20 +293,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( type == null )
 					throw new Exception( "Could not find internal type for CharacterEntity" );
 				bool result = true;
-				result &= HasMethod( type, CharacterGetHealthMethod );
-				result &= HasMethod( type, CharacterDamageCharacterMethod );
-				result &= HasMethod( type, CharacterSetHealthMethod );
-				result &= HasMethod( type, CharacterGetBatteryMethod );
-				result &= HasMethod( type, CharacterGetInventoryMethod );
-				result &= HasMethod( type, CharacterGetDisplayNameMethod );
-				result &= HasMethod( type, CharacterGetNetworkManagerMethod );
-				result &= HasField( type, CharacterItemListField );
+				result &= BaseObject.HasMethod( type, CharacterGetHealthMethod );
+				result &= BaseObject.HasMethod( type, CharacterDamageCharacterMethod );
+				result &= BaseObject.HasMethod( type, CharacterSetHealthMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetBatteryMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetInventoryMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetDisplayNameMethod );
+				result &= BaseObject.HasMethod( type, CharacterGetNetworkManagerMethod );
+				result &= BaseObject.HasField( type, CharacterItemListField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterBatteryNamespace, CharacterBatteryClass );
 				if ( type2 == null )
 					throw new Exception( "Could not find battery type for CharacterEntity" );
-				result &= HasMethod( type2, CharacterBatterySetBatteryCapacityMethod );
-				result &= HasField( type2, CharacterBatteryCapacityField );
+				result &= BaseObject.HasMethod( type2, CharacterBatterySetBatteryCapacityMethod );
+				result &= BaseObject.HasField( type2, CharacterBatteryCapacityField );
 
 				return result;
 			}
@@ -314,9 +319,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public override void Dispose( )
 		{
-			MIsDisposed = true;
+			m_isDisposed = true;
 
-			ApplicationLog.BaseLog.Debug( "Disposing CharacterEntity '{0}'", Name );
+			ApplicationLog.BaseLog.Debug( "Disposing CharacterEntity '" + Name + "'" );
 
 			EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 			newEvent.type = EntityEventManager.EntityEventType.OnCharacterDeleted;
@@ -445,8 +450,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private CharacterEntity m_parent;
 		private Object m_backingObject;
 
-		public static string CharacterNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
-		public static string CharacterNetManagerClass = "FA70B722FFD1F55F5A5019DA2499E60B";
+		public static string CharacterNetManagerNamespace = "";
+		public static string CharacterNetManagerClass = "=2f1qCclG2slBN6Vw5QbX1zDIG6=";
 
 		//Packets
 		//2
@@ -527,7 +532,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				packetType = InternalType.GetNestedType("06F1DF314B7D765E189DFBBF84C09B00", BindingFlags.Public | BindingFlags.NonPublic);
 				method = typeof(CharacterEntityNetworkManager).GetMethod("ReceiveOrientationPacket", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 				result &= NetworkManager.RegisterCustomPacketHandler(PacketRegistrationType.Instance, packetType, method, InternalType);
-
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType("AAC05F537A6F0F6775339593FBDFC564", "7B40EEB62BF9EBADF967050BFA3976CA");
 				packetType = type.GetNestedType("4850B8A3B1027F683755D493244815AA", BindingFlags.Public | BindingFlags.NonPublic);
 				method = typeof(CharacterEntityNetworkManager).GetMethod("ReceiveSpawnPacket", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
@@ -549,7 +553,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, "4055A1176BF0FA0C554491A3206CD656" );
-				basePacketHandlerMethod.Invoke( null, new[ ] { instanceNetManager, packet, masterNetManager } );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { instanceNetManager, packet, masterNetManager } );
 			}
 			catch ( Exception ex )
 			{
@@ -562,7 +566,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			try
 			{
 				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, "F990CA0A818DDC8A56001B3D630EE54C" );
-				basePacketHandlerMethod.Invoke( null, new[ ] { instanceNetManager, packet, masterNetManager } );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { instanceNetManager, packet, masterNetManager } );
 			}
 			catch ( Exception ex )
 			{
@@ -576,7 +580,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( "AAC05F537A6F0F6775339593FBDFC564", "7B40EEB62BF9EBADF967050BFA3976CA" );
 				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( type, "364216D779218E8D22F3991B8FBA170A" );
-				basePacketHandlerMethod.Invoke( null, new[ ] { packet, masterNetManager } );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { packet, masterNetManager } );
 			}
 			catch ( Exception ex )
 			{

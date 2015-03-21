@@ -80,34 +80,25 @@
     <Compile Include="API\Common\GameObjectRegistry.cs" />
     <Compile Include="API\Common\NetworkManager.cs" />
     <Compile Include="API\Common\PlayerManager.cs" />
-    <Compile Include="API\Common\PlayerMap.cs" />
     <Compile Include="API\Common\PowerManager.cs" />
     <Compile Include="API\Common\RadioManager.cs" />
-    <Compile Include="API\Common\RadioManagerNetworkManager.cs" />
     <Compile Include="API\Common\WorldManager.cs" />
     <Compile Include="API\Entity\BaseEntity.cs" />
-    <Compile Include="API\Entity\BaseEntityNetworkManager.cs" />
     <Compile Include="API\Entity\BaseObject.cs" />
-    <Compile Include="API\Entity\BaseObjectManager.cs" />
-    <Compile Include="API\Entity\InventoryItemEntity.cs" />
-    <Compile Include="API\Entity\InventoryItemManager.cs" />
     <Compile Include="API\Entity\PowerProducer.cs" />
     <Compile Include="API\Entity\PowerReceiver.cs" />
-    <Compile Include="API\Entity\SectorManager.cs" />
-    <Compile Include="API\Entity\SectorObjectManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridManagerManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGridNetworkManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\AntennaEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\AssemblerEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\BatteryBlockEntity.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\BatteryBlockNetworkManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ButtonPanelEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\CameraBlockEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ConveyorBlockEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ConveyorTubeEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\GyroNetworkManager.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\LandingGearNetworkManager.cs" />
+    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\LandingGearEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ProductionQueueItem.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipConnectorEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\InteriorTurretEntity.cs" />
@@ -116,7 +107,6 @@
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\GravityBaseEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\GravitySphereEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\GyroEntity.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\LandingGearEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\MergeBlockEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\MissileTurretEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\OreDetectorEntity.cs" />
@@ -128,7 +118,6 @@
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\LightEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\RotorEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipControllerEntity.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipControllerNetworkManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipDrillEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipGrinderEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ShipToolBaseEntity.cs" />
@@ -137,11 +126,7 @@
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\SolarPanelEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ThrustEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\TurretBaseEntity.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\TurretNetworkManager.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\VirtualMassEntity.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\FloatingObjectManager.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\VoxelMapMaterialManager.cs" />
-    <Compile Include="API\Server\MyObjectSeedType.cs" />
     <Compile Include="API\Server\ServerNetworkManager.cs" />
     <Compile Include="API\Utility\Utility.cs" />
     <Compile Include="API\Entity\SectorEntity.cs" />
@@ -207,6 +192,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.XML" />
+    <Reference Include="VRage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\VRage.dll</HintPath>
+    </Reference>
     <Reference Include="VRage.Common">
       <HintPath>..\GameLibraries\VRage.Common.dll</HintPath>
     </Reference>

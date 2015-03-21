@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -9,40 +9,42 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract]
+	[DataContract( Name = "BatteryBlockEntityProxy" )]
 	public class BatteryBlockEntity : FunctionalBlockEntity
 	{
+		#region "Attributes"
 
-		private readonly BatteryBlockNetworkManager _batteryBlockNetManager;
+		private BatteryBlockNetworkManager m_batteryBlockNetManager;
 
-		private float _maxPowerOutput;
-		private float _maxStoredPower;
+		private float m_maxPowerOutput;
+		private float m_maxStoredPower;
 
 		//Internal class
-		public static string BatteryBlockNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
+		public static string BatteryBlockNamespace = "";
 
-		public static string BatteryBlockClass = "711CB30D2043393F07630CD237B5EFBF";
+		public static string BatteryBlockClass = "=FeVrZCRTmSBe9Id7Mx2xhOXO9=";
 
 		//Internal methods
-		public static string BatteryBlockGetCurrentStoredPowerMethod = "82DBD55631B1D9694F1DCB5BFF88AB5B";
+		public static string BatteryBlockGetCurrentStoredPowerMethod = "get_CurrentStoredPower";
 
-		public static string BatteryBlockSetCurrentStoredPowerMethod = "365694972F163426A27531B867041ABB";
-		public static string BatteryBlockGetMaxStoredPowerMethod = "1E1C89D073DDC026426B44820B1A6286";
-		public static string BatteryBlockSetMaxStoredPowerMethod = "51188413AE93A8E2B2375B7721F1A3FC";
-		public static string BatteryBlockGetProducerEnabledMethod = "36B457125A54787901017D24BD0E3346";
-		public static string BatteryBlockSetProducerEnabledMethod = "5538173B5047FC438226267C0088356E";
-		public static string BatteryBlockGetSemiautoEnabledMethod = "19312D5BF11FBC0A682B613E21621BA6";
-		public static string BatteryBlockSetSemiautoEnabledMethod = "A3BEE5A757F096951F158F9FFF5A878A";
+		public static string BatteryBlockSetCurrentStoredPowerMethod = "set_CurrentStoredPower";
+		public static string BatteryBlockGetMaxStoredPowerMethod = "get_MaxStoredPower";
+		public static string BatteryBlockSetMaxStoredPowerMethod = "set_MaxStoredPower";
+		public static string BatteryBlockGetProducerEnabledMethod = "get_ProducerEnabled";
+		public static string BatteryBlockSetProducerEnabledMethod = "set_ProducerEnabled";
+		public static string BatteryBlockGetSemiautoEnabledMethod = "get_SemiautoEnabled";
+		public static string BatteryBlockSetSemiautoEnabledMethod = "set_SemiautoEnabled";
 
 		//Internal fields
-		public static string BatteryBlockCurrentStoredPowerField = "736E72768436E8A7C1F33EF1F4396B9E";
+		public static string BatteryBlockCurrentStoredPowerField = "=qlIdp0aSUxfNBSinvM3ou1FeS7=";
 
-		public static string BatteryBlockMaxStoredPowerField = "3E888DF7D4F5C207088050DF6CA348D5";
-		public static string BatteryBlockProducerEnabledField = "5CE4521F11C6B1D64721848D226F15BF";
-		public static string BatteryBlockSemiautoEnabledField = "61505AAA6C86342099EFC9D89532BBE7";
-		public static string BatteryBlockBatteryDefinitionField = "F0C59D70E13560B7212CEF8CF082A67B";
-		public static string BatteryBlockNetManagerField = "E93BD8EF419C322C547231F9BF991090";
+		public static string BatteryBlockMaxStoredPowerField = "=kLcq0qSwgxq5vJTqTnFbDV4cqK=";
+		public static string BatteryBlockProducerEnabledField = "=WcIVqHi6XgtPM0ayYW3JkeiBsg=";
+		public static string BatteryBlockSemiautoEnabledField = "=ZqnpHhiBDtIN2SBGBYeIx7Yo7h=";
+		public static string BatteryBlockBatteryDefinitionField = "=MyI3nwWJ5yT4zDqx4XcphKgTSS=";
+		public static string BatteryBlockNetManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
 
+		#endregion "Attributes"
 
 		#region "Constructors and Initializers"
 
@@ -54,21 +56,21 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public BatteryBlockEntity( CubeGridEntity parent, MyObjectBuilder_BatteryBlock definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			_maxPowerOutput = 0;
-			_maxStoredPower = definition.MaxStoredPower;
+			m_maxPowerOutput = 0;
+			m_maxStoredPower = definition.MaxStoredPower;
 
-			_batteryBlockNetManager = new BatteryBlockNetworkManager( this, InternalGetNetManager( ) );
+			m_batteryBlockNetManager = new BatteryBlockNetworkManager( this, InternalGetNetManager( ) );
 		}
 
 		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
-		/// <summary>
-		/// Gets a reference to the <see cref="BatteryBlockEntity"/> type.
-		/// </summary>
-		[IgnoreDataMember, Category( "Battery Block" ), Browsable( false ), ReadOnly( true )]
-		internal new static Type InternalType
+		[IgnoreDataMember]
+		[Category( "Battery Block" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		new internal static Type InternalType
 		{
 			get
 			{
@@ -77,21 +79,28 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[IgnoreDataMember, Category( "Battery Block" ), Browsable( false ), ReadOnly( true )]
+		[IgnoreDataMember]
+		[Category( "Battery Block" )]
+		[Browsable( false )]
+		[ReadOnly( true )]
 		internal new MyObjectBuilder_BatteryBlock ObjectBuilder
 		{
 			get
 			{
-				MyObjectBuilder_BatteryBlock batteryBlock = (MyObjectBuilder_BatteryBlock) base.ObjectBuilder;
+				MyObjectBuilder_BatteryBlock batteryBlock = (MyObjectBuilder_BatteryBlock)base.ObjectBuilder;
 
-				batteryBlock.MaxStoredPower = _maxStoredPower;
+				batteryBlock.MaxStoredPower = m_maxStoredPower;
 
 				return batteryBlock;
 			}
-			set { base.ObjectBuilder = value; }
+			set
+			{
+				base.ObjectBuilder = value;
+			}
 		}
 
-		[DataMember, Category( "Battery Block" )]
+		[DataMember]
+		[Category( "Battery Block" )]
 		public float CurrentStoredPower
 		{
 			get { return ObjectBuilder.CurrentStoredPower; }
@@ -109,8 +118,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember, Category( "Battery Block" )]
-		[DisplayName( "Max Stored Power (MWh)" )]
+		[DataMember]
+		[Category( "Battery Block" )]
 		public float MaxStoredPower
 		{
 			get
@@ -119,19 +128,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( ActualObject != null )
 				{
-					maxStoredPower = (float) InvokeEntityMethod( ActualObject, BatteryBlockGetMaxStoredPowerMethod );
+					maxStoredPower = (float)InvokeEntityMethod( ActualObject, BatteryBlockGetMaxStoredPowerMethod );
 				}
 				else
 				{
-					maxStoredPower = _maxStoredPower;
+					maxStoredPower = m_maxStoredPower;
 				}
 
 				return maxStoredPower;
 			}
 			set
 			{
-				if ( _maxStoredPower == value ) return;
-				_maxStoredPower = value;
+				if ( m_maxStoredPower == value ) return;
+				m_maxStoredPower = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -142,7 +151,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember, Category( "Battery Block" )]
+		[DataMember]
+		[Category( "Battery Block" )]
 		public bool ProducerEnabled
 		{
 			get { return ObjectBuilder.ProducerEnabled; }
@@ -160,8 +170,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember, Category( "Battery Block" )]
-		[DisplayName("Semi-Automatic Mode")]
+		[DataMember]
+		[Category( "Battery Block" )]
 		public bool SemiautoEnabled
 		{
 			get { return ObjectBuilder.SemiautoEnabled; }
@@ -179,7 +189,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember, Category( "Battery Block" )]
+		[DataMember]
+		[Category( "Battery Block" )]
 		public float RequiredPowerInput
 		{
 			get { return PowerReceiver.MaxRequiredInput; }
@@ -191,15 +202,15 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember, Category( "Battery Block" )]
-		[DisplayName("Max Power Output (MW)")]
+		[DataMember]
+		[Category( "Battery Block" )]
 		public float MaxPowerOutput
 		{
-			get { return _maxPowerOutput; }
+			get { return m_maxPowerOutput; }
 			set
 			{
-				if ( _maxPowerOutput == value ) return;
-				_maxPowerOutput = value;
+				if ( m_maxPowerOutput == value ) return;
+				m_maxPowerOutput = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -210,14 +221,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[IgnoreDataMember, Browsable( false ), ReadOnly( true )]
-		internal BatteryBlockNetworkManager BatteryNetManager { get { return _batteryBlockNetManager; } }
+		[IgnoreDataMember]
+		[Browsable( false )]
+		[ReadOnly( true )]
+		internal BatteryBlockNetworkManager BatteryNetManager
+		{
+			get { return m_batteryBlockNetManager; }
+		}
 
 		#endregion "Properties"
 
 		#region "Methods"
 
-		public new static bool ReflectionUnitTest( )
+		new public static bool ReflectionUnitTest( )
 		{
 			try
 			{
@@ -225,7 +241,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( BatteryBlockNamespace, BatteryBlockClass );
 				if ( type == null )
-					throw new TypeLoadException( "Could not find internal type for BatteryBlockEntity" );
+					throw new Exception( "Could not find internal type for BatteryBlockEntity" );
 
 				result &= HasMethod( type, BatteryBlockGetCurrentStoredPowerMethod );
 				result &= HasMethod( type, BatteryBlockSetCurrentStoredPowerMethod );
@@ -245,9 +261,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				return result;
 			}
-			catch ( TypeLoadException ex )
+			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
@@ -299,7 +315,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			try
 			{
-				InvokeEntityMethod( ActualObject, BatteryBlockSetMaxStoredPowerMethod, new object[ ] { _maxStoredPower } );
+				InvokeEntityMethod( ActualObject, BatteryBlockSetMaxStoredPowerMethod, new object[ ] { m_maxStoredPower } );
 			}
 			catch ( Exception ex )
 			{
@@ -339,6 +355,176 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		#endregion "Internal"
+
+		#endregion "Methods"
+	}
+
+	public class BatteryBlockNetworkManager
+	{
+		#region "Attributes"
+
+		private BatteryBlockEntity m_parent;
+		private Object m_backingObject;
+
+		private static bool m_isRegistered;
+
+		public static string BatteryBlockNetworkManagerNamespace = BatteryBlockEntity.BatteryBlockNamespace + "." + BatteryBlockEntity.BatteryBlockClass;
+		public static string BatteryBlockNetworkManagerClass = "=rFysemK2skc7if3GAl3o5mrQbv=";
+
+		public static string BatteryBlockNetManagerBroadcastProducerEnabledMethod = "SendProducerEnableChange";
+		public static string BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod = "CapacityChange";
+		public static string BatteryBlockNetManagerBroadcastSemiautoEnabledMethod = "SendSemiautoEnableChange";
+		public static string BatteryBlockNetManagerCurrentPowerPacketReceiver = "CapacityChange";
+
+		///////////////////////////////////////////////////////////////////////
+
+		//Packets
+		//1587 - CurrentStoredPower
+		//1588 - ??
+		//15870 - ProducerEnabled On/Off
+		//15871 - SemiautoEnabled On/Off
+
+		//public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "300F0FF97B3FABBCEBB539E8935D6930";
+		//public static string BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod = "12133389A918B17D9822AB1721C55497";
+
+		public static string BatteryBlockNetManagerCurrentStoredPowerPacketClass = "=2Ng0rzVvFTPtmiEEWK6CjKFrjl=";
+		public static string BatteryBlockNetManagerCurrentStoredPowerPacketValueField = "=jSrsNPNLczO6fsavF4k89DzRMy=";
+
+		#endregion "Attributes"
+
+		#region "Constructors and Initializers"
+
+		public BatteryBlockNetworkManager( BatteryBlockEntity parent, Object backingObject )
+		{
+			m_parent = parent;
+			m_backingObject = backingObject;
+
+			Action action = RegisterPacketHandlers;
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+		}
+
+		#endregion "Constructors and Initializers"
+
+		#region "Properties"
+
+		internal Object BackingObject
+		{
+			get { return m_backingObject; }
+		}
+
+		public static Type InternalType
+		{
+			get
+			{
+				Type type = BatteryBlockEntity.InternalType.GetNestedType( BatteryBlockNetworkManagerClass, BindingFlags.Public | BindingFlags.NonPublic );
+				return type;
+			}
+		}
+
+		#endregion "Properties"
+
+		#region "Methods"
+
+		public static bool ReflectionUnitTest( )
+		{
+			try
+			{
+				bool result = true;
+
+				Type type = InternalType;
+				if ( type == null )
+					throw new Exception( "Could not find internal type for BatteryBlockNetworkManager" );
+				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastProducerEnabledMethod );
+				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod );
+				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod );
+
+				Type packetType = InternalType.GetNestedType( BatteryBlockNetManagerCurrentStoredPowerPacketClass, BindingFlags.Public | BindingFlags.NonPublic );
+				//result &= BaseObject.HasMethod( packetType, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod );
+				result &= BaseObject.HasField( packetType, BatteryBlockNetManagerCurrentStoredPowerPacketValueField );
+				//				result &= BaseObject.HasField(packetType, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdField);
+
+				Type refPacketType = packetType.MakeByRefType( );
+
+				return result;
+			}
+			catch ( Exception ex )
+			{
+				Console.WriteLine( ex );
+				return false;
+			}
+		}
+
+		public void BroadcastProducerEnabled( )
+		{
+			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastProducerEnabledMethod, new object[ ] { m_parent.ProducerEnabled } );
+		}
+
+		public void BroadcastCurrentStoredPower( )
+		{
+			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod, new object[ ] { m_parent.CurrentStoredPower } );
+		}
+
+		public void BroadcastSemiautoEnabled( )
+		{
+			BaseObject.InvokeEntityMethod( BackingObject, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod, new object[ ] { m_parent.SemiautoEnabled } );
+		}
+
+		protected static void RegisterPacketHandlers( )
+		{
+			try
+			{
+				if ( m_isRegistered )
+					return;
+
+				Type packetType = InternalType.GetNestedType( BatteryBlockNetManagerCurrentStoredPowerPacketClass, BindingFlags.Public | BindingFlags.NonPublic );
+				MethodInfo method = typeof( BatteryBlockNetworkManager ).GetMethod( "ReceiveCurrentPowerPacket", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static );
+				bool result = NetworkManager.RegisterCustomPacketHandler( PacketRegistrationType.Static, packetType, method, InternalType );
+				if ( !result )
+					return;
+
+				m_isRegistered = true;
+			}
+			catch ( Exception ex )
+			{
+				ApplicationLog.BaseLog.Error( ex );
+			}
+		}
+
+		protected static void ReceiveCurrentPowerPacket<T>( ref T packet, Object netManager ) where T : struct
+		{
+			try
+			{
+				//object result = BaseObject.InvokeEntityMethod( packet, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod );
+				//object result = BaseObject.GetEntityFieldValue(packet, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdField);
+				object result = null;
+				if ( result == null )
+					return;
+				long entityId = (long)result;
+				BaseObject matchedEntity = GameEntityManager.GetEntity( entityId );
+				if ( matchedEntity == null )
+					return;
+				if ( !( matchedEntity is BatteryBlockEntity ) )
+					return;
+				BatteryBlockEntity battery = (BatteryBlockEntity)matchedEntity;
+
+				result = BaseObject.GetEntityFieldValue( packet, BatteryBlockNetManagerCurrentStoredPowerPacketValueField );
+				if ( result == null )
+					return;
+				float packetPowerLevel = (float)result;
+				if ( packetPowerLevel == 1.0f )
+					return;
+
+				BaseObject.SetEntityFieldValue( packet, BatteryBlockNetManagerCurrentStoredPowerPacketValueField, battery.CurrentStoredPower );
+
+				Type refPacketType = packet.GetType( ).MakeByRefType( );
+				MethodInfo basePacketHandlerMethod = BaseObject.GetStaticMethod( InternalType, BatteryBlockNetManagerCurrentPowerPacketReceiver, new Type[ ] { refPacketType, netManager.GetType( ) } );
+				basePacketHandlerMethod.Invoke( null, new object[ ] { packet, netManager } );
+			}
+			catch ( Exception ex )
+			{
+				ApplicationLog.BaseLog.Error( ex );
+			}
+		}
 
 		#endregion "Methods"
 	}

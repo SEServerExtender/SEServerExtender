@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Sandbox.Common.ObjectBuilders.Definitions;
 
 namespace SEModAPI.API.Definitions

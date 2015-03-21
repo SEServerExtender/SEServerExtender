@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
@@ -15,12 +15,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		private bool m_dampenersEnabled;
 
-		public static string CubeGridThrusterManagerNamespace = "8EAF60352312606996BD8147B0A3C880";
-		public static string CubeGridThrusterManagerClass = "958ADAA3423FBDC5DE98C1A32DE7258C";
+		public static string CubeGridThrusterManagerNamespace = "";
+		public static string CubeGridThrusterManagerClass = "=RQ6GT5VPdcFWeja6eus3dlb5mI=";
 
-		public static string CubeGridThrusterManagerGetEnabled = "51FDDFF9224B3F717EEFFEBEA5F1BAF6";
-		public static string CubeGridThrusterManagerSetEnabled = "86B66668D555E1C1B744C17D2AFA77F7";
-		public static string CubeGridThrusterManagerSetControlEnabled = "BC83851AFAE183711CFB864BA6F62CC6";
+		public static string CubeGridThrusterManagerGetEnabled = "get_DampenersEnabled";
+		public static string CubeGridThrusterManagerSetEnabled = "set_DampenersEnabled";
+		public static string CubeGridThrusterManagerSetControlEnabled = "set_Enabled";
 
 		#endregion "Attributes"
 

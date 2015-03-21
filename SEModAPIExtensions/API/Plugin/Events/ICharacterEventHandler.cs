@@ -1,4 +1,4 @@
-﻿using SEModAPIInternal.API.Entity.Sector.SectorObject;
+using SEModAPIInternal.API.Entity.Sector.SectorObject;
 
 namespace SEModAPIExtensions.API.Plugin.Events
 {

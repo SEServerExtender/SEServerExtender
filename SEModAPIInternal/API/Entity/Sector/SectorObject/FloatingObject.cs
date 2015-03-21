@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -9,16 +9,16 @@ using SEModAPIInternal.Support;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract]
+	[DataContract( Name = "FloatingObjectProxy" )]
 	public class FloatingObject : BaseEntity
 	{
 		#region "Attributes"
 
-		private static Type _internalType;
-		private InventoryItemEntity _item;
+		private static Type m_internalType;
+		private InventoryItemEntity m_item;
 
-		public static string FloatingObjectNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string FloatingObjectClass = "60663B6C2E735862064C925471BD4138";
+		public static string FloatingObjectNamespace = "";
+		public static string FloatingObjectClass = "Sandbox.Game.Entities.MyFloatingObject";
 
 		#endregion "Attributes"
 
@@ -27,13 +27,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public FloatingObject( MyObjectBuilder_FloatingObject definition )
 			: base( definition )
 		{
-			_item = new InventoryItemEntity( definition.Item );
+			m_item = new InventoryItemEntity( definition.Item );
 		}
 
 		public FloatingObject( MyObjectBuilder_FloatingObject definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			_item = new InventoryItemEntity( definition.Item );
+			m_item = new InventoryItemEntity( definition.Item );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -46,7 +46,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get { return _internalType ?? ( _internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectNamespace, FloatingObjectClass ) ); }
+			get
+			{
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectNamespace, FloatingObjectClass );
+				return m_internalType;
+			}
 		}
 
 		[DataMember]
@@ -78,11 +83,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[Browsable( false )]
 		public InventoryItemEntity Item
 		{
-			get { return _item; }
+			get { return m_item; }
 			set
 			{
-				if ( _item == value ) return;
-				_item = value;
+				if ( m_item == value ) return;
+				m_item = value;
 				Changed = true;
 
 				if ( BackingObject != null )
@@ -103,12 +108,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				Type type = InternalType;
 				if ( type == null )
-					throw new TypeLoadException( "Could not find internal type for FloatingObject" );
-				const bool result = true;
+					throw new Exception( "Could not find internal type for FloatingObject" );
+				bool result = true;
 
 				return result;
 			}
-			catch ( TypeLoadException ex )
+			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
@@ -119,7 +124,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			FloatingObjectManager.Instance.RemoveFloatingObject( this );
 
-			MIsDisposed = true;
+			m_isDisposed = true;
 		}
 
 		protected void InternalUpdateItem( )
@@ -132,6 +137,99 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				ApplicationLog.BaseLog.Error( ex );
 			}
+		}
+
+		#endregion "Methods"
+	}
+
+	public class FloatingObjectManager
+	{
+		#region "Attributes"
+
+		private static FloatingObjectManager m_instance;
+		private static Type m_internalType;
+
+		private FloatingObject m_floatingObjectToChange;
+
+		public static string FloatingObjectManagerNamespace = "";
+		public static string FloatingObjectManagerClass = "=pMk4KQu8GhB7zVlIPCt8oVE8ts=";
+
+		public static string FloatingObjectManagerRemoveFloatingObjectMethod = "UnregisterFloatingObject";
+
+		#endregion "Attributes"
+
+		#region "Constructors and Initializers"
+
+		protected FloatingObjectManager( )
+		{
+			m_instance = this;
+		}
+
+		#endregion "Constructors and Initializers"
+
+		#region "Properties"
+
+		internal static Type InternalType
+		{
+			get
+			{
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FloatingObjectManagerNamespace, FloatingObjectManagerClass );
+				return m_internalType;
+			}
+		}
+
+		public static FloatingObjectManager Instance
+		{
+			get
+			{
+				if ( m_instance == null )
+					m_instance = new FloatingObjectManager( );
+
+				return m_instance;
+			}
+		}
+
+		#endregion "Properties"
+
+		#region "Methods"
+
+		public static bool ReflectionUnitTest( )
+		{
+			try
+			{
+				Type type = InternalType;
+				if ( type == null )
+					throw new Exception( "Could not find internal type for FloatingObjectManager" );
+				bool result = true;
+				result &= BaseObject.HasMethod( type, FloatingObjectManagerRemoveFloatingObjectMethod );
+
+				return result;
+			}
+			catch ( Exception ex )
+			{
+				ApplicationLog.BaseLog.Error( ex );
+				return false;
+			}
+		}
+
+		public void RemoveFloatingObject( FloatingObject floatingObject )
+		{
+			m_floatingObjectToChange = floatingObject;
+
+			Action action = InternalRemoveFloatingObject;
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+		}
+
+		protected void InternalRemoveFloatingObject( )
+		{
+			if ( m_floatingObjectToChange == null )
+				return;
+
+			Object backingObject = m_floatingObjectToChange.BackingObject;
+			BaseObject.InvokeStaticMethod( InternalType, FloatingObjectManagerRemoveFloatingObjectMethod, new object[ ] { backingObject } );
+
+			m_floatingObjectToChange = null;
 		}
 
 		#endregion "Methods"

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity.Sector.SectorObject;

@@ -7,35 +7,37 @@ using Sandbox.Definitions;
 using Sandbox.ModAPI;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.Support;
-using VRage.Common.Voxels;
+using VRage.Voxels;
 using VRageMath;
+using VRage.Utils;
+using VRage;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	[DataContract]
+	[DataContract( Name = "VoxelMapProxy" )]
 	public class VoxelMap : BaseEntity
 	{
 		#region "Attributes"
 
-		private static Type _internalType;
+		private static Type m_internalType;
 
-		private VoxelMapMaterialManager _materialManager;
-		private MyStorageDataCache _cache;
-		private readonly Dictionary<MyVoxelMaterialDefinition, float> _materialTotals;
+		private VoxelMapMaterialManager m_materialManager;
+		private MyStorageDataCache m_cache;
+		private Dictionary<MyVoxelMaterialDefinition, float> m_materialTotals;
 
-		public static string VoxelMapNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string VoxelMapClass = "6EC806B54BA319767DA878841A56ECD8";
+		public static string VoxelMapNamespace = "";
+		public static string VoxelMapClass = "Sandbox.Game.Entities.MyVoxelMap";
 
-		public static string VoxelMapGetSizeMethod = "F7FC06F8DAF6ECC3F74F1D863DD65A36";
+		public static string VoxelMapGetSizeMethod = "get_SizeInMetres";
 
 		//public static string VoxelMapGetVoxelMaterialManagerMethod = "1543B7CCAB7538E6877BA8CCC513A070";
-		public static string VoxelMapGetVoxelMaterialManagerMethod = "61D7D905B19D162AF69D27DD9B2ADC58";
+		public static string VoxelMapGetVoxelMaterialManagerMethod = "get_Storage";
 
-		public static string VoxelMapGetMaterialAtPositionMethod = "5F7E3213E519961F42617BC410B19346";
+		//public static string VoxelMapGetMaterialAtPositionMethod = "5F7E3213E519961F42617BC410B19346";
 
 		/*
 		 * Storage recompute for asteroids? CC67DA892A0C9277CC606E1B4C97A4F1.6922E99EC72C10627AA239B8167BF7DC.95CFB363D0BF8BBC6CBFC7248263FD6A
-		 * Add a new voxel? 5BCAC68007431E61367F5B2CF24E2D6F.6EC806B54BA319767DA878841A56ECD8.01774E4E0A0FC967FD0C28D949278314
+		 * Add a new voxel? .Sandbox.Game.Entities.MyVoxelMap.01774E4E0A0FC967FD0C28D949278314
 		 * Add a new voxel static? AAC05F537A6F0F6775339593FBDFC564.3F0C9546C1796109CAF2EB98B70C8049.40A5DC2FA0E0E2380A9DAB38B4953D0C
 		 * Add a new voxel static by enum? AAC05F537A6F0F6775339593FBDFC564.3F0C9546C1796109CAF2EB98B70C8049.48D3319B987E8C194FDFEB0EFC41E8DF(MyMwcVoxelFilesEnum asteroidType, Vector3 position, string name, bool unknown)
 		 * Generate voxel materials? 6B85614235D7D81095FD26C72DC7E1D1
@@ -56,8 +58,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public VoxelMap( MyObjectBuilder_VoxelMap definition, Object backingObject )
 			: base( definition, backingObject )
 		{
-			//_materialManager = new VoxelMapMaterialManager(this, GetMaterialManager());
-			_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
+			//m_materialManager = new VoxelMapMaterialManager(this, GetMaterialManager());
+			m_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
 			//RefreshCache();
 		}
 
@@ -71,7 +73,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		new internal static Type InternalType
 		{
-			get { return _internalType ?? ( _internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( VoxelMapNamespace, VoxelMapClass ) ); }
+			get
+			{
+				if ( m_internalType == null )
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( VoxelMapNamespace, VoxelMapClass );
+				return m_internalType;
+			}
 		}
 
 		[DataMember]
@@ -105,6 +112,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public string Filename
 		{
 			get { return ObjectBuilder.StorageName; }
+			private set
+			{
+				//Do nothing!
+			}
 		}
 
 		[DataMember]
@@ -114,7 +125,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				return BackingObject == null ? Vector3.Zero : GetVoxelMapSize( );
+				if ( BackingObject == null )
+					return Vector3.Zero;
+
+				return GetVoxelMapSize( );
+			}
+			private set
+			{
+				//Do nothing!
 			}
 		}
 
@@ -126,7 +144,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			get
 			{
-				return _cache == null ? 0 : _cache.Data.Length;
+				if ( m_cache == null )
+					return 0;
+
+				return m_cache.Data.Length;
+			}
+			private set
+			{
+				//Do nothing!
 			}
 		}
 
@@ -145,6 +170,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				//Note: This is not a realistic mass as this volume of silicate would be ~135kg
 				return Volume * 19.727f;
 			}
+			private set
+			{
+				//Do nothing!
+			}
 		}
 
 		[IgnoreDataMember]
@@ -158,12 +187,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( BackingObject == null )
 					return null;
 
-				if ( _cache == null )
+				if ( m_cache == null )
 				{
 					RefreshCache( );
 				}
 
-				return _materialTotals;
+				return m_materialTotals;
 			}
 		}
 
@@ -173,17 +202,24 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[ReadOnly( true )]
 		internal VoxelMapMaterialManager MaterialManager
 		{
-			get { return _materialManager; }
+			get { return m_materialManager; }
 		}
 
 		#endregion "Properties"
 
 		#region "Methods"
 
-		[Obsolete("Please file an issue if this method is used or it will be removed in SE version 1.70.", true)]
 		public MyVoxelMaterialDefinition GetMaterial( Vector3I voxelPosition )
 		{
-			return GetMaterialAt( voxelPosition );
+			try
+			{
+				return GetMaterialAt( voxelPosition );
+			}
+			catch ( Exception ex )
+			{
+				ApplicationLog.BaseLog.Error( ex );
+				return null;
+			}
 		}
 
 		new public static bool ReflectionUnitTest( )
@@ -194,14 +230,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				Type type = InternalType;
 				if ( type == null )
-					throw new TypeLoadException( "Could not find internal type for VoxelMap" );
+					throw new Exception( "Could not find internal type for VoxelMap" );
 
 				result &= HasMethod( type, VoxelMapGetSizeMethod );
 				result &= HasMethod( type, VoxelMapGetVoxelMaterialManagerMethod );
 
 				return result;
 			}
-			catch ( TypeLoadException ex )
+			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
@@ -225,23 +261,30 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		protected MyVoxelMaterialDefinition GetMaterialAt( Vector3I voxelPosition )
 		{
-			return InvokeEntityMethod( BackingObject, VoxelMapGetMaterialAtPositionMethod, new object[ ] { voxelPosition } ) as MyVoxelMaterialDefinition;
+			/*
+			Object rawResult = InvokeEntityMethod( BackingObject, VoxelMapGetMaterialAtPositionMethod, new object[ ] { voxelPosition } );
+			if ( rawResult == null )
+				return null;
+			MyVoxelMaterialDefinition result = (MyVoxelMaterialDefinition)rawResult;
+			return result;
+			 */
+			return null;
 		}
 
 		protected void RefreshCache( )
 		{
 			IMyVoxelMap voxelMap = (IMyVoxelMap)BackingObject;
-			_cache = new MyStorageDataCache( );
+			m_cache = new MyStorageDataCache( );
 			Vector3I size = voxelMap.Storage.Size;
-			_cache.Resize( size );
+			m_cache.Resize( size );
 
 			//			SandboxGameAssemblyWrapper.Instance.GameAction(() =>
 			//			{
-			voxelMap.Storage.ReadRange( _cache, MyStorageDataTypeFlags.Material, 0, Vector3I.Zero, size - 1 );
-			//voxelMap.Storage.ReadRange(_cache, MyStorageDataTypeFlags.Material, Vector3I.Zero, size - 1);
+			voxelMap.Storage.ReadRange( m_cache, MyStorageDataTypeFlags.Material, 0, Vector3I.Zero, size - 1 );
+			//voxelMap.Storage.ReadRange(m_cache, MyStorageDataTypeFlags.Material, Vector3I.Zero, size - 1);
 			//			});
 
-			foreach ( byte materialIndex in _cache.Data )
+			foreach ( byte materialIndex in m_cache.Data )
 			{
 				try
 				{
@@ -249,16 +292,158 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 					if ( material == null )
 						continue;
 
-					if ( !_materialTotals.ContainsKey( material ) )
-						_materialTotals.Add( material, 1 );
+					if ( !m_materialTotals.ContainsKey( material ) )
+						m_materialTotals.Add( material, 1 );
 					else
-						_materialTotals[ material ]++;
+						m_materialTotals[ material ]++;
 				}
 				catch ( Exception ex )
 				{
 					ApplicationLog.BaseLog.Error( ex );
 				}
 			}
+		}
+
+		#endregion "Methods"
+	}
+
+	public class VoxelMapMaterialManager
+	{
+		#region "Attributes"
+
+		private VoxelMap m_parent;
+		private Object m_backingObject;
+		private int m_voxelCount;
+		private FastResourceLock m_resourceLock;
+		private Dictionary<MyVoxelMaterialDefinition, float> m_materialTotals;
+
+		//public static string VoxelMapMaterialManagerNamespace = "DC3F8F35BD18173B1D075139B475AD8E";
+		//public static string VoxelMapMaterialManagerClass = "119B0A83D4E9B352826763AD3746A162";
+
+		//public static string VoxelMapMaterialManagerGetVoxelsDictionaryMethod = "3B4214480FDA5B1811A72EEBB55B543C";
+
+		//public static string VoxelMapMaterialManagerVoxelsField = "4E39EA62F3374F5CCE29BA40FE62818C";
+
+		#endregion "Attributes"
+
+		#region "Constructors and Initializers"
+
+		public VoxelMapMaterialManager( VoxelMap parent, Object backingObject )
+		{
+			m_parent = parent;
+			m_backingObject = backingObject;
+
+			m_resourceLock = new FastResourceLock( );
+			m_materialTotals = new Dictionary<MyVoxelMaterialDefinition, float>( );
+		}
+
+		#endregion "Constructors and Initializers"
+
+		#region "Properties"
+
+		public static Type InternalType
+		{
+			get
+			{
+				//Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( VoxelMapMaterialManagerNamespace, VoxelMapMaterialManagerClass );
+				//return type;
+				return null;
+			}
+		}
+
+		internal Object BackingObject
+		{
+			get { return m_backingObject; }
+		}
+
+		internal Dictionary<MyVoxelMaterialDefinition, float> Materials
+		{
+			get
+			{
+				if ( BackingObject == null )
+					return m_materialTotals;
+
+				object[ ] voxels = GetVoxels( );
+				if ( voxels.Length == m_voxelCount )
+					return m_materialTotals;
+
+				m_resourceLock.AcquireExclusive( );
+
+				m_voxelCount = voxels.Length;
+				m_materialTotals.Clear( );
+
+				foreach ( object entry in voxels )
+				{
+					try
+					{
+						if ( entry == null )
+							continue;
+						Object rawIndex = BaseObject.InvokeEntityMethod( entry, "42F2A6C72643C1E13B243E1B5A8E075B" );
+						if ( rawIndex == null )
+							continue;
+						byte materialIndex = (byte)rawIndex;
+						MyVoxelMaterialDefinition material = MyDefinitionManager.Static.GetVoxelMaterialDefinition( materialIndex );
+						if ( material == null )
+							continue;
+						if ( !m_materialTotals.ContainsKey( material ) )
+							m_materialTotals.Add( material, 1 );
+						else
+							m_materialTotals[ material ]++;
+					}
+					catch ( Exception ex )
+					{
+						ApplicationLog.BaseLog.Error( ex );
+					}
+				}
+
+				m_resourceLock.ReleaseExclusive( );
+
+				return m_materialTotals;
+			}
+		}
+
+		internal int VoxelCount
+		{
+			get { return m_voxelCount; }
+		}
+
+		#endregion "Properties"
+
+		#region "Methods"
+
+		public static bool ReflectionUnitTest( )
+		{
+			try
+			{
+				bool result = true;
+				/*
+				Type type = InternalType;
+				if (type == null)
+					throw new Exception("Could not find internal type for VoxelMapMaterialManager");
+
+				result &= BaseObject.HasMethod(type, VoxelMapMaterialManagerGetVoxelsDictionaryMethod);
+
+				result &= BaseObject.HasField(type, VoxelMapMaterialManagerVoxelsField);
+				*/
+				return result;
+			}
+			catch ( Exception ex )
+			{
+				ApplicationLog.BaseLog.Error( ex );
+				return false;
+			}
+		}
+
+		protected object[ ] GetVoxels( )
+		{
+			/*
+			Object rawResult = BaseObject.GetEntityFieldValue( BackingObject, VoxelMapMaterialManagerVoxelsField );
+			if ( rawResult == null )
+				return null;
+			object[ ] result = (object[ ])rawResult;
+			return result;
+			 */
+			return null;
 		}
 
 		#endregion "Methods"

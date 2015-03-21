@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Sandbox.Common.ObjectBuilders;
 
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;

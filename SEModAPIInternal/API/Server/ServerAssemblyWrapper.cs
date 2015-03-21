@@ -14,6 +14,7 @@ using SteamSDK;
 using SysUtils.Utils;
 using VRage.Common.Plugins;
 using VRage.Common.Utils;
+using VRage.Library.Utils;
 
 namespace SEModAPIInternal.API.Server
 {
@@ -25,10 +26,10 @@ namespace SEModAPIInternal.API.Server
 		private static Assembly _assembly;
 		//private static AppDomain _domain;
 
-		public static string DedicatedServerNamespace = "83BCBFA49B3A2A6EC1BC99583DA2D399";
-		public static string DedicatedServerClass = "49BCFF86BA276A9C7C0D269C2924DE2D";
+		public static string DedicatedServerNamespace = "";
+		public static string DedicatedServerClass = "Sandbox.AppCode.App.MyProgram";
 
-		public static string DedicatedServerStartupBaseMethod = "26A7ABEA729FAE1F24679E21470F8E98";
+		public static string DedicatedServerStartupBaseMethod = "RunMain";
 
 		#region "Constructors and Initializers"
 

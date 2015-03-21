@@ -1,4 +1,4 @@
-﻿using Microsoft.Xml.Serialization.GeneratedAssembly;
+using Microsoft.Xml.Serialization.GeneratedAssembly;
 
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -90,13 +90,13 @@ namespace SEModAPIExtensions.API
 		//	}
 		//	catch (CommunicationException ex)
 		//	{
-		//		ApplicationLog.BaseLog.ErrorAndConsole("An exception occurred: " + ex.Message);
+		//		ApplicationLog.BaseLog.Error("An exception occurred: " + ex.Message);
 		//		_serverHost.Abort( );
 		//		return false;
 		//	}
 		//	catch ( TimeoutException ex )
 		//	{
-		//		ApplicationLog.BaseLog.ErrorAndConsole( "An exception occurred: " + ex.Message );
+		//		ApplicationLog.BaseLog.Error( "An exception occurred: " + ex.Message );
 		//		_serverHost.Abort( );
 		//		return false;
 		//	}
@@ -113,13 +113,13 @@ namespace SEModAPIExtensions.API
 		//	}
 		//	catch ( CommunicationException ex )
 		//	{
-		//		ApplicationLog.BaseLog.ErrorAndConsole( "An exception occurred: " + ex.Message );
+		//		ApplicationLog.BaseLog.Error( "An exception occurred: " + ex.Message );
 		//		_baseHost.Abort( );
 		//		return false;
 		//	}
 		//	catch ( TimeoutException ex )
 		//	{
-		//		ApplicationLog.BaseLog.ErrorAndConsole( "An exception occurred: " + ex.Message );
+		//		ApplicationLog.BaseLog.Error( "An exception occurred: " + ex.Message );
 		//		_baseHost.Abort( );
 		//		return false;
 		//	}
@@ -427,7 +427,7 @@ namespace SEModAPIExtensions.API
 					if ( CommandLineArgs.WorldDataModify )
 						ServerNetworkManager.Instance.ReplaceWorldData( );
 
-					SandboxGameAssemblyWrapper.InitAPIGateway( );
+					//SandboxGameAssemblyWrapper.InitAPIGateway();
 					_pluginManager.LoadPlugins( );
 					_pluginManager.Init( );
 

@@ -1,4 +1,4 @@
-﻿namespace SEModAPI.Interop
+namespace SEModAPI.Interop
 {
     public enum ClassType
     {

@@ -1,4 +1,4 @@
-﻿using Sandbox.Common.ObjectBuilders.Definitions;
+using Sandbox.Common.ObjectBuilders.Definitions;
 using VRage.Common;
 
 namespace SEModAPI.API.Definitions

@@ -1,4 +1,4 @@
-﻿namespace SEModAPIExtensions.API.Plugin.Events
+namespace SEModAPIExtensions.API.Plugin.Events
 {
 	public interface IPlayerEventHandler
 	{

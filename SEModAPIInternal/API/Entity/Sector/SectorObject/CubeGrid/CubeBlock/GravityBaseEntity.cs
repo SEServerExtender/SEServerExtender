@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Sandbox.Common.ObjectBuilders;
@@ -14,10 +14,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private float m_acceleration;
 
-		public static string GravityBaseNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public static string GravityBaseClass = "8CCFFE7D12F92AA0036E030AEAB6236F";
+		public static string GravityBaseNamespace = "";
+		public static string GravityBaseClass = "=Gzts3NqimVWYP0iJIkraScr0Ks=";
 
-		public static string GravityBaseSetAccelerationMethod = "F73ED856331E83CE2A7A37C0FA54AFB9";
+		public static string GravityBaseSetAccelerationMethod = "set_GravityAcceleration";
 
 		#endregion "Attributes"
 

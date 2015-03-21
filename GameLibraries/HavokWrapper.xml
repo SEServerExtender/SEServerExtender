@@ -1,0 +1,1001 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        "HavokWrapper"
+    </assembly>
+    <members>
+        <member name="T:Havok.HkRigidBodyNamePredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
+        <member name="T:Havok.HkRigidBodyPredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
+        <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
+Splitting data for breaking a single 'board' into 'splinters'.
+</member>
+        <member name="P:Havok.HkdWoodFracture.BoardSplittingData">
+Splitting data for breaking the original shape into 'boards'.
+</member>
+        <member name="P:Havok.HkdWoodFracture.RandomSeed">
+The seed used for the runtime random number generator.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.FractureNormalShearingRange">
+Before splitting some shearing will be applied to the original splitting geometry.
+You can use this value to define the amount of distortion along the geometry's z-axis when traversing along the y-axis.
+E.g. setting this value to 1 will virtually 'rotate' the splitting geometry up to 45 degrees.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.FractureLineShearingRange">
+Before splitting some shearing will be applied to the original splitting geometry.
+You can use this value to define the amount of distortion along the geometry's x-axis when traversing along the z-axis.
+E.g. setting this value to 1 will virtually 'rotate' the splitting geometry up to 45 degrees.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.SurfaceNormalShearingRange">
+Before splitting some shearing will be applied to the original splitting geometry.
+You can use this value to define the amount of distortion along the geometry's x-axis when traversing along the y-axis.
+E.g. setting this value to 1 will virtually 'rotate' the splitting geometry up to 45 degrees.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.SplitGeomShiftRangeZ">
+The splitting geometry will be randomly shifted along its plane.
+You can use this value to limit the maximum variance for the shifting along the geometry's z-axis.
+This value is defined as percentage of the geometry's extent along its z-axis.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.SplitGeomShiftRangeY">
+The splitting geometry will be randomly shifted along its plane.
+You can use this value to limit the maximum variance for the shifting along the geometry's y-axis.
+This value is defined as percentage of the geometry's extent along its y-axis.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.ScaleRange">
+When scaling the splitting geometry the m_scale values will be modified using a random number generator.
+The m_scaleRange values define the maximum variation around the original m_scale values.
+Using 0.0 will scale the geometry by the exact m_scale values, 2.0 allows for values from 0.5x to 2.0x the original scale.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.Scale">
+The splitting geometry will be scaled along it axes by these values.
+You can use this to 'zoom into' the splitting geometry before applying it.
+Using values of exactly 1.0 will leave the geometry at its original size.
+Using values smaller than 1.0 might cause artifacts if the splitting geometry gets smaller than the to-be-split object.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.WidthRange">
+The variation of the subpart's width. 0.0 -&gt; no variation, 1.0 -&gt; width can vary between 0.0 and 'double width'.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.NumSubparts">
+The number of subparts you would ideally want.
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.RotateSplitGeom">
+How to rotate the splitting geometry
+</member>
+        <member name="F:Havok.HkdWoodFracture.SplittingData.SplittingAxis">
+Controls how the orientation of the splitting takes place. If this is set to (0,0,0), the system will try to automatically select the best axis (based on mass distribution/inertia tensor computer calculation).
+</member>
+        <member name="T:Havok.HkdWoodFracture.SplittingData.Rotation">
+How to rotate the splitting geometry
+</member>
+        <member name="T:Havok.HkdWoodFracture.SplittingData">
+Data to control the details of a split
+</member>
+        <member name="P:Havok.HkdVoronoiFracture.NumIterations">
+The number of passes applied to the Voronoi site creation to move them to equidistant positions.
+</member>
+        <member name="P:Havok.HkdVoronoiFracture.NumSitesToGenerate">
+Set this to some number to enable auto-creation of Voronoi sites.
+</member>
+        <member name="P:Havok.HkdVoronoiFracture.Seed">
+The random seed for the Voronoi site auto-creation.
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.RandomRange">
+The range of the random influence on the possible cut position. 0.0 always chooses the center, 1.0 allows the full range to be used.
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.RandomSeed4">
+The seed used for the runtime random number generator on the fourth level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.RandomSeed3">
+The seed used for the runtime random number generator on the third level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.RandomSeed2">
+The seed used for the runtime random number generator on the second level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.RandomSeed1">
+The seed used for the runtime random number generator on the first level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.NumObjectsOnLevel4">
+The number of objects to produce on the fourth level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.NumObjectsOnLevel3">
+The number of objects to produce on the third level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.NumObjectsOnLevel2">
+The number of objects to produce on the second level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.NumObjectsOnLevel1">
+The number of objects to produce on the first level
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.SplitGeometryScale">
+This scales the splitting geometry in splitting geometry space
+</member>
+        <member name="P:Havok.HkdRandomSplitFracture.SplitLargestVolumesFirst">
+If set to true, the largest volumes will be split first on each recursion level.
+If set to false, a random shape will be chosen for splitting on each recursion level.
+</member>
+        <member name="P:Havok.HkdDecomposeFracture.ShiftToSmallerCrossSection">
+The actual position of the split can be shifted towards (or away from) the physics object (out of the two "connected" parts) with the smaller cross-section. See the user guide for more details on this.
+</member>
+        <member name="M:hkpGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
+Call this to update the triggerVolume outside the physics step.
+triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
+You may want to re-collide the entities before calling this.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
+Character proxies process their own collisions, so they call this method to inform
+the trigger volume that they touched it during the frame.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
+Subclasses should implement this function to be informed of events involving
+rigid bodies (including the bodies of hkpCharacterRigidBodies).
+</member>
+        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
+Fired for any overlapping body when the trigger body leaves the world or is deleted.
+</member>
+        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
+            <summary>
+Gets geometry
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
+            <summary>
+Gets faces
+</summary>
+        </member>
+        <member name="P:Havok.HkConvexVerticesShape.Center">
+            <summary>
+Gets center
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
+            <summary>
+Gets vertices
+</summary>
+        </member>
+        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
+            <summary>
+Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
+</summary>
+        </member>
+        <member name="P:Havok.HkListShape.DebugShapeKeys">
+            <summary>
+Gets shape keys, for debug purposes, allocates!
+</summary>
+        </member>
+        <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Sets the color properties of the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getColors(hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Gets the color properties of the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.addTexture(hkMeshTexture*)">
+Adds a texture to the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getTexture(System.Int32)">
+Interface describing the texture at index
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getNumTextures">
+Number of textures used by the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getName">
+Gets the name of the material. Returns HK_NULL if the material is not named.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.setName(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*)">
+Sets the name of the material.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.equals(hkMeshMaterial!System.Runtime.CompilerServices.IsConst*)">
+Tests whether two materials are equal
+</member>
+        <member name="M:Havok.hkdMeshMaterial.isCompatible(hkMeshVertexBuffer!System.Runtime.CompilerServices.IsConst*)">
+Returns true if this vertex buffer is suitable for this material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexBuffer(hkMeshVertexBuffer*)">
+Constructs a suitable vertex buffer based on the input.
+If the input is suitable, may return the input ref'd.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexFormat(hkVertexFormat!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVertexFormat*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Returns a vertex buffer format that is compatible with this material
+</member>
+        <member name="T:Havok.hkdMeshMaterial">
+
+!! IMPORTANT : Use only its id as identifier to our material !!
+
+</member>
+        <member name="P:Havok.HkdFracture.FlattenHierarchy">
+Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
+</member>
+        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
+This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
+It is used to prevent infinite recursion.
+</member>
+        <member name="T:Havok.HkdFracture.RefitPhysicsType">
+Defines how the physics for the broken shapes should be calculated
+</member>
+        <member name="T:Havok.HkdFracture.Type">
+The algorithm type
+</member>
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
+</member>
+        <member name="F:Havok.HkdWorld.m_havokWorld">
+Our world
+</member>
+        <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Called after a breakable body is replaced with new bodies.
+</member>
+        <member name="M:Havok.HkdBreakableBodyListener.beforeBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Called before a breakable body is replaced with new bodies.
+</member>
+        <member name="M:Havok.HkdShapeInstanceInfo.#ctor(Havok.HkdBreakableShape,VRageMath.Matrix)">
+initializing Ctor
+</member>
+        <member name="M:Havok.HkdShapeInstanceInfo.#ctor(Havok.HkdBreakableShape,System.Nullable`1{VRageMath.Quaternion},System.Nullable`1{VRageMath.Vector3})">
+Ctor which does not initialize anything
+initializing Ctor
+</member>
+        <member name="P:Havok.HkdConnection.ContactArea">
+A measure of the strength of a connection. Normally set as the area of the connection
+between the shapes. The controller will use this to work out compression and tension
+strengths.
+</member>
+        <member name="F:Havok.HkWorld.m_world">
+Our world
+</member>
+        <member name="M:Havok.HkRagdoll.#ctor(System.Int32)">
+Create ragdoll object which will have its layer for collisions
+</member>
+        <member name="M:Havok.HkRagdoll.UpdatePosition(VRageMath.Vector3)">
+Updates Ragdoll position
+</member>
+        <member name="F:Havok.HkRagdoll.m_ragdollBones">
+List of the bones 
+</member>
+        <member name="F:Havok.HkRagdoll.m_rigPoseTransfroms">
+list of rig pose transforms
+</member>
+        <member name="F:Havok.HkRagdoll.m_constraints">
+list of ragdoll constraint instances
+</member>
+        <member name="F:Havok.HkRagdoll.m_ragdollConstraintsData">
+list of constraint datas used to create ragdoll constraints
+</member>
+        <member name="F:Havok.HkRagdoll.m_rigidBodies">
+list of rigid bodies used in this ragdoll
+</member>
+        <member name="F:Havok.HkRagdoll.m_shapes">
+list of shapes used in this ragdoll
+</member>
+        <member name="F:Havok.HkRagdoll.m_ragdollCollisionLayer">
+Ragdoll Layer to get collisions in the world
+</member>
+        <member name="M:Havok.HkGroupFilter.GetNewSystemGroup">
+Creates a new unique identifier for system groups (maximum 65k).
+</member>
+        <member name="M:Havok.HkGroupFilter.getSubSystemDontCollideWithFromFilterInfo(System.UInt32)">
+Extract the subSystemDontCollideWith from a given filterInfo.
+</member>
+        <member name="M:Havok.HkGroupFilter.GetSubSystemIdFromFilterInfo(System.UInt32)">
+Extract the subsystem id from a given filterInfo.
+</member>
+        <member name="M:Havok.HkGroupFilter.GetSystemGroupFromFilterInfo(System.UInt32)">
+Extract the system group from a given filterInfo.
+</member>
+        <member name="M:Havok.HkGroupFilter.SetLayer(System.UInt32,System.Int32)">
+Returns the filter info provided with the layer replaced by newLayer.
+</member>
+        <member name="M:Havok.HkGroupFilter.GetLayerFromFilterInfo(System.UInt32)">
+Extract the layer from a given filterInfo.
+</member>
+        <member name="M:Havok.HkGroupFilter.CalcFilterInfo(System.Int32,System.Int32)">
+Combine the layer and systemGroup information into one 32 bit integer.
+This resulting collision filter info can be used in entities and hkEntityCinfo.
+</member>
+        <member name="M:Havok.HkGroupFilter.DisableCollisionsUsingBitfield(System.UInt32,System.UInt32)">
+Disables collisions between the specified collision layers.
+See enableCollisionsUsingBitfield for how to use bitfields.
+</member>
+        <member name="P:Havok.HkCharacterRigidBody.LinearVelocity">
+            <summary>
+Gets or sets linear velocity of rigid body at center of mass.
+</summary>
+        </member>
+        <member name="P:Havok.HkCharacterRigidBody.Position">
+The initial position for the proxy in world space.
+</member>
+        <member name="M:hkpCharacterStateInAir2.getType">
+Return the state type
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.HardSupportDistance">
+A character should keep falling until it is this distance or less from its supporting planes.
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.SupportDistance">
+A character is considered supported if it is less than this distance above its supporting planes.
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.MaxSpeedForSimplexSolver">
+Set maximal speed for simplex solver
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.UnweldingHeightOffsetFactor">
+If the character's shape is a capsule, then this is used to define the height of a region around its center
+where we redirect contact point normals. The region extends from above the capsule's upper vertex to below
+the lower vertex by this height, expressed as a factor of the capsule's radius.
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.MaxForce">
+Set maximal force of character
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.MaxSlope">
+Set maximal slope
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.Up">
+Set up direction
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.AllowedPenetrationDepth">
+Set maximal allowed penetration depth.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.MaxLinearVelocity">
+Set maximum linear velocity (see hkpRigidBodyCinfo for details). Keep in mind that the maximum linear 
+velocity is restricted as well by hkpCharacterContext. Use hkpCharacterContext.setFilterParameters 
+to keep both limits in sync when necessary.
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.Friction">
+Set friction of character.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.Mass">
+The mass of character.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.Rotation">
+Initial rotation.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.Position">
+Initial position.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.Shape">
+The shape.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterRigidBodyCinfo.CollisionFilterInfo">
+The collision filter info.
+See hkpRigidBodyCinfo for details
+</member>
+        <member name="P:Havok.HkCharacterProxy.LinearVelocity">
+            <summary>
+Gets or sets linear velocity of rigid body at center of mass.
+</summary>
+        </member>
+        <member name="P:Havok.HkCharacterProxy.Position">
+The initial position for the proxy in world space.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.RefreshManifoldInCheckSupport">
+This flag determines whether the character controller refreshes the manifold when checkSupport is called.
+By default this is set to false, i.e., the manifold is not updated. This leads to a small inaccuracy when
+the character controller is hit by a rapidly accelerating body, however it is better to accept this
+inaccuracy, as the extra refresh manifold call can be computationally expensive.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.MaxCastIterations">
+The number of iterations the character controller will take to resolve an integrate() call.
+The character controller will iterate if it hits a surface, and needs to change direction to complete
+the integrate for that timestep. The default is 10 iterations.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.PenetrationRecoverySpeed">
+When a penetrating plane is added to the manifold we set its velocity so it will push
+the character away from the point of penetration. This variable controls the speed
+at which this recovery takes place. The velocity applied is proportional to the penetration distance.
+This values controls the proportion.
+By default this value is set to 1.0
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.MaxSlope">
+The maximum slope that the character can walk up. If the character is standing on a slope that
+is steeper than this, checkSupport() will return false, and an additional vertical plane will be
+added during integrate() that will block the character's movement in the direction of the slope.
+This angle is measured in radians from the horizontal.
+By default this value is set to PI / 2, i.e., vertical, which disables this feature.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.CharacterMass">
+The mass of the character. This value is only used to apply an extra downward force to dynamic
+rigid bodies that the character is standing on. By default this value is 0, which means no additional
+downward force is applied. It should only be set to a positive value if you do not apply gravity
+from your state machine when the character is on the ground.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.CharacterStrength">
+The maximum constant force that the character controller can impart onto
+moving objects. By default this is HK_REAL_MAX, i.e., the character controller
+is infinitely strong.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.MaxCharacterSpeedForSolver">
+This value is used to clip the character's velocity when it is being "squeezed" by two
+moving planes. When two nearly parallel planes squeeze the character, the resultant velocity
+necessary to move the character so that both planes do not penetrate it can be extremely high,
+which can cause in the character controller to move at a very fast velocity.
+This value defaults to 10 (which is appropriate if your default walking speed is 10).
+If this velocity is exceeded by the character solver when solving parallel planes, the
+solver solves the planes independently. The result is that instead of moving at a high
+velocity, the character may penetrate one of the planes (based on plane priorities).
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.UserPlanes">
+The maximum number of extra planes the user may add to the simplex input
+during a processConstraints callback.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.ContactAngleSensitivity">
+This value is used when deciding which contact points in the manifold are duplicates.
+Precisely, it determines when two contact points are found, whether they
+are to be treated as the same based on the angle between the normals.
+For two contact points which are identical apart from the direction of the normals
+the threshold angle A can be calculated from A = acos(1 - (.1/(10* m_contactAngleSensitivity))).
+For the default value of 10, contact points with angles less then 2.56 degrees are considered as identical.
+If you decrease this to 1, contact points with angles less then 8.1 degrees are considered as identical.
+A larger value will increase the number of contact points considered in the manifold, and make for
+a more accurate simulation at slightly higher computational expense.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.KeepDistance">
+Attempt to keep the character at least this distance from the surface. Used
+internally for numerical stability and performance reasons.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.ShapePhantom">
+The collision detection representation for this entity.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.ExtraDownStaticFriction">
+This parameter has been deprecated. It was intended to limit the maximum slope
+on which a character can walk. Now use m_maxSlope instead.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.ExtraUpStaticFriction">
+This parameter has been deprecated. It was intended to limit the maximum slope
+on which a character can walk. Now use m_maxSlope instead.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.Up">
+Friction is split into horizontal and vertical components. This vector is used
+to separate the components. In general it should be a normalized, negated version
+of gravity.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.KeepContactTolerance">
+This parameter is used to determine when a contact point should be considered
+as part of the character's contact manifold. The default is 0.1f, which means
+that points .1 above the keep distance will be considered as part of the manifold.
+This value should be kept at the its default, as changing it from the default
+value can have undesirable effects.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.StaticFriction">
+Controls the default static friction for surfaces hit.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.DynamicFriction">
+Controls the default dynamic friction for surfaces hit. A value of 0
+maintains character momentum. A value of 1 clips all momentum against the normal
+of the surface hit.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.Velocity">
+The initial velocity for the proxy in world space.
+</member>
+        <member name="P:Havok.HkCharacterProxyCinfo.Position">
+The initial position for the proxy in world space.
+</member>
+        <member name="M:Havok.HkShapeCollection.GetShape(System.UInt32,Havok.HkShapeBuffer)">
+            <summary>
+Buffer can be null, when shape won't create any triangles
+</summary>
+        </member>
+        <member name="M:Havok.HkStaticCompoundShape.AddInstance(Havok.HkShape,VRageMath.Matrix)">
+            <summary>
+Add instance, returns instance id
+</summary>
+        </member>
+        <member name="M:Havok.HkStaticCompoundShape.#ctor(Havok.HkReferencePolicy)">
+            <summary>
+Creates new instance
+</summary>
+        </member>
+        <member name="M:Havok.HkRigidBody.ApplyTorque(System.Single,VRageMath.Vector3)">
+            <summary>
+Applies torque to rigid body.
+</summary>
+        </member>
+        <member name="M:Havok.HkRigidBody.ApplyForce(System.Single,VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+Applies world force to specific point of rigid body in world space.
+</summary>
+        </member>
+        <member name="M:Havok.HkRigidBody.ApplyForce(System.Single,VRageMath.Vector3)">
+            <summary>
+Applies world force to center of mass of rigid body.
+</summary>
+        </member>
+        <member name="M:Havok.HkRigidBody.ApplyAngularImpulse(VRageMath.Vector3)">
+            <summary>
+Applies angular impulse to rigid body.
+</summary>
+            <summary>
+Apply an instantaneous change in angular velocity around center of mass.
+</summary>
+        </member>
+        <member name="M:Havok.HkRigidBody.ApplyPointImpulse(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+Apply an impulse at the point p in world space.
+</summary>
+            <summary>
+Apply an impulse at the point p in world space.
+</summary>
+        </member>
+        <member name="M:Havok.HkRigidBody.ApplyLinearImpulse(VRageMath.Vector3)">
+            <summary>
+Applies linear impulse to center of mass of rigid body.
+</summary>
+            <summary>
+Apply an impulse to the center of mass.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.Restitution">
+            <summary>
+Gets or sets restitution of rigid body when coliding.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.Friction">
+            <summary>
+Gets or sets friction of rigid body when coliding.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.AllowedPenetrationDepth">
+            <summary />
+        </member>
+        <member name="P:Havok.HkRigidBody.MaxAngularVelocity">
+            <summary>
+Gets or sets maximal velocity of rigid body. 
+The units used here are radians per second.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.MaxLinearVelocity">
+            <summary>
+Gets or sets maximal velocity of rigid body.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.AngularDamping">
+            <summary>
+Gets or sets angular damping of rigid body. Default = 0.05
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.LinearDamping">
+            <summary>
+Gets or sets linear damping of rigid body. Default = 0
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.DeltaAngle">
+            <summary>
+Gets the value of (angular velocity * dt) which was used in the last integration step.
+Can be used to detect if a rigid body is still when constrained (AngularVelocity IS NOT equal to zero in this case)
+</summary>
+Note: W component is equal to the length of the 3D vector made by X,Y,Z
+</member>
+        <member name="P:Havok.HkRigidBody.AngularVelocity">
+            <summary>
+Gets or sets angular velocity of rigid body at center of mass.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.LinearVelocity">
+            <summary>
+Gets or sets linear velocity of rigid body at center of mass.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.CenterOfMassWorld">
+            <summary>
+Gets of sets Center of Mass in world space of the rigid body.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.InverseInertiaTensor">
+            <summary>
+Gets inverse inertia tensor in local space of rigid body
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.InertiaTensor">
+            <summary>
+Gets inertia tensor in local space of rigid body
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.CenterOfMassLocal">
+            <summary>
+Gets of sets Center of Mass in local space of the rigid body. Default = 0,0,0
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.Mass">
+            <summary>
+Gets or sets mass of the rigid body. Default = 1
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.Motion">
+            <summary>
+Gets motion, use motion to set velocity, impulse, position and rotation without activating the body
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.Position">
+            <summary>
+Gets of sets position of rigid body.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBody.Rotation">
+            <summary>
+Gets of sets rotation of rigid body.
+</summary>
+        </member>
+        <member name="T:Havok.BreakLogicHandler">
+            <summary>
+Break off logic handler, default behavior is to return UseLimit
+</summary>
+        </member>
+        <member name="F:Havok.HkBreakOffPointInfo.ContactPointDirection">
+            <summary>
+Either +1 or -1
+</summary>
+        </member>
+        <member name="F:Havok.HkBreakOffPointInfo.BreakingImpulse">
+            <summary>
+The impulse which caused the breaking.
+</summary>
+        </member>
+        <member name="F:Havok.HkBreakOffPointInfo.IsContact">
+            <summary>
+If a contact force limit is exceeded, this is set to true, otherwise a constraint impulse limit has been exceeded.
+</summary>
+        </member>
+        <member name="M:Havok.HkContactPointEvent.UpdateVelocities(System.Int32)">
+            <summary>
+Call after modifying body velocities
+</summary>
+        </member>
+        <member name="M:Havok.HkContactPointEvent.AccessVelocities(System.Int32)">
+            <summary>
+Call before modifying body velocities
+</summary>
+        </member>
+        <member name="P:HkContactPoint.Normal">
+            <summary>
+Points from B to A
+</summary>
+        </member>
+        <member name="P:HkContactPoint.NormalAndDistance">
+            <summary>
+Points from B to A
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.Shape">
+            <summary>
+The collision detection representation for this entity.
+This defaults to NULL, and must be set before constructing a HkpRigidBody.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.AutoRemoveLevel">
+            <summary>
+This is a user flag which you can set to give you a hint as to which objects to remove from
+the simulation if the memory overhead becomes too high. It defaults to 0.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.QualityType">
+            <summary>
+The quality type, used to specify when to use continuous physics.
+This defaults to Invalid.
+If you add a hkpRigidBody to the hkpWorld, this type automatically gets converted to either
+Fixed, Keyframed or Debris.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.SolverDeactivation">
+            <summary>
+Allows you to enable an extra single object deactivation schema. 
+That means the engine will try to "deactivate" single objects (not just entire islands)
+if those objects get very slow.
+This does not save CPU, however it can reduce small movements in big stacks of objects dramatically. 
+This defaults to Low.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.MotionType">
+            <summary>
+The initial motion type of the body.
+This defaults to HkpMotionType.Dynamic
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.AllowedPenetrationDepth">
+            <summary>
+The maximum allowed penetration for this object. The default is -1.
+This is a hint to the engine to see how much CPU the engine should
+invest to keep this object from penetrating. A good choice is 5% - 20% of the
+smallest diameter of the object.  Setting the initial value less than zero
+allows the penetration depth to be estimated by the RigidBody upon creation.
+This estimated value is 1/5th of the smallest dimension of the object's radius. 
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.MaxAngularVelocity">
+            <summary>
+The maximum angular velocity of the body (in rad/s).
+This defaults to 200.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.MaxLinearVelocity">
+            <summary>
+The maximum linear velocity of the body (in m/s).
+This defaults to 200. 
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.Restitution">
+            <summary>
+The initial restitution of the body.
+This defaults to 0.4.
+If the restitution is not 0.0 the object will need extra CPU
+for all new collisions. Try to set restitution to 0 for maximum 
+performance (e.g. collapsing buildings)
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.Friction">
+            <summary>
+The initial friction of the body.
+This defaults to 0.5.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.AngularDamping">
+            <summary>
+The initial angular damping of the body.
+This defaults to 0.05.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.LinearDamping">
+            <summary>
+The initial linear damping of the body.
+This defaults to 0.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.Mass">
+            <summary>
+The mass of the body.
+This defaults to 1.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.CenterOfMass">
+            <summary>
+The center of mass in the local space of the rigid body.
+This defaults to 0,0,0.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.AngularVelocity">
+            <summary>
+The initial angular velocity of the body.
+This defaults to 0,0,0.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.LinearVelocity">
+            <summary>
+The initial linear velocity of the body.
+This defaults to 0,0,0.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.Rotation">
+            <summary>
+The initial rotation of the body.
+This defaults to the Identity quaternion.
+</summary>
+        </member>
+        <member name="P:Havok.HkRigidBodyCinfo.Position">
+            <summary>
+The initial position of the body.
+This defaults to 0,0,0.
+</summary>
+        </member>
+        <member name="T:Havok.HkRigidBodyCinfo">
+            <remarks>
+A class containing all the information needed to construct a rigid body.
+</remarks>
+        </member>
+        <member name="F:Havok.HkResponseModifiers.AdditionalSizeModifiers">
+those modifiers which require additional schema size.
+</member>
+        <member name="F:Havok.HkResponseType.None">
+Do nothing, ignore all the results.
+</member>
+        <member name="F:Havok.HkResponseType.Reporting">
+Deprecated. Instead of using this, you can disable contacts from a hkpContactListener.
+</member>
+        <member name="F:Havok.HkResponseType.SimpleContact">
+Do normal collision resolution.
+</member>
+        <member name="T:Havok.HkSolverDeactivation">
+            <summary>
+A list of possible solver deactivation settings. This value defines how the
+solver deactivates objects. The solver works on a per object basis. 	
+Note: Solver deactivation does not save CPU, but reduces creeping of
+movable objects in a pile quite dramatically.
+</summary>
+        </member>
+        <member name="F:Havok.HkSolverDeactivation.Max">
+            <summary>Very fast deactivation, visible artifacts.</summary>
+        </member>
+        <member name="F:Havok.HkSolverDeactivation.High">
+            <summary>Fast deactivation, visible artifacts.</summary>
+        </member>
+        <member name="F:Havok.HkSolverDeactivation.Medium">
+            <summary>Normal deactivation, no serious visible artifacts in most cases.</summary>
+        </member>
+        <member name="F:Havok.HkSolverDeactivation.Low">
+            <summary>Very conservative deactivation, typically no visible artifacts.</summary>
+        </member>
+        <member name="F:Havok.HkSolverDeactivation.Off">
+            <summary>No solver deactivation.</summary>
+        </member>
+        <member name="T:Havok.HkCollidableQualityType">
+            <summary>
+This type is used to specify the quality type for collidables (used by hkpRigidBody)
+This is mainly used to identify objects, which require the more expensive
+continuous simulation (compared to the faster, Havok2 style discrete) simulation.
+See the continuous simulation user guide, of the hkpCollisionDispatcher for more details.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.KeyframedReporting">
+            <summary>
+Use this for moving objects with infinite mass which should report contact points and TOI-collisions against all other bodies, including other fixed and keyframed bodies.
+Note that only non-TOI contact points are reported in collisions against debris-quality objects.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Character">
+            <summary>
+Use this for rigid body character controllers.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Bullet">
+            <summary>
+Use this for very fast objects.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Critical">
+            <summary>
+Use this for all objects, which you cannot afford to tunnel through
+the world at all.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Moving">
+            <summary>
+Use this for moving bodies, which should not leave the world, 
+but you rather prefer those objects to tunnel through the world than
+dropping frames because the engine.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Debris">
+            <summary>
+Use this for all you debris objects.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Keyframed">
+            <summary>
+Use this for moving objects with infinite mass. 
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Fixed">
+            <summary>
+Use this for fixed bodies.
+</summary>
+        </member>
+        <member name="F:Havok.HkCollidableQualityType.Invalid">
+            <summary>
+Invalid or unassinged type. If you add a hkpRigidBody to the hkpWorld,
+this type automatically gets converted to either
+Fixed, Keyframed or Debris.
+</summary>
+        </member>
+        <member name="T:Havok.HkMotionType">
+            <summary>
+A list of all motion types. The motion type of a hkpRigidBody determines what
+happens when the rigid body is simulated. 
+</summary>
+        </member>
+        <member name="F:Havok.HkMotionType.Character">
+A specialized motion used for character controllers
+</member>
+        <member name="F:Havok.HkMotionType.Thin_Box_Inertia">
+            <summary>
+A box inertia motion which is optimized for thin boxes and has less stability problems.
+</summary>
+        </member>
+        <member name="F:Havok.HkMotionType.Fixed">
+            <summary>
+This motion type is used for the static elements of a game scene, e.g. the
+landscape. Fixed rigid bodies are treated in a special way by the system. They
+have the same effect as a rigid body with a motion of type Keyframed
+and velocity 0, however they are much faster to use, incurring no simulation
+overhead, except in collision with moving bodies.
+</summary>
+        </member>
+        <member name="F:Havok.HkMotionType.Keyframed">
+            <summary>
+Simulation is not performed as a normal rigid body. During a simulation step,
+the velocity of the rigid body is used to calculate the new position of the
+rigid body, however the velocity is NOT updated. The user can keyframe a rigid
+body by setting the velocity of the rigid body to produce the desired keyframe
+positions. The hkpKeyFrameUtility class can be used to simply apply keyframes
+in this way. The velocity of a keyframed rigid body is NOT changed by the
+application of impulses or forces. The keyframed rigid body has an infinite
+mass when viewed by the rest of the system.
+</summary>
+        </member>
+        <member name="F:Havok.HkMotionType.Box_Inertia">
+            <summary>
+Simulation is performed using a box inertia tensor. The non-diagonal elements
+of the inertia tensor are set to zero. This is slower than the
+Sphere_Inertia motions, however it can produce more accurate results,
+especially for long thin objects.
+</summary>
+        </member>
+        <member name="F:Havok.HkMotionType.Sphere_Inertia">
+            <summary>
+Simulation is performed using a sphere inertia tensor. (A multiple of the
+Identity matrix). The highest value of the diagonal of the rigid body's
+inertia tensor is used as the spherical inertia.
+</summary>
+        </member>
+        <member name="F:Havok.HkMotionType.Dynamic">
+            <summary>
+A fully-simulated, movable rigid body. At construction time the engine checks
+the input inertia and selects Sphere_Inertia or Box_Inertia as
+appropriate.
+</summary>
+        </member>
+        <member name="F:Havok.HkReferencePolicy.TakeOwnership">
+            <summary>
+Reference count remains as it was.
+</summary>
+        </member>
+        <member name="F:Havok.HkReferencePolicy.None">
+            <summary>
+Increments reference count.
+</summary>
+        </member>
+        <member name="M:Havok.HkReferenceBase.Resurrect">
+            <summary>
+Use this method to keep native object alive. Test IsNativeAlive before calling this method.
+Main usage of this method is when you need to keep objects received from Havoc in some handler.
+</summary>
+        </member>
+        <member name="P:Havok.HkReferenceBase.OwnsReference">
+            <summary>
+Returns true when this object holds active reference to native object and prevents its collection.
+When false, it can still be resurrected (when IsNativeAlive is true)
+</summary>
+        </member>
+        <member name="P:Havok.HkReferenceBase.IsNativeAlive">
+            <summary>
+Returns true when native object is still alive.
+When true, Resurrect can be called.
+</summary>
+        </member>
+        <member name="M:Havok.HkReferenceBase.Finalize">
+            <summary>
+Finalizer, checks whether ownership of native object was released.
+Even when not, there's nothing to do, because finalizer cannot release native object (it runs on different thread)
+</summary>
+        </member>
+        <member name="M:Havok.HkReferenceBase.Dispose">
+            <summary>
+Releases ownership of native object. Native object may or may not be reclaimed.
+It depends whether this object held last reference or not.
+</summary>
+        </member>
+        <member name="M:Havok.HkReferenceBase.#ctor(hkReferencedObject*)">
+            <summary>
+Initializes a new instance of the HkReferenceBase class.
+Argument must be derived from ManagedReference!
+</summary>
+        </member>
+        <member name="T:Havok.HkReferenceBase">
+            <summary>
+Stores native object derived from hkReferenceObject.
+Handles object lifetime, object is destroyed when there's no managed and no native references.
+It doesn't matter whether managed references are release first or not.
+Managed references are released by calling Dispose().
+</summary>
+        </member>
+    </members>
+</doc>

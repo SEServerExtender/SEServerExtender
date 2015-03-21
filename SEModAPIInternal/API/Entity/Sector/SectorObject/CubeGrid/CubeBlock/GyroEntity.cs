@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -15,20 +15,25 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using SEModAPI.API.TypeConverters;
 
-	[DataContract]
+	[DataContract( Name = "GyroEntityProxy" )]
 	public class GyroEntity : FunctionalBlockEntity
 	{
-		private readonly GyroNetworkManager _networkManager;
+		#region "Attributes"
 
-		public const string GyroNamespace = "5BCAC68007431E61367F5B2CF24E2D6F";
-		public const string GyroClass = "C33277D56ED00A2772C484D143A9CB42";
-			   
-		public const string GyroSetOverrideMethod = "248F13F6DFA54470FE81204B119B7DE1";
-		public const string GyroSetPowerMethod = "46001A635CDAA4591E15661BA2083B75";
-		public const string GyroSetTargetAngularVelocityMethod = "5E85AE802570A4C0028157B436BDF0B5";
-			   
-		public const string GyroNetworkManagerField = "172E1F246A16951E55BC16D121BE2667";
+		private GyroNetworkManager m_networkManager;
 
+		public static string GyroNamespace = "";
+		public static string GyroClass = "=Naf3gC9AWnHHOtllqy1OLLb5BL=";
+
+		public static string GyroSetOverrideMethod = "set_GyroOverride";
+		public static string GyroSetPowerMethod = "set_GyroPower";
+		public static string GyroSetTargetAngularVelocityMethod = "SetGyroTorque";
+
+		public static string GyroNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
+
+		#endregion "Attributes"
+
+		#region "Constructors and Intializers"
 
 		public GyroEntity( CubeGridEntity parent, MyObjectBuilder_Gyro definition )
 			: base( parent, definition )
@@ -38,8 +43,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public GyroEntity( CubeGridEntity parent, MyObjectBuilder_Gyro definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			_networkManager = new GyroNetworkManager( this, InternalGetGyroNetworkManager( ) );
+			m_networkManager = new GyroNetworkManager( this, InternalGetGyroNetworkManager( ) );
 		}
+
+		#endregion "Constructors and Intializers"
+
+		#region "Properties"
 
 		[IgnoreDataMember]
 		[Category( "Gyro" )]
@@ -108,7 +117,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[TypeConverter( typeof( Vector3TypeConverter ) )]
 		public Vector3Wrapper TargetAngularVelocity
 		{
-			get { return ObjectBuilder.TargetAngularVelocity; }
+			get { return (Vector3Wrapper)ObjectBuilder.TargetAngularVelocity; }
 			set
 			{
 				if ( (Vector3)ObjectBuilder.TargetAngularVelocity == (Vector3)value ) return;
@@ -122,6 +131,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				}
 			}
 		}
+
+		#endregion "Properties"
+
+		#region "Methods"
 
 		new public static bool ReflectionUnitTest( )
 		{
@@ -141,10 +154,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				Console.WriteLine( ex );
 				return false;
 			}
 		}
+
+		#region "Internal"
 
 		protected Object InternalGetGyroNetworkManager( )
 		{
@@ -165,20 +180,23 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		protected void InternalUpdateGyroOverride( )
 		{
 			InvokeEntityMethod( ActualObject, GyroSetOverrideMethod, new object[ ] { GyroOverride } );
-			_networkManager.BroadcastOverride( );
+			m_networkManager.BroadcastOverride( );
 		}
 
 		protected void InternalUpdateGyroPower( )
 		{
 			InvokeEntityMethod( ActualObject, GyroSetPowerMethod, new object[ ] { GyroPower } );
-			_networkManager.BroadcastPower( );
+			m_networkManager.BroadcastPower( );
 		}
 
 		protected void InternalUpdateTargetAngularVelocity( )
 		{
 			InvokeEntityMethod( ActualObject, GyroSetTargetAngularVelocityMethod, new object[ ] { (Vector3)TargetAngularVelocity } );
-			_networkManager.BroadcastTargetAngularVelocity( );
+			m_networkManager.BroadcastTargetAngularVelocity( );
 		}
 
+		#endregion "Internal"
+
+		#endregion "Methods"
 	}
 }

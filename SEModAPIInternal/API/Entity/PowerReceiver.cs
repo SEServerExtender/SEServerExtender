@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 using SEModAPIInternal.API.Common;
@@ -17,29 +17,29 @@ namespace SEModAPIInternal.API.Entity
 		private Func<float> m_powerRateCallback;
 
 		//Power Receiver Type
-		public static string PowerReceiverNamespace = "FB8C11741B7126BD9C97FE76747E087F";
+		public static string PowerReceiverNamespace = "";
 
-		public static string PowerReceiverClass = "BD46495A378D4E0EEAB7EADCF05C74F1";
+		public static string PowerReceiverClass = "=babgJs9QqKNc4MkX8NUlXXlEdH=";
 
 		//Power Receiver Methods
-		public static string PowerReceiverRunPowerRateCallbackMethod = "29C1EE7C1DFD2BFF25004AFFEFA00723";
+		public static string PowerReceiverRunPowerRateCallbackMethod = "Update";
 
-		public static string PowerReceiverGetCurrentInputMethod = "D1114EB448825412789ECD52D28D40A1";
-		public static string PowerReceiverGetCurrentRateMethod = "C1054E3D5EB57AE417205025EF53EFCD";
-		public static string PowerReceiverSetMaxRequiredInputMethod = "F45F239EB3FDF7512379B9147E014547";
+		public static string PowerReceiverGetCurrentInputMethod = "get_RequiredInput";
+		public static string PowerReceiverGetCurrentRateMethod = "get_CurrentInput";
+		public static string PowerReceiverSetMaxRequiredInputMethod = "set_RequiredInput";
 
 		//Power Receiver Fields
-		public static string PowerReceiverMaxRequiredInputField = "59318896499727A72FF42D624ECE3084";
+		public static string PowerReceiverMaxRequiredInputField = "=DQnFVF8DDXIHnCWpuaPGltdbq6g=";
 
-		public static string PowerReceiverPowerRatioField = "0E8DD5E4ED55981F95E90E0524F6FA1A";
-		public static string PowerReceiverInputRateCallbackField = "053C195FD883E42B0FB64E893A4000D6";
+		public static string PowerReceiverPowerRatioField = "=YFDFLyRS3s03wJ0SpppayhlNLH=";
+		public static string PowerReceiverInputRateCallbackField = "=h6hWnoHwe9fvx7FWapN4KPGeTR=";
 
 		////////////////////////////////////////////////////////////////////
 
 		//3 - Door, 4 - Gravity Generator, 5 - Battery, 8 - BatteryBlock
-		public static string PowerReceiverTypeEnumNamespace = "FB8C11741B7126BD9C97FE76747E087F";
+		public static string PowerReceiverTypeEnumNamespace = "";
 
-		public static string PowerReceiverTypeEnumClass = "0CAE5E7398171101A465139DC3A8A6A4";
+		public static string PowerReceiverTypeEnumClass = "Sandbox.Game.GameSystems.Electricity.MyConsumerGroupEnum";
 
 		#endregion "Attributes"
 

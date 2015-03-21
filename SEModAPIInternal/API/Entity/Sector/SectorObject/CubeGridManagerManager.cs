@@ -14,11 +14,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private PowerManager m_powerManager;
 		private CubeGridThrusterManager m_thrusterManager;
 
-		public static string CubeGridManagerManagerNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string CubeGridManagerManagerClass = "0A0120EAD12D237F859BDAB2D84DA72B";
+		public static string CubeGridManagerManagerNamespace = "";
+		public static string CubeGridManagerManagerClass = "Sandbox.Game.Entities.Cube.MyCubeGridSystems";
 
-		public static string CubeGridManagerManagerGetPowerManagerMethod = "F05ACB25E5255DA110249186EE895C73";
-		public static string CubeGridManagerManagerGetThrusterManagerMethod = "0EF76C91FA04B0B200A3F3AC155F089D";
+		public static string CubeGridManagerManagerGetPowerManagerMethod = "get_PowerDistributor";
+		public static string CubeGridManagerManagerGetThrusterManagerMethod = "get_ThrustSystem";
 
 		#endregion "Attributes"
 

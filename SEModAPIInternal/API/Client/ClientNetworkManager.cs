@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using SEModAPIInternal.API.Common;
 
@@ -10,9 +10,9 @@ namespace SEModAPIInternal.API.Client
 
 		new protected static ClientNetworkManager m_instance;
 
-		public static string ClientNetworkManagerNamespace = "C42525D7DE28CE4CFB44651F3D03A50D";
-		public static string ClientNetworkManagerClass = "917D70698518C7E9DB7763365C3831D7";
-		public static string ClientNetworkManagerConnectedPlayersField = "0A6298E827EEFE85ABBA7D3FA0A0EFCA";
+		public static string ClientNetworkManagerNamespace = "";
+		public static string ClientNetworkManagerClass = "=VZlADLeS8fUdvHT4xyQSVm8dYk=";
+		public static string ClientNetworkManagerConnectedPlayersField = "=hrd2r4yATC2NCJnhqOpJBW6EOU=";
 
 		#endregion "Attributes"
 

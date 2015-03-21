@@ -62,27 +62,27 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		private static bool m_isRegistered;
 
-		public static string CubeGridGetNetManagerMethod = "AF2DACDED0370C8DBA03A53FDA4E2C47";
+		public static string CubeGridGetNetManagerMethod = "get_SyncObject";
 
 		//Definition
-		public static string CubeGridNetManagerNamespace = "5F381EA9388E0A32A8C817841E192BE8";
+		public static string CubeGridNetManagerNamespace = "";
 
-		public static string CubeGridNetManagerClass = "E727876839B1C8FFEE302CD2A1948CDA";
+		public static string CubeGridNetManagerClass = "=zoXj9sAM1q8S0PhlB3s4jkZF7e=";
 
 		//Methods
-		public static string CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod = "F7C40254F25941842EA6558205FAC160";
+		public static string CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod = "SendIntegrityChanged";
 
-		public static string CubeGridNetManagerBroadcastCubeBlockFactionDataMethod = "EF45C83059E3CD5A2C5354ABB687D861";
-		public static string CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod = "4A75379DE89606408396FDADD89822F3";
-		public static string CubeGridNetManagerBroadcastAddCubeBlockMethod = "0B27B2B92323D75DF73055AD0A6DB4B6";
+		public static string CubeGridNetManagerBroadcastCubeBlockFactionDataMethod = "ChangeOwnerRequest";
+		public static string CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod = "SendRemovedBlocks";
+		public static string CubeGridNetManagerBroadcastAddCubeBlockMethod = "BuildBlocksSuccess";
 
 		//Fields
-		public static string CubeGridNetManagerCubeBlocksToDestroyField = "8E76EFAC4EED3B61D48795B2CD5AF989";
+		public static string CubeGridNetManagerCubeBlocksToDestroyField = "=XbM83NQKvFOEEzrVYjD6oxsh7d=";
 
 		//////////////////////////////////////////////////////////////////
 
 		public static string CubeGridIntegrityChangeEnumNamespace = CubeGridEntity.CubeGridNamespace + "." + CubeGridEntity.CubeGridClass;
-		public static string CubeGridIntegrityChangeEnumClass = "55D3513B52D474C7AF161242E01FB9A9";
+		public static string CubeGridIntegrityChangeEnumClass = "MyIntegrityChangeEnum";
 
 		#endregion "Attributes"
 

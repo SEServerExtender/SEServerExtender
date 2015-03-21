@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text;
@@ -11,7 +11,7 @@ using Sandbox.ModAPI;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
-	[DataContract]
+	[DataContract( Name = "TerminalBlockEntityProxy" )]
 	[KnownType( typeof( InventoryEntity ) )]
 	public class TerminalBlockEntity : CubeBlockEntity
 	{
@@ -19,14 +19,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private string m_customName;
 
-		public static string TerminalBlockNamespace = "6DDCED906C852CFDABA0B56B84D0BD74";
-		public static string TerminalBlockClass = "CCFD704C70C3F20F7E84E8EA42D7A730";
+		public static string TerminalBlockNamespace = "";
+		public static string TerminalBlockClass = "Sandbox.Game.Entities.Cube.MyTerminalBlock";
 
-		public static string TerminalBlockGetCustomNameMethod = "DE9705A29F3FE6F1E501595879B2E54F";
-		public static string TerminalBlockSetCustomNameMethod = "774FC8084C0899CEF5C8DAE867B847FE";
+		public static string TerminalBlockGetCustomNameMethod = "get_CustomName";
+		public static string TerminalBlockSetCustomNameMethod = "set_CustomName";
 
 		//public static string TerminalBlockBroadcastCustomNameMethod = "FEBDC0DCFB7DA9823C08CE7FC0927638";
-		public static string TerminalBlockBroadcastCustomNameMethod = "97B2C51E83D10649FBF8E598D77C8BF8";
+		public static string TerminalBlockBroadcastCustomNameMethod = "<.cctor>b__7";
 
 		#endregion "Attributes"
 
@@ -71,8 +71,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				try
 				{
-					if ( MObjectBuilder == null )
-						MObjectBuilder = new MyObjectBuilder_TerminalBlock( );
+					if ( m_objectBuilder == null )
+						m_objectBuilder = new MyObjectBuilder_TerminalBlock( );
 
 					return (MyObjectBuilder_TerminalBlock)base.ObjectBuilder;
 				}
@@ -138,16 +138,16 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		public static void SetCustomName(Sandbox.ModAPI.Ingame.IMyTerminalBlock terminalBlock, string text)
+		public static void SetCustomName( Sandbox.ModAPI.Ingame.IMyTerminalBlock terminalBlock, string text )
 		{
 			try
 			{
-				StringBuilder newCustomName = new StringBuilder(text);
-				InvokeStaticMethod(terminalBlock.GetType(), TerminalBlockBroadcastCustomNameMethod, new object[] { terminalBlock, newCustomName });
+				StringBuilder newCustomName = new StringBuilder( text );
+				InvokeStaticMethod( terminalBlock.GetType( ), TerminalBlockBroadcastCustomNameMethod, new object[ ] { terminalBlock, newCustomName } );
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );				
+				ApplicationLog.BaseLog.Error( string.Format( "SetCustomName(): {0}", ex ) );
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				StringBuilder newCustomName = new StringBuilder( m_customName );
 
 				//InvokeEntityMethod(ActualObject, TerminalBlockSetCustomNameMethod, new object[] { newCustomName });
-				InvokeStaticMethod( ActualObject.GetType( ), TerminalBlockBroadcastCustomNameMethod, new[ ] { ActualObject, newCustomName } );
+				InvokeStaticMethod( ActualObject.GetType( ), TerminalBlockBroadcastCustomNameMethod, new object[ ] { ActualObject, newCustomName } );
 			}
 			catch ( Exception ex )
 			{
