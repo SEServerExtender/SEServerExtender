@@ -68,13 +68,13 @@
 			else
 			{
 				PlayerList.Dispatcher.Invoke( ( ) =>
-				                              {
-					                              PlayerList.Items.Clear( );
-					                              foreach ( ChatUserItem player in players )
-					                              {
-						                              PlayerList.Items.Add( new ListViewItem { Content = string.Format( "{0} ({1})", player.Username, player.SteamId ), Tag = player } );
-					                              }
-				                              } );
+											  {
+												  PlayerList.Items.Clear( );
+												  foreach ( ChatUserItem player in players )
+												  {
+													  PlayerList.Items.Add( new ListViewItem { Content = string.Format( "{0} ({1})", player.Username, player.SteamId ), Tag = player } );
+												  }
+											  } );
 			}
 		}
 
@@ -107,6 +107,8 @@
 			ServerServiceProxy p = new ServerServiceProxy( );
 			IEnumerable<PluginInfo> plugins = p.GetLoadedPluginList( );
 			p.Close( );
+
+			LoadedPlugins.Items.Clear( );
 
 			foreach ( var plugin in plugins )
 			{
