@@ -1,8 +1,11 @@
 ﻿namespace SEComm
 {
+	using System;
 	using System.Collections.Generic;
 	using System.ServiceModel;
+	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal;
+	using PluginInfo = SEComm.Plugins.PluginInfo;
 
 	[ServiceContract]
 	public interface IServerService
@@ -40,5 +43,11 @@
 
 		[OperationContract]
 		void UnBanPlayer( ulong steamId );
+
+		[OperationContract]
+		Version GetExtenderVersion( );
+
+		[OperationContract]
+		IEnumerable<PluginInfo> GetLoadedPluginList( );
 	}
 }

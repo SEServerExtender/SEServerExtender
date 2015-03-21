@@ -1,18 +1,17 @@
-using System;
-
 namespace SEModAPIExtensions.API.Plugin
 {
+	using System;
+
 	public interface IPlugin
 	{
 		void Init();
-//        void InitWithPath(String modPath);
 		void Update();
 		void Shutdown();
 		Guid Id
 		{ get; }
 		string Name
 		{ get; }
-		string Version
+		Version Version
 		{ get; }
 	}
 }

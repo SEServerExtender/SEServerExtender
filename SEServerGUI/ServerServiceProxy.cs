@@ -1,11 +1,12 @@
 ﻿namespace SEServerGUI
 {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 	using System.ServiceModel;
 	using SEComm;
+	using SEComm.Plugins;
 	using SEModAPIInternal;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 
 	public sealed class ServerServiceProxy : ClientBase<IServerService>, IServerService
 	{
@@ -54,6 +55,16 @@
 		public void UnBanPlayer( ulong steamId )
 		{
 			Channel.UnBanPlayer( steamId );
+		}
+
+		public Version GetExtenderVersion( )
+		{
+			return Channel.GetExtenderVersion( );
+		}
+
+		public IEnumerable<PluginInfo> GetLoadedPluginList( )
+		{
+			return Channel.GetLoadedPluginList( );
 		}
 	}
 }

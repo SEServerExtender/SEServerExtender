@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
-using SEModAPIExtensions.API.Plugin;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-
 namespace SEModAPIExtensions.API
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+	using System.Threading;
+	using SEModAPIExtensions.API.Plugin;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.Support;
 
 	public class PluginManager
@@ -34,7 +32,7 @@ namespace SEModAPIExtensions.API
 		{
 			m_instance = this;
 
-			Plugins = new Dictionary<Guid, Object>( );
+			Plugins = new Dictionary<Guid, IPlugin>( );
 			PluginStates = new Dictionary<Guid, bool>( );
 			m_pluginAssemblies = new Dictionary<Guid, Assembly>( );
 			Initialized = false;
@@ -63,7 +61,7 @@ namespace SEModAPIExtensions.API
 
 		public bool Initialized { get; private set; }
 
-		public Dictionary<Guid, object> Plugins { get; private set; }
+		public Dictionary<Guid, IPlugin> Plugins { get; private set; }
 
 		public Dictionary<Guid, bool> PluginStates { get; private set; }
 
@@ -140,12 +138,12 @@ namespace SEModAPIExtensions.API
 								Type[ ] filteredTypes = type.GetInterfaces( );
 								foreach ( Type interfaceType in filteredTypes )
 								{
-									if ( interfaceType.FullName == typeof( IPlugin ).FullName )
+									if ( interfaceType.Name == typeof( IPlugin ).Name )
 									{
 										try
 										{
 											//Create an instance of the plugin object
-											object pluginObject = Activator.CreateInstance( type );
+											IPlugin pluginObject = (IPlugin)Activator.CreateInstance( type );
 
 											//And add it to the dictionary
 											Plugins.Add( guidValue, pluginObject );
@@ -342,7 +340,7 @@ namespace SEModAPIExtensions.API
 				List<EntityEventManager.EntityEvent> events = parameters.Events;
 				List<ChatManager.ChatEvent> chatEvents = parameters.ChatEvents;
 				Object plugin = parameters.Plugin;
-				Dictionary<Guid, Object> plugins = parameters.Plugins;
+				Dictionary<Guid, IPlugin> plugins = parameters.Plugins;
 				Dictionary<Guid, bool> pluginState = parameters.PluginState;
 
 				//Run entity events
@@ -464,7 +462,7 @@ namespace SEModAPIExtensions.API
 			}
 		}
 
-		public static void HookChatMessage( Object plugin, Dictionary<Guid, Object> plugins, Dictionary<Guid, bool> pluginState, ChatManager.ChatEvent chatEvent, out bool discard )
+		public static void HookChatMessage( Object plugin, Dictionary<Guid, IPlugin> plugins, Dictionary<Guid, bool> pluginState, ChatManager.ChatEvent chatEvent, out bool discard )
 		{
 			discard = false;
 
@@ -527,7 +525,7 @@ namespace SEModAPIExtensions.API
 
 		public void UnloadPlugin( Guid key )
 		{
-			object plugin;
+			IPlugin plugin;
 			//Skip if the plugin doesn't exist
 			if ( !Plugins.TryGetValue( key, out plugin ) )
 				return;

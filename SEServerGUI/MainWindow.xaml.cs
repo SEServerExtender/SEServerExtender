@@ -1,24 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace SEServerGUI
+﻿namespace SEServerGUI
 {
+	using System;
 	using System.Collections.Generic;
-	using System.Data;
+	using System.Linq;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Controls;
 	using SEComm;
+	using SEComm.Plugins;
 	using SEModAPIInternal;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
@@ -109,6 +99,18 @@ namespace SEServerGUI
 			if ( ( (TabControl)sender ).SelectedIndex == 1 )
 			{
 				Task.Run( ( ) => ReloadChatPlayerList( sender, e ) );
+			}
+		}
+
+		private void RefreshPluginList( object sender, RoutedEventArgs e )
+		{
+			ServerServiceProxy p = new ServerServiceProxy( );
+			IEnumerable<PluginInfo> plugins = p.GetLoadedPluginList( );
+			p.Close( );
+
+			foreach ( var plugin in plugins )
+			{
+				LoadedPlugins.Items.Add( string.Format( "{0} - {1}", plugin.Name, plugin.Version ) );
 			}
 		}
 	}

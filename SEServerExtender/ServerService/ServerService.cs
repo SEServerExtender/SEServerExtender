@@ -7,16 +7,17 @@
 	using System.ServiceModel;
 	using System.ServiceModel.Channels;
 	using SEComm;
+	using SEComm.Plugins;
+	using SEModAPIExtensions.API;
+	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal;
 	using SEModAPIInternal.API.Common;
-	using SEModAPIInternal.API.Entity;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.Support;
 
 	[ServiceBehavior( ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.PerCall )]
 	public class ServerService : IServerService
 	{
-		private static readonly Version ProtocolVersion = new Version( 1, 0, 0 );
+		private static readonly Version ProtocolVersion = new Version( 1, 1, 0 );
 
 		/// <summary>
 		/// Starts the SE server with the given configuration name.
@@ -135,6 +136,24 @@
 			string ip = GetRemoteEndpoint( );
 			ApplicationLog.BaseLog.Info( "Received request to un-ban player {0} from {1}", null, steamId, ip );
 			PlayerManager.Instance.UnBanPlayer( steamId );
+		}
+
+		/// <summary>
+		/// Gets the version of SESE that is currently running.
+		/// </summary>
+		public Version GetExtenderVersion( )
+		{
+			return Assembly.GetExecutingAssembly( ).GetName( ).Version;
+		}
+
+		public IEnumerable<PluginInfo> GetLoadedPluginList( )
+		{
+			return PluginManager.Instance.Plugins.Select( p => new PluginInfo
+			                                                   {
+				                                                   Id = p.Value.Id,
+				                                                   Version = p.Value.Version,
+				                                                   Name = p.Value.Name
+			                                                   } );
 		}
 	}
 }

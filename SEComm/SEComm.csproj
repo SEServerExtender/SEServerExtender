@@ -63,12 +63,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Plugins\PluginInfo.cs" />
     <Compile Include="StartServerResponse.cs" />
     <Compile Include="IServerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartServerRequest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SEModAPIExtensions\SEModAPIExtensions.csproj">
+      <Project>{727B1141-2124-4A31-82FA-CAE218501215}</Project>
+      <Name>SEModAPIExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SEModAPIInternal\SEModAPIInternal.csproj">
       <Project>{8c4b07b6-0864-497a-acaa-18babe2f4168}</Project>
       <Name>SEModAPIInternal</Name>

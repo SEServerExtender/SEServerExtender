@@ -1,16 +1,16 @@
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
 namespace SEModAPIExtensions.API.Plugin
 {
+	using System;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+
 	public abstract class PluginBase : IPlugin
 	{
 		#region "Attributes"
 
 		protected Guid m_pluginId;
 		protected string m_name = "";
-		protected string m_version = "";
+		protected Version m_version;
 
 		#endregion
 
@@ -23,7 +23,7 @@ namespace SEModAPIExtensions.API.Plugin
 			m_pluginId = new Guid( guidAttr.Value );
 			AssemblyName asmName = assembly.GetName( );
 			m_name = asmName.Name;
-			m_version = asmName.Version.ToString( );
+			m_version = asmName.Version;
 		}
 
 		#endregion
@@ -40,7 +40,7 @@ namespace SEModAPIExtensions.API.Plugin
 			get { return m_name; }
 		}
 
-		public string Version
+		public Version Version
 		{
 			get { return m_version; }
 		}
