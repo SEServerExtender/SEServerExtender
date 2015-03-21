@@ -258,7 +258,7 @@ namespace SEModAPIInternal.API.Server
 					entity.Dispose();
 				}
 				TimeSpan cleanupTime = DateTime.Now - startedEntityCleanup;
-				Console.WriteLine("Took " + cleanupTime.TotalSeconds.ToString() + " seconds to clean up entities");
+				ApplicationLog.BaseLog.Debug("Took " + cleanupTime.TotalSeconds.ToString() + " seconds to clean up entities");
 				*/
 				Object mainGame = SandboxGameAssemblyWrapper.MainGame;
 				BaseObject.InvokeEntityMethod( mainGame, "Dispose" );

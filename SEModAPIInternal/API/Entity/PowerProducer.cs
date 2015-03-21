@@ -18,12 +18,14 @@ namespace SEModAPIInternal.API.Entity
 		public static string PowerProducerNamespace = "";
 		public static string PowerProducerClass = "=H36sAJ3q2dwiHOAJoDFIiSAhzB=";
 
-		//public static string PowerProducerGetMaxPowerOutputMethod = "99696D7EE29C66F4A38A1F54DE55BC36";	  //1.72.08
-		//public static string PowerProducerGetCurrentOutputMethod = "93F2E1747A5EA2B97AF67DA5F2A2F8AC";	  //1.72.08
-		//public static string PowerProducerSetCurrentOutputMethod = "46DA79EF5778B2413934F14DC8F3589C";	  //1.72.08
-		public static string PowerProducerGetMaxPowerOutputMethod = "2F4566F5785A938FCDE93C36C71066C8";		  //1.73.09  float 2F4566F5785A938FCDE93C36C71066C8();  Second function of this type
-		public static string PowerProducerGetCurrentOutputMethod = "0DE7BC75E34014AA5A2C722A6C6B048E";		  //1.73.09  float 0DE7BC75E34014AA5A2C722A6C6B048E();  First function of this type
-		public static string PowerProducerSetCurrentOutputMethod = "8A64E0D6467536E75388E502F1CCB920";		  //1.73.09  void 8A64E0D6467536E75388E502F1CCB920(float 094E467FF825343C63A4502A66537B82);
+		
+
+		//public static string PowerProducerGetMaxPowerOutputMethod = "2F4566F5785A938FCDE93C36C71066C8";		//1.73.09  float 2F4566F5785A938FCDE93C36C71066C8();  Second function of this type
+		//public static string PowerProducerGetCurrentOutputMethod = "0DE7BC75E34014AA5A2C722A6C6B048E";		//1.73.09  float 0DE7BC75E34014AA5A2C722A6C6B048E();  First function of this type
+		//public static string PowerProducerSetCurrentOutputMethod = "8A64E0D6467536E75388E502F1CCB920";		//1.73.09  void 8A64E0D6467536E75388E502F1CCB920(float 094E467FF825343C63A4502A66537B82);
+		public static string PowerProducerGetMaxPowerOutputMethod = "get_MaxPowerOutput";						//1.74.10
+		public static string PowerProducerGetCurrentOutputMethod = "get_CurrentPowerOutput";					//1.74.10
+		public static string PowerProducerSetCurrentOutputMethod = "set_CurrentPowerOutput";					//1.74.10
 
 		#endregion "Attributes"
 

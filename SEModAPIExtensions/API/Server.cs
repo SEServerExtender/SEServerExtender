@@ -145,7 +145,7 @@ namespace SEModAPIExtensions.API
 		//}
 		//catch (CommunicationException ex)
 		//{
-		//	Console.WriteLine("An exception occurred: {0}", ex.Message);
+		//	ApplicationLog.BaseLog.Error( "An exception occurred: {0}", ex.Message);
 		//	//_webHost.Abort( );
 		//	return false;
 		//}
@@ -592,7 +592,7 @@ namespace SEModAPIExtensions.API
 
 			_isServerRunning = false;
 
-			Console.WriteLine( "Server has been stopped" );
+			ApplicationLog.BaseLog.Info(  "Server has been stopped" );
 		}
 
 		public MyConfigDedicatedData LoadServerConfig( )

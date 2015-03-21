@@ -62,7 +62,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			m_instance = this;
 
-			Console.WriteLine( "Finished loading WorldManager" );
+			ApplicationLog.BaseLog.Info(  "Finished loading WorldManager" );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -207,7 +207,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error(  ex );
 				return false;
 			}
 		}

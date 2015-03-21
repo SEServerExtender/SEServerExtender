@@ -106,7 +106,7 @@ namespace SEModAPIInternal.API.Common
 			m_countQueuedActions = 0;
 			m_averageQueuedActions = 0;
 
-			Console.WriteLine( "Finished loading SandboxGameAssemblyWrapper" );
+			ApplicationLog.BaseLog.Info( "Finished loading SandboxGameAssemblyWrapper" );
 		}
 
 		#endregion "Constructors and Initializers"sss
@@ -338,7 +338,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -651,7 +651,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex.ToString( ) );
+				ApplicationLog.BaseLog.Error(  ex.ToString( ) );
 			}
 
 			return result;

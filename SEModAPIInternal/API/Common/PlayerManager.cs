@@ -176,7 +176,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			m_instance = this;
 
-			Console.WriteLine("Finished loading PlayerMap");
+			ApplicationLog.BaseLog.Info("Finished loading PlayerMap");
 		}
 
 		#endregion
@@ -233,7 +233,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return false;
 			}
 		}
@@ -883,7 +883,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			m_instance = this;
 
-			Console.WriteLine("Finished loading PlayerManager");
+			ApplicationLog.BaseLog.Info("Finished loading PlayerManager");
 		}
 
 		#endregion
@@ -944,7 +944,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				ApplicationLog.BaseLog.Error(ex);
 				return false;
 			}
 		}

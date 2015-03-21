@@ -131,7 +131,7 @@ namespace SEModAPIInternal.API.Common
 		{
 
 			m_instance = this;
-			Console.WriteLine( "Finished loading NetworkManager" );
+			ApplicationLog.BaseLog.Info(  "Finished loading NetworkManager" );
 		}
 
 		#endregion
@@ -170,7 +170,7 @@ namespace SEModAPIInternal.API.Common
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error(  ex );
 				return false;
 			}
 		}

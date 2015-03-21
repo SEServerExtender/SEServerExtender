@@ -511,7 +511,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					Console.WriteLine( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
+					ApplicationLog.BaseLog.Debug( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
 
 				m_addEntityQueue.Enqueue( entity );
 
@@ -534,7 +534,7 @@ namespace SEModAPIInternal.API.Entity
 				BaseEntity entityToAdd = m_addEntityQueue.Dequeue( );
 
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					Console.WriteLine( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
+					ApplicationLog.BaseLog.Debug( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
 
 				//Create the backing object
 				Type entityType = entityToAdd.GetType( );
@@ -587,7 +587,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( SandboxGameAssemblyWrapper.IsDebugging )
 				{
 					Type type = entityToAdd.GetType( );
-					Console.WriteLine( type.Name + " '" + entityToAdd.Name + "': Finished adding to scene" );
+					ApplicationLog.BaseLog.Debug( type.Name + " '" + entityToAdd.Name + "': Finished adding to scene" );
 				}
 			}
 			catch ( Exception ex )

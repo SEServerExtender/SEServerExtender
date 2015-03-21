@@ -37,7 +37,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

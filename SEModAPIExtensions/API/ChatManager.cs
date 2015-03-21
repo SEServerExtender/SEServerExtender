@@ -170,7 +170,7 @@ namespace SEModAPIExtensions.API
 			RegisterChatCommand( unbanCommand );
 			RegisterChatCommand( asyncSaveCommand );
 
-			Console.WriteLine( "Finished loading ChatManager" );
+			ApplicationLog.BaseLog.Info(  "Finished loading ChatManager" );
 		}
 
 		#endregion
@@ -239,7 +239,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( Exception ex )
 			{
-				Console.WriteLine( ex );
+				ApplicationLog.BaseLog.Error(  ex );
 				return false;
 			}
 		}

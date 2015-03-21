@@ -534,6 +534,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
+		/// <summary>
+		/// Repairs all <see cref="CubeBlockEntity">CubeBlockEntities</see> in this <see cref="CubeGridEntity"/>
+		/// </summary>
+		public void Repair( )
+		{
+			foreach ( CubeBlockEntity block in CubeBlocks )
+			{
+				block.Repair( );
+			}
+		}
+
 		#region "Internal"
 
 		protected Object GetManagerManager( )
