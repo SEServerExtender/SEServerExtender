@@ -6,11 +6,12 @@ using Sandbox.Game.Entities;
 using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 using SEModAPIInternal.Support;
 
-using VRage.Common.Utils;
 using VRageMath;
 
 namespace SEModAPIInternal.API.Utility
 {
+	using VRage.Utils;
+
 	public class UtilityFunctions
 	{
 		#region "Attributes"
@@ -247,7 +248,7 @@ namespace SEModAPIInternal.API.Utility
 		public static Vector3D GenerateRandomBorderPosition( Vector3 borderStart, Vector3 borderEnd )
 		{
 			BoundingBoxD box = new BoundingBoxD( borderStart, borderEnd );
-			Vector3D result = MyVRageUtils.GetRandomBorderPosition( ref box );
+			Vector3D result = MyUtils.GetRandomBorderPosition( ref box );
 
 			return result;
 		}

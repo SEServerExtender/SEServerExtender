@@ -11,8 +11,6 @@ using Sandbox.Input;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Entity;
 using SteamSDK;
-using SysUtils.Utils;
-using VRage.Common.Plugins;
 using VRage.Common.Utils;
 using VRage.Library.Utils;
 
@@ -162,12 +160,6 @@ namespace SEModAPIInternal.API.Server
 			}
 			*/
 
-			try
-			{
-				MyPlugins.Unload( );
-			}
-			catch { }
-
 			MyAudio.Static.UnloadData( );
 			MyAudio.UnloadData( );
 			MyFileSystem.Reset( );
@@ -183,10 +175,6 @@ namespace SEModAPIInternal.API.Server
 		{
 			try
 			{
-				//Make sure the log, if running, is closed out before we begin
-				if ( MyLog.Default != null )
-					MyLog.Default.Close( );
-
 				SandboxGameAssemblyWrapper.Instance.SetNullRender( true );
 				MyFileSystem.Reset( );
 
