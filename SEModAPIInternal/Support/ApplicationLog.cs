@@ -19,6 +19,7 @@ namespace SEModAPIInternal.Support
 		private string _logFileName;
 
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
+		public static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
 
 		public ApplicationLog( bool useGamePath = false )
 		{

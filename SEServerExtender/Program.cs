@@ -227,7 +227,7 @@ namespace SEServerExtender
 				Server.IsWCFEnabled = !extenderArgs.NoWcf;
 				Server.Init( );
 
-				ChatCommand guiCommand = new ChatCommand( "gui", ChatCommand_GUI, false );
+				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
 				if ( extenderArgs.AutoStart )
@@ -308,7 +308,7 @@ namespace SEServerExtender
 			BaseLog.Error( "AppDomain.UnhandledException - {0}", e.ExceptionObject );
 		}
 
-		static void ChatCommand_GUI( ChatEvent chatEvent )
+		static void ChatCommand_GUI( ChatManager.ChatEvent chatEvent )
 		{
 			Thread uiThread = new Thread( StartGui );
 			uiThread.SetApartmentState( ApartmentState.STA );

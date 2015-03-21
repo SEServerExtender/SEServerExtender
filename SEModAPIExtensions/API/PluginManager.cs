@@ -238,7 +238,7 @@ namespace SEModAPIExtensions.API
 			EntityEventManager.Instance.ResourceLocked = true;
 
 			List<EntityEventManager.EntityEvent> events = EntityEventManager.Instance.EntityEvents;
-			List<ChatEvent> chatEvents = ChatManager.Instance.ChatEvents;
+			List<ChatManager.ChatEvent> chatEvents = ChatManager.Instance.ChatEvents;
 
 			//Generate the player join/leave events here
 			List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
@@ -298,7 +298,7 @@ namespace SEModAPIExtensions.API
 					                                       Plugins = Plugins,
 					                                       PluginState = PluginStates,
 					                                       Events = new List<EntityEventManager.EntityEvent>( events ),
-					                                       ChatEvents = new List<ChatEvent>( chatEvents )
+					                                       ChatEvents = new List<ChatManager.ChatEvent>( chatEvents )
 				                                       };
 
 				ThreadPool.QueueUserWorkItem( DoUpdate, parameters );
@@ -340,7 +340,7 @@ namespace SEModAPIExtensions.API
 				PluginManagerThreadParams parameters = (PluginManagerThreadParams)args;
 
 				List<EntityEventManager.EntityEvent> events = parameters.Events;
-				List<ChatEvent> chatEvents = parameters.ChatEvents;
+				List<ChatManager.ChatEvent> chatEvents = parameters.ChatEvents;
 				Object plugin = parameters.Plugin;
 				Dictionary<Guid, Object> plugins = parameters.Plugins;
 				Dictionary<Guid, bool> pluginState = parameters.PluginState;
@@ -426,7 +426,7 @@ namespace SEModAPIExtensions.API
 				}
 
 				//Run chat events
-				foreach ( ChatEvent chatEvent in chatEvents )
+				foreach ( ChatManager.ChatEvent chatEvent in chatEvents )
 				{
 					try
 					{
@@ -464,7 +464,7 @@ namespace SEModAPIExtensions.API
 			}
 		}
 
-		public static void HookChatMessage( Object plugin, Dictionary<Guid, Object> plugins, Dictionary<Guid, bool> pluginState, ChatEvent chatEvent, out bool discard )
+		public static void HookChatMessage( Object plugin, Dictionary<Guid, Object> plugins, Dictionary<Guid, bool> pluginState, ChatManager.ChatEvent chatEvent, out bool discard )
 		{
 			discard = false;
 

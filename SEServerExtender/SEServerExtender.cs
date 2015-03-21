@@ -1648,11 +1648,11 @@ namespace SEServerExtender
 		private void ChatViewRefresh(object sender, EventArgs e)
 		{
 			//Refresh the chat history
-			List<ChatEvent> chatHistory = ChatManager.Instance.ChatHistory;
+			List<ChatManager.ChatEvent> chatHistory = ChatManager.Instance.ChatHistory;
 			if (chatHistory.Count != m_chatLineCount)
 			{
 				int pos = 0;
-				foreach (ChatEvent entry in chatHistory)
+				foreach (ChatManager.ChatEvent entry in chatHistory)
 				{
 					if (pos >= m_chatLineCount)
 					{

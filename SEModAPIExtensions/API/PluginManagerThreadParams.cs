@@ -11,6 +11,6 @@ namespace SEModAPIExtensions.API
 		public Dictionary<Guid, Object> Plugins;
 		public Dictionary<Guid, bool> PluginState;
 		public List<EntityEventManager.EntityEvent> Events;
-		public List<ChatEvent> ChatEvents;
+		public List<ChatManager.ChatEvent> ChatEvents;
 	}
 }
