@@ -23,27 +23,27 @@ namespace SEModAPIInternal.API.Common
 
 		public struct InternalPlayerItem
 		{
-            public string name;
-			public bool isDead;
-			public ulong steamId;
-			public string model;
-            public long playerId;
-            public long entityId;
+            public string Name;
+			public bool IsDead;
+			public ulong SteamId;
+			public string Model;
+            public long PlayerId;
+            public long EntityId;
 		}
 
         public struct InternalIdentityItem
         {
-            public string name;
-            public string model;
-            public long playerId;
-            public long entityId;
+            public string Name;
+            public string Model;
+            public long PlayerId;
+            public long EntityId;
 
             public InternalIdentityItem(Object source)
             {
-                name = (string)BaseObject.GetEntityFieldValue(source, "=B8PXSHqLp25RBGOdmCis2sKmta=");
-				model = (string)BaseObject.GetEntityFieldValue(source, "=BD1UO2NAjZuOCLGyyxuxvZ5l9Q=");
-				playerId = (long)BaseObject.GetEntityFieldValue(source, "=rtuCuyLjrqvR3q9lO6M8YE5s0J=");
-                entityId = 0;
+                Name = (string)BaseObject.GetEntityFieldValue(source, "=B8PXSHqLp25RBGOdmCis2sKmta=");
+				Model = (string)BaseObject.GetEntityFieldValue(source, "=BD1UO2NAjZuOCLGyyxuxvZ5l9Q=");
+				PlayerId = (long)BaseObject.GetEntityFieldValue(source, "=rtuCuyLjrqvR3q9lO6M8YE5s0J=");
+                EntityId = 0;
             }
         }
 
@@ -247,7 +247,7 @@ namespace SEModAPIInternal.API.Common
 
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
             if (steamDictionary.ContainsKey(steamId))
-                return steamDictionary[steamId].name;
+                return steamDictionary[steamId].Name;
 
             return playerName;
         }
@@ -287,12 +287,12 @@ namespace SEModAPIInternal.API.Common
 
 			foreach (var playerItem in InternalGetSteamDictionary().Values)
 			{
-				if (playerItem.name.ToLower().Contains(lowerName))
+				if (playerItem.Name.ToLower().Contains(lowerName))
 				{
 					// if the playeritem occurs more than once, replace it.
-					if (playerItemstoReturn.Exists(x => x.name.ToLower() == playerItem.name.ToLower()))
+					if (playerItemstoReturn.Exists(x => x.Name.ToLower() == playerItem.Name.ToLower()))
 					{
-						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItemstoReturn.First(x => x.name.ToLower() == playerItem.name.ToLower()))] = playerItem;
+						playerItemstoReturn[playerItemstoReturn.IndexOf(playerItemstoReturn.First(x => x.Name.ToLower() == playerItem.Name.ToLower()))] = playerItem;
 					}
 					else
 						playerItemstoReturn.Add(playerItem);
@@ -312,11 +312,11 @@ namespace SEModAPIInternal.API.Common
                     return playerItem;
 
                 InternalPlayerItem item = playerDictionary[playerId];
-                playerItem.PlayerId = item.playerId;
-                playerItem.SteamId = item.steamId;
-                playerItem.Name = item.name;
-                playerItem.Model = item.model;
-                playerItem.IsDead = item.isDead;
+                playerItem.PlayerId = item.PlayerId;
+                playerItem.SteamId = item.SteamId;
+                playerItem.Name = item.Name;
+                playerItem.Model = item.Model;
+                playerItem.IsDead = item.IsDead;
             }
             catch (Exception ex)
             {
@@ -331,9 +331,9 @@ namespace SEModAPIInternal.API.Common
             ulong steamId = 0;
             Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
 			if(!partial)
-				steamId = steamDictionary.FirstOrDefault(x => x.Value.name == playerName && x.Value.steamId != 0).Key;
+				steamId = steamDictionary.FirstOrDefault(x => x.Value.Name == playerName && x.Value.SteamId != 0).Key;
 			else
-				steamId = steamDictionary.FirstOrDefault(x => x.Value.name.ToLower().Contains(playerName.ToLower()) && x.Value.steamId != 0).Key;
+				steamId = steamDictionary.FirstOrDefault(x => x.Value.Name.ToLower().Contains(playerName.ToLower()) && x.Value.SteamId != 0).Key;
 
             if (steamId == 0)
             {
@@ -354,7 +354,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			Dictionary<long, InternalPlayerItem> allPlayers = InternalGetPlayerDictionary();
 			if (allPlayers.ContainsKey(playerId))
-				return allPlayers[playerId].steamId;
+				return allPlayers[playerId].SteamId;
 
 			return 0;
 		}
@@ -396,14 +396,14 @@ namespace SEModAPIInternal.API.Common
                 {
                     Dictionary<ulong, InternalPlayerItem> steamDictionary = InternalGetSteamDictionary();
                     if (steamDictionary.ContainsKey(steamId))
-                        matchingPlayerIds.Add(steamDictionary[steamId].playerId);
+                        matchingPlayerIds.Add(steamDictionary[steamId].PlayerId);
                 }
                 else
                 {
                     foreach (InternalPlayerItem item in InternalGetPlayerList())
                     {
-                        if (item.steamId == steamId)
-                            matchingPlayerIds.Add(item.playerId);
+                        if (item.SteamId == steamId)
+                            matchingPlayerIds.Add(item.PlayerId);
                     }
                 }
             }
@@ -417,7 +417,7 @@ namespace SEModAPIInternal.API.Common
 
         public List<long> GetPlayerIds()
         {
-            return InternalGetPlayerList().Select(x => x.playerId).ToList();
+            return InternalGetPlayerList().Select(x => x.PlayerId).ToList();
         }
 
 		public long GetFastPlayerIdFromSteamId(ulong steamId)
@@ -518,18 +518,18 @@ namespace SEModAPIInternal.API.Common
             foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
             {
                 InternalPlayerItem item = new InternalPlayerItem();
-                item.isDead = false;
-                item.model = p.Value.model;
-                item.name = p.Value.name;
-                item.playerId = p.Value.playerId;
-                item.steamId = 0;
-                if (allSteamList.ContainsKey(p.Value.playerId))
-                    item.steamId = allSteamList[p.Value.playerId].SteamId;
+                item.IsDead = false;
+                item.Model = p.Value.Model;
+                item.Name = p.Value.Name;
+                item.PlayerId = p.Value.PlayerId;
+                item.SteamId = 0;
+                if (allSteamList.ContainsKey(p.Value.PlayerId))
+                    item.SteamId = allSteamList[p.Value.PlayerId].SteamId;
 
-                if (result.ContainsKey(item.playerId))
-                    result[item.playerId] = item;
+                if (result.ContainsKey(item.PlayerId))
+                    result[item.PlayerId] = item;
                 else
-                    result.Add(item.playerId, item);
+                    result.Add(item.PlayerId, item);
             }
 
             return result;
@@ -546,18 +546,18 @@ namespace SEModAPIInternal.API.Common
             foreach (KeyValuePair<long, InternalIdentityItem> p in allPlayerList)
             {
                 InternalPlayerItem item = new InternalPlayerItem();
-                item.isDead = false;
-                item.model = p.Value.model;
-                item.name = p.Value.name;
-                item.playerId = p.Value.playerId;
-                item.steamId = 0;
-                if (allSteamList.ContainsKey(p.Value.playerId))
-                    item.steamId = allSteamList[p.Value.playerId].SteamId;
+                item.IsDead = false;
+                item.Model = p.Value.Model;
+                item.Name = p.Value.Name;
+                item.PlayerId = p.Value.PlayerId;
+                item.SteamId = 0;
+                if (allSteamList.ContainsKey(p.Value.PlayerId))
+                    item.SteamId = allSteamList[p.Value.PlayerId].SteamId;
 
-                if (result.ContainsKey(item.steamId))
-                    result[item.steamId] = item;
+                if (result.ContainsKey(item.SteamId))
+                    result[item.SteamId] = item;
                 else
-                    result.Add(item.steamId, item);
+                    result.Add(item.SteamId, item);
             }
 
             return result;
@@ -577,18 +577,18 @@ namespace SEModAPIInternal.API.Common
                     for (int x = 0; x < result.Count; x++)
                     {
                         InternalPlayerItem test = result[x];
-                        if (test.name == p.Value.name)
-                            test.isDead = true;
+                        if (test.Name == p.Value.Name)
+                            test.IsDead = true;
                     }
 
                     InternalPlayerItem item = new InternalPlayerItem();
-                    item.isDead = false;
-                    item.model = p.Value.model;
-                    item.name = p.Value.name;
-                    item.playerId = p.Value.playerId;
-                    item.steamId = 0;
-                    if (allSteamList.ContainsKey(p.Value.playerId))
-                        item.steamId = allSteamList[p.Value.playerId].SteamId;
+                    item.IsDead = false;
+                    item.Model = p.Value.Model;
+                    item.Name = p.Value.Name;
+                    item.PlayerId = p.Value.PlayerId;
+                    item.SteamId = 0;
+                    if (allSteamList.ContainsKey(p.Value.PlayerId))
+                        item.SteamId = allSteamList[p.Value.PlayerId].SteamId;
 
                     result.Add(item);
                 }
