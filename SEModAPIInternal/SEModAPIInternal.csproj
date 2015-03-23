@@ -71,6 +71,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\Chat\ChatMessage.cs" />
+    <Compile Include="API\Chat\ChatSession.cs" />
+    <Compile Include="API\Chat\ChatSessionManager.cs" />
     <Compile Include="API\Client\ClientNetworkManager.cs" />
     <Compile Include="API\Common\BlockRegistry.cs" />
     <Compile Include="API\Common\EntityEvents.cs" />
@@ -164,7 +167,8 @@
     <Reference Include="HavokWrapper">
       <HintPath>..\GameLibraries\HavokWrapper.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.3.2.0.0\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Sandbox.Audio, Version=0.1.5410.26916, Culture=neutral, processorArchitecture=AMD64">

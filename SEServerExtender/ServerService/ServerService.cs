@@ -9,8 +9,8 @@
 	using SEComm;
 	using SEComm.Plugins;
 	using SEModAPIExtensions.API;
-	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal;
+	using SEModAPIInternal.API.Chat;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -146,14 +146,55 @@
 			return Assembly.GetExecutingAssembly( ).GetName( ).Version;
 		}
 
+		/// <summary>
+		/// Gets the list of plugins currently loaded by the server.
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<PluginInfo> GetLoadedPluginList( )
 		{
 			return PluginManager.Instance.Plugins.Select( p => new PluginInfo
-			                                                   {
-				                                                   Id = p.Value.Id,
-				                                                   Version = p.Value.Version,
-				                                                   Name = p.Value.Name
-			                                                   } );
+															   {
+																   Id = p.Value.Id,
+																   Version = p.Value.Version,
+																   Name = p.Value.Name
+															   } );
+		}
+
+		/// <summary>
+		/// Begins a chat monitoring session.
+		/// </summary>
+		public Guid BeginChatSession( )
+		{
+			Guid sessionId = Guid.NewGuid( );
+			lock ( ChatSessionManager.SessionsMutex )
+				ChatSessionManager.Instance.Sessions.Add( sessionId, new ChatSession { Id = sessionId } );
+			return sessionId;
+		}
+
+		/// <summary>
+		/// Gets all the messages that have not yet been delivered to the chat monitoring session.
+		/// </summary>
+		/// <param name="sessionGuid">The session identifier to retrieve messages for</param>
+		public IEnumerable<ChatMessage> GetChatMessages( Guid sessionGuid )
+		{
+			List<ChatMessage> messages;
+			lock ( ChatSessionManager.SessionsMutex )
+			{
+				messages = ChatSessionManager.Instance.Sessions[ sessionGuid ].Messages;
+				ChatSessionManager.Instance.Sessions[ sessionGuid ].Messages.Clear( );
+				ChatSessionManager.Instance.Sessions[ sessionGuid ].LastUpdatedTime = DateTimeOffset.Now;
+			}
+			return messages;
+		}
+
+		/// <summary>
+		/// Ends a chat monitoring session explicitly.
+		/// </summary>
+		/// <param name="sessionGuid">The session identifier to terminate</param>
+		public void EndChatSession( Guid sessionGuid )
+		{
+			lock ( ChatSessionManager.SessionsMutex )
+				ChatSessionManager.Instance.Sessions.Remove( sessionGuid );
 		}
 	}
 }

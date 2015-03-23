@@ -5,6 +5,7 @@
 	using System.ServiceModel;
 	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal;
+	using SEModAPIInternal.API.Chat;
 	using PluginInfo = SEComm.Plugins.PluginInfo;
 
 	[ServiceContract]
@@ -49,5 +50,14 @@
 
 		[OperationContract]
 		IEnumerable<PluginInfo> GetLoadedPluginList( );
+
+		[OperationContract]
+		Guid BeginChatSession( );
+
+		[OperationContract]
+		IEnumerable<ChatMessage> GetChatMessages( Guid sessionGuid );
+
+		[OperationContract]
+		void EndChatSession( Guid sessionGuid );
 	}
 }

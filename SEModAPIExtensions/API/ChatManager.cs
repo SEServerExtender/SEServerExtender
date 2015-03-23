@@ -1,35 +1,28 @@
-﻿using SteamSDK;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ServiceModel;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Xml;
-
-using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.API.Server;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-using SEModAPIInternal.Support;
-
-using VRage;
-using VRage.Common.Utils;
-using VRageMath;
-using VRage.Library.Utils;
-
-using Sandbox.ModAPI;
-
-namespace SEModAPIExtensions.API
+﻿namespace SEModAPIExtensions.API
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+	using System.Text.RegularExpressions;
+	using System.Threading;
+	using System.Xml;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.ModAPI;
+	using SEModAPIInternal.API.Chat;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+	using SEModAPIInternal.API.Server;
+	using SEModAPIInternal.Support;
+	using SteamSDK;
+	using VRage;
+	using VRage.Library.Utils;
+	using VRageMath;
 
 	public class ChatManager
 	{
@@ -283,13 +276,24 @@ namespace SEModAPIExtensions.API
 		protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
 			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
+			foreach ( var chatManagerSession in ChatSessionManager.Instance.Sessions )
+			{
+				chatManagerSession.Value.Messages.Add( new ChatMessage
+				                                       {
+					                                       Message = message,
+					                                       Timestamp = DateTimeOffset.Now,
+					                                       User = playerName,
+					                                       UserId = remoteUserId
+				                                       } );
+				chatManagerSession.Value.LastUpdatedTime = DateTimeOffset.Now;
+			}
 
 			bool commandParsed = ParseChatCommands( message, remoteUserId );
 
 			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
 			{
 				m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
-				ApplicationLog.ChatLog.Info(  string.Format( "Chat - Client '{0}': {1}", playerName, message ) );
+				ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, message );
 			}
 
 			ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
