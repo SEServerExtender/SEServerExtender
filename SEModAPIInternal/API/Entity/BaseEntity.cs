@@ -1,22 +1,19 @@
-using System;
-using System.ComponentModel;
-using System.IO;
-using System.Runtime.Serialization;
-using Havok;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using Sandbox.Common.Components;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.ModAPI;
-using SEModAPI.API;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.Support;
-using VRageMath;
-
 namespace SEModAPIInternal.API.Entity
 {
-	using NLog;
+	using System;
+	using System.ComponentModel;
+	using System.IO;
+	using System.Runtime.Serialization;
+	using Havok;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.Components;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.ModAPI;
 	using SEModAPI.API.TypeConverters;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using VRageMath;
 
 	[DataContract( Name = "BaseEntityProxy" )]
 	public class BaseEntity : BaseObject

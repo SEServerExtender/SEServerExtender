@@ -1,10 +1,8 @@
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using VRageMath;
-
 namespace SEModAPI.API.Definitions
 {
-	using System;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRageMath;
 
 	public class EnvironmentDefinition
 	{

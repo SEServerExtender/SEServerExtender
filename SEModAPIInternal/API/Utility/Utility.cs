@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Game.Entities;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.Support;
-
-using VRageMath;
-
 namespace SEModAPIInternal.API.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Game.Entities;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.Support;
 	using VRage.Utils;
+	using VRageMath;
 
 	public class UtilityFunctions
 	{

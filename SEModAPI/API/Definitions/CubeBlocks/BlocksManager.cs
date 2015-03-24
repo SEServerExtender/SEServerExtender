@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
-namespace SEModAPI.API.Definitions.CubeBlocks
+﻿namespace SEModAPI.API.Definitions.CubeBlocks
 {
+	using System.Collections.Generic;
 	using System.Linq;
+	using Sandbox.Common.ObjectBuilders.Definitions;
 
 	/// <summary>
 	/// This class is intended to manage the modification and persistence of CubeBlocks.sbc

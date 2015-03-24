@@ -1,10 +1,10 @@
-﻿using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using VRage.Utils;
-
-namespace SEModAPI.API.Definitions
+﻿namespace SEModAPI.API.Definitions
 {
-    public class ContainerTypesDefinition : OverLayerDefinition<MyObjectBuilder_ContainerTypeDefinition>
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRage.Utils;
+
+	public class ContainerTypesDefinition : OverLayerDefinition<MyObjectBuilder_ContainerTypeDefinition>
     {
         #region "Attributes"
 

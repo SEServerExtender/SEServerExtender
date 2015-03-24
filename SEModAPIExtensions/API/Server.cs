@@ -1,27 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Threading;
-using System.Windows.Forms;
-using System.Runtime.ExceptionServices;
-using System.Security;
-
-using Sandbox.Common.ObjectBuilders;
-using SEModAPI.API;
-using SEModAPI.API.Definitions;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Server;
-
 namespace SEModAPIExtensions.API
 {
+	using System;
+	using System.Collections.Generic;
 	using System.Diagnostics;
-	using System.Timers;
+	using System.IO;
+	using System.Linq;
+	using System.Runtime.ExceptionServices;
+	using System.Runtime.Serialization;
+	using System.Security;
+	using System.ServiceModel;
+	using System.Threading;
+	using System.Windows.Forms;
 	using NLog;
 	using NLog.Targets;
+	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API;
+	using SEModAPI.API.Definitions;
+	using SEModAPIInternal.API.Chat;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Server;
 	using SEModAPIInternal.Support;
+	using Timer = System.Timers.Timer;
 
 	[DataContract]
 	public class Server
@@ -62,7 +61,7 @@ namespace SEModAPIExtensions.API
 			if ( _isInitialized )
 				return;
 
-			FileTarget baseLogTarget = NLog.LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
+			FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
 			if ( baseLogTarget != null )
 			{
 				baseLogTarget.FileName = baseLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
@@ -80,6 +79,7 @@ namespace SEModAPIExtensions.API
 
 			ApplicationLog.BaseLog.Info( "Finished creating server!" );
 		}
+
 
 		//private bool SetupServerService()
 		//{

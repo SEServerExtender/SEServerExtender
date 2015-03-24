@@ -1,11 +1,10 @@
-using System;
-using System.ComponentModel;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Entity
 {
+	using System;
+	using System.ComponentModel;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+
 	public class PowerReceiver
 	{
 		#region "Attributes"

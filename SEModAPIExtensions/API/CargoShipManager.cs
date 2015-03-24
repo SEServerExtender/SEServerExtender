@@ -1,18 +1,16 @@
-using System;
-using System.Collections.Generic;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Definitions;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.Support;
-
-using VRageMath;
-
 namespace SEModAPIExtensions.API
 {
+	using System;
+	using System.Collections.Generic;
 	using System.Linq;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Definitions;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using VRageMath;
 
 	public class CargoShipManager
 	{

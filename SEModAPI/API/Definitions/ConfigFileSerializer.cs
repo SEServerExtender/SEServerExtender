@@ -1,15 +1,14 @@
-using System;
-using System.IO;
-using System.Xml;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
+	using System;
 	using System.Configuration;
+	using System.IO;
 	using System.Reflection;
 	using System.Runtime.Serialization;
 	using System.Security;
+	using System.Xml;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders.Definitions;
 
 	public class ConfigFileSerializer
 	{

@@ -1,13 +1,14 @@
-using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.ModAPI;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
+	using System;
+	using System.ComponentModel;
+	using System.Runtime.Serialization;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.ModAPI;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+	using IMyTerminalBlock = Sandbox.ModAPI.Ingame.IMyTerminalBlock;
+
 	[DataContract( Name = "FunctionalBlockEntityProxy" )]
 	public class FunctionalBlockEntity : TerminalBlockEntity
 	{
@@ -174,7 +175,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static void SetState( IMyEntity entity, bool enabled )
 		{
-			if ( !( entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock ) )
+			if ( !( entity is IMyTerminalBlock ) )
 				return;
 
 			SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
@@ -186,7 +187,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public static bool GetState( IMyEntity entity )
 		{
-			if ( !( entity is Sandbox.ModAPI.Ingame.IMyTerminalBlock ) )
+			if ( !( entity is IMyTerminalBlock ) )
 				return false;
 
 			Object rawResult = InvokeEntityMethod( entity, FunctionalBlockGetEnabledMethod );

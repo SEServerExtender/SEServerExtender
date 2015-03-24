@@ -1,5 +1,6 @@
 namespace SEModAPI.API.TypeConverters
 {
+	using System.Collections;
 	using System.ComponentModel;
 
 	public class Vector3DTypeConverter : ExpandableObjectConverter
@@ -9,7 +10,7 @@ namespace SEModAPI.API.TypeConverters
 			return true;
 		}
 
-		public override object CreateInstance(ITypeDescriptorContext context, System.Collections.IDictionary propertyValues)
+		public override object CreateInstance(ITypeDescriptorContext context, IDictionary propertyValues)
 		{
 			return new Vector3DWrapper((double)propertyValues["X"], (double)propertyValues["Y"], (double)propertyValues["Z"]);
 		}

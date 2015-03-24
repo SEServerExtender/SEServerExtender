@@ -1,34 +1,25 @@
-using SteamSDK;
-
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Collections;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading;
-using System.IO;
-using System.Runtime.ExceptionServices;
-using System.Security;
-
-using Sandbox.ModAPI;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Serializer;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPIInternal.Support;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.API.Common;
-using System.Linq.Expressions;
-
-using VRageMath;
-
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-
 namespace SEModAPIInternal.API.Server
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.ExceptionServices;
+	using System.Security;
+	using System.Threading;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using Sandbox.Common.ObjectBuilders.Serializer;
+	using Sandbox.Common.ObjectBuilders.Voxels;
+	using Sandbox.ModAPI;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using SteamSDK;
+	using VRageMath;
+
 	public class ServerNetworkManager : NetworkManager
 	{
 		#region "Attributes"

@@ -1,7 +1,8 @@
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRageMath;
+
 	public class ComponentsDefinition : ObjectOverLayerDefinition<MyObjectBuilder_ComponentDefinition>
 	{
 		#region "Constructors and Initializers"
@@ -24,7 +25,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
-		public VRageMath.Vector3 Size
+		public Vector3 Size
 		{
 			get { return m_baseDefinition.Size; }
 			set

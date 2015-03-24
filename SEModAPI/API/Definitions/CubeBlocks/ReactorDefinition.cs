@@ -1,8 +1,9 @@
-using System.ComponentModel;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
+	using System.ComponentModel;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRageMath;
+
 	public class ReactorDefinition : BlockDefinition
 	{
 		#region "Constructors and Initializers"
@@ -21,7 +22,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		[Browsable(true)]
 		[ReadOnly(false)]
 		[Description("Get or set the current Reactor Inventory Size.")]
-		public VRageMath.Vector3 InventorySize
+		public Vector3 InventorySize
 		{
 			get { return GetSubTypeDefinition().InventorySize; }
 			set

@@ -1,8 +1,9 @@
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
-    public class SpawnGroupDefinition : OverLayerDefinition<MyObjectBuilder_SpawnGroupDefinition>
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRageMath;
+
+	public class SpawnGroupDefinition : OverLayerDefinition<MyObjectBuilder_SpawnGroupDefinition>
 	{
 		#region "Attributes"
 
@@ -131,7 +132,7 @@ namespace SEModAPI.API.Definitions
             }
         }
 
-        public VRageMath.Vector3 Position
+        public Vector3 Position
         {
             get { return m_baseDefinition.Position; }
             set

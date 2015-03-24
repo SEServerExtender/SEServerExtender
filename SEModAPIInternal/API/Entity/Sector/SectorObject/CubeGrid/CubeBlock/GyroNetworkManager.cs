@@ -1,12 +1,9 @@
-using System;
-
-using SEModAPIInternal.API.Common;
-
-using VRageMath;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
+	using System;
+	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
+	using VRageMath;
 
 	public class GyroNetworkManager
 	{

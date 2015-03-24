@@ -1,5 +1,6 @@
 ﻿namespace SEModAPI.API.TypeConverters
 {
+	using System.Collections;
 	using System.ComponentModel;
 	using VRageMath;
 
@@ -10,7 +11,7 @@
 			return true;
 		}
 
-		public override object CreateInstance(ITypeDescriptorContext context, System.Collections.IDictionary propertyValues)
+		public override object CreateInstance(ITypeDescriptorContext context, IDictionary propertyValues)
 		{
 			return new Vector3I((int)propertyValues["X"], (int)propertyValues["Y"], (int)propertyValues["Z"]);
 		}

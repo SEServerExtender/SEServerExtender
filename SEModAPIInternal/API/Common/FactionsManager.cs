@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
-using SEModAPIInternal.API.Entity;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
 	using NLog;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 
 	public class Faction

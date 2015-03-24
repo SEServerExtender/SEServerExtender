@@ -1,32 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
-using SEModAPI.API;
-using SEModAPI.API.Definitions;
-using SEModAPI.Support;
-
-using SEModAPIExtensions.API;
-using SEModAPIExtensions.API.Plugin;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-using SEModAPIInternal.Support;
-using VRageMath;
-using Sandbox.Definitions;
-using Sandbox.ModAPI;
-using VRage.Utils;
-
 namespace SEServerExtender
 {
-	using Sandbox;
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using System.Text;
+	using System.Threading;
+	using System.Windows.Forms;
+	using Sandbox.Definitions;
+	using SEModAPI.API;
+	using SEModAPI.API.Definitions;
+	using SEModAPI.Support;
+	using SEModAPIExtensions.API;
+	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+	using SEModAPIInternal.Support;
+	using VRage.Utils;
+	using VRageMath;
 	using Timer = System.Windows.Forms.Timer;
 
 	public sealed partial class SEServerExtender : Form

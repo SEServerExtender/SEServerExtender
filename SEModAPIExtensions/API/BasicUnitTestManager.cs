@@ -1,16 +1,15 @@
-using System;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Server;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-using SEModAPIInternal.API.Utility;
-
 namespace SEModAPIExtensions.API
 {
+	using System;
 	using NLog;
 	using NLog.Targets;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+	using SEModAPIInternal.API.Server;
+	using SEModAPIInternal.API.Utility;
 
 	public class BasicUnitTestManager
 	{

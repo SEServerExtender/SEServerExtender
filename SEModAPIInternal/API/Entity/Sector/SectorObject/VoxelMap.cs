@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using Sandbox.Definitions;
-using Sandbox.ModAPI;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-using VRage.Voxels;
-using VRageMath;
-using VRage.Utils;
-using VRage;
-
-namespace SEModAPIInternal.API.Entity.Sector.SectorObject
+﻿namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Runtime.Serialization;
+	using Sandbox.Common.ObjectBuilders.Voxels;
+	using Sandbox.Definitions;
+	using Sandbox.ModAPI;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+	using VRage;
+	using VRage.Voxels;
+	using VRageMath;
+
 	[DataContract( Name = "VoxelMapProxy" )]
 	public class VoxelMap : BaseEntity
 	{

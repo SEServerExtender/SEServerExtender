@@ -1,10 +1,10 @@
-using System;
-using System.Globalization;
-using System.Windows.Forms;
-
 namespace SEModAPI.Support
 {
-    public class NumericTextBox : TextBox
+	using System;
+	using System.Globalization;
+	using System.Windows.Forms;
+
+	public class NumericTextBox : TextBox
     {
         bool allowSpace = false;
 

@@ -1,11 +1,10 @@
-using System;
-using System.ComponentModel;
-
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.ComponentModel;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.Support;
+
 	public class RadioManager
 	{
 		#region "Attributes"

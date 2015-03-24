@@ -1,22 +1,20 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
-using System.Security;
-using Havok;
-using Sandbox.Audio;
-using Sandbox.Input;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SteamSDK;
-using VRage.Common.Utils;
-using VRage.Library.Utils;
-
-namespace SEModAPIInternal.API.Server
+﻿namespace SEModAPIInternal.API.Server
 {
+	using System;
+	using System.ComponentModel;
+	using System.IO;
+	using System.Reflection;
+	using System.Runtime.ExceptionServices;
+	using System.Runtime.InteropServices;
+	using System.Security;
+	using Havok;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
+	using SteamSDK;
+	using VRage.Audio;
+	using VRage.Input;
+	using VRage.Library.Utils;
 
 	public class ServerAssemblyWrapper
 	{

@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.Support;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-using System.ServiceModel.Web;
-
 namespace SEModAPIExtensions.API.IPC
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using System.Runtime.Serialization;
+	using System.ServiceModel;
+	using System.ServiceModel.Web;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+	using SEModAPIInternal.Support;
+
 	public class WebService : IWebServiceContract
 	{
 		public void GetOptions()

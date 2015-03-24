@@ -1,11 +1,10 @@
-using System;
-using System.Runtime.Serialization;
-
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Runtime.Serialization;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.Support;
+
 	[DataContract]
 	public class PowerManager
 	{

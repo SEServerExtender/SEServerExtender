@@ -1,11 +1,10 @@
-using System;
-using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using Sandbox.Common.ObjectBuilders;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+
 	public class BlockRegistry : GameObjectRegistry
 	{
 		#region "Attributes"

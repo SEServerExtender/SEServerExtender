@@ -1,25 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Xml;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using Sandbox.Common.ObjectBuilders.Serializer;
-using Sandbox.Definitions;
-using SEModAPI.API;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.Support;
-using VRage;
-
 namespace SEModAPIInternal.API.Entity
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.IO;
+	using System.Reflection;
+	using System.Runtime.Serialization;
+	using System.Xml;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using Sandbox.Common.ObjectBuilders.Serializer;
+	using Sandbox.Definitions;
+	using SEModAPI.API;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using VRage;
+
 	[DataContract( Name = "BaseObjectProxy" )]
 	[KnownType( typeof( BaseEntity ) )]
 	[KnownType( typeof( CharacterEntity ) )]

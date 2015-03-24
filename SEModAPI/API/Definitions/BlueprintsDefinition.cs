@@ -1,7 +1,7 @@
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
+	using Sandbox.Common.ObjectBuilders.Definitions;
+
 	public class BlueprintsDefinition : OverLayerDefinition<MyObjectBuilder_BlueprintDefinition>
 	{
         /*

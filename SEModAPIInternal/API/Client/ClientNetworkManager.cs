@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using SEModAPIInternal.API.Common;
-
 namespace SEModAPIInternal.API.Client
 {
+	using System;
+	using System.Collections.Generic;
+	using SEModAPIInternal.API.Common;
+
 	public class ClientNetworkManager : NetworkManager
 	{
 		#region "Attributes"

@@ -1,7 +1,7 @@
-using SEModAPIInternal.API.Entity;
-
 namespace SEModAPIExtensions.API.Plugin.Events
 {
+	using SEModAPIInternal.API.Entity;
+
 	public interface IBaseEntityHandler
 	{
 		void OnBaseEntityMoved(BaseEntity entity);

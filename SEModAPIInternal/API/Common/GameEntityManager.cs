@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
-
-using VRage;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.Support;
+	using VRage;
+
 	public class GameEntityManager
 	{
 		#region "Attributes"

@@ -1,8 +1,9 @@
-using System.ComponentModel;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
+	using System.ComponentModel;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRageMath;
+
 	public class SolarPanelDefinition : BlockDefinition
 	{
 		#region "Constructors and Initializers"
@@ -38,7 +39,7 @@ namespace SEModAPI.API.Definitions.CubeBlocks
 		[Browsable(true)]
 		[ReadOnly(false)]
 		[Description("Get or set the current Solar Panel Orientation.")]
-		public VRageMath.Vector3 PanelOrientation
+		public Vector3 PanelOrientation
 		{
 			get { return GetSubTypeDefinition().PanelOrientation; }
 			set

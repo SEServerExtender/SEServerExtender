@@ -1,7 +1,7 @@
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
+	using Sandbox.Common.ObjectBuilders.Definitions;
+
 	public class GlobalEventsDefinition : ObjectOverLayerDefinition<MyObjectBuilder_GlobalEventDefinition>
 	{
 		#region "Constructors and Initializers"

@@ -1,10 +1,9 @@
-using System.ComponentModel;
-
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPIInternal.API.Entity.Sector
 {
+	using System.ComponentModel;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+
 	public class Event : BaseObject
 	{
 		#region "Constructors and Initializers"

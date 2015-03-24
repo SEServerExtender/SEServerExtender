@@ -1,14 +1,12 @@
-using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-
-using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
+	using System;
+	using System.ComponentModel;
+	using System.Runtime.Serialization;
+	using Sandbox.Common.ObjectBuilders;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+
 	[DataContract( Name = "FloatingObjectProxy" )]
 	public class FloatingObject : BaseEntity
 	{

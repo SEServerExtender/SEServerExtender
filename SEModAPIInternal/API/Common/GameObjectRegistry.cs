@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using Sandbox.Common.ObjectBuilders;
-using SEModAPIInternal.API.Entity;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+	using Sandbox.Common.ObjectBuilders;
+	using SEModAPIInternal.API.Entity;
+
 	public struct GameObjectTypeEntry
 	{
 		public Guid source;

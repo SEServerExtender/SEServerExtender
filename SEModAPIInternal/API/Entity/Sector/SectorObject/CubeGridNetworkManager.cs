@@ -2,14 +2,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
 	using System.Collections.Generic;
+	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
+	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.Support;
 	using VRage;
 	using VRageMath;
-	using Sandbox.ModAPI;
-	using Sandbox.Common.ObjectBuilders;
 
 	public class CubeGridNetworkManager
 	{

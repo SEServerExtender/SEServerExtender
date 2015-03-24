@@ -1,13 +1,14 @@
-using Microsoft.Win32;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Security.Principal;
-
 namespace SEModAPI.API
 {
+	using System;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Reflection;
+	using System.Security.Principal;
+	using Microsoft.Win32;
+	using NLog;
+
 	/// <summary>
 	/// Class dedicated to handle of Space Engineer installation and information
 	/// </summary>
@@ -25,7 +26,7 @@ namespace SEModAPI.API
 			"VRage.Math.dll"
 		};
 
-		private static readonly NLog.Logger BaseLog = NLog.LogManager.GetLogger( "BaseLog" );
+		private static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 
 
 		#region "Constructor and Initializers"

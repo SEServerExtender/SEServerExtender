@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-
 namespace SEModAPIInternal.API.Common
 {
-	using NLog;
-	using NLog.Targets;
+	using System;
+	using System.Collections.Generic;
 	using SEModAPIInternal.Support;
 
 	public class EntityEventManager

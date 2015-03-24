@@ -1,11 +1,14 @@
 namespace SEServerExtender
 {
+	using System.ComponentModel;
+	using System.Windows.Forms;
+
 	partial class InventoryItemDialog
 	{
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -155,12 +158,12 @@ namespace SEServerExtender
 
 		#endregion
 
-		private System.Windows.Forms.Button BTN_InventoryItem_Add;
-		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.SplitContainer splitContainer2;
-		private System.Windows.Forms.Label LBL_Amount;
-		private System.Windows.Forms.Label LBL_Type;
-		private System.Windows.Forms.TextBox TXT_ItemAmount;
-		private System.Windows.Forms.ComboBox CMB_ItemType;
+		private Button BTN_InventoryItem_Add;
+		private SplitContainer splitContainer1;
+		private SplitContainer splitContainer2;
+		private Label LBL_Amount;
+		private Label LBL_Type;
+		private TextBox TXT_ItemAmount;
+		private ComboBox CMB_ItemType;
 	}
 }

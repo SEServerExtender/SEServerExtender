@@ -1,8 +1,8 @@
-using System;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
+	using System;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+
 	public class ConfigurationDefinition
 	{
 		private MyObjectBuilder_Configuration _baseDefinition;

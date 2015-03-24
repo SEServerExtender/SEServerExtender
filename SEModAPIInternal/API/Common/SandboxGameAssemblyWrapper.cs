@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-using Sandbox.Common.ObjectBuilders;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
-using VRage.Common.Utils;
-using Sandbox.ModAPI;
-using VRage.Library.Utils;
-
-namespace SEModAPIInternal.API.Common
+﻿namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Reflection;
+	using System.Threading;
+	using Sandbox.Common.ObjectBuilders;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.Support;
+	using VRage.Library.Utils;
+
 	public class SandboxGameAssemblyWrapper
 	{
 		#region "Attributes"

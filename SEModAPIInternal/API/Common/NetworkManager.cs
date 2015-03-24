@@ -1,32 +1,13 @@
-using SteamSDK;
-
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Collections;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading;
-using System.IO;
-using System.Runtime.ExceptionServices;
-using System.Security;
-
-using Sandbox.ModAPI;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Serializer;
-using Sandbox.Common.ObjectBuilders.Voxels;
-
-using SEModAPIInternal.Support;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Utility;
-using System.Linq.Expressions;
-
-using VRageMath;
-
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-
 namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using SteamSDK;
+
 	//PacketIdEnum Attribute: .4C6398741B0F8804D769E5A2E3999E1D
 
 	public enum PacketIds
@@ -283,13 +264,13 @@ namespace SEModAPIInternal.API.Common
 				switch ( registrationType )
 				{
 					case PacketRegistrationType.Static:
-						delegateType = typeof( NetworkManager.ReceivePacketStatic<> );
+						delegateType = typeof( ReceivePacketStatic<> );
 						break;
 					case PacketRegistrationType.Instance:
-						delegateType = typeof( NetworkManager.ReceivePacketInstance<> );
+						delegateType = typeof( ReceivePacketInstance<> );
 						break;
 					case PacketRegistrationType.Timespan:
-						delegateType = typeof( NetworkManager.ReceivePacketTimespan<> );
+						delegateType = typeof( ReceivePacketTimespan<> );
 						break;
 					default:
 						return null;
@@ -310,7 +291,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				Type masterNetManagerType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( NetworkManager.InternalNetManagerNamespace, NetworkManager.InternalNetManagerClass );
+				Type masterNetManagerType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( InternalNetManagerNamespace, InternalNetManagerClass );
 
 				MethodInfo[ ] methods = masterNetManagerType.GetMethods( BindingFlags.Public | BindingFlags.Static );
 				foreach ( MethodInfo method in methods )
@@ -363,7 +344,7 @@ namespace SEModAPIInternal.API.Common
 					return false;
 
 				//Find the old packet handler
-				Type masterNetManagerType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( NetworkManager.InternalNetManagerNamespace, NetworkManager.InternalNetManagerClass );
+				Type masterNetManagerType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( InternalNetManagerNamespace, InternalNetManagerClass );
 				FieldInfo packetRegisteryHashSetField = masterNetManagerType.GetField( "9858E5CD512FFA5633683B9551FA4C30", BindingFlags.NonPublic | BindingFlags.Static );
 				Object packetRegisteryHashSetRaw = packetRegisteryHashSetField.GetValue( null );
 				HashSet<Object> packetRegisteryHashSet = UtilityFunctions.ConvertHashSet( packetRegisteryHashSetRaw );

@@ -1,18 +1,17 @@
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
-using System.ComponentModel;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Xml;
-
-using Sandbox.Common.ObjectBuilders;
-using System.Linq;
-
 namespace SEModAPI.API.Definitions
 {
+	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Configuration;
+	using System.Drawing.Design;
+	using System.IO;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Windows.Forms.Design;
+	using System.Xml;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders;
 
 	[DataContract]
 	public class DedicatedConfigDefinition
@@ -688,7 +687,7 @@ namespace SEModAPI.API.Definitions
 		[Browsable( true )]
 		[ReadOnly( false )]
 		[Description( "Get or set the path of the world to load" )]
-		[EditorAttribute( typeof( System.Windows.Forms.Design.FolderNameEditor ), typeof( System.Drawing.Design.UITypeEditor ) )]
+		[Editor( typeof( FolderNameEditor ), typeof( UITypeEditor ) )]
 		[Category( "World Settings" )]
 		public string LoadWorld
 		{

@@ -1,9 +1,8 @@
-using System;
-using SEModAPI.Support;
-
 namespace SEModAPIInternal.Support
 {
+	using System;
 	using NLog;
+	using SEModAPI.Support;
 
 	public enum EntityExceptionState
 	{

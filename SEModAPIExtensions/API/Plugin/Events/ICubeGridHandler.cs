@@ -1,7 +1,7 @@
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-
 namespace SEModAPIExtensions.API.Plugin.Events
 {
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+
 	public interface ICubeGridHandler
 	{
 		void OnCubeGridCreated(CubeGridEntity cubeGrid);

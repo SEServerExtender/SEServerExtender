@@ -1,16 +1,14 @@
-using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-using System.Text;
-
-using Sandbox.Common.ObjectBuilders;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-
-using Sandbox.ModAPI;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
+	using System;
+	using System.ComponentModel;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.ModAPI.Ingame;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+
 	[DataContract( Name = "TerminalBlockEntityProxy" )]
 	[KnownType( typeof( InventoryEntity ) )]
 	public class TerminalBlockEntity : CubeBlockEntity
@@ -138,7 +136,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		public static void SetCustomName( Sandbox.ModAPI.Ingame.IMyTerminalBlock terminalBlock, string text )
+		public static void SetCustomName( IMyTerminalBlock terminalBlock, string text )
 		{
 			try
 			{

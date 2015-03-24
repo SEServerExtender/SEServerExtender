@@ -1,7 +1,7 @@
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-
 namespace SEModAPIExtensions.API.Plugin.Events
 {
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+
 	public interface ICharacterEventHandler
 	{
 		void OnCharacterCreated(CharacterEntity entity);

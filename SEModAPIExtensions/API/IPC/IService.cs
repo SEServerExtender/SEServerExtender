@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using System.ServiceModel;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-using System.ServiceModel.Web;
-
 namespace SEModAPIExtensions.API.IPC
 {
+	using System.Collections.Generic;
+	using System.ServiceModel;
+	using System.ServiceModel.Web;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+
 	[ServiceContract]
 	public interface IWebServiceContract
 	{

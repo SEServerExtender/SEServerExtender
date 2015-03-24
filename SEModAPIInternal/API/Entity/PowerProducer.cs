@@ -1,10 +1,9 @@
-using System;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Entity
 {
+	using System;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+
 	public class PowerProducer
 	{
 		#region "Attributes"

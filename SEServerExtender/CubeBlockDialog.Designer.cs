@@ -1,11 +1,14 @@
 namespace SEServerExtender
 {
+	using System.ComponentModel;
+	using System.Windows.Forms;
+
 	partial class CubeBlockDialog
 	{
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -192,16 +195,16 @@ namespace SEServerExtender
 
 		#endregion
 
-		private System.Windows.Forms.Button BTN_CubeBlock_Add;
-		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.SplitContainer splitContainer2;
-		private System.Windows.Forms.Label LBL_SubType;
-		private System.Windows.Forms.Label LBL_Type;
-		private System.Windows.Forms.ComboBox CMB_BlockType;
-		private System.Windows.Forms.TextBox TXT_Position_X;
-		private System.Windows.Forms.TextBox TXT_Position_Y;
-		private System.Windows.Forms.TextBox TXT_Position_Z;
-		private System.Windows.Forms.Label LBL_Position;
-		private System.Windows.Forms.ComboBox CMB_BlockSubType;
+		private Button BTN_CubeBlock_Add;
+		private SplitContainer splitContainer1;
+		private SplitContainer splitContainer2;
+		private Label LBL_SubType;
+		private Label LBL_Type;
+		private ComboBox CMB_BlockType;
+		private TextBox TXT_Position_X;
+		private TextBox TXT_Position_Y;
+		private TextBox TXT_Position_Z;
+		private Label LBL_Position;
+		private ComboBox CMB_BlockSubType;
 	}
 }

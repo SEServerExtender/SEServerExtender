@@ -1,8 +1,6 @@
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
-	using System;
+	using Sandbox.Common.ObjectBuilders.Definitions;
 
 	public class CubeBlockDef : BlockDefinition
 	{

@@ -1,18 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Voxels;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Entity.Sector;
-using SEModAPIInternal.API.Entity.Sector.SectorObject;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.Support;
-
 namespace SEModAPIInternal.API.Entity
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.IO;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Voxels;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Entity.Sector;
+	using SEModAPIInternal.API.Entity.Sector.SectorObject;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using VRageMath;
+
 	public class SectorEntity : BaseObject
 	{
 		#region "Attributes"
@@ -144,7 +145,7 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		[Category( "Sector" )]
-		public VRageMath.Vector3I Position
+		public Vector3I Position
 		{
 			get { return ObjectBuilder.Position; }
 		}

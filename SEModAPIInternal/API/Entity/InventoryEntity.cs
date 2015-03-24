@@ -1,19 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Serializer;
-using Sandbox.Definitions;
-using Sandbox.ModAPI;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.Support;
-using VRage;
-
 //using Sandbox.ModAPI.Interfaces;
 
 namespace SEModAPIInternal.API.Entity
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Runtime.Serialization;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Serializer;
+	using Sandbox.Definitions;
+	using Sandbox.ModAPI.Interfaces;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.Support;
+	using VRage;
+	using IMyInventory = Sandbox.ModAPI.IMyInventory;
+
 	public struct InventoryDelta
 	{
 		public InventoryItemEntity item;
@@ -161,7 +162,7 @@ namespace SEModAPIInternal.API.Entity
 							if ( BackingObject != null )
 							{
 								IMyInventory myInventory = (IMyInventory)BackingObject;
-								foreach ( Sandbox.ModAPI.Interfaces.IMyInventoryItem item in myInventory.GetItems( ) )
+								foreach ( IMyInventoryItem item in myInventory.GetItems( ) )
 								{
 									InventoryItemEntity newItem = new InventoryItemEntity( item, this );
 									newList.Add( newItem );
@@ -200,20 +201,20 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for InventoryEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, InventoryCalculateMassVolumeMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetTotalVolumeMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetTotalMassMethod );
-				result &= BaseObject.HasMethod( type, InventorySetFromObjectBuilderMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetObjectBuilderMethod );
-				result &= BaseObject.HasMethod( type, InventoryCleanUpMethod );
-				result &= BaseObject.HasMethod( type, InventoryGetItemListMethod );
-				result &= BaseObject.HasMethod( type, InventoryAddItemAmountMethod );
+				result &= HasMethod( type, InventoryCalculateMassVolumeMethod );
+				result &= HasMethod( type, InventoryGetTotalVolumeMethod );
+				result &= HasMethod( type, InventoryGetTotalMassMethod );
+				result &= HasMethod( type, InventorySetFromObjectBuilderMethod );
+				result &= HasMethod( type, InventoryGetObjectBuilderMethod );
+				result &= HasMethod( type, InventoryCleanUpMethod );
+				result &= HasMethod( type, InventoryGetItemListMethod );
+				result &= HasMethod( type, InventoryAddItemAmountMethod );
 
 				Type[ ] argTypes = new Type[ 3 ];
 				argTypes[ 0 ] = typeof( MyFixedPoint );
 				argTypes[ 1 ] = typeof( MyObjectBuilder_PhysicalObject );
 				argTypes[ 2 ] = typeof( bool );
-				result &= BaseObject.HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
+				result &= HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
 
 				return result;
 			}
@@ -452,7 +453,7 @@ namespace SEModAPIInternal.API.Entity
 			m_backingObject = backingObject;
 			m_parentContainer = parent;
 
-			Sandbox.ModAPI.Interfaces.IMyInventoryItem item = (Sandbox.ModAPI.Interfaces.IMyInventoryItem)backingObject;
+			IMyInventoryItem item = (IMyInventoryItem)backingObject;
 			MyObjectBuilder_InventoryItem newItem = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>( );
 			newItem.Amount = item.Amount;
 			newItem.Content = item.Content;
@@ -468,11 +469,11 @@ namespace SEModAPIInternal.API.Entity
 		#region "Properties"
 
 		[IgnoreDataMember]
-		internal Sandbox.ModAPI.Interfaces.IMyInventoryItem InventoryInterface
+		internal IMyInventoryItem InventoryInterface
 		{
 			get
 			{
-				Sandbox.ModAPI.Interfaces.IMyInventoryItem item = null;
+				IMyInventoryItem item = null;
 				if ( BackingObject == null )
 				{
 					if ( m_parentContainer != null )
@@ -487,7 +488,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 				else
 				{
-					item = (Sandbox.ModAPI.Interfaces.IMyInventoryItem)BackingObject;
+					item = (IMyInventoryItem)BackingObject;
 				}
 
 				return item;
@@ -706,8 +707,8 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for InventoryItemEntity" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, InventoryItemGetObjectBuilderMethod );
-				result &= BaseObject.HasField( type, InventoryItemItemIdField );
+				result &= HasMethod( type, InventoryItemGetObjectBuilderMethod );
+				result &= HasField( type, InventoryItemItemIdField );
 
 				return result;
 			}

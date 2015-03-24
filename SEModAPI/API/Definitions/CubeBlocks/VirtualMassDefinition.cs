@@ -1,8 +1,8 @@
-using System.ComponentModel;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
+	using System.ComponentModel;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+
 	public class VirtualMassDefinition : BlockDefinition
 	{
 		#region "Constructors and Initializers"

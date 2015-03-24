@@ -1,9 +1,9 @@
-using System.ComponentModel;
-using Sandbox.Common.ObjectBuilders.Definitions;
-using VRageMath;
-
 namespace SEModAPI.API.Definitions
 {
+	using System.ComponentModel;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRageMath;
+
 	public class HandItemsDefinition : OverLayerDefinition<MyObjectBuilder_HandItemDefinition>
 	{
 		#region "Constructors and Initializers"

@@ -1,13 +1,11 @@
-using System;
-using System.IO;
-
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.Serializer;
-
-using SEModAPIInternal.Support;
-
 namespace SEModAPIExtensions.API
 {
+	using System;
+	using System.IO;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Serializer;
+	using SEModAPIInternal.Support;
+
 	public class SessionManager
 	{
 		private static MyObjectBuilder_Checkpoint m_checkPoint;

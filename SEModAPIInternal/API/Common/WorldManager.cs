@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Reflection;
-using Sandbox.Common.ObjectBuilders;
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.Support;
-using VRage;
-
-namespace SEModAPIInternal.API.Common
+﻿namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Threading;
+	using Sandbox.Common.ObjectBuilders;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.Support;
+	using VRage;
+
 	public class WorldManager
 	{
 		#region "Attributes"

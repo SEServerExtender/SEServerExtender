@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-
-using Sandbox.Common.ObjectBuilders;
-
-using SEModAPIInternal.API.Entity;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.API.Server;
-using SEModAPIInternal.Support;
-
-using VRage.Serialization;
-
-using Sandbox.ModAPI;
-using System.Reflection;
-using SteamSDK;
-
-namespace SEModAPIInternal.API.Common
+﻿namespace SEModAPIInternal.API.Common
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Reflection;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.ModAPI;
+	using SEModAPIInternal.API.Entity;
+	using SEModAPIInternal.API.Server;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+
 	public class PlayerMap
 	{
 
@@ -704,7 +697,7 @@ namespace SEModAPIInternal.API.Common
 		{
 			try
 			{
-				long playerId = PlayerMap.Instance.GetFastPlayerIdFromSteamId(steamId);
+				long playerId = Instance.GetFastPlayerIdFromSteamId(steamId);
 				if(playerId == 0)
 					return false;
 

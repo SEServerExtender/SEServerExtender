@@ -1,17 +1,15 @@
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Reflection;
-using Sandbox.Common.ObjectBuilders.Definitions;
-
 namespace SEModAPI.API.Definitions
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Configuration;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using System.Xml;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders.Definitions;
 
 	/// <summary>
 	/// This class is only intended for easy data access and management. It is a wrapper around all MyObjectBuilder_Definitions children sub type

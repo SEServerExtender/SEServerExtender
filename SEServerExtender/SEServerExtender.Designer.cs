@@ -1,11 +1,15 @@
 ﻿namespace SEServerExtender
 {
+	using System.ComponentModel;
+	using System.Windows.Forms;
+	using SEModAPI.Support;
+
 	sealed partial class SEServerExtender
 	{
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -1035,70 +1039,70 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.TabControl TAB_MainTabs;
-		private System.Windows.Forms.TabPage TAB_Control_Page;
-		private System.Windows.Forms.Button BTN_ServerControl_Start;
-		private System.Windows.Forms.TabPage TAB_Entities_Page;
-		private System.Windows.Forms.SplitContainer splitContainer2;
-		private System.Windows.Forms.PropertyGrid PG_Entities_Details;
-		private System.Windows.Forms.Button BTN_ServerControl_Stop;
-		private System.Windows.Forms.TreeView TRV_Entities;
-		private System.Windows.Forms.SplitContainer splitContainer3;
-		private System.Windows.Forms.SplitContainer splitContainer5;
-		private System.Windows.Forms.Button BTN_Entities_New;
-		private System.Windows.Forms.Button BTN_Entities_Delete;
-		private System.Windows.Forms.CheckBox CHK_Control_Debugging;
-		private System.Windows.Forms.Button BTN_Entities_Export;
-		private System.Windows.Forms.TabPage TAB_Chat_Page;
-		private System.Windows.Forms.SplitContainer splitContainer6;
-		private System.Windows.Forms.SplitContainer splitContainer7;
-		private System.Windows.Forms.TextBox TXT_Chat_Message;
-		private System.Windows.Forms.Button BTN_Chat_Send;
-		private System.Windows.Forms.SplitContainer splitContainer8;
-		private System.Windows.Forms.TabPage TAB_Factions_Page;
-		private System.Windows.Forms.SplitContainer splitContainer9;
-		private System.Windows.Forms.SplitContainer splitContainer10;
-		private System.Windows.Forms.TreeView TRV_Factions;
-		private System.Windows.Forms.TabPage TAB_Plugins_Page;
-		private System.Windows.Forms.SplitContainer SC_Plugins;
-		private System.Windows.Forms.SplitContainer splitContainer12;
-		private System.Windows.Forms.ListBox LST_Plugins;
-		private System.Windows.Forms.PropertyGrid PG_Factions;
-		private System.Windows.Forms.PropertyGrid PG_Plugins;
-		private System.Windows.Forms.PropertyGrid PG_Control_Server_Properties;
-		private System.Windows.Forms.GroupBox GRP_Control_Server;
-		private System.Windows.Forms.Button BTN_Control_Server_Reset;
-		private System.Windows.Forms.Button BTN_Control_Server_Save;
-		private System.Windows.Forms.Label LBL_Control_Instance;
-		internal System.Windows.Forms.ComboBox CMB_Control_CommonInstanceList;
-		private System.Windows.Forms.CheckBox CHK_Control_CommonDataPath;
-		private System.Windows.Forms.TabPage TAB_Utilities_Page;
-		private System.Windows.Forms.SplitContainer splitContainer4;
-		private System.Windows.Forms.GroupBox floatingObjectControlGroupBox;
-		private SEModAPI.Support.NumericTextBox TXT_Utilities_FloatingObjectAmount;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button BTN_Utilities_ClearFloatingObjectsNow;
-		private System.Windows.Forms.CheckBox CHK_Utilities_FloatingObjectAutoClean;
-		private System.Windows.Forms.Button BTN_Factions_Delete;
-		private System.Windows.Forms.Label LBL_Control_AutosaveInterval;
-		private System.Windows.Forms.ComboBox CMB_Control_AutosaveInterval;
-		private System.Windows.Forms.SplitContainer splitContainer13;
-		private System.Windows.Forms.ListBox LST_Chat_ConnectedPlayers;
-		private System.Windows.Forms.ContextMenuStrip CMS_Chat;
-		private System.Windows.Forms.ToolStripMenuItem TSM_Kick;
-		private System.Windows.Forms.ToolStripMenuItem TSM_Ban;
-		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button BTN_Chat_BanSelected;
-		private System.Windows.Forms.Button BTN_Chat_KickSelected;
-		private System.Windows.Forms.RichTextBox RTB_Chat_Messages;
-		private System.Windows.Forms.Button BTN_Plugins_Reload;
-		private System.Windows.Forms.ComboBox CB_Entity_Sort;
-		private System.Windows.Forms.Button BTN_Plugins_Enable;
-		private System.Windows.Forms.StatusStrip SS_Bottom;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.TabPage TAB_Statistics;
-		private System.Windows.Forms.TextBox TB_Statistics;
-		private System.Windows.Forms.Button btnRepairEntity;
+		private SplitContainer splitContainer1;
+		private TabControl TAB_MainTabs;
+		private TabPage TAB_Control_Page;
+		private Button BTN_ServerControl_Start;
+		private TabPage TAB_Entities_Page;
+		private SplitContainer splitContainer2;
+		private PropertyGrid PG_Entities_Details;
+		private Button BTN_ServerControl_Stop;
+		private TreeView TRV_Entities;
+		private SplitContainer splitContainer3;
+		private SplitContainer splitContainer5;
+		private Button BTN_Entities_New;
+		private Button BTN_Entities_Delete;
+		private CheckBox CHK_Control_Debugging;
+		private Button BTN_Entities_Export;
+		private TabPage TAB_Chat_Page;
+		private SplitContainer splitContainer6;
+		private SplitContainer splitContainer7;
+		private TextBox TXT_Chat_Message;
+		private Button BTN_Chat_Send;
+		private SplitContainer splitContainer8;
+		private TabPage TAB_Factions_Page;
+		private SplitContainer splitContainer9;
+		private SplitContainer splitContainer10;
+		private TreeView TRV_Factions;
+		private TabPage TAB_Plugins_Page;
+		private SplitContainer SC_Plugins;
+		private SplitContainer splitContainer12;
+		private ListBox LST_Plugins;
+		private PropertyGrid PG_Factions;
+		private PropertyGrid PG_Plugins;
+		private PropertyGrid PG_Control_Server_Properties;
+		private GroupBox GRP_Control_Server;
+		private Button BTN_Control_Server_Reset;
+		private Button BTN_Control_Server_Save;
+		private Label LBL_Control_Instance;
+		internal ComboBox CMB_Control_CommonInstanceList;
+		private CheckBox CHK_Control_CommonDataPath;
+		private TabPage TAB_Utilities_Page;
+		private SplitContainer splitContainer4;
+		private GroupBox floatingObjectControlGroupBox;
+		private NumericTextBox TXT_Utilities_FloatingObjectAmount;
+		private Label label1;
+		private Button BTN_Utilities_ClearFloatingObjectsNow;
+		private CheckBox CHK_Utilities_FloatingObjectAutoClean;
+		private Button BTN_Factions_Delete;
+		private Label LBL_Control_AutosaveInterval;
+		private ComboBox CMB_Control_AutosaveInterval;
+		private SplitContainer splitContainer13;
+		private ListBox LST_Chat_ConnectedPlayers;
+		private ContextMenuStrip CMS_Chat;
+		private ToolStripMenuItem TSM_Kick;
+		private ToolStripMenuItem TSM_Ban;
+		private Panel panel1;
+		private Button BTN_Chat_BanSelected;
+		private Button BTN_Chat_KickSelected;
+		private RichTextBox RTB_Chat_Messages;
+		private Button BTN_Plugins_Reload;
+		private ComboBox CB_Entity_Sort;
+		private Button BTN_Plugins_Enable;
+		private StatusStrip SS_Bottom;
+		private ToolStripStatusLabel toolStripStatusLabel1;
+		private TabPage TAB_Statistics;
+		private TextBox TB_Statistics;
+		private Button btnRepairEntity;
 	}
 }

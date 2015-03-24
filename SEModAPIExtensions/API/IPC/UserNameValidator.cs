@@ -1,9 +1,9 @@
-using System;
-using System.IdentityModel.Selectors;
-using System.ServiceModel;
-
 namespace SEModAPIExtensions.API.IPC
 {
+	using System;
+	using System.IdentityModel.Selectors;
+	using System.ServiceModel;
+
 	public class UserNameValidator : UserNamePasswordValidator
 	{
 		public override void Validate(string userName, string password)

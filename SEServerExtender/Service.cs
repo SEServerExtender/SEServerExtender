@@ -1,10 +1,10 @@
-using System.Collections;
-using System.ComponentModel;
-using System.Configuration.Install;
-using System.ServiceProcess;
-
 namespace SEServerExtender
 {
+	using System.Collections;
+	using System.ComponentModel;
+	using System.Configuration.Install;
+	using System.ServiceProcess;
+
 	[RunInstaller(true)]
 	public class WindowsServiceInstaller : Installer
 	{

@@ -1,23 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Runtime.Serialization;
-using Microsoft.Xml.Serialization.GeneratedAssembly;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Common.ObjectBuilders.VRageData;
-using Sandbox.Definitions;
-using SEModAPI.API;
-using SEModAPIInternal.API.Common;
-using SEModAPIInternal.API.Utility;
-using SEModAPIInternal.Support;
-using VRageMath;
-using Sandbox.ModAPI;
-
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
-	using NLog;
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.IO;
+	using System.Runtime.Serialization;
+	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.VRageData;
+	using Sandbox.Definitions;
+	using Sandbox.ModAPI;
 	using SEModAPI.API.TypeConverters;
+	using SEModAPIInternal.API.Common;
+	using SEModAPIInternal.API.Utility;
+	using SEModAPIInternal.Support;
+	using VRageMath;
 
 	[DataContract( Name = "CubeBlockEntityProxy" )]
 	[KnownType( "KnownTypes" )]
@@ -504,8 +501,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				Type someEnum = CubeGridEntity.InternalType.GetNestedType( CubeGridNetworkManager.CubeGridIntegrityChangeEnumClass );
 				Array someEnumValues = someEnum.GetEnumValues( );
 				object enumValue = someEnumValues.GetValue( 0 );
-				object netManager = BaseObject.InvokeEntityMethod( block.CubeGrid, CubeGridNetworkManager.CubeGridGetNetManagerMethod );
-				BaseObject.InvokeEntityMethod( netManager, CubeGridNetworkManager.CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod, new object[ ] { block, enumValue, 0L } );
+				object netManager = InvokeEntityMethod( block.CubeGrid, CubeGridNetworkManager.CubeGridGetNetManagerMethod );
+				InvokeEntityMethod( netManager, CubeGridNetworkManager.CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod, new object[ ] { block, enumValue, 0L } );
 			}
 			catch ( Exception ex )
 			{
