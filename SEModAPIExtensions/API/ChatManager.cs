@@ -28,8 +28,6 @@
 	public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
 	public class ChatManager
 	{
-		private readonly int _maxChatHistoryMessageAge = 3600;
-		private readonly int _maxChatHistoryMessageCount = 100;
 		public struct ChatCommand
 		{
 			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
@@ -109,17 +107,6 @@
 		protected ChatManager( )
 		{
 			m_instance = this;
-
-			if ( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryAge" ] != null )
-				if ( !int.TryParse( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryAge" ], out _maxChatHistoryMessageAge ) )
-				{
-					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryAge", "3600" );
-				}
-			if ( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryCount" ] != null )
-				if ( !int.TryParse( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryCount" ], out _maxChatHistoryMessageCount ) )
-				{
-					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryCount", "100" );
-				}
 
 			m_chatMessages = new List<string>( );
 			m_chatHistory = new List<ChatEvent>( );

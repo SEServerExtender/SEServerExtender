@@ -2,6 +2,7 @@ namespace SEServerExtender
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Configuration;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
@@ -18,6 +19,8 @@ namespace SEServerExtender
 
 	public static class Program
 	{
+		private static int _maxChatHistoryMessageAge = 3600;
+		private static int _maxChatHistoryMessageCount = 100;
 		public static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public class WindowsService : ServiceBase
@@ -102,7 +105,16 @@ namespace SEServerExtender
 								  Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
 							  };
 
-			//Setup the default args
+			if ( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryAge" ] != null )
+				if ( !int.TryParse( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryAge" ], out _maxChatHistoryMessageAge ) )
+				{
+					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryAge", "3600" );
+				}
+			if ( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryCount" ] != null )
+				if ( !int.TryParse( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryCount" ], out _maxChatHistoryMessageCount ) )
+				{
+					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryCount", "100" );
+				}
 
 			//Process the args
 			foreach ( string arg in args )
@@ -293,6 +305,10 @@ namespace SEServerExtender
 											 User = playerName,
 											 UserId = userId
 										 } );
+					if ( s.Value.Messages.Count > _maxChatHistoryMessageCount )
+						s.Value.Messages.RemoveAt( 0 );
+					while ( s.Value.Messages.Any( ) && ( DateTimeOffset.Now - s.Value.Messages[ 0 ].Timestamp ).TotalSeconds > _maxChatHistoryMessageAge )
+						s.Value.Messages.RemoveAt( 0 );
 				}
 		}
 
