@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Configuration;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
@@ -24,8 +25,11 @@
 	using VRage.Library.Utils;
 	using VRageMath;
 
+	public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
 	public class ChatManager
 	{
+		private readonly int _maxChatHistoryMessageAge = 3600;
+		private readonly int _maxChatHistoryMessageCount = 100;
 		public struct ChatCommand
 		{
 			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
@@ -96,6 +100,8 @@
 
 		public static string ChatMessageMessageField = "=1E7qaeCHzjZbPzDjaRW5iq5d10=";
 
+		public event ChatEventDelegate ChatMessage;
+
 		#endregion
 
 		#region "Constructors and Initializers"
@@ -103,6 +109,17 @@
 		protected ChatManager( )
 		{
 			m_instance = this;
+
+			if ( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryAge" ] != null )
+				if ( !int.TryParse( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryAge" ], out _maxChatHistoryMessageAge ) )
+				{
+					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryAge", "3600" );
+				}
+			if ( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryCount" ] != null )
+				if ( !int.TryParse( ConfigurationManager.AppSettings[ "WCFChatMaxMessageHistoryCount" ], out _maxChatHistoryMessageCount ) )
+				{
+					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryCount", "100" );
+				}
 
 			m_chatMessages = new List<string>( );
 			m_chatHistory = new List<ChatEvent>( );
@@ -163,7 +180,7 @@
 			RegisterChatCommand( unbanCommand );
 			RegisterChatCommand( asyncSaveCommand );
 
-			ApplicationLog.BaseLog.Info(  "Finished loading ChatManager" );
+			ApplicationLog.BaseLog.Info( "Finished loading ChatManager" );
 		}
 
 		#endregion
@@ -232,7 +249,7 @@
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error(  ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -276,17 +293,6 @@
 		protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
 			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
-			foreach ( var chatManagerSession in ChatSessionManager.Instance.Sessions )
-			{
-				chatManagerSession.Value.Messages.Add( new ChatMessage
-				                                       {
-					                                       Message = message,
-					                                       Timestamp = DateTimeOffset.Now,
-					                                       User = playerName,
-					                                       UserId = remoteUserId
-				                                       } );
-				chatManagerSession.Value.LastUpdatedTime = DateTimeOffset.Now;
-			}
 
 			bool commandParsed = ParseChatCommands( message, remoteUserId );
 
@@ -301,6 +307,8 @@
 
 			m_resourceLock.AcquireExclusive( );
 			m_chatHistory.Add( chatEvent );
+			if ( ChatMessage != null )
+				ChatMessage.Invoke( remoteUserId, playerName, message );
 			m_resourceLock.ReleaseExclusive( );
 		}
 
@@ -321,13 +329,15 @@
 
 				m_chatMessages.Add( string.Format( "Server: {0}", message ) );
 
-				ApplicationLog.ChatLog.Info(  string.Format( "Chat - Server: {0}", message ) );
+				ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
 
 				ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
 				Instance.AddEvent( chatEvent );
 
 				m_resourceLock.AcquireExclusive( );
 				m_chatHistory.Add( chatEvent );
+				if ( ChatMessage != null )
+					ChatMessage.Invoke( 0, "Server", message );
 				m_resourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
@@ -360,7 +370,7 @@
 						Instance.AddEvent( chatEvent );
 					}
 					m_chatMessages.Add( string.Format( "Server: {0}", message ) );
-					ApplicationLog.ChatLog.Info(  string.Format( "Chat - Server: {0}", message ) );
+					ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
 				}
 
 				//Send a loopback chat event for server-sent messages
@@ -369,6 +379,8 @@
 
 				m_resourceLock.AcquireExclusive( );
 				m_chatHistory.Add( selfChatEvent );
+				if ( ChatMessage != null )
+					ChatMessage.Invoke( 0, "Server", message );
 				m_resourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )

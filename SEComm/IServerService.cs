@@ -59,5 +59,8 @@
 
 		[OperationContract]
 		void EndChatSession( Guid sessionGuid );
+
+		[OperationContract]
+		void SendPublicChatMessage( string message );
 	}
 }

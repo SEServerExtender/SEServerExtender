@@ -7,6 +7,7 @@
 	using SEComm;
 	using SEComm.Plugins;
 	using SEModAPIInternal;
+	using SEModAPIInternal.API.Chat;
 
 	public sealed class ServerServiceProxy : ClientBase<IServerService>, IServerService
 	{
@@ -65,6 +66,26 @@
 		public IEnumerable<PluginInfo> GetLoadedPluginList( )
 		{
 			return Channel.GetLoadedPluginList( );
+		}
+
+		public Guid BeginChatSession( )
+		{
+			return Channel.BeginChatSession( );
+		}
+
+		public IEnumerable<ChatMessage> GetChatMessages( Guid sessionGuid )
+		{
+			return Channel.GetChatMessages( sessionGuid );
+		}
+
+		public void EndChatSession( Guid sessionGuid )
+		{
+			Channel.EndChatSession( sessionGuid );
+		}
+
+		public void SendPublicChatMessage( string message )
+		{
+			Channel.SendPublicChatMessage( message );
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SEServerGUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="393" Width="616">
+        Title="MainWindow" Height="393" Width="616" Closing="Window_Closing">
     <Window.Resources>
         <ContextMenu x:Key="PlayerListContextMenu">
             <MenuItem Header="Kick Player" Click="KickPlayer" />
@@ -23,6 +23,7 @@
                         <ColumnDefinition MinWidth="100" Width="3*"></ColumnDefinition>
                         <ColumnDefinition MinWidth="100" Width="1.1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <TextBox Name="ChatHistoryTextBox" Grid.Column="0" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
                     <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndCurrent" ResizeDirection="Columns" IsTabStop="False" Width="2" HorizontalAlignment="Left" />
                     <ListView x:Name="PlayerList" Grid.Column="1" Margin="7,37,0,0">
                         <ListView.View>

@@ -4,20 +4,42 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
+	using System.Timers;
 	using System.Windows;
 	using System.Windows.Controls;
 	using SEComm;
 	using SEComm.Plugins;
 	using SEModAPIInternal;
+	using SEModAPIInternal.API.Chat;
 
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private Guid chatSessionGuid;
+		Timer chatRefreshTimer = new Timer { AutoReset = true, Enabled = false, Interval = 2000, };
 		public MainWindow( )
 		{
 			InitializeComponent( );
+			ServerServiceProxy proxy = new ServerServiceProxy( );
+			chatSessionGuid = proxy.BeginChatSession( );
+			proxy.Close( );
+			proxy.InnerChannel.Dispose( );
+			chatRefreshTimer.Elapsed += chatRefreshTimer_Elapsed;
+			chatRefreshTimer.Start(  );
+		}
+
+		void chatRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			ServerServiceProxy proxy = new ServerServiceProxy( );
+			IEnumerable<ChatMessage> chatMessages = proxy.GetChatMessages( chatSessionGuid );
+			proxy.Close(  );
+			proxy.InnerChannel.Dispose( );
+			foreach ( ChatMessage m in chatMessages )
+			{
+				ChatHistoryTextBox.Dispatcher.Invoke( ( ) => ChatHistoryTextBox.AppendText( string.Format( "\r\n{0} - {1} - {2}", m.Timestamp, m.User, m.Message ) ) );
+			}
 		}
 
 		private void StopServer( object sender, RoutedEventArgs e )
@@ -31,7 +53,7 @@
 		private void StartServer( object sender, RoutedEventArgs e )
 		{
 			ServerServiceProxy proxy = new ServerServiceProxy( );
-			proxy.StartServer( new StartServerRequest { ConfigurationName = "Temporal Engineering", ProtocolVersion = new Version( 1, 0, 0 ) } );
+			proxy.StartServer( new StartServerRequest { ConfigurationName = "", ProtocolVersion = new Version( 1, 0, 0 ) } );
 			proxy.Close( );
 			proxy.InnerChannel.Dispose( );
 		}
@@ -107,6 +129,7 @@
 			ServerServiceProxy p = new ServerServiceProxy( );
 			IEnumerable<PluginInfo> plugins = p.GetLoadedPluginList( );
 			p.Close( );
+			p.InnerChannel.Dispose( );
 
 			LoadedPlugins.Items.Clear( );
 
@@ -114,6 +137,14 @@
 			{
 				LoadedPlugins.Items.Add( string.Format( "{0} - {1}", plugin.Name, plugin.Version ) );
 			}
+		}
+
+		private void Window_Closing( object sender, System.ComponentModel.CancelEventArgs e )
+		{
+			ServerServiceProxy p = new ServerServiceProxy( );
+			p.EndChatSession( chatSessionGuid );
+			p.Close( );
+			p.InnerChannel.Dispose( );
 		}
 	}
 }

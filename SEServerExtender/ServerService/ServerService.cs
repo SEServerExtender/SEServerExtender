@@ -165,10 +165,11 @@
 		/// </summary>
 		public Guid BeginChatSession( )
 		{
-			Guid sessionId = Guid.NewGuid( );
+			Guid sessionGuid = Guid.NewGuid( );
+			ApplicationLog.BaseLog.Info( "Starting new chat monitoring session {0}", sessionGuid );
 			lock ( ChatSessionManager.SessionsMutex )
-				ChatSessionManager.Instance.Sessions.Add( sessionId, new ChatSession { Id = sessionId } );
-			return sessionId;
+				ChatSessionManager.Instance.Sessions.Add( sessionGuid, new ChatSession { Id = sessionGuid } );
+			return sessionGuid;
 		}
 
 		/// <summary>
@@ -177,10 +178,11 @@
 		/// <param name="sessionGuid">The session identifier to retrieve messages for</param>
 		public IEnumerable<ChatMessage> GetChatMessages( Guid sessionGuid )
 		{
-			List<ChatMessage> messages;
+			ApplicationLog.BaseLog.Debug( "Getting messages for chat monitoring session {0}", sessionGuid );
+			ChatMessage[ ] messages;
 			lock ( ChatSessionManager.SessionsMutex )
 			{
-				messages = ChatSessionManager.Instance.Sessions[ sessionGuid ].Messages;
+				messages = ChatSessionManager.Instance.Sessions[ sessionGuid ].Messages.ToArray(  );
 				ChatSessionManager.Instance.Sessions[ sessionGuid ].Messages.Clear( );
 				ChatSessionManager.Instance.Sessions[ sessionGuid ].LastUpdatedTime = DateTimeOffset.Now;
 			}
@@ -193,8 +195,18 @@
 		/// <param name="sessionGuid">The session identifier to terminate</param>
 		public void EndChatSession( Guid sessionGuid )
 		{
+			ApplicationLog.BaseLog.Info( "Ending chat monitoring session {0}", sessionGuid );
 			lock ( ChatSessionManager.SessionsMutex )
 				ChatSessionManager.Instance.Sessions.Remove( sessionGuid );
+		}
+
+		/// <summary>
+		/// Sends a public chat message to all users, as the Server user.
+		/// </summary>
+		/// <param name="message">The text of the message to send.</param>
+		public void SendPublicChatMessage( string message )
+		{
+			ChatManager.Instance.SendPublicChatMessage( message );
 		}
 	}
 }

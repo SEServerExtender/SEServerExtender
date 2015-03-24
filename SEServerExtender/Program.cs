@@ -1,28 +1,25 @@
-using System;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
-using System.ServiceProcess;
-using System.Linq;
-
-using SEModAPI.Support;
-
-using SEModAPIInternal.API.Common;
-using SEModAPIExtensions.API;
-
 namespace SEServerExtender
 {
+	using System;
+	using System.Collections.Generic;
 	using System.IO;
+	using System.Linq;
+	using System.Reflection;
 	using System.ServiceModel;
+	using System.ServiceProcess;
+	using System.Threading;
+	using System.Windows.Forms;
 	using NLog;
 	using NLog.Targets;
+	using SEModAPI.Support;
+	using SEModAPIExtensions.API;
+	using SEModAPIInternal.API.Chat;
+	using SEModAPIInternal.API.Common;
 
 	public static class Program
 	{
 		public static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
-		public static readonly Logger ServerLog = LogManager.GetLogger( "ServerLog" );
-		public static readonly Logger ApiLog = LogManager.GetLogger( "APILog" );
 		public class WindowsService : ServiceBase
 		{
 			public WindowsService( )
@@ -89,21 +86,21 @@ namespace SEServerExtender
 			BaseLog.Info( "Starting SEServerExtender with {0} arguments ...", args.Length );
 
 			CommandLineArgs extenderArgs = CommandLineArgs = new CommandLineArgs
-			                  {
-				                  AutoStart = false,
-				                  WorldName = string.Empty,
-				                  InstanceName = string.Empty,
-				                  NoGui = false,
-				                  NoConsole = false,
-				                  Debug = false,
-				                  GamePath = Directory.GetParent( Directory.GetCurrentDirectory( ) ).FullName,
-				                  NoWcf = false,
-				                  Autosave = 0,
-				                  Path = string.Empty,
-				                  CloseOnCrash = false,
-				                  RestartOnCrash = false,
-				                  Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
-			                  };
+							  {
+								  AutoStart = false,
+								  WorldName = string.Empty,
+								  InstanceName = string.Empty,
+								  NoGui = false,
+								  NoConsole = false,
+								  Debug = false,
+								  GamePath = Directory.GetParent( Directory.GetCurrentDirectory( ) ).FullName,
+								  NoWcf = false,
+								  Autosave = 0,
+								  Path = string.Empty,
+								  CloseOnCrash = false,
+								  RestartOnCrash = false,
+								  Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
+							  };
 
 			//Setup the default args
 
@@ -240,6 +237,7 @@ namespace SEServerExtender
 					BaseLog.Info( "Opening up WCF service listener" );
 					ServerServiceHost = new ServiceHost( typeof( ServerService.ServerService ) );
 					ServerServiceHost.Open( );
+					ChatManager.Instance.ChatMessage += ChatManager_ChatMessage;
 				}
 
 				if ( !extenderArgs.NoGui )
@@ -281,6 +279,21 @@ namespace SEServerExtender
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
 			}
+		}
+
+		private static void ChatManager_ChatMessage( ulong userId, string playerName, string message )
+		{
+			lock ( ChatSessionManager.SessionsMutex )
+				foreach ( KeyValuePair<Guid, ChatSession> s in ChatSessionManager.Instance.Sessions )
+				{
+					s.Value.Messages.Add( new ChatMessage
+										 {
+											 Message = message,
+											 Timestamp = DateTimeOffset.Now,
+											 User = playerName,
+											 UserId = userId
+										 } );
+				}
 		}
 
 		private static void Stop( )
