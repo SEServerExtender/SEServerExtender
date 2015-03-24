@@ -16,20 +16,12 @@ namespace SEModAPI.API.Definitions
 	[DataContract]
 	public class DedicatedConfigDefinition
 	{
-		#region "Attributes"
-
 		private readonly MyConfigDedicatedData _definition;
-
-		#endregion
-
-		#region "Constructors and Initializers"
 
 		public DedicatedConfigDefinition( MyConfigDedicatedData definition )
 		{
 			_definition = definition;
 		}
-
-		#endregion
 
 		#region "Properties"
 
@@ -891,6 +883,24 @@ namespace SEModAPI.API.Definitions
 			{
 				if ( _definition.GroupID == value ) return;
 				_definition.GroupID = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set the whether oxygen mechanics are in use.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Get or set the whether oxygen mechanics are in use." )]
+		[Category( "World Settings" )]
+		public bool EnableOxygen
+		{
+			get { return _definition.SessionSettings.EnableOxygen; }
+			set
+			{
+				if ( _definition.SessionSettings.EnableOxygen != value )
+					_definition.SessionSettings.EnableOxygen = value;
 			}
 		}
 
