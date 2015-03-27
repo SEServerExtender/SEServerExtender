@@ -171,10 +171,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.3.2.0.0\lib\net40\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Sandbox.Audio, Version=0.1.5410.26916, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\GameLibraries\Sandbox.Audio.dll</HintPath>
-    </Reference>
     <Reference Include="Sandbox.Common">
       <HintPath>..\GameLibraries\Sandbox.Common.dll</HintPath>
     </Reference>
@@ -184,17 +180,12 @@
     <Reference Include="Sandbox.Game">
       <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>
     </Reference>
-    <Reference Include="Sandbox.Input, Version=0.1.5305.29171, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\GameLibraries\Sandbox.Input.dll</HintPath>
-    </Reference>
     <Reference Include="SteamSDK">
       <HintPath>..\GameLibraries\SteamSDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.XML" />
     <Reference Include="VRage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -205,9 +196,6 @@
     </Reference>
     <Reference Include="VRage.Math">
       <HintPath>..\GameLibraries\VRage.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Render">
-      <HintPath>..\GameLibraries\VRage.Render.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

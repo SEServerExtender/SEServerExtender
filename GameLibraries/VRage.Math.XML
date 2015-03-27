@@ -1297,6 +1297,14 @@
             Defines a matrix.
             </summary>
         </member>
+        <member name="T:Havok.IPhysicsMesh">
+            <summary>
+            Interface through which physics can work with graphical meshes.
+            This has been moved here due to problems with obfuscator and to reduce dependencies of Havok!
+            You should treat this as part of HavokWrapper (not accessible when there is no reference to HavokWrapper)!
+            Exception to this can only be rare cases such as avoiding code duplication.
+            </summary>
+        </member>
         <member name="T:VRageMath.QuaternionD">
             <summary>
             Defines a four-dimensional vector (x,y,z,w), which is used to efficiently rotate an object about the (x, y, z) vector by the angle theta, where w = cos(theta/2).
@@ -4833,6 +4841,11 @@
         <member name="T:VRageMath.Vector3I.RangeIterator">
             <summary>
             A class for simpler traversal of ranges of integer vectors
+            </summary>
+        </member>
+        <member name="F:VRageMath.Vector3I.RangeIterator.Current">
+            <summary>
+            Do not modify, public only for optimization!
             </summary>
         </member>
         <member name="M:VRageMath.Vector3I.RangeIterator.#ctor(VRageMath.Vector3I@,VRageMath.Vector3I@)">

@@ -8,7 +8,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.Support;
-	using VRage;
+	using VRage.Library.Utils;
 	using VRageMath;
 
 	public class CubeGridNetworkManager

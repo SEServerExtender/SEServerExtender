@@ -257,6 +257,8 @@ Create ragdoll object which will have its layer for collisions
 </member>
         <member name="M:Havok.HkRagdoll.UpdatePosition(VRageMath.Vector3)">
 Updates Ragdoll position
+
+Updates Ragdoll Rigid Bodies positions
 </member>
         <member name="F:Havok.HkRagdoll.m_ragdollBones">
 List of the bones 
