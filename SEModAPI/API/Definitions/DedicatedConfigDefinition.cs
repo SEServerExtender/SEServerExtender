@@ -887,12 +887,12 @@ namespace SEModAPI.API.Definitions
 		}
 
 		/// <summary>
-		/// Get or set the whether oxygen mechanics are in use.
+		/// Get or set whether oxygen mechanics are in use.
 		/// </summary>
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the whether oxygen mechanics are in use." )]
+		[Description( "Get or set whether oxygen mechanics are in use." )]
 		[Category( "World Settings" )]
 		public bool EnableOxygen
 		{
@@ -901,6 +901,24 @@ namespace SEModAPI.API.Definitions
 			{
 				if ( _definition.SessionSettings.EnableOxygen != value )
 					_definition.SessionSettings.EnableOxygen = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set whether tools cause ships to shake when operating.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( " Get or set whether tools cause ships to shake when operating." )]
+		[Category( "World Settings" )]
+		public bool EnableToolShake
+		{
+			get { return _definition.SessionSettings.EnableToolShake; }
+			set
+			{
+				if ( _definition.SessionSettings.EnableToolShake != value )
+					_definition.SessionSettings.EnableToolShake = value;
 			}
 		}
 
