@@ -140,14 +140,8 @@ namespace SEServerExtender
 					}
 					else if ( lowerCaseArgument.Equals( "autosave" ) )
 					{
-						try
-						{
-							extenderArgs.Autosave = int.Parse( argValue );
-						}
-						catch
-						{
-							//Do nothing
-						}
+						if ( !int.TryParse( argValue, out extenderArgs.Autosave ) )
+							BaseLog.Warn( "Autosave parameter was not a valid integer." );
 					}
 					else if ( lowerCaseArgument.Equals( "path" ) )
 					{
