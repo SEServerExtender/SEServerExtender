@@ -234,9 +234,9 @@ namespace SEModAPIExtensions.API
 				{
 					ApplicationLog.BaseLog.Info( "Synchronous Save: Enabled" );
 				}
-				if ( _commandLineArgs.Path.Length != 0 )
+				if ( _commandLineArgs.InstancePath.Length != 0 )
 				{
-					ApplicationLog.BaseLog.Info( "Full path pre-selected: '" + _commandLineArgs.Path + "'" );
+					ApplicationLog.BaseLog.Info( "Full path pre-selected: '" + _commandLineArgs.InstancePath + "'" );
 				}
 				if ( _commandLineArgs.RestartOnCrash )
 				{
@@ -354,7 +354,7 @@ namespace SEModAPIExtensions.API
 		{
 			get
 			{
-				string path = _commandLineArgs.Path;
+				string path = _commandLineArgs.InstancePath;
 				if ( string.IsNullOrEmpty( path ) )
 				{
 					if ( InstanceName.Length != 0 )
@@ -367,7 +367,7 @@ namespace SEModAPIExtensions.API
 
 				return path;
 			}
-			set { _commandLineArgs.Path = value; }
+			set { _commandLineArgs.InstancePath = value; }
 		}
 
 		[IgnoreDataMember]
@@ -488,7 +488,7 @@ namespace SEModAPIExtensions.API
 			{
 				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
 				_serverWrapper = ServerAssemblyWrapper.Instance;
-				bool result = _serverWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.Path, !_commandLineArgs.NoConsole );
+				bool result = _serverWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
 				ApplicationLog.BaseLog.Info( "Server has stopped running" );
 
 				_isServerRunning = false;

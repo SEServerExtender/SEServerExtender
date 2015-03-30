@@ -99,7 +99,7 @@ namespace SEServerExtender
 								  GamePath = Directory.GetParent( Directory.GetCurrentDirectory( ) ).FullName,
 								  NoWcf = false,
 								  Autosave = 0,
-								  Path = string.Empty,
+								  InstancePath = string.Empty,
 								  CloseOnCrash = false,
 								  RestartOnCrash = false,
 								  Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
@@ -151,7 +151,7 @@ namespace SEServerExtender
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
-						extenderArgs.Path = argValue;
+						extenderArgs.InstancePath = argValue;
 					}
 				}
 				else
@@ -210,7 +210,7 @@ namespace SEServerExtender
 				}
 			}
 
-			if ( !string.IsNullOrEmpty( extenderArgs.Path ) )
+			if ( !string.IsNullOrEmpty( extenderArgs.InstancePath ) )
 			{
 				extenderArgs.InstanceName = string.Empty;
 			}
