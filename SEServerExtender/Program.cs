@@ -119,24 +119,26 @@ namespace SEServerExtender
 			//Process the args
 			foreach ( string arg in args )
 			{
-				if ( arg.Split( '=' ).Length > 1 )
+				string[ ] splitAtEquals = arg.Split( '=' );
+				if ( splitAtEquals.Length > 1 )
 				{
-					string argName = arg.Split( '=' )[ 0 ];
-					string argValue = arg.Split( '=' )[ 1 ];
+					string argName = splitAtEquals[ 0 ];
+					string argValue = splitAtEquals[ 1 ];
 
-					if ( argName.ToLower( ).Equals( "instance" ) )
+					string lowerCaseArgument = argName.ToLower( );
+					if ( lowerCaseArgument.Equals( "instance" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
 						extenderArgs.InstanceName = argValue;
 					}
-					else if ( argName.ToLower( ).Equals( "gamepath" ) )
+					else if ( lowerCaseArgument.Equals( "gamepath" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
 						extenderArgs.GamePath = argValue;
 					}
-					else if ( argName.ToLower( ).Equals( "autosave" ) )
+					else if ( lowerCaseArgument.Equals( "autosave" ) )
 					{
 						try
 						{
@@ -147,7 +149,13 @@ namespace SEServerExtender
 							//Do nothing
 						}
 					}
-					else if ( argName.ToLower( ).Equals( "path" ) )
+					else if ( lowerCaseArgument.Equals( "path" ) )
+					{
+						if ( argValue[ argValue.Length - 1 ] == '"' )
+							argValue = argValue.Substring( 0, argValue.Length - 1 );
+						extenderArgs.InstancePath = argValue;
+					}
+					else if ( lowerCaseArgument.Equals( "instancepath" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
@@ -156,18 +164,19 @@ namespace SEServerExtender
 				}
 				else
 				{
-					if ( arg.ToLower( ).Equals( "autostart" ) )
+					string lowerCaseArgument = arg.ToLower( );
+					if ( lowerCaseArgument.Equals( "autostart" ) )
 					{
 						extenderArgs.AutoStart = true;
 					}
-					if ( arg.ToLower( ).Equals( "nogui" ) )
+					else if ( lowerCaseArgument.Equals( "nogui" ) )
 					{
 						extenderArgs.NoGui = true;
 
 						//Implies autostart
 						//extenderArgs.AutoStart = true;
 					}
-					if ( arg.ToLower( ).Equals( "noconsole" ) )
+					else if ( lowerCaseArgument.Equals( "noconsole" ) )
 					{
 						extenderArgs.NoConsole = true;
 
@@ -175,35 +184,35 @@ namespace SEServerExtender
 						extenderArgs.NoGui = true;
 						extenderArgs.AutoStart = true;
 					}
-					if ( arg.ToLower( ).Equals( "debug" ) )
+					else if ( lowerCaseArgument.Equals( "debug" ) )
 					{
 						extenderArgs.Debug = true;
 					}
-					if ( arg.ToLower( ).Equals( "nowcf" ) )
+					else if ( lowerCaseArgument.Equals( "nowcf" ) )
 					{
 						extenderArgs.NoWcf = true;
 					}
-					if ( arg.ToLower( ).Equals( "closeoncrash" ) )
+					else if ( lowerCaseArgument.Equals( "closeoncrash" ) )
 					{
 						extenderArgs.CloseOnCrash = true;
 					}
-					if ( arg.ToLower( ).Equals( "autosaveasync" ) )
+					else if ( lowerCaseArgument.Equals( "autosaveasync" ) )
 					{
 						extenderArgs.AutoSaveSync = false;
 					}
-					if ( arg.ToLower( ).Equals( "autosavesync" ) )
+					else if ( lowerCaseArgument.Equals( "autosavesync" ) )
 					{
 						extenderArgs.AutoSaveSync = true;
 					}
-					if ( arg.ToLower( ).Equals( "restartoncrash" ) )
+					else if ( lowerCaseArgument.Equals( "restartoncrash" ) )
 					{
 						extenderArgs.RestartOnCrash = true;
 					}
-					if ( arg.ToLower( ).Equals( "wrr" ) )
+					else if ( lowerCaseArgument.Equals( "wrr" ) )
 					{
 						extenderArgs.WorldRequestReplace = true;
 					}
-					if ( arg.ToLower( ).Equals( "wrm" ) )
+					else if ( lowerCaseArgument.Equals( "wrm" ) )
 					{
 						extenderArgs.WorldDataModify = true;
 					}
