@@ -6,9 +6,9 @@ namespace SEModAPIExtensions.API
 		public string WorldName;
 		/// <summary>The name of the game instance to load</summary>
 		public string InstanceName { get; set; }
-		/// <summary>Do not show the local GUI, if true.</summary>
 		/// <summary>The path to the instance folder</summary>
 		public string InstancePath;
+		/// <summary>Do not show the local GUI, if true.</summary>
 		public bool NoGui;
 		/// <summary>Do not show a command-line console, if true.</summary>
 		public bool NoConsole;
