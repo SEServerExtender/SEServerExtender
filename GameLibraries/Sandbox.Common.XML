@@ -1268,6 +1268,12 @@
             MyStringId value for localization.
             </summary>
         </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_OxygenContainerObject.OxygenLevel">
+            <summary>
+            This is not synced automatically
+            Call SyncOxygenContainerLevel on inventory to sync it
+            </summary>
+        </member>
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelBlockDefinition">
             <summary>
             Definition for one small grid cog wheel (used inside large block as mechanical subblock).
