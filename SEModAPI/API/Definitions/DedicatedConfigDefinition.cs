@@ -894,6 +894,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set whether oxygen mechanics are in use." )]
 		[Category( "World Settings" )]
+		[DisplayName("Enable Oxygen")]
 		public bool EnableOxygen
 		{
 			get { return _definition.SessionSettings.EnableOxygen; }
@@ -910,8 +911,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( " Get or set whether tools cause ships to shake when operating." )]
+		[Description( "Get or set whether tools cause ships to shake when operating." )]
 		[Category( "World Settings" )]
+		[DisplayName("Enable Tool Shake")]
 		public bool EnableToolShake
 		{
 			get { return _definition.SessionSettings.EnableToolShake; }
@@ -919,6 +921,25 @@ namespace SEModAPI.API.Definitions
 			{
 				if ( _definition.SessionSettings.EnableToolShake != value )
 					_definition.SessionSettings.EnableToolShake = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set the VoxelGeneratorVersion setting..
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Get or set the VoxelGeneratorVersion setting." )]
+		[Category( "World Settings" )]
+		[DisplayName("Voxel Generator Version")]
+		public int VoxelGeneratorVersion
+		{
+			get { return _definition.SessionSettings.VoxelGeneratorVersion; }
+			set
+			{
+				if ( _definition.SessionSettings.VoxelGeneratorVersion != value )
+					_definition.SessionSettings.VoxelGeneratorVersion = value;
 			}
 		}
 
