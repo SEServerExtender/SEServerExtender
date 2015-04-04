@@ -1337,8 +1337,9 @@ namespace SEModAPIInternal.API.Entity
 					serializer.Serialize( xmlTextWriter, sector );
 				}
 			}
-			catch
+			catch(Exception ex)
 			{
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 
