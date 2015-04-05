@@ -475,6 +475,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether spectator mode is enable" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Enable Spectator" )]
 		public bool EnableSpectator
 		{
 			get { return _definition.SessionSettings.EnableSpectator; }
@@ -581,6 +582,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "The seed value to use for procedural generation" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Procedural Seed" )]
 		public int ProceduralSeed
 		{
 			get { return _definition.SessionSettings.ProceduralSeed; }
@@ -596,6 +598,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "The density of procedurally generated asteroids" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Procedural Density" )]
 		public float ProceduralDensity
 		{
 			get { return _definition.SessionSettings.ProceduralDensity; }
@@ -626,6 +629,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Enable or Disable ingame scripting" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Enable In-Game Scripts" )]
 		public bool EnableIngameScripts
 		{
 			get { return _definition.SessionSettings.EnableIngameScripts; }
@@ -836,6 +840,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set if the last session should be ignored" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Ignore Last Session" )]
 		public bool IgnoreLastSession
 		{
 			get { return _definition.IgnoreLastSession; }
@@ -854,6 +859,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the name of the world(map)" )]
 		[Category( "Server Settings" )]
+		[DisplayName( "World Name" )]
 		public string WorldName
 		{
 			get { return _definition.WorldName; }
@@ -876,6 +882,7 @@ namespace SEModAPI.API.Definitions
 	"Only members of this group will be able to join the server.\n" +
 	"Set to 0 to open the server to everyone" )]
 		[Category( "Server Settings" )]
+		[DisplayName( "Steam Group ID" )]
 		public ulong GroupID
 		{
 			get { return _definition.GroupID; }
