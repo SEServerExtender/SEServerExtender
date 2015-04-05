@@ -12,6 +12,7 @@ namespace SEModAPI.API.Definitions
 	using System.Xml;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.Support;
 
 	[DataContract]
 	public class DedicatedConfigDefinition
@@ -33,7 +34,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the server's name" )]
 		[Category( "Server Settings" )]
-		[DisplayName("Server Name")]
+		[DisplayName( "Server Name" )]
 		public string ServerName
 		{
 			get { return _definition.ServerName; }
@@ -52,7 +53,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the server's port" )]
 		[Category( "Server Settings" )]
-		[DisplayName("Server Port")]
+		[DisplayName( "Server Port" )]
+		[DefaultValue( 27016 )]
 		public int ServerPort
 		{
 			get { return _definition.ServerPort; }
@@ -71,7 +73,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the game mode" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Game Mode")]
+		[DisplayName( "Game Mode" )]
 		public MyGameModeEnum GameMode
 		{
 			get { return _definition.SessionSettings.GameMode; }
@@ -91,7 +93,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the grinder speed multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Grinder Speed Multiplier")]
+		[DisplayName( "Grinder Speed Multiplier" )]
+		[DefaultValue( 1 )]
 		public float GrinderSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.GrinderSpeedMultiplier; }
@@ -110,7 +113,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the welder speed multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Welder Speed Multiplier")]
+		[DisplayName( "Welder Speed Multiplier" )]
+		[DefaultValue( 1 )]
 		public float WelderSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.WelderSpeedMultiplier; }
@@ -129,7 +133,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the inventory size multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Inventory Size Multiplier")]
+		[DisplayName( "Inventory Size Multiplier" )]
+		[DefaultValue( 1 )]
 		public float InventorySizeMultiplier
 		{
 			get { return _definition.SessionSettings.InventorySizeMultiplier; }
@@ -148,7 +153,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the assembler speed multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Assembler Speed Multiplier")]
+		[DisplayName( "Assembler Speed Multiplier" )]
+		[DefaultValue( 1 )]
 		public float AssemblerSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.AssemblerSpeedMultiplier; }
@@ -167,7 +173,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the assembler efficiency multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Assembler Efficiency Multiplier")]
+		[DisplayName( "Assembler Efficiency Multiplier" )]
+		[DefaultValue( 1 )]
 		public float AssemblerEfficiencyMultiplier
 		{
 			get { return _definition.SessionSettings.AssemblerEfficiencyMultiplier; }
@@ -186,7 +193,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the refinery speed multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Refinery Speed Multiplier")]
+		[DisplayName( "Refinery Speed Multiplier" )]
+		[DefaultValue( 1 )]
 		public float RefinerySpeedMultiplier
 		{
 			get { return _definition.SessionSettings.RefinerySpeedMultiplier; }
@@ -205,7 +213,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the hacking speed multiplier" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Hacking Speed Multiplier")]
+		[DisplayName( "Hacking Speed Multiplier" )]
 		public float HackSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.HackSpeedMultiplier; }
@@ -224,7 +232,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the online mode. This controls who is able to connect to your server.  If set to public and Group ID is also set, only members of that Steam group will be able to connect." )]
 		[Category( "Global Settings" )]
-		[DisplayName("Online Mode")]
+		[DisplayName( "Online Mode" )]
 		public MyOnlineModeEnum OnlineMode
 		{
 			get { return _definition.SessionSettings.OnlineMode; }
@@ -243,7 +251,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the maximum number of players" )]
 		[Category( "Server Settings" )]
-		[DisplayName("Player Limit")]
+		[DisplayName( "Player Limit" )]
 		public short MaxPlayers
 		{
 			get { return _definition.SessionSettings.MaxPlayers; }
@@ -262,7 +270,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the maximum number of floating object" )]
 		[Category( "Global Settings" )]
-		[DisplayName("Floating Object Limit")]
+		[DisplayName( "Floating Object Limit" )]
 		public short MaxFloatingObject
 		{
 			get { return _definition.SessionSettings.MaxFloatingObjects; }
@@ -282,6 +290,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Get or set the environment hostility. Controls if or how many meteor storms will occur." )]
 		[Category( "World Settings" )]
 		[DisplayName( "Environment Hostility" )]
+		[DefaultValue( MyEnvironmentHostilityEnum.SAFE )]
 		public MyEnvironmentHostilityEnum EnvironmentHostility
 		{
 			get { return _definition.SessionSettings.EnvironmentHostility; }
@@ -301,6 +310,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Determine whether the player's health auto heals" )]
 		[Category( "Global Settings" )]
 		[DisplayName( "Auto-Healing" )]
+		[DefaultValue( true )]
 		public bool AutoHealing
 		{
 			get { return _definition.SessionSettings.AutoHealing; }
@@ -319,7 +329,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the player can copy/paste ships" )]
 		[Category( "Global Settings" )]
-		[DisplayName( "Enable Copy & Paste" )]
+		[DisplayName( "Copy/Paste" )]
+		[DefaultValue( true )]
 		public bool EnableCopyPaste
 		{
 			get { return _definition.SessionSettings.EnableCopyPaste; }
@@ -339,6 +350,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Enable or disable built-in auto-save.  Disable if you are using Extender's auto-save feature (configured on the left)." )]
 		[Category( "Server Settings" )]
 		[DisplayName( "Auto-Save" )]
+		[DefaultValue( false )]
 		public bool AutoSave
 		{
 			get { return _definition.SessionSettings.AutoSave; }
@@ -358,6 +370,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "The interval for built-in auto-save, in minutes.  Does not affect Extender's auto-save setting." )]
 		[Category( "Server Settings" )]
 		[DisplayName( "Auto-Save Interval" )]
+		[DefaultValue( 0 )]
 		public uint AutoSaveInMinutes
 		{
 			get { return _definition.SessionSettings.AutoSaveInMinutes; }
@@ -376,7 +389,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the weapons are functional" )]
 		[Category( "Global Settings" )]
-		[DisplayName( "Enable Weapons" )]
+		[DisplayName( "Weapons" )]
+		[DefaultValue( true )]
 		public bool WeaponsEnabled
 		{
 			get { return _definition.SessionSettings.WeaponsEnabled; }
@@ -396,6 +410,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Determine whether the player names will show on the HUD" )]
 		[Category( "Global Settings" )]
 		[DisplayName( "Show Player Names On HUD" )]
+		[DefaultValue( true )]
 		public bool ShowPlayerNamesOnHud
 		{
 			get { return _definition.SessionSettings.ShowPlayerNamesOnHud; }
@@ -415,6 +430,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Determine whether the thrusters damage blocks" )]
 		[Category( "Global Settings" )]
 		[DisplayName( "Thruster Damage" )]
+		[DefaultValue( true )]
 		public bool ThrusterDamage
 		{
 			get { return _definition.SessionSettings.ThrusterDamage; }
@@ -433,7 +449,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether random ships spawn on the server" )]
 		[Category( "World Settings" )]
-		[DisplayName( "Enable Cargo Ships" )]
+		[DisplayName( "Cargo Ships" )]
+		[DefaultValue( true )]
 		public bool CargoShipsEnabled
 		{
 			get { return _definition.SessionSettings.CargoShipsEnabled; }
@@ -450,6 +467,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "" )]
 		[Category( "World Settings" )]
 		[DisplayName( "Realistic Sound" )]
+		[DefaultValue( true )]
 		public bool RealisticSound
 		{
 			get { return _definition.SessionSettings.RealisticSound; }
@@ -466,6 +484,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "When a player dies, they are removed from all factions and their ownership is removed from all ships and blocks." )]
 		[Category( "World Settings" )]
 		[DisplayName( "Permanent Death" )]
+		[DefaultValue( false )]
 		public bool PermanentDeath
 		{
 			get { return _definition.SessionSettings.PermanentDeath.GetValueOrDefault( true ); }
@@ -482,6 +501,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Allows or disallows clients saving a local copy of the world." )]
 		[Category( "Global Settings" )]
 		[DisplayName( "Client Can Save" )]
+		[DefaultValue( true )]
 		public bool ClientCanSave
 		{
 			get { return _definition.SessionSettings.ClientCanSave; }
@@ -500,7 +520,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether spectator mode is enable" )]
 		[Category( "Global Settings" )]
-		[DisplayName( "Enable Spectator Mode" )]
+		[DisplayName( "Allow Spectators" )]
+		[DefaultValue( true )]
 		public bool EnableSpectator
 		{
 			get { return _definition.SessionSettings.EnableSpectator; }
@@ -520,6 +541,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Determine whether the server will automatically remove debris" )]
 		[Category( "World Settings" )]
 		[DisplayName( "Remove Trash" )]
+		[DefaultValue( false )]
 		public bool RemoveTrash
 		{
 			get { return _definition.SessionSettings.RemoveTrash; }
@@ -539,6 +561,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Ships and players which travel beyond this limit are destroyed/killed. Set to 0 for infinite." )]
 		[Category( "World Settings" )]
 		[DisplayName( "World Size (km)" )]
+		[DefaultValue( 0 )]
 		public int WorldSizeKm
 		{
 			get { return _definition.SessionSettings.WorldSizeKm; }
@@ -558,6 +581,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Determine whether starter ships are removed after a while" )]
 		[Category( "World Settings" )]
 		[DisplayName( "Delete Respawn Ships" )]
+		[DefaultValue( false )]
 		public bool RespawnShipDelete
 		{
 			get { return _definition.SessionSettings.RespawnShipDelete; }
@@ -574,9 +598,10 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set how long people have to wait to spawn in a respawn ship" )]
+		[Description( "A multiplier applied to the time a player has to wait to be able to respawn in a ship." )]
 		[Category( "Global Settings" )]
 		[DisplayName( "Respawn Ship Spawn Time Multiplier" )]
+		[DefaultValue( 1 )]
 		public float RespawnShipSpawnTimeMuliplier
 		{
 			get { return _definition.SessionSettings.SpawnShipTimeMultiplier; }
@@ -597,6 +622,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Resets all ownership of all blocks and ships, when the server launches. USE WITH CAUTION!" )]
 		[Category( "World Settings" )]
 		[DisplayName( "Reset Ownership" )]
+		[DefaultValue( false )]
 		public bool ResetOwnership
 		{
 			get { return _definition.SessionSettings.ResetOwnership; }
@@ -660,7 +686,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Enable or Disable ingame scripting" )]
 		[Category( "World Settings" )]
-		[DisplayName( "Enable In-Game Scripts" )]
+		[DisplayName( "In-Game Scripts" )]
+		[DefaultValue( true )]
 		public bool EnableIngameScripts
 		{
 			get { return _definition.SessionSettings.EnableIngameScripts; }
@@ -814,7 +841,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "The list of banned players, by steam ID" )]
 		[Category( "Server Settings" )]
-		[DisplayName("Banned Users")]
+		[DisplayName( "Banned Users" )]
 		public string[ ] Banned
 		{
 			get { return _definition.Banned.ConvertAll( x => x.ToString( ) ).ToArray( ); }
@@ -860,7 +887,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Pause the game if there are no players online" )]
 		[Category( "World Settings" )]
-		[DisplayName("Pause Game When Empty")]
+		[DisplayName( "Pause Game When Empty" )]
+		[DefaultValue( false )]
 		public bool PauseGameWhenEmpty
 		{
 			get { return _definition.PauseGameWhenEmpty; }
@@ -880,6 +908,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Get or set if the last session should be ignored" )]
 		[Category( "World Settings" )]
 		[DisplayName( "Ignore Last Session" )]
+		[DefaultValue( false )]
 		public bool IgnoreLastSession
 		{
 			get { return _definition.IgnoreLastSession; }
@@ -940,7 +969,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set whether oxygen mechanics are in use." )]
 		[Category( "World Settings" )]
-		[DisplayName("Enable Oxygen")]
+		[DisplayName( "Oxygen" )]
+		[DefaultValue( true )]
 		public bool EnableOxygen
 		{
 			get { return _definition.SessionSettings.EnableOxygen; }
@@ -959,7 +989,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set whether tools cause ships to shake when operating." )]
 		[Category( "World Settings" )]
-		[DisplayName("Enable Tool Shake")]
+		[DisplayName( "Tool Shake" )]
+		[DefaultValue( true )]
 		public bool EnableToolShake
 		{
 			get { return _definition.SessionSettings.EnableToolShake; }
@@ -978,7 +1009,8 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the VoxelGeneratorVersion setting." )]
 		[Category( "World Settings" )]
-		[DisplayName("Voxel Generator Version")]
+		[DisplayName( "Voxel Generator Version" )]
+		[DefaultValue( 1 )]
 		public int VoxelGeneratorVersion
 		{
 			get { return _definition.SessionSettings.VoxelGeneratorVersion; }
@@ -1025,7 +1057,7 @@ namespace SEModAPI.API.Definitions
 					fileContent = serializer.Deserialize( xmlReader );
 				}
 			}
-			catch(Exception ex)
+			catch ( Exception ex )
 			{
 				throw new ConfigurationErrorsException( "Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.", ex, filePath, -1 );
 			}
