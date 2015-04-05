@@ -33,6 +33,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the server's name" )]
 		[Category( "Server Settings" )]
+		[DisplayName("Server Name")]
 		public string ServerName
 		{
 			get { return _definition.ServerName; }
@@ -51,6 +52,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the server's port" )]
 		[Category( "Server Settings" )]
+		[DisplayName("Server Port")]
 		public int ServerPort
 		{
 			get { return _definition.ServerPort; }
@@ -69,6 +71,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the game mode" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Game Mode")]
 		public MyGameModeEnum GameMode
 		{
 			get { return _definition.SessionSettings.GameMode; }
@@ -88,6 +91,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the grinder speed multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Grinder Speed Multiplier")]
 		public float GrinderSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.GrinderSpeedMultiplier; }
@@ -106,6 +110,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the welder speed multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Welder Speed Multiplier")]
 		public float WelderSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.WelderSpeedMultiplier; }
@@ -124,6 +129,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the inventory size multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Inventory Size Multiplier")]
 		public float InventorySizeMultiplier
 		{
 			get { return _definition.SessionSettings.InventorySizeMultiplier; }
@@ -142,6 +148,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the assembler speed multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Assembler Speed Multiplier")]
 		public float AssemblerSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.AssemblerSpeedMultiplier; }
@@ -160,6 +167,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the assembler efficiency multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Assembler Efficiency Multiplier")]
 		public float AssemblerEfficiencyMultiplier
 		{
 			get { return _definition.SessionSettings.AssemblerEfficiencyMultiplier; }
@@ -178,6 +186,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the refinery speed multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Refinery Speed Multiplier")]
 		public float RefinerySpeedMultiplier
 		{
 			get { return _definition.SessionSettings.RefinerySpeedMultiplier; }
@@ -196,6 +205,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the hacking speed multiplier" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Hacking Speed Multiplier")]
 		public float HackSpeedMultiplier
 		{
 			get { return _definition.SessionSettings.HackSpeedMultiplier; }
@@ -212,8 +222,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the online mode" )]
+		[Description( "Get or set the online mode. This controls who is able to connect to your server.  If set to public and Group ID is also set, only members of that Steam group will be able to connect." )]
 		[Category( "Global Settings" )]
+		[DisplayName("Online Mode")]
 		public MyOnlineModeEnum OnlineMode
 		{
 			get { return _definition.SessionSettings.OnlineMode; }
@@ -232,6 +243,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the maximum number of players" )]
 		[Category( "Server Settings" )]
+		[DisplayName("Player Limit")]
 		public short MaxPlayers
 		{
 			get { return _definition.SessionSettings.MaxPlayers; }
@@ -250,6 +262,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the maximum number of floating object" )]
 		[Category( "Global Settings" )]
+		[DisplayName("Floating Object Limit")]
 		public short MaxFloatingObject
 		{
 			get { return _definition.SessionSettings.MaxFloatingObjects; }
@@ -266,8 +279,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the environment hostility" )]
+		[Description( "Get or set the environment hostility. Controls if or how many meteor storms will occur." )]
 		[Category( "World Settings" )]
+		[DisplayName( "Environment Hostility" )]
 		public MyEnvironmentHostilityEnum EnvironmentHostility
 		{
 			get { return _definition.SessionSettings.EnvironmentHostility; }
@@ -279,13 +293,14 @@ namespace SEModAPI.API.Definitions
 		}
 
 		/// <summary>
-		/// Determine whether the player's health auto heal
+		/// Determine whether the player's health auto heals
 		/// </summary>
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Determine whether the player's health auto heal" )]
+		[Description( "Determine whether the player's health auto heals" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Auto-Healing" )]
 		public bool AutoHealing
 		{
 			get { return _definition.SessionSettings.AutoHealing; }
@@ -304,6 +319,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the player can copy/paste ships" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Enable Copy & Paste" )]
 		public bool EnableCopyPaste
 		{
 			get { return _definition.SessionSettings.EnableCopyPaste; }
@@ -320,8 +336,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Determine whether the server will save regularly the sector" )]
+		[Description( "Enable or disable built-in auto-save.  Disable if you are using Extender's auto-save feature (configured on the left)." )]
 		[Category( "Server Settings" )]
+		[DisplayName( "Auto-Save" )]
 		public bool AutoSave
 		{
 			get { return _definition.SessionSettings.AutoSave; }
@@ -338,8 +355,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the minutes between autosaving the sector" )]
+		[Description( "The interval for built-in auto-save, in minutes.  Does not affect Extender's auto-save setting." )]
 		[Category( "Server Settings" )]
+		[DisplayName( "Auto-Save Interval" )]
 		public uint AutoSaveInMinutes
 		{
 			get { return _definition.SessionSettings.AutoSaveInMinutes; }
@@ -358,6 +376,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the weapons are functional" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Enable Weapons" )]
 		public bool WeaponsEnabled
 		{
 			get { return _definition.SessionSettings.WeaponsEnabled; }
@@ -376,6 +395,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the player names will show on the HUD" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Show Player Names On HUD" )]
 		public bool ShowPlayerNamesOnHud
 		{
 			get { return _definition.SessionSettings.ShowPlayerNamesOnHud; }
@@ -394,6 +414,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the thrusters damage blocks" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Thruster Damage" )]
 		public bool ThrusterDamage
 		{
 			get { return _definition.SessionSettings.ThrusterDamage; }
@@ -412,6 +433,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether random ships spawn on the server" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Enable Cargo Ships" )]
 		public bool CargoShipsEnabled
 		{
 			get { return _definition.SessionSettings.CargoShipsEnabled; }
@@ -427,6 +449,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Realistic Sound" )]
 		public bool RealisticSound
 		{
 			get { return _definition.SessionSettings.RealisticSound; }
@@ -440,8 +463,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "" )]
+		[Description( "When a player dies, they are removed from all factions and their ownership is removed from all ships and blocks." )]
 		[Category( "World Settings" )]
+		[DisplayName( "Permanent Death" )]
 		public bool PermanentDeath
 		{
 			get { return _definition.SessionSettings.PermanentDeath.GetValueOrDefault( true ); }
@@ -455,8 +479,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "" )]
+		[Description( "Allows or disallows clients saving a local copy of the world." )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Client Can Save" )]
 		public bool ClientCanSave
 		{
 			get { return _definition.SessionSettings.ClientCanSave; }
@@ -475,7 +500,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether spectator mode is enable" )]
 		[Category( "Global Settings" )]
-		[DisplayName( "Enable Spectator" )]
+		[DisplayName( "Enable Spectator Mode" )]
 		public bool EnableSpectator
 		{
 			get { return _definition.SessionSettings.EnableSpectator; }
@@ -494,6 +519,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether the server will automatically remove debris" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Remove Trash" )]
 		public bool RemoveTrash
 		{
 			get { return _definition.SessionSettings.RemoveTrash; }
@@ -510,8 +536,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the world borders. Ships and players cannot go further than this" )]
+		[Description( "Ships and players which travel beyond this limit are destroyed/killed. Set to 0 for infinite." )]
 		[Category( "World Settings" )]
+		[DisplayName( "World Size (km)" )]
 		public int WorldSizeKm
 		{
 			get { return _definition.SessionSettings.WorldSizeKm; }
@@ -530,6 +557,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Determine whether starter ships are removed after a while" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Delete Respawn Ships" )]
 		public bool RespawnShipDelete
 		{
 			get { return _definition.SessionSettings.RespawnShipDelete; }
@@ -548,6 +576,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set how long people have to wait to spawn in a respawn ship" )]
 		[Category( "Global Settings" )]
+		[DisplayName( "Respawn Ship Spawn Time Multiplier" )]
 		public float RespawnShipSpawnTimeMuliplier
 		{
 			get { return _definition.SessionSettings.SpawnShipTimeMultiplier; }
@@ -565,8 +594,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Determine whether the server should reset the ships ownership" )]
+		[Description( "Resets all ownership of all blocks and ships, when the server launches. USE WITH CAUTION!" )]
 		[Category( "World Settings" )]
+		[DisplayName( "Reset Ownership" )]
 		public bool ResetOwnership
 		{
 			get { return _definition.SessionSettings.ResetOwnership; }
@@ -614,6 +644,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "The maximum view distance that a player can see in game" )]
 		[Category( "World Settings" )]
+		[DisplayName( "View Distance" )]
 		public int ViewDistance
 		{
 			get { return _definition.SessionSettings.ViewDistance; }
@@ -646,8 +677,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the Scenario's TypeId" )]
-		[Category( "World Settings" )]
+		[Description( "Only relevant for new worlds. This tells the game which pre-made scenario to load, if a world save location is not specified or does not exist." )]
+		[Category( "World Settings - New Worlds Only" )]
+		[DisplayName( "Scenario Type ID" )]
 		public MyObjectBuilderType ScenarioTypeId
 		{
 			get { return _definition.Scenario.TypeId; }
@@ -664,8 +696,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the scenario's subtype Id" )]
-		[Category( "World Settings" )]
+		[Description( "Only relevant for new worlds. This tells the game which pre-made scenario to load, if a world save location is not specified or does not exist." )]
+		[Category( "World Settings - New Worlds Only" )]
+		[DisplayName( "Scenario Sub-Type ID" )]
 		public string ScenarioSubtypeId
 		{
 			get { return _definition.Scenario.SubtypeId; }
@@ -685,6 +718,7 @@ namespace SEModAPI.API.Definitions
 		[Description( "Get or set the path of the world to load" )]
 		[Editor( typeof( FolderNameEditor ), typeof( UITypeEditor ) )]
 		[Category( "World Settings" )]
+		[DisplayName( "World Save Location" )]
 		public string LoadWorld
 		{
 			get { return _definition.LoadWorld; }
@@ -701,8 +735,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the Ip the server will listen on. 0.0.0.0 to listen to every Ip" )]
+		[Description( "The IP address the server listens on, for new player connections. Set to 0.0.0.0 to listen on all addresses." )]
 		[Category( "Server Settings" )]
+		[DisplayName( "Server Listener IP" )]
 		public string Ip
 		{
 			get { return _definition.IP; }
@@ -721,6 +756,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Get or set the steam port" )]
 		[Category( "Server Settings" )]
+		[DisplayName( "Steam Port" )]
 		public int SteamPort
 		{
 			get { return _definition.SteamPort; }
@@ -737,8 +773,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the number of asteroid in the world" )]
-		[Category( "World Settings" )]
+		[Description( "The number of asteroids generated in a new world. Has no effect on existing worlds" )]
+		[Category( "World Settings - New Worlds Only" )]
+		[DisplayName( "Asteroid Amount" )]
 		public int AsteroidAmount
 		{
 			get { return _definition.AsteroidAmount; }
@@ -755,7 +792,7 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the list of administrators of the server" )]
+		[Description( "The list of administrators of the server, by steam ID" )]
 		[Category( "Server Settings" )]
 		public BindingList<string> Administrators
 		{
@@ -775,8 +812,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the list of banned players" )]
+		[Description( "The list of banned players, by steam ID" )]
 		[Category( "Server Settings" )]
+		[DisplayName("Banned Users")]
 		public string[ ] Banned
 		{
 			get { return _definition.Banned.ConvertAll( x => x.ToString( ) ).ToArray( ); }
@@ -820,8 +858,9 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set if the server should pause the game if there is no players online" )]
+		[Description( "Pause the game if there are no players online" )]
 		[Category( "World Settings" )]
+		[DisplayName("Pause Game When Empty")]
 		public bool PauseGameWhenEmpty
 		{
 			get { return _definition.PauseGameWhenEmpty; }
