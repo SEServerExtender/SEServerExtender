@@ -249,8 +249,9 @@ namespace SEServerExtender
 
 				if ( !extenderArgs.NoWcf )
 				{
-					BaseLog.Info( "Opening up WCF service listener" );
-					ServerServiceHost = new ServiceHost( typeof( ServerService.ServerService ) );
+					string uriString = string.Format( "{0}{1}", ConfigurationManager.AppSettings[ "WCFServerServiceBaseAddress" ], CommandLineArgs.InstanceName );
+					BaseLog.Info( "Opening up WCF service listener at {0}", uriString );
+					ServerServiceHost = new ServiceHost( typeof ( ServerService.ServerService ), new Uri( uriString, UriKind.Absolute ) );
 					ServerServiceHost.Open( );
 					ChatManager.Instance.ChatMessage += ChatManager_ChatMessage;
 				}
