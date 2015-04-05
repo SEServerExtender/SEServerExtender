@@ -11,6 +11,7 @@ namespace SEServerExtender
 	using System.Threading;
 	using System.Windows.Forms;
 	using NLog;
+	using NLog.Layouts;
 	using NLog.Targets;
 	using SEModAPI.Support;
 	using SEModAPIExtensions.API;
@@ -23,6 +24,7 @@ namespace SEServerExtender
 		private static int _maxChatHistoryMessageCount = 100;
 		public static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
+		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
 		public class WindowsService : ServiceBase
 		{
 			public WindowsService( )
@@ -116,6 +118,7 @@ namespace SEServerExtender
 					ConfigurationManager.AppSettings.Add( "WCFChatMaxMessageHistoryCount", "100" );
 				}
 
+			bool logPathSet = false;
 			//Process the args
 			foreach ( string arg in args )
 			{
@@ -131,6 +134,26 @@ namespace SEServerExtender
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
 						extenderArgs.InstanceName = argValue;
+						
+						//Only let this override log path if the log path wasn't already explicitly set
+						if ( !logPathSet )
+						{
+							FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
+							if ( baseLogTarget != null )
+							{
+								baseLogTarget.FileName = baseLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } ).Replace( "NoInstance", argValue );
+							}
+							FileTarget chatLogTarget = LogManager.Configuration.FindTargetByName( "ChatLog" ) as FileTarget;
+							if ( chatLogTarget != null )
+							{
+								chatLogTarget.FileName = chatLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } ).Replace( "NoInstance", argValue );
+							}
+							FileTarget pluginLogTarget = LogManager.Configuration.FindTargetByName( "PluginLog" ) as FileTarget;
+							if ( pluginLogTarget != null )
+							{
+								pluginLogTarget.FileName = pluginLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } ).Replace( "NoInstance", argValue );
+							}
+						}
 					}
 					else if ( lowerCaseArgument.Equals( "gamepath" ) )
 					{
@@ -154,6 +177,36 @@ namespace SEServerExtender
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
 						extenderArgs.InstancePath = argValue;
+					}
+					else if ( lowerCaseArgument == "logpath" )
+					{
+						if ( argValue[ argValue.Length - 1 ] == '"' )
+							argValue = argValue.Substring( 0, argValue.Length - 1 );
+
+						//This argument always prevails.
+						FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
+						if ( baseLogTarget != null )
+						{
+							Layout l = new SimpleLayout( Path.Combine(argValue,"SEServerExtenderLog-${shortdate}.log") );
+							baseLogTarget.FileName = l.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
+							SEModAPIInternal.Support.ApplicationLog.BaseLog = BaseLog;
+						}
+						FileTarget chatLogTarget = LogManager.Configuration.FindTargetByName( "ChatLog" ) as FileTarget;
+						if ( chatLogTarget != null )
+						{
+							Layout l = new SimpleLayout( Path.Combine( argValue, "ChatLog-${shortdate}.log" ) );
+							chatLogTarget.FileName = l.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
+							SEModAPIInternal.Support.ApplicationLog.ChatLog = ChatLog;
+						}
+						FileTarget pluginLogTarget = LogManager.Configuration.FindTargetByName( "PluginLog" ) as FileTarget;
+						if ( pluginLogTarget != null )
+						{
+							Layout l = new SimpleLayout( Path.Combine( argValue, "PluginLog-${shortdate}.log" ) );
+							pluginLogTarget.FileName = l.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
+							logPathSet = true;
+							SEModAPIInternal.Support.ApplicationLog.PluginLog = PluginLog;
+						}
+
 					}
 				}
 				else

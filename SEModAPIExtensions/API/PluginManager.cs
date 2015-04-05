@@ -2,6 +2,7 @@ namespace SEModAPIExtensions.API
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Globalization;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
@@ -504,6 +505,11 @@ namespace SEModAPIExtensions.API
 			try
 			{
 				object plugin = Plugins[ key ];
+				FieldInfo logField = plugin.GetType( ).GetField( "Log" );
+				if ( logField != null )
+				{
+					logField.SetValue( plugin, ApplicationLog.PluginLog, BindingFlags.Static, null, CultureInfo.CurrentCulture );
+				}
 				MethodInfo initMethod = plugin.GetType( ).GetMethod( "InitWithPath" );
 				if ( initMethod != null )
 				{
