@@ -381,12 +381,12 @@
 				if ( string.IsNullOrEmpty( message ) )
 					return false;
 
-				string[ ] commandParts = message.Split( ' ' );
-				if ( commandParts.Length == 0 )
+				//Skip if message doesn't have leading forward slash
+				if ( message[ 0 ] != '/' )
 					return false;
 
-				//Skip if message doesn't have leading forward slash
-				if ( !message.Substring( 0, 1 ).Equals( "/" ) )
+				List<string> commandParts = CommandParser.GetCommandParts( message );
+				if ( commandParts.Count == 0 )
 					return false;
 
 				//Get the base command and strip off the leading slash
@@ -477,8 +477,8 @@
 		protected void Command_Delete( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			//All entities
 			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "all" ) )
@@ -618,9 +618,9 @@
 				else
 				{
 					string entityName = commandParts[ 2 ];
-					if ( commandParts.Length > 3 )
+					if ( commandParts.Count > 3 )
 					{
-						for ( int i = 3; i < commandParts.Length; i++ )
+						for ( int i = 3; i < commandParts.Count; i++ )
 						{
 							entityName += " " + commandParts[ i ];
 						}
@@ -882,8 +882,8 @@
 		protected void Command_Stop( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
@@ -937,15 +937,15 @@
 		protected void Command_GetId( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount > 0 )
 			{
 				string entityName = commandParts[ 1 ];
-				if ( commandParts.Length > 2 )
+				if ( commandParts.Count > 2 )
 				{
-					for ( int i = 2; i < commandParts.Length; i++ )
+					for ( int i = 2; i < commandParts.Count; i++ )
 					{
 						entityName += string.Format( " {0}", commandParts[ i ] );
 					}
@@ -982,8 +982,8 @@
 		protected void Command_Owner( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount == 2 )
 			{
@@ -1020,8 +1020,8 @@
 		protected void Command_Export( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount == 1 )
 			{
@@ -1063,8 +1063,8 @@
 
 		protected void Command_Import( ChatEvent chatEvent )
 		{
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount == 1 )
 			{
@@ -1125,8 +1125,8 @@
 		protected void Command_Spawn( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "ship" ) )
 			{
@@ -1146,8 +1146,8 @@
 		protected void Command_Clear( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
@@ -1185,8 +1185,8 @@
 		protected void Command_List( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
@@ -1238,8 +1238,8 @@
 		protected void Command_Off( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
@@ -1298,8 +1298,8 @@
 		protected void Command_On( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
@@ -1355,8 +1355,8 @@
 		protected void Command_Kick( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
@@ -1464,8 +1464,8 @@
 		protected void Command_Unban( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
