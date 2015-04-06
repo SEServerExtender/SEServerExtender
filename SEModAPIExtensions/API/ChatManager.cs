@@ -294,8 +294,7 @@
 
 			m_resourceLock.AcquireExclusive( );
 			m_chatHistory.Add( chatEvent );
-			if ( ChatMessage != null )
-				ChatMessage.Invoke( remoteUserId, playerName, message );
+			OnChatMessage( remoteUserId, playerName, message );
 			m_resourceLock.ReleaseExclusive( );
 		}
 
@@ -323,8 +322,7 @@
 
 				m_resourceLock.AcquireExclusive( );
 				m_chatHistory.Add( chatEvent );
-				if ( ChatMessage != null )
-					ChatMessage.Invoke( 0, "Server", message );
+				OnChatMessage( 0, "Server", message );
 				m_resourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
@@ -366,8 +364,7 @@
 
 				m_resourceLock.AcquireExclusive( );
 				m_chatHistory.Add( selfChatEvent );
-				if ( ChatMessage != null )
-					ChatMessage.Invoke( 0, "Server", message );
+				OnChatMessage( 0, "Server", message );
 				m_resourceLock.ReleaseExclusive( );
 			}
 			catch ( Exception ex )
@@ -1516,5 +1513,13 @@
 		#endregion
 
 		#endregion
+
+		protected virtual void OnChatMessage( ulong steamid, string playername, string message )
+		{
+			if ( ChatMessage != null )
+			{
+				ChatMessage( steamid, playername, message );
+			}
+		}
 	}
 }
