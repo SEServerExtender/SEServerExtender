@@ -144,6 +144,7 @@
     <Compile Include="API\TypeConverters\Vector3DWrapper.cs" />
     <Compile Include="API\TypeConverters\Vector3TypeConverter.cs" />
     <Compile Include="API\TypeConverters\Vector3ITypeConverter.cs" />
+    <Compile Include="API\Utility\CommandParser.cs" />
     <Compile Include="AssemblyFileVersion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
