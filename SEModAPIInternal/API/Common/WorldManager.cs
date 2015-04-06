@@ -61,7 +61,7 @@
 		{
 			m_instance = this;
 
-			ApplicationLog.BaseLog.Info(  "Finished loading WorldManager" );
+			ApplicationLog.BaseLog.Info( "Finished loading WorldManager" );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -206,7 +206,7 @@
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error(  ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -290,6 +290,7 @@
 						}
 
 						ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
+						OnWorldSaved( );
 						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 						newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
 						newEvent.timestamp = DateTime.Now;
@@ -297,6 +298,7 @@
 						newEvent.priority = 0;
 						EntityEventManager.Instance.AddEvent( newEvent );
 					} ) );
+
 			}
 			catch ( Exception ex )
 			{
@@ -378,15 +380,15 @@
 			 */
 		}
 
-		public void ClearSpawnTimers()
+		public void ClearSpawnTimers( )
 		{
-			Type respawnManagerClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(WorldManagerNamespace, RespawnManager);
-			
-			object respawnDictionary = BaseObject.GetStaticFieldValue(respawnManagerClassType, RespawnManagerDictionary);
-			respawnDictionary.GetType().GetMethod("Clear").Invoke(respawnDictionary, new object[] { });
+			Type respawnManagerClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldManagerNamespace, RespawnManager );
 
-			object respawnList = BaseObject.GetStaticFieldValue(respawnManagerClassType, RespawnManagerList);
-			respawnList.GetType().GetMethod("Clear").Invoke(respawnList, new object[] { });
+			object respawnDictionary = BaseObject.GetStaticFieldValue( respawnManagerClassType, RespawnManagerDictionary );
+			respawnDictionary.GetType( ).GetMethod( "Clear" ).Invoke( respawnDictionary, new object[ ] { } );
+
+			object respawnList = BaseObject.GetStaticFieldValue( respawnManagerClassType, RespawnManagerList );
+			respawnList.GetType( ).GetMethod( "Clear" ).Invoke( respawnList, new object[ ] { } );
 		}
 
 		// Internals //
@@ -457,6 +459,8 @@
 				{
 					ApplicationLog.BaseLog.Error( "Save failed!" );
 				}
+
+				OnWorldSaved( );
 			}
 			catch ( Exception ex )
 			{
@@ -469,5 +473,18 @@
 		}
 
 		#endregion "Methods"
+
+		public event WorldSaveEventHandler WorldSaved;
+
+		/// <summary>Invoke the <see cref="WorldSaved"/> event. Called at the end of all world save methods, before releasing <see cref="m_isSaving"/>.</summary>
+		protected virtual void OnWorldSaved( )
+		{
+			if ( WorldSaved != null )
+			{
+				WorldSaved( );
+			}
+		}
 	}
+
+	public delegate void WorldSaveEventHandler( );
 }
