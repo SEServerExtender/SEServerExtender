@@ -278,7 +278,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Info( "PluginManager.Update() Exception in player discovery: {0}", ex );
+				ApplicationLog.BaseLog.Error( ex );
 			}
 			m_lastConnectedPlayerList = new List<ulong>( connectedPlayers );
 
