@@ -12,6 +12,7 @@
 	using System.Xml;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Chat;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
@@ -839,8 +840,8 @@
 		protected void Command_Teleport( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount == 2 )
 			{
@@ -1407,8 +1408,8 @@
 		protected void Command_Ban( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
-			string[ ] commandParts = chatEvent.Message.Split( ' ' );
-			int paramCount = commandParts.Length - 1;
+			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+			int paramCount = commandParts.Count - 1;
 
 			if ( paramCount != 1 )
 				return;
