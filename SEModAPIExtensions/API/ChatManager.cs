@@ -1415,9 +1415,9 @@
 				return;
 
 			//Get the steam id of the player
-			string rawSteamId = commandParts[ 1 ];
+			string playerName = commandParts[ 1 ];
 
-			if ( rawSteamId.Length < 3 )
+			if ( playerName.Length < 3 )
 			{
 				SendPrivateChatMessage( remoteUserId, "3 or more characters required to ban." );
 				return;
@@ -1425,11 +1425,11 @@
 
 			ulong steamId;
 
-			var playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( rawSteamId );
+			List<PlayerMap.InternalPlayerItem> playerItems = PlayerManager.Instance.PlayerMap.GetPlayerItemsFromPlayerName( playerName );
 
 			if ( playerItems.Count == 0 )
 			{
-				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName( rawSteamId );
+				steamId = PlayerManager.Instance.PlayerMap.GetSteamIdFromPlayerName( playerName );
 				if ( steamId == 0 )
 					return;
 			}
@@ -1458,7 +1458,7 @@
 
 			PlayerManager.Instance.BanPlayer( steamId );
 
-			SendPrivateChatMessage( remoteUserId, string.Format( "Banned '{0}' and kicked them off of the server", ( playerItems.Count == 0 ? rawSteamId : playerItems[ 0 ].Name ) ) );
+			SendPrivateChatMessage( remoteUserId, string.Format( "Banned '{0}' and kicked them off of the server", ( playerItems.Count == 0 ? playerName : playerItems[ 0 ].Name ) ) );
 		}
 
 		protected void Command_Unban( ChatEvent chatEvent )
