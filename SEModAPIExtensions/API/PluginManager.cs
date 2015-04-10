@@ -15,36 +15,36 @@ namespace SEModAPIExtensions.API
 
 	public class PluginManager
 	{
-		private static PluginManager m_instance;
+		private static PluginManager _instance;
 
-		private readonly Dictionary<Guid, Assembly> m_pluginAssemblies;
-		private DateTime m_lastUpdate;
-		private TimeSpan m_lastUpdateTime;
-		private double m_averageUpdateInterval;
-		private double m_averageUpdateTime;
-		private DateTime m_lastAverageOutput;
-		private double m_averageEvents;
-		private List<ulong> m_lastConnectedPlayerList;
-		private readonly Dictionary<Guid, String> m_pluginPaths;
+		private readonly Dictionary<Guid, Assembly> _pluginAssemblies;
+		private DateTime _lastUpdate;
+		private TimeSpan _lastUpdateTime;
+		private double _averageUpdateInterval;
+		private double _averageUpdateTime;
+		private DateTime _lastAverageOutput;
+		private double _averageEvents;
+		private List<ulong> _lastConnectedPlayerList;
+		private readonly Dictionary<Guid, string> _pluginPaths;
 
 		#region "Constructors and Initializers"
 
 		protected PluginManager( )
 		{
-			m_instance = this;
+			_instance = this;
 
 			Plugins = new Dictionary<Guid, IPlugin>( );
 			PluginStates = new Dictionary<Guid, bool>( );
-			m_pluginAssemblies = new Dictionary<Guid, Assembly>( );
+			_pluginAssemblies = new Dictionary<Guid, Assembly>( );
 			Initialized = false;
-			m_lastUpdate = DateTime.Now;
-			m_lastUpdateTime = DateTime.Now - m_lastUpdate;
-			m_averageUpdateInterval = 0;
-			m_averageUpdateTime = 0;
-			m_lastAverageOutput = DateTime.Now;
-			m_averageEvents = 0;
-			m_lastConnectedPlayerList = new List<ulong>( );
-			m_pluginPaths = new Dictionary<Guid, string>( );
+			_lastUpdate = DateTime.Now;
+			_lastUpdateTime = DateTime.Now - _lastUpdate;
+			_averageUpdateInterval = 0;
+			_averageUpdateTime = 0;
+			_lastAverageOutput = DateTime.Now;
+			_averageEvents = 0;
+			_lastConnectedPlayerList = new List<ulong>( );
+			_pluginPaths = new Dictionary<Guid, string>( );
 
 			ApplicationLog.BaseLog.Info( "Finished loading PluginManager" );
 		}
@@ -55,7 +55,7 @@ namespace SEModAPIExtensions.API
 
 		public static PluginManager Instance
 		{
-			get { return m_instance ?? ( m_instance = new PluginManager( ) ); }
+			get { return _instance ?? ( _instance = new PluginManager( ) ); }
 		}
 
 		public bool Loaded { get; private set; }
@@ -114,15 +114,15 @@ namespace SEModAPIExtensions.API
 							GuidAttribute guid = (GuidAttribute)pluginAssembly.GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 							Guid guidValue = new Guid( guid.Value );
 
-							if ( m_pluginPaths.ContainsKey( guidValue ) )
-								m_pluginPaths[ guidValue ] = file;
+							if ( _pluginPaths.ContainsKey( guidValue ) )
+								_pluginPaths[ guidValue ] = file;
 							else
-								m_pluginPaths.Add( guidValue, file );
+								_pluginPaths.Add( guidValue, file );
 
-							if ( m_pluginAssemblies.ContainsKey( guidValue ) )
-								m_pluginAssemblies[ guidValue ] = pluginAssembly;
+							if ( _pluginAssemblies.ContainsKey( guidValue ) )
+								_pluginAssemblies[ guidValue ] = pluginAssembly;
 							else
-								m_pluginAssemblies.Add( guidValue, pluginAssembly );
+								_pluginAssemblies.Add( guidValue, pluginAssembly );
 
 							//Look through the exported types to find the one that implements PluginBase
 							Type[ ] types = pluginAssembly.GetExportedTypes( );
@@ -230,9 +230,9 @@ namespace SEModAPIExtensions.API
 			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 				return;
 
-			m_lastUpdateTime = DateTime.Now - m_lastUpdate;
-			m_averageUpdateInterval = ( m_averageUpdateTime + m_lastUpdateTime.TotalMilliseconds ) / 2;
-			m_lastUpdate = DateTime.Now;
+			_lastUpdateTime = DateTime.Now - _lastUpdate;
+			_averageUpdateInterval = ( _averageUpdateTime + _lastUpdateTime.TotalMilliseconds ) / 2;
+			_lastUpdate = DateTime.Now;
 
 			EntityEventManager.Instance.ResourceLocked = true;
 
@@ -245,7 +245,7 @@ namespace SEModAPIExtensions.API
 			{
 				foreach ( ulong steamId in connectedPlayers )
 				{
-					if ( !m_lastConnectedPlayerList.Contains( steamId ) )
+					if ( !_lastConnectedPlayerList.Contains( steamId ) )
 					{
 						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent
 						                                             {
@@ -259,7 +259,7 @@ namespace SEModAPIExtensions.API
 						events.Add( playerEvent );
 					}
 				}
-				foreach ( ulong steamId in m_lastConnectedPlayerList )
+				foreach ( ulong steamId in _lastConnectedPlayerList )
 				{
 					if ( !connectedPlayers.Contains( steamId ) )
 					{
@@ -280,7 +280,7 @@ namespace SEModAPIExtensions.API
 			{
 				ApplicationLog.BaseLog.Error( ex );
 			}
-			m_lastConnectedPlayerList = new List<ulong>( connectedPlayers );
+			_lastConnectedPlayerList = new List<ulong>( connectedPlayers );
 
 			//Run the update threads on the plugins
 			foreach ( Guid key in Plugins.Keys )
@@ -308,19 +308,19 @@ namespace SEModAPIExtensions.API
 			//Capture profiling info if debugging is on
 			if ( SandboxGameAssemblyWrapper.IsDebugging )
 			{
-				m_averageEvents = ( m_averageEvents + ( events.Count + chatEvents.Count ) ) / 2;
+				_averageEvents = ( _averageEvents + ( events.Count + chatEvents.Count ) ) / 2;
 
-				TimeSpan updateTime = DateTime.Now - m_lastUpdate;
-				m_averageUpdateTime = ( m_averageUpdateTime + updateTime.TotalMilliseconds ) / 2;
+				TimeSpan updateTime = DateTime.Now - _lastUpdate;
+				_averageUpdateTime = ( _averageUpdateTime + updateTime.TotalMilliseconds ) / 2;
 
-				TimeSpan timeSinceAverageOutput = DateTime.Now - m_lastAverageOutput;
+				TimeSpan timeSinceAverageOutput = DateTime.Now - _lastAverageOutput;
 				if ( timeSinceAverageOutput.TotalSeconds > 30 )
 				{
-					m_lastAverageOutput = DateTime.Now;
+					_lastAverageOutput = DateTime.Now;
 
-					ApplicationLog.BaseLog.Debug( "PluginManager - Update interval = {0}ms", m_averageUpdateInterval );
-					ApplicationLog.BaseLog.Debug( "PluginManager - Update time = {0}ms", m_averageUpdateTime );
-					ApplicationLog.BaseLog.Debug( "PluginManager - Events per update = {0}", m_averageEvents );
+					ApplicationLog.BaseLog.Debug( "PluginManager - Update interval = {0}ms", _averageUpdateInterval );
+					ApplicationLog.BaseLog.Debug( "PluginManager - Update time = {0}ms", _averageUpdateTime );
+					ApplicationLog.BaseLog.Debug( "PluginManager - Events per update = {0}", _averageEvents );
 				}
 			}
 
@@ -499,7 +499,7 @@ namespace SEModAPIExtensions.API
 			if ( PluginStates.ContainsKey( key ) )
 				return;
 
-			String pluginPath = m_pluginPaths[ key ];
+			String pluginPath = _pluginPaths[ key ];
 			ApplicationLog.BaseLog.Info( "Initializing plugin at {0} - {1}'", pluginPath, key );
 
 			try
@@ -552,7 +552,7 @@ namespace SEModAPIExtensions.API
 				ApplicationLog.BaseLog.Error( ex );
 			}
 
-			m_pluginAssemblies.Remove( key );
+			_pluginAssemblies.Remove( key );
 			PluginStates.Remove( key );
 			Plugins.Remove( key );
 		}
