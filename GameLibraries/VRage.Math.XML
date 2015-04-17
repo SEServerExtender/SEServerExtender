@@ -2152,25 +2152,39 @@
         <member name="F:VRageMath.PlaneD.D">
             <summary>
             The distance of the PlaneD along its normal from the origin.
+            Note: Be careful! The distance is signed and is the opposite of what people usually expect.
+                  If you look closely at the plane equation: (n dot P) - D = 0, you'll realize that D = - (n dot P) (that is, negative instead of positive)
             </summary>
         </member>
         <member name="M:VRageMath.PlaneD.#ctor(System.Double,System.Double,System.Double,System.Double)">
             <summary>
             Creates a new instance of PlaneD.
             </summary>
-            <param name="a">X component of the normal defining the PlaneD.</param><param name="b">Y component of the normal defining the PlaneD.</param><param name="c">Z component of the normal defining the PlaneD.</param><param name="d">Distance of the PlaneD along its normal from the origin.</param>
+            <param name="a">X component of the normal defining the PlaneD.</param><param name="b">Y component of the normal defining the PlaneD.</param><param name="c">Z component of the normal defining the PlaneD.</param><param name="d">Distance of the origin from the PlaneD along its normal.</param>
         </member>
         <member name="M:VRageMath.PlaneD.#ctor(VRageMath.Vector3D,System.Double)">
             <summary>
             Creates a new instance of PlaneD.
             </summary>
-            <param name="normal">The normal vector to the PlaneD.</param><param name="d">The PlaneD's distance along its normal from the origin.</param>
+            <param name="normal">The normal vector to the PlaneD.</param><param name="d">The distance of the origin from the PlaneD along its normal.</param>
+        </member>
+        <member name="M:VRageMath.PlaneD.#ctor(VRageMath.Vector3D,VRageMath.Vector3D)">
+            <summary>
+            Creates a new instance of Plane.
+            </summary>
+            <param name="position">A point that lies on the Plane</param><param name="normal">The normal vector to the Plane.</param>
+        </member>
+        <member name="M:VRageMath.PlaneD.#ctor(VRageMath.Vector3D,VRageMath.Vector3)">
+            <summary>
+            Creates a new instance of Plane.
+            </summary>
+            <param name="position">A point that lies on the Plane</param><param name="normal">The normal vector to the Plane.</param>
         </member>
         <member name="M:VRageMath.PlaneD.#ctor(VRageMath.Vector4)">
             <summary>
             Creates a new instance of PlaneD.
             </summary>
-            <param name="value">Vector4 with X, Y, and Z components defining the normal of the PlaneD. The W component defines the distance of the PlaneD along the normal from the origin.</param>
+            <param name="value">Vector4 with X, Y, and Z components defining the normal of the PlaneD. The W component defines the distance of the origin from the PlaneD along its normal.</param>
         </member>
         <member name="M:VRageMath.PlaneD.#ctor(VRageMath.Vector3D,VRageMath.Vector3D,VRageMath.Vector3D)">
             <summary>
@@ -2229,29 +2243,17 @@
             </summary>
             <param name="value">The PlaneD to normalize.</param><param name="result">[OutAttribute] An existing PlaneD PlaneD filled in with a normalized version of the specified PlaneD.</param>
         </member>
-        <member name="M:VRageMath.PlaneD.Transform(VRageMath.PlaneD,VRageMath.Matrix)">
+        <member name="M:VRageMath.PlaneD.Transform(VRageMath.PlaneD,VRageMath.MatrixD)">
             <summary>
             Transforms a normalized PlaneD by a Matrix.
             </summary>
             <param name="PlaneD">The normalized PlaneD to transform. This PlaneD must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="matrix">The transform Matrix to apply to the PlaneD.</param>
         </member>
-        <member name="M:VRageMath.PlaneD.Transform(VRageMath.PlaneD@,VRageMath.Matrix@,VRageMath.PlaneD@)">
+        <member name="M:VRageMath.PlaneD.Transform(VRageMath.PlaneD@,VRageMath.MatrixD@,VRageMath.PlaneD@)">
             <summary>
             Transforms a normalized PlaneD by a Matrix.
             </summary>
             <param name="PlaneD">The normalized PlaneD to transform. This PlaneD must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="matrix">The transform Matrix to apply to the PlaneD.</param><param name="result">[OutAttribute] An existing PlaneD filled in with the results of applying the transform.</param>
-        </member>
-        <member name="M:VRageMath.PlaneD.Transform(VRageMath.PlaneD,VRageMath.Quaternion)">
-            <summary>
-            Transforms a normalized PlaneD by a Quaternion rotation.
-            </summary>
-            <param name="PlaneD">The normalized PlaneD to transform. This PlaneD must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="rotation">The Quaternion rotation to apply to the PlaneD.</param>
-        </member>
-        <member name="M:VRageMath.PlaneD.Transform(VRageMath.PlaneD@,VRageMath.Quaternion@,VRageMath.PlaneD@)">
-            <summary>
-            Transforms a normalized PlaneD by a Quaternion rotation.
-            </summary>
-            <param name="PlaneD">The normalized PlaneD to transform. This PlaneD must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="rotation">The Quaternion rotation to apply to the PlaneD.</param><param name="result">[OutAttribute] An existing PlaneD filled in with the results of applying the rotation.</param>
         </member>
         <member name="M:VRageMath.PlaneD.Dot(VRageMath.Vector4)">
             <summary>
@@ -6236,25 +6238,33 @@
         <member name="F:VRageMath.Plane.D">
             <summary>
             The distance of the Plane along its normal from the origin.
+            Note: Be careful! The distance is signed and is the opposite of what people usually expect.
+                  If you look closely at the plane equation: (n dot P) - D = 0, you'll realize that D = - (n dot P) (that is, negative instead of positive)
             </summary>
         </member>
         <member name="M:VRageMath.Plane.#ctor(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Creates a new instance of Plane.
             </summary>
-            <param name="a">X component of the normal defining the Plane.</param><param name="b">Y component of the normal defining the Plane.</param><param name="c">Z component of the normal defining the Plane.</param><param name="d">Distance of the Plane along its normal from the origin.</param>
+            <param name="a">X component of the normal defining the Plane.</param><param name="b">Y component of the normal defining the Plane.</param><param name="c">Z component of the normal defining the Plane.</param><param name="d">Distance of the origin from the plane along its normal.</param>
         </member>
         <member name="M:VRageMath.Plane.#ctor(VRageMath.Vector3,System.Single)">
             <summary>
             Creates a new instance of Plane.
             </summary>
-            <param name="normal">The normal vector to the Plane.</param><param name="d">The Plane's distance along its normal from the origin.</param>
+            <param name="normal">The normal vector to the Plane.</param><param name="d">Distance of the origin from the plane along its normal.</param>
+        </member>
+        <member name="M:VRageMath.Plane.#ctor(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Creates a new instance of Plane.
+            </summary>
+            <param name="position">A point that lies on the Plane</param><param name="normal">The normal vector to the Plane.</param>
         </member>
         <member name="M:VRageMath.Plane.#ctor(VRageMath.Vector4)">
             <summary>
             Creates a new instance of Plane.
             </summary>
-            <param name="value">Vector4 with X, Y, and Z components defining the normal of the Plane. The W component defines the distance of the Plane along the normal from the origin.</param>
+            <param name="value">Vector4 with X, Y, and Z components defining the normal of the Plane. The W component defines the distance of the origin from the plane along its normal.</param>
         </member>
         <member name="M:VRageMath.Plane.#ctor(VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3)">
             <summary>
@@ -6324,18 +6334,6 @@
             Transforms a normalized Plane by a Matrix.
             </summary>
             <param name="plane">The normalized Plane to transform. This Plane must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="matrix">The transform Matrix to apply to the Plane.</param><param name="result">[OutAttribute] An existing Plane filled in with the results of applying the transform.</param>
-        </member>
-        <member name="M:VRageMath.Plane.Transform(VRageMath.Plane,VRageMath.Quaternion)">
-            <summary>
-            Transforms a normalized Plane by a Quaternion rotation.
-            </summary>
-            <param name="plane">The normalized Plane to transform. This Plane must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="rotation">The Quaternion rotation to apply to the Plane.</param>
-        </member>
-        <member name="M:VRageMath.Plane.Transform(VRageMath.Plane@,VRageMath.Quaternion@,VRageMath.Plane@)">
-            <summary>
-            Transforms a normalized Plane by a Quaternion rotation.
-            </summary>
-            <param name="plane">The normalized Plane to transform. This Plane must already be normalized, so that its Normal vector is of unit length, before this method is called.</param><param name="rotation">The Quaternion rotation to apply to the Plane.</param><param name="result">[OutAttribute] An existing Plane filled in with the results of applying the rotation.</param>
         </member>
         <member name="M:VRageMath.Plane.Dot(VRageMath.Vector4)">
             <summary>

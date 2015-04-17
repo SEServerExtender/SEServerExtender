@@ -1265,7 +1265,22 @@
         </member>
         <member name="M:VRage.Utils.MyUtils.GetRandomVector3">
             <summary>
-            Returns random vector (-1,1)
+            Returns a uniformly-distributed random vector from inside of a box (-1,-1,-1), (1, 1, 1)
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyUtils.GetRandomVector3D">
+            <summary>
+            Returns a uniformly-distributed random vector from inside of a box (-1,-1,-1), (1, 1, 1)
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyUtils.GetRandomPosition(VRageMath.BoundingBox@)">
+            <summary>
+            Warning: Fast, but non-uniform distribution!
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyUtils.GetRandomPosition(VRageMath.BoundingBoxD@)">
+            <summary>
+            Warning: Fast, but non-uniform distribution!
             </summary>
         </member>
         <member name="M:VRage.Utils.MyUtils.GetRandomTimeSpan(System.TimeSpan,System.TimeSpan)">
@@ -1393,6 +1408,11 @@
             The company name of the calling assembly.
             </summary>
         </member>
+        <member name="M:VRage.Utils.MyWingedEdgeMesh.Copy">
+            <summary>
+            For testing purposes only! The copy is only a shallow copy (i.e. userdata is not copied)
+            </summary>
+        </member>
         <member name="M:VRage.Utils.MyWingedEdgeMesh.MakeEdgeFace(System.Int32,System.Int32,System.Int32,System.Int32,System.Object,System.Int32@)">
             <summary>
             Creates a new face by closing the gap between vertices vert1 and vert2 by a new edge
@@ -1473,7 +1493,7 @@
         </member>
         <member name="M:VRage.Utils.MyWingedEdgeMesh.EdgeTableEntry.SetFacePred(System.Int32,System.Int32)">
             <summary>
-            Sets the successor of this edge in the given face
+            Sets the predecessor of this edge in the given face
             </summary>
         </member>
         <member name="M:VRage.Utils.MyWingedEdgeMesh.EdgeTableEntry.VertexSucc(System.Int32)">
@@ -1526,12 +1546,17 @@
             Note: This is invalid after the mesh changes!
             </summary>
         </member>
-        <member name="T:VRage.Utils.MyWingedEdgeMesh.EdgeEnumerator">
+        <member name="T:VRage.Utils.MyWingedEdgeMesh.FaceEdgeEnumerator">
             <summary>
             Note: This is invalid after the mesh changes!
             </summary>
         </member>
-        <member name="T:VRage.Utils.MyWingedEdgeMesh.VertexEnumerator">
+        <member name="T:VRage.Utils.MyWingedEdgeMesh.FaceVertexEnumerator">
+            <summary>
+            Note: This is invalid after the mesh changes!
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyWingedEdgeMesh.EdgeEnumerator">
             <summary>
             Note: This is invalid after the mesh changes!
             </summary>
