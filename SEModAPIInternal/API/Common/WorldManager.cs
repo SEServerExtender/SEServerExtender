@@ -422,9 +422,7 @@
 				}
 				DateTime saveStartTime = DateTime.Now;
 
-				Type type = BackingObject.GetType( );
-				Type[ ] argTypes = { typeof ( string ), typeof ( string ) };
-				bool result = (bool)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerSaveWorldMethod, new object[ ] { null, null }, argTypes );
+				bool result = MyAPIGateway.Session.Save( null );
 
 				if ( result )
 				{
@@ -448,6 +446,7 @@
 			}
 			catch ( Exception ex )
 			{
+				Monitor.Exit( SaveMutex );
 				ApplicationLog.BaseLog.Error( ex );
 			}
 			finally
