@@ -467,32 +467,7 @@
 		{
 			try
 			{
-				AutoResetEvent e = new AutoResetEvent( false );
-				/*
-				MyAPIGateway.Utilities.InvokeOnGameThread(() =>
-				{
-					if (m_gameThread == null)
-					{
-						m_gameThread = Thread.CurrentThread;
-					}
-
-					action();
-					e.Set();
-				});
-				*/
-
-				Instance.EnqueueMainGameAction( ( ) =>
-				{
-					if ( m_gameThread == null )
-					{
-						m_gameThread = Thread.CurrentThread;
-					}
-
-					action( );
-					e.Set( );
-				} );
-
-				e.WaitOne( );
+				Sandbox.ModAPI.MyAPIGateway.Utilities.InvokeOnGameThread( action );
 				return true;
 			}
 			catch ( Exception ex )

@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity
 	using System.IO;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using System.Threading;
 	using System.Xml;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
@@ -960,13 +961,13 @@ namespace SEModAPIInternal.API.Entity
 					return false;
 				if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
 					return false;
-				if ( WorldManager.Instance.IsWorldSaving )
+				if ( !Monitor.TryEnter( WorldManager.SaveMutex, 100 ) )
 					return false;
 				if ( WorldManager.Instance.InternalGetResourceLock( ) == null )
 					return false;
 				if ( WorldManager.Instance.InternalGetResourceLock( ).Owned )
 					return false;
-
+				Monitor.Exit( WorldManager.SaveMutex );
 				return true;
 			}
 		}
@@ -1337,7 +1338,7 @@ namespace SEModAPIInternal.API.Entity
 					serializer.Serialize( xmlTextWriter, sector );
 				}
 			}
-			catch(Exception ex)
+			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
