@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Threading;
+	using System.Threading.Tasks;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
@@ -258,53 +259,53 @@
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				ThreadPool.QueueUserWorkItem( new WaitCallback( ( object state ) =>
-					{
-						SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-							{
-								Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
-								BaseObject.InvokeStaticMethod( type,
-								                               WorldSnapshotSaveMethod,
-								                               new object[ ]
-								                               {
-									                               new Action( ( ) =>
-									                                           {
-										                                           ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
-									                                           } ),
-									                               null
-								                               } );
-							} );
+				ThreadPool.QueueUserWorkItem( state =>
+				                              {
+					                              SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+					                                                                              {
+						                                                                              Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
+						                                                                              BaseObject.InvokeStaticMethod( type,
+						                                                                                                             WorldSnapshotSaveMethod,
+						                                                                                                             new object[ ]
+						                                                                                                             {
+							                                                                                                             new Action( ( ) =>
+							                                                                                                                         {
+								                                                                                                                         ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
+							                                                                                                                         } ),
+							                                                                                                             null
+						                                                                                                             } );
+					                                                                              } );
 
-						// Ugly -- Get rid of this?
-						DateTime start = DateTime.Now;
-						FastResourceLock saveLock = InternalGetResourceLock( );
-						while ( !saveLock.Owned )
-						{
-							if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
-								return;
+					                              // Ugly -- Get rid of this?
+					                              DateTime start = DateTime.Now;
+					                              FastResourceLock saveLock = InternalGetResourceLock( );
+					                              while ( !saveLock.Owned )
+					                              {
+						                              if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
+							                              return;
 
-							Thread.Sleep( 1 );
-						}
+						                              Thread.Sleep( 1 );
+					                              }
 
-						while ( saveLock.Owned )
-						{
-							if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
-								return;
+					                              while ( saveLock.Owned )
+					                              {
+						                              if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
+							                              return;
 
-							Thread.Sleep( 1 );
-						}
+						                              Thread.Sleep( 1 );
+					                              }
 
-						ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
-						OnWorldSaved( );
-						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
-																  {
-																	  type = EntityEventManager.EntityEventType.OnSectorSaved,
-																	  timestamp = DateTime.Now,
-																	  entity = null,
-																	  priority = 0
-																  };
-						EntityEventManager.Instance.AddEvent( newEvent );
-					} ) );
+					                              ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
+					                              OnWorldSaved( );
+					                              EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+					                                                                        {
+						                                                                        type = EntityEventManager.EntityEventType.OnSectorSaved,
+						                                                                        timestamp = DateTime.Now,
+						                                                                        entity = null,
+						                                                                        priority = 0
+					                                                                        };
+					                              EntityEventManager.Instance.AddEvent( newEvent );
+				                              } );
 
 			}
 			catch ( Exception ex )
