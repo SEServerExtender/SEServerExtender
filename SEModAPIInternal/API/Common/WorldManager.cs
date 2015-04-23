@@ -263,11 +263,16 @@
 						SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
 							{
 								Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
-								BaseObject.InvokeStaticMethod( type, WorldSnapshotSaveMethod, new object[ ] { new Action(() =>
-									{
-										ApplicationLog.BaseLog.Info("Asynchronous Save Setup Started: {0}ms", (DateTime.Now - saveStartTime).TotalMilliseconds);
-									})
-								} );
+								BaseObject.InvokeStaticMethod( type,
+								                               WorldSnapshotSaveMethod,
+								                               new object[ ]
+								                               {
+									                               new Action( ( ) =>
+									                                           {
+										                                           ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
+									                                           } ),
+									                               null
+								                               } );
 							} );
 
 						// Ugly -- Get rid of this?
@@ -291,11 +296,13 @@
 
 						ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
 						OnWorldSaved( );
-						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
-						newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
-						newEvent.timestamp = DateTime.Now;
-						newEvent.entity = null;
-						newEvent.priority = 0;
+						EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+																  {
+																	  type = EntityEventManager.EntityEventType.OnSectorSaved,
+																	  timestamp = DateTime.Now,
+																	  entity = null,
+																	  priority = 0
+																  };
 						EntityEventManager.Instance.AddEvent( newEvent );
 					} ) );
 
