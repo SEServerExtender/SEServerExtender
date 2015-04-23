@@ -229,42 +229,10 @@
 				DateTime saveStartTime = DateTime.Now;
 
 				Task.Factory.StartNew( ( ) =>
-									   {
-										   SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-																						   {
-																							   Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
-																							   BaseObject.InvokeStaticMethod( type,
-																															  WorldSnapshotSaveMethod,
-																															  new object[ ]
-						                                                                                                      {
-							                                                                                                      new Action( ( ) =>
-							                                                                                                                  {
-								                                                                                                                  ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms",
-								                                                                                                                                               ( DateTime.Now - saveStartTime )
-									                                                                                                                                               .TotalMilliseconds );
-							                                                                                                                  } ),
-							                                                                                                      null
-						                                                                                                      } );
-																						   } );
+				                       {
+					                       ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
 
-										   // Ugly -- Get rid of this?
-										   DateTime start = DateTime.Now;
-										   FastResourceLock saveLock = InternalGetResourceLock( );
-										   while ( !saveLock.Owned )
-										   {
-											   if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
-												   return;
-
-											   Thread.Sleep( 1 );
-										   }
-
-										   while ( saveLock.Owned )
-										   {
-											   if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
-												   return;
-
-											   Thread.Sleep( 1 );
-										   }
+					                       MyAPIGateway.Session.Save( Name );
 
 										   ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
 										   OnWorldSaved( );
