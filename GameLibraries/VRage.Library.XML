@@ -669,7 +669,7 @@
             <param name="path"></param>
             <returns></returns>
         </member>
-        <member name="M:VRage.FileSystem.IFileProvider.GetFiles(System.String,System.String,VRage.FileSystem.SearchOption)">
+        <member name="M:VRage.FileSystem.IFileProvider.GetFiles(System.String,System.String,VRage.FileSystem.MySearchOption)">
             <summary>
             Returns list of files in directory
             </summary>
@@ -4586,27 +4586,27 @@
             Cached strings to avoid ToString() calls. These values are not readable in obfuscated builds!
             </summary>
         </member>
-        <member name="M:VRage.Library.Utils.MyFileSystem.OpenRead(System.String)">
+        <member name="M:VRage.FileSystem.MyFileSystem.OpenRead(System.String)">
             <summary>
             Opens file for reading
             </summary>
         </member>
-        <member name="M:VRage.Library.Utils.MyFileSystem.OpenRead(System.String,System.String)">
+        <member name="M:VRage.FileSystem.MyFileSystem.OpenRead(System.String,System.String)">
             <summary>
             Opens file for reading, convenient method with two paths to combine
             </summary>
         </member>
-        <member name="M:VRage.Library.Utils.MyFileSystem.OpenWrite(System.String,System.IO.FileMode)">
+        <member name="M:VRage.FileSystem.MyFileSystem.OpenWrite(System.String,System.IO.FileMode)">
             <summary>
             Creates or overwrites existing file
             </summary>
         </member>
-        <member name="M:VRage.Library.Utils.MyFileSystem.OpenWrite(System.String,System.String,System.IO.FileMode)">
+        <member name="M:VRage.FileSystem.MyFileSystem.OpenWrite(System.String,System.String,System.IO.FileMode)">
             <summary>
             Creates or overwrites existing file, convenient method with two paths to combine
             </summary>
         </member>
-        <member name="M:VRage.Library.Utils.MyFileSystem.CheckFileWriteAccess(System.String)">
+        <member name="M:VRage.FileSystem.MyFileSystem.CheckFileWriteAccess(System.String)">
             <summary>
             Checks write access for file
             </summary>

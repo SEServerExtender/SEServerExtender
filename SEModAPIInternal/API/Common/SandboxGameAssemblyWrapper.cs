@@ -8,7 +8,7 @@
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
-	using VRage.Library.Utils;
+	using VRage.FileSystem;
 
 	public class SandboxGameAssemblyWrapper
 	{

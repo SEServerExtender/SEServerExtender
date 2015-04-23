@@ -207,6 +207,20 @@ Returns a vertex buffer format that is compatible with this material
 !! IMPORTANT : Use only its id as identifier to our material !!
 
 </member>
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
+</member>
+        <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Called after a breakable body is replaced with new bodies.
+</member>
+        <member name="M:Havok.HkdBreakableBodyListener.beforeBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Called before a breakable body is replaced with new bodies.
+</member>
         <member name="P:Havok.HkdFracture.FlattenHierarchy">
 Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
 </member>
@@ -220,22 +234,8 @@ Defines how the physics for the broken shapes should be calculated
         <member name="T:Havok.HkdFracture.Type">
 The algorithm type
 </member>
-        <member name="M:hkpUniformGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
-</member>
         <member name="F:Havok.HkdWorld.m_havokWorld">
 Our world
-</member>
-        <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Called after a breakable body is replaced with new bodies.
-</member>
-        <member name="M:Havok.HkdBreakableBodyListener.beforeBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Called before a breakable body is replaced with new bodies.
 </member>
         <member name="M:Havok.HkdShapeInstanceInfo.#ctor(Havok.HkdBreakableShape,VRageMath.Matrix)">
 initializing Ctor

@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Configuration;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
@@ -13,7 +12,6 @@
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI;
 	using SEModAPI.API.Utility;
-	using SEModAPIInternal.API.Chat;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
@@ -23,7 +21,7 @@
 	using SEModAPIInternal.Support;
 	using SteamSDK;
 	using VRage;
-	using VRage.Library.Utils;
+	using VRage.FileSystem;
 	using VRageMath;
 
 	public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
