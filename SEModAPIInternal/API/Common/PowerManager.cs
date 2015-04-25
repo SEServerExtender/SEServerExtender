@@ -45,8 +45,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					float totalPower = (float)BaseObject.GetEntityFieldValue( m_powerManager, PowerManagerTotalPowerField );
-					return totalPower;
+					return m_powerManager != null ? (float) BaseObject.GetEntityFieldValue( m_powerManager, PowerManagerTotalPowerField ) : 0;
 				}
 				catch ( Exception ex )
 				{
@@ -62,8 +61,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					float availablePower = TotalPower - (float)BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerGetAvailablePowerMethod );
-					return availablePower;
+					return m_powerManager != null ? TotalPower - (float) BaseObject.InvokeEntityMethod( m_powerManager, PowerManagerGetAvailablePowerMethod ) : 0;
 				}
 				catch ( Exception ex )
 				{
