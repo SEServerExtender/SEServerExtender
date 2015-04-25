@@ -9,10 +9,7 @@ namespace SEModAPIInternal.API.Entity
 		#region "Attributes"
 
 		private PowerManager m_parent;
-		private Object m_powerProducer;
-
-		protected float m_maxPowerOutput;
-		protected float m_powerOutput;
+		private Object _powerProducer;
 
 		public static string PowerProducerNamespace = "";
 		public static string PowerProducerClass = "=H36sAJ3q2dwiHOAJoDFIiSAhzB=";
@@ -33,13 +30,7 @@ namespace SEModAPIInternal.API.Entity
 		public PowerProducer( PowerManager parent, Object powerProducer )
 		{
 			m_parent = parent;
-			m_powerProducer = powerProducer;
-
-			m_maxPowerOutput = 0;
-			m_powerOutput = 0;
-
-			m_maxPowerOutput = MaxPowerOutput;
-			m_powerOutput = PowerOutput;
+			_powerProducer = powerProducer;
 		}
 
 		#endregion "Constructors and Initializers"
@@ -50,19 +41,14 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if ( m_powerProducer == null )
-					return m_maxPowerOutput;
-
 				try
 				{
-					float result = (float)BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerGetMaxPowerOutputMethod );
-					//float result = 0f;
-					return result;
+					return _powerProducer == null ? 0 : (float) BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerGetMaxPowerOutputMethod );
 				}
 				catch ( Exception ex )
 				{
 					ApplicationLog.BaseLog.Error( ex );
-					return m_maxPowerOutput;
+					return 0;
 				}
 			}
 		}
@@ -71,27 +57,20 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if ( m_powerProducer == null )
-					return m_powerOutput;
-
 				try
 				{
-					float result = (float)BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerGetCurrentOutputMethod );
-					//float result = 0f;
-					return result;
+					return _powerProducer == null ? 0 : (float) BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerGetCurrentOutputMethod );
 				}
 				catch ( Exception ex )
 				{
 					ApplicationLog.BaseLog.Error( ex );
-					return m_powerOutput;
+					return 0;
 				}
 			}
 			set
 			{
-				m_powerOutput = value;
-
-				Action action = InternalUpdatePowerOutput;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				Action<float> action = InternalUpdatePowerOutput;
+				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action, value );
 			}
 		}
 
@@ -121,9 +100,9 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		protected void InternalUpdatePowerOutput( )
+		protected void InternalUpdatePowerOutput( float powerOutput )
 		{
-			BaseObject.InvokeEntityMethod( m_powerProducer, PowerProducerSetCurrentOutputMethod, new object[ ] { m_powerOutput } );
+			BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerSetCurrentOutputMethod, new object[ ] { powerOutput } );
 		}
 
 		#endregion "Methods"
