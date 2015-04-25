@@ -8,7 +8,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
-	[DataContract( Name = "BatteryBlockEntityProxy" )]
+	[DataContract]
 	public class BatteryBlockEntity : FunctionalBlockEntity
 	{
 		#region "Attributes"
@@ -100,6 +100,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Battery Block" )]
+		[DisplayName("Current Stored Power (MWh)")]
 		public float CurrentStoredPower
 		{
 			get { return ObjectBuilder.CurrentStoredPower; }
@@ -119,6 +120,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Battery Block" )]
+		[DisplayName("Maximum Stored Power (MWh)")]
+		[ReadOnly(true)]
 		public float MaxStoredPower
 		{
 			get
@@ -152,6 +155,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Battery Block" )]
+		[DisplayName("Discharge")]
 		public bool ProducerEnabled
 		{
 			get { return ObjectBuilder.ProducerEnabled; }
@@ -171,6 +175,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Battery Block" )]
+		[DisplayName("Semi-Automatic")]
 		public bool SemiautoEnabled
 		{
 			get { return ObjectBuilder.SemiautoEnabled; }
@@ -190,6 +195,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Battery Block" )]
+		[ReadOnly(true)]
+		[DisplayName("Power Input (MW)")]
 		public float RequiredPowerInput
 		{
 			get { return PowerReceiver.MaxRequiredInput; }
@@ -203,6 +210,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Battery Block" )]
+		[ReadOnly(true)]
+		[DisplayName("Maximum Power Output")]
 		public float MaxPowerOutput
 		{
 			get { return m_maxPowerOutput; }
