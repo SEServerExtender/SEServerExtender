@@ -259,6 +259,24 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
+		[IgnoreDataMember, Category( "Entity" ), Browsable( true ), ReadOnly( ( true ) )]
+		[Description( "Whether or not the entity will be rendered in the world and subject to physics calculations." )]
+		public bool InScene
+		{
+			get { return ObjectBuilder.PersistentFlags.HasFlag( MyPersistentEntityFlags2.InScene ); }
+			private set
+			{
+				if ( value )
+				{
+					ObjectBuilder.PersistentFlags |= MyPersistentEntityFlags2.InScene;
+				}
+				else
+				{
+					ObjectBuilder.PersistentFlags &= ~MyPersistentEntityFlags2.InScene;
+				}
+			}
+		}
+
 		[IgnoreDataMember]
 		[Category( "Entity" )]
 		[Browsable( false )]
@@ -605,7 +623,7 @@ namespace SEModAPIInternal.API.Entity
 				result &= HasMethod( type, BaseEntitySetEntityIdMethod );
 				result &= HasMethod( type, BaseEntityGetDisplayNameMethod );
 				result &= HasMethod( type, BaseEntitySetDisplayNameMethod );
-				result &= HasField( type, BaseEntityEntityIdField );				
+				result &= HasField( type, BaseEntityEntityIdField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PhysicsManagerNamespace, PhysicsManagerClass );
 				if ( type2 == null )
@@ -616,7 +634,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error(  ex );
+				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}
@@ -660,7 +678,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				Object result = GetEntityPropertyValue(entity, BaseEntityGetNetManagerMethod);
+				Object result = GetEntityPropertyValue( entity, BaseEntityGetNetManagerMethod );
 				//Object result = InvokeEntityMethod( entity, BaseEntityGetNetManagerMethod );
 
 				return result;
@@ -941,7 +959,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public static void BroadcastRemoveEntity( IMyEntity entity, bool safe = true )
 		{
-			Object result = BaseObject.GetEntityPropertyValue(entity, BaseEntity.BaseEntityGetNetManagerMethod);
+			Object result = BaseObject.GetEntityPropertyValue( entity, BaseEntity.BaseEntityGetNetManagerMethod );
 			//Object result = BaseEntity.InvokeEntityMethod( entity, BaseEntity.BaseEntityGetNetManagerMethod );
 			if ( result == null )
 				return;
