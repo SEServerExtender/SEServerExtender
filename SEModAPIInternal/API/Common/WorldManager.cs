@@ -211,9 +211,9 @@
 			return result;
 		}
 
-		public void SaveWorld( )
+		public bool SaveWorld( )
 		{
-			InternalSaveWorld(  );
+			return InternalSaveWorld(  );
 		}
 
 		internal static readonly object SaveMutex = new object( );
@@ -249,6 +249,7 @@
 			}
 			catch ( Exception ex )
 			{
+				ApplicationLog.BaseLog.Warn( ex );
 			}
 			finally
 			{
@@ -379,15 +380,15 @@
 			}
 		}
 
-		internal void InternalSaveWorld( )
+		internal bool InternalSaveWorld( )
 		{
+			if ( !Monitor.TryEnter( SaveMutex, 20000 ) )
+			{
+				ApplicationLog.BaseLog.Info( "Save already in progress. Save request canceled." );
+				return false;
+			}
 			try
 			{
-				if ( !Monitor.TryEnter( SaveMutex, 20000 ) )
-				{
-					ApplicationLog.BaseLog.Info( "Save already in progress. Save request canceled." );
-					return;
-				}
 				DateTime saveStartTime = DateTime.Now;
 
 				bool result = MyAPIGateway.Session.Save( null );
@@ -409,18 +410,17 @@
 					ApplicationLog.BaseLog.Error( "Save failed!" );
 				}
 
-				Monitor.Exit( SaveMutex );
 				OnWorldSaved( );
 			}
 			catch ( Exception ex )
 			{
-				Monitor.Exit( SaveMutex );
 				ApplicationLog.BaseLog.Error( ex );
 			}
 			finally
 			{
-				
+				Monitor.Exit( SaveMutex );
 			}
+			return true;
 		}
 
 		#endregion "Methods"
