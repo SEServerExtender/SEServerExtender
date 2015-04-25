@@ -1189,7 +1189,7 @@ namespace SEServerExtender
 				BTN_Entities_Delete.Enabled = true;
 
 				//If the object isn't InScene, let's just stop here.
-				if ( baseEntity.InScene )
+				if ( !baseEntity.InScene )
 				{
 					return;
 				}
