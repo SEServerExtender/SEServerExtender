@@ -13,6 +13,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Common.ObjectBuilders.Serializer;
 	using Sandbox.Definitions;
+	using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
@@ -404,8 +405,6 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get static field '" + fieldName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
@@ -433,9 +432,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get entity field '" + fieldName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
-					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( "Failed to get entity field '{0}'", fieldName );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
