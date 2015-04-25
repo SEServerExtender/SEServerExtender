@@ -8,7 +8,9 @@ namespace SEServerExtender
 	using System.Text;
 	using System.Threading;
 	using System.Windows.Forms;
+	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
+	using Sandbox.Game.Entities;
 	using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPI.API.Definitions;
@@ -1172,10 +1174,7 @@ namespace SEServerExtender
 				return;
 
 			object linkedObject = selectedNode.Tag;
-			//if ( ( (IMyEntity)selectedNode.Tag ).InScene )
-				PG_Entities_Details.SelectedObject = linkedObject;
-			//else
-			//	PG_Entities_Details.SelectedObject = null;
+			PG_Entities_Details.SelectedObject = linkedObject;
 
 			//Enable export for all objects that inherit from BaseObject
 			if ( linkedObject is BaseObject )
@@ -1183,11 +1182,19 @@ namespace SEServerExtender
 				BTN_Entities_Export.Enabled = true;
 			}
 
-			//Enable delete for all objects that inherit from BaseEntity
-			if ( linkedObject is BaseEntity )
+			BaseEntity baseEntity = linkedObject as BaseEntity;
+			if ( baseEntity != null )
 			{
+				//Enable delete for all objects that inherit from BaseEntity
 				BTN_Entities_Delete.Enabled = true;
+
+				//If the object isn't InScene, let's just stop here.
+				if ( baseEntity.InScene )
+				{
+					return;
+				}
 			}
+
 
 			//Enable delete and repair for all objects that inherit from CubeBlockEntity
 			CubeBlockEntity cubeBlockEntity = linkedObject as CubeBlockEntity;
@@ -1452,7 +1459,10 @@ namespace SEServerExtender
 			{
 				Object linkedObject = TRV_Entities.SelectedNode.Tag;
 				if ( !( linkedObject is BaseObject ) )
+				{
+					ApplicationLog.BaseLog.Info( "Object cannot be deleted." );
 					return;
+				}
 
 				BaseObject baseObject = (BaseObject)linkedObject;
 				baseObject.Dispose( );
@@ -1470,6 +1480,7 @@ namespace SEServerExtender
 			}
 			catch ( Exception ex )
 			{
+				ApplicationLog.BaseLog.Error( ex );
 				MessageBox.Show( ex.ToString( ) );
 			}
 		}
