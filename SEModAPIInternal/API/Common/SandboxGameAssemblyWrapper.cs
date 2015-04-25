@@ -397,6 +397,32 @@
 			}
 		}
 
+		public bool EnqueueMainGameAction<T>( Action<T> action, T arg )
+		{
+			try
+			{
+				if ( Thread.CurrentThread == m_gameThread )
+				{
+					action( arg );
+					return true;
+				}
+
+				BaseObject.InvokeEntityMethod( MainGame, MainGameEnqueueActionMethod, new object[ ] { action, arg } );
+
+				if ( IsDebugging )
+				{
+					UpdateProfile( );
+				}
+
+				return true;
+			}
+			catch ( Exception ex )
+			{
+				ApplicationLog.BaseLog.Error( ex );
+				return false;
+			}
+		}
+
 		private void UpdateProfile( )
 		{
 			m_countQueuedActions++;
@@ -631,5 +657,6 @@
 		}
 
 		#endregion "Methods"
+
 	}
 }
