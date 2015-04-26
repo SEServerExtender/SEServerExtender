@@ -346,8 +346,8 @@ namespace SEModAPI.API.Definitions
 		/// </summary>
 		[DataMember]
 		[Browsable( true )]
-		[ReadOnly( false )]
-		[Description( "Enable or disable built-in auto-save.  Disable if you are using Extender's auto-save feature (configured on the left)." )]
+		[ReadOnly( true )]
+		[Description( "Enable or disable built-in auto-save.  This is automatically disabled when you start the server, to prevent conflicts." )]
 		[Category( "Server Settings" )]
 		[DisplayName( "Auto-Save" )]
 		[DefaultValue( false )]
@@ -366,7 +366,7 @@ namespace SEModAPI.API.Definitions
 		/// </summary>
 		[DataMember]
 		[Browsable( true )]
-		[ReadOnly( false )]
+		[ReadOnly( true )]
 		[Description( "The interval for built-in auto-save, in minutes.  Does not affect Extender's auto-save setting." )]
 		[Category( "Server Settings" )]
 		[DisplayName( "Auto-Save Interval" )]
@@ -679,6 +679,19 @@ namespace SEModAPI.API.Definitions
 				if ( _definition.SessionSettings.ViewDistance == value ) return;
 				_definition.SessionSettings.ViewDistance = value;
 			}
+		}
+
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Enable or disable generation of ships/stations at random locations in procedural worlds" )]
+		[Category( "World Settings" )]
+		[DisplayName( "Enable Encounters" )]
+		[DefaultValue( true )]
+		public bool EnableEncounters
+		{
+			get { return _definition.SessionSettings.EnableEncounters; }
+			set { _definition.SessionSettings.EnableEncounters = value; }
 		}
 
 		[DataMember]
