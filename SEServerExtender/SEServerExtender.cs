@@ -8,9 +8,7 @@ namespace SEServerExtender
 	using System.Text;
 	using System.Threading;
 	using System.Windows.Forms;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
-	using Sandbox.Game.Entities;
 	using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPI.API.Definitions;
@@ -108,7 +106,7 @@ namespace SEServerExtender
 			m_statusCheckTimer.Tick += StatusCheckRefresh;
 			m_statusCheckTimer.Start( );
 
-			m_utilitiesCleanFloatingObjectsTimer = new Timer { Interval = 5000 };
+			m_utilitiesCleanFloatingObjectsTimer = new Timer { Interval = 10000 };
 			m_utilitiesCleanFloatingObjectsTimer.Tick += UtilitiesCleanFloatingObjects;
 
 			m_statisticsTimer = new Timer { Interval = 1000 };
@@ -222,7 +220,15 @@ namespace SEServerExtender
 				return;
 
 			if ( m_server.Config != null )
+			{
+				//Enforce built-in auto-save being off
+				if ( m_server.Config.AutoSave )
+				{
+					ApplicationLog.BaseLog.Warn( "SE built-in autosave was enabled in configuration. It has been disabled to prevent conflicts." );
+					m_server.Config.AutoSave = false;
+				}
 				m_server.SaveServerConfig( );
+			}
 
 			m_server.StartServer( );
 		}
@@ -337,7 +343,7 @@ namespace SEServerExtender
 				CMB_Control_CommonInstanceList.SelectedText = m_server.InstanceName;
 
 			BTN_ServerControl_Stop.Enabled = m_server.IsRunning;
-			BTN_ServerControl_Start.Enabled = !m_server.IsRunning;
+			BTN_ServerControl_Start.Enabled &= !m_server.IsRunning;
 			BTN_Chat_Send.Enabled = m_server.IsRunning;
 			if ( !m_server.IsRunning )
 				BTN_Entities_New.Enabled = false;
@@ -2162,7 +2168,9 @@ namespace SEServerExtender
 		// Delete all floating objects when the count reaches the amount set.
 		private void UtilitiesCleanFloatingObjects( object sender, EventArgs e )
 		{
-			if ( m_floatingObjectsCount > TXT_Utilities_FloatingObjectAmount.IntValue )
+			HashSet<IMyEntity> floatingEntities = new HashSet<IMyEntity>();
+			MyAPIGateway.Entities.GetEntities( floatingEntities, entity => entity is IMyFloatingObject );
+			if (  floatingEntities.Count > TXT_Utilities_FloatingObjectAmount.Value )
 			{
 				ChatManager.Instance.SendPublicChatMessage( "/delete all floatingobjects" );
 			}
