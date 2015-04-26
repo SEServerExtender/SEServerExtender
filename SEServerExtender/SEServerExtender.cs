@@ -211,7 +211,6 @@ namespace SEServerExtender
 
 		internal void BTN_ServerControl_Start_Click( object sender, EventArgs e )
 		{
-			m_entityTreeRefreshTimer.Start( );
 			m_chatViewRefreshTimer.Start( );
 			m_factionRefreshTimer.Start( );
 			m_pluginManagerRefreshTimer.Start( );
@@ -235,7 +234,8 @@ namespace SEServerExtender
 
 		internal void BTN_ServerControl_Stop_Click( object sender, EventArgs e )
 		{
-			m_entityTreeRefreshTimer.Stop( );
+			if ( m_entityTreeRefreshTimer.Enabled )
+				m_entityTreeRefreshTimer.Stop( );
 			m_chatViewRefreshTimer.Stop( );
 			m_factionRefreshTimer.Stop( );
 			m_pluginManagerRefreshTimer.Stop( );
@@ -2168,9 +2168,9 @@ namespace SEServerExtender
 		// Delete all floating objects when the count reaches the amount set.
 		private void UtilitiesCleanFloatingObjects( object sender, EventArgs e )
 		{
-			HashSet<IMyEntity> floatingEntities = new HashSet<IMyEntity>();
+			HashSet<IMyEntity> floatingEntities = new HashSet<IMyEntity>( );
 			MyAPIGateway.Entities.GetEntities( floatingEntities, entity => entity is IMyFloatingObject );
-			if (  floatingEntities.Count > TXT_Utilities_FloatingObjectAmount.Value )
+			if ( floatingEntities.Count > TXT_Utilities_FloatingObjectAmount.Value )
 			{
 				ChatManager.Instance.SendPublicChatMessage( "/delete all floatingobjects" );
 			}
@@ -2266,6 +2266,18 @@ namespace SEServerExtender
 			BTN_Entities_New.Enabled = previousNewButtonState;
 			BTN_Entities_Delete.Enabled = previousDeleteButtonState;
 			btnRepairEntity.Enabled = true;
+		}
+
+		private void TAB_MainTabs_SelectedIndexChanged( object sender, EventArgs e )
+		{
+			if ( TAB_MainTabs.SelectedTab.Name == "TAB_Entities_Page" )
+			{
+				m_entityTreeRefreshTimer.Start( );
+			}
+			else
+			{
+				m_entityTreeRefreshTimer.Stop( );
+			}
 		}
 	}
 }

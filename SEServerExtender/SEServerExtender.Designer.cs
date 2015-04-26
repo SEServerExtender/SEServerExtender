@@ -199,6 +199,7 @@
 			this.TAB_MainTabs.SelectedIndex = 0;
 			this.TAB_MainTabs.Size = new System.Drawing.Size(951, 569);
 			this.TAB_MainTabs.TabIndex = 0;
+			this.TAB_MainTabs.SelectedIndexChanged += new System.EventHandler(this.TAB_MainTabs_SelectedIndexChanged);
 			// 
 			// TAB_Control_Page
 			// 
