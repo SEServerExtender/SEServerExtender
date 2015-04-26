@@ -134,7 +134,7 @@ namespace SEServerExtender
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 0, argValue.Length - 1 );
 						extenderArgs.InstanceName = argValue;
-						
+
 						//Only let this override log path if the log path wasn't already explicitly set
 						if ( !logPathSet )
 						{
@@ -187,7 +187,7 @@ namespace SEServerExtender
 						FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
 						if ( baseLogTarget != null )
 						{
-							Layout l = new SimpleLayout( Path.Combine(argValue,"SEServerExtenderLog-${shortdate}.log") );
+							Layout l = new SimpleLayout( Path.Combine( argValue, "SEServerExtenderLog-${shortdate}.log" ) );
 							baseLogTarget.FileName = l.Render( new LogEventInfo { TimeStamp = DateTime.Now } );
 							SEModAPIInternal.Support.ApplicationLog.BaseLog = BaseLog;
 						}
@@ -297,6 +297,11 @@ namespace SEServerExtender
 
 				if ( extenderArgs.AutoStart )
 				{
+					if ( Server.Config.AutoSave )
+					{
+						Server.Config.AutoSave = false;
+						Server.SaveServerConfig( );
+					}
 					Server.StartServer( );
 				}
 
@@ -304,7 +309,7 @@ namespace SEServerExtender
 				{
 					string uriString = string.Format( "{0}{1}", ConfigurationManager.AppSettings[ "WCFServerServiceBaseAddress" ], CommandLineArgs.InstanceName );
 					BaseLog.Info( "Opening up WCF service listener at {0}", uriString );
-					ServerServiceHost = new ServiceHost( typeof ( ServerService.ServerService ), new Uri( uriString, UriKind.Absolute ) );
+					ServerServiceHost = new ServiceHost( typeof( ServerService.ServerService ), new Uri( uriString, UriKind.Absolute ) );
 					ServerServiceHost.Open( );
 					ChatManager.Instance.ChatMessage += ChatManager_ChatMessage;
 				}
