@@ -52,6 +52,7 @@ namespace SEServerExtender
 		private Timer m_utilitiesCleanFloatingObjectsTimer;
 		private Timer m_statisticsTimer;
 		private Timer m_playersTimer;
+		private Timer _genericUpdateTimer = new Timer { Interval = 1000 };
 
 		//Utilities Page
 		private int m_floatingObjectsCount;
@@ -112,12 +113,19 @@ namespace SEServerExtender
 			m_statisticsTimer = new Timer { Interval = 1000 };
 			m_statisticsTimer.Tick += StatisticsRefresh;
 
+			_genericUpdateTimer.Tick += GenericTimerTick;
+
 			/*
 			m_playersTimer = new Timer { Interval = 2000 };
 			m_playersTimer.Tick += PlayersRefresh;
 			*/
 
 			return true;
+		}
+
+		private void GenericTimerTick( object sender, EventArgs e )
+		{
+			SS_Bottom.Items[ 0 ].Text = string.Format( "Updates Per Second: {0}", WorldManager.GetUpdatesPerSecond( ) );
 		}
 
 		private bool SetupControls( )
@@ -214,6 +222,7 @@ namespace SEServerExtender
 			m_chatViewRefreshTimer.Start( );
 			m_factionRefreshTimer.Start( );
 			m_pluginManagerRefreshTimer.Start( );
+			_genericUpdateTimer.Start( );
 
 			if ( m_server.IsRunning )
 				return;
@@ -240,6 +249,7 @@ namespace SEServerExtender
 			m_factionRefreshTimer.Stop( );
 			m_pluginManagerRefreshTimer.Stop( );
 			m_utilitiesCleanFloatingObjectsTimer.Stop( );
+			_genericUpdateTimer.Stop(  );
 
 			m_server.StopServer( );
 		}
@@ -438,8 +448,6 @@ namespace SEServerExtender
 		private void TreeViewRefresh( object sender, EventArgs e )
 		{
 			m_entityTreeRefreshTimer.Enabled = false;
-
-			SS_Bottom.Items[ 0 ].Text = string.Format( "Updates Per Second: {0}", WorldManager.GetUpdatesPerSecond( ) );
 
 			try
 			{
