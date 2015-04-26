@@ -54,6 +54,7 @@
 			this.splitContainer5 = new System.Windows.Forms.SplitContainer();
 			this.CB_Entity_Sort = new System.Windows.Forms.ComboBox();
 			this.TRV_Entities = new System.Windows.Forms.TreeView();
+			this.btnRepairEntity = new System.Windows.Forms.Button();
 			this.BTN_Entities_Export = new System.Windows.Forms.Button();
 			this.BTN_Entities_New = new System.Windows.Forms.Button();
 			this.BTN_Entities_Delete = new System.Windows.Forms.Button();
@@ -89,7 +90,7 @@
 			this.TAB_Utilities_Page = new System.Windows.Forms.TabPage();
 			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
 			this.floatingObjectControlGroupBox = new System.Windows.Forms.GroupBox();
-			this.TXT_Utilities_FloatingObjectAmount = new SEModAPI.Support.NumericTextBox();
+			this.TXT_Utilities_FloatingObjectAmount = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.BTN_Utilities_ClearFloatingObjectsNow = new System.Windows.Forms.Button();
 			this.CHK_Utilities_FloatingObjectAutoClean = new System.Windows.Forms.CheckBox();
@@ -97,7 +98,6 @@
 			this.TB_Statistics = new System.Windows.Forms.TextBox();
 			this.SS_Bottom = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.btnRepairEntity = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -160,6 +160,7 @@
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
 			this.floatingObjectControlGroupBox.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.TXT_Utilities_FloatingObjectAmount)).BeginInit();
 			this.TAB_Statistics.SuspendLayout();
 			this.SS_Bottom.SuspendLayout();
 			this.SuspendLayout();
@@ -443,6 +444,17 @@
 			this.TRV_Entities.TabIndex = 0;
 			this.TRV_Entities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TRV_Entities_AfterSelect);
 			this.TRV_Entities.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TRV_Entities_NodeRefresh);
+			// 
+			// btnRepairEntity
+			// 
+			this.btnRepairEntity.Enabled = false;
+			this.btnRepairEntity.Location = new System.Drawing.Point(133, 4);
+			this.btnRepairEntity.Name = "btnRepairEntity";
+			this.btnRepairEntity.Size = new System.Drawing.Size(53, 23);
+			this.btnRepairEntity.TabIndex = 3;
+			this.btnRepairEntity.Text = "Repair";
+			this.btnRepairEntity.UseVisualStyleBackColor = true;
+			this.btnRepairEntity.Click += new System.EventHandler(this.btnRepairEntity_Click);
 			// 
 			// BTN_Entities_Export
 			// 
@@ -870,12 +882,21 @@
 			// 
 			// TXT_Utilities_FloatingObjectAmount
 			// 
-			this.TXT_Utilities_FloatingObjectAmount.AllowSpace = false;
 			this.TXT_Utilities_FloatingObjectAmount.Location = new System.Drawing.Point(132, 96);
+			this.TXT_Utilities_FloatingObjectAmount.Maximum = new decimal(new int[] {
+            8192,
+            0,
+            0,
+            0});
 			this.TXT_Utilities_FloatingObjectAmount.Name = "TXT_Utilities_FloatingObjectAmount";
 			this.TXT_Utilities_FloatingObjectAmount.Size = new System.Drawing.Size(63, 20);
 			this.TXT_Utilities_FloatingObjectAmount.TabIndex = 6;
-			this.TXT_Utilities_FloatingObjectAmount.Text = "512";
+			this.TXT_Utilities_FloatingObjectAmount.ThousandsSeparator = true;
+			this.TXT_Utilities_FloatingObjectAmount.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
 			// 
 			// label1
 			// 
@@ -942,17 +963,6 @@
 			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
 			this.toolStripStatusLabel1.Size = new System.Drawing.Size(124, 17);
 			this.toolStripStatusLabel1.Text = "Updates Per Second: 0";
-			// 
-			// btnRepairEntity
-			// 
-			this.btnRepairEntity.Enabled = false;
-			this.btnRepairEntity.Location = new System.Drawing.Point(133, 4);
-			this.btnRepairEntity.Name = "btnRepairEntity";
-			this.btnRepairEntity.Size = new System.Drawing.Size(53, 23);
-			this.btnRepairEntity.TabIndex = 3;
-			this.btnRepairEntity.Text = "Repair";
-			this.btnRepairEntity.UseVisualStyleBackColor = true;
-			this.btnRepairEntity.Click += new System.EventHandler(this.btnRepairEntity_Click);
 			// 
 			// SEServerExtender
 			// 
@@ -1029,6 +1039,7 @@
 			this.splitContainer4.ResumeLayout(false);
 			this.floatingObjectControlGroupBox.ResumeLayout(false);
 			this.floatingObjectControlGroupBox.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.TXT_Utilities_FloatingObjectAmount)).EndInit();
 			this.TAB_Statistics.ResumeLayout(false);
 			this.TAB_Statistics.PerformLayout();
 			this.SS_Bottom.ResumeLayout(false);
@@ -1080,7 +1091,7 @@
 		private TabPage TAB_Utilities_Page;
 		private SplitContainer splitContainer4;
 		private GroupBox floatingObjectControlGroupBox;
-		private NumericTextBox TXT_Utilities_FloatingObjectAmount;
+		private NumericUpDown TXT_Utilities_FloatingObjectAmount;
 		private Label label1;
 		private Button BTN_Utilities_ClearFloatingObjectsNow;
 		private CheckBox CHK_Utilities_FloatingObjectAutoClean;
