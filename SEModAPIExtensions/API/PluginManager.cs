@@ -100,8 +100,7 @@ namespace SEModAPIExtensions.API
 								continue;
 
 							// Load assembly from file into memory, so we can hotswap it if we want
-							byte[ ] b = File.ReadAllBytes( file );
-							Assembly pluginAssembly = Assembly.Load( b );
+							Assembly pluginAssembly = Assembly.LoadFrom( PathManager.BasePath + file );
 							if ( IsOldPlugin( pluginAssembly ) )
 							{
 								if ( IsValidPlugin( pluginAssembly ) )

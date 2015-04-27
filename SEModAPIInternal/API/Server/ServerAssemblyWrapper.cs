@@ -60,8 +60,7 @@
 			{
 				if ( _assembly == null )
 				{
-					byte[ ] b = File.ReadAllBytes( "SpaceEngineersDedicated.exe" );
-					_assembly = Assembly.Load( b );
+                    _assembly = Assembly.LoadFrom(PathManager.BasePath + "SpaceEngineersDedicated.exe");
 				}
 
 				Type dedicatedServerType = _assembly.GetType( DedicatedServerNamespace + "." + DedicatedServerClass );
