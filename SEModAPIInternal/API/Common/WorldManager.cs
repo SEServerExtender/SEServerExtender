@@ -4,7 +4,6 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage;
@@ -14,6 +13,7 @@
 		#region "Attributes"
 
 		private static WorldManager m_instance;
+		private bool m_isSaving = false;
 
 		public static string WorldManagerNamespace = "";
 		public static string WorldManagerClass = "=GND6z8idGdIAcWcb2YBaSnRMp7=";
@@ -111,7 +111,17 @@
 		{
 			get
 			{
-				return Sandbox.ModAPI.MyAPIGateway.Session.Name;
+				string name = (string)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetSessionNameMethod );
+
+				return name;
+			}
+		}
+
+		public bool IsWorldSaving
+		{
+			get
+			{
+				return m_isSaving;
 			}
 		}
 
@@ -119,7 +129,17 @@
 		{
 			get
 			{
-				return Sandbox.ModAPI.MyAPIGateway.Session.SessionSettings;
+				try
+				{
+					MyObjectBuilder_SessionSettings sessionSettings = (MyObjectBuilder_SessionSettings)BaseObject.GetEntityFieldValue( BackingObject, WorldManagerSessionSettingsField );
+
+					return sessionSettings;
+				}
+				catch ( Exception ex )
+				{
+					ApplicationLog.BaseLog.Error( ex );
+					return new MyObjectBuilder_SessionSettings( );
+				}
 			}
 		}
 
@@ -127,7 +147,9 @@
 		{
 			get
 			{
-				return Sandbox.ModAPI.MyAPIGateway.Session.GetCheckpoint( Name );
+				MyObjectBuilder_Checkpoint checkpoint = (MyObjectBuilder_Checkpoint)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetCheckpointMethod, new object[ ] { Name } );
+
+				return checkpoint;
 			}
 		}
 
@@ -135,7 +157,9 @@
 		{
 			get
 			{
-				return Sandbox.ModAPI.MyAPIGateway.Session.GetSector( );
+				MyObjectBuilder_Sector sector = (MyObjectBuilder_Sector)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetSectorMethod );
+
+				return sector;
 			}
 		}
 
@@ -155,6 +179,9 @@
 				Type[ ] argTypes = new Type[ 1 ];
 				argTypes[ 0 ] = typeof( string );
 				result &= BaseObject.HasMethod( type1, WorldManagerSaveWorldMethod, argTypes );
+				result &= BaseObject.HasMethod( type1, WorldManagerGetCheckpointMethod );
+				result &= BaseObject.HasMethod( type1, WorldManagerGetSectorMethod );
+				result &= BaseObject.HasMethod( type1, WorldManagerGetSessionNameMethod );
 				result &= BaseObject.HasField( type1, WorldManagerInstanceField );
 				result &= BaseObject.HasField( type1, WorldManagerFactionManagerField );
 				result &= BaseObject.HasField( type1, WorldManagerSessionSettingsField );
@@ -211,50 +238,84 @@
 			return result;
 		}
 
-		public bool SaveWorld( )
+		public void SaveWorld( )
 		{
-			return InternalSaveWorld(  );
+			if ( m_isSaving )
+				return;
+
+			m_isSaving = true;
+			Action action = InternalSaveWorld;
+			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
 		}
 
-		internal static readonly object SaveMutex = new object( );
 		public void AsynchronousSaveWorld( )
 		{
-			if ( !Monitor.TryEnter( SaveMutex, 20000 ) )
-			{
-				ApplicationLog.BaseLog.Info( "Save already in progress. Save request canceled." );
+			if ( m_isSaving )
 				return;
-			}
+
+			m_isSaving = true;
+
 			try
 			{
 				DateTime saveStartTime = DateTime.Now;
 
 				Task.Factory.StartNew( ( ) =>
 				                       {
-					                       ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
+					                       SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+					                                                                       {
+						                                                                       Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
+						                                                                       BaseObject.InvokeStaticMethod( type,
+						                                                                                                      WorldSnapshotSaveMethod,
+						                                                                                                      new object[ ]
+						                                                                                                      {
+							                                                                                                      new Action( ( ) =>
+							                                                                                                                  {
+								                                                                                                                  ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms",
+								                                                                                                                                               ( DateTime.Now - saveStartTime )
+									                                                                                                                                               .TotalMilliseconds );
+							                                                                                                                  } ),
+							                                                                                                      null
+						                                                                                                      } );
+					                                                                       } );
 
-					                       MyAPIGateway.Session.Save( Name );
+					                       // Ugly -- Get rid of this?
+					                       DateTime start = DateTime.Now;
+					                       FastResourceLock saveLock = InternalGetResourceLock( );
+					                       while ( !saveLock.Owned )
+					                       {
+						                       if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
+							                       return;
 
-										   ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
-										   OnWorldSaved( );
-										   EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
-																					 {
-																						 type = EntityEventManager.EntityEventType.OnSectorSaved,
-																						 timestamp = DateTime.Now,
-																						 entity = null,
-																						 priority = 0
-																					 };
-										   EntityEventManager.Instance.AddEvent( newEvent );
-									   } );
+						                       Thread.Sleep( 1 );
+					                       }
+
+					                       while ( saveLock.Owned )
+					                       {
+						                       if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 60000 ) )
+							                       return;
+
+						                       Thread.Sleep( 1 );
+					                       }
+
+					                       ApplicationLog.BaseLog.Info( "Asynchronous Save Completed: {0}ms", ( DateTime.Now - saveStartTime ).TotalMilliseconds );
+					                       OnWorldSaved( );
+					                       EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
+					                                                                 {
+						                                                                 type = EntityEventManager.EntityEventType.OnSectorSaved,
+						                                                                 timestamp = DateTime.Now,
+						                                                                 entity = null,
+						                                                                 priority = 0
+					                                                                 };
+					                       EntityEventManager.Instance.AddEvent( newEvent );
+				                       } );
 
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Warn( ex );
 			}
 			finally
 			{
-				Monitor.PulseAll( SaveMutex );
-				Monitor.Exit( SaveMutex );
+				m_isSaving = false;
 			}
 
 			/*
@@ -380,24 +441,23 @@
 			}
 		}
 
-		internal bool InternalSaveWorld( )
+		internal void InternalSaveWorld( )
 		{
-			if ( !Monitor.TryEnter( SaveMutex, 20000 ) )
-			{
-				ApplicationLog.BaseLog.Info( "Save already in progress. Save request canceled." );
-				return false;
-			}
 			try
 			{
 				DateTime saveStartTime = DateTime.Now;
 
-				bool result = MyAPIGateway.Session.Save( null );
+				Type type = BackingObject.GetType( );
+				Type[ ] argTypes = new Type[ 1 ];
+				argTypes[ 0 ] = typeof( string );
+				bool result = (bool)BaseObject.InvokeEntityMethod( BackingObject, WorldManagerSaveWorldMethod, new object[ ] { null }, argTypes );
 
 				if ( result )
 				{
 					TimeSpan timeToSave = DateTime.Now - saveStartTime;
 					ApplicationLog.BaseLog.Info( "Save complete and took {0} seconds", timeToSave.TotalSeconds );
-					
+					m_isSaving = false;
+
 					EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent( );
 					newEvent.type = EntityEventManager.EntityEventType.OnSectorSaved;
 					newEvent.timestamp = DateTime.Now;
@@ -418,9 +478,8 @@
 			}
 			finally
 			{
-				Monitor.Exit( SaveMutex );
+				m_isSaving = false;
 			}
-			return true;
 		}
 
 		#endregion "Methods"
