@@ -964,16 +964,17 @@
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
 
-			SendPrivateChatMessage( remoteUserId, "Performing an asynchronous save." );
 			WorldManager.Instance.AsynchronousSaveWorld( );
+			SendPrivateChatMessage( remoteUserId, "Performing an asynchronous save." );
 		}
 
 		protected void Command_SyncSave( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
 
-			if(WorldManager.Instance.SaveWorld( ))
-				SendPrivateChatMessage( remoteUserId, "World has been saved!" );
+			WorldManager.Instance.SaveWorld( );
+
+			SendPrivateChatMessage( remoteUserId, "World has been saved!" );
 		}
 
 		protected void Command_Owner( ChatEvent chatEvent )
