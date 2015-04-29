@@ -246,6 +246,7 @@ namespace SEModAPIExtensions.API
 				{
 					ApplicationLog.BaseLog.Info( "World Request Replace: Enabled" );
 				}
+                ApplicationLog.BaseLog.Info("end parsing");
 			}
 			catch ( Exception ex )
 			{

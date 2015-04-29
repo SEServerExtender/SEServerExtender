@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Management;
+using SEModAPIInternal.Support;
+
 namespace SEServerExtender
 {
 	using System;
@@ -29,17 +33,53 @@ namespace SEServerExtender
 		{
 			public WindowsService( )
 			{
-				ServiceName = "SEServerExtender";
 				CanPauseAndContinue = false;
 				CanStop = true;
 				AutoLog = true;
+
+
 			}
 
 			protected override void OnStart( string[ ] args )
 			{
+                Thread.Sleep(30000);
 				BaseLog.Info( "Starting SEServerExtender Service with {0} arguments ...", args.Length );
 
-				Start( args );
+			    List<string> listArg = args.ToList();
+
+                // Instance autodetect
+			    if (args.All(item => !item.Contains("instance")))
+			    {
+                    BaseLog.Info( "No instance specified, guessing it ...");
+			        int processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+			        String query = "SELECT Name FROM Win32_Service where ProcessId = " + processId;
+			        ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+			        ManagementObjectCollection collection = searcher.Get();
+			        IEnumerator enumerator = collection.GetEnumerator();
+			        enumerator.MoveNext();
+			        ManagementObject managementObject = (ManagementObject) enumerator.Current;
+
+			        string serviceName = managementObject["Name"].ToString();
+                    BaseLog.Info( "Instance detected : {0}", serviceName);
+                    listArg.Add("instance=" + serviceName);
+			    }
+                // gamepath autodetect
+                if (args.All(item => !item.Contains("gamepath")))
+                {
+                    BaseLog.Info("No gamepath specified, guessing it ...");
+                    string gamePath = new DirectoryInfo(PathManager.BasePath).Parent.FullName;
+                    BaseLog.Info("gamepath detected : {0}", gamePath);
+                    listArg.Add("gamepath=\"" + gamePath + "\"");
+                }
+
+                // It's a service, it's mandatory to use noconsole (nogui and autostart implied)
+			    if (args.All(item => !item.Contains("noconsole")))
+			    {
+                    BaseLog.Info("Service Startup, noconsole is mandatory, adding it ...");
+                    listArg.Add("noconsole");
+			    }
+
+			    Start( listArg.ToArray() );
 			}
 
 			protected override void OnStop( )
@@ -98,7 +138,7 @@ namespace SEServerExtender
 								  NoGui = false,
 								  NoConsole = false,
 								  Debug = false,
-								  GamePath = Directory.GetParent( Directory.GetCurrentDirectory( ) ).FullName,
+								  GamePath = new DirectoryInfo( PathManager.BasePath ).Parent.FullName,
 								  NoWcf = false,
 								  Autosave = 0,
 								  InstancePath = string.Empty,
@@ -158,7 +198,7 @@ namespace SEServerExtender
 					else if ( lowerCaseArgument.Equals( "gamepath" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.GamePath = argValue;
 					}
 					else if ( lowerCaseArgument.Equals( "autosave" ) )
@@ -169,19 +209,19 @@ namespace SEServerExtender
 					else if ( lowerCaseArgument.Equals( "path" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstancePath = argValue;
 					}
 					else if ( lowerCaseArgument.Equals( "instancepath" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstancePath = argValue;
 					}
 					else if ( lowerCaseArgument == "logpath" )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 
 						//This argument always prevails.
 						FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
@@ -281,8 +321,8 @@ namespace SEServerExtender
 			if ( extenderArgs.Debug )
 				SandboxGameAssemblyWrapper.IsDebugging = true;
 
-			try
-			{
+			/*try
+			{*/
 				bool unitTestResult = BasicUnitTestManager.Instance.Run( );
 				if ( !unitTestResult )
 					SandboxGameAssemblyWrapper.IsInSafeMode = true;
@@ -322,7 +362,8 @@ namespace SEServerExtender
 				}
 				else if ( Environment.UserInteractive )
 					Console.ReadLine( );
-			}
+
+			/*}
 			catch ( AutoException eEx )
 			{
 				if ( !extenderArgs.NoConsole )
@@ -352,7 +393,7 @@ namespace SEServerExtender
 
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
-			}
+			}*/
 		}
 
 		private static void ChatManager_ChatMessage( ulong userId, string playerName, string message )
