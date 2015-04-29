@@ -297,11 +297,6 @@ namespace SEServerExtender
 
 				if ( extenderArgs.AutoStart )
 				{
-					if ( Server.Config.AutoSave )
-					{
-						Server.Config.AutoSave = false;
-						Server.SaveServerConfig( );
-					}
 					Server.StartServer( );
 				}
 
