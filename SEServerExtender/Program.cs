@@ -42,7 +42,6 @@ namespace SEServerExtender
 
 			protected override void OnStart( string[ ] args )
 			{
-                Thread.Sleep(30000);
 				BaseLog.Info( "Starting SEServerExtender Service with {0} arguments ...", args.Length );
 
 			    List<string> listArg = args.ToList();
@@ -321,8 +320,8 @@ namespace SEServerExtender
 			if ( extenderArgs.Debug )
 				SandboxGameAssemblyWrapper.IsDebugging = true;
 
-			/*try
-			{*/
+			try
+			{
 				bool unitTestResult = BasicUnitTestManager.Instance.Run( );
 				if ( !unitTestResult )
 					SandboxGameAssemblyWrapper.IsInSafeMode = true;
@@ -358,7 +357,7 @@ namespace SEServerExtender
 				else if ( Environment.UserInteractive )
 					Console.ReadLine( );
 
-			/*}
+			}
 			catch ( AutoException eEx )
 			{
 				if ( !extenderArgs.NoConsole )
@@ -388,7 +387,7 @@ namespace SEServerExtender
 
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
-			}*/
+			}
 		}
 
 		private static void ChatManager_ChatMessage( ulong userId, string playerName, string message )
