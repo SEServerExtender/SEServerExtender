@@ -49,7 +49,7 @@ namespace SEModAPIExtensions.API
 
 		public void UpdateSessionSettings( )
 		{
-			MyConfigDedicatedData config = Server.Instance.LoadServerConfig();
+			MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = Server.Instance.LoadServerConfig( );
 
 			ApplicationLog.BaseLog.Info( "Loading Session Settings" );
 			try

@@ -15,8 +15,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private bool m_broadcastUsingAntennas;
 		private float m_detectionRadius;
 
-		public static string OreDetectorNamespace = "";
-		public static string OreDetectorClass = "=r9nrbLrgG3TFfNkdacaTuHGXN5=";
+		public static string OreDetectorNamespace = "Sandbox.Game.Entities.Cube";
+		public static string OreDetectorClass = "MyOreDetector";
 
 		public static string OreDetectorGetUsingAntennasMethod = "get_BroadcastUsingAntennas";
 		public static string OreDetectorSetUsingAntennasMethod = "set_BroadcastUsingAntennas";

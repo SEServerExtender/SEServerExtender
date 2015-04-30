@@ -11,17 +11,12 @@ namespace SEModAPIInternal.API.Entity
 		private PowerManager m_parent;
 		private Object _powerProducer;
 
-		public static string PowerProducerNamespace = "";
-		public static string PowerProducerClass = "=H36sAJ3q2dwiHOAJoDFIiSAhzB=";
+		public static string PowerProducerNamespace = "Sandbox.Game.GameSystems.Electricity";
+		public static string PowerProducerInterface = "IMyPowerProducer";
 
-		
-
-		//public static string PowerProducerGetMaxPowerOutputMethod = "2F4566F5785A938FCDE93C36C71066C8";		//1.73.09  float 2F4566F5785A938FCDE93C36C71066C8();  Second function of this type
-		//public static string PowerProducerGetCurrentOutputMethod = "0DE7BC75E34014AA5A2C722A6C6B048E";		//1.73.09  float 0DE7BC75E34014AA5A2C722A6C6B048E();  First function of this type
-		//public static string PowerProducerSetCurrentOutputMethod = "8A64E0D6467536E75388E502F1CCB920";		//1.73.09  void 8A64E0D6467536E75388E502F1CCB920(float 094E467FF825343C63A4502A66537B82);
-		public static string PowerProducerGetMaxPowerOutputMethod = "get_MaxPowerOutput";						//1.74.10
-		public static string PowerProducerGetCurrentOutputMethod = "get_CurrentPowerOutput";					//1.74.10
-		public static string PowerProducerSetCurrentOutputMethod = "set_CurrentPowerOutput";					//1.74.10
+				public static string PowerProducerGetMaxPowerOutputMethod = "get_MaxPowerOutput";
+		public static string PowerProducerGetCurrentOutputMethod = "get_CurrentPowerOutput";
+		public static string PowerProducerSetCurrentOutputMethod = "set_CurrentPowerOutput";
 
 		#endregion "Attributes"
 
@@ -82,7 +77,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PowerProducerNamespace, PowerProducerClass );
+				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PowerProducerNamespace, PowerProducerInterface );
 				if ( type1 == null )
 					throw new TypeLoadException( "Could not find internal type for PowerProducer" );
 				bool result = true;

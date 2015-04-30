@@ -10,9 +10,9 @@ namespace SEModAPIInternal.API.Client
 
 		new protected static ClientNetworkManager m_instance;
 
-		public static string ClientNetworkManagerNamespace = "";
-		public static string ClientNetworkManagerClass = "=VZlADLeS8fUdvHT4xyQSVm8dYk=";
-		public static string ClientNetworkManagerConnectedPlayersField = "=hrd2r4yATC2NCJnhqOpJBW6EOU=";
+		public static string ClientNetworkManagerNamespace = "Sandbox.Engine.Multiplayer";
+		public static string ClientNetworkManagerClass = "MyMultiplayerClient";
+		public static string ClientNetworkManagerConnectedPlayersField = "m_members";
 
 		#endregion "Attributes"
 

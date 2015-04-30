@@ -16,8 +16,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private PowerProducer m_powerProducer;
 		private float m_maxPowerOutput;
 
-		public static string SolarPanelNamespace = "";
-		public static string SolarPanelClass = "=eMM44GvCk02ICnSbvGDga6Az5t=";
+		public static string SolarPanelNamespace = "Sandbox.Game.Entities.Blocks";
+		public static string SolarPanelClass = "MySolarPanel";
 
 		public static string SolarPanelSetMaxOutputMethod = "set_MaxPowerOutput";
 

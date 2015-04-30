@@ -22,8 +22,8 @@
 		private static Assembly _assembly;
 		//private static AppDomain _domain;
 
-		public static string DedicatedServerNamespace = "";
-		public static string DedicatedServerClass = "Sandbox.AppCode.App.MyProgram";
+		public static string DedicatedServerNamespace = "Sandbox.AppCode.App";
+		public static string DedicatedServerClass = "MyProgram";
 
 		public static string DedicatedServerStartupBaseMethod = "RunMain";
 
@@ -41,7 +41,7 @@
 
 			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineersDedicated.exe" );
 			_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
-
+			
 			ApplicationLog.BaseLog.Info( "Finished loading ServerAssemblyWrapper" );
 		}
 
@@ -184,6 +184,9 @@
 					isUsingInstance,
 					useConsole
 				};
+
+				//Initialize config
+				SpaceEngineers.Game.SpaceEngineersGame.SetupPerGameSettings( );
 
 				//Start the server
 				MethodInfo serverStartupMethod = InternalType.GetMethod( DedicatedServerStartupBaseMethod, BindingFlags.Static | BindingFlags.NonPublic );

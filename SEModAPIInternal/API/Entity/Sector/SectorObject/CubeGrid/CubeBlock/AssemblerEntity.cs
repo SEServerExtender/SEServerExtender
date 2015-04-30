@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string AssemblerNamespace = "";
-		public static string AssemblerClass = "=HEfaqb80qdXtP0YwG2EV0OQFs=";
+		public static string AssemblerNamespace = "Sandbox.Game.Entities.Cube";
+		public static string AssemblerClass = "MyAssembler";
 
 		#endregion "Attributes"
 

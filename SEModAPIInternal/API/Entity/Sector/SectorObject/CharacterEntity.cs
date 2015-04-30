@@ -20,8 +20,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private InventoryEntity m_inventory;
 		private static Type m_internalType;
 
-		public static string CharacterNamespace = "";
-		public static string CharacterClass = "Sandbox.Game.Entities.Character.MyCharacter";
+		public static string CharacterNamespace = "Sandbox.Game.Entities.Character";
+		public static string CharacterClass = "MyCharacter";
 
 		public static string CharacterGetHealthMethod = "get_Health";
 
@@ -38,12 +38,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		///////////////////////////////////////////////////////////
 
-		public static string CharacterBatteryNamespace = "";
-		public static string CharacterBatteryClass = "=5gBNkgv53FoJ8FAvzAXRggJ6nm=";
+		public static string CharacterBatteryNamespace = "Sandbox.Game.GameSystems.Electricity";
+		public static string CharacterBatteryClass = "MyBattery";
 
 		public static string CharacterBatterySetBatteryCapacityMethod = "set_RemainingCapacity";
 
-		public static string CharacterBatteryCapacityField = "=QeE0wGdUdldFfmabysIgxC6YCB=";
+		public static string CharacterBatteryCapacityField = "m_remainingCapacity";
 
 		#endregion "Attributes"
 
@@ -450,8 +450,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private CharacterEntity m_parent;
 		private Object m_backingObject;
 
-		public static string CharacterNetManagerNamespace = "";
-		public static string CharacterNetManagerClass = "=2f1qCclG2slBN6Vw5QbX1zDIG6=";
+		public static string CharacterNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string CharacterNetManagerClass = "MySyncCharacter";
 
 		//Packets
 		//2

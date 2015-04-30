@@ -16,8 +16,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private CharacterEntity m_pilot;
 		private bool m_weaponStatus;
 
-		public static string ShipControllerEntityNamespace = "";
-		public static string ShipControllerEntityClass = "=7h87qJfPTuhTWq2FGYlI84qCpg=";
+		public static string ShipControllerEntityNamespace = "Sandbox.Game.Entities";
+		public static string ShipControllerEntityClass = "MyShipController";
 
 		public static string ShipControllerEntityGetNetworkManager = "get_SyncObject";
 
@@ -254,8 +254,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//2488 - Thruster Power On/Off
 		//2489 - Motor Handbrake On/Off
 
-		public static string ShipControllerNetworkManagerNamespace = "";
-		public static string ShipControllerNetworkManagerClass = "=YTP9oWvasPaCXTYBL8uGXhRmd2=";
+		public static string ShipControllerNetworkManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string ShipControllerNetworkManagerClass = "MySyncShipController";
 
 		public static string ShipControllerNetworkManagerBroadcastDampenersStatus = "SendDampenersUpdate";
 

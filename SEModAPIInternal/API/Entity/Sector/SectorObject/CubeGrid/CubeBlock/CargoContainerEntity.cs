@@ -13,8 +13,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private InventoryEntity m_Inventory;
 
-		public static string CargoContainerNamespace = "";
-		public static string CargoContainerClass = "=oYFCJscKDsNLb5ixFZYeII2thY=";
+		public static string CargoContainerNamespace = "Sandbox.Game.Entities";
+		public static string CargoContainerClass = "MyCargoContainer";
 
 		public static string CargoContainerGetInventoryMethod = "GetInventory";
 

@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string RefineryNamespace = "";
-		public static string RefineryClass = "=8SP9fGLhWKHDI8VQ7qCDMW9aEE=";
+		public static string RefineryNamespace = "Sandbox.Game.Entities.Cube";
+		public static string RefineryClass = "MyRefinery";
 
 		#endregion "Attributes"
 

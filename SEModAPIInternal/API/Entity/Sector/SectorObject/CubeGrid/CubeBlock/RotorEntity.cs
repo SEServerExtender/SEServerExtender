@@ -12,10 +12,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string RotorNamespace = "";
-		public static string RotorClass = "=6Wy9Sq1bSnd1NU3pZEtIJjR4rJ=";
+		public static string RotorNamespace = "Sandbox.Game.Entities.Cube";
+		public static string RotorClass = "MyMotorStator";
 
-		public static string RotorTopBlockEntityIdField = "=3VfRAqLnpYlKKw2kDSOSyVqUsR=";
+		public static string RotorTopBlockEntityIdField = "m_rotorBlockId";
 
 		#endregion "Attributes"
 

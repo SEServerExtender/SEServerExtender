@@ -19,8 +19,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private bool m_autoLockEnabled;
 		private float m_brakeForce;
 
-		public static string LandingGearNamespace = "";
-		public static string LandingGearClass = "=AA3bC04kGQqpKYQrJeWyVBRPMo=";
+		public static string LandingGearNamespace = "Sandbox.Game.Entities.Cube";
+		public static string LandingGearClass = "MyLandingGear";
 
 		//public static string LandingGearGetAutoLockMethod = "71F8F86678091875138C01C64F0C2F01";
 		//public static string LandingGearGetAutoLockMethod = "3ECDCF46AB6230B4998CE81E37A36F34";
@@ -29,9 +29,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string LandingGearGetBrakeForceMethod = "get_BreakForce";
 		public static string LandingGearSetBrakeForceMethod = "set_BreakForce";
 
-		public static string LandingGearIsLockedField = "=h3HDhpaog3xY86fynaPucUKBOz=";
-		public static string LandingGearNetManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
-		public static string LandingGearGetAutoLockField = "=xd4EZB2qmsXfoSlekxOeqMRDDf=";
+		public static string LandingGearIsLockedField = "m_needsToRetryLock";
+		public static string LandingGearNetManagerField = "SyncObject";
+		public static string LandingGearGetAutoLockField = "m_autoLock";
 
 		#endregion "Attributes"
 
@@ -285,7 +285,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private Object m_backingObject;
 
 		public static string LandingGearNetworkManagerNamespace = LandingGearEntity.LandingGearNamespace + "." + LandingGearEntity.LandingGearClass;
-		public static string LandingGearNetworkManagerClass = "=YhSrJ3q9iN0eWxvuXLPcMVvT5U=";
+		public static string LandingGearNetworkManagerClass = "MySyncLandingGear";
 
 		public static string LandingGearNetworkManagerBroadcastIsLockedMethod = "SendAttachRequest";
 		public static string LandingGearNetworkManagerBroadcastAutoLockMethod = "SendAutoLockChange";

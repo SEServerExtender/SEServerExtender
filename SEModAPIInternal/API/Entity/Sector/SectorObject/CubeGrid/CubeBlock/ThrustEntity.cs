@@ -18,8 +18,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private float m_thrustOverride;
 		private ThrustNetworkManager m_networkManager;
 
-		public static string ThrustNamespace = "";
-		public static string ThrustClass = "=Avs8k7NfpEpYw1QyLX0wdzrIq9=";
+		public static string ThrustNamespace = "Sandbox.Game.Entities";
+		public static string ThrustClass = "MyThrust";
 
 		public static string ThrustGetOverrideMethod = "get_ThrustOverride";
 		public static string ThrustSetOverrideMethod = "SetThrustOverride";
@@ -27,13 +27,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string ThrustGetMaxPowerConsumptionMethod = "get_MaxPowerConsumption";
 		public static string ThrustGetMinPowerConsumptionMethod = "get_MinPowerConsumption";
 
-		public static string ThrustNetManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
+		public static string ThrustNetManagerField = "SyncObject";
 
 		//Note: The following fields exist but are not broadcast and as such setting these on the server will do nothing client-side
-		public static string ThrustFlameColorField = "=6OD8GKOc8H2eZeBzbaPpDc8wHza=";
+		public static string ThrustFlameColorField = "m_thrustColor";
 
-		public static string ThrustLightField = "=SvdAPseZczZcMSnX1q9J0bFGki=";
-		public static string ThrustFlameScaleCoefficientField = "=Ey8BUGNI8orxc8EnSAO8vkFNiB=";
+		public static string ThrustLightField = "m_light";
+		public static string ThrustFlameScaleCoefficientField = "m_maxBillboardDistanceSquared";
 
 		//Thrust flame scale coefficient values:
 		//LargeShip-Large: 700
@@ -205,8 +205,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private float m_lastOverride;
 
-		public static string ThrustNetManagerNamespace = "";
-		public static string ThrustNetManagerClass = "=JekhTXKmjFBlkT4vf3FViyIGcg=";
+		public static string ThrustNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string ThrustNetManagerClass = "MySyncThruster";
 
 		public static string ThrustNetManagerBroadcastOverrideMethod = "SendChangeThrustOverrideRequest";
 

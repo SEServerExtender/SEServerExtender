@@ -31,22 +31,20 @@ namespace SEModAPIInternal.API.Entity
 		private string m_displayName;
 
 		//Definition
-		public static string BaseEntityNamespace = "";
+		public static string BaseEntityNamespace = "Sandbox.Game.Entities";
 
-		public static string BaseEntityClass = "Sandbox.Game.Entities.MyEntity";
+		public static string BaseEntityClass = "MyEntity";
 
 		//Methods
 		public static string BaseEntityGetObjectBuilderMethod = "GetObjectBuilder";
 
 		public static string BaseEntityGetPhysicsManagerMethod = "get_Physics";
 
-		//public static string BaseEntityCombineOnMovedEventMethod = "04F6493DF187FBA38C2B379BA9484304";
 		public static string BaseEntityCombineOnClosedEventMethod = "add_OnClose";
 
 		public static string BaseEntityGetIsDisposedMethod = "get_Closed";
 		public static string BaseEntityGetOrientationMatrixMethod = "get_WorldMatrix";
 
-		//public static string BaseEntityGetNetManagerMethod = "F4456F82186EC3AE6C73294FA6C0A11D";
 		public static string BaseEntityGetNetManagerMethod = "SyncObject";
 
 		public static string BaseEntitySetEntityIdMethod = "set_EntityId";
@@ -60,8 +58,8 @@ namespace SEModAPIInternal.API.Entity
 
 		//////////////////////////////////////////////////////////
 
-		public static string PhysicsManagerNamespace = "";
-		public static string PhysicsManagerClass = "=wF2nlwFYbuUxt9MEr3pF84L4ho=";
+		public static string PhysicsManagerNamespace = "Sandbox.Engine.Physics";
+		public static string PhysicsManagerClass = "MyPhysicsBody";
 		public static string PhysicsManagerGetRigidBodyMethod = "get_RigidBody";
 
 		#endregion "Attributes"
@@ -921,10 +919,9 @@ namespace SEModAPIInternal.API.Entity
 		private BaseEntity m_parent;
 		private Object m_networkManager;
 
-		public static string BaseEntityNetworkManagerNamespace = "";
-		public static string BaseEntityNetworkManagerClass = "=uTZ4uCH8frEHtn0VfQJ0coHE2v=";
+		public static string BaseEntityNetworkManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string BaseEntityNetworkManagerClass = "MySyncEntity";
 
-		//public static string BaseEntityBroadcastRemovalMethod = "5EBE421019EACEA0F25718E2585CF3D2";
 		public static string BaseEntityBroadcastRemovalMethod = "SendCloseRequest";
 
 		//Packets

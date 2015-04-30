@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string ReflectorLightNamespace = "";
-		public static string ReflectorLightClass = "=LI5taOob2o87FserNhrJciGlxO=";
+		public static string ReflectorLightNamespace = "Sandbox.Game.Entities";
+		public static string ReflectorLightClass = "MyReflectorLight";
 
 		#endregion "Attributes"
 

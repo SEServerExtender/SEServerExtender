@@ -601,7 +601,7 @@ namespace SEModAPIExtensions.API
 			ApplicationLog.BaseLog.Info(  "Server has been stopped" );
 		}
 
-		public MyConfigDedicatedData LoadServerConfig( )
+		public MyConfigDedicatedData<MyObjectBuilder_SessionSettings> LoadServerConfig( )
 		{
 			if ( File.Exists( System.IO.Path.Combine(Path,"SpaceEngineers-Dedicated.cfg.restart") ) )
 			{
@@ -611,7 +611,7 @@ namespace SEModAPIExtensions.API
 
 			if ( File.Exists( System.IO.Path.Combine( Path,"SpaceEngineers-Dedicated.cfg" ) ) )
 			{
-				MyConfigDedicatedData config = DedicatedConfigDefinition.Load( new FileInfo( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) );
+				MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = DedicatedConfigDefinition.Load( new FileInfo( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) );
 				_dedicatedConfigDefinition = new DedicatedConfigDefinition( config );
 				_cfgWatch = new FileSystemWatcher( Path, "*.cfg" );
 				_cfgWatch.Changed += Config_Changed;
@@ -662,15 +662,15 @@ namespace SEModAPIExtensions.API
 					{
 						ApplicationLog.BaseLog.Info( "SpaceEngineers-Dedicated.cfg has changed updating configuration settings." );
 
-						MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load( new FileInfo( e.FullPath ) );
+						MyConfigDedicatedData<MyObjectBuilder_SessionSettings> changedConfig = DedicatedConfigDefinition.Load( new FileInfo( e.FullPath ) );
 						Config = new DedicatedConfigDefinition( changedConfig );
 					}
 					else
 					{
 						ApplicationLog.BaseLog.Info( "SpaceEngineers-Dedicated.cfg has changed with existing restart file." );
 
-						MyConfigDedicatedData restartConfig = DedicatedConfigDefinition.Load( new FileInfo( Path + @"\SpaceEngineers-Dedicated.cfg.restart" ) );
-						MyConfigDedicatedData changedConfig = DedicatedConfigDefinition.Load( new FileInfo( e.FullPath ) );
+						MyConfigDedicatedData<MyObjectBuilder_SessionSettings> restartConfig = DedicatedConfigDefinition.Load( new FileInfo( Path + @"\SpaceEngineers-Dedicated.cfg.restart" ) );
+						MyConfigDedicatedData<MyObjectBuilder_SessionSettings> changedConfig = DedicatedConfigDefinition.Load( new FileInfo( e.FullPath ) );
 
 						restartConfig.Mods = restartConfig.Mods.Union( changedConfig.Mods ).ToList( );
 						restartConfig.Banned = changedConfig.Banned.Union( changedConfig.Banned ).ToList( );

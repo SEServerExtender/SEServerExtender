@@ -15,8 +15,8 @@
 		private static WorldManager m_instance;
 		private bool m_isSaving = false;
 
-		public static string WorldManagerNamespace = "";
-		public static string WorldManagerClass = "=GND6z8idGdIAcWcb2YBaSnRMp7=";
+		public static string WorldManagerNamespace = "Sandbox.Game.World";
+		public static string WorldManagerClass = "MySession";
 
 		public static string WorldManagerGetPlayerManagerMethod = "get_SyncLayer";
 		public static string WorldManagerSaveWorldMethod = "Save";
@@ -24,29 +24,29 @@
 		public static string WorldManagerGetSectorMethod = "GetSector";
 		public static string WorldManagerGetSessionNameMethod = "get_Name";
 
-		public static string WorldManagerInstanceField = "=iHp1wRxASKwluTuE6ZRcBr1tEt=";
-		public static string WorldManagerFactionManagerField = "=CQQ5bEg8wsyXQIIb8tgJVAWlvQ=";
-		public static string WorldManagerSessionSettingsField = "=h2we4UBWghQd1vXkt52UMKFEm0=";
+		public static string WorldManagerInstanceField = "<Static>k__BackingField";
+		public static string WorldManagerFactionManagerField = "Factions";
+		public static string WorldManagerSessionSettingsField = "Settings";
 
 		public static string WorldManagerSaveSnapshot = "Save";
 
-		public static string WorldSnapshotNamespace = "";
-		public static string WorldSnapshotStaticClass = "=BoBxxlO6NNIfr918q5l0NF4t5k=";
+		public static string WorldSnapshotNamespace = "Sandbox.Game.Screens.Helpers";
+		public static string WorldSnapshotStaticClass = "MyAsyncSaving";
 		public static string WorldSnapshotSaveMethod = "Start";
 
 		////////////////////////////////////////////////////////////////////
 
-		public static string WorldResourceManagerNamespace = "";
-		public static string WorldResourceManagerClass = "=eVTMVlP4PfCfeF0vXNraUAYQr7=";
+		public static string WorldResourceManagerNamespace = "Sandbox.Game.World";
+		public static string WorldResourceManagerClass = "MySessionSnapshot";
 
-		public static string WorldResourceManagerResourceLockField = "=Xl7JjDRg5FKWoieR6JiWECpB59=";
+		public static string WorldResourceManagerResourceLockField = "m_savingLock";
 
 		///////////////////////////////////////////////////////////////////
 
-		public static string SandboxGameNamespace = "";
-		public static string SandboxGameGameStatsClass = "=UnZ3XvpasoiU22GhaSLN7Oooqt=";
+		public static string SandboxGameNamespace = "Sandbox.Game";
+		public static string SandboxGameGameStatsClass = "MyGameStats";
 		public static string SandboxGameGetGameStatsInstance = "get_Static";
-		public static string SandboxGameGetUpdatesPerSecondField = "=FcpSLAzswrKm3Y1htxRDcGezBo=";
+		public static string SandboxGameGetUpdatesPerSecondField = "<UpdatesPerSecond>k__BackingField";
 
 		//////////////////////////////////////////////////////////////////
 

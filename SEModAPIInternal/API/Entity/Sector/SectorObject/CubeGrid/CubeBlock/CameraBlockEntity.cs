@@ -14,8 +14,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private bool m_isActive;
 
-		public static string CameraBlockNamespace = "";
-		public static string CameraBlockClass = "=QCcadxxSGXM4pmvgJ0k26zE4nB=";
+		public static string CameraBlockNamespace = "Sandbox.Game.Entities";
+		public static string CameraBlockClass = "MyCameraBlock";
 
 		public static string CameraBlockGetIsActiveMethod = "get_IsActive";
 		public static string CameraBlockSetIsActiveMethod = "set_IsActive";

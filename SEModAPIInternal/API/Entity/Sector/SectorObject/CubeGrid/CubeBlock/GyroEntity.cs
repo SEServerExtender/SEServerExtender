@@ -17,14 +17,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private GyroNetworkManager m_networkManager;
 
-		public static string GyroNamespace = "";
-		public static string GyroClass = "=Naf3gC9AWnHHOtllqy1OLLb5BL=";
+		public static string GyroNamespace = "Sandbox.Game.Entities";
+		public static string GyroClass = "MyGyro";
 
 		public static string GyroSetOverrideMethod = "set_GyroOverride";
 		public static string GyroSetPowerMethod = "set_GyroPower";
 		public static string GyroSetTargetAngularVelocityMethod = "SetGyroTorque";
 
-		public static string GyroNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
+		public static string GyroNetworkManagerField = "SyncObject";
 
 		#endregion "Attributes"
 

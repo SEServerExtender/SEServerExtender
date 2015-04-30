@@ -92,10 +92,10 @@
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ChatMessageStructNamespace = "";
-		public static string ChatMessageStructClass = "=0s41V8Fjmi5UgTia9mpcSpmVb6=";
+		public static string ChatMessageStructNamespace = "Sandbox.Engine.Multiplayer";
+		public static string ChatMessageStructClass = "ChatMsg";
 
-		public static string ChatMessageMessageField = "=1E7qaeCHzjZbPzDjaRW5iq5d10=";
+		public static string ChatMessageMessageField = "Text";
 
 		public event ChatEventDelegate ChatMessage;
 

@@ -511,8 +511,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		//687 - Range
 		//688 - Target settings (meteor on/off, missile on/off, moving on/off)
 
-		public static string TurretNetworkManagerNamespace = "";
-		public static string TurretNetworkManagerClass = "=84tFfP5aiJ9RHaU4zToO66WhUa=";
+		public static string TurretNetworkManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string TurretNetworkManagerClass = "MySyncLargeTurret";
 
 		public static string TurretNetworkManagerBroadcastTargetIdMethod = "SendChangeTarget";
 		public static string TurretNetworkManagerBroadcastRangeMethod = "SendChangeRangeRequest";

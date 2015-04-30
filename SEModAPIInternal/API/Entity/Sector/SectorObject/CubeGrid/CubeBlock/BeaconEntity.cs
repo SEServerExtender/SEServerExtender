@@ -14,8 +14,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private RadioManager m_radioManager;
 
-		public static string BeaconNamespace = "";
-		public static string BeaconClass = "=TuRG2bDnpLfkPdaN8Nr22GzDoH=";
+		public static string BeaconNamespace = "Sandbox.Game.Entities.Cube";
+		public static string BeaconClass = "MyBeacon";
 
 		public static string BeaconGetRadioManagerMethod = "get_RadioBroadcaster";
 

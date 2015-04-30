@@ -14,20 +14,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string LightNamespace = "";
-		public static string LightClass = "=FS9XaTQBULhE857hF1lkq5eY89=";
+		public static string LightNamespace = "Sandbox.Game.Entities.Blocks";
+		public static string LightClass = "MyLightingBlock";
 
 		public static string LightUpdateColorMethod = "set_Color";
 		public static string LightUpdateIntensityMethod = "set_Intensity";
 		public static string LightUpdateFalloffMethod = "set_Falloff";
 		public static string LightUpdateRadiusMethod = "set_Radius";
 
-		public static string LightNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
+		public static string LightNetworkManagerField = "SyncObject";
 
 		////////////////////////////////////////////////////////////////////////
 
-		public static string LightNetworkManagerNamespace = "";
-		public static string LightNetworkManagerClass = "=KQ3UhmTVDnlgjehKAcLT0Ldkte=";
+		public static string LightNetworkManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string LightNetworkManagerClass = "MySyncLightingBlock";
 
 		// Need to find this method update again, lights changed completely - I believe it changed to setting individual properties instead of all of them:
 		// Color, Radius, Falloff, Intensity, BlinkInterval, BlinkLength, BlinkOffset - 

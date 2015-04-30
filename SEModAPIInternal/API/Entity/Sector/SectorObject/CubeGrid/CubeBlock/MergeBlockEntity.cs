@@ -12,10 +12,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string MergeBlockNamespace = "";
-		public static string MergeBlockClass = "=YK6jgjDtIbOqkG0PSaYK8OgDCm=";
+		public static string MergeBlockNamespace = "Sandbox.Game.Entities.Blocks";
+		public static string MergeBlockClass = "MyShipMergeBlock";
 
-		public static string MergeBlockConnectedMergeBlockField = "=lx8f0RXA6W8t7SqmCKW5zoCHpf=";
+		public static string MergeBlockConnectedMergeBlockField = "m_other";
 
 		#endregion "Attributes"
 

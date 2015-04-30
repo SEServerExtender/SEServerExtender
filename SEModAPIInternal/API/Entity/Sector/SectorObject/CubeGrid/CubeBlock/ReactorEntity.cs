@@ -17,8 +17,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private float m_maxPowerOutput;
 		private DateTime m_lastInventoryRefresh;
 
-		public static string ReactorNamespace = "";
-		public static string ReactorClass = "=8zjCx0ti2Bhb0pNnUuSZ3jChGV=";
+		public static string ReactorNamespace = "Sandbox.Game.Entities";
+		public static string ReactorClass = "MyReactor";
 
 		public static string ReactorGetInventoryMethod = "GetInventory";
 		public static string ReactorSetMaxPowerOutputMethod = "set_MaxPowerOutput";

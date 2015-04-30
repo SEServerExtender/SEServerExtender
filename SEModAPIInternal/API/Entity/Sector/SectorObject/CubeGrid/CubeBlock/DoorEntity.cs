@@ -14,8 +14,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private bool m_state;
 
-		public static string DoorNamespace = "";
-		public static string DoorClass = "=wp7zXl4reE5K6JKn7fEub3oZLT=";
+		public static string DoorNamespace = "Sandbox.Game.Entities";
+		public static string DoorClass = "MyDoor";
 
 		public static string DoorGetStateMethod = "get_Open";
 		public static string DoorSetStateMethod = "set_Open";

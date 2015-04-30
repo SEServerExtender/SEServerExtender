@@ -15,14 +15,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private bool _weaponStatus;
 		private CharacterEntity _pilot;
 
-		public static string CockpitEntityNamespace = "";
-		public static string CockpitEntityClass = "=a46pBNaH1dvgjWHyn2Az7HnXm0=";
+		public static string CockpitEntityNamespace = "Sandbox.Game.Entities";
+		public static string CockpitEntityClass = "MyCockpit";
 
-		//public static string CockpitGetPilotEntityMethod = "C9A8295457C46F4DF5FC4DDBC7276287";
-		//public static string CockpitGetPilotEntityMethod = "B0B4C9DD7231024CD14A50DB178582C8";
 		public static string CockpitSetPilotEntityMethod = "AttachPilot";
 
-		public static string CockpitGetPilotEntityField = "=0olbllUszKBbT2Web0qxywjatAD=";
+		public static string CockpitGetPilotEntityField = "m_pilot";
 
 		#endregion "Attributes"
 

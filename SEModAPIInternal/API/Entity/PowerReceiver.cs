@@ -16,9 +16,9 @@ namespace SEModAPIInternal.API.Entity
 		private Func<float> m_powerRateCallback;
 
 		//Power Receiver Type
-		public static string PowerReceiverNamespace = "";
+		public static string PowerReceiverNamespace = "Sandbox.Game.GameSystems.Electricity";
 
-		public static string PowerReceiverClass = "=babgJs9QqKNc4MkX8NUlXXlEdH=";
+		public static string PowerReceiverClass = "MyPowerReceiver";
 
 		//Power Receiver Methods
 		public static string PowerReceiverRunPowerRateCallbackMethod = "Update";
@@ -28,17 +28,17 @@ namespace SEModAPIInternal.API.Entity
 		public static string PowerReceiverSetMaxRequiredInputMethod = "set_RequiredInput";
 
 		//Power Receiver Fields
-		public static string PowerReceiverMaxRequiredInputField = "=DQnFVF8DDXIHnCWpuaPGltdbq6g=";
+		public static string PowerReceiverMaxRequiredInputField = "MaxRequiredInput";
 
-		public static string PowerReceiverPowerRatioField = "=YFDFLyRS3s03wJ0SpppayhlNLH=";
-		public static string PowerReceiverInputRateCallbackField = "=h6hWnoHwe9fvx7FWapN4KPGeTR=";
+		public static string PowerReceiverPowerRatioField = "<SuppliedRatio>k__BackingField";
+		public static string PowerReceiverInputRateCallbackField = "m_requiredInputFunc";
 
 		////////////////////////////////////////////////////////////////////
 
 		//3 - Door, 4 - Gravity Generator, 5 - Battery, 8 - BatteryBlock
-		public static string PowerReceiverTypeEnumNamespace = "";
+		public static string PowerReceiverTypeEnumNamespace = "Sandbox.Game.GameSystems.Electricity";
 
-		public static string PowerReceiverTypeEnumClass = "Sandbox.Game.GameSystems.Electricity.MyConsumerGroupEnum";
+		public static string PowerReceiverTypeEnumClass = "MyConsumerGroupEnum";
 
 		#endregion "Attributes"
 

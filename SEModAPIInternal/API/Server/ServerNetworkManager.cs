@@ -34,102 +34,99 @@ namespace SEModAPIInternal.API.Server
 		private static List<ulong> m_inGame = new List<ulong>( );
 		private static Dictionary<ulong, Tuple<DateTime, int>> m_slowDown = new Dictionary<ulong, Tuple<DateTime, int>>( );
 
-		public static string ServerNetworkManagerNamespace = "";
-		public static string ServerNetworkManagerClass = "=O1XbQ6WcY6sEbcduBcq5Wrj8ok=";
+		public static string ServerNetworkManagerNamespace = "Sandbox.Engine.Multiplayer";
+		public static string ServerNetworkManagerClass = "MyDedicatedServer";
 
-		//public static string ServerNetworkManagerDisconnectPlayerMethod = "MyDedicatedServer_ClientLeft";
-		//public static string ServerNetworkManagerSetPlayerBannedMethod = "7746929EC77B732BB52EFC8FC757085D";
-		//public static string ServerNetworkManagerKickPlayerMethod = "33F8624DFE8A8E3FA9B8CC9A2446CCB8";
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "MyDedicatedServer_ClientLeft";
 		public static string ServerNetworkManagerSetPlayerBannedMethod = "BanClient";
 		public static string ServerNetworkManagerKickPlayerMethod = "KickClient";
 
-		public static string ServerNetworkManagerConnectedPlayersField = "=hrd2r4yATC2NCJnhqOpJBW6EOU=";
+		public static string ServerNetworkManagerConnectedPlayersField = "m_members";
 
 		///////////// All these need testing /////////////
-		public static string NetworkingNamespace = "";
-		public static string NetworkingOnWorldRequestField = "=brsw3F6mys5AacUJHYIS14TVH2=";
+		public static string NetworkingNamespace = "Sandbox.Engine.Networking";
+		public static string NetworkingOnWorldRequestField = "Callback";
 
-		public static string MyMultipartMessageClass = "=cDj6WIzYFodmTa89pvnrADNanH=";
+		public static string MyMultipartMessageClass = "MyMultipartMessage";
 		public static string MyMultipartMessagePreemble = "SendPreemble";
 
-		public static string MySyncLayerClass = "=KgBTSimjVMGbRzYnmrvyNW6go7=";
-		public static string MySyncLayerField = "=CuPFQfpJpbb8r5FyAD4AIHGjwn=";
+		public static string MySyncLayerClass = "MySyncLayer";
+		public static string MySyncLayerField = "SyncLayer";
 
-		public static string MyTransportLayerField = "=hh7T0u2R6UFfq7GWwBLvlXzDmY=";
+		public static string MyTransportLayerField = "TransportLayer";
 		public static string MyTransportLayerClearMethod = "SendFlush";
 
-		public static string MyMultipartSenderClass = "=mPqaTNwLBiwakf5CK3At5qdRPuP=";
+		public static string MyMultipartSenderClass = "MyMultipartSender";
 		public static string MyMultipartSenderSendPart = "SendPart";
 
 		public static string MySyncLayerSendMessage = "SendMessage";
 		public static string MySyncLayerSendMessageToServer = "SendMessageToServer";
 
-		public static string MyControlMessageCallbackClass = "";
-		public static string MyControlMessageHandlerClass = "=ejTBGKAhbRZPjUJjNkuRRlSLGh=";
+		public static string MyControlMessageCallbackClass = "MyControlMessageCallback`1";
+		public static string MyControlMessageHandlerClass = "ControlMessageHandler`1";
 
 		///////////// All these need testing /////////////
 
-		private static string MultiplayerNamespace = "";
+		private static string MultiplayerNamespace = "Sandbox.Game.Multiplayer";
 
-		private static string SendCloseClass = "=uTZ4uCH8frEHtn0VfQJ0coHE2v=";
-		private static string SendCloseClosedMsg = "=gWIXWndvNVwS3ts7qLawsCo4L6=";
-		private static string SendCloseClosedMsgEntityId = "=oU1leYhaRCXt3fs7qWXtuRa3yR=";
+		private static string SendCloseClass = "MySyncEntity";
+		private static string SendCloseClosedMsg = "ClosedMsg";
+		private static string SendCloseClosedMsgEntityId = "EntityId";
 
-		private static string SendCreateClass = "=r6VaZpriOkuuKqMuT2aPUQtWow=";
-		private static string SendCreateRelativeCompressedMsg = "=Jb9TlhCazLAuTwbBe9RenF4v7Q=";
-		private static string SendCreateCompressedMsg = "=P5EKdj3EJhVtTJV0b2GCB1xNHsc=";
+		private static string SendCreateClass = "MySyncCreate";
+		private static string SendCreateRelativeCompressedMsg = "CreateRelativeCompressedMsg";
+		private static string SendCreateCompressedMsg = "CreateCompressedMsg";
 
-		private static string SendCreateRelativeCompressedMsgCreateMessage = "=tQs567mzcxroGhjYr8lz1PqzoU=";
-		private static string SendCreateRelativeCompressedMsgBaseEntity = "=xruOKzLEhNYhebgpKfA5KhhhXQ=";
-		private static string SendCreateRelativeCompressedMsgRelativeVelocity = "=fhrdPJMxlPgyEkzKIN17aUZ71n=";
+		private static string SendCreateRelativeCompressedMsgCreateMessage = "CreateMessage";
+		private static string SendCreateRelativeCompressedMsgBaseEntity = "BaseEntity";
+		private static string SendCreateRelativeCompressedMsgRelativeVelocity = "RelativeVelocity";
 
-		private static string SendCreateCompressedMsgObjectBuilders = "=DH7Oztbz8DbiZ1r4yCr7zTe1nP=";
-		private static string SendCreateCompressedMsgBuilderLengths = "=5pfmIWWAOZCsIysc7YMDSWY13g=";
+		private static string SendCreateCompressedMsgObjectBuilders = "ObjectBuilders";
+		private static string SendCreateCompressedMsgBuilderLengths = "BuilderLengths";
 
-		private static string PlayerCollectionClass = "=DRGhkayMZHgcBGswfi83RRIYcc=";
+		private static string PlayerCollectionClass = "MyPlayerCollection";
 
-		private static string RespawnMsg = "=Eyig3zbAKk28MoFuUhwULbgO9h=";
-		private static string RespawnMsgJoinGame = "=A029yp2A0WBnWMZpQSa7psz5f2=";
-		private static string RespawnMsgNewIdenity = "=4Wq6erLoLZgEqlM1zSSWH2WWjO=";
-		private static string RespawnMsgMedicalRoom = "=ShCxItwZ8brXdPEkz0JNzn1Fxp=";
-		private static string RespawnMsgRespawnShipId = "=at6Sy5bwukZGZdQGJYlInzdVm8=";
-		private static string RespawnMsgPlayerSerialId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
+		private const string RespawnMsg = "RespawnMsg";
+		private const string RespawnMsgJoinGame = "JoinGame";
+		private const string RespawnMsgNewIdenity = "NewIdentity";
+		private const string RespawnMsgMedicalRoom = "MedicalRoom";
+		private const string RespawnMsgRespawnShipId = "RespawnShipId";
+		private const string RespawnMsgPlayerSerialId = "PlayerSerialId";
 
-		private static string CharacterClass = "=2f1qCclG2slBN6Vw5QbX1zDIG6=";
-		private static string AttachMsg = "=XEAo5lB7RgcI6LNeKCn5RQSxUd=";
-		private static string AttachCharacterId = "=QoeTaBdFG5hLQTySy0Rra15gNK=";
-		private static string AttachCockpitId = "=KTOQgaLVpUNcBVMewWW3FM4m3y=";
+		private const string MySyncCharacterClass = "MySyncCharacter";
+		private const string AttachToCockpitMsg = "AttachToCockpitMsg";
+		private const string AttachCharacterId = "CharacterEntityId";
+		private const string AttachCockpitId = "CockpitEntityId";
 
-		private static string ControllableClass = "=mk2iB8SwAcxjNcwkIM1EjyAgDq=";
-		private static string UseMsg = "=teayYzvyUnChFRguXuaAzby6dA=";
-		private static string UseMsgEntityId = "=oU1leYhaRCXt3fs7qWXtuRa3yR=";
-		private static string UseMsgUsedByEntityId = "=tYrDGqpzipKWJtDSv3yh7YoVyw=";
-		private static string UseMsgUseAction = "=qQBgTP4aIaCfxhNjdeAaCPQv9fr=";
-		private static string UseMsgActionResult = "=61UFXGPQBQkmqO1WnSNBjwgqVb=";
+		private const string ControllableClass = "MySyncControllableEntity";
+		private const string UseMsg = "UseObject_UseMsg";
+		private const string UseMsgEntityId = "EntityId";
+		private const string UseMsgUsedByEntityId = "UsedByEntityId";
+		private const string UseMsgUseAction = "UseAction";
+		private const string UseMsgActionResult = "UseResult";
 
-		private static string ModAPINamespace = "";
-		private static string ModAPIHelperClass = "=llwrhjftxf0UHKTxHfJpMmeCEs=";
-		private static string SendDataMessageClass = "=ccuaV71K6ms95rCYBXoWr8qjT2=";
-		private static string SendReliableMsg = "=1FUeCV7aAYZCGFd3KUhH5A0mEe=";
-		private static string SendReliableMsgId = "=uRgMOkIX0djjiF3VDo6Hr4CmJx=";
-		private static string SendReliableMsgData = "=WNLspkvjzVBe8e418uPlh3EhJN=";
+		private const string ModAPINamespace = "Sandbox.ModAPI";
+		private const string ModAPIHelperClass = "MyModAPIHelper";
+		private const string SendDataMessageClass = "MyMultiplayerSyncObject";
+		private const string SendReliableMsg = "CustomModMsg";
+		private const string SendReliableMsgId = "ModID";
+		private const string SendReliableMsgData = "Message";
 
-		private static string ControlChangedMsg = "=Py6oB722vMEMLvXlAoczDrpoOu=";
-		private static string ControlChangedMsgEntityId = "=oU1leYhaRCXt3fs7qWXtuRa3yR=";
-		private static string ControlChangedMsgSteamId = "=uj3LI43ZxE5HcfdPWFZSliFEA1=";
-		private static string ControlChangedMsgSerialId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
+		private const string ControlChangedMsg = "ControlChangedMsg";
+		private const string ControlChangedMsgEntityId = "EntityId";
+		private const string ControlChangedMsgSteamId = "ClientSteamId";
+		private const string ControlChangedMsgSerialId = "PlayerSerialId";
 
-		private static string SetPlayerDeadMsg = "=6pj8lSLelEguuqvNjgO6Hglqax=";
-		private static string SetPlayerDeadMsgSteamId = "=uj3LI43ZxE5HcfdPWFZSliFEA1=";
-		private static string SetPlayerDeadMsgSerialId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
-		private static string SetPlayerDeadMsgIsDead = "=vJoyYM9pjeoG12SSUAOQjNFTHG=";
+		private const string SetPlayerDeadMsg = "SetPlayerDeadMsg";
+		private const string SetPlayerDeadMsgSteamId = "ClientSteamId";
+		private const string SetPlayerDeadMsgSerialId = "PlayerSerialId";
+		private const string SetPlayerDeadMsgIsDead = "IsDead";
 
-		private static string CharacterChangedMsg = "=GLzqhdD8SwqaIlodUM9kTayE7u=";
-		private static string CharacterChangedMsgCharacterEntityId = "=QoeTaBdFG5hLQTySy0Rra15gNK=";
-		private static string CharacterChangedMsgControlledEntityId = "=rZPDoWdhk5ehIChJ7JrirJmF7k=";
-		private static string CharacterChangedMsgSteamId = "=uj3LI43ZxE5HcfdPWFZSliFEA1=";
-		private static string CharacterChangedMsgClientId = "=YtTbep5CcJrw9BQnTJKPIk1pIFC=";
+		private const string CharacterChangedMsg = "CharacterChangedMsg";
+		private const string CharacterChangedMsgCharacterEntityId = "CharacterEntityId";
+		private const string CharacterChangedMsgControlledEntityId = "ControlledEntityId";
+		private const string CharacterChangedMsgSteamId = "ClientSteamId";
+		private const string CharacterChangedMsgClientId = "PlayerSerialId";
 
 		#endregion
 
@@ -212,13 +209,13 @@ namespace SEModAPIInternal.API.Server
 				result &= BaseObject.HasField( respawnMsgType, RespawnMsgRespawnShipId );
 				result &= BaseObject.HasField( respawnMsgType, RespawnMsgPlayerSerialId );
 
-				Type type6 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, CharacterClass );
+				Type type6 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, MySyncCharacterClass );
 				if ( type5 == null )
-					throw new Exception( "Could not find internal type for CharacterClass" );
+					throw new Exception( "Could not find internal type for MySyncCharacterClass" );
 
-				Type attachMsgType = type6.GetNestedType( AttachMsg, BindingFlags.NonPublic | BindingFlags.Public );
+				Type attachMsgType = type6.GetNestedType( AttachToCockpitMsg, BindingFlags.NonPublic | BindingFlags.Public );
 				if ( attachMsgType == null )
-					throw new Exception( "Could not find internal type for AttachMsg" );
+					throw new Exception( "Could not find internal type for AttachToCockpitMsg" );
 
 				result &= BaseObject.HasField( attachMsgType, AttachCharacterId );
 				result &= BaseObject.HasField( attachMsgType, AttachCockpitId );
@@ -446,8 +443,8 @@ namespace SEModAPIInternal.API.Server
 
 		public static void AttachToCockpit( long characterId, long cockpitId, ulong steamId )
 		{
-			Type syncCharacterClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, CharacterClass );
-			Type attachMsgType = syncCharacterClassType.GetNestedType( AttachMsg, BindingFlags.NonPublic | BindingFlags.Public );
+			Type syncCharacterClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, MySyncCharacterClass );
+			Type attachMsgType = syncCharacterClassType.GetNestedType( AttachToCockpitMsg, BindingFlags.NonPublic | BindingFlags.Public );
 
 			FieldInfo attachCharacterId = attachMsgType.GetField( AttachCharacterId );
 			FieldInfo attachCockpitId = attachMsgType.GetField( AttachCockpitId );

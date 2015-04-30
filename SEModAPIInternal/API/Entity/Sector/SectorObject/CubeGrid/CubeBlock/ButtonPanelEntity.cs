@@ -14,8 +14,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		//private long _currentPlayerId;
 
-		public static string ButtonPanelNamespace = "";
-		public static string ButtonPanelClass = "=51h1yWMOSorv3CAc61MO8nFJJ0=";
+		public static string ButtonPanelNamespace = "Sandbox.Game.Entities";
+		public static string ButtonPanelClass = "MyRemoteControl";
 
 		//public static string ButtonPanelGetCurrentPlayerIdMethod = "";
 		//public static string ButtonPanelSetCurrentPlayerIdMethod = "";

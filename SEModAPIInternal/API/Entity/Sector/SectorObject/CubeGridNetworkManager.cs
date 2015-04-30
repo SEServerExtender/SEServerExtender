@@ -65,9 +65,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public static string CubeGridGetNetManagerMethod = "get_SyncObject";
 
 		//Definition
-		public static string CubeGridNetManagerNamespace = "";
+		public static string CubeGridNetManagerNamespace = "Sandbox.Game.Multiplayer";
 
-		public static string CubeGridNetManagerClass = "=zoXj9sAM1q8S0PhlB3s4jkZF7e=";
+		public static string CubeGridNetManagerClass = "MySyncGrid";
 
 		//Methods
 		public static string CubeGridNetManagerBroadcastCubeBlockBuildIntegrityValuesMethod = "SendIntegrityChanged";
@@ -77,11 +77,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public static string CubeGridNetManagerBroadcastAddCubeBlockMethod = "BuildBlocksSuccess";
 
 		//Fields
-		public static string CubeGridNetManagerCubeBlocksToDestroyField = "=XbM83NQKvFOEEzrVYjD6oxsh7d=";
+		public static string CubeGridNetManagerCubeBlocksToDestroyField = "m_destroyBlockQueue";
 
 		//////////////////////////////////////////////////////////////////
 
-		public static string CubeGridIntegrityChangeEnumNamespace = CubeGridEntity.CubeGridNamespace + "." + CubeGridEntity.CubeGridClass;
+		public static string CubeGridIntegrityChangeEnumNamespace = string.Format( "{0}.{1}", CubeGridEntity.CubeGridNamespace, CubeGridEntity.CubeGridClass );
 		public static string CubeGridIntegrityChangeEnumClass = "MyIntegrityChangeEnum";
 
 		#endregion "Attributes"

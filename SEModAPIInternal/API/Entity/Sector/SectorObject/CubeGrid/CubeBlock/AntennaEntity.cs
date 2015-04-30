@@ -14,8 +14,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private RadioManager m_radioManager;
 
-		public static string AntennaNamespace = "";
-		public static string AntennaClass = "=Jaud2hDz8fLVTEpqsW3FMuLjLj=";
+		public static string AntennaNamespace = "Sandbox.Game.Entities.Cube";
+		public static string AntennaClass = "MyRadioAntenna";
 
 		public static string AntennaGetRadioManagerMethod = "get_RadioBroadcaster";
 

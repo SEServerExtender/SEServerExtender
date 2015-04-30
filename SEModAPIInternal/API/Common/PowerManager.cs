@@ -12,8 +12,8 @@ namespace SEModAPIInternal.API.Common
 
 		protected Object m_powerManager;
 
-		public static string PowerManagerNamespace = "";
-		public static string PowerManagerClass = "=0byCEQZRaZUljJT3BnkqiceYaZ2=";
+		public static string PowerManagerNamespace = "Sandbox.Game.GameSystems.Electricity";
+		public static string PowerManagerClass = "MyPowerDistributor";
 
 		public static string PowerManagerRegisterPowerReceiverMethod = "AddConsumer";
 		public static string PowerManagerUnregisterPowerReceiverMethod = "RemoveConsumer";
@@ -22,9 +22,9 @@ namespace SEModAPIInternal.API.Common
 		public static string PowerManagerGetAvailablePowerMethod = "get_TotalRequiredInput";
 		public static string PowerManagerGetUsedPowerPercentMethod = "get_RemainingFuelTime";
 
-		public static string PowerManagerPowerReceiverHashSetField = "=AEoDnX2MCH8JabbCIv82dKGgdWc=";
-		public static string PowerManagerPowerProducerHashSetField = "=OF1fWtFbtbKuBYCQZT1RwqelGD=";
-		public static string PowerManagerTotalPowerField = "=F3vjA1VbQZ6h5a0yRFs7eUEDKm=";
+		public static string PowerManagerPowerReceiverHashSetField = "m_consumersByPriority";
+		public static string PowerManagerPowerProducerHashSetField = "m_producersByPriority";
+		public static string PowerManagerMaxAvailablePowerField = "m_maxAvailablePower";
 
 		#endregion "Attributes"
 
@@ -45,7 +45,7 @@ namespace SEModAPIInternal.API.Common
 			{
 				try
 				{
-					return m_powerManager != null ? (float) BaseObject.GetEntityFieldValue( m_powerManager, PowerManagerTotalPowerField ) : 0;
+					return m_powerManager != null ? (float) BaseObject.GetEntityFieldValue( m_powerManager, PowerManagerMaxAvailablePowerField ) : 0;
 				}
 				catch ( Exception ex )
 				{
@@ -91,7 +91,7 @@ namespace SEModAPIInternal.API.Common
 				result &= BaseObject.HasMethod( type1, PowerManagerGetUsedPowerPercentMethod );
 				result &= BaseObject.HasField( type1, PowerManagerPowerReceiverHashSetField );
 				result &= BaseObject.HasField( type1, PowerManagerPowerProducerHashSetField );
-				result &= BaseObject.HasField( type1, PowerManagerTotalPowerField );
+				result &= BaseObject.HasField( type1, PowerManagerMaxAvailablePowerField );
 
 				return result;
 			}

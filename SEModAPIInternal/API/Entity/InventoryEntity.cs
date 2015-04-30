@@ -32,8 +32,8 @@ namespace SEModAPIInternal.API.Entity
 		private InventoryItemManager m_itemManager;
 		private Queue<InventoryDelta> m_itemDeltaQueue;
 
-		public static string InventoryNamespace = "";
-		public static string InventoryClass = "=mazFMfE1HhxL19l3plK4hvEmGA=";
+		public static string InventoryNamespace = "Sandbox.Game";
+		public static string InventoryClass = "MyInventory";
 
 		public static string InventoryCalculateMassVolumeMethod = "RefreshVolumeAndMass";
 		public static string InventoryGetTotalVolumeMethod = "get_CurrentVolume";
@@ -423,12 +423,12 @@ namespace SEModAPIInternal.API.Entity
 
 		private InventoryEntity m_parentContainer;
 
-		public static string InventoryItemNamespace = "";
-		public static string InventoryItemClass = "=Jm6LVWsHj1NFGuqtqTheDghSPX=";
+		public static string InventoryItemNamespace = "Sandbox.Game";
+		public static string InventoryItemClass = "MyInventoryItem";
 
 		public static string InventoryItemGetObjectBuilderMethod = "GetObjectBuilder";
 
-		public static string InventoryItemItemIdField = "=4E6roGfagvQcqDT8xP531wSsud=";
+		public static string InventoryItemItemIdField = "ItemId";
 
 		#endregion "Attributes"
 

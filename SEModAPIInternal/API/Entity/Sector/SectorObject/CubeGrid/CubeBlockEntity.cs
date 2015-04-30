@@ -29,14 +29,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		private long m_owner;
 		private MyOwnershipShareModeEnum m_shareMode;
 
-		public static string CubeBlockNamespace = "";
-		public static string CubeBlockClass = "=Q6WknzTZKSlxBUSpPd9birHnHM=";
+		public static string CubeBlockNamespace = "Sandbox.Game.Entities.Cube";
+		public static string SlimBlockClass = "MySlimBlock";
 
 		public static string CubeBlockGetObjectBuilderMethod = "GetObjectBuilder";
 		public static string CubeBlockGetActualBlockMethod = "get_FatBlock";
 
-		//public static string CubeBlockDamageBlockMethod = "DoDamage";
-		//public static string CubeBlockDamageBlockMethod = "DoDamage";
 		public static string CubeBlockDamageBlockMethod = "DoDamage";
 
 		public static string CubeBlockGetBuildValueMethod = "get_BuildIntegrity";
@@ -51,10 +49,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		public static string CubeBlockGetBoneDamageMethod = "get_MaxDeformation";
 		public static string CubeBlockFixBonesMethod = "FixBones";
 
-		public static string CubeBlockParentCubeGridField = "=Wd4bOKsL0x6ZGo4FEr1QwUQS9s=";
-		public static string CubeBlockColorMaskHSVField = "=8QhDIJJXEtEHadk6EZwVOcIJYl=";
-		public static string CubeBlockConstructionManagerField = "=OviXvN1r6opeXc05tiwopPdJf7=";
-		public static string CubeBlockCubeBlockDefinitionField = "=AAmEIud4ynYzd5Q4F7luHvih41=";
+		public static string CubeBlockParentCubeGridField = "m_cubeGrid";
+		public static string CubeBlockColorMaskHSVField = "ColorMaskHSV";
+		public static string CubeBlockConstructionManagerField = "m_componentStack";
+		public static string CubeBlockCubeBlockDefinitionField = "BlockDefinition";
 
 		/////////////////////////////////////////////////////
 
@@ -66,21 +64,20 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		public static string ActualCubeBlockSetFactionsDataMethod = "ChangeOwner";
 		public static string ActualCubeBlockGetMatrixMethod = "get_WorldMatrix";
 
-		//public static string ActualCubeBlockGetOwnerMethod = "5CE075E5E73578252A4A030502881491";
 		public static string ActualCubeBlockGetOwnerMethod = "get_OwnerId";
 
 		/////////////////////////////////////////////////////
 
-		public static string FactionsDataNamespace = "";
-		public static string FactionsDataClass = "=wTusAoAA9gd1xro87X9yESfe4W=";
+		public static string FactionsDataNamespace = "Sandbox.Game.Entities";
+		public static string FactionsDataClass = "MyIDModule";
 
-		public static string FactionsDataOwnerField = "=YgdgyLfBJmRD6iDXj84kTwFowF=";
-		public static string FactionsDataShareModeField = "=LUf55ivE1dgbhUWJ1VsVVGRFc=";
+		public static string FactionsDataOwnerField = "m_owner";
+		public static string FactionsDataShareModeField = "ShareMode";
 
 		/////////////////////////////////////////////////////
 
-		public static string ConstructionManagerNamespace = "";
-		public static string ConstructionManagerClass = "=Jf01Hh51ImVzDWapGIJDtoI84J=";
+		public static string ConstructionManagerNamespace = "Sandbox.Game.Entities";
+		public static string ConstructionManagerClass = "MyComponentStack";
 
 		public static string ConstructionManagerSetIntegrityBuildValuesMethod = "SetIntegrity";
 		public static string ConstructionManagerGetBuildValueMethod = "get_BuildIntegrity";
@@ -89,8 +86,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 		public static string ConstructionManagerGetBuildPercentMethod = "get_BuildRatio";
 		public static string ConstructionManagerGetIntegrityPercentMethod = "get_IntegrityRatio";
 
-		public static string ConstructionManagerIntegrityValueField = "=WEy9w0GiMfb8Ob9AGVRD7bSrYm=";
-		public static string ConstructionManagerBuildValueField = "=mhgFjGDZHyEs8YNANDHNmZrAlJ=";
+		public static string ConstructionManagerIntegrityValueField = "m_integrity";
+		public static string ConstructionManagerBuildValueField = "m_buildIntegrity";
 
 		#endregion "Attributes"
 
@@ -154,7 +151,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			get
 			{
 				if ( m_internalType == null )
-					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeBlockNamespace, CubeBlockClass );
+					m_internalType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeBlockNamespace, SlimBlockClass );
 				return m_internalType;
 			}
 		}

@@ -10,6 +10,7 @@ namespace SEModAPI.API.Definitions
 	using System.Runtime.Serialization;
 	using System.Windows.Forms.Design;
 	using System.Xml;
+	using System.Xml.Serialization;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.Support;
@@ -17,9 +18,9 @@ namespace SEModAPI.API.Definitions
 	[DataContract]
 	public class DedicatedConfigDefinition
 	{
-		private readonly MyConfigDedicatedData _definition;
+		private readonly MyConfigDedicatedData<MyObjectBuilder_SessionSettings> _definition;
 
-		public DedicatedConfigDefinition( MyConfigDedicatedData definition )
+		public DedicatedConfigDefinition( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> definition )
 		{
 			_definition = definition;
 		}
@@ -1045,7 +1046,7 @@ namespace SEModAPI.API.Definitions
 		/// <exception cref="FileNotFoundException">Thrown if configuration file cannot be found at the path specified.</exception>
 		/// <returns></returns>
 		/// <exception cref="ConfigurationErrorsException">Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.</exception>
-		public static MyConfigDedicatedData Load( FileInfo fileInfo )
+		public static MyConfigDedicatedData<MyObjectBuilder_SessionSettings> Load( FileInfo fileInfo )
 		{
 			object fileContent;
 
@@ -1058,29 +1059,17 @@ namespace SEModAPI.API.Definitions
 
 			try
 			{
-				XmlReaderSettings settings = new XmlReaderSettings
+				using ( TextReader rdr = File.OpenText( filePath ) )
 				{
-					IgnoreComments = true,
-					IgnoreWhitespace = true,
-				};
-
-				using ( XmlReader xmlReader = XmlReader.Create( filePath, settings ) )
-				{
-					MyConfigDedicatedDataSerializer serializer = (MyConfigDedicatedDataSerializer)Activator.CreateInstance( typeof( MyConfigDedicatedDataSerializer ) );
-					fileContent = serializer.Deserialize( xmlReader );
+					XmlSerializer deserializer = new XmlSerializer( typeof( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> ) );
+					MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = (MyConfigDedicatedData<MyObjectBuilder_SessionSettings>)deserializer.Deserialize( rdr );
+					return config;
 				}
 			}
 			catch ( Exception ex )
 			{
 				throw new ConfigurationErrorsException( "Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.", ex, filePath, -1 );
 			}
-
-			if ( fileContent == null )
-			{
-				throw new ConfigurationErrorsException( "Configuration file empty." );
-			}
-
-			return (MyConfigDedicatedData)fileContent;
 		}
 
 		public bool Save( FileInfo fileInfo )
@@ -1095,7 +1084,7 @@ namespace SEModAPI.API.Definitions
 					xmlTextWriter.Formatting = Formatting.Indented;
 					xmlTextWriter.Indentation = 2;
 					xmlTextWriter.IndentChar = ' ';
-					MyConfigDedicatedDataSerializer serializer = (MyConfigDedicatedDataSerializer)Activator.CreateInstance( typeof( MyConfigDedicatedDataSerializer ) );
+					XmlSerializer serializer = new XmlSerializer( typeof( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> ) );
 					serializer.Serialize( xmlTextWriter, _definition );
 				}
 			}

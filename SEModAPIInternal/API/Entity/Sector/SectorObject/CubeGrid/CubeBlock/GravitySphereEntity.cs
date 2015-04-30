@@ -12,8 +12,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		public static string GravitySphereNamespace = "";
-		public static string GravitySphereClass = "=H4poEFhzHwlXDXKvslKQChDub8=";
+		public static string GravitySphereNamespace = "Sandbox.Game.Entities";
+		public static string GravitySphereClass = "MyGravityGeneratorSphere";
 
 		public static string GravitySphereSetFieldRadiusMethod = "set_Radius";
 

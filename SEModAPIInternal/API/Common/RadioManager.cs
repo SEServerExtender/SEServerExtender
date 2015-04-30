@@ -17,19 +17,17 @@ namespace SEModAPIInternal.API.Common
 		private bool m_isEnabled;
 		private int m_aabbTreeId;
 
-		public static string RadioManagerNamespace = "";
-		public static string RadioManagerClass = "=CwVM7BADbqpHpB6u9jbaBjpyXD=";
+		public static string RadioManagerNamespace = "Sandbox.Game.Entities.Cube";
+		public static string RadioManagerClass = "MyRadioBroadcaster";
 
 		public static string RadioManagerGetBroadcastRadiusMethod = "get_BroadcastRadius";
 		public static string RadioManagerSetBroadcastRadiusMethod = "set_BroadcastRadius";
-		//public static string RadioManagerGetLinkedEntityMethod = "7DE57FDDF37DD6219A990596E0283F01";
-		//public static string RadioManagerSetLinkedEntityMethod = "1C653F74AF87659F7AA9B39E35D789CE";
 		public static string RadioManagerGetEnabledMethod = "get_Enabled";
 		public static string RadioManagerSetEnabledMethod = "set_Enabled";
 		public static string RadioManagerGetAABBTreeIdMethod = "get_RadioProxyID";
 		public static string RadioManagerSetAABBTreeIdMethod = "set_RadioProxyID";
 
-		public static string RadioManagerNetworkManagerField = "=gNAvpmtOwXYmmcG9ynRDGRitUw=";
+		public static string RadioManagerNetworkManagerField = "SyncObject";
 
 		#endregion "Attributes"
 
@@ -209,8 +207,8 @@ namespace SEModAPIInternal.API.Common
 
 		private RadioManager m_parent;
 
-		public static string RadioManagerNetManagerNamespace = "";
-		public static string RadioManagerNetManagerClass = "=VoqSmlEdXY72n1HyjX9bKJigDP=";
+		public static string RadioManagerNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string RadioManagerNetManagerClass = "MySyncRadioBroadcaster";
 
 		public static string RadioManagerNetManagerBroadcastRadiusMethod = "SendChangeRadioAntennaRequest";
 		public static string RadioManagerNetManagerBroadcastEnabledMethod = "SendChangeRadioAntennaDisplayName";

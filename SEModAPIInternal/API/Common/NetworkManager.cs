@@ -47,56 +47,56 @@ namespace SEModAPIInternal.API.Common
 		protected static MethodInfo m_registerPacketHandlerMethod3;
 
 		//This class is just a container for some basic steam game values as well as the actual network manager instance
-		public static string NetworkManagerWrapperNamespace = "";
-		public static string NetworkManagerWrapperClass = "=yhQOBRq7Aut6NmIMALEjdrfhpG=";
-		public static string NetworkManagerWrapperManagerInstanceField = "=7qTITGYD99C8zJuRX4MmJLozdJ=";
-		public static string NetworkManagerControlType = "=m8iVi2PqjOIPzevypouAk2W6Hq=";
+		public static string NetworkManagerWrapperNamespace = "Sandbox.Engine.Multiplayer";
+		public static string NetworkManagerWrapperClass = "MyMultiplayer";
+		public static string NetworkManagerWrapperManagerInstanceField = "Static";
+		public static string NetworkManagerControlType = "ITransportCallback";
 
 		//This is an abstract class that the actual network managers implement
-		public static string NetworkManagerNamespace = "";
-		public static string NetworkManagerClass = "=GygYZULhRyAiF3TANWoXH1JiRg=";
+		public static string NetworkManagerNamespace = "Sandbox.Engine.Multiplayer";
+		public static string NetworkManagerClass = "MyMultiplayerBase";
 		public static string NetworkManagerSendStructMethod = "SendControlMessage";
 		public static string NetworkManagerRegisterChatReceiverMethod = "add_ChatMessageReceived";
-		public static string NetworkManagerInternalNetManagerField = "=CuPFQfpJpbb8r5FyAD4AIHGjwn=";
-		public static string NetworkManagerControlHandlerField = "=NzMKuWxQ0vOXu5T6HmvC6tpUUc=";
+		public static string NetworkManagerInternalNetManagerField = "SyncLayer";
+		public static string NetworkManagerControlHandlerField = "m_controlMessageHandlers";
 
-		public static string InternalNetManagerNamespace = "";
-		public static string InternalNetManagerClass = "=KgBTSimjVMGbRzYnmrvyNW6go7=";
-		public static string InternalNetManagerPacketRegistryField = "=hh7T0u2R6UFfq7GWwBLvlXzDmY=";
+		public static string InternalNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string InternalNetManagerClass = "MySyncLayer";
+		public static string InternalNetManagerPacketRegistryField = "TransportLayer";
 		public static string InternalNetManagerSendToAllExceptMethod = "SendMessageToAllButOne";
 		public static string InternalNetManagerSendToAllMethod = "SendMessageToAll";
 
-		public static string PacketRegistryNamespace = "";
-		public static string PacketRegistryClass = "=4JBu7DsRvLxNJpspmI41mb52sk=";
-		public static string PacketRegistryTypeIdMapField = "=zugV8aykXlkbgMxStoBGUhs2bp=";
+		public static string PacketRegistryNamespace = "Sandbox.Game.Multiplayer";
+		public static string PacketRegistryClass = "MyTransportLayer";
+		public static string PacketRegistryTypeIdMapField = "TypeMap";
 
 		//36CC7CE820B9BBBE4B3FECFEEFE4AE86.7B6560DE2B6A29DE7F0157E9CDFFCC37.7AEDE70A5F16434A660FC187077FC86F
 
 		/////////////////////////////////////////////////
 
 		//1 Packet Type
-		public static string GravityGeneratorNetManagerNamespace = "";
-		public static string GravityGeneratorNetManagerClass = "=nGwdEtFYaCm6bR0Txrd3wcoHFf=";
+		public static string GravityGeneratorNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string GravityGeneratorNetManagerClass = "MySyncGravityGenerator";
 
 		//2 Packet Types
-		public static string TerminalFunctionalBlocksNetManagerNamespace = "";
-		public static string TerminalFunctionalBlocksNetManagerClass = "=KCSGcFwun9p2jMN39F3QKMyUVG=";
+		public static string TerminalFunctionalBlocksNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string TerminalFunctionalBlocksNetManagerClass = "MySyncBlockHelpers";
 
 		//2+ Packet Types
-		public static string InventoryNetManagerNamespace = "";
-		public static string InventoryNetManagerClass = "=VvHtMfzhu4ubefR4eLqHZvYfA4=";
+		public static string InventoryNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string InventoryNetManagerClass = "MySyncInventory";
 
 		//1 Packet Type
-		public static string ConveyorEnabledBlockNetManagerNamespace = "";
-		public static string ConveyorEnabledBlockNetManagerClass = "=WAOtB3ZL3CsDDxyGQwZtuaoRHK=";
+		public static string ConveyorEnabledBlockNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string ConveyorEnabledBlockNetManagerClass = "MySyncConveyors";
 
 		//3 Packet Types
-		public static string FloatingObjectNetManagerNamespace = "";
-		public static string FloatingObjectNetManagerClass = "=1UtSo3i5OV66klidr9wYTmcxyS=";
+		public static string FloatingObjectNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string FloatingObjectNetManagerClass = "MySyncFloatingObjects";
 
 		//2 Packet Types
-		public static string VoxelMapNetManagerNamespace = "";
-		public static string VoxelMapNetManagerClass = "=KzM2HkTyCMrBilsbQ3wAsP34Aq=";
+		public static string VoxelMapNetManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string VoxelMapNetManagerClass = "MySyncVoxel";
 
 
 		#endregion

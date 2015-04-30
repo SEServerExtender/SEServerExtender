@@ -12,8 +12,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private GyroEntity m_parent;
 		private Object m_backingObject;
 
-		public static string GyroNetworkManagerNamespace = "";
-		public static string GyroNetworkManagerClass = "=oxJceWENGF516EExThNDB8OIOS=";
+		public static string GyroNetworkManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string GyroNetworkManagerClass = "MySyncGyro";
 
 		//Packet ID 7587
 		public static string GyroNetworkManagerBroadcastOverrideMethod = "SendGyroOverrideRequest";

@@ -3,6 +3,7 @@ namespace SEModAPIExtensions.API
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using SEModAPIInternal.API.Common;
@@ -35,7 +36,7 @@ namespace SEModAPIExtensions.API
 
 		public void SpawnCargoShipGroup( bool spawnAtAsteroids = true, ulong remoteUserId = 0 )
 		{
-			double worldSize = SandboxGameAssemblyWrapper.Instance.GetServerConfig( ).SessionSettings.WorldSizeKm * 1000.0d;
+			double worldSize = MySandboxGame.ConfigDedicated.SessionSettings.WorldSizeKm * 1000d;
 			double spawnSize = 0.25d * worldSize;
 			double destinationSize = 0.02d * spawnSize;
 

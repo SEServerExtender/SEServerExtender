@@ -6,6 +6,7 @@
 	using System.Reflection;
 	using System.Threading;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Engine.Utils;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage.FileSystem;
@@ -17,7 +18,6 @@
 		private Assembly m_assembly;
 
 		protected static SandboxGameAssemblyWrapper m_instance;
-		protected static bool m_gatewayInitialzed;
 		protected static Thread m_gameThread;
 		protected static string m_instanceName;
 
@@ -29,60 +29,49 @@
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string MainGameNamespace = "";
-		public static string MainGameClass = "=JbLZcQ0hj347engCZ44EtlRZjA=";
+		public static string MainGameNamespace = "Sandbox";
+		public static string MainGameClass = "MySandboxGame";
 
 		public static string MainGameEnqueueActionMethod = "Invoke";
 		public static string MainGameGetTimeMillisMethod = "get_TotalGamePlayTimeInMilliseconds";
 		public static string MainGameExitMethod = "EndLoop";
 		public static string MainGameDisposeMethod = "Dispose";
 
-		public static string MainGameInstanceField = "=7qTITGYD99C8zJuRX4MmJLozdJ=";
-		public static string MainGameConfigContainerField = "=2pBMOL3zIdsqp8CDhqTzegniOR=";
-		public static string MainGameIsLoadedField = "=lxpQpM8HDsUzmtXB86WSyPLJoo=";
-		public static string MainGameLoadingCompleteActionField = "=Sv41JciNGhgoQ30Av1MsYFmTDE=";
-		public static string MainGameMyLogField = "=651BcwYE08Rl3znxPmzJaTB6gmc=";
+		public static string MainGameInstanceField = "Static";
+		public static string MainGameConfigContainerField = "ConfigDedicated";
+		public static string MainGameIsLoadedField = "isFirstUpdateDone";
+		public static string MainGameLoadingCompleteActionField = "OnSessionReady";
+		public static string MainGameMyLogField = "Log";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ServerCoreNamespace = "";
-		public static string ServerCoreClass = "=f3Z6Ndh0u8AiCd1RYvZsU5Dv7T=";
+		public static string ServerCoreNamespace = "Sandbox.Engine.Platform";
+		public static string ServerCoreClass = "Game";
 
-		public static string ServerCoreNullRenderField = "=nzs8s84ImxtauGKUXygMgIpinN=";
-
-		/////////////////////////////////////////////////////////////////////////////
-
-		public static string GameConstantsNamespace = "";
-		public static string GameConstantsClass = "=Qf8bCAQhfztrGrjRhh0cHn7vi2=";
+		public static string ServerCoreNullRenderField = "IsDedicated";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string ConfigContainerNamespace = "";
-		public static string ConfigContainerClass = "=H1P2jEZdfoahFOXwBy7s06kFWr=";
-
-		//public static string ConfigContainerGetConfigDataMethod = "4DD64FD1D45E514D01C925D07B69B3BE";
-		public static string ConfigContainerGetConfigDataMethod = "Load";
-
-		public static string ConfigContainerDedicatedDataField = "=hvY6QCkRIywBS3UbXAe445CTvK=";
+		public static string GameConstantsNamespace = "Sandbox.Engine.Utils";
+		public static string GameConstantsClass = "MyFakes";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string CubeBlockObjectFactoryNamespace = "";
-		public static string CubeBlockObjectFactoryClass = "=q3M4XNDkDZisDtwxMVfGjNwTcw=";
+		public static string CubeBlockObjectFactoryNamespace = "Sandbox.Game.Entities.Cube";
+		public static string CubeBlockObjectFactoryClass = "MyCubeBlockFactory";
 
 		public static string CubeBlockObjectFactoryGetBuilderFromEntityMethod = "CreateObjectBuilder";
 
 		/////////////////////////////////////////////////////////////////////////////
 
-		public static string EntityBaseObjectFactoryNamespace = "";
-		public static string EntityBaseObjectFactoryClass = "=iXKU6ehmc24G5brre7PFeSWgPb=";
+		public static string EntityBaseObjectFactoryNamespace = "Sandbox.Game.Entities";
+		public static string EntityBaseObjectFactoryClass = "MyEntityFactory";
 		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "CreateObjectBuilder";
-
+		
 		////////////////////////////////////////////////////////////////////////////////
-		private const string MyAPIGatewayNamespace = "91D02AC963BE35D1F9C1B9FBCFE1722D";
-
-		private const string MyAPIGatewayClass = "4C1ED56341F07A7D73298D03926F04DE";
-		private const string MyAPIGatewayInitMethod = "0DE98737B4717615E252D27A4F3A2B44";
+		private const string MyAPIGatewayNamespace = "Sandbox.ModAPI";
+		
+		private const string MyAPIGatewayClass = "MyAPIGateway";
 
 		#endregion "Attributes"
 
@@ -94,7 +83,6 @@
 			IsDebugging = false;
 			UseCommonProgramData = false;
 			IsInSafeMode = false;
-			m_gatewayInitialzed = false;
 			m_gameThread = null;
 
 			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll" );
@@ -157,15 +145,6 @@
 			}
 		}
 
-		public static Type ConfigContainerType
-		{
-			get
-			{
-				Type type = Instance.GetAssemblyType( ConfigContainerNamespace, ConfigContainerClass );
-				return type;
-			}
-		}
-
 		public static Type CubeBlockObjectFactoryType
 		{
 			get
@@ -208,23 +187,6 @@
 			{
 				Type type = Instance.GetAssemblyType( MyAPIGatewayNamespace, MyAPIGatewayClass );
 				return type;
-			}
-		}
-
-		public static void InitAPIGateway( )
-		{
-			try
-			{
-				if ( m_gatewayInitialzed )
-					return;
-
-				BaseObject.InvokeStaticMethod( APIGatewayType, MyAPIGatewayInitMethod );
-				ApplicationLog.BaseLog.Info( "MyAPIGateway Initialized" );
-				m_gatewayInitialzed = true;
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -284,21 +246,6 @@
 			}
 		}
 
-		private Object GetServerConfigContainer( )
-		{
-			try
-			{
-				Object configObject = BaseObject.GetEntityFieldValue( MainGame, MainGameConfigContainerField );
-
-				return configObject;
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
-				return null;
-			}
-		}
-
 		public static bool ReflectionUnitTest( )
 		{
 			try
@@ -325,12 +272,6 @@
 				Type type3 = GameConstantsType;
 				if ( type3 == null )
 					throw new Exception( "Could not find physics manager type for GameConstants" );
-
-				Type type4 = ConfigContainerType;
-				if ( type4 == null )
-					throw new Exception( "Could not find physics manager type for ConfigContainer" );
-				result &= BaseObject.HasMethod( type4, ConfigContainerGetConfigDataMethod );
-				result &= BaseObject.HasField( type4, ConfigContainerDedicatedDataField );
 
 				return result;
 			}
@@ -543,27 +484,6 @@
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
-			}
-		}
-
-		public MyConfigDedicatedData GetServerConfig( )
-		{
-			try
-			{
-				Object configContainer = GetServerConfigContainer( );
-				MyConfigDedicatedData config = (MyConfigDedicatedData)BaseObject.GetEntityFieldValue( configContainer, ConfigContainerDedicatedDataField );
-				if ( config == null )
-				{
-					BaseObject.InvokeEntityMethod( configContainer, ConfigContainerGetConfigDataMethod );
-					config = (MyConfigDedicatedData)BaseObject.GetEntityFieldValue( configContainer, ConfigContainerDedicatedDataField );
-				}
-
-				return config;
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
-				return null;
 			}
 		}
 

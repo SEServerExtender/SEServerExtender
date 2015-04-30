@@ -18,8 +18,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		private InventoryEntity m_inputInventory;
 		private InventoryEntity m_outputInventory;
 
-		public static string ProductionBlockNamespace = "";
-		public static string ProductionBlockClass = "=iWpDUaii693COLkVnnyRHzjQ5G=";
+		public static string ProductionBlockNamespace = "Sandbox.Game.Entities.Cube";
+		public static string ProductionBlockClass = "MyProductionBlock";
 
 		public static string ProductionBlockGetInputInventoryMethod = "GetInventory";
 		public static string ProductionBlockGetOutputInventoryMethod = "GetInventory";
@@ -27,9 +27,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string ProductionBlockSetQueueMethod = "SwapQueue";
 		public static string ProductionBlockTriggerQueueChangedCallbackMethod = "UpdatePower";
 
-		public static string ProductionBlockQueueField = "=FBZBIAZYOlQe8fvktZmOnSLvpf=";
+		public static string ProductionBlockQueueField = "m_queue";
 
-		public static string ProductionBlockQueueItemStruct = "=Yx7EZD3DXtebnUYA0dNbNQfeKV=";
+		public static string ProductionBlockQueueItemStruct = "QueueItem";
 
 		#endregion "Attributes"
 

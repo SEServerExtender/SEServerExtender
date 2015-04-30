@@ -15,8 +15,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		private bool m_dampenersEnabled;
 
-		public static string CubeGridThrusterManagerNamespace = "";
-		public static string CubeGridThrusterManagerClass = "=RQ6GT5VPdcFWeja6eus3dlb5mI=";
+		public static string CubeGridThrusterManagerNamespace = "Sandbox.Game.GameSystems";
+		public static string CubeGridThrusterManagerClass = "MyGridThrustSystem";
 
 		public static string CubeGridThrusterManagerGetEnabled = "get_DampenersEnabled";
 		public static string CubeGridThrusterManagerSetEnabled = "set_DampenersEnabled";

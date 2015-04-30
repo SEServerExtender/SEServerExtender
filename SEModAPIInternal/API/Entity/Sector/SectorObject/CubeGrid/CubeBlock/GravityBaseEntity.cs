@@ -14,8 +14,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		private float m_acceleration;
 
-		public static string GravityBaseNamespace = "";
-		public static string GravityBaseClass = "=Gzts3NqimVWYP0iJIkraScr0Ks=";
+		public static string GravityBaseNamespace = "Sandbox.Game.Entities";
+		public static string GravityBaseClass = "MyGravityGeneratorBase";
 
 		public static string GravityBaseSetAccelerationMethod = "set_GravityAcceleration";
 

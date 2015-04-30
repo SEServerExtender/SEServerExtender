@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Reflection;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Entity;
@@ -33,9 +34,9 @@
 
             public InternalIdentityItem(Object source)
             {
-                Name = (string)BaseObject.GetEntityFieldValue(source, "=B8PXSHqLp25RBGOdmCis2sKmta=");
-				Model = (string)BaseObject.GetEntityFieldValue(source, "=BD1UO2NAjZuOCLGyyxuxvZ5l9Q=");
-				PlayerId = (long)BaseObject.GetEntityFieldValue(source, "=rtuCuyLjrqvR3q9lO6M8YE5s0J=");
+				Name = (string)BaseObject.GetEntityFieldValue( source, "<DisplayName>k__BackingField" );
+				Model = (string)BaseObject.GetEntityFieldValue( source, "<Model>k__BackingField" );
+				PlayerId = (long)BaseObject.GetEntityFieldValue(source, "<IdentityId>k__BackingField");
                 EntityId = 0;
             }
         }
@@ -47,8 +48,8 @@
 
             public InternalClientItem(Object source)
             {
-				SteamId = (ulong)BaseObject.GetEntityFieldValue(source, "=v9sY9LgUjONNh6if6qNSY0DAB1=");
-				SerialId = (int)BaseObject.GetEntityFieldValue(source, "=XsMYhA4RpNUSkeiMbDzUmwOzax=");
+				SteamId = (ulong)BaseObject.GetEntityFieldValue( source, "SteamId" );
+				SerialId = (int)BaseObject.GetEntityFieldValue( source, "SerialId" );
             }
 
 			public InternalClientItem(IMyPlayer player)
@@ -124,30 +125,29 @@
 
 		private static PlayerMap _instance;
 
-		public static string PlayerMapNamespace = "";
-		public static string PlayerMapClass = "=DRGhkayMZHgcBGswfi83RRIYcc=";
+		public static string PlayerMapNamespace = "Sandbox.Game.Multiplayer";
+		public static string PlayerMapClass = "MyPlayerCollection";
 
-        public static string PlayerMapGetPlayerItemMappingField = "=nwt286BXGi9AELvLOkhjWLbmxe3=";
-        public static string PlayerMapGetSteamItemMappingField = "=sreefa2InAx7IxNYE9rdYCVJW7=";
+		public static string PlayerMapGetPlayerItemMappingField = "m_allIdentities";
+		public static string PlayerMapGetSteamItemMappingField = "m_playerIdentityIds";
 		public static string PlayerMapGetFastPlayerIdFromSteamIdMethod = "TryGetIdentityId";
 		public static string PlayerMapGetFastIdentityFromPlayerIdMethod = "TryGetIdentity";
-		public static string PlayerMapGetFastIdentityNameField = "=B8PXSHqLp25RBGOdmCis2sKmta=";
-		public static string PlayerMapGetFastStreamIdFromPlayerId = "";
+		public static string PlayerMapGetFastIdentityNameField = "<DisplayName>k__BackingField";
 
-		public static string PlayerMapSessionNamespace = "";
-		public static string PlayerMapSessionClass = "=GND6z8idGdIAcWcb2YBaSnRMp7=";
-		public static string PlayerMapSessionCameraField = "=IG2GK7sB3xsB5eFsL2B0XDgz3l=";
-		public static string PlayerMapCameraDataClass = "=Eveq1oFdjy7EIBPUC0ToMTRCSM=";
-		public static string PlayerMapGetCameraDataField = "=3anAXWGikB6XQYAajgxQ6B4nMx=";
+		public static string PlayerMapSessionNamespace = "Sandbox.Game.World";
+		public static string PlayerMapSessionClass = "MySession";
+		public static string PlayerMapSessionCameraField = "Cameras";
+		public static string PlayerMapCameraDataClass = "MyCameraCollection";
+		public static string PlayerMapGetCameraDataField = "m_entityCameraSettings";
 
 		public static string PlayerMapForceDisplaySpawnMenu = "OnRespawnRequestFailure";
 
 		public static string PlayerMapCreateNewPlayerInternalMethod = "CreateNewPlayerInternal";
 		public static string PlayerMapCreateMyIdentity = "CreateNewIdentity";
-		public static string PlayerMapPlayerDictionary = "=O4YjedVCdgQCHX3Dy1MI3JBYdh=";
+		public static string PlayerMapPlayerDictionary = "m_players";
 
-		public static string PlayerMapPlayerIdentity = "=1lfdD2iuwsELsWaBfIBofPIEK0=";
-		public static string PlayerMapIdentityPlayerId = "=rtuCuyLjrqvR3q9lO6M8YE5s0J=";
+		public static string PlayerMapPlayerIdentity = "<Identity>k__BackingField";
+		public static string PlayerMapIdentityPlayerId = "<IdentityId>k__BackingField";
 
         // SteamIdToPlayerId? public long TryGetIdentityId(ulong u00336ADF4D8C43635669729322024D2AD33, int u0032FA8049E153F637DEA99600B785ECCA0 = 0)
 
@@ -843,8 +843,8 @@
 		//public static string PlayerManagerClass = "08FBF1782D25BEBDA2070CAF8CE47D72";
         //public static string PlayerManagerPlayerMapField = "3F86E23829227B55C95CEB9F813578B2";
 
-        public static string PlayerManagerNamespace = "";
-        public static string PlayerManagerClass = "=Yp93o6tmyK8AK8RCczmC0mKcgQ=";
+		public static string PlayerManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string PlayerManagerClass = "Sync";
         public static string PlayerManagerPlayerMapField = "get_Players";
 
         //
@@ -951,19 +951,7 @@
 
 		public bool IsUserAdmin(ulong remoteUserId)
 		{
-			bool result = false;
-
-			List<string> adminUsers = SandboxGameAssemblyWrapper.Instance.GetServerConfig().Administrators;
-			foreach (string userId in adminUsers)
-			{
-				if (remoteUserId.ToString().Equals(userId))
-				{
-					result = true;
-					break;
-				}
-			}
-
-			return result;
+			return MySandboxGame.ConfigDedicated.Administrators.Any( userId => remoteUserId.ToString( ).Equals( userId ) );
 		}
 
 		#endregion

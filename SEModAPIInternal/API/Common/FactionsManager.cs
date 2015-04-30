@@ -18,8 +18,8 @@ namespace SEModAPIInternal.API.Common
 		private Dictionary<long, FactionMember> m_joinRequests;
 		private long m_memberToModify;
 
-		public static string FactionNamespace = "";
-		public static string FactionClass = "=9DUcsoJb37UyrFZNPPoFzkiQCma=";
+		public static string FactionNamespace = "Sandbox.Game.World";
+		public static string FactionClass = "MyFaction";
 
 		public static string FactionGetMembersMethod = "get_Members";
 		public static string FactionGetJoinRequestsMethod = "get_JoinRequests";
@@ -28,8 +28,8 @@ namespace SEModAPIInternal.API.Common
 		public static string FactionAcceptApplicantMethod = "AcceptJoin";
 		public static string FactionRemoveMemberMethod = "KickMember";
 
-		public static string FactionMembersDictionaryField = "=hrd2r4yATC2NCJnhqOpJBW6EOU=";
-		public static string FactionJoinRequestsDictionaryField = "=1xaBHU23sqENJAlqfZYI7iPsvP=";
+		public static string FactionMembersDictionaryField = "m_members";
+		public static string FactionJoinRequestsDictionaryField = "m_joinRequests";
 
 		#endregion "Attributes"
 
@@ -337,17 +337,14 @@ namespace SEModAPIInternal.API.Common
 		protected long m_factionToModify;
 		protected long m_memberToModify;
 
-		public static string FactionManagerNamespace = "";
-		public static string FactionManagerClass = "=zCz9UXvRmT148ybvcyvkfMadCL=";
+		public static string FactionManagerNamespace = "Sandbox.Game.Multiplayer";
+		public static string FactionManagerClass = "MyFactionCollection";
 
 		public static string FactionManagerGetFactionCollectionMethod = "GetObjectBuilder";
 		public static string FactionManagerGetFactionByIdMethod = "TryGetFactionById";
 		public static string FactionManagerRemoveFactionByIdMethod = "KickPlayerFromFaction";
 
 		//////////////////////////////////////////////////////
-
-		public static string FactionNetManagerNamespace = "";
-		public static string FactionNetManagerClass = "";
 
 		public static string FactionNetManagerRemoveFactionMethod = "RemoveFaction";
 		public static string FactionNetManagerRemoveMemberMethod = "MemberLeaves";

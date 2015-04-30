@@ -254,22 +254,22 @@ namespace SEModAPIInternal.API.Entity
 		private static SectorObjectManager m_instance;
 		private static Queue<BaseEntity> m_addEntityQueue = new Queue<BaseEntity>( );
 
-		public static string ObjectManagerNamespace = "";
-		public static string ObjectManagerClass = "Sandbox.Game.Entities.MyEntities";
+		public static string ObjectManagerNamespace = "Sandbox.Game.Entities";
+		public static string ObjectManagerClass = "MyEntities";
 		public static string ObjectManagerGetEntityHashSet = "GetEntities";
 		public static string ObjectManagerAddEntity = "Add";
 
 		/////////////////////////////////////////////////////////////////
 
-		public static string ObjectFactoryNamespace = "";
-		public static string ObjectFactoryClass = "=iXKU6ehmc24G5brre7PFeSWgPb=";
+		public static string ObjectFactoryNamespace = "Sandbox.Game.Entities";
+		public static string ObjectFactoryClass = "MyEntityFactory";
 
 		/////////////////////////////////////////////////////////////////
 
 		//2 Packet Types
-		public static string EntityBaseNetManagerNamespace = "";
+		public static string EntityBaseNetManagerNamespace = "Sandbox.Game.Multiplayer";
 
-		public static string EntityBaseNetManagerClass = "=r6VaZpriOkuuKqMuT2aPUQtWow=";
+		public static string EntityBaseNetManagerClass = "MySyncCreate";
 		public static string EntityBaseNetManagerSendEntity = "SendEntityCreated";
 
 		#endregion "Attributes"

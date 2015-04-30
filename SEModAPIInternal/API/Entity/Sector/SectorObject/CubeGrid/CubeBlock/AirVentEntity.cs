@@ -9,8 +9,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 	public class AirVentEntity : TerminalBlockEntity
 	{
-		public static string AirVentNamespace = "";
-		public static string AirVentClass = "=Ninmd8b0GgB8nNeFY3EhBjlmin=";
+		public static string AirVentNamespace = "Sandbox.Game.Entities.Blocks";
+		public static string AirVentClass = "MyAirVent";
 
 		public static string AirVentGetOxygenLevelMethod = "GetOxygenLevel";
 		public static string AirVentIsPressurizedMethod = "IsPressurized";
