@@ -1065,6 +1065,12 @@
             Checks is AI is enabled for turret
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.IMySession.Config">
+            <summary>
+            Obtaining values from config is slow and can allocate memory!
+            Do it only when necessary.
+            </summary>
+        </member>
         <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
             <summary>
             Will paint given material with given shape
@@ -1262,68 +1268,6 @@
             Container class to prevent boxing in ProtoBuf
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
-            <summary>
-            Color is used to get Color(4 bytes) as well as
-            MyStringId value for localization.
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_OxygenContainerObject.OxygenLevel">
-            <summary>
-            This is not synced automatically
-            Call SyncOxygenContainerLevel on inventory to sync it
-            </summary>
-        </member>
-        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelBlockDefinition">
-            <summary>
-            Definition for one small grid cog wheel (used inside large block as mechanical subblock).
-            </summary>
-        </member>
-        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_MechanicalSubBlockDefinition">
-            <summary>
-            Definition for common subblock mechanical parts.
-            </summary>
-        </member>
-        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelsBlockDefinition">
-            <summary>
-            Definition for large grid block which consists of several connected small grid cog wheel subblocks.
-            </summary>
-        </member>
-        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_LockBlockDefinition">
-            <summary>
-            Definition for one small grid lock block (used inside large block as mechanical subblock).
-            </summary>
-        </member>
-        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_SwitchBlockDefinition">
-            <summary>
-            Definition for one small grid switch block (used inside large block as mechanical subblock).
-            </summary>
-        </member>
-        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_TorsionSpringBlockDefinition">
-            <summary>
-            Definition for one small grid torsion spring (used inside large block as mechanical subblock).
-            </summary>
-        </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(Sandbox.Common.ObjectBuilders.IMyRemapHelper)">
-            <summary>
-            Remaps this entity's entityId to a new value.
-            If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
-            references and retrieve them.
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_SessionSettings.WorldSizeKm">
-            <summary>
-            Size of the edge of the world area cube.
-            Don't use directly, as it is error-prone (it's km instead of m and edge size instead of half-extent)
-            Rather use MyEntities.WorldHalfExtent()
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.BlueprintItem.Amount">
-            <summary>
-            Amount of item required or produced. For discrete objects this refers to
-            pieces. For ingots and ore, this refers to volume in m^3.
-            </summary>
-        </member>
         <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
             <summary>
             Enum used for localization of display name. Null for player created definitions.
@@ -1364,6 +1308,68 @@
             <summary>
             Use this property when showing description in GUI, as it takes into account more
             complex description construction.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
+            <summary>
+            Color is used to get Color(4 bytes) as well as
+            MyStringId value for localization.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_OxygenContainerObject.OxygenLevel">
+            <summary>
+            This is not synced automatically
+            Call SyncOxygenContainerLevel on inventory to sync it
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(Sandbox.Common.ObjectBuilders.IMyRemapHelper)">
+            <summary>
+            Remaps this entity's entityId to a new value.
+            If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
+            references and retrieve them.
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelBlockDefinition">
+            <summary>
+            Definition for one small grid cog wheel (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_MechanicalSubBlockDefinition">
+            <summary>
+            Definition for common subblock mechanical parts.
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelsBlockDefinition">
+            <summary>
+            Definition for large grid block which consists of several connected small grid cog wheel subblocks.
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_LockBlockDefinition">
+            <summary>
+            Definition for one small grid lock block (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_SwitchBlockDefinition">
+            <summary>
+            Definition for one small grid switch block (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_TorsionSpringBlockDefinition">
+            <summary>
+            Definition for one small grid torsion spring (used inside large block as mechanical subblock).
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_SessionSettings.WorldSizeKm">
+            <summary>
+            Size of the edge of the world area cube.
+            Don't use directly, as it is error-prone (it's km instead of m and edge size instead of half-extent)
+            Rather use MyEntities.WorldHalfExtent()
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.BlueprintItem.Amount">
+            <summary>
+            Amount of item required or produced. For discrete objects this refers to
+            pieces. For ingots and ore, this refers to volume in m^3.
             </summary>
         </member>
         <member name="T:Sandbox.Definitions.MyDefinitionId">
