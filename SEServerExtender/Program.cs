@@ -45,7 +45,8 @@ namespace SEServerExtender
 				BaseLog.Info( "Starting SEServerExtender Service with {0} arguments ...", args.Length );
 
 			    List<string> listArg = args.ToList();
-
+			    string serviceName = string.Empty;
+                string gamePath = new DirectoryInfo(PathManager.BasePath).Parent.FullName;
                 // Instance autodetect
 			    if (args.All(item => !item.Contains("instance")))
 			    {
@@ -58,7 +59,7 @@ namespace SEServerExtender
 			        enumerator.MoveNext();
 			        ManagementObject managementObject = (ManagementObject) enumerator.Current;
 
-			        string serviceName = managementObject["Name"].ToString();
+			        serviceName = managementObject["Name"].ToString();
                     BaseLog.Info( "Instance detected : {0}", serviceName);
                     listArg.Add("instance=" + serviceName);
 			    }
@@ -66,7 +67,7 @@ namespace SEServerExtender
                 if (args.All(item => !item.Contains("gamepath")))
                 {
                     BaseLog.Info("No gamepath specified, guessing it ...");
-                    string gamePath = new DirectoryInfo(PathManager.BasePath).Parent.FullName;
+                    
                     BaseLog.Info("gamepath detected : {0}", gamePath);
                     listArg.Add("gamepath=\"" + gamePath + "\"");
                 }
@@ -77,6 +78,16 @@ namespace SEServerExtender
                     BaseLog.Info("Service Startup, noconsole is mandatory, adding it ...");
                     listArg.Add("noconsole");
 			    }
+
+                // It's a service, storing the logs in the instace directly
+                if (args.All(item => !item.Contains("logpath")) && !String.IsNullOrWhiteSpace(serviceName))
+			    {
+                    listArg.Add("logpath=\"C:\\ProgramData\\SpaceEngineersDedicated\\" + serviceName + "\"");
+			    }
+                if (args.All(item => !item.Contains("instancepath")) && !String.IsNullOrWhiteSpace(serviceName))
+                {
+                    listArg.Add("instancepath=\"C:\\ProgramData\\SpaceEngineersDedicated\\" + serviceName + "\"");
+                }
 
 			    Start( listArg.ToArray() );
 			}
