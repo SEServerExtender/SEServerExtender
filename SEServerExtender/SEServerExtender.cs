@@ -1968,7 +1968,7 @@ namespace SEServerExtender
 				LST_Plugins.Items.Clear( );
 				foreach ( Guid key in PluginManager.Instance.Plugins.Keys )
 				{
-					IPlugin plugin = (IPlugin)PluginManager.Instance.Plugins[ key ];
+					IPlugin plugin = PluginManager.Instance.Plugins[ key ];
 					LST_Plugins.Items.Add( string.Format( "{0} - {1}", plugin.Name, plugin.Version.ToString( 4 ) ) );
 				}
 				LST_Plugins.SelectedIndex = selectedIndex;
@@ -2088,10 +2088,12 @@ namespace SEServerExtender
 			if ( selectedIndex >= PluginManager.Instance.Plugins.Count )
 				return;
 
-			Guid selectedItem = PluginManager.Instance.Plugins.Keys.ElementAt( selectedIndex );
-			PluginManager.Instance.UnloadPlugin( selectedItem );
+			Guid selectedPluginId = PluginManager.Instance.Plugins.Keys.ElementAt( selectedIndex );
+			IPlugin plugin = PluginManager.Instance.Plugins[ selectedPluginId ];
+			PluginManager.Instance.UnloadPlugin( selectedPluginId );
 			PluginManager.Instance.LoadPlugins( true );
-			PluginManager.Instance.InitPlugin( selectedItem );
+			PluginManager.Instance.InitPlugin( selectedPluginId );
+			LST_Plugins.Items[ LST_Plugins.SelectedIndex ] = string.Format( "{0} - {1}", plugin.Name, plugin.Version.ToString( 4 ) );
 			LST_Plugins_SelectedIndexChanged( this, EventArgs.Empty );
 		}
 
