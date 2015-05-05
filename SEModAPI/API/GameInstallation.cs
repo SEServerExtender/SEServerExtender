@@ -170,13 +170,7 @@ namespace SEModAPI.API
 		{
 			try
 			{
-				string codeBase = Assembly.GetExecutingAssembly( ).CodeBase;
-				UriBuilder uri = new UriBuilder( codeBase );
-				string path = Path.GetDirectoryName( Uri.UnescapeDataString( uri.Path ) );
-				DirectoryInfo directory = new DirectoryInfo( path );
-				string finalPath = directory.Parent.FullName;
-
-				return finalPath;
+			    return new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
 			}
 			catch ( Exception )
 			{
@@ -227,16 +221,16 @@ namespace SEModAPI.API
 			if ( File.Exists( file1 ) != File.Exists( file2 ) )
 				return false;
 
-			byte[ ] buffer1 = File.ReadAllBytes( file1 );
-			byte[ ] buffer2 = File.ReadAllBytes( file2 );
+            if (new FileInfo(file1).Length != new FileInfo(file2).Length)
+                return true;
 
-			if ( buffer1.Length != buffer2.Length )
-				return true;
+            byte[] buffer1 = File.ReadAllBytes(file1);
+            byte[] buffer2 = File.ReadAllBytes(file2);
 
-			Assembly ass1 = Assembly.Load( buffer1 );
+            Assembly ass1 = Assembly.Load(buffer1);
 			Guid guid1 = ass1.ManifestModule.ModuleVersionId;
 
-			Assembly ass2 = Assembly.Load( buffer2 );
+            Assembly ass2 = Assembly.Load(buffer2);
 			Guid guid2 = ass2.ManifestModule.ModuleVersionId;
 
 			return guid1 != guid2;
