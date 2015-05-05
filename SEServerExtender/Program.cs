@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Management;
+using SEModAPIInternal.Support;
+
 namespace SEServerExtender
 {
 	using System;
@@ -29,17 +33,63 @@ namespace SEServerExtender
 		{
 			public WindowsService( )
 			{
-				ServiceName = "SEServerExtender";
 				CanPauseAndContinue = false;
 				CanStop = true;
 				AutoLog = true;
+
+
 			}
 
 			protected override void OnStart( string[ ] args )
 			{
 				BaseLog.Info( "Starting SEServerExtender Service with {0} arguments ...", args.Length );
 
-				Start( args );
+			    List<string> listArg = args.ToList();
+			    string serviceName = string.Empty;
+                string gamePath = new DirectoryInfo(PathManager.BasePath).Parent.FullName;
+                // Instance autodetect
+			    if (args.All(item => !item.Contains("instance")))
+			    {
+                    BaseLog.Info( "No instance specified, guessing it ...");
+			        int processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+			        String query = "SELECT Name FROM Win32_Service where ProcessId = " + processId;
+			        ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+			        ManagementObjectCollection collection = searcher.Get();
+			        IEnumerator enumerator = collection.GetEnumerator();
+			        enumerator.MoveNext();
+			        ManagementObject managementObject = (ManagementObject) enumerator.Current;
+
+			        serviceName = managementObject["Name"].ToString();
+                    BaseLog.Info( "Instance detected : {0}", serviceName);
+                    listArg.Add("instance=" + serviceName);
+			    }
+                // gamepath autodetect
+                if (args.All(item => !item.Contains("gamepath")))
+                {
+                    BaseLog.Info("No gamepath specified, guessing it ...");
+                    
+                    BaseLog.Info("gamepath detected : {0}", gamePath);
+                    listArg.Add("gamepath=\"" + gamePath + "\"");
+                }
+
+                // It's a service, it's mandatory to use noconsole (nogui and autostart implied)
+			    if (args.All(item => !item.Contains("noconsole")))
+			    {
+                    BaseLog.Info("Service Startup, noconsole is mandatory, adding it ...");
+                    listArg.Add("noconsole");
+			    }
+
+                // It's a service, storing the logs in the instace directly
+                if (args.All(item => !item.Contains("logpath")) && !String.IsNullOrWhiteSpace(serviceName))
+			    {
+                    listArg.Add("logpath=\"C:\\ProgramData\\SpaceEngineersDedicated\\" + serviceName + "\"");
+			    }
+                if (args.All(item => !item.Contains("instancepath")) && !String.IsNullOrWhiteSpace(serviceName))
+                {
+                    listArg.Add("instancepath=\"C:\\ProgramData\\SpaceEngineersDedicated\\" + serviceName + "\"");
+                }
+
+			    Start( listArg.ToArray() );
 			}
 
 			protected override void OnStop( )
@@ -98,7 +148,7 @@ namespace SEServerExtender
 								  NoGui = false,
 								  NoConsole = false,
 								  Debug = false,
-								  GamePath = Directory.GetParent( Directory.GetCurrentDirectory( ) ).FullName,
+								  GamePath = new DirectoryInfo( PathManager.BasePath ).Parent.FullName,
 								  NoWcf = false,
 								  Autosave = 0,
 								  InstancePath = string.Empty,
@@ -158,7 +208,7 @@ namespace SEServerExtender
 					else if ( lowerCaseArgument.Equals( "gamepath" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.GamePath = argValue;
 					}
 					else if ( lowerCaseArgument.Equals( "autosave" ) )
@@ -169,19 +219,19 @@ namespace SEServerExtender
 					else if ( lowerCaseArgument.Equals( "path" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstancePath = argValue;
 					}
 					else if ( lowerCaseArgument.Equals( "instancepath" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstancePath = argValue;
 					}
 					else if ( lowerCaseArgument == "logpath" )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 
 						//This argument always prevails.
 						FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
@@ -317,6 +367,7 @@ namespace SEServerExtender
 				}
 				else if ( Environment.UserInteractive )
 					Console.ReadLine( );
+
 			}
 			catch ( AutoException eEx )
 			{

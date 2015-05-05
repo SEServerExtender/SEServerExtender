@@ -87,84 +87,77 @@ namespace SEModAPIExtensions.API
 				if ( !Directory.Exists( modsPath ) )
 					return;
 
-				string[ ] subDirectories = Directory.GetDirectories( modsPath );
-				foreach ( string path in subDirectories )
+                string[] subDirectories = Directory.GetDirectories(modsPath, "*.dll",SearchOption.AllDirectories);
+                foreach (string file in subDirectories)
 				{
-					string[ ] files = Directory.GetFiles( path );
-					foreach ( string file in files )
+
+					try
 					{
-						try
+						// Load assembly from file into memory, so we can hotswap it if we want
+                        byte[] b = File.ReadAllBytes(file);
+                        Assembly pluginAssembly = Assembly.Load(b);
+						if ( IsOldPlugin( pluginAssembly ) )
 						{
-							FileInfo fileInfo = new FileInfo( file );
-							if ( !fileInfo.Extension.ToLower( ).Equals( ".dll" ) )
+							if ( IsValidPlugin( pluginAssembly ) )
+								pluginAssembly = Assembly.UnsafeLoadFrom( file );
+							else
 								continue;
+						}
 
-							// Load assembly from file into memory, so we can hotswap it if we want
-							byte[ ] b = File.ReadAllBytes( file );
-							Assembly pluginAssembly = Assembly.Load( b );
-							if ( IsOldPlugin( pluginAssembly ) )
+						//Get the assembly GUID
+						GuidAttribute guid = (GuidAttribute)pluginAssembly.GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
+						Guid guidValue = new Guid( guid.Value );
+
+						if ( _pluginPaths.ContainsKey( guidValue ) )
+							_pluginPaths[ guidValue ] = file;
+						else
+							_pluginPaths.Add( guidValue, file );
+
+						if ( _pluginAssemblies.ContainsKey( guidValue ) )
+							_pluginAssemblies[ guidValue ] = pluginAssembly;
+						else
+							_pluginAssemblies.Add( guidValue, pluginAssembly );
+
+						//Look through the exported types to find the one that implements PluginBase
+						Type[ ] types = pluginAssembly.GetExportedTypes( );
+						foreach ( Type type in types )
+						{
+							//Check that we don't have an entry already for this GUID
+							if ( Plugins.ContainsKey( guidValue ) )
+								break;
+
+							//if (type.BaseType == null)
+							//                                    continue;
+
+							//Type[] filteredTypes = type.BaseType.GetInterfaces();
+							Type[ ] filteredTypes = type.GetInterfaces( );
+							foreach ( Type interfaceType in filteredTypes )
 							{
-								if ( IsValidPlugin( pluginAssembly ) )
-									pluginAssembly = Assembly.UnsafeLoadFrom( file );
-								else
-									continue;
-							}
-
-							//Get the assembly GUID
-							GuidAttribute guid = (GuidAttribute)pluginAssembly.GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
-							Guid guidValue = new Guid( guid.Value );
-
-							if ( _pluginPaths.ContainsKey( guidValue ) )
-								_pluginPaths[ guidValue ] = file;
-							else
-								_pluginPaths.Add( guidValue, file );
-
-							if ( _pluginAssemblies.ContainsKey( guidValue ) )
-								_pluginAssemblies[ guidValue ] = pluginAssembly;
-							else
-								_pluginAssemblies.Add( guidValue, pluginAssembly );
-
-							//Look through the exported types to find the one that implements PluginBase
-							Type[ ] types = pluginAssembly.GetExportedTypes( );
-							foreach ( Type type in types )
-							{
-								//Check that we don't have an entry already for this GUID
-								if ( Plugins.ContainsKey( guidValue ) )
-									break;
-
-								//if (type.BaseType == null)
-								//                                    continue;
-
-								//Type[] filteredTypes = type.BaseType.GetInterfaces();
-								Type[ ] filteredTypes = type.GetInterfaces( );
-								foreach ( Type interfaceType in filteredTypes )
+								if ( interfaceType.Name == typeof( IPlugin ).Name )
 								{
-									if ( interfaceType.Name == typeof( IPlugin ).Name )
+									try
 									{
-										try
-										{
-											//Create an instance of the plugin object
-											IPlugin pluginObject = (IPlugin)Activator.CreateInstance( type );
+										//Create an instance of the plugin object
+										IPlugin pluginObject = (IPlugin)Activator.CreateInstance( type );
 
-											//And add it to the dictionary
-											Plugins.Add( guidValue, pluginObject );
+										//And add it to the dictionary
+										Plugins.Add( guidValue, pluginObject );
 
-											break;
-										}
-										catch ( Exception ex )
-										{
-											ApplicationLog.BaseLog.Error( ex );
-										}
+										break;
+									}
+									catch ( Exception ex )
+									{
+										ApplicationLog.BaseLog.Error( ex );
 									}
 								}
 							}
+						}
 
-							break;
-						}
-						catch ( Exception ex )
-						{
-							ApplicationLog.BaseLog.Error( ex );
-						}
+						break;
+					}
+					catch ( Exception ex )
+					{
+						ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 			}
