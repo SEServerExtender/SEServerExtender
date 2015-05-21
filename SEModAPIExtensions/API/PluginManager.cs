@@ -152,8 +152,6 @@ namespace SEModAPIExtensions.API
 								}
 							}
 						}
-
-						break;
 					}
 					catch ( Exception ex )
 					{
