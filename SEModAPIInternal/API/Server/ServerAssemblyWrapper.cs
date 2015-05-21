@@ -2,46 +2,34 @@
 {
 	using System;
 	using System.ComponentModel;
-	using System.IO;
 	using System.Reflection;
 	using System.Runtime.ExceptionServices;
 	using System.Runtime.InteropServices;
 	using System.Security;
 	using Havok;
+	using Sandbox.Game;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
+	using SpaceEngineers.Game;
 	using SteamSDK;
 	using VRage.Audio;
+	using VRage.Dedicated;
 	using VRage.FileSystem;
 	using VRage.Input;
 
 	public class ServerAssemblyWrapper
 	{
 		private static ServerAssemblyWrapper _instance;
-		private static Assembly _assembly;
-		//private static AppDomain _domain;
 
-		public static string DedicatedServerNamespace = "Sandbox.AppCode.App";
-		public static string DedicatedServerClass = "MyProgram";
-
-		public static string DedicatedServerStartupBaseMethod = "RunMain";
+		public static string DedicatedServerRunMainMethod = "RunMain";
 
 		#region "Constructors and Initializers"
 
-		/// <exception cref="SecurityException">A codebase that does not start with "file://" was specified without the required <see cref="T:System.Net.WebPermission" />. </exception>
-		/// <exception cref="BadImageFormatException">Not a valid assembly. -or- assembly was compiled with a later version of the common language runtime than the version that is currently loaded.</exception>
-		/// <exception cref="FileLoadException">A file that was found could not be loaded. </exception>
-		/// <exception cref="FileNotFoundException">Assembly is not found, or the module you are trying to load does not specify a filename extension. </exception>
-		/// <exception cref="PathTooLongException">The assembly name is longer than MAX_PATH characters.</exception>
-		/// <exception cref="AppDomainUnloadedException">The operation is attempted on an unloaded application domain. </exception>
 		protected ServerAssemblyWrapper( )
 		{
 			_instance = this;
 
-			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineersDedicated.exe" );
-			_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
-			
 			ApplicationLog.BaseLog.Info( "Finished loading ServerAssemblyWrapper" );
 		}
 
@@ -58,13 +46,7 @@
 		{
 			get
 			{
-				if ( _assembly == null )
-				{
-                    _assembly = Assembly.LoadFrom(PathManager.BasePath + "SpaceEngineersDedicated.exe");
-				}
-
-				Type dedicatedServerType = _assembly.GetType( DedicatedServerNamespace + "." + DedicatedServerClass );
-				return dedicatedServerType;
+				return typeof( DedicatedServer );
 			}
 		}
 
@@ -76,11 +58,11 @@
 		{
 			try
 			{
-				Type type1 = InternalType;
-				if ( type1 == null )
+				Type dedicatedServerType = InternalType;
+				if ( dedicatedServerType == null )
 					throw new Exception( "Could not find internal type for ServerAssemblyWrapper" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, DedicatedServerStartupBaseMethod );
+				result &= BaseObject.HasMethod( dedicatedServerType, DedicatedServerRunMainMethod );
 
 				return result;
 			}
@@ -185,11 +167,17 @@
 				};
 
 				//Initialize config
-				SpaceEngineers.Game.SpaceEngineersGame.SetupPerGameSettings( );
+				SpaceEngineersGame.SetupPerGameSettings();
+				MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
+				MyPerServerSettings.GameName = MyPerGameSettings.GameName;
+				MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
+				MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
+				MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
+				MyPerServerSettings.AppId = 0x3bc72;
 
 				//Start the server
-				MethodInfo serverStartupMethod = InternalType.GetMethod( DedicatedServerStartupBaseMethod, BindingFlags.Static | BindingFlags.NonPublic );
-				serverStartupMethod.Invoke( null, methodParams );
+				MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
+				dedicatedServerRunMainMethod.Invoke( null, methodParams );
 
 				return true;
 			}
