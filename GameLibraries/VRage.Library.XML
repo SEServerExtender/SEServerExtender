@@ -567,6 +567,11 @@
             <param name="publicKey">signature (in base64 form)</param>
             <returns>true if the signature is valid; otherwise, false.</returns>
         </member>
+        <member name="M:System.Runtime.CompilerServices.CompilerHelper.GetCallerFileName(System.String)">
+            <summary>
+            Helper method which returns file path of caller.
+            </summary>
+        </member>
         <member name="M:VRage.Compiler.IlChecker.CheckIl(System.Collections.Generic.List{VRage.Compiler.IlReader.IlInstruction},System.Type@,System.Boolean,System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Reflection.MemberInfo}})">
             <summary>
             Checks list of IL instructions against dangerous types
@@ -4432,6 +4437,12 @@
             </summary>
         </member>
         <member name="M:VRage.Security.Md5.ComputeHash(System.Byte[])">
+            <summary>
+            calculat md5 signature of the string in Input
+            </summary>
+            <returns> Digest: the finger print of msg</returns>
+        </member>
+        <member name="M:VRage.Security.Md5.ComputeHash(System.Byte[],VRage.Security.Md5.Hash)">
             <summary>
             calculat md5 signature of the string in Input
             </summary>
