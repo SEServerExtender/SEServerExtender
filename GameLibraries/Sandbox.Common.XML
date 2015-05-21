@@ -339,6 +339,114 @@
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyGps.UpdateHash">
+            <summary>
+            Updates the hash id if you've changed the name or the coordinates.
+            NOTE: Do not use this if you plan on using this object to update existing GPS entries.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGps.Hash">
+            <summary>
+            The GPS entry id hash which is generated using the GPS name and coordinates.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGps.DiscardAt">
+            <summary>
+            If it's null then the GPS is confirmed (does not expire automatically).
+            Otherwise, time at which we should drop it from the list, relative to ElapsedPlayTime
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.GetGpsList(System.Int64)">
+            <summary>
+            Gets the GPS entries from the specified identity (does not use network traffic).
+            </summary>
+            <param name="identityId"></param>
+            <returns>The GPS entry list.</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.GetGpsList(System.Int64,System.Collections.Generic.List{Sandbox.ModAPI.IMyGps})">
+            <summary>
+            Gets the GPS entries from the specified identity (does not use network traffic).
+            </summary>
+            <param name="identityId"></param>
+            <param name="list">GPS entries will be added to this list. The list is not cleared internally.</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.Create(System.String,System.String,VRageMath.Vector3D,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a GPS entry object. Does not automatically add it, you need to use AddGps() or AddLocalGps().
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="coords"></param>
+            <param name="showOnHud"></param>
+            <param name="temporary">wether it automatically expires or not (DiscardAt field)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.AddGps(System.Int64,Sandbox.ModAPI.IMyGps)">
+            <summary>
+            Sends a network request to add the GPS entry for the said player, which will also save it to the server.
+            </summary>
+            <param name="playerId"></param>
+            <param name="gps">Use the Create() method to get this object</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.ModifyGps(System.Int64,Sandbox.ModAPI.IMyGps)">
+            <summary>
+            Sends a network request to modify the contents of an existing GPS entry.
+            </summary>
+            <param name="identityId"></param>
+            <param name="gps">NOTE: it must contain the original hash id</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveGps(System.Int64,Sandbox.ModAPI.IMyGps)">
+            <summary>
+            Sends a network request to remove the specified GPS entry.
+            </summary>
+            <param name="identityId"></param>
+            <param name="gps"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveGps(System.Int64,System.Int32)">
+            <summary>
+            Sends a network request to remove the specified GPS entry.
+            </summary>
+            <param name="identityId"></param>
+            <param name="gpsHash"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.SetShowOnHud(System.Int64,Sandbox.ModAPI.IMyGps,System.Boolean)">
+            <summary>
+            Sends a network request to set the GPS entry if it's shown on HUD or not.
+            </summary>
+            <param name="identityId"></param>
+            <param name="gps"></param>
+            <param name="show"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.SetShowOnHud(System.Int64,System.Int32,System.Boolean)">
+            <summary>
+            Sends a network request to set the GPS entry if it's shown on HUD or not.
+            </summary>
+            <param name="identityId"></param>
+            <param name="gpsHash"></param>
+            <param name="show"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.AddLocalGps(Sandbox.ModAPI.IMyGps)">
+            <summary>
+            Adds a GPS entry only for this client which won't be synchronized or saved.
+            </summary>
+            <param name="gps"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveLocalGps(Sandbox.ModAPI.IMyGps)">
+            <summary>
+            Remove a local GPS entry, no network updates sent.
+            
+            NOTE: This can remove synchronized ones too.
+            </summary>
+            <param name="gps"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveLocalGps(System.Int32)">
+            <summary>
+            Remove a local GPS entry, no network updates sent.
+            
+            NOTE: This can remove synchronized ones too.
+            </summary>
+            <param name="gpsHash"></param>
+        </member>
         <member name="T:Sandbox.Common.Input.MyInputSnapshot">
             <summary>
             Snapshot of an input state, so it can be pumped to the game for testing
@@ -541,6 +649,17 @@
         <member name="P:Sandbox.ModAPI.IMyCubeBlock.Position">
             <summary>
             Position in grid coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.UpgradeValues">
+            <summary>
+            Get all values changed by upgrade modules
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyCubeBlock.OnUpgradeValuesChanged">
+            <summary>
+            Event called when upgrade values are changed
+            Either upgrades were built or destroyed, or they become damaged or unpowered
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyCubeBuilder.Activate">
@@ -1000,6 +1119,11 @@
             In World Space
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
+            <summary>
+            Indicates whether a block is locally or remotely controlled.
+            </summary>
+        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(Sandbox.ModAPI.IMyEntity)">
             <summary>
             Tracks entity with enabled position prediction
@@ -1045,6 +1169,11 @@
             resert targeting to default values
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.IsUnderControl">
+            <summary>
+            Indicates whether a block is locally or remotely controlled.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
             <summary>
             Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
@@ -1064,6 +1193,27 @@
             <summary>
             Checks is AI is enabled for turret
             </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.TerminalActionParameter.Empty">
+            <summary>
+            Gets an empty parameter.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.TerminalActionParameter.Deserialize(System.String,System.TypeCode)">
+            <summary>
+            Creates a <see cref="T:Sandbox.ModAPI.Ingame.TerminalActionParameter"/> from a serialized value in a string and a type code.
+            </summary>
+            <param name="serializedValue"></param>
+            <param name="typeCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.TerminalActionParameter.Get(System.Object)">
+            <summary>
+            Creates a <see cref="T:Sandbox.ModAPI.Ingame.TerminalActionParameter"/> from the given value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
         </member>
         <member name="P:Sandbox.ModAPI.IMySession.Config">
             <summary>
@@ -1441,6 +1591,12 @@
         <member name="M:Sandbox.Common.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
             <summary>
             Can handle old values as well.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.GameRelationAttribute">
+            <summary>
+            This class is here only to distinguish fields in SessionSettings
+            Will be removed after correct hierarchy and usage of session settings is made
             </summary>
         </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OneDirection">
