@@ -87,15 +87,15 @@ namespace SEModAPIExtensions.API
 				if ( !Directory.Exists( modsPath ) )
 					return;
 
-                string[] subDirectories = Directory.GetDirectories(modsPath, "*.dll",SearchOption.AllDirectories);
-                foreach (string file in subDirectories)
+				string[ ] files = Directory.GetFiles( modsPath, "*.dll", SearchOption.AllDirectories );
+				foreach ( string file in files )
 				{
 
 					try
 					{
 						// Load assembly from file into memory, so we can hotswap it if we want
-                        byte[] b = File.ReadAllBytes(file);
-                        Assembly pluginAssembly = Assembly.Load(b);
+						byte[ ] b = File.ReadAllBytes( file );
+						Assembly pluginAssembly = Assembly.Load( b );
 						if ( IsOldPlugin( pluginAssembly ) )
 						{
 							if ( IsValidPlugin( pluginAssembly ) )
@@ -198,7 +198,7 @@ namespace SEModAPIExtensions.API
 		{
 			Type[ ] types = assembly.GetExportedTypes( );
 
-			return types.Any( type => type.GetInterface( typeof ( IPlugin ).FullName ) != null );
+			return types.Any( type => type.GetInterface( typeof( IPlugin ).FullName ) != null );
 		}
 
 		public void Init( )
@@ -241,12 +241,12 @@ namespace SEModAPIExtensions.API
 					if ( !_lastConnectedPlayerList.Contains( steamId ) )
 					{
 						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent
-						                                             {
-							                                             priority = 1,
-							                                             timestamp = DateTime.Now,
-							                                             type = EntityEventManager.EntityEventType.OnPlayerJoined,
-							                                             entity = steamId
-						                                             };
+																	 {
+																		 priority = 1,
+																		 timestamp = DateTime.Now,
+																		 type = EntityEventManager.EntityEventType.OnPlayerJoined,
+																		 entity = steamId
+																	 };
 						//TODO - Find a way to stall the event long enough for a linked character entity to exist - this is impossible because of cockpits and respawnships
 						//For now, create a dummy entity just for passing the player's steam id along
 						events.Add( playerEvent );
@@ -257,12 +257,12 @@ namespace SEModAPIExtensions.API
 					if ( !connectedPlayers.Contains( steamId ) )
 					{
 						EntityEventManager.EntityEvent playerEvent = new EntityEventManager.EntityEvent
-						                                             {
-							                                             priority = 1,
-							                                             timestamp = DateTime.Now,
-							                                             type = EntityEventManager.EntityEventType.OnPlayerLeft,
-							                                             entity = steamId
-						                                             };
+																	 {
+																		 priority = 1,
+																		 timestamp = DateTime.Now,
+																		 type = EntityEventManager.EntityEventType.OnPlayerLeft,
+																		 entity = steamId
+																	 };
 						//TODO - Find a way to stall the event long enough for a linked character entity to exist - this is impossible because of cockpits and respawnships
 						//For now, create a dummy entity just for passing the player's steam id along
 						events.Add( playerEvent );
@@ -284,14 +284,14 @@ namespace SEModAPIExtensions.API
 					continue;
 
 				PluginManagerThreadParams parameters = new PluginManagerThreadParams
-				                                       {
-					                                       Plugin = plugin,
-					                                       Key = key,
-					                                       Plugins = Plugins,
-					                                       PluginState = PluginStates,
-					                                       Events = new List<EntityEventManager.EntityEvent>( events ),
-					                                       ChatEvents = new List<ChatManager.ChatEvent>( chatEvents )
-				                                       };
+													   {
+														   Plugin = plugin,
+														   Key = key,
+														   Plugins = Plugins,
+														   PluginState = PluginStates,
+														   Events = new List<EntityEventManager.EntityEvent>( events ),
+														   ChatEvents = new List<ChatManager.ChatEvent>( chatEvents )
+													   };
 
 				ThreadPool.QueueUserWorkItem( DoUpdate, parameters );
 				//				Thread pluginThread = new Thread(DoUpdate);
