@@ -1,10 +1,11 @@
 namespace SEModAPIInternal.API.Entity
 {
 	using System;
+	using Sandbox.ModAPI.Ingame;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
-	public class PowerProducer
+	public class PowerProducer : IMyPowerProducer
 	{
 		#region "Attributes"
 
@@ -14,9 +15,10 @@ namespace SEModAPIInternal.API.Entity
 		public static string PowerProducerNamespace = "Sandbox.Game.GameSystems.Electricity";
 		public static string PowerProducerInterface = "IMyPowerProducer";
 
-				public static string PowerProducerGetMaxPowerOutputMethod = "get_MaxPowerOutput";
-		public static string PowerProducerGetCurrentOutputMethod = "get_CurrentPowerOutput";
-		public static string PowerProducerSetCurrentOutputMethod = "set_CurrentPowerOutput";
+		public static string PowerProducerGetMaxPowerOutputMethod = "get_MaxPowerOutput";
+		public static string PowerProducerCurrentOutputProperty = "CurrentPowerOutput";
+		public const string PowerProducerRemainingCapacityProperty = "RemainingCapacity";
+		public const string PowerProducerHasCapacityRemainingProperty = "HasCapacityRemaining";
 
 		#endregion "Attributes"
 
@@ -32,13 +34,15 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Properties"
 
+		public float CurrentPowerOutput { get { return PowerOutput; } }
+
 		public float MaxPowerOutput
 		{
 			get
 			{
 				try
 				{
-					return _powerProducer == null ? 0 : (float) BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerGetMaxPowerOutputMethod );
+					return _powerProducer == null ? 0 : (float)BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerGetMaxPowerOutputMethod );
 				}
 				catch ( Exception ex )
 				{
@@ -54,7 +58,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				try
 				{
-					return _powerProducer == null ? 0 : (float) BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerGetCurrentOutputMethod );
+					return _powerProducer == null ? 0 : (float)BaseObject.GetEntityPropertyValue( _powerProducer, PowerProducerCurrentOutputProperty );
 				}
 				catch ( Exception ex )
 				{
@@ -62,12 +66,11 @@ namespace SEModAPIInternal.API.Entity
 					return 0;
 				}
 			}
-			set
-			{
-				Action<float> action = InternalUpdatePowerOutput;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action, value );
-			}
+			set { BaseObject.SetEntityPropertyValue( _powerProducer, PowerProducerCurrentOutputProperty, value ); }
 		}
+
+		public bool HasCapacityRemaining { get { return _powerProducer != null && (bool)BaseObject.GetEntityPropertyValue( _powerProducer, PowerProducerHasCapacityRemainingProperty ); } }
+		public float RemainingCapacity { get { return _powerProducer == null ? 0 : (float)BaseObject.GetEntityPropertyValue( _powerProducer, PowerProducerRemainingCapacityProperty ); } }
 
 		#endregion "Properties"
 
@@ -82,10 +85,21 @@ namespace SEModAPIInternal.API.Entity
 					throw new TypeLoadException( "Could not find internal type for PowerProducer" );
 				bool result = true;
 
-				result &= BaseObject.HasMethod( type1, PowerProducerGetMaxPowerOutputMethod );
-				result &= BaseObject.HasMethod( type1, PowerProducerGetCurrentOutputMethod );
-				result &= BaseObject.HasMethod( type1, PowerProducerSetCurrentOutputMethod );
-
+				if ( !BaseObject.HasProperty( type1, PowerProducerCurrentOutputProperty ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Warn( "PowerProducer does not have property {0}", PowerProducerCurrentOutputProperty );
+				}
+				if ( !BaseObject.HasProperty( type1, PowerProducerHasCapacityRemainingProperty ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Warn( "PowerProducer does not have property {0}", PowerProducerHasCapacityRemainingProperty );
+				}
+				if ( !BaseObject.HasProperty( type1, PowerProducerRemainingCapacityProperty ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Warn( "PowerProducer does not have property {0}", PowerProducerRemainingCapacityProperty );
+				}
 				return result;
 			}
 			catch ( TypeLoadException ex )
@@ -93,11 +107,6 @@ namespace SEModAPIInternal.API.Entity
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
-		}
-
-		protected void InternalUpdatePowerOutput( float powerOutput )
-		{
-			BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerSetCurrentOutputMethod, new object[ ] { powerOutput } );
 		}
 
 		#endregion "Methods"
