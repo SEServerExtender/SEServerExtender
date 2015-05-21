@@ -113,6 +113,45 @@ If set to false, a random shape will be chosen for splitting on each recursion l
         <member name="P:Havok.HkdDecomposeFracture.ShiftToSmallerCrossSection">
 The actual position of the split can be shifted towards (or away from) the physics object (out of the two "connected" parts) with the smaller cross-section. See the user guide for more details on this.
 </member>
+        <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Sets the color properties of the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getColors(hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Gets the color properties of the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.addTexture(hkMeshTexture*)">
+Adds a texture to the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getTexture(System.Int32)">
+Interface describing the texture at index
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getNumTextures">
+Number of textures used by the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getName">
+Gets the name of the material. Returns HK_NULL if the material is not named.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.setName(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*)">
+Sets the name of the material.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.equals(hkMeshMaterial!System.Runtime.CompilerServices.IsConst*)">
+Tests whether two materials are equal
+</member>
+        <member name="M:Havok.hkdMeshMaterial.isCompatible(hkMeshVertexBuffer!System.Runtime.CompilerServices.IsConst*)">
+Returns true if this vertex buffer is suitable for this material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexBuffer(hkMeshVertexBuffer*)">
+Constructs a suitable vertex buffer based on the input.
+If the input is suitable, may return the input ref'd.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexFormat(hkVertexFormat!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVertexFormat*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Returns a vertex buffer format that is compatible with this material
+</member>
+        <member name="T:Havok.hkdMeshMaterial">
+
+!! IMPORTANT : Use only its id as identifier to our material !!
+
+</member>
         <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
 Call this to update the triggerVolume outside the physics step.
 triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
@@ -159,15 +198,10 @@ Input value is rounded down to a multiple of 8. Values between 8 and 128 are acc
 Gets shape keys, for debug purposes, allocates!
 </summary>
         </member>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
-</member>
-        <member name="M:hkpUniformGridShape.#ctor">
+        <member name="M:hkpGridShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
 </member>
-        <member name="M:hkpGridShape.#ctor">
+        <member name="M:hkpUniformGridShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
 </member>
         <member name="T:Havok.HkRigidBodyNamePredicate">
@@ -175,45 +209,6 @@ This class is used as predicate to do searches within HkRigidBody lists..
 </member>
         <member name="T:Havok.HkRigidBodyPredicate">
 This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Sets the color properties of the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getColors(hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Gets the color properties of the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.addTexture(hkMeshTexture*)">
-Adds a texture to the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getTexture(System.Int32)">
-Interface describing the texture at index
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getNumTextures">
-Number of textures used by the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getName">
-Gets the name of the material. Returns HK_NULL if the material is not named.
-</member>
-        <member name="M:Havok.hkdMeshMaterial.setName(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*)">
-Sets the name of the material.
-</member>
-        <member name="M:Havok.hkdMeshMaterial.equals(hkMeshMaterial!System.Runtime.CompilerServices.IsConst*)">
-Tests whether two materials are equal
-</member>
-        <member name="M:Havok.hkdMeshMaterial.isCompatible(hkMeshVertexBuffer!System.Runtime.CompilerServices.IsConst*)">
-Returns true if this vertex buffer is suitable for this material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexBuffer(hkMeshVertexBuffer*)">
-Constructs a suitable vertex buffer based on the input.
-If the input is suitable, may return the input ref'd.
-</member>
-        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexFormat(hkVertexFormat!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVertexFormat*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Returns a vertex buffer format that is compatible with this material
-</member>
-        <member name="T:Havok.hkdMeshMaterial">
-
-!! IMPORTANT : Use only its id as identifier to our material !!
-
 </member>
         <member name="P:Havok.HkdFracture.FlattenHierarchy">
 Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
@@ -227,6 +222,11 @@ Defines how the physics for the broken shapes should be calculated
 </member>
         <member name="T:Havok.HkdFracture.Type">
 The algorithm type
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Called after a breakable body is replaced with new bodies.
@@ -406,6 +406,9 @@ Ragdoll Layer to get collisions in the world
         <member name="T:Havok.HkRagdoll">
 Classes used to hold data for ragdoll system - rigid bodies with its constraints etc.
 </member>
+        <member name="M:Havok.HkRagdollConstraintData.SetConeLimitStabilization(System.Boolean)">
+Enable/disable cone limit stabilization.
+</member>
         <member name="M:Havok.HkGroupFilter.GetNewSystemGroup">
 Creates a new unique identifier for system groups (maximum 65k).
 </member>
@@ -431,6 +434,13 @@ This resulting collision filter info can be used in entities and hkEntityCinfo.
         <member name="M:Havok.HkGroupFilter.DisableCollisionsUsingBitfield(System.UInt32,System.UInt32)">
 Disables collisions between the specified collision layers.
 See enableCollisionsUsingBitfield for how to use bitfields.
+</member>
+        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
+Gets/Sets the inertia stabilization factor.
+Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
+</member>
+        <member name="P:Havok.HkConstraintData.BreachImpulse">
+Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
 </member>
         <member name="P:Havok.HkCharacterRigidBody.LinearVelocity">
             <summary>

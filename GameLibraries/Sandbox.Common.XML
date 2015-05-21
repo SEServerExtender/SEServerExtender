@@ -447,6 +447,16 @@
             </summary>
             <param name="gpsHash"></param>
         </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyCubeBlock">
+            <summary>
+            Basic cube interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeBlock.Mass">
+            <summary>
+            Block mass
+            </summary>
+        </member>
         <member name="T:Sandbox.Common.Input.MyInputSnapshot">
             <summary>
             Snapshot of an input state, so it can be pumped to the game for testing
@@ -460,6 +470,16 @@
         <member name="P:Sandbox.Common.Input.MyInputSnapshot.SnapshotTimestamp">
             <summary>
             In milliseconds.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
+            <summary>
+            Indicates whether door is opened or closed. True when door is opened.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
+            <summary>
+            Door state, zero is fully closed. One is fully opened.
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyCubeBlock.CalcLocalMatrix(VRageMath.Matrix@,System.String@)">
@@ -625,6 +645,11 @@
             Maximum coordinates of grid cells occupied by this block
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Mass">
+            <summary>
+            Block mass
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.IMyCubeBlock.Min">
             <summary>
             Minimum coordinates of grid cells occupied by this block
@@ -760,6 +785,58 @@
         <member name="P:Sandbox.ModAPI.IMyCubeBuilder.IsActivated">
             <summary>
             Is any mode active
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyCubeGrid">
+            <summary>
+            Grid interface
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.CubeExists(VRageMath.Vector3I)">
+            <summary>
+            Returns true if there is any block occupying given position
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.GetCubeBlock(VRageMath.Vector3I)">
+            <summary>
+            Get cube block at given position
+            </summary>
+            <param name="pos">Block position</param>
+            <returns>Block or null if none is present at given position</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.GridIntegerToWorld(VRageMath.Vector3I)">
+            <summary>
+            Converts grid coordinates to world space
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.WorldToGridInteger(VRageMath.Vector3D)">
+            <summary>
+            Converts world coordinates to grid space cell coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.GridSize">
+            <summary>
+            Grid size in meters
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.GridSizeEnum">
+            <summary>
+            Grid size enum
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.IsStatic">
+            <summary>
+            Station = static
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.Max">
+            <summary>
+            Maximum coordinates of blocks in grid
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.Min">
+            <summary>
+            Minimum coordinates of blocks in grid
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyCubeGrid.ApplyDestructionDeformation(Sandbox.ModAPI.IMySlimBlock)">
@@ -1064,9 +1141,64 @@
             Param - limit is top
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.LeftExtend">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.CurrentPosition">
+            <summary>
+            Gets the current position of the piston head relative to the base.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Status">
+            <summary>
+            Gets the current status.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.CurrentPowerOutput">
+            <summary>
+            Currently used power output of the producer in [MW].
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.MaxPowerOutput">
+            <summary>
+            Maximum power output of the producer in [MW].
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
             <summary>
             Param - active
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMySpaceBall">
+            <summary>
+            ModAPI Spaceball interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMySpaceBall">
+            <summary>
+            Spaceball interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyVirtualMass.VirtualMass">
+            <summary>
+            Virtualmass weight
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.Friction">
+            <summary>
+            Ball friction
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.Restitution">
+            <summary>
+            Ball restitution
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.IsBroadcasting">
+            <summary>
+            Is broadcasting
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyVirtualMass">
+            <summary>
+            ModAPI VirtualMass Interface
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyVoxelShape.GetWorldBoundary">
@@ -1117,6 +1249,57 @@
         <member name="P:Sandbox.ModAPI.IMyVoxelShapeSphere.Center">
             <summary>
             In World Space
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyAirVent">
+            <summary>
+            AirVent block for pressurizing and depresurizing rooms
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyAirVent.IsPressurized">
+            <summary>
+            Room can be pressurized
+            </summary>
+            <returns>true if containing room is airtight</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyAirVent.GetOxygenLevel">
+            <summary>
+            Oxygen level in room
+            </summary>
+            <returns>Oxygen fill level as decimal (0.5 = 50%)</returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAirVent.CanPressurize">
+            <summary>
+            Can fill room with air 
+            true - room is airtight
+            false - room is not airtight
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAirVent.IsDepressurizing">
+            <summary>
+            Vent mode
+            false - pressurize (filling room)
+            true - depressurize (sucking air out)
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyRadioAntenna">
+            <summary>
+            Antenna block interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.Radius">
+            <summary>
+            Broadcasting/Receiving range (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.ShowShipName">
+            <summary>
+            Show shipname on hud (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IsBroadcasting">
+            <summary>
+            Returns true if antena is broadcasting (read-only)
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
@@ -1194,6 +1377,62 @@
             Checks is AI is enabled for turret
             </summary>
         </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyLaserAntenna">
+            <summary>
+            Laser antenna block interface
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.SetTargetCoords(System.String)">
+            <summary>
+            Set coordinates of target
+            </summary>
+            <param name="coords">GPS coordinates string</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.Connect">
+            <summary>
+            Connect to target defined by SetTargetCoords
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TargetCoords">
+            <summary>
+            get target coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsPermanent">
+            <summary>
+            Connection is permanent
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.PistonStatus">
+            <summary>
+            Describes the current status of the piston.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Stopped">
+            <summary>
+            The piston velocity is 0 (stationary).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Extending">
+            <summary>
+            The piston is being extended (moving).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Extended">
+            <summary>
+            The piston is in its extended position (stationary).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Retracting">
+            <summary>
+            The piston is being retracted (moving).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Retracted">
+            <summary>
+            The piston is in its retracted position (stationary).
+            </summary>
+        </member>
         <member name="F:Sandbox.ModAPI.Ingame.TerminalActionParameter.Empty">
             <summary>
             Gets an empty parameter.
@@ -1221,7 +1460,17 @@
             Do it only when necessary.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
+        <member name="T:Sandbox.ModAPI.Ingame.IMySlimBlock">
+            <summary>
+            basic block interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySlimBlock.Mass">
+            <summary>
+            Block mass
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(Sandbox.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
             <summary>
             Will paint given material with given shape
             </summary>
@@ -1229,14 +1478,14 @@
             <param name="voxelShape"></param>
             <param name="materialIdx"></param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CutOutShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape)">
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CutOutShape(Sandbox.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape)">
             <summary>
             Will cut out given shape
             </summary>
             <param name="voxelMap"></param>
             <param name="voxelShape"></param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.FillInShape(Sandbox.ModAPI.IMyVoxelMap,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.FillInShape(Sandbox.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
             <summary>
             Will fill given material with given shape
             </summary>

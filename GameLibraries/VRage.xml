@@ -334,6 +334,13 @@
             Without this environment variable, CLR won't attach profiler.
             </summary>
         </member>
+        <member name="T:VRage.Noise.MyModule">
+            <summary>
+            High quality noise module that combines properties of Value noise and gradient noise.
+            Value noise is used as input for gradient function. This leads to no artifacts or zero values at integer points.
+            It's so called Value-Gradient noise.
+            </summary>
+        </member>
         <member name="P:VRageRender.IMyRenderMessage.MessageClass">
             <summary>
             Get message class
@@ -693,13 +700,6 @@
         <member name="T:VRage.Noise.Modifiers.MyClamp">
             <summary>
             Clamps the output value from a source module to a range of values.
-            </summary>
-        </member>
-        <member name="T:VRage.Noise.MyModule">
-            <summary>
-            High quality noise module that combines properties of Value noise and gradient noise.
-            Value noise is used as input for gradient function. This leads to no artifacts or zero values at integer points.
-            It's so called Value-Gradient noise.
             </summary>
         </member>
         <member name="T:VRage.Noise.MyModuleFast">
@@ -1612,6 +1612,12 @@
         <member name="M:VRage.Voxels.MyClipmap.LodLevel.ChildrenWereLoaded(VRage.Voxels.MyClipmap.LodLevel,VRage.Voxels.MyCellCoord@)">
             <summary>
             Checks only immediate children (any deeper would take too long).
+            </summary>
+        </member>
+        <member name="F:VRage.Voxels.MyClipmap.RequestCollector.m_maxRequests">
+            <summary>
+            Sent requests + low priority requests are checked against this.
+            High priority requests should be sent even when they are over limit.
             </summary>
         </member>
         <member name="M:VRage.Voxels.MyStorageDataCache.Resize(VRageMath.Vector3I,VRageMath.Vector3I)">
