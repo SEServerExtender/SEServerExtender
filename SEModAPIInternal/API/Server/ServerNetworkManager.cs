@@ -132,6 +132,8 @@ namespace SEModAPIInternal.API.Server
 
 		#region "Properties"
 
+        public static bool WorldVoxelModify { get; set; }
+
 		new public static ServerNetworkManager Instance
 		{
 			get
@@ -853,6 +855,30 @@ namespace SEModAPIInternal.API.Server
 							}
 						}
 					}
+
+                    // This will modify the world data to remove voxels and turn off procedural for the player.  The
+                    // server controls procedural anyway, and doesn't require the user to know about it.  If we don't
+                    // turn it off, the objects will still generate on the server.  Possible issue: turning on voxel
+                    // management + procedural encounters may be an issue, as I don't think the server sends procedural
+                    // encounters to the client.  This may be a gotcha issue when it comes to using this option
+                    if (WorldVoxelModify)
+                    {
+                        for (int r = myObjectBuilderWorld.Sector.SectorObjects.Count - 1; r >= 0; r--)
+                        {
+                            MyObjectBuilder_EntityBase entity = (MyObjectBuilder_EntityBase)myObjectBuilderWorld.Sector.SectorObjects[r];
+
+                            if (!(entity is MyObjectBuilder_VoxelMap))
+                                continue;
+
+                            myObjectBuilderWorld.Sector.SectorObjects.RemoveAt(r);
+                        }
+
+                        myObjectBuilderWorld.Sector.Encounters = null;
+
+                        myObjectBuilderWorld.VoxelMaps.Dictionary.Clear();
+                        myObjectBuilderWorld.Checkpoint.Settings.ProceduralDensity = 0f;
+                        myObjectBuilderWorld.Checkpoint.Settings.ProceduralSeed = 0;
+                    }
 
 					MyObjectBuilder_Checkpoint checkpoint = myObjectBuilderWorld.Checkpoint;
 					checkpoint.WorkshopId = null;

@@ -24,6 +24,7 @@ namespace SEModAPIExtensions.API
 		public bool RestartOnCrash;
 		public bool WorldRequestReplace;
 		public bool WorldDataModify;
+        public bool WorldVoxelModify;
 		public string Args;
 	}
 }

@@ -428,6 +428,9 @@ namespace SEModAPIExtensions.API
 					if ( CommandLineArgs.WorldDataModify )
 						ServerNetworkManager.Instance.ReplaceWorldData( );
 
+                    if (CommandLineArgs.WorldVoxelModify)
+                        ServerNetworkManager.WorldVoxelModify = true;
+
 					//SandboxGameAssemblyWrapper.InitAPIGateway();
 					_pluginManager.LoadPlugins( );
 					_pluginManager.Init( );
