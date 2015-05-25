@@ -313,6 +313,10 @@ namespace SEServerExtender
 					{
 						extenderArgs.WorldDataModify = true;
 					}
+                    else if (lowerCaseArgument.Equals("wvm"))
+                    {
+                        extenderArgs.WorldVoxelModify = true;
+                    }
 				}
 			}
 
