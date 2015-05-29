@@ -88,7 +88,7 @@
             Animation clips associated with this model
             </summary>
         </member>
-        <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Library.Utils.MyStringId,VRage.Library.Utils.MyStringId[],System.Nullable{System.Single})">
+        <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Utils.MyStringId,VRage.Utils.MyStringId[],System.Nullable{System.Single})">
             <summary>
             Creates effect on input emitter
             </summary>
@@ -101,6 +101,9 @@
             <summary>
             Enumerator of available curve types
             </summary>
+        </member>
+        <member name="T:VRage.WoodFractureSettings.Rotation">
+            How to rotate the splitting geometry
         </member>
         <member name="M:VRage.Import.ModelAutoRebuild.IsModelActual(System.String,System.String,System.String,System.String)">
             <summary>
@@ -351,7 +354,7 @@
             Gets message type
             </summary>
         </member>
-        <member name="T:VRageRender.MyRenderMessageSwitchRenderSettings1">
+        <member name="T:VRageRender.MyRenderMessageSwitchRenderSettings">
             <summary>
             1 at the end is naming convention from DX, saying this is newer version (for Dx11 render).
             </summary>
@@ -475,6 +478,11 @@
             </summary>
             <param name="writer"></param>
             <returns></returns>
+        </member>
+        <member name="M:VRage.Import.MyModelImporter.ReadVector3(System.IO.BinaryReader)">
+            <summary>
+            Read Vector34
+            </summary>
         </member>
         <member name="M:VRage.Import.MyModelImporter.ReadHalfVector4(System.IO.BinaryReader)">
             <summary>
@@ -1070,6 +1078,11 @@
             Describes the state of a video player
             </summary>
         </member>
+        <member name="P:VRageRender.IMyRender.IsSupported">
+            <summary>
+            Must be possible to query during startup before render thread and window is created.
+            </summary>
+        </member>
         <member name="M:VRageRender.MyRenderProxy.ChangeModel(System.UInt32,System.Int32,System.String,System.Boolean)">
             <summary>
             New model should have similar size to previous model because of prunning structure recalculation
@@ -1107,19 +1120,9 @@
             Rotate 180 degress around both the X and Y axis before rendering.
             </summary>
         </member>
-        <member name="T:VRage.Utils.MyVector3ISet">
+        <member name="M:VRage.Utils.MyStringId.TryGet(System.Int32)">
             <summary>
-            A data structure for a set of Vector3I coordinates optimized for sets with high spatial coherence (hence the name)
-            </summary>
-        </member>
-        <member name="M:VRage.Utils.MyVector3ISet.Union(VRage.Utils.MyVector3ISet)">
-            <summary>
-            Makes a union of this set and the other set and saves it in this set
-            </summary>
-        </member>
-        <member name="P:VRage.Utils.MyVector3ISet.Timestamp">
-            <summary>
-            For detection of modification of the set during iteration. Every modifying operation on the set should increase the timestamp
+            Think HARD before using this. Usually you should be able to use MyStringId as it is without conversion to int.
             </summary>
         </member>
         <member name="T:VRage.Utils.MyUtils">
@@ -1249,6 +1252,11 @@
             <param name="vec"></param>
             <returns></returns>
         </member>
+        <member name="F:VRage.Utils.MyUtils.DefaultNumberSuffix">
+            <summary>
+            Default number suffix, k = thousand, m = million, g/b = billion
+            </summary>
+        </member>
         <member name="M:VRage.Utils.MyUtils.GetCoordAligned(VRageMath.Vector2,VRageMath.Vector2,VRage.Utils.MyGuiDrawAlignEnum)">
             <summary>
             Aligns rectangle, works in screen/texture/pixel coordinates, not normalized coordinates.
@@ -1306,6 +1314,21 @@
         <member name="M:VRage.Utils.MyUtils.GetRandomTimeSpan(System.TimeSpan,System.TimeSpan)">
             <summary>
             Returns a random TimeSpan between begin (inclusive) and end (exclusive).
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyVector3ISet">
+            <summary>
+            A data structure for a set of Vector3I coordinates optimized for sets with high spatial coherence (hence the name)
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyVector3ISet.Union(VRage.Utils.MyVector3ISet)">
+            <summary>
+            Makes a union of this set and the other set and saves it in this set
+            </summary>
+        </member>
+        <member name="P:VRage.Utils.MyVector3ISet.Timestamp">
+            <summary>
+            For detection of modification of the set during iteration. Every modifying operation on the set should increase the timestamp
             </summary>
         </member>
         <member name="M:VRage.Utils.My5BitEncoding.#ctor">
