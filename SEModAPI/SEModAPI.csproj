@@ -97,6 +97,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VRage">
+      <HintPath>..\GameLibraries\VRage.dll</HintPath>
+    </Reference>
     <Reference Include="VRage.Library">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\VRage.Library.dll</HintPath>

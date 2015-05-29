@@ -2,7 +2,7 @@
 {
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
-	using VRage.Library.Utils;
+	using VRage.Utils;
 
 	public class ContainerTypesDefinition : OverLayerDefinition<MyObjectBuilder_ContainerTypeDefinition>
     {

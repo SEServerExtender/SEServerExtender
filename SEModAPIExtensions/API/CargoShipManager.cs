@@ -6,7 +6,6 @@ namespace SEModAPIExtensions.API
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
-	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Utility;
