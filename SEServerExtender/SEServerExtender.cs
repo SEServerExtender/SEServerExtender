@@ -87,6 +87,9 @@ namespace SEServerExtender
 			Text = string.Format( "SEServerExtender {0}", Assembly.GetExecutingAssembly( ).GetName( ).Version );
 
 			FormClosing += OnFormClosing;
+
+			if ( m_server.IsRunning )
+				_genericUpdateTimer.Start( );
 		}
 
 		private bool SetupTimers( )
