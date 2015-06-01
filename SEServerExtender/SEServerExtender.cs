@@ -245,7 +245,7 @@ namespace SEServerExtender
 			m_chatViewRefreshTimer.Stop( );
 			m_factionRefreshTimer.Stop( );
 			m_pluginManagerRefreshTimer.Stop( );
-			_genericUpdateTimer.Stop(  );
+			_genericUpdateTimer.Stop( );
 
 			m_server.StopServer( );
 		}
@@ -312,15 +312,12 @@ namespace SEServerExtender
 		{
 			if ( !CMB_Control_AutosaveInterval.Enabled || CMB_Control_AutosaveInterval.SelectedIndex == -1 ) return;
 
-			double interval = 2;
-			try
-			{
-				interval = double.Parse( CMB_Control_AutosaveInterval.Text );
-			}
-			catch
-			{
+			double interval;
+			if ( !double.TryParse( CMB_Control_AutosaveInterval.Text, out interval ) )
 				MessageBox.Show( this, "Invalid input for auto-save interval." );
-			}
+			
+			if ( interval < 1 )
+				interval = 2;
 
 			m_server.AutosaveInterval = interval * 60000;
 		}
