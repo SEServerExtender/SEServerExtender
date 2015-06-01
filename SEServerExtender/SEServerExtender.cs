@@ -9,7 +9,6 @@ namespace SEServerExtender
 	using System.Threading;
 	using System.Windows.Forms;
 	using Sandbox.Definitions;
-	using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPI.API.Definitions;
 	using SEModAPI.Support;
@@ -49,7 +48,6 @@ namespace SEServerExtender
 		private Timer m_factionRefreshTimer;
 		private Timer m_pluginManagerRefreshTimer;
 		private Timer m_statusCheckTimer;
-		private Timer m_utilitiesCleanFloatingObjectsTimer;
 		private Timer m_statisticsTimer;
 		private Timer m_playersTimer;
 		private Timer _genericUpdateTimer = new Timer { Interval = 1000 };
@@ -110,9 +108,6 @@ namespace SEServerExtender
 			m_statusCheckTimer.Tick += StatusCheckRefresh;
 			m_statusCheckTimer.Start( );
 
-			m_utilitiesCleanFloatingObjectsTimer = new Timer { Interval = 10000 };
-			m_utilitiesCleanFloatingObjectsTimer.Tick += UtilitiesCleanFloatingObjects;
-
 			m_statisticsTimer = new Timer { Interval = 1000 };
 			m_statisticsTimer.Tick += StatisticsRefresh;
 
@@ -172,7 +167,6 @@ namespace SEServerExtender
 			m_factionRefreshTimer.Stop( );
 			m_pluginManagerRefreshTimer.Stop( );
 			m_statusCheckTimer.Stop( );
-			m_utilitiesCleanFloatingObjectsTimer.Stop( );
 			m_statisticsTimer.Stop( );
 			m_playersTimer.Stop( );
 		}
@@ -251,7 +245,6 @@ namespace SEServerExtender
 			m_chatViewRefreshTimer.Stop( );
 			m_factionRefreshTimer.Stop( );
 			m_pluginManagerRefreshTimer.Stop( );
-			m_utilitiesCleanFloatingObjectsTimer.Stop( );
 			_genericUpdateTimer.Stop(  );
 
 			m_server.StopServer( );
@@ -360,7 +353,6 @@ namespace SEServerExtender
 			BTN_Chat_Send.Enabled = m_server.IsRunning;
 			if ( !m_server.IsRunning )
 				BTN_Entities_New.Enabled = false;
-			BTN_Utilities_ClearFloatingObjectsNow.Enabled = m_server.IsRunning;
 
 			if ( CHK_Control_CommonDataPath.CheckState == CheckState.Checked )
 				CMB_Control_CommonInstanceList.Enabled = !m_server.IsRunning;
@@ -2158,45 +2150,6 @@ namespace SEServerExtender
 
 		#endregion
 
-		#region "Utilities"
-
-		// Start the Auto Clean timer if user checks the auto clean checkbox.
-		private void CHK_Utilities_FloatingObjectAutoClean_CheckedChanged( object sender, EventArgs e )
-		{
-			if ( CHK_Utilities_FloatingObjectAutoClean.Checked )
-			{
-				if ( !m_utilitiesCleanFloatingObjectsTimer.Enabled )
-					m_utilitiesCleanFloatingObjectsTimer.Start( );
-			}
-			else
-			{
-				if ( m_utilitiesCleanFloatingObjectsTimer.Enabled )
-				{
-					m_utilitiesCleanFloatingObjectsTimer.Enabled = false;
-					m_utilitiesCleanFloatingObjectsTimer.Stop( );
-				}
-			}
-		}
-
-		// Delete all floating objects when the count reaches the amount set.
-		private void UtilitiesCleanFloatingObjects( object sender, EventArgs e )
-		{
-			HashSet<IMyEntity> floatingEntities = new HashSet<IMyEntity>( );
-			MyAPIGateway.Entities.GetEntities( floatingEntities, entity => entity is IMyFloatingObject );
-			if ( floatingEntities.Count > TXT_Utilities_FloatingObjectAmount.Value )
-			{
-				ChatManager.Instance.SendPublicChatMessage( "/delete all floatingobjects" );
-			}
-		}
-
-		// Delete all floating objects now
-		private void BTN_Utilities_ClearFloatingObjectsNow_Click( object sender, EventArgs e )
-		{
-			ChatManager.Instance.SendPublicChatMessage( "/delete all floatingobjects" );
-		}
-
-		#endregion
-
 		private void TSM_Kick_Click( object sender, EventArgs e )
 		{
 			if ( LST_Chat_ConnectedPlayers.SelectedItem != null )
@@ -2291,6 +2244,16 @@ namespace SEServerExtender
 			{
 				m_entityTreeRefreshTimer.Stop( );
 			}
+		}
+
+		private void PG_Entities_Details_Click( object s, PropertyValueChangedEventArgs e )
+		{
+
+		}
+
+		private void PG_Entities_Details_Click( object sender, SelectedGridItemChangedEventArgs e )
+		{
+
 		}
 	}
 }
