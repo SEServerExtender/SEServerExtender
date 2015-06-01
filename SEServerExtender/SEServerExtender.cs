@@ -409,7 +409,7 @@ namespace SEServerExtender
 				if ( entriesChanged )
 				{
 					node.Nodes.Clear( );
-					node.Text = node.Name + " (" + source.Count + ")";
+					node.Text = string.Format( "{0} ({1})", node.Name, source.Count );
 				}
 
 				int index = 0;
@@ -769,7 +769,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round( rawPosition.Length( ), 0 );
-							string newNodeText = item.Name + " | Dist: " + distance + "m";
+							string newNodeText = string.Format( "{0} | Dist: {1}m", item.Name, distance );
 							node.Text = newNodeText;
 						}
 						list.Remove( item );
@@ -799,7 +799,7 @@ namespace SEServerExtender
 					Type sectorObjectType = item.GetType( );
 					string nodeKey = item.EntityId.ToString( );
 
-					TreeNode newNode = rootNode.Nodes.Add( nodeKey, item.Name + " | Dist: " + distance + "m" );
+					TreeNode newNode = rootNode.Nodes.Add( nodeKey, string.Format( "{0} | Dist: {1}m", item.Name, distance ) );
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
@@ -810,7 +810,7 @@ namespace SEServerExtender
 			}
 
 			//Update node text
-			rootNode.Text = rootNode.Name + " (" + rootNode.Nodes.Count + ")";
+			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
 
 		private void RenderFloatingObjectNodes( TreeNode rootNode )
@@ -837,7 +837,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.Position;
 							double distance = Math.Round( rawPosition.Length( ), 0 );
-							string newNodeText = item.Name + " | Amount: " + item.Item.Amount + " | Dist: " + distance + "m";
+							string newNodeText = string.Format( "{0} | Amount: {1} | Dist: {2}m", item.Name, item.Item.Amount, distance );
 							node.Text = newNodeText;
 						}
 						list.Remove( item );
