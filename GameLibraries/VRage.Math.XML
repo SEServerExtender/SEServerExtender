@@ -1305,6 +1305,73 @@
             Exception to this can only be rare cases such as avoiding code duplication.
             </summary>
         </member>
+        <member name="M:VRageMath.MyMath.ArcTanAngle(System.Single,System.Single)">
+            <summary>
+            ArcTanAngle
+            </summary>
+            <returns>ArcTan angle between x and y</returns>
+        </member>
+        <member name="M:VRageMath.MyMath.MaxComponents(VRageMath.Vector3@,VRageMath.Vector3@)">
+            <summary>
+            Return vector with each component max
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.MyMath.AngleTo(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            AngleTo 
+            </summary>
+            <returns>Angle between the vector lines</returns>
+        </member>
+        <member name="M:VRageMath.MyMath.QuaternionToEuler(VRageMath.Quaternion)">
+            <summary>
+            QuaternionToEuler 
+            </summary>
+            <returns>Converted quaternion to the euler pitch, rot, yaw</returns>
+        </member>
+        <member name="M:VRageMath.MyMath.ForwardVectorProjection(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            This projection results to initial velocity of non-engine objects, which parents move in some velocity
+            We want to add only forward speed of the parent to the forward direction of the object, and if parent
+            is going backward, no speed is added.
+            </summary>
+            <param name="forwardVector"></param>
+            <param name="projectedVector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.MyMath.VectorFromColor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Calculates color from vector
+            </summary>
+        </member>
+        <member name="M:VRageMath.MyMath.DistanceSquaredFromLineSegment(VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Return minimum distance between line segment v-w and point p.
+            </summary>
+        </member>
+        <member name="T:VRageMath.Vector3Extensions">
+            <summary>
+            Usefull Vector3 extensions
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector3Extensions.Project(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Calculates projection vector
+            </summary>
+            <param name="sb">The sb.</param>
+            <param name="length">The length.</param>
+        </member>
+        <member name="M:VRageMath.BoundingFrustumExtensions.ToBoundingSphere(VRageMath.BoundingFrustum,VRageMath.Vector3[])">
+            <summary>
+            Creates bounding sphere from bounding frustum.
+            Implementation taken from XNA source, replace IEnumerable with array
+            </summary>
+            <param name="frustum">The bounding frustum.</param>
+            <param name="corners">Temporary memory to save corner when getting from frustum.</param>
+            <returns>BoundingSphere</returns>
+        </member>
         <member name="T:VRageMath.QuaternionD">
             <summary>
             Defines a four-dimensional vector (x,y,z,w), which is used to efficiently rotate an object about the (x, y, z) vector by the angle theta, where w = cos(theta/2).
