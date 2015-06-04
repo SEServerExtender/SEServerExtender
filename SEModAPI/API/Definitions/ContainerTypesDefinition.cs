@@ -1,7 +1,7 @@
 ﻿namespace SEModAPI.API.Definitions
 {
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRage.ObjectBuilders;
 	using VRage.Utils;
 
 	public class ContainerTypesDefinition : OverLayerDefinition<MyObjectBuilder_ContainerTypeDefinition>

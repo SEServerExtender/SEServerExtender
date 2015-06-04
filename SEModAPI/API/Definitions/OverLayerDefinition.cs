@@ -10,6 +10,7 @@ namespace SEModAPI.API.Definitions
 	using System.Xml;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRage.ObjectBuilders;
 
 	/// <summary>
 	/// This class is only intended for easy data access and management. It is a wrapper around all MyObjectBuilder_Definitions children sub type

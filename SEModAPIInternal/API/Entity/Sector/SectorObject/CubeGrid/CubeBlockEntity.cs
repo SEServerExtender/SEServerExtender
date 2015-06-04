@@ -7,13 +7,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 	using System.Runtime.Serialization;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.VRageData;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
+	using VRage;
 	using VRageMath;
 
 	[DataContract( Name = "CubeBlockEntityProxy" )]

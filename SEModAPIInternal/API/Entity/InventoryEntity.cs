@@ -7,12 +7,12 @@ namespace SEModAPIInternal.API.Entity
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Serializer;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI.Interfaces;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRage;
+	using VRage.ObjectBuilders;
 	using IMyInventory = Sandbox.ModAPI.IMyInventory;
 
 	public struct InventoryDelta

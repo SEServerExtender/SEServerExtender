@@ -6,13 +6,14 @@ namespace SEModAPIInternal.API.Entity
 	using System.Runtime.Serialization;
 	using Havok;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
-	using Sandbox.Common.Components;
-	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.ModAPI;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
+	using VRage;
+	using VRage.Components;
+	using VRage.ModAPI;
+	using VRage.ObjectBuilders;
 	using VRageMath;
 
 	[DataContract( Name = "BaseEntityProxy" )]

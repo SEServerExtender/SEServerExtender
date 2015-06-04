@@ -11,9 +11,8 @@ namespace SEModAPI.API.Definitions
 	using System.Windows.Forms.Design;
 	using System.Xml;
 	using System.Xml.Serialization;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
-	using SEModAPI.Support;
+	using VRage.ObjectBuilders;
 
 	[DataContract]
 	public class DedicatedConfigDefinition

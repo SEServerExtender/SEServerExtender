@@ -22,6 +22,8 @@
 	using SteamSDK;
 	using VRage;
 	using VRage.FileSystem;
+	using VRage.ModAPI;
+	using VRage.ObjectBuilders;
 	using VRageMath;
 
 	public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );

@@ -56,10 +56,10 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn( "SandboxGameAssemblyWrapper reflection validation failed!" );
 			}
 
-			if (!ServerAssemblyWrapper.ReflectionUnitTest())
+			if (!DedicatedServerAssemblyWrapper.ReflectionUnitTest())
 			{
 				result = false;
-				BaseLog.Warn( "ServerAssemblyWrapper reflection validation failed!" );
+				BaseLog.Warn( "DedicatedServerAssemblyWrapper reflection validation failed!" );
 			}
 
 			if (!NetworkManager.ReflectionUnitTest())

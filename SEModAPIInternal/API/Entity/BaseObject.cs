@@ -8,11 +8,8 @@ namespace SEModAPIInternal.API.Entity
 	using System.Runtime.Serialization;
 	using System.Xml;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
-	using Sandbox.Common.ObjectBuilders.Serializer;
 	using Sandbox.Definitions;
-	using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
@@ -20,6 +17,7 @@ namespace SEModAPIInternal.API.Entity
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
 	using VRage;
+	using VRage.ObjectBuilders;
 
 	[DataContract( Name = "BaseObjectProxy" )]
 	[KnownType( typeof( BaseEntity ) )]

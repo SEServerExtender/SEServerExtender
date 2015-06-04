@@ -4,9 +4,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
+	using VRage.ModAPI;
 	using IMyTerminalBlock = Sandbox.ModAPI.Ingame.IMyTerminalBlock;
 
 	[DataContract( Name = "FunctionalBlockEntityProxy" )]

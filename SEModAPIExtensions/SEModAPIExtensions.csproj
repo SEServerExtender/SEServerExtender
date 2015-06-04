@@ -126,6 +126,9 @@
     <Reference Include="VRage">
       <HintPath>..\GameLibraries\VRage.dll</HintPath>
     </Reference>
+    <Reference Include="VRage.Game">
+      <HintPath>..\GameLibraries\VRage.Game.dll</HintPath>
+    </Reference>
     <Reference Include="VRage.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\VRage.Library.dll</HintPath>

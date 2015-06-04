@@ -3,10 +3,10 @@ namespace SEModAPIInternal.API.Utility
 	using System;
 	using System.Collections.Generic;
 	using System.Reflection;
-	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Game.Entities;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.Support;
+	using VRage;
+	using VRage.ObjectBuilders;
 	using VRage.Utils;
 	using VRageMath;
 

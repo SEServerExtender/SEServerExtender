@@ -4,12 +4,12 @@ namespace SEServerExtender
 	using System.Collections.Generic;
 	using System.Windows.Forms;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Serializer;
 	using Sandbox.Definitions;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage;
 	using VRage.Collections;
+	using VRage.ObjectBuilders;
 
 	public partial class InventoryItemDialog : Form
 	{

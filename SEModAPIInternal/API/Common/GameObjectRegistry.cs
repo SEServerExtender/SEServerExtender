@@ -5,8 +5,8 @@ namespace SEModAPIInternal.API.Common
 	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.InteropServices;
-	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Entity;
+	using VRage.ObjectBuilders;
 
 	public struct GameObjectTypeEntry
 	{

@@ -154,7 +154,7 @@
     <Compile Include="API\Entity\Sector\SectorObject\Meteor.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\VoxelMap.cs" />
     <Compile Include="API\Common\SandboxGameAssemblyWrapper.cs" />
-    <Compile Include="API\Server\ServerAssemblyWrapper.cs" />
+    <Compile Include="API\Server\DedicatedServerAssemblyWrapper.cs" />
     <Compile Include="AssemblyFileVersion.cs">
       <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -200,6 +200,9 @@
     </Reference>
     <Reference Include="VRage.Dedicated">
       <HintPath>..\GameLibraries\VRage.Dedicated.dll</HintPath>
+    </Reference>
+    <Reference Include="VRage.Game">
+      <HintPath>..\GameLibraries\VRage.Game.dll</HintPath>
     </Reference>
     <Reference Include="VRage.Library">
       <HintPath>..\GameLibraries\VRage.Library.dll</HintPath>

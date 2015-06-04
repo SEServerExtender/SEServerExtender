@@ -4,10 +4,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.VRageData;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
+	using VRage;
 	using VRageMath;
 
 	[DataContract]

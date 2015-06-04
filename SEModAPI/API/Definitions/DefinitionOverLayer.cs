@@ -1,8 +1,8 @@
 namespace SEModAPI.API.Definitions
 {
 	using System.ComponentModel;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
+	using VRage.ObjectBuilders;
 
 	/// <summary>
 	/// This class is only intended for easy data access and management. It is a wrapper around all MyObjectBuilder_DefinitionsBase children sub type

@@ -44,7 +44,7 @@ namespace SEModAPIExtensions.API
 		private PluginManager _pluginManager;
 		private SandboxGameAssemblyWrapper _gameAssemblyWrapper;
 		private FactionsManager _factionsManager;
-		private ServerAssemblyWrapper _serverWrapper;
+		private DedicatedServerAssemblyWrapper _dedicatedServerWrapper;
 		private LogManager _logManager;
 		private EntityEventManager _entityEventManager;
 		private ChatManager _chatManager;
@@ -186,7 +186,7 @@ namespace SEModAPIExtensions.API
 
 		private bool SetupManagers( )
 		{
-			_serverWrapper = ServerAssemblyWrapper.Instance;
+			_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
 			_pluginManager = PluginManager.Instance;
 			_gameAssemblyWrapper = SandboxGameAssemblyWrapper.Instance;
 			_factionsManager = FactionsManager.Instance;
@@ -491,8 +491,8 @@ namespace SEModAPIExtensions.API
 			try
 			{
 				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
-				_serverWrapper = ServerAssemblyWrapper.Instance;
-				bool result = _serverWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
+				_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
+				bool result = _dedicatedServerWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
 				ApplicationLog.BaseLog.Info( "Server has stopped running" );
 
 				_isServerRunning = false;
@@ -547,7 +547,7 @@ namespace SEModAPIExtensions.API
 			}
 			finally
 			{
-				_serverWrapper = null;
+				_dedicatedServerWrapper = null;
 			}
 		}
 
@@ -596,7 +596,7 @@ namespace SEModAPIExtensions.API
 			_pluginManager.Shutdown( );
 
 			//_runServerThread.Interrupt();
-			//_serverWrapper.StopServer();
+			//_dedicatedServerWrapper.StopServer();
 			//_runServerThread.Abort();
 			_runServerThread.Interrupt( );
 

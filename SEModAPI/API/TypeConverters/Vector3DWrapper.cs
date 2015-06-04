@@ -1,6 +1,6 @@
 ﻿namespace SEModAPI.API.TypeConverters
 {
-	using Sandbox.Common.ObjectBuilders.VRageData;
+	using VRage;
 	using VRageMath;
 
 	public struct Vector3DWrapper

@@ -16,6 +16,7 @@ namespace SEModAPIInternal.API.Entity
 		public static string PowerProducerInterface = "IMyPowerProducer";
 
 		public static string PowerProducerGetMaxPowerOutputMethod = "get_MaxPowerOutput";
+		public static string PowerProducerGetDefinedPowerOutputMethod = "get_DefinedPowerOutput";
 		public static string PowerProducerCurrentOutputProperty = "CurrentPowerOutput";
 		public const string PowerProducerRemainingCapacityProperty = "RemainingCapacity";
 		public const string PowerProducerHasCapacityRemainingProperty = "HasCapacityRemaining";
@@ -50,6 +51,23 @@ namespace SEModAPIInternal.API.Entity
 					return 0;
 				}
 			}
+		}
+
+		public float DefinedPowerOutput
+		{
+			get
+			{
+				try
+				{
+					return _powerProducer == null ? 0 : (float)BaseObject.InvokeEntityMethod( _powerProducer, PowerProducerGetDefinedPowerOutputMethod );
+				}
+				catch ( Exception ex )
+				{
+					ApplicationLog.BaseLog.Error( ex );
+					return 0;
+				}
+			}
+			private set { }
 		}
 
 		public float PowerOutput

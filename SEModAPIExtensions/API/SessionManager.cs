@@ -3,8 +3,8 @@ namespace SEModAPIExtensions.API
 	using System;
 	using System.IO;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Serializer;
 	using SEModAPIInternal.Support;
+	using VRage.ObjectBuilders;
 
 	public class SessionManager
 	{

@@ -12,6 +12,7 @@ namespace SEModAPIInternal.API.Entity
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
+	using VRage.ObjectBuilders;
 	using VRageMath;
 
 	public class SectorEntity : BaseObject

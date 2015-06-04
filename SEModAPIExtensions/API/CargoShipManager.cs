@@ -10,6 +10,7 @@ namespace SEModAPIExtensions.API
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
+	using VRage;
 	using VRageMath;
 
 	public class CargoShipManager

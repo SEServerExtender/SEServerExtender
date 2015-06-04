@@ -6,10 +6,10 @@
 	using System.Reflection;
 	using System.Threading;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Engine.Utils;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage.FileSystem;
+	using VRage.ObjectBuilders;
 
 	public class SandboxGameAssemblyWrapper
 	{

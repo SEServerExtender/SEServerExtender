@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.ComponentModel;
+	using System.IO;
 	using System.Reflection;
 	using System.Runtime.ExceptionServices;
 	using System.Runtime.InteropServices;
@@ -18,28 +19,34 @@
 	using VRage.FileSystem;
 	using VRage.Input;
 
-	public class ServerAssemblyWrapper
+	public class DedicatedServerAssemblyWrapper
 	{
-		private static ServerAssemblyWrapper _instance;
+		private static DedicatedServerAssemblyWrapper _instance;
+		private static Assembly _assembly;
 
-		public static string DedicatedServerRunMainMethod = "RunMain";
+		public const string DedicatedServerNamespace = "VRage.Dedicated";
+		public const string DedicatedServerClass = "DedicatedServer";
+		public const string DedicatedServerRunMainMethod = "RunMain";
 
 		#region "Constructors and Initializers"
 
-		protected ServerAssemblyWrapper( )
+		protected DedicatedServerAssemblyWrapper( )
 		{
 			_instance = this;
 
-			ApplicationLog.BaseLog.Info( "Finished loading ServerAssemblyWrapper" );
+			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "VRage.Dedicated.dll" );
+			_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
+
+			ApplicationLog.BaseLog.Info( "Finished loading DedicatedServerAssemblyWrapper" );
 		}
 
 		#endregion "Constructors and Initializers"
 
 		#region "Properties"
 
-		public static ServerAssemblyWrapper Instance
+		public static DedicatedServerAssemblyWrapper Instance
 		{
-			get { return _instance ?? ( _instance = new ServerAssemblyWrapper( ) ); }
+			get { return _instance ?? ( _instance = new DedicatedServerAssemblyWrapper( ) ); }
 		}
 
 		public static Type InternalType
@@ -60,7 +67,7 @@
 			{
 				Type dedicatedServerType = InternalType;
 				if ( dedicatedServerType == null )
-					throw new Exception( "Could not find internal type for ServerAssemblyWrapper" );
+					throw new Exception( "Could not find internal type for DedicatedServerAssemblyWrapper" );
 				bool result = true;
 				result &= BaseObject.HasMethod( dedicatedServerType, DedicatedServerRunMainMethod );
 

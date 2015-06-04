@@ -2,8 +2,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System.Runtime.Serialization;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Definitions;
 	using VRage;
+	using VRage.ObjectBuilders;
 
 	[DataContract]
 	public class ProductionQueueItem

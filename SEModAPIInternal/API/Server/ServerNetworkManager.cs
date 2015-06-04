@@ -10,7 +10,6 @@ namespace SEModAPIInternal.API.Server
 	using System.Threading;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
-	using Sandbox.Common.ObjectBuilders.Serializer;
 	using Sandbox.Common.ObjectBuilders.Voxels;
 	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
@@ -18,6 +17,8 @@ namespace SEModAPIInternal.API.Server
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
 	using SteamSDK;
+	using VRage;
+	using VRage.ObjectBuilders;
 	using VRageMath;
 
 	public class ServerNetworkManager : NetworkManager
