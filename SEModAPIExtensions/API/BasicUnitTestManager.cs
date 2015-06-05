@@ -51,12 +51,6 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn( "DedicatedServerAssemblyWrapper reflection validation failed!" );
 			}
 
-			if (!NetworkManager.ReflectionUnitTest())
-			{
-				result = false;
-				BaseLog.Warn( "NetworkManager reflection validation failed!" );
-			}
-
 			if (!ServerNetworkManager.ReflectionUnitTest())
 			{
 				result = false;
