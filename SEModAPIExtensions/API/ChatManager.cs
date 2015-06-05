@@ -9,8 +9,11 @@
 	using System.Text.RegularExpressions;
 	using System.Threading;
 	using System.Xml;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Engine.Multiplayer;
 	using Sandbox.ModAPI;
+	using SEModAPI.API.Sandbox;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
@@ -227,9 +230,7 @@
 		{
 			try
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ChatMessageStructNamespace, ChatMessageStructClass );
-				if ( type == null )
-					throw new Exception( "Could not find internal type for ChatMessageStruct" );
+				Type type = typeof ( Sandbox.Engine.Multiplayer.ChatMsg );
 				bool result = true;
 				result &= BaseObject.HasField( type, ChatMessageMessageField );
 
@@ -247,7 +248,7 @@
 			if ( m_chatHandlerSetup )
 				return;
 
-			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+			if ( !MySandboxGameWrapper.IsGameStarted )
 				return;
 
 			try
@@ -269,7 +270,7 @@
 
 		protected Object CreateChatMessageStruct( string message )
 		{
-			Type chatMessageStructType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ChatMessageStructNamespace, ChatMessageStructClass );
+			Type chatMessageStructType = typeof ( ChatMsg );
 			FieldInfo messageField = chatMessageStructType.GetField( ChatMessageMessageField );
 
 			Object chatMessageStruct = Activator.CreateInstance( chatMessageStructType );
@@ -301,7 +302,7 @@
 
 		public void SendPrivateChatMessage( ulong remoteUserId, string message )
 		{
-			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+			if ( !MySandboxGameWrapper.IsGameStarted )
 				return;
 			if ( string.IsNullOrEmpty( message ) )
 				return;
@@ -334,7 +335,7 @@
 
 		public void SendPublicChatMessage( string message )
 		{
-			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+			if ( !MySandboxGameWrapper.IsGameStarted )
 				return;
 			if ( string.IsNullOrEmpty( message ) )
 				return;
@@ -583,35 +584,36 @@
 					 */
 
 					int count = 0;
-					SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-					{
-						HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
-						MyAPIGateway.Entities.GetEntities( entities );
-						List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
+					MySandboxGame.Static.Invoke( ( ) =>
+					                             {
+						                             HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
+						                             MyAPIGateway.Entities.GetEntities( entities );
+						                             List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
 
-						foreach ( IMyEntity entity in entities )
-						{
-							MyObjectBuilder_Base objectBuilder;
-							try
-							{
-								objectBuilder = entity.GetObjectBuilder( );
-							}
-							catch
-							{
-								continue;
-							}
+						                             foreach ( IMyEntity entity in entities )
+						                             {
+							                             MyObjectBuilder_Base objectBuilder;
+							                             try
+							                             {
+								                             objectBuilder = entity.GetObjectBuilder( );
+							                             }
+							                             catch
+							                             {
+								                             continue;
+							                             }
 
-							if ( objectBuilder is MyObjectBuilder_FloatingObject )
-								entitiesToRemove.Add( entity );
-						}
+							                             if ( objectBuilder is MyObjectBuilder_FloatingObject )
+								                             entitiesToRemove.Add( entity );
+						                             }
 
-						for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
-						{
-							IMyEntity entity = entitiesToRemove[ r ];
-							MyAPIGateway.Entities.RemoveEntity( entity );
-							count++;
-						}
-					} );
+						                             for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
+						                             {
+							                             IMyEntity entity = entitiesToRemove[ r ];
+							                             MyAPIGateway.Entities.RemoveEntity( entity );
+							                             count++;
+						                             }
+					                             } );
+					
 
 					SendPrivateChatMessage( remoteUserId, count + " floating objects have been removed" );
 				}
