@@ -7,6 +7,7 @@ namespace SEModAPIInternal.API.Entity
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Voxels;
+	using SEModAPI.API;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
@@ -512,7 +513,7 @@ namespace SEModAPIInternal.API.Entity
 					throw new Exception( "AddEntity queue is full. Cannot add more entities yet" );
 				}
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Debug( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
 
 				m_addEntityQueue.Enqueue( entity );
@@ -535,7 +536,7 @@ namespace SEModAPIInternal.API.Entity
 
 				BaseEntity entityToAdd = m_addEntityQueue.Dequeue( );
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Debug( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
 
 				//Create the backing object
@@ -586,7 +587,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 				}
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					Type type = entityToAdd.GetType( );
 					ApplicationLog.BaseLog.Debug( type.Name + " '" + entityToAdd.Name + "': Finished adding to scene" );
@@ -642,7 +643,7 @@ namespace SEModAPIInternal.API.Entity
 
 		new public bool Save( )
 		{
-			return WriteSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( m_Sector.ObjectBuilder, this.FileInfo.FullName );
+			return WriteSpaceEngineersFile( m_Sector.ObjectBuilder, this.FileInfo.FullName );
 		}
 
 		#endregion "Methods"

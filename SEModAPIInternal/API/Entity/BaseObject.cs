@@ -8,9 +8,11 @@ namespace SEModAPIInternal.API.Entity
 	using System.Runtime.Serialization;
 	using System.Xml;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Definitions;
 	using SEModAPI.API;
+	using SEModAPI.API.Sandbox;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
@@ -242,7 +244,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public virtual void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_Base, MyObjectBuilder_BaseSerializer>( ObjectBuilder, fileInfo );
+			BaseObjectManager.SaveContentFile( ObjectBuilder, fileInfo );
 		}
 
 		public MyObjectBuilder_Base Export( )
@@ -270,7 +272,7 @@ namespace SEModAPIInternal.API.Entity
 					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( field == null )
 				{
-					if ( SandboxGameAssemblyWrapper.IsDebugging )
+					if ( ExtenderOptions.IsDebugging )
 						ApplicationLog.BaseLog.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
 					return false;
 				}
@@ -278,7 +280,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
@@ -306,7 +308,7 @@ namespace SEModAPIInternal.API.Entity
 						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 					if ( method == null )
 					{
-						if ( SandboxGameAssemblyWrapper.IsDebugging )
+						if ( ExtenderOptions.IsDebugging )
 							ApplicationLog.BaseLog.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
 						return false;
 					}
@@ -320,7 +322,7 @@ namespace SEModAPIInternal.API.Entity
 						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
 					if ( method == null )
 					{
-						if ( SandboxGameAssemblyWrapper.IsDebugging )
+						if ( ExtenderOptions.IsDebugging )
 							ApplicationLog.BaseLog.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
 						return false;
 					}
@@ -334,7 +336,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message );
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
@@ -354,7 +356,7 @@ namespace SEModAPIInternal.API.Entity
 					property = objectType.BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( property == null )
 				{
-					if ( SandboxGameAssemblyWrapper.IsDebugging )
+					if ( ExtenderOptions.IsDebugging )
 						ApplicationLog.BaseLog.Error( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "'" );
 					return false;
 				}
@@ -362,7 +364,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "': " + ex.Message );
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
@@ -381,7 +383,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( "Failed to find nested type '" + nestedTypeName + "' in type '" + objectType.FullName + "': " + ex.Message );
 
 				ApplicationLog.BaseLog.Error( ex );
@@ -462,7 +464,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get static method '" + methodName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -499,7 +501,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get static method '" + methodName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -535,7 +537,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get entity method '" + methodName + "': " + ex.Message );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -574,7 +576,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get entity method '" + methodName + "': " + ex.Message );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -613,7 +615,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		public static Object GetEntityFieldValue( Object gameEntity, string fieldName )
+		public static dynamic GetEntityFieldValue( Object gameEntity, string fieldName )
 		{
 			try
 			{
@@ -664,7 +666,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to invoke static method '" + methodName + "': " + ex.Message );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -696,7 +698,7 @@ namespace SEModAPIInternal.API.Entity
 			{
 				ApplicationLog.BaseLog.Error( "Failed to invoke entity method '" + methodName + "' on type '" + gameEntity.GetType( ).FullName + "': " + ex.Message );
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 
 				ApplicationLog.BaseLog.Error( ex );
@@ -717,7 +719,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get entity property '" + propertyName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -738,7 +740,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to get entity property value '" + propertyName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
@@ -758,7 +760,7 @@ namespace SEModAPIInternal.API.Entity
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( "Failed to set entity property value '" + propertyName + "'" );
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return;
@@ -953,7 +955,7 @@ namespace SEModAPIInternal.API.Entity
 					return false;
 				if ( IsInternalResourceLocked )
 					return false;
-				if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+				if ( !MySandboxGameWrapper.IsGameStarted )
 					return false;
 				if ( WorldManager.Instance.IsWorldSaving )
 					return false;
@@ -1097,7 +1099,7 @@ namespace SEModAPIInternal.API.Entity
 					m_rawDataListResourceLock.ReleaseShared( );
 				m_rawDataObjectBuilderListResourceLock.ReleaseShared( );
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					TimeSpan timeToRefresh = DateTime.Now - startRefreshTime;
 					m_averageRefreshDataTime = ( m_averageRefreshDataTime + timeToRefresh.TotalMilliseconds ) / 2;
@@ -1216,65 +1218,48 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Serializers"
 
-		public static T LoadContentFile<T, TS>( FileInfo fileInfo ) where TS : XmlSerializer1
+		/// <exception cref="FileNotFoundException">The specified content file could not be found.</exception>
+		/// <exception cref="InvalidDataException">The specified content file was not understood by the game.</exception>
+		/// <exception cref="FileLoadException">Deserializing the specified content file resulted in an empty object.</exception>
+		public static T LoadContentFile<T>( FileInfo fileInfo ) where T : MyObjectBuilder_Base
 		{
-			object fileContent = null;
+			T fileContent;
 
 			string filePath = fileInfo.FullName;
 
 			if ( !File.Exists( filePath ) )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileMissing, filePath );
+				throw new FileNotFoundException( "The specified content file could not be found.", filePath );
 			}
 
 			try
 			{
-				fileContent = ReadSpaceEngineersFile<T, TS>( filePath );
+				MyObjectBuilderSerializer.DeserializeXML( filePath, out fileContent );
 			}
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
+				throw new InvalidDataException("The specified content file was not understood by the game.", ex );
 			}
 
 			if ( fileContent == null )
 			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
+				throw new FileLoadException( "Deserializing the specified content file resulted in an empty object.", filePath );
 			}
 
 			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
 			//     Lock the load during this time, in case it happens multiple times.
 			// Report a friendly error if this load fails.
 
-			return (T)fileContent;
+			return fileContent;
 		}
 
-		public static void SaveContentFile<T, TS>( T fileContent, FileInfo fileInfo ) where TS : XmlSerializer1
+		[Obsolete( "Use MyObjectBuilderSerializer.SerializeXML" )]
+		public static void SaveContentFile( MyObjectBuilder_Base fileContent, FileInfo fileInfo )
 		{
 			string filePath = fileInfo.FullName;
 
-			//if (!File.Exists(filePath))
-			//{
-			//	throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileMissing, filePath);
-			//}
-
-			try
-			{
-				WriteSpaceEngineersFile<T, TS>( fileContent, filePath );
-			}
-			catch
-			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath );
-			}
-
-			if ( fileContent == null )
-			{
-				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileEmpty, filePath );
-			}
-
-			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
-			//     Lock the load during this time, in case it happens multiple times.
-			// Report a friendly error if this load fails.
+			MyObjectBuilderSerializer.SerializeXML( filePath, false, fileContent );
 		}
 
 		public static T ReadSpaceEngineersFile<T, TS>( string filename )
@@ -1317,22 +1302,14 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		public static bool WriteSpaceEngineersFile<T, TS>( T sector, string filename )
-			where TS : XmlSerializer1
+		public static bool WriteSpaceEngineersFile( MyObjectBuilder_Base sector, string filename )
 		{
 			// How they appear to be writing the files currently.
 			try
 			{
-				using ( XmlTextWriter xmlTextWriter = new XmlTextWriter( filename, null ) )
-				{
-					xmlTextWriter.Formatting = Formatting.Indented;
-					xmlTextWriter.Indentation = 2;
-					xmlTextWriter.IndentChar = ' ';
-					TS serializer = (TS)Activator.CreateInstance( typeof( TS ) );
-					serializer.Serialize( xmlTextWriter, sector );
-				}
+				MyObjectBuilderSerializer.SerializeXML( filename, false, sector );
 			}
-			catch(Exception ex)
+			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
@@ -1553,7 +1530,7 @@ namespace SEModAPIInternal.API.Entity
 			m_definitionsContainerField.SetValue( definitionsContainer, baseDefs.ToArray( ) );
 
 			//Save the definitions container out to the file
-			SaveContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>( definitionsContainer, m_fileInfo );
+			SaveContentFile( definitionsContainer, m_fileInfo );
 
 			return true;
 		}

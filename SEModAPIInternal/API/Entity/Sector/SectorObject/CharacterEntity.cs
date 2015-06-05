@@ -52,7 +52,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		public CharacterEntity( FileInfo characterFile )
 			: base( null )
 		{
-			MyObjectBuilder_Character character = BaseObjectManager.LoadContentFile<MyObjectBuilder_Character, MyObjectBuilder_CharacterSerializer>( characterFile );
+			MyObjectBuilder_Character character = BaseObjectManager.LoadContentFile<MyObjectBuilder_Character>( characterFile );
 			ObjectBuilder = character;
 
 			m_inventory = new InventoryEntity( character.Inventory );
@@ -335,7 +335,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public override void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_Character, MyObjectBuilder_CharacterSerializer>( ObjectBuilder, fileInfo );
+			BaseObjectManager.SaveContentFile( ObjectBuilder, fileInfo );
 		}
 
 		#region "Internal"

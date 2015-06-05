@@ -567,7 +567,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 		public override void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_CubeBlock, MyObjectBuilder_CubeBlockSerializer>( ObjectBuilder, fileInfo );
+			BaseObjectManager.SaveContentFile( ObjectBuilder, fileInfo );
 		}
 
 		new public static bool ReflectionUnitTest( )

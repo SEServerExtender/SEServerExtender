@@ -8,9 +8,14 @@ namespace SEServerExtender
 	using System.Text;
 	using System.Threading;
 	using System.Windows.Forms;
+	using Sandbox;
+	using Sandbox.Common;
 	using Sandbox.Definitions;
+	using Sandbox.Game.World;
 	using SEModAPI.API;
 	using SEModAPI.API.Definitions;
+	using SEModAPI.API.Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPI.Support;
 	using SEModAPIExtensions.API;
 	using SEModAPIExtensions.API.Plugin;
@@ -252,15 +257,15 @@ namespace SEServerExtender
 
 		private void CHK_Control_Debugging_CheckedChanged( object sender, EventArgs e )
 		{
-			SandboxGameAssemblyWrapper.IsDebugging = CHK_Control_Debugging.CheckState == CheckState.Checked;
+			ExtenderOptions.IsDebugging = CHK_Control_Debugging.CheckState == CheckState.Checked;
 		}
 
 		private void CHK_Control_CommonDataPath_CheckedChanged( object sender, EventArgs e )
 		{
-			SandboxGameAssemblyWrapper.UseCommonProgramData = CHK_Control_CommonDataPath.CheckState == CheckState.Checked;
-			CMB_Control_CommonInstanceList.Enabled = SandboxGameAssemblyWrapper.UseCommonProgramData;
+			ExtenderOptions.UseCommonProgramData = CHK_Control_CommonDataPath.CheckState == CheckState.Checked;
+			CMB_Control_CommonInstanceList.Enabled = ExtenderOptions.UseCommonProgramData;
 
-			m_server.InstanceName = SandboxGameAssemblyWrapper.UseCommonProgramData ? CMB_Control_CommonInstanceList.Text : string.Empty;
+			m_server.InstanceName = ExtenderOptions.UseCommonProgramData ? CMB_Control_CommonInstanceList.Text : string.Empty;
 
 			m_server.LoadServerConfig( );
 
@@ -301,7 +306,7 @@ namespace SEServerExtender
 			if ( !CMB_Control_CommonInstanceList.Enabled || CMB_Control_CommonInstanceList.SelectedIndex == -1 ) return;
 
 			m_server.InstanceName = CMB_Control_CommonInstanceList.Text;
-			SandboxGameAssemblyWrapper.Instance.InitMyFileSystem( CMB_Control_CommonInstanceList.Text );
+			FileSystem.InitMyFileSystem( CMB_Control_CommonInstanceList.Text );
 
 			m_server.LoadServerConfig( );
 
@@ -315,7 +320,7 @@ namespace SEServerExtender
 			double interval;
 			if ( !double.TryParse( CMB_Control_AutosaveInterval.Text, out interval ) )
 				MessageBox.Show( this, "Invalid input for auto-save interval." );
-			
+
 			if ( interval < 1 )
 				interval = 2;
 
@@ -325,7 +330,7 @@ namespace SEServerExtender
 		private void UpdateControls( )
 		{
 			if ( m_server.Config == null )
-				SandboxGameAssemblyWrapper.UseCommonProgramData = true;
+				ExtenderOptions.UseCommonProgramData = true;
 
 			if ( m_server.InstanceName.Length != 0 )
 			{
@@ -340,7 +345,7 @@ namespace SEServerExtender
 				}
 			}
 
-			CHK_Control_Debugging.Checked = SandboxGameAssemblyWrapper.IsDebugging;
+			CHK_Control_Debugging.Checked = ExtenderOptions.IsDebugging;
 
 			if ( !CMB_Control_CommonInstanceList.ContainsFocus && m_server.InstanceName.Length > 0 )
 				CMB_Control_CommonInstanceList.SelectedText = m_server.InstanceName;
@@ -443,7 +448,7 @@ namespace SEServerExtender
 
 			try
 			{
-				if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+				if ( !MySandboxGameWrapper.IsGameStarted )
 					return;
 
 				if ( TAB_MainTabs.SelectedTab != TAB_Entities_Page )
@@ -1781,11 +1786,11 @@ namespace SEServerExtender
 		{
 			try
 			{
-				if ( SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+				if ( MySandboxGameWrapper.IsGameStarted )
 				{
 					TRV_Factions.BeginUpdate( );
 
-					List<Faction> list = FactionsManager.Instance.Factions;
+					List<MyFaction> list = MySession.Static.Factions.Select( f => f.Value ).ToList( );
 
 					//Cleanup and update the existing nodes
 					foreach ( TreeNode node in TRV_Factions.Nodes )
@@ -1800,34 +1805,34 @@ namespace SEServerExtender
 								continue;
 							}
 
-							Faction item = (Faction)node.Tag;
+							MyFaction item = (MyFaction)node.Tag;
 							bool foundMatch = false;
-							foreach ( Faction faction in list )
+							foreach ( MyFaction faction in list )
 							{
-								if ( faction.Id == item.Id )
+								if ( faction.FactionId == item.FactionId )
 								{
 									foundMatch = true;
 
-									string newNodeText = string.Format( "{0} ({1})", item.Name, item.Members.Count );
+									string newNodeText = string.Format( "{0} ({1})", item.Name, item.Members.Count() );
 									node.Text = newNodeText;
 
 									TreeNode membersNode = node.Nodes[ 0 ];
 									TreeNode joinRequestsNode = node.Nodes[ 1 ];
 
-									if ( membersNode.Nodes.Count != item.Members.Count )
+									if ( membersNode.Nodes.Count != item.Members.Count() )
 									{
 										membersNode.Nodes.Clear( );
-										foreach ( FactionMember member in item.Members )
+										foreach ( MyFactionMember member in item.Members.Select( m=>m.Value ) )
 										{
 											TreeNode memberNode = membersNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
 											memberNode.Name = member.PlayerId.ToString( );
 											memberNode.Tag = member;
 										}
 									}
-									if ( joinRequestsNode.Nodes.Count != item.JoinRequests.Count )
+									if ( joinRequestsNode.Nodes.Count != item.JoinRequests.Count() )
 									{
 										joinRequestsNode.Nodes.Clear( );
-										foreach ( FactionMember member in item.JoinRequests )
+										foreach ( MyFactionMember member in item.JoinRequests.Select( j=>j.Value ) )
 										{
 											TreeNode joinRequestNode = joinRequestsNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
 											joinRequestNode.Name = member.PlayerId.ToString( );
@@ -1854,29 +1859,29 @@ namespace SEServerExtender
 					}
 
 					//Add new nodes
-					foreach ( Faction item in list )
+					foreach ( MyFaction item in list )
 					{
 						try
 						{
 							if ( item == null )
 								continue;
 
-							string nodeKey = item.Id.ToString( );
+							string nodeKey = item.FactionId.ToString( );
 
-							TreeNode newNode = TRV_Factions.Nodes.Add( nodeKey, string.Format( "{0} ({1})", item.Name, item.Members.Count ) );
+							TreeNode newNode = TRV_Factions.Nodes.Add( nodeKey, string.Format( "{0} ({1})", item.Name, item.Members.Count( ) ) );
 							newNode.Name = item.Name;
 							newNode.Tag = item;
 
 							TreeNode membersNode = newNode.Nodes.Add( "Members" );
 							TreeNode joinRequestsNode = newNode.Nodes.Add( "Join Requests" );
 
-							foreach ( FactionMember member in item.Members )
+							foreach ( MyFactionMember member in item.Members.Select( m => m.Value ) )
 							{
 								TreeNode memberNode = membersNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
 								memberNode.Name = member.PlayerId.ToString( );
 								memberNode.Tag = member;
 							}
-							foreach ( FactionMember member in item.JoinRequests )
+							foreach ( MyFactionMember member in item.JoinRequests.Select( j => j.Value ) )
 							{
 								TreeNode memberNode = membersNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
 								memberNode.Name = member.PlayerId.ToString( );
@@ -1928,16 +1933,15 @@ namespace SEServerExtender
 
 			object linkedObject = node.Tag;
 
-			Faction faction = linkedObject as Faction;
+			MyFaction faction = linkedObject as MyFaction;
 			if ( faction != null )
 			{
-				FactionsManager.Instance.RemoveFaction( faction.Id );
+				MySession.Static.Factions.RemoveFaction( faction.FactionId );
 			}
-
-			FactionMember factionMember = linkedObject as FactionMember;
-			if ( factionMember != null )
+			if ( linkedObject is MyFactionMember )
 			{
-				factionMember.Parent.RemoveMember( factionMember.PlayerId );
+				MyFactionMember factionMember = (MyFactionMember) linkedObject;
+				MySession.Static.Factions.KickPlayerFromFaction( factionMember.PlayerId );
 			}
 		}
 

@@ -13,9 +13,12 @@ namespace SEModAPIExtensions.API
 	using System.Windows.Forms;
 	using NLog;
 	using NLog.Targets;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API;
 	using SEModAPI.API.Definitions;
+	using SEModAPI.API.Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Chat;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Server;
@@ -42,7 +45,6 @@ namespace SEModAPIExtensions.API
 
 		//Managers
 		private PluginManager _pluginManager;
-		private SandboxGameAssemblyWrapper _gameAssemblyWrapper;
 		private FactionsManager _factionsManager;
 		private DedicatedServerAssemblyWrapper _dedicatedServerWrapper;
 		private LogManager _logManager;
@@ -188,7 +190,6 @@ namespace SEModAPIExtensions.API
 		{
 			_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
 			_pluginManager = PluginManager.Instance;
-			_gameAssemblyWrapper = SandboxGameAssemblyWrapper.Instance;
 			_factionsManager = FactionsManager.Instance;
 			_entityEventManager = EntityEventManager.Instance;
 			_chatManager = ChatManager.Instance;
@@ -216,7 +217,7 @@ namespace SEModAPIExtensions.API
 				if ( _commandLineArgs.Debug )
 				{
 					ApplicationLog.BaseLog.Info( "Debugging enabled" );
-					SandboxGameAssemblyWrapper.IsDebugging = true;
+					ExtenderOptions.IsDebugging = true;
 				}
 				if ( _commandLineArgs.NoWcf )
 				{
@@ -360,10 +361,10 @@ namespace SEModAPIExtensions.API
 				{
 					if ( InstanceName.Length != 0 )
 					{
-						SandboxGameAssemblyWrapper.UseCommonProgramData = true;
-						SandboxGameAssemblyWrapper.Instance.InitMyFileSystem( InstanceName, false );
+						ExtenderOptions.UseCommonProgramData = true;
+						FileSystem.InitMyFileSystem( InstanceName, false );
 					}
-					path = _gameAssemblyWrapper.GetUserDataPath( InstanceName );
+					path = FileSystem.GetUserDataPath( InstanceName );
 				}
 
 				return path;
@@ -420,7 +421,7 @@ namespace SEModAPIExtensions.API
 
 			if ( !_pluginManager.Initialized && !_pluginManager.Loaded )
 			{
-				if ( SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+				if ( MySandboxGameWrapper.IsGameStarted )
 				{
 					if ( CommandLineArgs.WorldRequestReplace )
 						ServerNetworkManager.Instance.ReplaceWorldJoin( );
@@ -490,7 +491,7 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
-				SandboxGameAssemblyWrapper.InstanceName = InstanceName;
+				ExtenderOptions.InstanceName = InstanceName;
 				_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
 				bool result = _dedicatedServerWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
 				ApplicationLog.BaseLog.Info( "Server has stopped running" );
@@ -589,7 +590,7 @@ namespace SEModAPIExtensions.API
 		public void StopServer( )
 		{
 			ApplicationLog.BaseLog.Info( "Stopping server" );
-			SandboxGameAssemblyWrapper.Instance.ExitGame( );
+			MySandboxGame.Static.Exit(  );
 
 			_pluginMainLoop.Stop( );
 			_autosaveTimer.Stop( );

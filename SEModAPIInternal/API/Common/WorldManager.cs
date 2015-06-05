@@ -4,6 +4,8 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Game.Multiplayer;
+	using Sandbox.Game.World;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage;
@@ -403,13 +405,11 @@
 
 		// Internals //
 
-		internal Object InternalGetFactionManager( )
+		internal MyFactionCollection InternalGetFactionManager( )
 		{
 			try
 			{
-				Object worldManager = BaseObject.GetEntityFieldValue( BackingObject, WorldManagerFactionManagerField );
-
-				return worldManager;
+				return MySession.Static.Factions;
 			}
 			catch ( Exception ex )
 			{

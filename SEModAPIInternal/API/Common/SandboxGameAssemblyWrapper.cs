@@ -5,7 +5,9 @@
 	using System.IO;
 	using System.Reflection;
 	using System.Threading;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage.FileSystem;
@@ -19,7 +21,6 @@
 
 		protected static SandboxGameAssemblyWrapper m_instance;
 		protected static Thread m_gameThread;
-		protected static string m_instanceName;
 
 		protected bool m_isGameLoaded;
 
@@ -39,8 +40,8 @@
 
 		public static string MainGameInstanceField = "Static";
 		public static string MainGameConfigContainerField = "ConfigDedicated";
-		public static string MainGameIsLoadedField = "isFirstUpdateDone";
-		public static string MainGameLoadingCompleteActionField = "OnSessionReady";
+		public static string IsFirstUpdateDoneField = "isFirstUpdateDone";
+		public static string MainGameOnGameLoadedEvent = "OnGameLoaded";
 		public static string MainGameMyLogField = "Log";
 
 		/////////////////////////////////////////////////////////////////////////////
@@ -80,8 +81,7 @@
 		protected SandboxGameAssemblyWrapper( )
 		{
 			m_instance = this;
-			IsDebugging = false;
-			UseCommonProgramData = false;
+			ExtenderOptions.UseCommonProgramData = false;
 			IsInSafeMode = false;
 			m_gameThread = null;
 
@@ -111,10 +111,6 @@
 				return m_instance;
 			}
 		}
-
-		public static bool IsDebugging { get; set; }
-
-		public static bool UseCommonProgramData { get; set; }
 
 		public static bool IsInSafeMode { get; set; }
 
@@ -163,15 +159,13 @@
 			}
 		}
 
-		public static Object MainGame
+		public static MySandboxGame MainGame
 		{
 			get
 			{
 				try
 				{
-					Object mainGame = BaseObject.GetStaticFieldValue( MainGameType, MainGameInstanceField );
-
-					return mainGame;
+					return MySandboxGame.Static;
 				}
 				catch ( Exception ex )
 				{
@@ -188,44 +182,6 @@
 				Type type = Instance.GetAssemblyType( MyAPIGatewayNamespace, MyAPIGatewayClass );
 				return type;
 			}
-		}
-
-		public bool IsGameStarted
-		{
-			get
-			{
-				try
-				{
-					if ( MainGame == null )
-						return false;
-
-					if ( !m_isGameLoaded )
-					{
-						bool someValue = (bool)BaseObject.GetEntityFieldValue( MainGame, MainGameIsLoadedField );
-						if ( someValue )
-						{
-							m_isGameLoaded = true;
-
-							return true;
-						}
-
-						return false;
-					}
-
-					return true;
-				}
-				catch ( Exception ex )
-				{
-					ApplicationLog.BaseLog.Error( ex );
-					return false;
-				}
-			}
-		}
-
-		public static string InstanceName
-		{
-			get { return m_instanceName; }
-			set { m_instanceName = value; }
 		}
 
 		#endregion "Properties"
@@ -254,15 +210,46 @@
 				if ( type == null )
 					throw new Exception( "Could not find internal type for MainGame" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, MainGameEnqueueActionMethod );
-				result &= BaseObject.HasMethod( type, MainGameGetTimeMillisMethod );
-				result &= BaseObject.HasMethod( type, MainGameExitMethod );
-				result &= BaseObject.HasMethod( type, MainGameDisposeMethod );
-				result &= BaseObject.HasField( type, MainGameInstanceField );
-				result &= BaseObject.HasField( type, MainGameConfigContainerField );
-				result &= BaseObject.HasField( type, MainGameIsLoadedField );
-				result &= BaseObject.HasField( type, MainGameLoadingCompleteActionField );
-				result &= BaseObject.HasField( type, MainGameMyLogField );
+				if ( !BaseObject.HasMethod( type, MainGameEnqueueActionMethod ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameEnqueueActionMethod );
+				}
+				if ( !BaseObject.HasMethod( type, MainGameGetTimeMillisMethod ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameGetTimeMillisMethod );
+				}
+				if ( !BaseObject.HasMethod( type, MainGameExitMethod ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameExitMethod );
+				}
+				if ( !BaseObject.HasMethod( type, MainGameDisposeMethod ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameDisposeMethod );
+				}
+				if ( !BaseObject.HasField( type, MainGameInstanceField ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameInstanceField );
+				}
+				if ( !BaseObject.HasField( type, MainGameConfigContainerField ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameConfigContainerField );
+				}
+				if ( !BaseObject.HasField( type, IsFirstUpdateDoneField ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0}", IsFirstUpdateDoneField );
+				}
+				if ( type.GetEvent( "OnGameLoaded" ) == null )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find event {0}", MainGameOnGameLoadedEvent );
+				}
 
 				Type type2 = ServerCoreType;
 				if ( type2 == null )
@@ -324,7 +311,7 @@
 
 				BaseObject.InvokeEntityMethod( MainGame, MainGameEnqueueActionMethod, new object[ ] { action } );
 
-				if ( IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					UpdateProfile( );
 				}
@@ -350,7 +337,7 @@
 
 				BaseObject.InvokeEntityMethod( MainGame, MainGameEnqueueActionMethod, new object[ ] { action, arg } );
 
-				if ( IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					UpdateProfile( );
 				}
@@ -469,24 +456,6 @@
 			}
 		}
 
-		public void ExitGame( )
-		{
-			try
-			{
-				ApplicationLog.BaseLog.Info( "Exiting" );
-				/*
-				GameAction(new Action(delegate()
-				{
-					BaseObject.InvokeEntityMethod(MainGame, "Dispose");
-				}));
-				 */
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
-			}
-		}
-
 		public void SetNullRender( bool nullRender )
 		{
 			try
@@ -527,51 +496,6 @@
 				ApplicationLog.BaseLog.Error( ex );
 				return 0;
 			}
-		}
-
-		public String GetUserDataPath( string instanceName = "" )
-		{
-			string userDataPath;
-			if ( UseCommonProgramData && instanceName != string.Empty )
-			{
-				userDataPath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ), "SpaceEngineersDedicated", instanceName );
-			}
-			else
-			{
-				userDataPath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "SpaceEngineersDedicated" );
-			}
-
-			return userDataPath;
-		}
-
-		public void InitMyFileSystem( string instanceName = "", bool reset = true )
-		{
-			string contentPath = Path.Combine( new FileInfo( MyFileSystem.ExePath ).Directory.FullName, "Content" );
-			string userDataPath = Instance.GetUserDataPath( instanceName );
-
-			if ( reset )
-			{
-				MyFileSystem.Reset( );
-			}
-			else
-			{
-				try
-				{
-					if ( !string.IsNullOrWhiteSpace( MyFileSystem.ContentPath ) )
-						return;
-					if ( !string.IsNullOrWhiteSpace( MyFileSystem.UserDataPath ) )
-						return;
-				}
-				catch ( Exception )
-				{
-					//Do nothing
-				}
-			}
-
-			MyFileSystem.Init( contentPath, userDataPath );
-			MyFileSystem.InitUserSpecific( null );
-
-			m_instanceName = instanceName;
 		}
 
 		public List<string> GetCommonInstanceList( )

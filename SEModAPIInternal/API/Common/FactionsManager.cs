@@ -6,6 +6,9 @@ namespace SEModAPIInternal.API.Common
 	using NLog;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
+	using Sandbox.Game.Multiplayer;
+	using Sandbox.Game.World;
+	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 
@@ -56,7 +59,7 @@ namespace SEModAPIInternal.API.Common
 
 		#region "Properties"
 
-		public Object BackingObject
+		public MyFaction BackingObject
 		{
 			get
 			{
@@ -372,7 +375,7 @@ namespace SEModAPIInternal.API.Common
 			get { return m_instance ?? ( m_instance = new FactionsManager( ) ); }
 		}
 
-		public Object BackingObject
+		public MyFactionCollection BackingObject
 		{
 			get
 			{
@@ -421,9 +424,7 @@ namespace SEModAPIInternal.API.Common
 
 		public MyObjectBuilder_FactionCollection GetSubTypeEntity( )
 		{
-			m_factionCollection = (MyObjectBuilder_FactionCollection)BaseObject.InvokeEntityMethod( BackingObject, FactionManagerGetFactionCollectionMethod );
-
-			return m_factionCollection;
+			return BackingObject.GetObjectBuilder( );
 		}
 
 		protected void RefreshFactions( )
@@ -484,11 +485,9 @@ namespace SEModAPIInternal.API.Common
 
 		#region "Internal"
 
-		internal Object InternalGetFactionById( long id )
+		internal MyFaction InternalGetFactionById( long id )
 		{
-			Object internalFaction = BaseObject.InvokeEntityMethod( BackingObject, FactionManagerGetFactionByIdMethod, new object[ ] { id } );
-
-			return internalFaction;
+			return (MyFaction)BackingObject.TryGetFactionById( id );
 		}
 
 		protected void InternalRemoveFaction( )
@@ -510,7 +509,7 @@ namespace SEModAPIInternal.API.Common
 			if ( m_memberToModify == 0 )
 				return;
 
-			BaseObject.InvokeEntityMethod( BackingObject, FactionNetManagerRemoveMemberMethod, new object[ ] { m_factionToModify, m_memberToModify } );
+			BackingObject.KickMember( m_factionToModify,m_memberToModify );
 
 			m_factionToModify = 0;
 			m_memberToModify = 0;

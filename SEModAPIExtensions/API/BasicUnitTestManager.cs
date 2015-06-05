@@ -33,15 +33,10 @@ namespace SEModAPIExtensions.API
 
 		public bool Run()
 		{
-			bool oldDebuggingSetting = SandboxGameAssemblyWrapper.IsDebugging;
-			SandboxGameAssemblyWrapper.IsDebugging = true;
-
 			bool result = true;
 			result &= RunBaseReflectionUnitTests();
 			result &= RunEntityReflectionUnitTests();
 			result &= RunCubeBlockReflectionTests();
-
-			SandboxGameAssemblyWrapper.IsDebugging = oldDebuggingSetting;
 
 			return result;
 		}
@@ -49,12 +44,6 @@ namespace SEModAPIExtensions.API
 		protected bool RunBaseReflectionUnitTests()
 		{
 			bool result = true;
-
-			if (!SandboxGameAssemblyWrapper.ReflectionUnitTest())
-			{
-				result = false;
-				BaseLog.Warn( "SandboxGameAssemblyWrapper reflection validation failed!" );
-			}
 
 			if (!DedicatedServerAssemblyWrapper.ReflectionUnitTest())
 			{

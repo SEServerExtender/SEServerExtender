@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity
 	using System.Runtime.Serialization;
 	using Havok;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using SEModAPI.API;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Utility;
@@ -594,7 +595,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public override void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile<MyObjectBuilder_EntityBase, MyObjectBuilder_EntityBaseSerializer>( ObjectBuilder, fileInfo );
+			MyObjectBuilderSerializer.SerializeXML( fileInfo.FullName, false, ObjectBuilder );
 		}
 
 		new public MyObjectBuilder_EntityBase Export( )
@@ -749,7 +750,7 @@ namespace SEModAPIInternal.API.Entity
 
 				Vector3D newPosition = m_positionOrientation.Position;
 
-				if (SandboxGameAssemblyWrapper.IsDebugging)
+				if (ExtenderOptions.IsDebugging)
 				{
 					ApplicationLog.BaseLog.Debug((this.GetType().Name + " - Changing position of '" + Name + "' from '" + havokBody.Position.ToString() + "' to '" + newPosition.ToString() + "'");
 				}
@@ -762,7 +763,7 @@ namespace SEModAPIInternal.API.Entity
 					return;
 
 				Vector3D newPosition = m_positionOrientation.Position;
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					ApplicationLog.BaseLog.Debug( "{0} - Changing position of '{1}' from '{2}' to '{3}'", GetType( ).Name, Name, entity.GetPosition( ).ToString( ), newPosition.ToString( ) );
 				}
@@ -801,7 +802,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( havokBody == null )
 					return;
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					ApplicationLog.BaseLog.Debug( "{0} - Changing linear velocity of '{1}' from '{2}' to '{3}'", GetType( ).Name, Name, havokBody.LinearVelocity, m_linearVelocity );
 				}
@@ -822,7 +823,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( havokBody == null )
 					return;
 
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 				{
 					ApplicationLog.BaseLog.Debug( "{0} - Changing angular velocity of '{1}' from '{2}' to '{3}'", GetType( ).Name, Name, havokBody.AngularVelocity.ToString( ), m_angularVelocity.ToString( ) );
 				}
@@ -839,7 +840,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( SandboxGameAssemblyWrapper.IsDebugging )
+				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Debug( "{0} '{1}': Calling 'Close' to remove entity", GetType( ).Name, Name );
 
 				InvokeEntityMethod( BackingObject, "Close" );
