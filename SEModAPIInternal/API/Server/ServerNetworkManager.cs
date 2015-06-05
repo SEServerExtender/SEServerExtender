@@ -11,6 +11,8 @@ namespace SEModAPIInternal.API.Server
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Common.ObjectBuilders.Voxels;
+	using Sandbox.Engine.Multiplayer;
+	using Sandbox.Game.Multiplayer;
 	using Sandbox.ModAPI;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
@@ -150,61 +152,54 @@ namespace SEModAPIInternal.API.Server
 
 		#region "Methods"
 
-		new public static bool ReflectionUnitTest( )
+		public static bool ReflectionUnitTest( )
 		{
 			try
 			{
 				Type type1 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ServerNetworkManagerNamespace, ServerNetworkManagerClass );
 				if ( type1 == null )
-					throw new Exception( "Could not find internal type for ServerNetworkManager" );
+					throw new TypeLoadException( "Could not find internal type for ServerNetworkManager" );
 				bool result = true;
 				result &= BaseObject.HasMethod( type1, ServerNetworkManagerSetPlayerBannedMethod );
 				result &= BaseObject.HasMethod( type1, ServerNetworkManagerDisconnectPlayerMethod );
 				result &= BaseObject.HasMethod( type1, ServerNetworkManagerKickPlayerMethod );
 				result &= BaseObject.HasField( type1, ServerNetworkManagerConnectedPlayersField );
 
-				Type type2 = NetworkManagerType;
-				if ( type2 == null )
-					throw new Exception( "Could not find internal type for NetworkManager" );
-				result &= BaseObject.HasField( type2, MySyncLayerField );
+				Type myMultiplayerBaseType = typeof ( MyMultiplayerBase );
+				result &= BaseObject.HasField( myMultiplayerBaseType, MySyncLayerField );
 
-				Type syncLayer = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, MySyncLayerClass );
-				if ( syncLayer == null )
-					throw new Exception( "Could not find internal type for SyncLayer" );
+				Type syncLayer = typeof ( MySyncLayer );
 				result &= BaseObject.HasMethod( syncLayer, MySyncLayerSendMessage );
 
-				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, SendCloseClass );
-				if ( type3 == null )
-					throw new Exception( "Could not find internal type for SendCloseClass" );
+				Type mySyncEntityType = typeof ( MySyncEntity );
+				result &= BaseObject.HasNestedType( mySyncEntityType, SendCloseClosedMsg );
 
-				result &= BaseObject.HasNestedType( type3, SendCloseClosedMsg );
-
-				Type nestedClosedMsgType = type3.GetNestedType( SendCloseClosedMsg, BindingFlags.NonPublic | BindingFlags.Public );
+				Type nestedClosedMsgType = mySyncEntityType.GetNestedType( SendCloseClosedMsg, BindingFlags.NonPublic | BindingFlags.Public );
 				if ( nestedClosedMsgType == null )
-					throw new Exception( "Could not find internal NestedClosedMsgType" );
+					throw new TypeLoadException( "Could not find internal NestedClosedMsgType" );
 
 				result &= BaseObject.HasField( nestedClosedMsgType, SendCloseClosedMsgEntityId );
 
 				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, SendCreateClass );
 				if ( type4 == null )
-					throw new Exception( "Could not find internal type for SendCreateClass" );
+					throw new TypeLoadException( "Could not find internal type for SendCreateClass" );
 
 				result &= BaseObject.HasNestedType( type4, SendCreateCompressedMsg );
 
 				Type nestedCreateType = type4.GetNestedType( SendCreateCompressedMsg, BindingFlags.Public | BindingFlags.NonPublic );
 				if ( nestedCreateType == null )
-					throw new Exception( "Could not find internal type for SendCreateCompressedMsg" );
+					throw new TypeLoadException( "Could not find internal type for SendCreateCompressedMsg" );
 
 				result &= BaseObject.HasField( nestedCreateType, SendCreateCompressedMsgObjectBuilders );
 				result &= BaseObject.HasField( nestedCreateType, SendCreateCompressedMsgBuilderLengths );
 
 				Type type5 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, PlayerCollectionClass );
 				if ( type5 == null )
-					throw new Exception( "Could not find internal type for PlayerCollectionClass" );
+					throw new TypeLoadException( "Could not find internal type for PlayerCollectionClass" );
 
 				Type respawnMsgType = type5.GetNestedType( RespawnMsg, BindingFlags.NonPublic | BindingFlags.Public );
 				if ( respawnMsgType == null )
-					throw new Exception( "Could not find internal type for RespawnMsg" );
+					throw new TypeLoadException( "Could not find internal type for RespawnMsg" );
 
 				result &= BaseObject.HasField( respawnMsgType, RespawnMsgJoinGame );
 				result &= BaseObject.HasField( respawnMsgType, RespawnMsgNewIdenity );
@@ -213,23 +208,23 @@ namespace SEModAPIInternal.API.Server
 				result &= BaseObject.HasField( respawnMsgType, RespawnMsgPlayerSerialId );
 
 				Type type6 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, MySyncCharacterClass );
-				if ( type5 == null )
-					throw new Exception( "Could not find internal type for MySyncCharacterClass" );
+				if ( type6 == null )
+					throw new TypeLoadException( "Could not find internal type for MySyncCharacterClass" );
 
 				Type attachMsgType = type6.GetNestedType( AttachToCockpitMsg, BindingFlags.NonPublic | BindingFlags.Public );
 				if ( attachMsgType == null )
-					throw new Exception( "Could not find internal type for AttachToCockpitMsg" );
+					throw new TypeLoadException( "Could not find internal type for AttachToCockpitMsg" );
 
 				result &= BaseObject.HasField( attachMsgType, AttachCharacterId );
 				result &= BaseObject.HasField( attachMsgType, AttachCockpitId );
 
 				Type controllableClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, ControllableClass );
-				if ( type5 == null )
-					throw new Exception( "Could not find internal type for ControllableClassType" );
+				if ( controllableClassType == null )
+					throw new TypeLoadException( "Could not find internal type for ControllableClassType" );
 
 				Type useMsgType = controllableClassType.GetNestedType( UseMsg, BindingFlags.NonPublic | BindingFlags.Public );
 				if ( useMsgType == null )
-					throw new Exception( "Could not find internal type for UseMsg" );
+					throw new TypeLoadException( "Could not find internal type for UseMsg" );
 
 				result &= BaseObject.HasField( useMsgType, UseMsgEntityId );
 				result &= BaseObject.HasField( useMsgType, UseMsgUsedByEntityId );
@@ -237,22 +232,22 @@ namespace SEModAPIInternal.API.Server
 
 				Type modAPIHelperClassType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ModAPINamespace, ModAPIHelperClass );
 				if ( modAPIHelperClassType == null )
-					throw new Exception( "Could not find internal type for ModAPIHelperClass" );
+					throw new TypeLoadException( "Could not find internal type for ModAPIHelperClass" );
 
 				Type sendDataMessageClassType = modAPIHelperClassType.GetNestedType( SendDataMessageClass, BindingFlags.Public | BindingFlags.NonPublic );
 				if ( sendDataMessageClassType == null )
-					throw new Exception( "Could not find internal type for SendDataMessageClass" );
+					throw new TypeLoadException( "Could not find internal type for SendDataMessageClass" );
 
 				Type sendReliableMsgType = sendDataMessageClassType.GetNestedType( SendReliableMsg, BindingFlags.Public | BindingFlags.NonPublic );
 				if ( sendReliableMsgType == null )
-					throw new Exception( "Could not find internal type for SendReliableMsg" );
+					throw new TypeLoadException( "Could not find internal type for SendReliableMsg" );
 
 				result &= BaseObject.HasField( sendReliableMsgType, SendReliableMsgId );
 				result &= BaseObject.HasField( sendReliableMsgType, SendReliableMsgData );
 
 				return result;
 			}
-			catch ( Exception ex )
+			catch ( TypeLoadException ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
