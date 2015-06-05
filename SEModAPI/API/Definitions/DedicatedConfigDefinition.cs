@@ -11,7 +11,7 @@ namespace SEModAPI.API.Definitions
 	using System.Windows.Forms.Design;
 	using System.Xml;
 	using System.Xml.Serialization;
-	using Sandbox.Common.ObjectBuilders;
+	using global::Sandbox.Common.ObjectBuilders;
 	using VRage.ObjectBuilders;
 
 	[DataContract]

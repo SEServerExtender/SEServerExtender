@@ -1,7 +1,7 @@
 ﻿namespace SEModAPI.API.Definitions.CubeBlocks
 {
 	using System.ComponentModel;
-	using Sandbox.Common.ObjectBuilders.Definitions;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 
 	class AirVentDefinition : BlockDefinition
 	{

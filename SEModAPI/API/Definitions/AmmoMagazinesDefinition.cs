@@ -1,6 +1,6 @@
 namespace SEModAPI.API.Definitions
 {
-	using Sandbox.Common.ObjectBuilders.Definitions;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRageMath;
 
 	public class AmmoMagazinesDefinition : ObjectOverLayerDefinition<MyObjectBuilder_AmmoMagazineDefinition>

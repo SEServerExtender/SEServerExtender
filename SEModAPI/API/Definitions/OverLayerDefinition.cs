@@ -8,8 +8,8 @@ namespace SEModAPI.API.Definitions
 	using System.Linq;
 	using System.Reflection;
 	using System.Xml;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
-	using Sandbox.Common.ObjectBuilders.Definitions;
 	using VRage.ObjectBuilders;
 
 	/// <summary>

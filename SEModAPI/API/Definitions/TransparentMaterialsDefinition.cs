@@ -1,7 +1,7 @@
 namespace SEModAPI.API.Definitions
 {
 	using System;
-	using Sandbox.Common.ObjectBuilders.VRageData;
+	using global::Sandbox.Common.ObjectBuilders.VRageData;
 	using VRageMath;
 
 	public class TransparentMaterialsDefinition : OverLayerDefinition<MyObjectBuilder_TransparentMaterial>

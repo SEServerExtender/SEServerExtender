@@ -2,6 +2,7 @@
 {
 	using System.Collections.Generic;
 	using System.Text;
+
 	public static class CommandParser
 	{
 		public static List<string> GetCommandParts( string input )

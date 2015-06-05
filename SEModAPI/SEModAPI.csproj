@@ -149,7 +149,9 @@
     <Compile Include="API\Definitions\CubeBlocks\CubeBlockDefinition.cs" />
     <Compile Include="API\Definitions\TransparentMaterialsDefinition.cs" />
     <Compile Include="API\Definitions\VoxelMaterialsDefinition.cs" />
+    <Compile Include="API\ExtenderOptions.cs" />
     <Compile Include="API\GameInstallation.cs" />
+    <Compile Include="API\Sandbox\MySandboxGameWrapper.cs" />
     <Compile Include="API\SEModAPIExceptions.cs" />
     <Compile Include="API\TypeConverters\Vector3Wrapper.cs" />
     <Compile Include="API\TypeConverters\Vector3DTypeConverter.cs" />
@@ -157,6 +159,8 @@
     <Compile Include="API\TypeConverters\Vector3TypeConverter.cs" />
     <Compile Include="API\TypeConverters\Vector3ITypeConverter.cs" />
     <Compile Include="API\Utility\CommandParser.cs" />
+    <Compile Include="API\Utility\FileSystem.cs" />
+    <Compile Include="API\Utility\Reflection.cs" />
     <Compile Include="AssemblyFileVersion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

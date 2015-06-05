@@ -7,8 +7,8 @@ namespace SEModAPI.API.Definitions
 	using System.Runtime.Serialization;
 	using System.Security;
 	using System.Xml;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
-	using Sandbox.Common.ObjectBuilders.Definitions;
 
 	public class ConfigFileSerializer
 	{
