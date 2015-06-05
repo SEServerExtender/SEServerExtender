@@ -356,7 +356,7 @@
 			{
 				m_averageQueuedActions = m_countQueuedActions / timeSinceLastProfilingOutput.TotalSeconds;
 
-				ApplicationLog.BaseLog.Info( "Average actions queued per second: {0}", Math.Round( m_averageQueuedActions, 2 ) );
+				ApplicationLog.BaseLog.Info( "Average actions queued per second: {0:N2}", m_averageQueuedActions );
 
 				m_countQueuedActions = 0;
 				m_lastProfilingOutput = DateTime.Now;
