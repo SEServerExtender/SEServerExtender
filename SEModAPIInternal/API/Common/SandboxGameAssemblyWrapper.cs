@@ -2,15 +2,20 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.IO;
+	using System.Linq;
 	using System.Reflection;
+	using System.ServiceProcess;
 	using System.Threading;
+	using Microsoft.Win32;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
-	using VRage.FileSystem;
+	using VRage.Dedicated;
+	using VRage.Dedicated.Configurator;
 	using VRage.ObjectBuilders;
 
 	public class SandboxGameAssemblyWrapper
@@ -68,10 +73,10 @@
 		public static string EntityBaseObjectFactoryNamespace = "Sandbox.Game.Entities";
 		public static string EntityBaseObjectFactoryClass = "MyEntityFactory";
 		public static string EntityBaseObjectFactoryGetBuilderFromEntityMethod = "CreateObjectBuilder";
-		
+
 		////////////////////////////////////////////////////////////////////////////////
 		private const string MyAPIGatewayNamespace = "Sandbox.ModAPI";
-		
+
 		private const string MyAPIGatewayClass = "MyAPIGateway";
 
 		#endregion "Attributes"
@@ -82,7 +87,7 @@
 		{
 			m_instance = this;
 			ExtenderOptions.UseCommonProgramData = false;
-			IsInSafeMode = false;
+			ExtenderOptions.IsInSafeMode = false;
 			m_gameThread = null;
 
 			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll" );
@@ -111,8 +116,6 @@
 				return m_instance;
 			}
 		}
-
-		public static bool IsInSafeMode { get; set; }
 
 		public static Type MainGameType
 		{
@@ -388,8 +391,8 @@
 						action();
 						e.Set();
 					});
-					 */ 
-					Instance.EnqueueMainGameAction(() =>
+					 */
+					Instance.EnqueueMainGameAction( ( ) =>
 					{
 						if ( m_gameThread == null )
 						{
@@ -399,7 +402,7 @@
 						action( );
 						e.Set( );
 					} );
-					
+
 					e.WaitOne( );
 
 					if ( callback != null )
@@ -496,33 +499,6 @@
 				ApplicationLog.BaseLog.Error( ex );
 				return 0;
 			}
-		}
-
-		public List<string> GetCommonInstanceList( )
-		{
-			List<string> result = new List<string>( );
-
-			try
-			{
-				string commonPath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ), "SpaceEngineersDedicated" );
-				if ( Directory.Exists( commonPath ) )
-				{
-					string[ ] subDirectories = Directory.GetDirectories( commonPath );
-					foreach ( string fullInstancePath in subDirectories )
-					{
-						string[ ] directories = fullInstancePath.Split( new[ ] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar } );
-						string instanceName = directories[ directories.Length - 1 ];
-
-						result.Add( instanceName );
-					}
-				}
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error(  ex.ToString( ) );
-			}
-
-			return result;
 		}
 
 		#endregion "Methods"

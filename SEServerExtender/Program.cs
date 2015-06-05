@@ -340,7 +340,7 @@ namespace SEServerExtender
 			{
 				bool unitTestResult = BasicUnitTestManager.Instance.Run( );
 				if ( !unitTestResult )
-					SandboxGameAssemblyWrapper.IsInSafeMode = true;
+					ExtenderOptions.IsInSafeMode = true;
 
 				Server = Server.Instance;
 				Server.CommandLineArgs = extenderArgs;

@@ -137,7 +137,7 @@ namespace SEServerExtender
 			{
 				if ( string.IsNullOrEmpty( m_server.CommandLineArgs.InstancePath ) )
 				{
-					List<String> instanceList = SandboxGameAssemblyWrapper.Instance.GetCommonInstanceList( );
+					List<String> instanceList = GameInstallationInfo.GetCommonInstanceList( );
 					CMB_Control_CommonInstanceList.BeginUpdate( );
 					CMB_Control_CommonInstanceList.Items.AddRange( instanceList.ToArray( ) );
 					if ( CMB_Control_CommonInstanceList.Items.Count > 0 )

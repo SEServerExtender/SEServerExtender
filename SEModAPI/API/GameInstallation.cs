@@ -1,13 +1,16 @@
 namespace SEModAPI.API
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.IO;
 	using System.Reflection;
 	using System.Security.Principal;
+	using System.ServiceProcess;
 	using Microsoft.Win32;
 	using NLog;
+	using VRage.Dedicated;
 
 	/// <summary>
 	/// Class dedicated to handle of Space Engineer installation and information
@@ -273,6 +276,37 @@ namespace SEModAPI.API
 				return null;
 			}
 		}
+
+		private static string GetServiceInstallPath( string serviceName )
+		{
+			RegistryKey regkey = Registry.LocalMachine.OpenSubKey( string.Format( @"SYSTEM\CurrentControlSet\services\{0}", serviceName ) );
+
+			return regkey.GetValue( "ImagePath" ) == null ? "Not Found" : regkey.GetValue( "ImagePath" ).ToString( );
+		}
+
+		public static List<string> GetCommonInstanceList( )
+		{
+			string exeName = MyPerServerSettings.GameDSName + ".exe";
+			List<string> result = new List<string>( );
+			try
+			{
+				foreach ( ServiceController s in ServiceController.GetServices( ) )
+				{
+					string path = GetServiceInstallPath( s.ServiceName );
+					if ( path.IndexOf( exeName, StringComparison.InvariantCultureIgnoreCase ) != -1 )
+					{
+						result.Add( s.ServiceName );
+					}
+				}
+			}
+			catch ( Win32Exception win32Exception )
+			{
+				BaseLog.Error( "Could not get instance list. {0}", win32Exception );
+			}
+			return result;
+		}
+
+
 
 		#endregion
 	}
