@@ -1,21 +1,14 @@
 ﻿namespace SEModAPIInternal.API.Common
 {
 	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
 	using System.IO;
-	using System.Linq;
 	using System.Reflection;
-	using System.ServiceProcess;
 	using System.Threading;
-	using Microsoft.Win32;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
-	using VRage.Dedicated;
-	using VRage.Dedicated.Configurator;
 	using VRage.ObjectBuilders;
 
 	public class SandboxGameAssemblyWrapper
