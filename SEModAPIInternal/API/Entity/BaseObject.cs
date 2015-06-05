@@ -263,7 +263,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( fieldName == null || fieldName.Length == 0 )
+				if ( string.IsNullOrEmpty( fieldName ) )
 					return false;
 				FieldInfo field = objectType.GetField( fieldName );
 				if ( field == null )
@@ -296,7 +296,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( methodName == null || methodName.Length == 0 )
+				if ( string.IsNullOrEmpty( methodName ) )
 					return false;
 
 				if ( argTypes == null )
@@ -347,7 +347,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( propertyName == null || propertyName.Length == 0 )
+				if ( string.IsNullOrEmpty( propertyName ) )
 					return false;
 				PropertyInfo property = objectType.GetProperty( propertyName );
 				if ( property == null )
