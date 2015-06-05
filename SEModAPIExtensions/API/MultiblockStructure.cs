@@ -2,7 +2,7 @@ namespace SEModAPIExtensions.API
 {
 	using System;
 	using System.Collections.Generic;
-	using SEModAPIInternal.API.Common;
+	using SEModAPI.API;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
@@ -284,7 +284,7 @@ namespace SEModAPIExtensions.API
 					m_anchor = cubeToCheck;
 			}
 
-			if ( isMatch && SandboxGameAssemblyWrapper.IsDebugging && recurseDepth == 0 )
+			if ( isMatch && ExtenderOptions.IsDebugging && recurseDepth == 0 )
 			{
 				//LogManager.APILog.WriteLine("Found multiblock match in cube grid '" + cubeToCheck.Parent.Name + "' anchored at " + ((Vector3I)m_anchor.Min).ToString());
 			}

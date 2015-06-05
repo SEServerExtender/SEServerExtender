@@ -6,7 +6,7 @@ namespace SEModAPIInternal.Support
 	using System.Text;
 	using System.Threading;
 	using NLog;
-	using SEModAPIInternal.API.Common;
+	using SEModAPI.API.Sandbox;
 	using VRage.FileSystem;
 
 	public class ApplicationLog
@@ -26,7 +26,7 @@ namespace SEModAPIInternal.Support
 		{
 			_useInstancePath = useGamePath;
 
-			if ( _useInstancePath && SandboxGameAssemblyWrapper.Instance.IsGameStarted && MyFileSystem.UserDataPath != null )
+			if ( _useInstancePath && MySandboxGameWrapper.IsGameStarted && MyFileSystem.UserDataPath != null )
 			{
 				_libraryPath = new DirectoryInfo( MyFileSystem.UserDataPath );
 

@@ -8,6 +8,7 @@
 	using System.ServiceModel.Channels;
 	using SEComm;
 	using SEComm.Plugins;
+	using SEModAPI.API.Utility;
 	using SEModAPIExtensions.API;
 	using SEModAPIInternal;
 	using SEModAPIInternal.API.Chat;
@@ -42,7 +43,7 @@
 			if ( Program.Server != null )
 			{
 				Program.Server.InstanceName = request.ConfigurationName;
-				SandboxGameAssemblyWrapper.Instance.InitMyFileSystem( request.ConfigurationName );
+				FileSystem.InitMyFileSystem( request.ConfigurationName );
 
 				Program.Server.LoadServerConfig( );
 				Program.Server.SaveServerConfig( );

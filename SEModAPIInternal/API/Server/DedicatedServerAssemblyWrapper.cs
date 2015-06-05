@@ -8,7 +8,9 @@
 	using System.Runtime.InteropServices;
 	using System.Security;
 	using Havok;
+	using Sandbox;
 	using Sandbox.Game;
+	using SEModAPI.API.Sandbox;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
@@ -185,7 +187,6 @@
 				//Start the server
 				MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
 				dedicatedServerRunMainMethod.Invoke( null, methodParams );
-
 				return true;
 			}
 			catch ( Win32Exception ex )

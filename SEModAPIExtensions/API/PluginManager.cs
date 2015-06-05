@@ -8,6 +8,9 @@ namespace SEModAPIExtensions.API
 	using System.Reflection;
 	using System.Runtime.InteropServices;
 	using System.Threading;
+	using Sandbox;
+	using SEModAPI.API;
+	using SEModAPI.API.Sandbox;
 	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
@@ -218,7 +221,7 @@ namespace SEModAPIExtensions.API
 				return;
 			if ( !Initialized )
 				return;
-			if ( !SandboxGameAssemblyWrapper.Instance.IsGameStarted )
+			if ( !MySandboxGameWrapper.IsGameStarted )
 				return;
 
 			_lastUpdateTime = DateTime.Now - _lastUpdate;
@@ -297,7 +300,7 @@ namespace SEModAPIExtensions.API
 			}
 
 			//Capture profiling info if debugging is on
-			if ( SandboxGameAssemblyWrapper.IsDebugging )
+			if ( ExtenderOptions.IsDebugging )
 			{
 				_averageEvents = ( _averageEvents + ( events.Count + chatEvents.Count ) ) / 2;
 

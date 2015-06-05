@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRage.ModAPI;
@@ -204,10 +205,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		protected virtual Object InternalGetPowerReceiver( )
 		{
-			bool oldDebuggingSetting = SandboxGameAssemblyWrapper.IsDebugging;
-			SandboxGameAssemblyWrapper.IsDebugging = false;
+			bool oldDebuggingSetting = ExtenderOptions.IsDebugging;
+			ExtenderOptions.IsDebugging = false;
 			bool hasPowerReceiver = HasMethod( ActualObject.GetType( ), FunctionalBlockGetPowerReceiverMethod );
-			SandboxGameAssemblyWrapper.IsDebugging = oldDebuggingSetting;
+			ExtenderOptions.IsDebugging = oldDebuggingSetting;
 			if ( !hasPowerReceiver )
 				return null;
 

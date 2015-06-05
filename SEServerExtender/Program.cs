@@ -17,6 +17,7 @@ namespace SEServerExtender
 	using NLog;
 	using NLog.Layouts;
 	using NLog.Targets;
+	using SEModAPI.API;
 	using SEModAPI.Support;
 	using SEModAPIExtensions.API;
 	using SEModAPIInternal.API.Chat;
@@ -333,7 +334,7 @@ namespace SEServerExtender
 			}
 
 			if ( extenderArgs.Debug )
-				SandboxGameAssemblyWrapper.IsDebugging = true;
+				ExtenderOptions.IsDebugging = true;
 
 			try
 			{
