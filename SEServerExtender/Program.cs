@@ -323,11 +323,6 @@ namespace SEServerExtender
 				}
 			}
 
-			if ( !string.IsNullOrEmpty( extenderArgs.InstancePath ) )
-			{
-				extenderArgs.InstanceName = string.Empty;
-			}
-
 			if ( !Environment.UserInteractive )
 			{
 				extenderArgs.NoConsole = true;
