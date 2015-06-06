@@ -13,6 +13,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox.Definitions;
 	using SEModAPI.API;
 	using SEModAPI.API.Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
@@ -282,62 +283,6 @@ namespace SEModAPIInternal.API.Entity
 			{
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
-				ApplicationLog.BaseLog.Error( ex );
-				return false;
-			}
-		}
-
-		public static bool HasMethod( Type objectType, string methodName )
-		{
-			return HasMethod( objectType, methodName, null );
-		}
-
-		public static bool HasMethod( Type objectType, string methodName, Type[ ] argTypes )
-		{
-			try
-			{
-				if ( string.IsNullOrEmpty( methodName ) )
-					return false;
-
-				if ( argTypes == null )
-				{
-					MethodInfo method = objectType.GetMethod( methodName );
-					if ( method == null )
-						method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-					if ( method == null && objectType.BaseType != null )
-						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-					if ( method == null )
-					{
-						if ( ExtenderOptions.IsDebugging )
-							ApplicationLog.BaseLog.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
-						return false;
-					}
-				}
-				else
-				{
-					MethodInfo method = objectType.GetMethod( methodName, argTypes );
-					if ( method == null )
-						method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
-					if ( method == null && objectType.BaseType != null )
-						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
-					if ( method == null )
-					{
-						if ( ExtenderOptions.IsDebugging )
-							ApplicationLog.BaseLog.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
-						return false;
-					}
-				}
-
-				return true;
-			}
-			catch ( AmbiguousMatchException aex )
-			{
-				return true;
-			}
-			catch ( Exception ex )
-			{
-				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message );
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
