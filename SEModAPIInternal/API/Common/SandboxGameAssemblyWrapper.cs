@@ -155,22 +155,6 @@
 			}
 		}
 
-		public static MySandboxGame MainGame
-		{
-			get
-			{
-				try
-				{
-					return MySandboxGame.Static;
-				}
-				catch ( Exception ex )
-				{
-					ApplicationLog.BaseLog.Error( ex );
-					return null;
-				}
-			}
-		}
-
 		public static Type APIGatewayType
 		{
 			get
@@ -342,18 +326,6 @@
 				{
 					AutoResetEvent e = new AutoResetEvent( false );
 
-					/*
-					MyAPIGateway.Utilities.InvokeOnGameThread(() =>
-					{
-						if (m_gameThread == null)
-						{
-							m_gameThread = Thread.CurrentThread;
-						}
-
-						action();
-						e.Set();
-					});
-					 */
 					MySandboxGame.Static.Invoke( ( ) =>
 					{
 						if ( m_gameThread == null )
@@ -387,18 +359,6 @@
 			try
 			{
 				AutoResetEvent e = new AutoResetEvent( false );
-				/*
-				MyAPIGateway.Utilities.InvokeOnGameThread(() =>
-				{
-					if (m_gameThread == null)
-					{
-						m_gameThread = Thread.CurrentThread;
-					}
-
-					action();
-					e.Set();
-				});
-				*/
 
 				MySandboxGame.Static.Invoke( ( ) =>
 				{
@@ -418,18 +378,6 @@
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
-			}
-		}
-
-		public void SetNullRender( bool nullRender )
-		{
-			try
-			{
-				BaseObject.SetStaticFieldValue( ServerCoreType, ServerCoreNullRenderField, nullRender );
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

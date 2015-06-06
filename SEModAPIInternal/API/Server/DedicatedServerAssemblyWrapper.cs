@@ -163,7 +163,7 @@
 		{
 			try
 			{
-				SandboxGameAssemblyWrapper.Instance.SetNullRender( true );
+				Sandbox.Engine.Platform.Game.IsDedicated = true;
 				MyFileSystem.Reset( );
 
 				//Prepare the parameters
@@ -244,8 +244,7 @@
 				TimeSpan cleanupTime = DateTime.Now - startedEntityCleanup;
 				ApplicationLog.BaseLog.Debug("Took " + cleanupTime.TotalSeconds.ToString() + " seconds to clean up entities");
 				*/
-				Object mainGame = SandboxGameAssemblyWrapper.MainGame;
-				BaseObject.InvokeEntityMethod( mainGame, "Dispose" );
+				MySandboxGame.Static.Exit( );
 			}
 			catch ( Exception ex )
 			{
