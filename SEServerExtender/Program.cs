@@ -48,6 +48,7 @@ namespace SEServerExtender
 			    List<string> listArg = args.ToList();
 			    string serviceName = string.Empty;
                 string gamePath = new DirectoryInfo(PathManager.BasePath).Parent.FullName;
+
                 // Instance autodetect
 			    if (args.All(item => !item.Contains("instance")))
 			    {
@@ -64,6 +65,7 @@ namespace SEServerExtender
                     BaseLog.Info( "Instance detected : {0}", serviceName);
                     listArg.Add("instance=" + serviceName);
 			    }
+
                 // gamepath autodetect
                 if (args.All(item => !item.Contains("gamepath")))
                 {
@@ -183,7 +185,7 @@ namespace SEServerExtender
 					if ( lowerCaseArgument.Equals( "instance" ) )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
-							argValue = argValue.Substring( 0, argValue.Length - 1 );
+							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstanceName = argValue;
 
 						//Only let this override log path if the log path wasn't already explicitly set
