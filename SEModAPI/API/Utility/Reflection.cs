@@ -112,5 +112,33 @@
 				return false;
 			}
 		}
+
+		public static bool HasField( Type objectType, string fieldName )
+		{
+			try
+			{
+				if ( String.IsNullOrEmpty( fieldName ) )
+					return false;
+				FieldInfo field = objectType.GetField( fieldName );
+				if ( field == null )
+					field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( field == null )
+					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( field == null )
+				{
+					if ( ExtenderOptions.IsDebugging )
+						Log.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
+					return false;
+				}
+				return true;
+			}
+			catch ( Exception ex )
+			{
+				if ( ExtenderOptions.IsDebugging )
+					Log.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				Log.Error( ex );
+				return false;
+			}
+		}
 	}
 }
