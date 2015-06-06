@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API.TypeConverters;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRage;
@@ -89,7 +90,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GravityGeneratorNamespace, GravityGeneratorClass );
 				if ( type == null )
 					throw new Exception( "Could not find internal type for GravityGeneratorEntity" );
-				result &= HasMethod( type, GravityGeneratorSetFieldSizeMethod );
+				result &= Reflection.HasMethod( type, GravityGeneratorSetFieldSizeMethod );
 
 				return result;
 			}

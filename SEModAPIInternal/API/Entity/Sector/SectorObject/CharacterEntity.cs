@@ -5,10 +5,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using System.IO;
 	using System.Reflection;
 	using System.Runtime.Serialization;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -292,19 +292,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( type == null )
 					throw new Exception( "Could not find internal type for CharacterEntity" );
 				bool result = true;
-				result &= HasMethod( type, CharacterGetHealthMethod );
-				result &= HasMethod( type, CharacterDamageCharacterMethod );
-				result &= HasMethod( type, CharacterSetHealthMethod );
-				result &= HasMethod( type, CharacterGetBatteryMethod );
-				result &= HasMethod( type, CharacterGetInventoryMethod );
-				result &= HasMethod( type, CharacterGetDisplayNameMethod );
-				result &= HasMethod( type, CharacterGetNetworkManagerMethod );
+				result &= Reflection.HasMethod( type, CharacterGetHealthMethod );
+				result &= Reflection.HasMethod( type, CharacterDamageCharacterMethod );
+				result &= Reflection.HasMethod( type, CharacterSetHealthMethod );
+				result &= Reflection.HasMethod( type, CharacterGetBatteryMethod );
+				result &= Reflection.HasMethod( type, CharacterGetInventoryMethod );
+				result &= Reflection.HasMethod( type, CharacterGetDisplayNameMethod );
+				result &= Reflection.HasMethod( type, CharacterGetNetworkManagerMethod );
 				result &= HasField( type, CharacterItemListField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterBatteryNamespace, CharacterBatteryClass );
 				if ( type2 == null )
 					throw new Exception( "Could not find battery type for CharacterEntity" );
-				result &= HasMethod( type2, CharacterBatterySetBatteryCapacityMethod );
+				result &= Reflection.HasMethod( type2, CharacterBatterySetBatteryCapacityMethod );
 				result &= HasField( type2, CharacterBatteryCapacityField );
 
 				return result;

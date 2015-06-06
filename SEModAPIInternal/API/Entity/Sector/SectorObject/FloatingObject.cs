@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -200,7 +201,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( type == null )
 					throw new Exception( "Could not find internal type for FloatingObjectManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, FloatingObjectManagerRemoveFloatingObjectMethod );
+				result &= Reflection.HasMethod( type, FloatingObjectManagerRemoveFloatingObjectMethod );
 
 				return result;
 			}

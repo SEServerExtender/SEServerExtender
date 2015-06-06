@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Common
 	using System;
 	using System.ComponentModel;
 	using Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 
@@ -140,14 +141,14 @@ namespace SEModAPIInternal.API.Common
 				if ( type1 == null )
 					throw new Exception( "Could not find internal type for RadioManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, RadioManagerGetBroadcastRadiusMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerSetBroadcastRadiusMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerGetBroadcastRadiusMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerSetBroadcastRadiusMethod );
 				//result &= BaseObject.HasMethod( type1, RadioManagerGetLinkedEntityMethod );
 				//result &= BaseObject.HasMethod( type1, RadioManagerSetLinkedEntityMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerGetEnabledMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerSetEnabledMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerGetAABBTreeIdMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerSetAABBTreeIdMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerGetEnabledMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerSetEnabledMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerGetAABBTreeIdMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerSetAABBTreeIdMethod );
 				result &= BaseObject.HasField( type1, RadioManagerNetworkManagerField );
 
 				return result;
@@ -244,8 +245,8 @@ namespace SEModAPIInternal.API.Common
 				if ( type1 == null )
 					throw new Exception( "Could not find internal type for RadioManagerNetworkManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, RadioManagerNetManagerBroadcastRadiusMethod );
-				result &= BaseObject.HasMethod( type1, RadioManagerNetManagerBroadcastEnabledMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerNetManagerBroadcastRadiusMethod );
+				result &= Reflection.HasMethod( type1, RadioManagerNetManagerBroadcastEnabledMethod );
 
 				return result;
 			}

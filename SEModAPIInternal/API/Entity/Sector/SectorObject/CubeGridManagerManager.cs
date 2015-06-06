@@ -1,6 +1,7 @@
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -73,8 +74,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( type == null )
 					throw new Exception( "Could not find internal type for CubeGridManagerManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, CubeGridManagerManagerGetPowerManagerMethod );
-				result &= BaseObject.HasMethod( type, CubeGridManagerManagerGetThrusterManagerMethod );
+				result &= Reflection.HasMethod( type, CubeGridManagerManagerGetPowerManagerMethod );
+				result &= Reflection.HasMethod( type, CubeGridManagerManagerGetThrusterManagerMethod );
 
 				return result;
 			}

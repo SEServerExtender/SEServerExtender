@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -106,9 +107,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( DoorNamespace, DoorClass );
 				if ( type == null )
 					throw new Exception( "Could not find internal type for DoorEntity" );
-				result &= HasMethod( type, DoorGetStateMethod );
-				result &= HasMethod( type, DoorSetStateMethod );
-				result &= HasMethod( type, DoorBroadcastStateMethod );
+				result &= Reflection.HasMethod( type, DoorGetStateMethod );
+				result &= Reflection.HasMethod( type, DoorSetStateMethod );
+				result &= Reflection.HasMethod( type, DoorBroadcastStateMethod );
 
 				return result;
 			}

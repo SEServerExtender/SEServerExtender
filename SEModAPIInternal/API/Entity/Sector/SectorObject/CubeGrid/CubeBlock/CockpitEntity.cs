@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -131,7 +132,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				//result &= BaseEntity.HasMethod(type, CockpitGetPilotEntityMethod);
 
-				result &= HasMethod( type, CockpitSetPilotEntityMethod );
+				result &= Reflection.HasMethod( type, CockpitSetPilotEntityMethod );
 				result &= HasField( type, CockpitGetPilotEntityField );
 
 				return result;

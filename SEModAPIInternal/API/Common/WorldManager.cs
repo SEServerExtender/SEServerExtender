@@ -7,6 +7,7 @@
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.Game.World;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage;
@@ -178,13 +179,13 @@
 				if ( type1 == null )
 					throw new Exception( "Could not find internal type for WorldManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, WorldManagerGetPlayerManagerMethod );
+				result &= Reflection.HasMethod( type1, WorldManagerGetPlayerManagerMethod );
 				Type[ ] argTypes = new Type[ 1 ];
 				argTypes[ 0 ] = typeof( string );
-				result &= BaseObject.HasMethod( type1, WorldManagerSaveWorldMethod, argTypes );
-				result &= BaseObject.HasMethod( type1, WorldManagerGetCheckpointMethod );
-				result &= BaseObject.HasMethod( type1, WorldManagerGetSectorMethod );
-				result &= BaseObject.HasMethod( type1, WorldManagerGetSessionNameMethod );
+				result &= Reflection.HasMethod( type1, WorldManagerSaveWorldMethod, argTypes );
+				result &= Reflection.HasMethod( type1, WorldManagerGetCheckpointMethod );
+				result &= Reflection.HasMethod( type1, WorldManagerGetSectorMethod );
+				result &= Reflection.HasMethod( type1, WorldManagerGetSessionNameMethod );
 				result &= BaseObject.HasField( type1, WorldManagerInstanceField );
 				result &= BaseObject.HasField( type1, WorldManagerFactionManagerField );
 				result &= BaseObject.HasField( type1, WorldManagerSessionSettingsField );
@@ -197,13 +198,13 @@
 				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
 				if ( type3 == null )
 					throw new Exception( "Could not find world snapshot type for WorldManager" );
-				result &= BaseObject.HasMethod( type3, WorldSnapshotSaveMethod );
+				result &= Reflection.HasMethod( type3, WorldSnapshotSaveMethod );
 
 				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( SandboxGameNamespace, SandboxGameGameStatsClass );
 				if ( type4 == null )
 					throw new Exception( "Count not find type for SandboxGameStats" );
 
-				result &= BaseObject.HasMethod( type4, SandboxGameGetGameStatsInstance );
+				result &= Reflection.HasMethod( type4, SandboxGameGetGameStatsInstance );
 				result &= BaseObject.HasField( type4, SandboxGameGetUpdatesPerSecondField );
 
 				return result;

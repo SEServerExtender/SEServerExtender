@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -247,14 +248,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for BatteryBlockEntity" );
 
-				result &= HasMethod( type, BatteryBlockGetCurrentStoredPowerMethod );
-				result &= HasMethod( type, BatteryBlockSetCurrentStoredPowerMethod );
-				result &= HasMethod( type, BatteryBlockGetMaxStoredPowerMethod );
-				result &= HasMethod( type, BatteryBlockSetMaxStoredPowerMethod );
-				result &= HasMethod( type, BatteryBlockGetProducerEnabledMethod );
-				result &= HasMethod( type, BatteryBlockSetProducerEnabledMethod );
-				result &= HasMethod( type, BatteryBlockGetSemiautoEnabledMethod );
-				result &= HasMethod( type, BatteryBlockSetSemiautoEnabledMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockGetCurrentStoredPowerMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockSetCurrentStoredPowerMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockGetMaxStoredPowerMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockSetMaxStoredPowerMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockGetProducerEnabledMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockSetProducerEnabledMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockGetSemiautoEnabledMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockSetSemiautoEnabledMethod );
 
 				result &= HasField( type, BatteryBlockCurrentStoredPowerField );
 				result &= HasField( type, BatteryBlockMaxStoredPowerField );
@@ -437,9 +438,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = InternalType;
 				if ( type == null )
 					throw new Exception( "Could not find internal type for BatteryBlockNetworkManager" );
-				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastProducerEnabledMethod );
-				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod );
-				result &= BaseObject.HasMethod( type, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockNetManagerBroadcastProducerEnabledMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockNetManagerBroadcastCurrentStoredPowerMethod );
+				result &= Reflection.HasMethod( type, BatteryBlockNetManagerBroadcastSemiautoEnabledMethod );
 
 				Type packetType = InternalType.GetNestedType( BatteryBlockNetManagerCurrentStoredPowerPacketClass, BindingFlags.Public | BindingFlags.NonPublic );
 				//result &= BaseObject.HasMethod( packetType, BatteryBlockNetManagerCurrentStoredPowerPacketGetIdMethod );

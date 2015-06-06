@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -109,8 +110,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for CameraBlockEntity" );
 
-				result &= HasMethod( type, CameraBlockGetIsActiveMethod );
-				result &= HasMethod( type, CameraBlockSetIsActiveMethod );
+				result &= Reflection.HasMethod( type, CameraBlockGetIsActiveMethod );
+				result &= Reflection.HasMethod( type, CameraBlockSetIsActiveMethod );
 
 				return result;
 			}

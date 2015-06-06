@@ -14,6 +14,7 @@ namespace SEModAPIInternal.API.Server
 	using Sandbox.Engine.Multiplayer;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.ModAPI;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.API.Utility;
@@ -160,16 +161,16 @@ namespace SEModAPIInternal.API.Server
 				if ( type1 == null )
 					throw new TypeLoadException( "Could not find internal type for ServerNetworkManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, ServerNetworkManagerSetPlayerBannedMethod );
-				result &= BaseObject.HasMethod( type1, ServerNetworkManagerDisconnectPlayerMethod );
-				result &= BaseObject.HasMethod( type1, ServerNetworkManagerKickPlayerMethod );
+				result &= Reflection.HasMethod( type1, ServerNetworkManagerSetPlayerBannedMethod );
+				result &= Reflection.HasMethod( type1, ServerNetworkManagerDisconnectPlayerMethod );
+				result &= Reflection.HasMethod( type1, ServerNetworkManagerKickPlayerMethod );
 				result &= BaseObject.HasField( type1, ServerNetworkManagerConnectedPlayersField );
 
 				Type myMultiplayerBaseType = typeof ( MyMultiplayerBase );
 				result &= BaseObject.HasField( myMultiplayerBaseType, MySyncLayerField );
 
 				Type syncLayer = typeof ( MySyncLayer );
-				result &= BaseObject.HasMethod( syncLayer, MySyncLayerSendMessage );
+				result &= Reflection.HasMethod( syncLayer, MySyncLayerSendMessage );
 
 				Type mySyncEntityType = typeof ( MySyncEntity );
 				result &= BaseObject.HasNestedType( mySyncEntityType, SendCloseClosedMsg );

@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity
 	using System;
 	using System.ComponentModel;
 	using Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -114,10 +115,10 @@ namespace SEModAPIInternal.API.Entity
 				if ( type1 == null )
 					throw new Exception( "Could not find internal type for PowerReceiver" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, PowerReceiverRunPowerRateCallbackMethod );
-				result &= BaseObject.HasMethod( type1, PowerReceiverGetCurrentInputMethod );
-				result &= BaseObject.HasMethod( type1, PowerReceiverGetCurrentRateMethod );
-				result &= BaseObject.HasMethod( type1, PowerReceiverSetMaxRequiredInputMethod );
+				result &= Reflection.HasMethod( type1, PowerReceiverRunPowerRateCallbackMethod );
+				result &= Reflection.HasMethod( type1, PowerReceiverGetCurrentInputMethod );
+				result &= Reflection.HasMethod( type1, PowerReceiverGetCurrentRateMethod );
+				result &= Reflection.HasMethod( type1, PowerReceiverSetMaxRequiredInputMethod );
 				result &= BaseObject.HasField( type1, PowerReceiverMaxRequiredInputField );
 				result &= BaseObject.HasField( type1, PowerReceiverPowerRatioField );
 				result &= BaseObject.HasField( type1, PowerReceiverInputRateCallbackField );

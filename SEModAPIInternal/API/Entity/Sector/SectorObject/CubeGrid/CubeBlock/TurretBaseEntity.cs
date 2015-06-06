@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -295,12 +296,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for TurretBaseEntity" );
 
-				result &= HasMethod( type, TurretIsTargetMethod );
-				result &= HasMethod( type, TurretIsTargetVisibleMethod );
-				result &= HasMethod( type, TurretIsTargetInViewMethod );
-				result &= HasMethod( type, TurretIsTargetEnemyMethod );
-				result &= HasMethod( type, TurretGetNearestVisibleTargetMethod );
-				result &= HasMethod( type, TurretGetRemainingAmmoMethod );
+				result &= Reflection.HasMethod( type, TurretIsTargetMethod );
+				result &= Reflection.HasMethod( type, TurretIsTargetVisibleMethod );
+				result &= Reflection.HasMethod( type, TurretIsTargetInViewMethod );
+				result &= Reflection.HasMethod( type, TurretIsTargetEnemyMethod );
+				result &= Reflection.HasMethod( type, TurretGetNearestVisibleTargetMethod );
+				result &= Reflection.HasMethod( type, TurretGetRemainingAmmoMethod );
 
 				result &= HasField( type, TurretSearchingRangeField );
 				result &= HasField( type, TurretInventoryField );
@@ -549,9 +550,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for TurretNetworkManager" );
 
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargetIdMethod );
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastRangeMethod );
-				result &= BaseObject.HasMethod( type, TurretNetworkManagerBroadcastTargettingFlagsMethod );
+				result &= Reflection.HasMethod( type, TurretNetworkManagerBroadcastTargetIdMethod );
+				result &= Reflection.HasMethod( type, TurretNetworkManagerBroadcastRangeMethod );
+				result &= Reflection.HasMethod( type, TurretNetworkManagerBroadcastTargettingFlagsMethod );
 
 				return result;
 			}

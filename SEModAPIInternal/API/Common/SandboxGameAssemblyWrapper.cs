@@ -7,6 +7,7 @@
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 	using VRage.ObjectBuilders;
@@ -190,22 +191,22 @@
 				if ( type == null )
 					throw new Exception( "Could not find internal type for MainGame" );
 				bool result = true;
-				if ( !BaseObject.HasMethod( type, MainGameEnqueueActionMethod ) )
+				if ( !Reflection.HasMethod( type, MainGameEnqueueActionMethod ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameEnqueueActionMethod );
 				}
-				if ( !BaseObject.HasMethod( type, MainGameGetTimeMillisMethod ) )
+				if ( !Reflection.HasMethod( type, MainGameGetTimeMillisMethod ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameGetTimeMillisMethod );
 				}
-				if ( !BaseObject.HasMethod( type, MainGameExitMethod ) )
+				if ( !Reflection.HasMethod( type, MainGameExitMethod ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameExitMethod );
 				}
-				if ( !BaseObject.HasMethod( type, MainGameDisposeMethod ) )
+				if ( !Reflection.HasMethod( type, MainGameDisposeMethod ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameDisposeMethod );

@@ -9,6 +9,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Voxels;
 	using SEModAPI.API;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
@@ -332,8 +333,8 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for SectorObjectManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type, ObjectManagerGetEntityHashSet );
-				result &= BaseObject.HasMethod( type, ObjectManagerAddEntity );
+				result &= Reflection.HasMethod( type, ObjectManagerGetEntityHashSet );
+				result &= Reflection.HasMethod( type, ObjectManagerAddEntity );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ObjectFactoryNamespace, ObjectFactoryClass );
 				if ( type2 == null )
@@ -342,7 +343,7 @@ namespace SEModAPIInternal.API.Entity
 				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( EntityBaseNetManagerNamespace, EntityBaseNetManagerClass );
 				if ( type3 == null )
 					throw new Exception( "Could not find entity base network manager type for SectorObjectManager" );
-				result &= BaseObject.HasMethod( type3, EntityBaseNetManagerSendEntity );
+				result &= Reflection.HasMethod( type3, EntityBaseNetManagerSendEntity );
 
 				return result;
 			}

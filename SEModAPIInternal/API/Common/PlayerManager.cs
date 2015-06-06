@@ -7,6 +7,7 @@
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.API.Server;
 	using SEModAPIInternal.API.Utility;
@@ -199,7 +200,7 @@
 				bool result = true;
                 result &= BaseObject.HasField(type1, PlayerMapGetPlayerItemMappingField);
                 result &= BaseObject.HasField(type1, PlayerMapGetSteamItemMappingField);
-				result &= BaseObject.HasMethod(type1, PlayerMapGetFastPlayerIdFromSteamIdMethod);
+				result &= Reflection.HasMethod(type1, PlayerMapGetFastPlayerIdFromSteamIdMethod);
 								
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapCameraDataClass);
 				if (type2 == null)
@@ -914,7 +915,7 @@
 				if (type1 == null)
 					throw new Exception("Could not find internal type for PlayerManager");
 				bool result = true;
-                result &= BaseObject.HasMethod(type1, PlayerManagerPlayerMapField);
+                result &= Reflection.HasMethod(type1, PlayerManagerPlayerMapField);
 
 				return result;
 			}

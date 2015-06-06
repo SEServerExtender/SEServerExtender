@@ -7,6 +7,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API.TypeConverters;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRageMath;
@@ -137,11 +138,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ThrustNamespace, ThrustClass );
 				if ( type == null )
 					throw new Exception( "Could not find internal type for ThrustEntity" );
-				result &= HasMethod( type, ThrustGetOverrideMethod );
-				result &= HasMethod( type, ThrustSetOverrideMethod );
-				result &= HasMethod( type, ThrustGetMaxThrustVectorMethod );
-				result &= HasMethod( type, ThrustGetMaxPowerConsumptionMethod );
-				result &= HasMethod( type, ThrustGetMinPowerConsumptionMethod );
+				result &= Reflection.HasMethod( type, ThrustGetOverrideMethod );
+				result &= Reflection.HasMethod( type, ThrustSetOverrideMethod );
+				result &= Reflection.HasMethod( type, ThrustGetMaxThrustVectorMethod );
+				result &= Reflection.HasMethod( type, ThrustGetMaxPowerConsumptionMethod );
+				result &= Reflection.HasMethod( type, ThrustGetMinPowerConsumptionMethod );
 				result &= HasField( type, ThrustNetManagerField );
 
 				return result;
@@ -238,7 +239,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ThrustNetManagerNamespace, ThrustNetManagerClass );
 				if ( type == null )
 					throw new Exception( "Could not find network manager type for ThrustEntity" );
-				result &= BaseObject.HasMethod( type, ThrustNetManagerBroadcastOverrideMethod );
+				result &= Reflection.HasMethod( type, ThrustNetManagerBroadcastOverrideMethod );
 
 				return result;
 			}

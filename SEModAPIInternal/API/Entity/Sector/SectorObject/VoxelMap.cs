@@ -7,6 +7,7 @@
 	using Sandbox.Common.ObjectBuilders.Voxels;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRage;
@@ -231,8 +232,8 @@
 				if ( type == null )
 					throw new Exception( "Could not find internal type for VoxelMap" );
 
-				result &= HasMethod( type, VoxelMapGetSizeMethod );
-				result &= HasMethod( type, VoxelMapGetVoxelMaterialManagerMethod );
+				result &= Reflection.HasMethod( type, VoxelMapGetSizeMethod );
+				result &= Reflection.HasMethod( type, VoxelMapGetVoxelMaterialManagerMethod );
 
 				return result;
 			}

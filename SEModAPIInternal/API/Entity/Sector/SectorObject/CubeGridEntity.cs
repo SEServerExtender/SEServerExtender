@@ -10,6 +10,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using SEModAPI.API;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Utility;
@@ -477,10 +478,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( type == null )
 					throw new Exception( "Could not find internal type for CubeGridEntity" );
 				bool result = true;
-				result &= HasMethod( type, CubeGridGetCubeBlocksHashSetMethod );
-				result &= HasMethod( type, CubeGridAddCubeBlockMethod );
-				result &= HasMethod( type, CubeGridRemoveCubeBlockMethod );
-				result &= HasMethod( type, CubeGridGetManagerManagerMethod );
+				result &= Reflection.HasMethod( type, CubeGridGetCubeBlocksHashSetMethod );
+				result &= Reflection.HasMethod( type, CubeGridAddCubeBlockMethod );
+				result &= Reflection.HasMethod( type, CubeGridRemoveCubeBlockMethod );
+				result &= Reflection.HasMethod( type, CubeGridGetManagerManagerMethod );
 				//result &= HasField( type, CubeGridBlockGroupsField );
 
 				return result;

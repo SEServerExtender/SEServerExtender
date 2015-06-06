@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -201,7 +202,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find type for ShipControllerEntity" );
 
-				result &= HasMethod( type, ShipControllerEntityGetNetworkManager );
+				result &= Reflection.HasMethod( type, ShipControllerEntityGetNetworkManager );
 				//				result &= BaseObject.HasMethod(type, ShipControllerEntityGetPilotEntityMethod);
 				//				result &= BaseObject.HasMethod(type, ShipControllerEntitySetPilotEntityMethod);
 
@@ -303,7 +304,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find type for ShipControllerNetworkManager" );
 
-				result &= BaseObject.HasMethod( type, ShipControllerNetworkManagerBroadcastDampenersStatus );
+				result &= Reflection.HasMethod( type, ShipControllerNetworkManagerBroadcastDampenersStatus );
 
 				return result;
 			}

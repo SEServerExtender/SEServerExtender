@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Common
 {
 	using System;
 	using System.Runtime.Serialization;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 
@@ -83,12 +84,12 @@ namespace SEModAPIInternal.API.Common
 				if ( type1 == null )
 					throw new Exception( "Could not find internal type for PowerManager" );
 				bool result = true;
-				result &= BaseObject.HasMethod( type1, PowerManagerRegisterPowerReceiverMethod );
-				result &= BaseObject.HasMethod( type1, PowerManagerUnregisterPowerReceiverMethod );
-				result &= BaseObject.HasMethod( type1, PowerManagerRegisterPowerProducerMethod );
-				result &= BaseObject.HasMethod( type1, PowerManagerUnregisterPowerProducerMethod );
-				result &= BaseObject.HasMethod( type1, PowerManagerGetAvailablePowerMethod );
-				result &= BaseObject.HasMethod( type1, PowerManagerGetUsedPowerPercentMethod );
+				result &= Reflection.HasMethod( type1, PowerManagerRegisterPowerReceiverMethod );
+				result &= Reflection.HasMethod( type1, PowerManagerUnregisterPowerReceiverMethod );
+				result &= Reflection.HasMethod( type1, PowerManagerRegisterPowerProducerMethod );
+				result &= Reflection.HasMethod( type1, PowerManagerUnregisterPowerProducerMethod );
+				result &= Reflection.HasMethod( type1, PowerManagerGetAvailablePowerMethod );
+				result &= Reflection.HasMethod( type1, PowerManagerGetUsedPowerPercentMethod );
 				result &= BaseObject.HasField( type1, PowerManagerPowerReceiverHashSetField );
 				result &= BaseObject.HasField( type1, PowerManagerPowerProducerHashSetField );
 				result &= BaseObject.HasField( type1, PowerManagerMaxAvailablePowerField );

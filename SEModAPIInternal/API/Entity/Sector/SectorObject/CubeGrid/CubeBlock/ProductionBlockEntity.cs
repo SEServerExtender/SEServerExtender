@@ -8,6 +8,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -170,11 +171,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for ProductionBlockEntity" );
 				bool result = true;
-				result &= HasMethod( type, ProductionBlockGetInputInventoryMethod );
-				result &= HasMethod( type, ProductionBlockGetOutputInventoryMethod );
-				result &= HasMethod( type, ProductionBlockGetQueueMethod );
-				result &= HasMethod( type, ProductionBlockSetQueueMethod );
-				result &= HasMethod( type, ProductionBlockTriggerQueueChangedCallbackMethod );
+				result &= Reflection.HasMethod( type, ProductionBlockGetInputInventoryMethod );
+				result &= Reflection.HasMethod( type, ProductionBlockGetOutputInventoryMethod );
+				result &= Reflection.HasMethod( type, ProductionBlockGetQueueMethod );
+				result &= Reflection.HasMethod( type, ProductionBlockSetQueueMethod );
+				result &= Reflection.HasMethod( type, ProductionBlockTriggerQueueChangedCallbackMethod );
 				result &= HasField( type, ProductionBlockQueueField );
 
 				return result;

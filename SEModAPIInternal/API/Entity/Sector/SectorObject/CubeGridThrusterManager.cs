@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
 	using Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
@@ -65,9 +66,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CubeGridThrusterManagerNamespace, CubeGridThrusterManagerClass );
 				if ( type == null )
 					throw new Exception( "Could not find type for CubeGridThrusterManager" );
-				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerGetEnabled );
-				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerSetEnabled );
-				result &= BaseObject.HasMethod( type, CubeGridThrusterManagerSetControlEnabled );
+				result &= Reflection.HasMethod( type, CubeGridThrusterManagerGetEnabled );
+				result &= Reflection.HasMethod( type, CubeGridThrusterManagerSetEnabled );
+				result &= Reflection.HasMethod( type, CubeGridThrusterManagerSetControlEnabled );
 
 				return result;
 			}

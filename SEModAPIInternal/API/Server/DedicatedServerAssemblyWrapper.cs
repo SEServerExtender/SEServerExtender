@@ -11,6 +11,7 @@
 	using Sandbox;
 	using Sandbox.Game;
 	using SEModAPI.API.Sandbox;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
@@ -71,7 +72,7 @@
 				if ( dedicatedServerType == null )
 					throw new Exception( "Could not find internal type for DedicatedServerAssemblyWrapper" );
 				bool result = true;
-				result &= BaseObject.HasMethod( dedicatedServerType, DedicatedServerRunMainMethod );
+				result &= Reflection.HasMethod( dedicatedServerType, DedicatedServerRunMainMethod );
 
 				return result;
 			}

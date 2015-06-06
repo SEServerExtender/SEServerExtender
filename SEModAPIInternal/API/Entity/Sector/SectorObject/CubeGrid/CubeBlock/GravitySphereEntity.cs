@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -85,7 +86,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GravitySphereNamespace, GravitySphereClass );
 				if ( type == null )
 					throw new Exception( "Could not find internal type for GravitySphereEntity" );
-				result &= HasMethod( type, GravitySphereSetFieldRadiusMethod );
+				result &= Reflection.HasMethod( type, GravitySphereSetFieldRadiusMethod );
 
 				return result;
 			}

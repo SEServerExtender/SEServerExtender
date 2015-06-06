@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -139,10 +140,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for OreDetectorEntity" );
 
-				result &= HasMethod( type, OreDetectorGetUsingAntennasMethod );
-				result &= HasMethod( type, OreDetectorSetUsingAntennasMethod );
-				result &= HasMethod( type, OreDetectorGetDetectionRadiusMethod );
-				result &= HasMethod( type, OreDetectorSetDetectionRadiusMethod );
+				result &= Reflection.HasMethod( type, OreDetectorGetUsingAntennasMethod );
+				result &= Reflection.HasMethod( type, OreDetectorSetUsingAntennasMethod );
+				result &= Reflection.HasMethod( type, OreDetectorGetDetectionRadiusMethod );
+				result &= Reflection.HasMethod( type, OreDetectorSetDetectionRadiusMethod );
 
 				return result;
 			}

@@ -8,6 +8,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox;
 	using SEModAPI.API;
 	using SEModAPI.API.TypeConverters;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Utility;
 	using SEModAPIInternal.Support;
@@ -599,24 +600,24 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for BaseEntity" );
 				bool result = true;
-				result &= HasMethod( type, BaseEntityGetObjectBuilderMethod );
-				result &= HasMethod( type, BaseEntityGetPhysicsManagerMethod );
-				result &= HasMethod( type, BaseEntityGetPositionManagerMethod );
+				result &= Reflection.HasMethod( type, BaseEntityGetObjectBuilderMethod );
+				result &= Reflection.HasMethod( type, BaseEntityGetPhysicsManagerMethod );
+				result &= Reflection.HasMethod( type, BaseEntityGetPositionManagerMethod );
 				//result &= HasMethod(type, BaseEntityCombineOnMovedEventMethod);
-				result &= HasMethod( type, BaseEntityCombineOnClosedEventMethod );
-				result &= HasMethod( type, BaseEntityGetIsDisposedMethod );
-				result &= HasMethod( type, BaseEntityGetOrientationMatrixMethod );
+				result &= Reflection.HasMethod( type, BaseEntityCombineOnClosedEventMethod );
+				result &= Reflection.HasMethod( type, BaseEntityGetIsDisposedMethod );
+				result &= Reflection.HasMethod( type, BaseEntityGetOrientationMatrixMethod );
 				//result &= HasMethod( type, BaseEntityGetNetManagerMethod );
 				result &= HasProperty( type, BaseEntityGetNetManagerMethod );
-				result &= HasMethod( type, BaseEntitySetEntityIdMethod );
-				result &= HasMethod( type, BaseEntityGetDisplayNameMethod );
-				result &= HasMethod( type, BaseEntitySetDisplayNameMethod );
+				result &= Reflection.HasMethod( type, BaseEntitySetEntityIdMethod );
+				result &= Reflection.HasMethod( type, BaseEntityGetDisplayNameMethod );
+				result &= Reflection.HasMethod( type, BaseEntitySetDisplayNameMethod );
 				result &= HasField( type, BaseEntityEntityIdField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PhysicsManagerNamespace, PhysicsManagerClass );
 				if ( type2 == null )
 					throw new Exception( "Could not find physics manager type for BaseEntity" );
-				result &= HasMethod( type2, PhysicsManagerGetRigidBodyMethod );
+				result &= Reflection.HasMethod( type2, PhysicsManagerGetRigidBodyMethod );
 
 				return result;
 			}
@@ -988,7 +989,7 @@ namespace SEModAPIInternal.API.Entity
 				Type type = InternalType;
 				if ( type == null )
 					throw new Exception( "Could not find internal type for BaseEntityNetworkManager" );
-				bool result = BaseObject.HasMethod( type, BaseEntityBroadcastRemovalMethod );
+				bool result = Reflection.HasMethod( type, BaseEntityBroadcastRemovalMethod );
 
 				return result;
 			}

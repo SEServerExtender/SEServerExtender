@@ -7,6 +7,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API.TypeConverters;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRageMath;
@@ -138,9 +139,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( GyroNamespace, GyroClass );
 				if ( type == null )
 					throw new Exception( "Could not find internal type for GyroEntity" );
-				result &= HasMethod( type, GyroSetOverrideMethod );
-				result &= HasMethod( type, GyroSetPowerMethod );
-				result &= HasMethod( type, GyroSetTargetAngularVelocityMethod );
+				result &= Reflection.HasMethod( type, GyroSetOverrideMethod );
+				result &= Reflection.HasMethod( type, GyroSetPowerMethod );
+				result &= Reflection.HasMethod( type, GyroSetTargetAngularVelocityMethod );
 				result &= HasField( type, GyroNetworkManagerField );
 
 				return result;

@@ -9,6 +9,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI.Interfaces;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRage;
@@ -201,20 +202,20 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for InventoryEntity" );
 				bool result = true;
-				result &= HasMethod( type, InventoryCalculateMassVolumeMethod );
-				result &= HasMethod( type, InventoryGetTotalVolumeMethod );
-				result &= HasMethod( type, InventoryGetTotalMassMethod );
-				result &= HasMethod( type, InventorySetFromObjectBuilderMethod );
-				result &= HasMethod( type, InventoryGetObjectBuilderMethod );
-				result &= HasMethod( type, InventoryCleanUpMethod );
-				result &= HasMethod( type, InventoryGetItemListMethod );
-				result &= HasMethod( type, InventoryAddItemAmountMethod );
+				result &= Reflection.HasMethod( type, InventoryCalculateMassVolumeMethod );
+				result &= Reflection.HasMethod( type, InventoryGetTotalVolumeMethod );
+				result &= Reflection.HasMethod( type, InventoryGetTotalMassMethod );
+				result &= Reflection.HasMethod( type, InventorySetFromObjectBuilderMethod );
+				result &= Reflection.HasMethod( type, InventoryGetObjectBuilderMethod );
+				result &= Reflection.HasMethod( type, InventoryCleanUpMethod );
+				result &= Reflection.HasMethod( type, InventoryGetItemListMethod );
+				result &= Reflection.HasMethod( type, InventoryAddItemAmountMethod );
 
 				Type[ ] argTypes = new Type[ 3 ];
 				argTypes[ 0 ] = typeof( MyFixedPoint );
 				argTypes[ 1 ] = typeof( MyObjectBuilder_PhysicalObject );
 				argTypes[ 2 ] = typeof( bool );
-				result &= HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
+				result &= Reflection.HasMethod( type, InventoryRemoveItemAmountMethod, argTypes );
 
 				return result;
 			}
@@ -707,7 +708,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for InventoryItemEntity" );
 				bool result = true;
-				result &= HasMethod( type, InventoryItemGetObjectBuilderMethod );
+				result &= Reflection.HasMethod( type, InventoryItemGetObjectBuilderMethod );
 				result &= HasField( type, InventoryItemItemIdField );
 
 				return result;

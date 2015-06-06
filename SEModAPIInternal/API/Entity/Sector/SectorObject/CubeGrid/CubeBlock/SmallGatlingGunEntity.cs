@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRageMath;
@@ -97,10 +98,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for SmallGatlingGunEntity" );
 
-				result &= HasMethod( type, SmallGatlingGunGetInventoryMethod );
+				result &= Reflection.HasMethod( type, SmallGatlingGunGetInventoryMethod );
 				//result &= HasMethod(type, SmallGatlingGunShootMethod);
-				result &= HasMethod( type, SmallGatlingGunCanShootMethod );
-				result &= HasMethod( type, SmallGatlingGunGetDirectionToTargetMethod );
+				result &= Reflection.HasMethod( type, SmallGatlingGunCanShootMethod );
+				result &= Reflection.HasMethod( type, SmallGatlingGunGetDirectionToTargetMethod );
 
 				return result;
 			}

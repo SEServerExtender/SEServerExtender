@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRage.ModAPI;
@@ -144,10 +145,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for FunctionalBlockEntity" );
 
-				result &= HasMethod( type, FunctionalBlockGetEnabledMethod );
-				result &= HasMethod( type, FunctionalBlockSetEnabledMethod );
-				result &= HasMethod( type, FunctionalBlockBroadcastEnabledMethod );
-				result &= HasMethod( type, FunctionalBlockCheckIsWorkingMethod );
+				result &= Reflection.HasMethod( type, FunctionalBlockGetEnabledMethod );
+				result &= Reflection.HasMethod( type, FunctionalBlockSetEnabledMethod );
+				result &= Reflection.HasMethod( type, FunctionalBlockBroadcastEnabledMethod );
+				result &= Reflection.HasMethod( type, FunctionalBlockCheckIsWorkingMethod );
 				//result &= HasMethod(type, FunctionalBlockGetPowerReceiverMethod);
 
 				return result;
@@ -207,7 +208,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			bool oldDebuggingSetting = ExtenderOptions.IsDebugging;
 			ExtenderOptions.IsDebugging = false;
-			bool hasPowerReceiver = HasMethod( ActualObject.GetType( ), FunctionalBlockGetPowerReceiverMethod );
+			bool hasPowerReceiver = Reflection.HasMethod( ActualObject.GetType( ), FunctionalBlockGetPowerReceiverMethod );
 			ExtenderOptions.IsDebugging = oldDebuggingSetting;
 			if ( !hasPowerReceiver )
 				return null;

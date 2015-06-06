@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI.Ingame;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -97,7 +98,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( SolarPanelNamespace, SolarPanelClass );
 				if ( type == null )
 					throw new Exception( "Could not find internal type for SolarPanelEntity" );
-				result &= HasMethod( type, SolarPanelSetMaxOutputMethod );
+				result &= Reflection.HasMethod( type, SolarPanelSetMaxOutputMethod );
 
 				return result;
 			}
