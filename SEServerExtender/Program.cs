@@ -43,7 +43,7 @@ namespace SEServerExtender
 
 			protected override void OnStart( string[ ] args )
 			{
-				BaseLog.Info( "Starting SEServerExtender Service with {0} arguments ...", args.Length );
+				BaseLog.Info( "Starting SEServerExtender Service with {0} arguments: {1}", args.Length, string.Join( "\r\n\t", args ) );
 
 			    List<string> listArg = args.ToList();
 			    string serviceName = string.Empty;
@@ -141,7 +141,7 @@ namespace SEServerExtender
 
 			//AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
 
-			BaseLog.Info( "Starting SEServerExtender with {0} arguments ...", args.Length );
+			BaseLog.Info( "Starting SEServerExtender with {0} arguments: {1}", args.Length, string.Join( "\r\n\t", args ) );
 
 			CommandLineArgs extenderArgs = CommandLineArgs = new CommandLineArgs
 							  {
