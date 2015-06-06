@@ -260,34 +260,6 @@ namespace SEModAPIInternal.API.Entity
 
 		#region "Internal"
 
-		public static bool HasField( Type objectType, string fieldName )
-		{
-			try
-			{
-				if ( string.IsNullOrEmpty( fieldName ) )
-					return false;
-				FieldInfo field = objectType.GetField( fieldName );
-				if ( field == null )
-					field = objectType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-				if ( field == null )
-					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
-				if ( field == null )
-				{
-					if ( ExtenderOptions.IsDebugging )
-						ApplicationLog.BaseLog.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
-					return false;
-				}
-				return true;
-			}
-			catch ( Exception ex )
-			{
-				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
-				ApplicationLog.BaseLog.Error( ex );
-				return false;
-			}
-		}
-
 		public static bool HasProperty( Type objectType, string propertyName )
 		{
 			try
