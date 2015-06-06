@@ -8,8 +8,10 @@ namespace SEModAPI.API
 	using System.Reflection;
 	using System.Security.Principal;
 	using System.ServiceProcess;
+	using global::Sandbox.Game;
 	using Microsoft.Win32;
 	using NLog;
+	using SpaceEngineers.Game;
 	using VRage.Dedicated;
 
 	/// <summary>
@@ -286,7 +288,19 @@ namespace SEModAPI.API
 
 		public static List<string> GetCommonInstanceList( )
 		{
+			if(string.IsNullOrEmpty( MyPerServerSettings.GameDSName ))
+				SpaceEngineersGame.SetupPerGameSettings( );
+			
+			MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
+			MyPerServerSettings.GameName = MyPerGameSettings.GameName;
+			MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
+			MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
+			MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
+			MyPerServerSettings.AppId = 0x3bc72;
+			
 			string exeName = MyPerServerSettings.GameDSName + ".exe";
+			
+			BaseLog.Trace( "Game path for service search: {0}", exeName );
 			List<string> result = new List<string>( );
 			try
 			{
@@ -295,6 +309,7 @@ namespace SEModAPI.API
 					string path = GetServiceInstallPath( s.ServiceName );
 					if ( path.IndexOf( exeName, StringComparison.InvariantCultureIgnoreCase ) != -1 )
 					{
+						BaseLog.Trace( "Adding {0} to instance list", s.ServiceName );
 						result.Add( s.ServiceName );
 					}
 				}
