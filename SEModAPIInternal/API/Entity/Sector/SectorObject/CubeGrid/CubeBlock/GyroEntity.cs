@@ -142,7 +142,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, GyroSetOverrideMethod );
 				result &= Reflection.HasMethod( type, GyroSetPowerMethod );
 				result &= Reflection.HasMethod( type, GyroSetTargetAngularVelocityMethod );
-				result &= HasField( type, GyroNetworkManagerField );
+				result &= Reflection.HasField( type, GyroNetworkManagerField );
 
 				return result;
 			}

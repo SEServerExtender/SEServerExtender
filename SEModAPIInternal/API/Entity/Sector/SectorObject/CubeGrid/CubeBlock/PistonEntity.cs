@@ -246,8 +246,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, PistonSetMaxLimitMethod );
 				result &= Reflection.HasMethod( type, PistonGetNetworkManagerMethod );
 
-				result &= HasField( type, PistonTopBlockEntityIdField );
-				result &= HasField( type, PistonCurrentPositionField );
+				result &= Reflection.HasField( type, PistonTopBlockEntityIdField );
+				result &= Reflection.HasField( type, PistonCurrentPositionField );
 
 				return result;
 			}

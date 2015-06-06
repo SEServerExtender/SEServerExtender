@@ -149,7 +149,7 @@ namespace SEModAPIInternal.API.Common
 				result &= Reflection.HasMethod( type1, RadioManagerSetEnabledMethod );
 				result &= Reflection.HasMethod( type1, RadioManagerGetAABBTreeIdMethod );
 				result &= Reflection.HasMethod( type1, RadioManagerSetAABBTreeIdMethod );
-				result &= BaseObject.HasField( type1, RadioManagerNetworkManagerField );
+				result &= Reflection.HasField( type1, RadioManagerNetworkManagerField );
 
 				return result;
 			}

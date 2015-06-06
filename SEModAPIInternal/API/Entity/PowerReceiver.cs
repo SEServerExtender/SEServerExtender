@@ -119,9 +119,9 @@ namespace SEModAPIInternal.API.Entity
 				result &= Reflection.HasMethod( type1, PowerReceiverGetCurrentInputMethod );
 				result &= Reflection.HasMethod( type1, PowerReceiverGetCurrentRateMethod );
 				result &= Reflection.HasMethod( type1, PowerReceiverSetMaxRequiredInputMethod );
-				result &= BaseObject.HasField( type1, PowerReceiverMaxRequiredInputField );
-				result &= BaseObject.HasField( type1, PowerReceiverPowerRatioField );
-				result &= BaseObject.HasField( type1, PowerReceiverInputRateCallbackField );
+				result &= Reflection.HasField( type1, PowerReceiverMaxRequiredInputField );
+				result &= Reflection.HasField( type1, PowerReceiverPowerRatioField );
+				result &= Reflection.HasField( type1, PowerReceiverInputRateCallbackField );
 
 				return result;
 			}

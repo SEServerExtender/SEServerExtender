@@ -132,7 +132,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				result &= Reflection.HasMethod( type, CubeGridNetManagerBroadcastCubeBlockFactionDataMethod );
 				result &= Reflection.HasMethod( type, CubeGridNetManagerBroadcastCubeBlockRemoveListsMethod );
 				result &= Reflection.HasMethod( type, CubeGridNetManagerBroadcastAddCubeBlockMethod );
-				result &= BaseObject.HasField( type, CubeGridNetManagerCubeBlocksToDestroyField );
+				result &= Reflection.HasField( type, CubeGridNetManagerCubeBlocksToDestroyField );
 
 				Type type2 = CubeGridEntity.InternalType.GetNestedType( CubeGridIntegrityChangeEnumClass );
 				if ( type2 == null )

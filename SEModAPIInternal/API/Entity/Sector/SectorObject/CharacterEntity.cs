@@ -299,13 +299,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				result &= Reflection.HasMethod( type, CharacterGetInventoryMethod );
 				result &= Reflection.HasMethod( type, CharacterGetDisplayNameMethod );
 				result &= Reflection.HasMethod( type, CharacterGetNetworkManagerMethod );
-				result &= HasField( type, CharacterItemListField );
+				result &= Reflection.HasField( type, CharacterItemListField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( CharacterBatteryNamespace, CharacterBatteryClass );
 				if ( type2 == null )
 					throw new Exception( "Could not find battery type for CharacterEntity" );
 				result &= Reflection.HasMethod( type2, CharacterBatterySetBatteryCapacityMethod );
-				result &= HasField( type2, CharacterBatteryCapacityField );
+				result &= Reflection.HasField( type2, CharacterBatteryCapacityField );
 
 				return result;
 			}

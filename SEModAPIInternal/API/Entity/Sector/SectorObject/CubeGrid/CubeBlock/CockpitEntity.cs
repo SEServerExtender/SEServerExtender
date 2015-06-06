@@ -133,7 +133,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				//result &= BaseEntity.HasMethod(type, CockpitGetPilotEntityMethod);
 
 				result &= Reflection.HasMethod( type, CockpitSetPilotEntityMethod );
-				result &= HasField( type, CockpitGetPilotEntityField );
+				result &= Reflection.HasField( type, CockpitGetPilotEntityField );
 
 				return result;
 			}

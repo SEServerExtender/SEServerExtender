@@ -211,17 +211,17 @@
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameDisposeMethod );
 				}
-				if ( !BaseObject.HasField( type, MainGameInstanceField ) )
+				if ( !Reflection.HasField( type, MainGameInstanceField ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameInstanceField );
 				}
-				if ( !BaseObject.HasField( type, MainGameConfigContainerField ) )
+				if ( !Reflection.HasField( type, MainGameConfigContainerField ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", MainGameConfigContainerField );
 				}
-				if ( !BaseObject.HasField( type, IsFirstUpdateDoneField ) )
+				if ( !Reflection.HasField( type, IsFirstUpdateDoneField ) )
 				{
 					result = false;
 					ApplicationLog.BaseLog.Error( "Could not find method {0}", IsFirstUpdateDoneField );
@@ -235,7 +235,7 @@
 				Type type2 = ServerCoreType;
 				if ( type2 == null )
 					throw new Exception( "Could not find physics manager type for ServerCore" );
-				result &= BaseObject.HasField( type2, ServerCoreNullRenderField );
+				result &= Reflection.HasField( type2, ServerCoreNullRenderField );
 
 				Type type3 = GameConstantsType;
 				if ( type3 == null )

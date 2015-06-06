@@ -303,8 +303,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, TurretGetNearestVisibleTargetMethod );
 				result &= Reflection.HasMethod( type, TurretGetRemainingAmmoMethod );
 
-				result &= HasField( type, TurretSearchingRangeField );
-				result &= HasField( type, TurretInventoryField );
+				result &= Reflection.HasField( type, TurretSearchingRangeField );
+				result &= Reflection.HasField( type, TurretInventoryField );
 
 				result &= HasProperty( type, TurretTargetProperty );
 				result &= HasProperty( type, TurretShootingRangeProperty );

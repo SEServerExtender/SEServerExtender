@@ -164,10 +164,10 @@ namespace SEModAPIInternal.API.Server
 				result &= Reflection.HasMethod( type1, ServerNetworkManagerSetPlayerBannedMethod );
 				result &= Reflection.HasMethod( type1, ServerNetworkManagerDisconnectPlayerMethod );
 				result &= Reflection.HasMethod( type1, ServerNetworkManagerKickPlayerMethod );
-				result &= BaseObject.HasField( type1, ServerNetworkManagerConnectedPlayersField );
+				result &= Reflection.HasField( type1, ServerNetworkManagerConnectedPlayersField );
 
 				Type myMultiplayerBaseType = typeof ( MyMultiplayerBase );
-				result &= BaseObject.HasField( myMultiplayerBaseType, MySyncLayerField );
+				result &= Reflection.HasField( myMultiplayerBaseType, MySyncLayerField );
 
 				Type syncLayer = typeof ( MySyncLayer );
 				result &= Reflection.HasMethod( syncLayer, MySyncLayerSendMessage );
@@ -179,7 +179,7 @@ namespace SEModAPIInternal.API.Server
 				if ( nestedClosedMsgType == null )
 					throw new TypeLoadException( "Could not find internal NestedClosedMsgType" );
 
-				result &= BaseObject.HasField( nestedClosedMsgType, SendCloseClosedMsgEntityId );
+				result &= Reflection.HasField( nestedClosedMsgType, SendCloseClosedMsgEntityId );
 
 				Type type4 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, SendCreateClass );
 				if ( type4 == null )
@@ -191,16 +191,16 @@ namespace SEModAPIInternal.API.Server
 				if ( nestedCreateType == null )
 					throw new TypeLoadException( "Could not find internal type for SendCreateCompressedMsg" );
 
-				result &= BaseObject.HasField( nestedCreateType, SendCreateCompressedMsgObjectBuilders );
-				result &= BaseObject.HasField( nestedCreateType, SendCreateCompressedMsgBuilderLengths );
+				result &= Reflection.HasField( nestedCreateType, SendCreateCompressedMsgObjectBuilders );
+				result &= Reflection.HasField( nestedCreateType, SendCreateCompressedMsgBuilderLengths );
 
 				Type respawnMsgType = typeof ( MyPlayerCollection.RespawnMsg );
 
-				result &= BaseObject.HasField( respawnMsgType, RespawnMsgJoinGame );
-				result &= BaseObject.HasField( respawnMsgType, RespawnMsgNewIdenity );
-				result &= BaseObject.HasField( respawnMsgType, RespawnMsgMedicalRoom );
-				result &= BaseObject.HasField( respawnMsgType, RespawnMsgRespawnShipId );
-				result &= BaseObject.HasField( respawnMsgType, RespawnMsgPlayerSerialId );
+				result &= Reflection.HasField( respawnMsgType, RespawnMsgJoinGame );
+				result &= Reflection.HasField( respawnMsgType, RespawnMsgNewIdenity );
+				result &= Reflection.HasField( respawnMsgType, RespawnMsgMedicalRoom );
+				result &= Reflection.HasField( respawnMsgType, RespawnMsgRespawnShipId );
+				result &= Reflection.HasField( respawnMsgType, RespawnMsgPlayerSerialId );
 
 				Type type6 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, MySyncCharacterClass );
 				if ( type6 == null )
@@ -210,8 +210,8 @@ namespace SEModAPIInternal.API.Server
 				if ( attachMsgType == null )
 					throw new TypeLoadException( "Could not find internal type for AttachToCockpitMsg" );
 
-				result &= BaseObject.HasField( attachMsgType, AttachCharacterId );
-				result &= BaseObject.HasField( attachMsgType, AttachCockpitId );
+				result &= Reflection.HasField( attachMsgType, AttachCharacterId );
+				result &= Reflection.HasField( attachMsgType, AttachCockpitId );
 
 				Type controllableClassType = typeof ( MySyncControllableEntity );
 
@@ -219,9 +219,9 @@ namespace SEModAPIInternal.API.Server
 				if ( useMsgType == null )
 					throw new TypeLoadException( "Could not find internal type for UseMsg" );
 
-				result &= BaseObject.HasField( useMsgType, UseMsgEntityId );
-				result &= BaseObject.HasField( useMsgType, UseMsgUsedByEntityId );
-				result &= BaseObject.HasField( useMsgType, UseMsgUseAction );
+				result &= Reflection.HasField( useMsgType, UseMsgEntityId );
+				result &= Reflection.HasField( useMsgType, UseMsgUsedByEntityId );
+				result &= Reflection.HasField( useMsgType, UseMsgUseAction );
 
 				Type sendDataMessageClassType = typeof ( MyModAPIHelper.MyMultiplayerSyncObject );
 
@@ -229,8 +229,8 @@ namespace SEModAPIInternal.API.Server
 				if ( sendReliableMsgType == null )
 					throw new TypeLoadException( "Could not find internal type for SendReliableMsg" );
 
-				result &= BaseObject.HasField( sendReliableMsgType, SendReliableMsgId );
-				result &= BaseObject.HasField( sendReliableMsgType, SendReliableMsgData );
+				result &= Reflection.HasField( sendReliableMsgType, SendReliableMsgId );
+				result &= Reflection.HasField( sendReliableMsgType, SendReliableMsgData );
 
 				return result;
 			}

@@ -139,8 +139,8 @@ namespace SEModAPIInternal.API.Common
 				result &= Reflection.HasMethod( type1, FactionRemoveApplicantMethod );
 				result &= Reflection.HasMethod( type1, FactionAcceptApplicantMethod );
 				result &= Reflection.HasMethod( type1, FactionRemoveMemberMethod );
-				result &= BaseObject.HasField( type1, FactionMembersDictionaryField );
-				result &= BaseObject.HasField( type1, FactionJoinRequestsDictionaryField );
+				result &= Reflection.HasField( type1, FactionMembersDictionaryField );
+				result &= Reflection.HasField( type1, FactionJoinRequestsDictionaryField );
 
 				return result;
 			}

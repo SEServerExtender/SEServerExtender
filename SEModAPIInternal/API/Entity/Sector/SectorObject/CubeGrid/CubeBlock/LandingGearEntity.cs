@@ -192,9 +192,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, LandingGearGetBrakeForceMethod );
 				result &= Reflection.HasMethod( type, LandingGearSetBrakeForceMethod );
 
-				result &= HasField( type, LandingGearGetAutoLockField );
-				result &= HasField( type, LandingGearIsLockedField );
-				result &= HasField( type, LandingGearNetManagerField );
+				result &= Reflection.HasField( type, LandingGearGetAutoLockField );
+				result &= Reflection.HasField( type, LandingGearIsLockedField );
+				result &= Reflection.HasField( type, LandingGearNetManagerField );
 
 				return result;
 			}

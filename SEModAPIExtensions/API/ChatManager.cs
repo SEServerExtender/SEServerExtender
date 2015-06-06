@@ -232,7 +232,7 @@
 			{
 				Type type = typeof ( Sandbox.Engine.Multiplayer.ChatMsg );
 				bool result = true;
-				result &= BaseObject.HasField( type, ChatMessageMessageField );
+				result &= Reflection.HasField( type, ChatMessageMessageField );
 
 				return result;
 			}

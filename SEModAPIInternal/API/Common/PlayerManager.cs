@@ -198,19 +198,19 @@
 				if (type1 == null)
 					throw new Exception("Could not find internal type for PlayerMap");
 				bool result = true;
-                result &= BaseObject.HasField(type1, PlayerMapGetPlayerItemMappingField);
-                result &= BaseObject.HasField(type1, PlayerMapGetSteamItemMappingField);
+                result &= Reflection.HasField(type1, PlayerMapGetPlayerItemMappingField);
+                result &= Reflection.HasField(type1, PlayerMapGetSteamItemMappingField);
 				result &= Reflection.HasMethod(type1, PlayerMapGetFastPlayerIdFromSteamIdMethod);
 								
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerMapNamespace, PlayerMapCameraDataClass);
 				if (type2 == null)
 					throw new Exception("Could not find camera data type for PlayerMap");
-				result &= BaseObject.HasField(type2, PlayerMapGetCameraDataField);
+				result &= Reflection.HasField(type2, PlayerMapGetCameraDataField);
 
 				Type type3 = WorldManager.InternalType;
 				if(type3 == null)
 					throw new Exception("Could not find world manager type for PlayerMap");
-				result &= BaseObject.HasField(type3, PlayerMapSessionCameraField);
+				result &= Reflection.HasField(type3, PlayerMapSessionCameraField);
 
 				return result;
 			}

@@ -709,7 +709,7 @@ namespace SEModAPIInternal.API.Entity
 					throw new Exception( "Could not find internal type for InventoryItemEntity" );
 				bool result = true;
 				result &= Reflection.HasMethod( type, InventoryItemGetObjectBuilderMethod );
-				result &= HasField( type, InventoryItemItemIdField );
+				result &= Reflection.HasField( type, InventoryItemItemIdField );
 
 				return result;
 			}

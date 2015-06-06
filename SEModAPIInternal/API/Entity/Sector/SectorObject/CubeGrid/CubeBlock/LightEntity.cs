@@ -284,7 +284,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, LightUpdateIntensityMethod );
 				result &= Reflection.HasMethod( type, LightUpdateFalloffMethod );
 				result &= Reflection.HasMethod( type, LightUpdateRadiusMethod );
-				result &= HasField( type, LightNetworkManagerField );
+				result &= Reflection.HasField( type, LightNetworkManagerField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( LightNetworkManagerNamespace, LightNetworkManagerClass );
 				if ( type2 == null )

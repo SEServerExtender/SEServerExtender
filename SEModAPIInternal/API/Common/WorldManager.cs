@@ -186,14 +186,14 @@
 				result &= Reflection.HasMethod( type1, WorldManagerGetCheckpointMethod );
 				result &= Reflection.HasMethod( type1, WorldManagerGetSectorMethod );
 				result &= Reflection.HasMethod( type1, WorldManagerGetSessionNameMethod );
-				result &= BaseObject.HasField( type1, WorldManagerInstanceField );
-				result &= BaseObject.HasField( type1, WorldManagerFactionManagerField );
-				result &= BaseObject.HasField( type1, WorldManagerSessionSettingsField );
+				result &= Reflection.HasField( type1, WorldManagerInstanceField );
+				result &= Reflection.HasField( type1, WorldManagerFactionManagerField );
+				result &= Reflection.HasField( type1, WorldManagerSessionSettingsField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldResourceManagerNamespace, WorldResourceManagerClass );
 				if ( type2 == null )
 					throw new Exception( "Could not find world resource manager type for WorldManager" );
-				result &= BaseObject.HasField( type2, WorldResourceManagerResourceLockField );
+				result &= Reflection.HasField( type2, WorldResourceManagerResourceLockField );
 
 				Type type3 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldSnapshotNamespace, WorldSnapshotStaticClass );
 				if ( type3 == null )
@@ -205,7 +205,7 @@
 					throw new Exception( "Count not find type for SandboxGameStats" );
 
 				result &= Reflection.HasMethod( type4, SandboxGameGetGameStatsInstance );
-				result &= BaseObject.HasField( type4, SandboxGameGetUpdatesPerSecondField );
+				result &= Reflection.HasField( type4, SandboxGameGetUpdatesPerSecondField );
 
 				return result;
 			}

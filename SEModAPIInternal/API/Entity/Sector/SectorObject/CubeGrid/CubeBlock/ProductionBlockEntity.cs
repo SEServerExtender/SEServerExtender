@@ -176,7 +176,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, ProductionBlockGetQueueMethod );
 				result &= Reflection.HasMethod( type, ProductionBlockSetQueueMethod );
 				result &= Reflection.HasMethod( type, ProductionBlockTriggerQueueChangedCallbackMethod );
-				result &= HasField( type, ProductionBlockQueueField );
+				result &= Reflection.HasField( type, ProductionBlockQueueField );
 
 				return result;
 			}

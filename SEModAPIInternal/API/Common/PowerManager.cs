@@ -90,9 +90,9 @@ namespace SEModAPIInternal.API.Common
 				result &= Reflection.HasMethod( type1, PowerManagerUnregisterPowerProducerMethod );
 				result &= Reflection.HasMethod( type1, PowerManagerGetAvailablePowerMethod );
 				result &= Reflection.HasMethod( type1, PowerManagerGetUsedPowerPercentMethod );
-				result &= BaseObject.HasField( type1, PowerManagerPowerReceiverHashSetField );
-				result &= BaseObject.HasField( type1, PowerManagerPowerProducerHashSetField );
-				result &= BaseObject.HasField( type1, PowerManagerMaxAvailablePowerField );
+				result &= Reflection.HasField( type1, PowerManagerPowerReceiverHashSetField );
+				result &= Reflection.HasField( type1, PowerManagerPowerProducerHashSetField );
+				result &= Reflection.HasField( type1, PowerManagerMaxAvailablePowerField );
 
 				return result;
 			}

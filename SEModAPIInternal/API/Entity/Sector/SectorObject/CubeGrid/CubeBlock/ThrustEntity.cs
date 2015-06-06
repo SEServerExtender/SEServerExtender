@@ -143,7 +143,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				result &= Reflection.HasMethod( type, ThrustGetMaxThrustVectorMethod );
 				result &= Reflection.HasMethod( type, ThrustGetMaxPowerConsumptionMethod );
 				result &= Reflection.HasMethod( type, ThrustGetMinPowerConsumptionMethod );
-				result &= HasField( type, ThrustNetManagerField );
+				result &= Reflection.HasField( type, ThrustNetManagerField );
 
 				return result;
 			}

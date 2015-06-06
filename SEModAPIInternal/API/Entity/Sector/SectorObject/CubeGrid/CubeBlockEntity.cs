@@ -585,10 +585,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				result &= Reflection.HasMethod( type, CubeBlockGetMaxIntegrityValueMethod );
 				result &= Reflection.HasMethod( type, CubeBlockUpdateWeldProgressMethod );
 
-				result &= HasField( type, CubeBlockParentCubeGridField );
-				result &= HasField( type, CubeBlockColorMaskHSVField );
-				result &= HasField( type, CubeBlockConstructionManagerField );
-				result &= HasField( type, CubeBlockCubeBlockDefinitionField );
+				result &= Reflection.HasField( type, CubeBlockParentCubeGridField );
+				result &= Reflection.HasField( type, CubeBlockColorMaskHSVField );
+				result &= Reflection.HasField( type, CubeBlockConstructionManagerField );
+				result &= Reflection.HasField( type, CubeBlockCubeBlockDefinitionField );
 
 				type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ActualCubeBlockNamespace, ActualCubeBlockClass );
 				if ( type == null )
@@ -602,8 +602,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( FactionsDataNamespace, FactionsDataClass );
 				if ( type == null )
 					throw new Exception( "Could not find factions data type for CubeBlockEntity" );
-				result &= HasField( type, FactionsDataOwnerField );
-				result &= HasField( type, FactionsDataShareModeField );
+				result &= Reflection.HasField( type, FactionsDataOwnerField );
+				result &= Reflection.HasField( type, FactionsDataShareModeField );
 
 				type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ConstructionManagerNamespace, ConstructionManagerClass );
 				if ( type == null )
@@ -614,8 +614,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 				result &= Reflection.HasMethod( type, ConstructionManagerGetMaxIntegrityMethod );
 				result &= Reflection.HasMethod( type, ConstructionManagerGetBuildPercentMethod );
 				result &= Reflection.HasMethod( type, ConstructionManagerGetIntegrityPercentMethod );
-				result &= HasField( type, ConstructionManagerIntegrityValueField );
-				result &= HasField( type, ConstructionManagerBuildValueField );
+				result &= Reflection.HasField( type, ConstructionManagerIntegrityValueField );
+				result &= Reflection.HasField( type, ConstructionManagerBuildValueField );
 
 				return result;
 			}

@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
 	using Sandbox.Common.ObjectBuilders;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -131,7 +132,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( type == null )
 					throw new Exception( "Could not find internal type for MergeBlockEntity" );
 
-				result &= HasField( type, MergeBlockConnectedMergeBlockField );
+				result &= Reflection.HasField( type, MergeBlockConnectedMergeBlockField );
 
 				return result;
 			}

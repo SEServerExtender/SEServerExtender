@@ -612,7 +612,7 @@ namespace SEModAPIInternal.API.Entity
 				result &= Reflection.HasMethod( type, BaseEntitySetEntityIdMethod );
 				result &= Reflection.HasMethod( type, BaseEntityGetDisplayNameMethod );
 				result &= Reflection.HasMethod( type, BaseEntitySetDisplayNameMethod );
-				result &= HasField( type, BaseEntityEntityIdField );
+				result &= Reflection.HasField( type, BaseEntityEntityIdField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( PhysicsManagerNamespace, PhysicsManagerClass );
 				if ( type2 == null )
