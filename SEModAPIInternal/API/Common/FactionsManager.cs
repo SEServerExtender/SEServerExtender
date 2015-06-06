@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Common
 	using System.Collections.Generic;
 	using System.ComponentModel;
 	using NLog;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Game.Multiplayer;
@@ -171,8 +172,7 @@ namespace SEModAPIInternal.API.Common
 				}
 				m_faction.Members.Remove( memberToRemove );
 
-				Action action = InternalRemoveMember;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( InternalRemoveMember );
 			}
 			catch ( Exception ex )
 			{
@@ -470,8 +470,7 @@ namespace SEModAPIInternal.API.Common
 			m_factionToModify = id;
 			m_factions.Remove( id );
 
-			Action action = InternalRemoveFaction;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalRemoveFaction );
 		}
 
 		internal void RemoveMember( long factionId, long memberId )
@@ -479,8 +478,7 @@ namespace SEModAPIInternal.API.Common
 			m_factionToModify = factionId;
 			m_memberToModify = memberId;
 
-			Action action = InternalRemoveMember;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalRemoveMember );
 		}
 
 		#region "Internal"

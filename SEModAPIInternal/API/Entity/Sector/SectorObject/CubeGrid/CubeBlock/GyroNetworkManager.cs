@@ -1,6 +1,7 @@
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System;
+	using Sandbox;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 	using VRageMath;
@@ -64,20 +65,17 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public void BroadcastOverride( )
 		{
-			Action action = InternalBroadcastOverride;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalBroadcastOverride );
 		}
 
 		public void BroadcastPower( )
 		{
-			Action action = InternalBroadcastPower;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalBroadcastPower );
 		}
 
 		public void BroadcastTargetAngularVelocity( )
 		{
-			Action action = InternalBroadcastTargetAngularVelocity;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalBroadcastTargetAngularVelocity );
 		}
 
 		#region "Internal"

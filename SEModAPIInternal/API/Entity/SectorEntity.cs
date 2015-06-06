@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity
 	using System.ComponentModel;
 	using System.IO;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Voxels;
 	using SEModAPI.API;
@@ -518,8 +519,7 @@ namespace SEModAPIInternal.API.Entity
 
 				m_addEntityQueue.Enqueue( entity );
 
-				Action action = InternalAddEntity;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( InternalAddEntity );
 			}
 			catch ( Exception ex )
 			{

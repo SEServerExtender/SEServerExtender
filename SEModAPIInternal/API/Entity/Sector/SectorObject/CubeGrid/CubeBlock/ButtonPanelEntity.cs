@@ -91,7 +91,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if (BackingObject != null && ActualObject != null)
 				{
 					Action action = InternalUpdateCurrentPlayerId;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+					MySandboxGame.Static.Invoke(action);
 				}
 			}
 		}

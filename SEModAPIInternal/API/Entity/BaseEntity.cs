@@ -5,7 +5,7 @@ namespace SEModAPIInternal.API.Entity
 	using System.IO;
 	using System.Runtime.Serialization;
 	using Havok;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox;
 	using SEModAPI.API;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
@@ -138,8 +138,7 @@ namespace SEModAPIInternal.API.Entity
 				GameEntityManager.AddEntity( EntityId, this );
 			}
 
-			Action action = InternalRegisterEntityMovedEvent;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalRegisterEntityMovedEvent );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -209,8 +208,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateDisplayName;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateDisplayName );
 				}
 			}
 		}
@@ -240,8 +238,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateEntityId;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateEntityId );
 				}
 			}
 		}
@@ -317,10 +314,8 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdatePosition;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
-					Action action2 = InternalUpdateOrientation;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action2 );
+					MySandboxGame.Static.Invoke( InternalUpdatePosition );
+					MySandboxGame.Static.Invoke( InternalUpdateOrientation );
 				}
 			}
 		}
@@ -338,8 +333,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdatePosition;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdatePosition );
 				}
 			}
 		}
@@ -357,8 +351,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateOrientation;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateOrientation );
 				}
 			}
 		}
@@ -376,8 +369,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateOrientation;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateOrientation );
 				}
 			}
 		}
@@ -408,8 +400,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLinearVelocity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLinearVelocity );
 				}
 			}
 		}
@@ -437,8 +428,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateAngularVelocity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateAngularVelocity );
 				}
 			}
 		}
@@ -466,8 +456,7 @@ namespace SEModAPIInternal.API.Entity
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateMaxLinearVelocity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateMaxLinearVelocity );
 				}
 			}
 		}
@@ -575,8 +564,7 @@ namespace SEModAPIInternal.API.Entity
 				{
 					m_networkManager.RemoveEntity( );
 
-					Action action = InternalRemoveEntity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalRemoveEntity );
 				}
 			}
 
@@ -1016,8 +1004,7 @@ namespace SEModAPIInternal.API.Entity
 			if ( NetworkManager == null )
 				return;
 
-			Action action = InternalRemoveEntity;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalRemoveEntity );
 		}
 
 		protected void InternalRemoveEntity( )

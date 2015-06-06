@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
 	using System.Collections.Generic;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI;
@@ -94,8 +95,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			object entity = m_cubeGrid.BackingObject;
 			m_netManager = BaseObject.InvokeEntityMethod( entity, CubeGridGetNetManagerMethod );
 
-			Action action = RegisterPacketHandlers;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( RegisterPacketHandlers );
 		}
 
 		#endregion "Constructors and Initializers"

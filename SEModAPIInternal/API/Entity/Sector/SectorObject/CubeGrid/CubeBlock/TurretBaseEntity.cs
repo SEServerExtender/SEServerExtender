@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -106,8 +107,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				m_shootingRange = value;
 
-				Action action = SetShootingRange;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( SetShootingRange );
 			}
 		}
 
@@ -127,8 +127,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				m_searchingRange = value;
 
-				Action action = SetSearchingRange;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( SetSearchingRange );
 			}
 		}
 
@@ -165,8 +164,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				m_target = value;
 
-				Action action = SetTarget;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( SetTarget );
 			}
 		}
 
@@ -367,8 +365,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public void Shoot( )
 		{
-			Action action = InternalTurretShoot;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalTurretShoot );
 		}
 
 		protected Object GetNetworkManager( )

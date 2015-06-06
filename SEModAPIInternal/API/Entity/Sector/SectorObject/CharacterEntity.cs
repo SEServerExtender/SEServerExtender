@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using System.Reflection;
 	using System.Runtime.Serialization;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using SEModAPIInternal.API.Common;
@@ -184,8 +185,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBatteryLevel;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBatteryLevel );
 				}
 			}
 		}
@@ -208,8 +208,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalDamageCharacter;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalDamageCharacter );
 				}
 
 				ObjectBuilder.Health = value;
@@ -472,8 +471,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			m_parent = parent;
 			m_backingObject = backingObject;
 
-			Action action = RegisterPacketHandlers;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( RegisterPacketHandlers );
 		}
 
 		#endregion "Constructors and Initializers"

@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -152,8 +153,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateQueue;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateQueue );
 				}
 			}
 		}
@@ -188,8 +188,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		public void ClearQueue( )
 		{
-			Action action = InternalClearQueue;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalClearQueue );
 		}
 
 		#region "Internal"

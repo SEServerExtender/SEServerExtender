@@ -357,7 +357,7 @@ namespace SEModAPIInternal.API.Entity
 			m_itemDeltaQueue.Enqueue(delta);
 
 			Action action = InternalUpdateItemAmount;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+			MySandboxGame.Static.Invoke(action);
 			 */
 		}
 

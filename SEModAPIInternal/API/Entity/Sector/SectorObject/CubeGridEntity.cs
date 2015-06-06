@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using System.IO;
 	using System.Runtime.Serialization;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using SEModAPI.API;
@@ -511,16 +512,14 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		{
 			_cubeBlockToAddRemove = cubeBlock;
 
-			Action action = InternalAddCubeBlock;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalAddCubeBlock );
 		}
 
 		public void DeleteCubeBlock( CubeBlockEntity cubeBlock )
 		{
 			_cubeBlockToAddRemove = cubeBlock;
 
-			Action action = InternalRemoveCubeBlock;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalRemoveCubeBlock );
 		}
 
 		protected void RefreshBaseCubeBlocks( )

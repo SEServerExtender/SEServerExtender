@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
@@ -70,8 +71,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateFieldSize;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateFieldSize );
 				}
 			}
 		}

@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -110,8 +111,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null && ActualObject != null )
 				{
-					Action action = InternalUpdatePilotEntity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdatePilotEntity );
 				}
 			}
 		}
@@ -165,8 +165,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 			_weaponStatus = true;
 
-			Action action = InternalFireWeapons;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalFireWeapons );
 		}
 
 		public void StopWeapons( )
@@ -176,8 +175,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 			_weaponStatus = false;
 
-			Action action = InternalStopWeapons;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalStopWeapons );
 		}
 
 		protected void InternalFireWeapons( )

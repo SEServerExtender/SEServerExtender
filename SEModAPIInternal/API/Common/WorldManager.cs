@@ -3,6 +3,7 @@
 	using System;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.Game.World;
@@ -246,8 +247,7 @@
 				return;
 
 			m_isSaving = true;
-			Action action = InternalSaveWorld;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalSaveWorld );
 		}
 
 		public void AsynchronousSaveWorld( )

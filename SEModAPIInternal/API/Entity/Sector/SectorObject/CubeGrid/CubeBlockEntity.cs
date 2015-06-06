@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 	using System.IO;
 	using System.Runtime.Serialization;
 	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI;
@@ -332,8 +333,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateColorMaskHSV;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateColorMaskHSV );
 				}
 			}
 		}
@@ -361,8 +361,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateConstructionManager;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateConstructionManager );
 				}
 			}
 		}
@@ -390,8 +389,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateConstructionManager;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateConstructionManager );
 				}
 			}
 		}
@@ -416,8 +414,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalSetOwnerShareMode;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalSetOwnerShareMode );
 				}
 			}
 		}
@@ -442,8 +439,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalSetOwnerShareMode;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalSetOwnerShareMode );
 				}
 			}
 		}

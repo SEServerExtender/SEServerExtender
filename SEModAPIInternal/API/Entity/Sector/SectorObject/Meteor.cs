@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -84,8 +85,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateMeteorIntegrity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateMeteorIntegrity );
 				}
 			}
 		}
@@ -104,8 +104,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateMeteorItem;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateMeteorItem );
 				}
 			}
 		}

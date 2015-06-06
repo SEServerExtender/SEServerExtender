@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -171,7 +172,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					if (BackingObject != null && ActualObject != null)
 					{
 						Action action = InternalUpdatePilotEntity;
-						SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction(action);
+						MySandboxGame.Static.Invoke(action);
 					}
 				}
 			}
@@ -268,8 +269,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			m_networkManager = networkManager;
 			m_parent = parent;
 
-			Action action = RegisterPacketHandlers;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( RegisterPacketHandlers );
 		}
 
 		#endregion "Constructors and Initializers"

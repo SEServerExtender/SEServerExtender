@@ -1,6 +1,7 @@
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
+	using Sandbox;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
@@ -48,8 +49,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				m_dampenersEnabled = value;
 
-				Action action = InternalUpdateDampenersEnabled;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( InternalUpdateDampenersEnabled );
 			}
 		}
 

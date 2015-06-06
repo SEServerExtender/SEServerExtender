@@ -1047,8 +1047,7 @@ namespace SEModAPIInternal.API.Entity
 			m_lastLoadTime = DateTime.Now;
 
 			//Run the refresh
-			Action action = RefreshData;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( RefreshData );
 
 			//Update the refresh counts
 			if ( !m_staticRefreshCountMap.ContainsKey( this.GetType( ) ) )

@@ -3,6 +3,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -121,8 +122,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			{
 				m_maxPowerOutput = value;
 
-				Action action = InternalUpdateMaxPowerOutput;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( InternalUpdateMaxPowerOutput );
 			}
 		}
 

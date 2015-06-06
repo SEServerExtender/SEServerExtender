@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -91,8 +92,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -110,8 +110,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -129,8 +128,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -148,8 +146,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -167,8 +164,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -186,8 +182,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -205,8 +200,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}
@@ -224,8 +218,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLight;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLight );
 				}
 			}
 		}

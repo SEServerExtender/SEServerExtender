@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -107,7 +108,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateIsLocked;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( action );
 				}
 			}
 		}
@@ -134,7 +135,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( BackingObject != null && ActualObject != null )
 				{
 					Action action = InternalUpdateAutoLockEnabled;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( action );
 				}
 			}
 		}
@@ -160,8 +161,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null && ActualObject != null )
 				{
-					Action action = InternalUpdateBrakeForce;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBrakeForce );
 				}
 			}
 		}

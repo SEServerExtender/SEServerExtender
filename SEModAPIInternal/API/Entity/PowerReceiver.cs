@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Entity
 {
 	using System;
 	using System.ComponentModel;
+	using Sandbox;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 
@@ -84,8 +85,7 @@ namespace SEModAPIInternal.API.Entity
 					return;
 				m_maxRequiredInput = value;
 
-				Action action = InternalUpdateMaxRequiredInput;
-				SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+				MySandboxGame.Static.Invoke( InternalUpdateMaxRequiredInput );
 			}
 		}
 

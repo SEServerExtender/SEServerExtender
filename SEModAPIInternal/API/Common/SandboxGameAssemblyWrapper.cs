@@ -295,17 +295,12 @@
 			}
 		}
 
+		[Obsolete( "Use MySandboxGame.Static.Invoke instead" )]
 		public bool EnqueueMainGameAction( Action action )
 		{
 			try
 			{
-				if ( Thread.CurrentThread == m_gameThread )
-				{
-					action( );
-					return true;
-				}
-
-				BaseObject.InvokeEntityMethod( MainGame, MainGameEnqueueActionMethod, new object[ ] { action } );
+				MySandboxGame.Static.Invoke( action );
 
 				if ( ExtenderOptions.IsDebugging )
 				{
@@ -359,7 +354,7 @@
 						e.Set();
 					});
 					 */
-					Instance.EnqueueMainGameAction( ( ) =>
+					MySandboxGame.Static.Invoke( ( ) =>
 					{
 						if ( m_gameThread == null )
 						{
@@ -405,7 +400,7 @@
 				});
 				*/
 
-				Instance.EnqueueMainGameAction( ( ) =>
+				MySandboxGame.Static.Invoke( ( ) =>
 				{
 					if ( m_gameThread == null )
 					{

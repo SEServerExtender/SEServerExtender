@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API.TypeConverters;
 	using SEModAPIInternal.API.Common;
@@ -99,8 +100,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null && ActualObject != null )
 				{
-					Action action = InternalUpdateOverride;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateOverride );
 				}
 			}
 		}
@@ -256,8 +256,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 			m_lastOverride = overrideValue;
 
-			Action action = InternalBroadcastOverride;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalBroadcastOverride );
 		}
 
 		protected void InternalBroadcastOverride( )

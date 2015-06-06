@@ -2,6 +2,7 @@ namespace SEModAPIInternal.API.Common
 {
 	using System;
 	using System.ComponentModel;
+	using Sandbox;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;
 
@@ -73,8 +74,7 @@ namespace SEModAPIInternal.API.Common
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBroadcastRadius;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBroadcastRadius );
 				}
 			}
 		}
@@ -91,8 +91,7 @@ namespace SEModAPIInternal.API.Common
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateLinkedEntity;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateLinkedEntity );
 				}
 			}
 		}
@@ -108,8 +107,7 @@ namespace SEModAPIInternal.API.Common
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateEnabled;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateEnabled );
 				}
 			}
 		}
@@ -125,8 +123,7 @@ namespace SEModAPIInternal.API.Common
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateTreeId;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateTreeId );
 				}
 			}
 		}
@@ -261,14 +258,12 @@ namespace SEModAPIInternal.API.Common
 
 		public void BroadcastRadius( )
 		{
-			Action action = InternalBroadcastRadius;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalBroadcastRadius );
 		}
 
 		public void BroadcastEnabled( )
 		{
-			Action action = InternalBroadcastEnabled;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( InternalBroadcastEnabled );
 		}
 
 		#region "Internal"

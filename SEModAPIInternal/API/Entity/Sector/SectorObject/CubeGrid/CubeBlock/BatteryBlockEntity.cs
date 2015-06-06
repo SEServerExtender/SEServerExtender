@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -112,8 +113,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBatteryBlockCurrentStoredPower;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBatteryBlockCurrentStoredPower );
 				}
 			}
 		}
@@ -147,8 +147,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBatteryBlockMaxStoredPower;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBatteryBlockMaxStoredPower );
 				}
 			}
 		}
@@ -167,8 +166,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBatteryBlockProducerEnabled;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBatteryBlockProducerEnabled );
 				}
 			}
 		}
@@ -187,8 +185,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBatteryBlockSemiautoEnabled;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBatteryBlockSemiautoEnabled );
 				}
 			}
 		}
@@ -223,8 +220,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalUpdateBatteryBlockMaxPowerOutput;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalUpdateBatteryBlockMaxPowerOutput );
 				}
 			}
 		}
@@ -407,8 +403,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			m_parent = parent;
 			m_backingObject = backingObject;
 
-			Action action = RegisterPacketHandlers;
-			SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+			MySandboxGame.Static.Invoke( RegisterPacketHandlers );
 		}
 
 		#endregion "Constructors and Initializers"

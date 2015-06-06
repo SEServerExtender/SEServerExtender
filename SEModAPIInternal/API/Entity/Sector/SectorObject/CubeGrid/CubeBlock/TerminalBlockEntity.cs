@@ -4,6 +4,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
 	using System.Text;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI.Ingame;
 	using SEModAPIInternal.API.Common;
@@ -105,8 +106,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 				if ( BackingObject != null )
 				{
-					Action action = InternalSetCustomName;
-					SandboxGameAssemblyWrapper.Instance.EnqueueMainGameAction( action );
+					MySandboxGame.Static.Invoke( InternalSetCustomName );
 				}
 			}
 		}
