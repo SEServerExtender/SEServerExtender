@@ -175,6 +175,16 @@
             Block mass
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
+            <summary>
+            Raises AppendingCustomInfo so every subscriber can append custom info.
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyTerminalBlock.AppendingCustomInfo">
+            <summary>
+            Event to append custom info.
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.IMyLaserAntenna">
             <summary>
             ModAPI laserantenna block interface
@@ -206,6 +216,11 @@
             Connection is permanent
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsOutsideLimits">
+            <summary>
+            Target is outside movement limits of antenna
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.IMyLaserAntenna.RequireLoS">
             <summary>
             Flag if antenna requires LoS - for modded antenas
@@ -234,6 +249,11 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
             <summary>
             Door state, zero is fully closed. One is fully opened.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyCubeBlock">
+            <summary>
+            base block interface, block can be affected by upgrade modules, and you can retrieve upgrade list from <see cref="T:Sandbox.ModAPI.IMyUpgradableBlock"/>
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyCubeBlock.CalcLocalMatrix(VRageMath.Matrix@,System.String@)">
@@ -855,6 +875,11 @@
             Max power output defined in definition [MW].
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.ProductionEnabled">
+            <summary>
+            Power production is enabled
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
             <summary>
             Param - active
@@ -888,6 +913,52 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.IsBroadcasting">
             <summary>
             Is broadcasting
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyUpgradableBlock">
+            <summary>
+            interface to retrieve upgrade effects from block <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock"/>
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock">
+            <summary>
+            interface to retrieve upgrade effects on block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.GetUpgrades(System.Collections.Generic.Dictionary{System.String,System.Single}@)">
+            <summary>
+            get list of upgrades (r/o);
+            string - upgrade type, float - effect value as float (1 = 100%)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.UpgradeCount">
+            <summary>
+            number of upgrades applied
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyUpgradeModule">
+            <summary>
+            Interface to access upgrade module properties <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradeModule"/>
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradeModule">
+            <summary>
+            Interface to access module upgrades properties
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradeModule.GetUpgradeList(System.Collections.Generic.List{Sandbox.Common.ObjectBuilders.Definitions.MyUpgradeModuleInfo}@)">
+            <summary>
+            Retrieve list of upgrades from this block (r/o), see <see cref="T:Sandbox.Common.ObjectBuilders.Definitions.MyUpgradeModuleInfo">MyUpgradeModuleInfo</see> for details
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradeModule.UpgradeCount">
+            <summary>
+            Retrieve number of upgrade effects this block has (r/o)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradeModule.Connections">
+            <summary>
+            Retrieve number of blocks this block is connected to (r/o)
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyVirtualMass">
@@ -1071,6 +1142,36 @@
             Checks is AI is enabled for turret
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
+            <summary>
+            Wheel's current steering angle
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.MaxSteerAngle">
+            <summary>
+            Max steering angle in radians.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerSpeed">
+            <summary>
+            Speed at which wheel steers.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerReturnSpeed">
+            <summary>
+            Speed at which wheel returns from steering.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SuspensionTravel">
+            <summary>
+            Suspension travel, value from 0 to 1.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.Brake">
+            <summary>
+            Set/get brake applied to the wheel.
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.Ingame.PistonStatus">
             <summary>
             Describes the current status of the piston.
@@ -1165,6 +1266,39 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyHudNotification.Show">
+            <summary>
+            Shows the notification on the HUD.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyHudNotification.Hide">
+            <summary>
+            Hides the notification on the HUD even if it was supposed to show for longer.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyHudNotification.ResetAliveTime">
+            <summary>
+            Reset the alive time for the text.
+            This is called when setting AliveTime as well.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyHudNotification.Text">
+            <summary>
+            Get or set the notification text.
+            Setting the text will immediatly update it if the notification is shown.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyHudNotification.Font">
+            <summary>
+            Get or set the font for this notification.
+            Setting it will immediatly update it if the notification is shown.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyHudNotification.AliveTime">
+            <summary>
+            Get or set the time for the notification to be shown, in miliseconds.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.IMySession.Config">
             <summary>
             Obtaining values from config is slow and can allocate memory!
@@ -1180,6 +1314,17 @@
             <summary>
             Block mass
             </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,Sandbox.Common.MyFontEnum)">
+            <summary>
+            Create a notification object.
+            The object needs to have Show() called on it to be shown.
+            On top of that you can dynamically change the text, font and adjust the time to live.
+            </summary>
+            <param name="message"></param>
+            <param name="disappearTimeMs"></param>
+            <param name="font"></param>
+            <returns>The notification object.</returns>
         </member>
         <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CreateVoxelMapFromStorageName(System.String,System.String,VRageMath.Vector3D)">
             <summary>

@@ -4752,6 +4752,11 @@
             Gets a system-defined color with the value R:154 G:205 B:50 A:255.
             </summary>
         </member>
+        <member name="M:VRageMath.ColorExtensions.ColorToHSVDX11(VRageMath.Color)">
+            <summary>
+            Use this for HSV in DX11 Renderer, X = Hue 0..1, Y = Saturation -1..1, Z = Value -1..1
+            </summary>
+        </member>
         <member name="T:VRageMath.ContainmentType">
             <summary>
             Indicates the extent to which bounding volumes intersect or contain one another.
