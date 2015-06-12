@@ -31,8 +31,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string BatteryBlockSetCurrentStoredPowerMethod = "set_CurrentStoredPower";
 		public static string BatteryBlockGetMaxStoredPowerMethod = "get_MaxStoredPower";
 		public static string BatteryBlockSetMaxStoredPowerMethod = "set_MaxStoredPower";
-		public static string BatteryBlockGetProducerEnabledMethod = "get_ProducerEnabled";
-		public static string BatteryBlockSetProducerEnabledMethod = "set_ProducerEnabled";
+		public static string BatteryBlockGetProducerEnabledMethod = "get_ProductionEnabled";
+		public static string BatteryBlockSetProducerEnabledMethod = "set_ProductionEnabled";
 		public static string BatteryBlockGetSemiautoEnabledMethod = "get_SemiautoEnabled";
 		public static string BatteryBlockSetSemiautoEnabledMethod = "set_SemiautoEnabled";
 

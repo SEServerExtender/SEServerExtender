@@ -70,6 +70,11 @@ namespace SEModAPIInternal.API.Entity
 			private set { }
 		}
 
+		public bool ProductionEnabled
+		{
+			get { return (bool) BaseObject.InvokeEntityMethod( _powerProducer, "get_ProductionEnabled" ); }
+		}
+
 		public float PowerOutput
 		{
 			get
