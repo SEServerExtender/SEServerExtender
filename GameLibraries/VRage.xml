@@ -88,13 +88,13 @@
             Animation clips associated with this model
             </summary>
         </member>
-        <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Utils.MyStringId,VRage.Utils.MyStringId[],System.Nullable{System.Single})">
+        <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Utils.MyStringHash,VRage.Audio.MyCueId[],System.Nullable{System.Single})">
             <summary>
             Creates effect on input emitter
             </summary>
             <param name="input">Emitter to work with</param>
             <param name="effect"></param>
-            <param name="cues">additional cues if effect mixes them (ie. crossfade)</param>
+            <param name="cueIds">additional cues if effect mixes them (ie. crossfade)</param>
             <returns>effect output sound</returns>
         </member>
         <member name="T:VRage.Data.Audio.MyCurveType">
@@ -1120,9 +1120,29 @@
             Rotate 180 degress around both the X and Y axis before rendering.
             </summary>
         </member>
-        <member name="M:VRage.Utils.MyStringId.TryGet(System.Int32)">
+        <member name="T:VRage.Utils.MyStringHash">
             <summary>
-            Think HARD before using this. Usually you should be able to use MyStringId as it is without conversion to int.
+            Generates string hashes deterministically and crashes on collisions. When used as key for hash tables (Dictionary or HashSet)
+            always pass in MyStringHash.Comparer, otherwise lookups will allocate memory! Can be safely used in network but never serialize to disk!
+            
+            IDs are computed as hash from string so there is a risk of collisions. Use only when MyStringId is
+            not sufficient (eg. sending over network). Because the odds of collision get higher the more hashes are in use, do not use this for
+            generated strings and make sure hashes are computed deterministically (eg. at startup) and don't require lengthy gameplay. This way
+            we know about any collision early and not from rare and random crash reports.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyStringHash.TryGet(System.Int32)">
+            <summary>
+            Think HARD before using this. Usually you should be able to use MyStringHash as it is without conversion to int.
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyStringId">
+            <summary>
+            Generates unique IDs for strings. When used as key for hash tables (Dictionary or HashSet)
+            always pass in MyStringId.Comparer, otherwise lookups will allocate memory! Never serialize to network or disk!
+            
+            IDs are created sequentially as they get requested so two IDs might be different between sessions or clients and
+            server. You can safely use ToString() as it will not allocate.
             </summary>
         </member>
         <member name="T:VRage.Utils.MyUtils">
