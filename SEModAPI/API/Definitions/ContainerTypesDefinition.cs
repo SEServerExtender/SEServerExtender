@@ -59,7 +59,7 @@
             get { return m_baseDefinition.TypeId; }
         }
 
-        public MyStringId SubtypeId
+        public MyStringHash SubtypeId
         {
             get { return m_baseDefinition.SubtypeId; }
         }
