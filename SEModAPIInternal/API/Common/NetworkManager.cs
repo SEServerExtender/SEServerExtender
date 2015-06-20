@@ -147,12 +147,11 @@ namespace SEModAPIInternal.API.Common
 				return false;
 			}
 		}
-		public static Object GetNetworkManager( )
+		public static MyMultiplayerBase GetNetworkManager( )
 		{
 			try
 			{
-				Type networkManagerWrapper = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( NetworkManagerWrapperNamespace, NetworkManagerWrapperClass );
-				Object networkManager = BaseObject.GetStaticFieldValue( networkManagerWrapper, NetworkManagerWrapperManagerInstanceField );
+				MyMultiplayerBase networkManager = MyMultiplayer.Static;
 
 				return networkManager;
 			}
