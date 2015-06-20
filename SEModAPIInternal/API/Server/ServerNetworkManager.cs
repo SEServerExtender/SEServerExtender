@@ -8,6 +8,7 @@ namespace SEModAPIInternal.API.Server
 	using System.Runtime.ExceptionServices;
 	using System.Security;
 	using System.Threading;
+	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Common.ObjectBuilders.Voxels;
@@ -280,9 +281,12 @@ namespace SEModAPIInternal.API.Server
 		{
 			try
 			{
-				Object steamServerManager = GetNetworkManager( );
-				BaseObject.InvokeEntityMethod( steamServerManager, ServerNetworkManagerKickPlayerMethod, new object[ ] { remoteUserId } );
-				BaseObject.InvokeEntityMethod( steamServerManager, ServerNetworkManagerDisconnectPlayerMethod, new object[ ] { remoteUserId, ChatMemberStateChangeEnum.Kicked } );
+				MyMultiplayerBase steamServerManager = GetNetworkManager( );
+				MySandboxGame.Static.Invoke( ( ) =>
+											 {
+												 MyMultiplayer.Static.KickClient( remoteUserId );
+												 BaseObject.InvokeEntityMethod( steamServerManager, ServerNetworkManagerDisconnectPlayerMethod, new object[ ] { remoteUserId, ChatMemberStateChangeEnum.Kicked } );
+											 } );
 			}
 			catch ( Exception ex )
 			{
