@@ -701,9 +701,9 @@ namespace SEModAPIInternal.API.Entity
 			}
 		}
 
-		public static MyObjectBuilder_EntityBase GetObjectBuilder( Object entity )
+		public static MyObjectBuilder_EntityBase GetObjectBuilder( IMyEntity entity )
 		{
-			MyObjectBuilder_EntityBase objectBuilder = (MyObjectBuilder_EntityBase)InvokeEntityMethod( entity, BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+			MyObjectBuilder_EntityBase objectBuilder = entity.GetObjectBuilder( );
 			return objectBuilder;
 		}
 
