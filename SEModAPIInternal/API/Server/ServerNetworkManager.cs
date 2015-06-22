@@ -43,7 +43,6 @@ namespace SEModAPIInternal.API.Server
 		public static string ServerNetworkManagerClass = "MyDedicatedServer";
 
 		public static string ServerNetworkManagerDisconnectPlayerMethod = "MyDedicatedServer_ClientLeft";
-		public static string ServerNetworkManagerSetPlayerBannedMethod = "BanClient";
 		public static string ServerNetworkManagerKickPlayerMethod = "KickClient";
 
 		public static string ServerNetworkManagerConnectedPlayersField = "m_members";
@@ -162,7 +161,6 @@ namespace SEModAPIInternal.API.Server
 				if ( type1 == null )
 					throw new TypeLoadException( "Could not find internal type for ServerNetworkManager" );
 				bool result = true;
-				result &= Reflection.HasMethod( type1, ServerNetworkManagerSetPlayerBannedMethod );
 				result &= Reflection.HasMethod( type1, ServerNetworkManagerDisconnectPlayerMethod );
 				result &= Reflection.HasMethod( type1, ServerNetworkManagerKickPlayerMethod );
 				result &= Reflection.HasField( type1, ServerNetworkManagerConnectedPlayersField );
@@ -266,8 +264,10 @@ namespace SEModAPIInternal.API.Server
 		{
 			try
 			{
-				Object steamServerManager = GetNetworkManager( );
-				BaseObject.InvokeEntityMethod( steamServerManager, ServerNetworkManagerSetPlayerBannedMethod, new object[ ] { remoteUserId, isBanned } );
+				MySandboxGame.Static.Invoke( ( ) =>
+				                             {
+					                             MyMultiplayer.Static.BanClient( remoteUserId, true );
+				                             } );
 
 				KickPlayer( remoteUserId );
 			}
