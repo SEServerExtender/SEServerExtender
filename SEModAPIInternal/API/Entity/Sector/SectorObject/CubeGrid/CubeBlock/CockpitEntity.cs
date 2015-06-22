@@ -5,9 +5,12 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Game.Entities;
+	using Sandbox.Game.Entities.Character;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
+	using VRage.ModAPI;
 
 	[DataContract]
 	public class CockpitEntity : ShipControllerEntity
@@ -69,7 +72,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				if ( BackingObject == null || ActualObject == null )
 					return null;
 
-				Object backingPilot = GetPilotEntity( );
+				IMyEntity backingPilot = GetPilotEntity( );
 				if ( backingPilot == null )
 					return null;
 
@@ -144,10 +147,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		protected Object GetPilotEntity( )
+		protected MyCharacter GetPilotEntity( )
 		{
 			//Object result = InvokeEntityMethod(ActualObject, CockpitGetPilotEntityMethod);
-			Object result = GetEntityPropertyValue( ActualObject, CockpitGetPilotEntityField );
+			MyCharacter result = ( (MyCockpit) ActualObject ).Pilot;
 			return result;
 		}
 

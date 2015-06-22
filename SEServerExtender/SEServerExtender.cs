@@ -26,6 +26,8 @@ namespace SEServerExtender
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
 	using SEModAPIInternal.Support;
+	using VRage.ModAPI;
+	using VRage.ObjectBuilders;
 	using VRage.Utils;
 	using VRageMath;
 	using Timer = System.Windows.Forms.Timer;
@@ -1580,8 +1582,10 @@ namespace SEServerExtender
 				if ( TRV_Entities.SelectedNode == null )
 					return;
 				Object linkedObject = TRV_Entities.SelectedNode.Tag;
+				
 				if ( linkedObject == null )
 					return;
+				ApplicationLog.BaseLog.Trace( "Object Type: {0}", linkedObject.GetType( ).Name );
 				if ( !( linkedObject is BaseObject ) )
 					return;
 
@@ -1594,11 +1598,12 @@ namespace SEServerExtender
 					FileInfo fileInfo = new FileInfo( saveFileDialog.FileName );
 					try
 					{
+						MyObjectBuilderSerializer.SerializeXML( fileInfo.FullName, false, ( (IMyEntity) objectToExport.BackingObject ).GetObjectBuilder( ) );
 						objectToExport.Export( fileInfo );
 					}
 					catch ( Exception ex )
 					{
-						MessageBox.Show( this, ex.Message );
+						ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 			}
