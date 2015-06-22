@@ -1034,6 +1034,26 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+		/// <summary>
+		/// Get or set the DisableRespawnShips setting.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Get or set the DisableRespawnShips setting." )]
+		[Category( "World Settings" )]
+		[DisplayName( "Disable Respawn Ships" )]
+		[DefaultValue( false )]
+		public bool DisableRespawnShips
+		{
+			get { return _definition.SessionSettings.DisableRespawnShips; }
+			set
+			{
+				if ( _definition.SessionSettings.DisableRespawnShips != value )
+					_definition.SessionSettings.DisableRespawnShips = value;
+			}
+		}
+
 		#endregion
 
 		#region "Methods"
