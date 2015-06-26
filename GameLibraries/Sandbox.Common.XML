@@ -377,6 +377,13 @@
             Start or stop dammage effect on cube block
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.AddUpgradeValue(System.String,System.Single)">
+            <summary>
+            Preferred way of registering a block for upgrades
+            Adding directly to the dictionary can have unintended consequences
+            when multiple mods are involved.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.IMyCubeBlock.CheckConnectionAllowed">
              <summary>
              Whether the grid should call the ConnectionAllowed method for this block 
@@ -453,6 +460,7 @@
         <member name="P:Sandbox.ModAPI.IMyCubeBlock.UpgradeValues">
             <summary>
             Get all values changed by upgrade modules
+            Should only be used as read-only
             </summary>
         </member>
         <member name="E:Sandbox.ModAPI.IMyCubeBlock.OnUpgradeValuesChanged">
@@ -845,6 +853,31 @@
             Minimum coordinates of blocks in grid
             </summary>
         </member>
+        <member name="T:Sandbox.ModAPI.IMyOxygenGenerator">
+            <summary>
+            Oxygen generator interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyOxygenGenerator">
+            <summary>
+            Oxygen generator interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyOxygenGenerator.AutoRefill">
+            <summary>
+            Autorefill enabled
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.ProductionCapacityMultiplier">
+            <summary>
+            Increase/decrese O2 produced
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.PowerConsumptionMultiplier">
+            <summary>
+            Increase/decrese power consumption
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
             <summary>
             Param - limit is top
@@ -883,6 +916,21 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
             <summary>
             Param - active
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyShipWelder">
+            <summary>
+            Ship welder interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyShipWelder">
+            <summary>
+            Ship welder interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipWelder.HelpOthers">
+            <summary>
+            True if welder is set to helper mode
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMySpaceBall">
