@@ -1054,6 +1054,106 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+		/// <summary>
+		/// Get or set the SpawnWithTools setting.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Get or set the SpawnWithTools setting." )]
+		[Category( "World Settings" )]
+		[DisplayName( "Spawn With Tools" )]
+		[DefaultValue( true )]
+		public bool SpawnWithTools
+		{
+			get { return _definition.SessionSettings.SpawnWithTools; }
+			set
+			{
+				if ( _definition.SessionSettings.SpawnWithTools != value )
+					_definition.SessionSettings.SpawnWithTools = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set the EnableJetpack setting.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Enable or disable jetpack." )]
+		[Category( "World Settings" )]
+		[DisplayName( "Enable Jetpack" )]
+		[DefaultValue( true )]
+		public bool EnableJetpack
+		{
+			get { return _definition.SessionSettings.EnableJetpack; }
+			set
+			{
+				if ( _definition.SessionSettings.EnableJetpack != value )
+					_definition.SessionSettings.EnableJetpack = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set the EnableSunRotation setting.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Enable or disable sun rotation." )]
+		[Category( "World Settings" )]
+		[DisplayName( "Sun Eotation Enabled" )]
+		[DefaultValue( true )]
+		public bool EnableSunRotation
+		{
+			get { return _definition.SessionSettings.EnableSunRotation; }
+			set
+			{
+				if ( _definition.SessionSettings.EnableSunRotation != value )
+					_definition.SessionSettings.EnableSunRotation = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set the SunRotationIntervalMinutes setting.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "Set the time, in minutes, it takes for the sun to make a complete rotation around the skybox. Only effective if sun rotation is enabled." )]
+		[Category( "World Settings" )]
+		[DisplayName( "Sun Rotation Interval" )]
+		[DefaultValue( 240d )]
+		public double SunRotationIntervalMinutes
+		{
+			get { return _definition.SessionSettings.SunRotationIntervalMinutes; }
+			set
+			{
+				if ( _definition.SessionSettings.SunRotationIntervalMinutes != value )
+					_definition.SessionSettings.SunRotationIntervalMinutes = value;
+			}
+		}
+
+		/// <summary>
+		/// Get or set the PhysicsIterations setting.
+		/// </summary>
+		[DataMember]
+		[Browsable( true )]
+		[ReadOnly( false )]
+		[Description( "The number of iterations the physics engine uses per update. Be careful modifying this value, as lower values may cause physics instability (read: explosions and death), and higher values may significantly decrease performance." )]
+		[Category( "World Settings" )]
+		[DisplayName( "Physics Iterations" )]
+		[DefaultValue( 4 )]
+		public int PhysicsIterations
+		{
+			get { return _definition.SessionSettings.PhysicsIterations; }
+			set
+			{
+				if ( _definition.SessionSettings.PhysicsIterations != value )
+					_definition.SessionSettings.PhysicsIterations = value;
+			}
+		}
+
 		#endregion
 
 		#region "Methods"
