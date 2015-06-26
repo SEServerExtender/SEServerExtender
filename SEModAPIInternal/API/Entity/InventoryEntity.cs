@@ -708,8 +708,11 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for InventoryItemEntity" );
 				bool result = true;
-				result &= Reflection.HasMethod( type, InventoryItemGetObjectBuilderMethod );
-				result &= Reflection.HasField( type, InventoryItemItemIdField );
+				if ( !Reflection.HasMethod( type, InventoryItemGetObjectBuilderMethod ) )
+				{
+					result = false;
+					ApplicationLog.BaseLog.Error( "Could not find method {0} in type {1}", InventoryItemGetObjectBuilderMethod, type );
+				}
 
 				return result;
 			}
@@ -717,20 +720,6 @@ namespace SEModAPIInternal.API.Entity
 			{
 				ApplicationLog.BaseLog.Error( ex );
 				return false;
-			}
-		}
-
-		public static uint GetInventoryItemId( object item )
-		{
-			try
-			{
-				uint result = (uint)GetEntityFieldValue( item, InventoryItemItemIdField );
-				return result;
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
-				return 0;
 			}
 		}
 
