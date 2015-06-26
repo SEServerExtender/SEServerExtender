@@ -479,12 +479,12 @@ namespace SEModAPIInternal.API.Entity
 				{
 					if ( m_parentContainer != null )
 					{
-						SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
-						{
-							IMyInventory inventory = (IMyInventory)m_parentContainer.BackingObject;
-							item = inventory.GetItemByID( ObjectBuilder.ItemId );
-							BackingObject = item;
-						} ) );
+						Sandbox.MySandboxGame.Static.Invoke( ( ) =>
+						                                     {
+							                                     IMyInventory inventory = (IMyInventory) m_parentContainer.BackingObject;
+							                                     item = inventory.GetItemByID( ObjectBuilder.ItemId );
+							                                     BackingObject = item;
+						                                     } );
 					}
 				}
 				else
@@ -503,7 +503,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( InventoryItemNamespace, InventoryItemClass );
+				Type type = typeof ( Sandbox.Game.MyInventory );
 				return type;
 			}
 		}
@@ -619,7 +619,7 @@ namespace SEModAPIInternal.API.Entity
 			get
 			{
 				if ( InventoryInterface != null )
-					return InventoryInterface.Content;
+					return (MyObjectBuilder_PhysicalObject) InventoryInterface.Content;
 
 				return ObjectBuilder.PhysicalContent;
 			}
