@@ -11,6 +11,7 @@ namespace SEServerExtender
 	using Sandbox;
 	using Sandbox.Common;
 	using Sandbox.Definitions;
+	using Sandbox.Game.Multiplayer;
 	using Sandbox.Game.World;
 	using SEModAPI.API;
 	using SEModAPI.API.Definitions;
@@ -1942,7 +1943,7 @@ namespace SEServerExtender
 			MyFaction faction = linkedObject as MyFaction;
 			if ( faction != null )
 			{
-				MySession.Static.Factions.RemoveFaction( faction.FactionId );
+				MyFactionCollection.RemoveFaction( faction.FactionId );
 			}
 			if ( linkedObject is MyFactionMember )
 			{

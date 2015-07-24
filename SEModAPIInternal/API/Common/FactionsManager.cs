@@ -502,11 +502,17 @@ namespace SEModAPIInternal.API.Common
 		protected void InternalRemoveMember( )
 		{
 			if ( m_factionToModify == 0 )
+			{
+				ApplicationLog.BaseLog.Warn( "Can't modify faction 0. No such faction." );
 				return;
+			}
 			if ( m_memberToModify == 0 )
+			{
+				ApplicationLog.BaseLog.Warn( "Can't kick player 0. No such player." );
 				return;
+			}
 
-			BackingObject.KickMember( m_factionToModify,m_memberToModify );
+			MyFactionCollection.KickMember( m_factionToModify,m_memberToModify );
 
 			m_factionToModify = 0;
 			m_memberToModify = 0;
