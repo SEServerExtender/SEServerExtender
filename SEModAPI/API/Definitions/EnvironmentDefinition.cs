@@ -2,7 +2,6 @@ namespace SEModAPI.API.Definitions
 {
 	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRage;
-	using VRageMath;
 
 	public class EnvironmentDefinition
 	{
@@ -24,12 +23,13 @@ namespace SEModAPI.API.Definitions
 			private set;
 		}
 
-		public Vector3 SunDirection
+		public SerializableVector3 SunDirection
 		{
 			get { return _baseDefinition.SunDirection; }
 			set
 			{
-				if (_baseDefinition.SunDirection == value) return;
+				if (_baseDefinition.SunDirection == value)
+					return;
 				_baseDefinition.SunDirection = value;
 				Changed = true;
 			}
@@ -40,7 +40,8 @@ namespace SEModAPI.API.Definitions
 			get { return _baseDefinition.EnvironmentTexture; }
 			set
 			{
-				if (_baseDefinition.EnvironmentTexture == value) return;
+				if (_baseDefinition.EnvironmentTexture == value)
+					return;
 				_baseDefinition.EnvironmentTexture = value;
 				Changed = true;
 			}
