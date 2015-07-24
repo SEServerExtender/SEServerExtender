@@ -7,9 +7,7 @@ namespace SEModAPI.API.Definitions
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
-	using System.Xml;
 	using global::Sandbox.Common.ObjectBuilders.Definitions;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using VRage.ObjectBuilders;
 
 	/// <summary>
@@ -396,154 +394,6 @@ namespace SEModAPI.API.Definitions
 
 		#endregion
 
-		#region "Serializers"
-
-		public static T1 LoadContentFile<T1, TS>(FileInfo fileInfo) where TS : XmlSerializer1
-		{
-			object fileContent;
-
-			string filePath = fileInfo.FullName;
-
-			if (!File.Exists(filePath))
-			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileMissing, filePath);
-			}
-
-			try
-			{
-				fileContent = ReadSpaceEngineersFile<T1, TS>(filePath);
-			}
-			catch
-			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath);
-			}
-
-			if (fileContent == null)
-			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileEmpty, filePath);
-			}
-
-			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
-			//     Lock the load during this time, in case it happens multiple times.
-			// Report a friendly error if this load fails.
-
-			return (T1)fileContent;
-		}
-
-		public static void SaveContentFile<T1, TS>(T1 fileContent, FileInfo fileInfo) where TS : XmlSerializer1
-		{
-
-			string filePath = fileInfo.FullName;
-
-			//if (!File.Exists(filePath))
-			//{
-			//	throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileMissing, filePath);
-			//}
-
-			try
-			{
-				WriteSpaceEngineersFile<T1, TS>(fileContent, filePath);
-			}
-			catch
-			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileCorrupted, filePath);
-			}
-
-			if (fileContent == null)
-			{
-				throw new GameInstallationInfoException(GameInstallationInfoExceptionState.ConfigFileEmpty, filePath);
-			}
-
-			// TODO: set a file watch to reload the files, incase modding is occuring at the same time this is open.
-			//     Lock the load during this time, in case it happens multiple times.
-			// Report a friendly error if this load fails.
-		}
-
-		public static T1 ReadSpaceEngineersFile<T1, TS>(string filename)
-			where TS : XmlSerializer1
-		{
-			XmlReaderSettings settings = new XmlReaderSettings
-			{
-				IgnoreComments = true,
-				IgnoreWhitespace = true,
-			};
-
-			object obj = null;
-
-			if (File.Exists(filename))
-			{
-				using (XmlReader xmlReader = XmlReader.Create(filename, settings))
-				{
-					TS serializer = (TS)Activator.CreateInstance(typeof(TS));
-					obj = serializer.Deserialize(xmlReader);
-				}
-			}
-
-			return (T1)obj;
-		}
-
-		protected T1 Deserialize<T1>(string xml)
-		{
-			using (StringReader textReader = new StringReader(xml))
-			{
-				return (T1)(new XmlSerializerContract().GetSerializer(typeof(T1)).Deserialize(textReader));
-			}
-		}
-
-		protected string Serialize<T1>(object item)
-		{
-			using (StringWriter textWriter = new StringWriter())
-			{
-				new XmlSerializerContract().GetSerializer(typeof(T1)).Serialize(textWriter, item);
-				return textWriter.ToString();
-			}
-		}
-
-		public static bool WriteSpaceEngineersFile<T1, TS>(T1 sector, string filename)
-			where TS : XmlSerializer1
-		{
-			// How they appear to be writing the files currently.
-			try
-			{
-				using (XmlTextWriter xmlTextWriter = new XmlTextWriter(filename, null))
-				{
-					xmlTextWriter.Formatting = Formatting.Indented;
-					xmlTextWriter.Indentation = 2;
-					xmlTextWriter.IndentChar = ' ';
-					TS serializer = (TS)Activator.CreateInstance(typeof(TS));
-					serializer.Serialize(xmlTextWriter, sector);
-				}
-			}
-			catch
-			{
-				return false;
-			}
-
-			//// How they should be doing it to support Unicode.
-			//var settingsDestination = new XmlWriterSettings()
-			//{
-			//    Indent = true, // Set indent to false to compress.
-			//    Encoding = new UTF8Encoding(false)   // codepage 65001 without signature. Removes the Byte Order Mark from the start of the file.
-			//};
-
-			//try
-			//{
-			//    using (var xmlWriter = XmlWriter.Create(filename, settingsDestination))
-			//    {
-			//        S serializer = (S)Activator.CreateInstance(typeof(S));
-			//        serializer.Serialize(xmlWriter, sector);
-			//    }
-			//}
-			//catch (Exception ex)
-			//{
-			//    return false;
-			//}
-
-			return true;
-		}
-
-		#endregion
-
 		protected override TU CreateOverLayerSubTypeInstance(T definition)
 		{
 			return (TU)Activator.CreateInstance(typeof(TU), new object[] { definition });
@@ -584,7 +434,8 @@ namespace SEModAPI.API.Definitions
 			m_fileInfo = sourceFile;
 
 			//Get the definitions content from the file
-			MyObjectBuilder_Definitions definitionsContainer = LoadContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>(m_fileInfo);
+			MyObjectBuilder_Definitions definitionsContainer;
+			MyObjectBuilderSerializer.DeserializeXML( m_fileInfo.FullName, out definitionsContainer );
 
 			if ( m_definitionsContainerField == null )
 				throw new ConfigurationErrorsException( "Failed to find matching definitions field in the specified file." );
@@ -622,9 +473,12 @@ namespace SEModAPI.API.Definitions
 
 		public bool Save()
 		{
-			if (!Changed) return false;
-			if (!IsMutable) return false;
-			if (FileInfo == null) return false;
+			if (!Changed)
+				return false;
+			if (!IsMutable)
+				return false;
+			if (FileInfo == null)
+				return false;
 
 			MyObjectBuilder_Definitions definitionsContainer = new MyObjectBuilder_Definitions();
 
@@ -635,7 +489,7 @@ namespace SEModAPI.API.Definitions
 			m_definitionsContainerField.SetValue(definitionsContainer, ExtractBaseDefinitions().ToArray());
 
 			//Save the definitions container out to the file
-			SaveContentFile<MyObjectBuilder_Definitions, MyObjectBuilder_DefinitionsSerializer>(definitionsContainer, m_fileInfo);
+			MyObjectBuilderSerializer.SerializeXML( m_fileInfo.FullName, false, definitionsContainer );
 
 			return true;
 		}

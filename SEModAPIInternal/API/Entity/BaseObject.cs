@@ -6,14 +6,11 @@ namespace SEModAPIInternal.API.Entity
 	using System.IO;
 	using System.Reflection;
 	using System.Runtime.Serialization;
-	using System.Xml;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Definitions;
 	using SEModAPI.API;
 	using SEModAPI.API.Sandbox;
-	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
@@ -1176,46 +1173,6 @@ namespace SEModAPIInternal.API.Entity
 			string filePath = fileInfo.FullName;
 
 			MyObjectBuilderSerializer.SerializeXML( filePath, false, fileContent );
-		}
-
-		public static T ReadSpaceEngineersFile<T, TS>( string filename )
-			where TS : XmlSerializer1
-		{
-			XmlReaderSettings settings = new XmlReaderSettings
-			{
-				IgnoreComments = true,
-				IgnoreWhitespace = true,
-			};
-
-			object obj = null;
-
-			if ( File.Exists( filename ) )
-			{
-				using ( XmlReader xmlReader = XmlReader.Create( filename, settings ) )
-				{
-					TS serializer = (TS)Activator.CreateInstance( typeof( TS ) );
-					obj = serializer.Deserialize( xmlReader );
-				}
-			}
-
-			return (T)obj;
-		}
-
-		protected T Deserialize<T>( string xml )
-		{
-			using ( StringReader textReader = new StringReader( xml ) )
-			{
-				return (T)( new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Deserialize( textReader ) );
-			}
-		}
-
-		protected string Serialize<T>( object item )
-		{
-			using ( StringWriter textWriter = new StringWriter( ) )
-			{
-				new XmlSerializerContract( ).GetSerializer( typeof( T ) ).Serialize( textWriter, item );
-				return textWriter.ToString( );
-			}
 		}
 
 		public static bool WriteSpaceEngineersFile( MyObjectBuilder_Base sector, string filename )

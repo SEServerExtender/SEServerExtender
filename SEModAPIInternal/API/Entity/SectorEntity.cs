@@ -4,7 +4,6 @@ namespace SEModAPIInternal.API.Entity
 	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.IO;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Voxels;
@@ -636,7 +635,8 @@ namespace SEModAPIInternal.API.Entity
 			FileInfo = fileInfo;
 
 			//Read in the sector data
-			MyObjectBuilder_Sector data = ReadSpaceEngineersFile<MyObjectBuilder_Sector, MyObjectBuilder_SectorSerializer>( this.FileInfo.FullName );
+			MyObjectBuilder_Sector data;
+			MyObjectBuilderSerializer.DeserializeXML(FileInfo.FullName,out data );
 
 			//And instantiate the sector with the data
 			m_Sector = new SectorEntity( data );
@@ -644,7 +644,7 @@ namespace SEModAPIInternal.API.Entity
 
 		new public bool Save( )
 		{
-			return WriteSpaceEngineersFile( m_Sector.ObjectBuilder, this.FileInfo.FullName );
+			return MyObjectBuilderSerializer.SerializeXML( FileInfo.FullName, false, m_Sector.ObjectBuilder );
 		}
 
 		#endregion "Methods"

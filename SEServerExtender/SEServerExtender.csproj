@@ -85,9 +85,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\Sandbox.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Sandbox.Common.XmlSerializers">
-      <HintPath>..\GameLibraries\Sandbox.Common.XmlSerializers.dll</HintPath>
-    </Reference>
     <Reference Include="Sandbox.Game, Version=0.1.5339.30118, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>

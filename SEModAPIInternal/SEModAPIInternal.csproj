@@ -177,9 +177,6 @@
     <Reference Include="Sandbox.Common">
       <HintPath>..\GameLibraries\Sandbox.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Sandbox.Common.XmlSerializers">
-      <HintPath>..\GameLibraries\Sandbox.Common.XmlSerializers.dll</HintPath>
-    </Reference>
     <Reference Include="Sandbox.Game">
       <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>
     </Reference>

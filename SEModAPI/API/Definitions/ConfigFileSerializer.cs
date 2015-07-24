@@ -3,12 +3,9 @@ namespace SEModAPI.API.Definitions
 	using System;
 	using System.Configuration;
 	using System.IO;
-	using System.Reflection;
-	using System.Runtime.Serialization;
 	using System.Security;
-	using System.Xml;
 	using global::Sandbox.Common.ObjectBuilders.Definitions;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
+	using VRage.ObjectBuilders;
 
 	public class ConfigFileSerializer
 	{
@@ -49,17 +46,7 @@ namespace SEModAPI.API.Definitions
 		/// <param name="definitions">The definition to serialize.</param>
 		public void Serialize(MyObjectBuilder_Definitions definitions)
 		{
-			XmlWriterSettings settings = new XmlWriterSettings()
-			{
-				CloseOutput = true,
-				Indent = true,
-				ConformanceLevel = ConformanceLevel.Auto,
-				NewLineHandling = NewLineHandling.Entitize
-			};
-			XmlWriter writer = XmlWriter.Create(_configFileInfo.FullName, settings);
-			MyObjectBuilder_DefinitionsSerializer serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
-			serializer.Serialize(writer,definitions);
-			writer.Close();
+			MyObjectBuilderSerializer.SerializeXML( _configFileInfo.FullName, false, definitions );
 		}
 
 		/// <summary>
@@ -67,13 +54,7 @@ namespace SEModAPI.API.Definitions
 		/// </summary>
 		/// <returns>The deserialized definition.</returns>
 		/// <exception cref="FileNotFoundException">Config file specified does not exist.</exception>
-		/// <exception cref="PathTooLongException">The fully qualified path and file name is 260 or more characters.</exception>
 		/// <exception cref="SecurityException">The caller does not have the required permission. </exception>
-		/// <exception cref="TargetInvocationException">The constructor being called throws an exception. </exception>
-		/// <exception cref="MethodAccessException">The caller does not have permission to call the specified constructor. </exception>
-		/// <exception cref="MemberAccessException">Cannot create an instance of an <see langword="abstract"/> class, or this member was invoked with a late-binding mechanism. </exception>
-		/// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
-		/// <exception cref="SerializationException">Unable to de-serialize file.</exception>
 		public MyObjectBuilder_Definitions Deserialize()
 		{
 			if (!_configFileInfo.Exists)
@@ -81,15 +62,8 @@ namespace SEModAPI.API.Definitions
 				throw new FileNotFoundException( string.Format( "The file specified in configFileInfo does not exists.\r\nCannot deserialize: {0}", _configFileInfo.FullName ), _configFileInfo.FullName );
 			}
 
-			XmlReaderSettings settings = new XmlReaderSettings();
-			XmlReader reader = XmlReader.Create(_configFileInfo.FullName, settings);
-			MyObjectBuilder_DefinitionsSerializer serializer = (MyObjectBuilder_DefinitionsSerializer)Activator.CreateInstance(typeof(MyObjectBuilder_DefinitionsSerializer));
-			if (!serializer.CanDeserialize(reader))
-			{
-				throw new SerializationException( string.Format( "The file specified in configFileInfo cannot be deserialized: {0}", _configFileInfo.FullName ));
-			}
-			MyObjectBuilder_Definitions definitions = (MyObjectBuilder_Definitions) serializer.Deserialize(reader);
-			reader.Close();
+			MyObjectBuilder_Definitions definitions;
+			MyObjectBuilderSerializer.DeserializeXML( _configFileInfo.FullName, out definitions );
 			return definitions;
 		}
 	}

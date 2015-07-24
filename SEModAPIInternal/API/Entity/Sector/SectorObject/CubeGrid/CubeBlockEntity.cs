@@ -5,7 +5,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 	using System.ComponentModel;
 	using System.IO;
 	using System.Runtime.Serialization;
-	using Microsoft.Xml.Serialization.GeneratedAssembly;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
