@@ -1123,8 +1123,8 @@ namespace SEModAPI.API.Definitions
 		[Description( "Set the time, in minutes, it takes for the sun to make a complete rotation around the skybox. Only effective if sun rotation is enabled." )]
 		[Category( "World Settings" )]
 		[DisplayName( "Sun Rotation Interval" )]
-		[DefaultValue( 240d )]
-		public double SunRotationIntervalMinutes
+		[DefaultValue( 240f )]
+		public float SunRotationIntervalMinutes
 		{
 			get { return _definition.SessionSettings.SunRotationIntervalMinutes; }
 			set
