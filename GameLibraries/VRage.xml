@@ -88,6 +88,26 @@
             Animation clips associated with this model
             </summary>
         </member>
+        <member name="M:VRage.Animations.IMyConstProperty.EditorGetValue">
+            <summary>
+            Warning, this does allocation, use only in editor!
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.IMyAnimatedProperty.EditorSetKey(System.Int32,System.Single,System.Object)">
+            <summary>
+            Warning this will do allocations, use only in editor!
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.IMyAnimatedProperty.EditorAddKey(System.Single)">
+            <summary>
+            Warning this will do allocations, use only in editor!
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.IMyAnimatedProperty.EditorGetKey(System.Int32,System.Single@,System.Object@)">
+            <summary>
+            Warning this will do allocations, use only in editor!
+            </summary>
+        </member>
         <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Utils.MyStringHash,VRage.Audio.MyCueId[],System.Nullable{System.Single})">
             <summary>
             Creates effect on input emitter
