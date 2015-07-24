@@ -78,8 +78,7 @@
 						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 					if ( method == null )
 					{
-						if ( ExtenderOptions.IsDebugging )
-							Log.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
+						Log.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
 						return false;
 					}
 				}
@@ -92,8 +91,7 @@
 						method = objectType.BaseType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy, Type.DefaultBinder, argTypes, null );
 					if ( method == null )
 					{
-						if ( ExtenderOptions.IsDebugging )
-							Log.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
+						Log.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "'" );
 						return false;
 					}
 				}
@@ -106,8 +104,7 @@
 			}
 			catch ( Exception ex )
 			{
-				if ( ExtenderOptions.IsDebugging )
-					Log.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				Log.Error( "Failed to find method '" + methodName + "' in type '" + objectType.FullName + "': " + ex.Message );
 				Log.Error( ex );
 				return false;
 			}
@@ -126,16 +123,40 @@
 					field = objectType.BaseType.GetField( fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( field == null )
 				{
-					if ( ExtenderOptions.IsDebugging )
-						Log.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
+					Log.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "'" );
 					return false;
 				}
 				return true;
 			}
 			catch ( Exception ex )
 			{
-				if ( ExtenderOptions.IsDebugging )
-					Log.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				Log.Error( "Failed to find field '" + fieldName + "' in type '" + objectType.FullName + "': " + ex.Message );
+				Log.Error( ex );
+				return false;
+			}
+		}
+
+		public static bool HasProperty( Type objectType, string propertyName )
+		{
+			try
+			{
+				if ( String.IsNullOrEmpty( propertyName ) )
+					return false;
+				PropertyInfo prop = objectType.GetProperty( propertyName );
+				if ( prop == null )
+					prop = objectType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( prop == null )
+					prop = objectType.BaseType.GetProperty( propertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy );
+				if ( prop == null )
+				{
+					Log.Error( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "'" );
+					return false;
+				}
+				return true;
+			}
+			catch ( Exception ex )
+			{
+				Log.Error( "Failed to find property '" + propertyName + "' in type '" + objectType.FullName + "': " + ex.Message );
 				Log.Error( ex );
 				return false;
 			}
