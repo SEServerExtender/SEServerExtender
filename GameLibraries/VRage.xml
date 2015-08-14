@@ -98,11 +98,6 @@
             Warning this will do allocations, use only in editor!
             </summary>
         </member>
-        <member name="M:VRage.Animations.IMyAnimatedProperty.EditorAddKey(System.Single)">
-            <summary>
-            Warning this will do allocations, use only in editor!
-            </summary>
-        </member>
         <member name="M:VRage.Animations.IMyAnimatedProperty.EditorGetKey(System.Int32,System.Single@,System.Object@)">
             <summary>
             Warning this will do allocations, use only in editor!
@@ -660,6 +655,13 @@
             <param name="reader"></param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Import.MyModelImporter.LinearKeyframeReduction(System.Collections.Generic.LinkedList{VRage.Animations.AnimationClip.Keyframe},System.Single,System.Single)">
+            <summary>
+            This function filters out keyframes that can be approximated well with 
+            linear interpolation.
+            </summary>
+            <param name="keyframes"></param>
+        </member>
         <member name="F:VRageRender.MyRenderMessageType.Draw">
             <summary>
             Draw message, skipped when processing multiple updates (only handled in last update before draw)
@@ -1030,7 +1032,7 @@
             0, 1 or 2, indicates what material is on this vertex
             </summary>
         </member>
-        <member name="P:VRageRender.MyVertexFormatVoxelSingleData.MaterialAlphaIndex">
+        <member name="P:VRageRender.MyVertexFormatVoxelSingleData.Material">
             <summary>
             For multimaterial vertex only
             0, 1 or 2, indicates what material is on this vertex
@@ -1139,6 +1141,16 @@
             <summary>
             Rotate 180 degress around both the X and Y axis before rendering.
             </summary>
+        </member>
+        <member name="T:VRage.Utils.MyDiscreteSampler">
+            <summary>
+            Provides a simple and efficient way of sampling a discrete probability distribution.
+            Instances can be reused by calling the Prepare method every time you want to change the distribution.
+            Sampling a value is O(1), while the storage requirements are O(N), where N is number of possible values
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyDiscreteSampler.Prepare(System.Collections.Generic.List{System.Single})">
+            The list supplied to the method does not have to add up to 1.0f, that's why it's called "densities" instead of "probabilities"
         </member>
         <member name="T:VRage.Utils.MyStringHash">
             <summary>
@@ -1339,16 +1351,6 @@
         <member name="M:VRage.Utils.MyUtils.GetRandomVector3D">
             <summary>
             Returns a uniformly-distributed random vector from inside of a box (-1,-1,-1), (1, 1, 1)
-            </summary>
-        </member>
-        <member name="M:VRage.Utils.MyUtils.GetRandomPosition(VRageMath.BoundingBox@)">
-            <summary>
-            Warning: Fast, but non-uniform distribution!
-            </summary>
-        </member>
-        <member name="M:VRage.Utils.MyUtils.GetRandomPosition(VRageMath.BoundingBoxD@)">
-            <summary>
-            Warning: Fast, but non-uniform distribution!
             </summary>
         </member>
         <member name="M:VRage.Utils.MyUtils.GetRandomTimeSpan(System.TimeSpan,System.TimeSpan)">
@@ -1669,7 +1671,7 @@
         </member>
         <member name="M:VRage.Voxels.MyClipmap.LodLevel.WasAncestorCellLoaded(VRage.Voxels.MyClipmap.LodLevel,VRage.Voxels.MyCellCoord@)">
             <summary>
-            Checks ancestor nodes recursively. Typically, this checks at most 9 nodes or so (depending on settings).
+            Checks ancestor nodes recursively.
             </summary>
         </member>
         <member name="M:VRage.Voxels.MyClipmap.LodLevel.ChildrenWereLoaded(VRage.Voxels.MyClipmap.LodLevel,VRage.Voxels.MyCellCoord@)">
