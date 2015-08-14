@@ -242,7 +242,7 @@ namespace SEModAPIInternal.API.Entity
 
 		public virtual void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile( ObjectBuilder, fileInfo );
+			MyObjectBuilderSerializer.SerializeXML( fileInfo.FullName, false, ObjectBuilder );
 		}
 
 		public MyObjectBuilder_Base Export( )
@@ -1403,7 +1403,7 @@ namespace SEModAPIInternal.API.Entity
 			m_definitionsContainerField.SetValue( definitionsContainer, baseDefs.ToArray( ) );
 
 			//Save the definitions container out to the file
-			SaveContentFile( definitionsContainer, m_fileInfo );
+			MyObjectBuilderSerializer.SerializeXML( m_fileInfo.FullName, false, definitionsContainer );
 
 			return true;
 		}
