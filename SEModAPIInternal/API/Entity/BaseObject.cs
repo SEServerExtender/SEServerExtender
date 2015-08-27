@@ -355,14 +355,14 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( methodName == null || methodName.Length == 0 )
+				if ( string.IsNullOrEmpty( methodName ) )
 					throw new Exception( "Method name was empty" );
 				MethodInfo method = objectType.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 				if ( method == null )
 				{
 					//Recurse up through the class heirarchy to try to find the method
 					Type type = objectType;
-					while ( type != typeof( Object ) )
+					while ( type != typeof( object ) )
 					{
 						method = type.GetMethod( methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy );
 						if ( method != null )
@@ -377,7 +377,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get static method '" + methodName + "'" );
+				ApplicationLog.BaseLog.Error( $"Failed to get static method '{methodName}'" );
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
@@ -573,15 +573,14 @@ namespace SEModAPIInternal.API.Entity
 				MethodInfo method = GetStaticMethod( objectType, methodName );
 				if ( method == null )
 					throw new Exception( "Method is empty" );
-				Object result = method.Invoke( null, parameters );
+				object result = method.Invoke( null, parameters );
 
 				return result;
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to invoke static method '" + methodName + "': " + ex.Message );
-				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				ApplicationLog.BaseLog.Error( $"Failed to invoke static method '{methodName}': {ex.Message}" );
+				ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
