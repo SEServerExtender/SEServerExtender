@@ -7,6 +7,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Voxels;
+	using Sandbox.Game.Multiplayer;
 	using SEModAPI.API;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
@@ -575,8 +576,7 @@ namespace SEModAPIInternal.API.Entity
 					{
 						//Broadcast the new entity to the clients
 						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
-						Type someManager = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( EntityBaseNetManagerNamespace, EntityBaseNetManagerClass );
-						BaseEntity.InvokeStaticMethod( someManager, EntityBaseNetManagerSendEntity, new object[ ] { baseEntity } );
+						MySyncCreate.SendEntityCreated( baseEntity );
 
 						entityToAdd.ObjectBuilder = baseEntity;
 					}
