@@ -4,16 +4,17 @@
         "HavokWrapper"
     </assembly>
     <members>
+        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
         <member name="T:Havok.HkRigidBodyNamePredicate">
 This class is used as predicate to do searches within HkRigidBody lists..
 </member>
         <member name="T:Havok.HkRigidBodyPredicate">
 This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
 </member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
@@ -124,6 +125,52 @@ If set to false, a random shape will be chosen for splitting on each recursion l
         <member name="P:Havok.HkdDecomposeFracture.ShiftToSmallerCrossSection">
 The actual position of the split can be shifted towards (or away from) the physics object (out of the two "connected" parts) with the smaller cross-section. See the user guide for more details on this.
 </member>
+        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
+Call this to update the triggerVolume outside the physics step.
+triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
+You may want to re-collide the entities before calling this.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
+Character proxies process their own collisions, so they call this method to inform
+the trigger volume that they touched it during the frame.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
+Subclasses should implement this function to be informed of events involving
+rigid bodies (including the bodies of hkpCharacterRigidBodies).
+</member>
+        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
+Fired for any overlapping body when the trigger body leaves the world or is deleted.
+</member>
+        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
+            <summary>
+Gets geometry
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
+            <summary>
+Gets faces
+</summary>
+        </member>
+        <member name="P:Havok.HkConvexVerticesShape.Center">
+            <summary>
+Gets center
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
+            <summary>
+Gets vertices
+</summary>
+        </member>
+        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
+            <summary>
+Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
+</summary>
+        </member>
+        <member name="P:Havok.HkListShape.DebugShapeKeys">
+            <summary>
+Gets shape keys, for debug purposes, allocates!
+</summary>
+        </member>
         <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Sets the color properties of the material
 </member>
@@ -163,58 +210,6 @@ Returns a vertex buffer format that is compatible with this material
 !! IMPORTANT : Use only its id as identifier to our material !!
 
 </member>
-        <member name="M:hkpGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
-Call this to update the triggerVolume outside the physics step.
-triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
-You may want to re-collide the entities before calling this.
-</member>
-        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
-Character proxies process their own collisions, so they call this method to inform
-the trigger volume that they touched it during the frame.
-</member>
-        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
-Subclasses should implement this function to be informed of events involving
-rigid bodies (including the bodies of hkpCharacterRigidBodies).
-</member>
-        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
-Fired for any overlapping body when the trigger body leaves the world or is deleted.
-</member>
-        <member name="M:hkpUniformGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
-            <summary>
-Gets geometry
-</summary>
-        </member>
-        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
-            <summary>
-Gets faces
-</summary>
-        </member>
-        <member name="P:Havok.HkConvexVerticesShape.Center">
-            <summary>
-Gets center
-</summary>
-        </member>
-        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
-            <summary>
-Gets vertices
-</summary>
-        </member>
-        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
-            <summary>
-Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
-</summary>
-        </member>
-        <member name="P:Havok.HkListShape.DebugShapeKeys">
-            <summary>
-Gets shape keys, for debug purposes, allocates!
-</summary>
-        </member>
         <member name="P:Havok.HkdFracture.FlattenHierarchy">
 Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
 </member>
@@ -227,6 +222,11 @@ Defines how the physics for the broken shapes should be calculated
 </member>
         <member name="T:Havok.HkdFracture.Type">
 The algorithm type
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyControllerOperation(hkdBreakableBody*)">
 Called after the breakable body's controller world operation has executed
@@ -261,11 +261,6 @@ strengths.
 </member>
         <member name="F:Havok.HkWorld.m_world">
 Our world
-</member>
-        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
-updates local bodies transformations after simulation
-
-Updates Ragdoll rigid bodies after the change of the world Matrix
 </member>
         <member name="M:Havok.HkRagdoll.SetToDynamic(System.Int32)">
 Set all rigid bodies to dynamic
@@ -306,11 +301,11 @@ Returns local rigid body world matrix (related to the whole system)
 
 Returns local rigid body world matrix (related to the whole system)
 </member>
+        <member name="M:Havok.HkRagdoll.SetWorldMatrix(VRageMath.MatrixD)">
+Updates Ragdoll's transformation World Matrix including the keyframed bodies
+</member>
         <member name="M:Havok.HkRagdoll.SetWorldMatrix(VRageMath.MatrixD,System.Boolean)">
 Updates Ragdoll's transformation World Matrix, if updateBodies is false, it just set's the world matrix, but doesn't transform bodies matrices
-</member>
-        <member name="M:Havok.HkRagdoll.GetRagdollWorldMatrix">
-Returns ragdoll system world matrix
 </member>
         <member name="M:Havok.HkRagdoll.GenerateRigidBodiesCollisionFilters(System.Int32,System.Int32,System.Int32)">
 Generates and sets collision filters on all rigid bodies in the ragdoll system, with the given layer, system group and will start indexing sub system ids with the passed startSubsystemIdsFrom
@@ -338,8 +333,8 @@ Return's true if whole system was set keyframed
         <member name="P:Havok.HkRagdoll.Layer">
 Ragdoll collision layer
 </member>
-        <member name="P:Havok.HkRagdoll.IsAddedToWorld">
-Indicates whether Ragdoll was in the world
+        <member name="P:Havok.HkRagdoll.InWorld">
+Indicates whether all ragdoll parts were in the world
 </member>
         <member name="P:Havok.HkRagdoll.IsActive">
 Indicates if the ragdoll system is active
@@ -364,77 +359,6 @@ Get the ragdoll bones local transforms - relative to the ragdoll world
 </member>
         <member name="P:Havok.HkRagdoll.RigTransforms">
 Get the ragdoll bones rig transforms - WorldMatrices of rigid bodies as when they were loaded
-</member>
-        <member name="P:Havok.HkRagdoll.RigidBodies">
-Get the rigid bodies in the system
-</member>
-        <member name="M:Havok.HkRagdoll.#ctor">
-Create ragdoll object which will have its layer for collisions
-</member>
-        <member name="F:Havok.HkRagdoll.Mass">
-sum of all rigid bodies mass
-</member>
-        <member name="F:Havok.HkRagdoll.m_ragdollTree">
-Ragdoll rigid bodies tree - body and its children, this is automatically found as the body with the most bodies attached to it, however, sometimes this is not the root you want and you may want to set it explicitly
-</member>
-        <member name="P:Havok.HkRagdoll.PhysicsSystem">
-Physics system with rigid bodies and constraints as a whole ragdoll
-</member>
-        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="F:Havok.HkRagdoll.m_keyframed">
-indicates whether whole system is keyframed
-</member>
-        <member name="F:Havok.HkRagdoll.m_originTransform">
-Ragdoll system's first rigid body to origin transform (rig position) on load
-</member>
-        <member name="F:Havok.HkRagdoll.m_childToParent">
-Containts indices to parent's collision sub Ids
-</member>
-        <member name="F:Havok.HkRagdoll.m_ragdollPhysicsSystem">
-Ragdoll as PhysicsSystem - containts constraints and rigid bodies
-</member>
-        <member name="F:Havok.HkRagdoll.m_localTransforms">
-list of local bodies transforms
-</member>
-        <member name="F:Havok.HkRagdoll.m_rigPoseTransfroms">
-list of rig pose transforms
-</member>
-        <member name="F:Havok.HkRagdoll.m_constraints">
-list of ragdoll constraint instances
-</member>
-        <member name="F:Havok.HkRagdoll.m_ragdollConstraintsData">
-list of constraint datas used to create ragdoll constraints
-</member>
-        <member name="F:Havok.HkRagdoll.m_rigidBodies">
-list of rigid bodies used in this ragdoll
-</member>
-        <member name="F:Havok.HkRagdoll.m_shapes">
-list of shapes used in this ragdoll
-</member>
-        <member name="F:Havok.HkRagdoll.m_worldMatrixInverted">
-Ragdoll system world Matrix inverted
-</member>
-        <member name="F:Havok.HkRagdoll.m_worldMatrix">
-Ragdoll system world Matrix
-</member>
-        <member name="F:Havok.HkRagdoll.m_firstSubsystemId">
-Ragdoll first bone subsystem ID
-</member>
-        <member name="F:Havok.HkRagdoll.m_systemGroup">
-Ragdoll System Group ID for collision filter
-</member>
-        <member name="F:Havok.HkRagdoll.m_collisionLayer">
-Ragdoll Layer to get collisions in the world
-</member>
-        <member name="F:Havok.HkRagdoll.m_instancesCounter">
-for debug purposes we count how many instances we created
-</member>
-        <member name="T:Havok.HkRagdoll">
-Classes used to hold data for ragdoll system - rigid bodies with its constraints etc.
 </member>
         <member name="M:Havok.HkRagdollConstraintData.SetConeLimitStabilization(System.Boolean)">
 Enable/disable cone limit stabilization.
@@ -464,13 +388,6 @@ This resulting collision filter info can be used in entities and hkEntityCinfo.
         <member name="M:Havok.HkGroupFilter.DisableCollisionsUsingBitfield(System.UInt32,System.UInt32)">
 Disables collisions between the specified collision layers.
 See enableCollisionsUsingBitfield for how to use bitfields.
-</member>
-        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
-Gets/Sets the inertia stabilization factor.
-Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
-</member>
-        <member name="P:Havok.HkConstraintData.BreachImpulse">
-Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
 </member>
         <member name="P:Havok.HkCharacterRigidBody.LinearVelocity">
             <summary>
@@ -664,6 +581,13 @@ Add instance, returns instance id
 Creates new instance
 </summary>
         </member>
+        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
+Gets/Sets the inertia stabilization factor.
+Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
+</member>
+        <member name="P:Havok.HkConstraintData.BreachImpulse">
+Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
+</member>
         <member name="M:Havok.HkRigidBody.ApplyTorque(System.Single,VRageMath.Vector3)">
             <summary>
 Applies torque to rigid body.
@@ -1164,5 +1088,11 @@ It doesn't matter whether managed references are release first or not.
 Managed references are released by calling Dispose().
 </summary>
         </member>
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:hkpGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
     </members>
 </doc>

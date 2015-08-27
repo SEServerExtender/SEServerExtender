@@ -905,6 +905,11 @@
             Specifies whether draw this entity or not.
             </summary>
         </member>
+        <member name="F:VRageRender.RenderFlags.DrawOutsideViewDistance">
+            <summary>
+            Specifies whether this entity should be drawn even when it is outside the set view distance
+            </summary>
+        </member>
         <member name="F:VRageRender.RenderFlags.Near">
             <summary>
             Specifies whether entity is "near", near entities are cockpit and weapons, these entities are rendered in special way
