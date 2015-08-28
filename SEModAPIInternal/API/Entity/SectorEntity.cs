@@ -7,6 +7,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Common.ObjectBuilders.Voxels;
+	using Sandbox.Game.Entities;
 	using Sandbox.Game.Multiplayer;
 	using SEModAPI.API;
 	using SEModAPI.API.Utility;
@@ -256,11 +257,10 @@ namespace SEModAPIInternal.API.Entity
 		#region "Attributes"
 
 		private static SectorObjectManager m_instance;
-		private static Queue<BaseEntity> m_addEntityQueue = new Queue<BaseEntity>( );
+		private static readonly Queue<BaseEntity> AddEntityQueue = new Queue<BaseEntity>( );
 
 		public static string ObjectManagerNamespace = "Sandbox.Game.Entities";
 		public static string ObjectManagerClass = "MyEntities";
-		public static string ObjectManagerGetEntityHashSet = "GetEntities";
 		public static string ObjectManagerAddEntity = "Add";
 
 		/////////////////////////////////////////////////////////////////
@@ -314,7 +314,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			get
 			{
-				if ( m_addEntityQueue.Count >= 25 )
+				if ( AddEntityQueue.Count >= 25 )
 					return true;
 
 				return false;
@@ -333,7 +333,6 @@ namespace SEModAPIInternal.API.Entity
 				if ( type == null )
 					throw new Exception( "Could not find internal type for SectorObjectManager" );
 				bool result = true;
-				result &= Reflection.HasMethod( type, ObjectManagerGetEntityHashSet );
 				result &= Reflection.HasMethod( type, ObjectManagerAddEntity );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( ObjectFactoryNamespace, ObjectFactoryClass );
@@ -402,7 +401,7 @@ namespace SEModAPIInternal.API.Entity
 
 				m_rawDataHashSetResourceLock.AcquireExclusive( );
 
-				object rawValue = BaseObject.InvokeStaticMethod( InternalType, ObjectManagerGetEntityHashSet );
+				object rawValue = MyEntities.GetEntities( );
 				if ( rawValue == null )
 					return;
 
@@ -510,7 +509,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( m_addEntityQueue.Count >= 25 )
+				if ( AddEntityQueue.Count >= 25 )
 				{
 					throw new Exception( "AddEntity queue is full. Cannot add more entities yet" );
 				}
@@ -518,7 +517,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Debug( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
 
-				m_addEntityQueue.Enqueue( entity );
+				AddEntityQueue.Enqueue( entity );
 
 				MySandboxGame.Static.Invoke( InternalAddEntity );
 			}
@@ -532,10 +531,10 @@ namespace SEModAPIInternal.API.Entity
 		{
 			try
 			{
-				if ( m_addEntityQueue.Count == 0 )
+				if ( AddEntityQueue.Count == 0 )
 					return;
 
-				BaseEntity entityToAdd = m_addEntityQueue.Dequeue( );
+				BaseEntity entityToAdd = AddEntityQueue.Dequeue( );
 
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Debug( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
@@ -547,19 +546,17 @@ namespace SEModAPIInternal.API.Entity
 					throw new Exception( "Could not get internal type of entity" );
 				entityToAdd.BackingObject = Activator.CreateInstance( internalType );
 
-				//Initialize the backing object
-				//BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, "Init", new object[ ] { entityToAdd.ObjectBuilder } );
-				BaseEntity.InvokeEntityMethod(entityToAdd.BackingObject, "Init", new object[] { entityToAdd.ObjectBuilder }, new Type[] { typeof(MyObjectBuilder_EntityBase) });
-
 				//Add the backing object to the main game object manager
-				BaseEntity.InvokeStaticMethod( InternalType, ObjectManagerAddEntity, new object[ ] { entityToAdd.BackingObject, true } );
+				MyEntity backingObject = (MyEntity)entityToAdd.BackingObject;
+				backingObject.Init( entityToAdd.ObjectBuilder );
+				MyEntities.Add( backingObject );
 
 				if ( entityToAdd is FloatingObject )
 				{
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+						MyObjectBuilder_EntityBase baseEntity = backingObject.GetObjectBuilder( );
 						//TODO - Do stuff
 
 						entityToAdd.ObjectBuilder = baseEntity;
@@ -575,7 +572,7 @@ namespace SEModAPIInternal.API.Entity
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = (MyObjectBuilder_EntityBase)BaseEntity.InvokeEntityMethod( entityToAdd.BackingObject, BaseEntity.BaseEntityGetObjectBuilderMethod, new object[ ] { Type.Missing } );
+						MyObjectBuilder_EntityBase baseEntity = backingObject.GetObjectBuilder( );
 						MySyncCreate.SendEntityCreated( baseEntity );
 
 						entityToAdd.ObjectBuilder = baseEntity;
