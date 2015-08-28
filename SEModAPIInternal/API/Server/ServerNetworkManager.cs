@@ -193,14 +193,6 @@ namespace SEModAPIInternal.API.Server
 				result &= Reflection.HasField( nestedCreateType, SendCreateCompressedMsgObjectBuilders );
 				result &= Reflection.HasField( nestedCreateType, SendCreateCompressedMsgBuilderLengths );
 
-				Type respawnMsgType = typeof ( MyPlayerCollection.RespawnMsg );
-
-				result &= Reflection.HasField( respawnMsgType, RespawnMsgJoinGame );
-				result &= Reflection.HasField( respawnMsgType, RespawnMsgNewIdenity );
-				result &= Reflection.HasField( respawnMsgType, RespawnMsgMedicalRoom );
-				result &= Reflection.HasField( respawnMsgType, RespawnMsgRespawnShipId );
-				result &= Reflection.HasField( respawnMsgType, RespawnMsgPlayerSerialId );
-
 				Type type6 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, MySyncCharacterClass );
 				if ( type6 == null )
 					throw new TypeLoadException( "Could not find internal type for MySyncCharacterClass" );
@@ -410,24 +402,16 @@ namespace SEModAPIInternal.API.Server
 
 		public static void ShowRespawnMenu( ulong userId )
 		{
-			Type playerCollectionType = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( MultiplayerNamespace, PlayerCollectionClass );
-			Type respawnMsgType = playerCollectionType.GetNestedType( RespawnMsg, BindingFlags.NonPublic | BindingFlags.Public );
+			MyPlayerCollection.RespawnMsg respawnMsg = new MyPlayerCollection.RespawnMsg
+			                                           {
+				                                           JoinGame = true,
+				                                           NewIdentity = true,
+				                                           MedicalRoom = 0,
+				                                           RespawnShipId = "",
+				                                           PlayerSerialId = 0
+			                                           };
 
-			FieldInfo respawnMsgJoinGame = respawnMsgType.GetField( RespawnMsgJoinGame );
-			FieldInfo respawnMsgNewIdentity = respawnMsgType.GetField( RespawnMsgNewIdenity );
-			FieldInfo respawnMsgMedicalRoom = respawnMsgType.GetField( RespawnMsgMedicalRoom );
-			FieldInfo respawnMsgRespawnShipId = respawnMsgType.GetField( RespawnMsgRespawnShipId );
-			FieldInfo respawnMsgPlayerSerialId = respawnMsgType.GetField( RespawnMsgPlayerSerialId );
-
-			object respawnMsg = Activator.CreateInstance( respawnMsgType );
-
-			respawnMsgJoinGame.SetValue( respawnMsg, true );
-			respawnMsgNewIdentity.SetValue( respawnMsg, true );
-			respawnMsgMedicalRoom.SetValue( respawnMsg, 0 );
-			respawnMsgRespawnShipId.SetValue( respawnMsg, "" );
-			respawnMsgPlayerSerialId.SetValue( respawnMsg, 0 );
-
-			SendMessage( respawnMsg, userId, respawnMsgType, 3 );
+			SendMessage( respawnMsg, userId, typeof ( MyPlayerCollection.RespawnMsg ), 3 );
 		}
 
 		public static void AttachToCockpit( long characterId, long cockpitId, ulong steamId )
