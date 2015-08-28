@@ -6,6 +6,8 @@
 	using System.Reflection;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Game.Multiplayer;
+	using Sandbox.Game.World;
 	using Sandbox.ModAPI;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
@@ -178,13 +180,7 @@
 			get { return _instance ?? ( _instance = new PlayerMap( ) ); }
 		}
 
-		public Object BackingObject
-		{
-			get
-			{
-				return PlayerManager.Instance.InternalGetPlayerMap();
-			}
-		}
+		public MyPlayerCollection BackingObject => Sync.Players;
 
 		#endregion
 
@@ -644,14 +640,11 @@
 					return false;
 				}
 
-				object playerCollection = PlayerManager.Instance.InternalGetPlayerMap();
+				MyPlayerCollection playerCollection = Sync.Players;
 
 				// This method adds the player to online players, so it's not quite what we want, but the parameters allow us to pull types
 				// This should be replaced by just grabbing playerIdentifierType from elsewhere, but this already took too long
 				MethodInfo createNewPlayerMethod = BaseObject.GetEntityMethod(playerCollection, PlayerMapCreateNewPlayerInternalMethod);
-
-				Type identityType = createNewPlayerMethod.GetParameters()[0].ParameterType;
-				Type networkClientType = createNewPlayerMethod.GetParameters()[1].ParameterType;
 				Type playerIdentifierType = createNewPlayerMethod.GetParameters()[3].ParameterType.GetElementType();
 
 				SandboxGameAssemblyWrapper.Instance.GameAction(() =>
@@ -660,9 +653,9 @@
 					//object networkClient = Activator.CreateInstance(networkClientType, new object[] { steamId });
 
 					// Create Identity
-					object identity = BaseObject.GetEntityMethod(playerCollection, PlayerMapCreateMyIdentity).Invoke(playerCollection, new object[] { playerName, playerId, "Default_Astronaut" });
 
 					// Create MyPlayer.PlayerId type
+
 					object playerIdentifier = Activator.CreateInstance(playerIdentifierType, steamId, 0 );
 
 					// Adding to m_playerIdentityIds should save player to checkpoint
@@ -688,7 +681,7 @@
 				if(playerId == 0)
 					return false;
 
-				object playerCollection = PlayerManager.Instance.InternalGetPlayerMap();
+				MyPlayerCollection playerCollection = Sync.Players;
 				object playerIdentityDictionary = BaseObject.GetEntityFieldValue(playerCollection, PlayerMapGetPlayerItemMappingField);
 				object playerIdentiferDictionary = BaseObject.GetEntityFieldValue(playerCollection, PlayerMapGetSteamItemMappingField);
 				object onlinePlayers = BaseObject.GetEntityFieldValue(playerCollection, PlayerMapPlayerDictionary);
@@ -773,7 +766,7 @@
 		{
 			try
 			{
-				object playerCollection = PlayerManager.Instance.InternalGetPlayerMap();
+				MyPlayerCollection playerCollection = Sync.Players;
 				object playerIdentiferDictionary = BaseObject.GetEntityFieldValue(playerCollection, PlayerMapGetSteamItemMappingField);
 				object onlinePlayers = BaseObject.GetEntityFieldValue(playerCollection, PlayerMapPlayerDictionary);
 
@@ -812,7 +805,7 @@
 		{
 			try
 			{
-				object myPlayerCollection = PlayerManager.Instance.InternalGetPlayerMap();
+				MyPlayerCollection myPlayerCollection = Sync.Players;
 				object myAllIdentities = BaseObject.GetEntityFieldValue(myPlayerCollection, PlayerMapGetPlayerItemMappingField);
 
 				bool result = false;
@@ -924,15 +917,6 @@
 				ApplicationLog.BaseLog.Error(ex);
 				return false;
 			}
-		}
-
-		public Object InternalGetPlayerMap()
-		{
-            Type type = SandboxGameAssemblyWrapper.Instance.GetAssemblyType(PlayerManagerNamespace, PlayerManagerClass);
-            MethodInfo playerMapHandler = BaseObject.GetStaticMethod(type, PlayerManagerPlayerMapField);
-            Object playerMap = playerMapHandler.Invoke(type, new object[] { });
-            
-			return playerMap;
 		}
 
 		public void KickPlayer(ulong steamId)
