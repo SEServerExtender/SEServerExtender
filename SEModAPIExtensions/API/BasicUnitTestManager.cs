@@ -225,12 +225,6 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn("PowerProducer reflection validation failed!");
 			}
 
-			if (!PowerReceiver.ReflectionUnitTest())
-			{
-				result = false;
-				BaseLog.Warn("PowerReceiver reflection validation failed!");
-			}
-
 			if (!VoxelMap.ReflectionUnitTest())
 			{
 				result = false;

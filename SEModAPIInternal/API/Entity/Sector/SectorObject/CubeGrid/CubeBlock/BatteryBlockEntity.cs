@@ -194,21 +194,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[DataMember]
 		[Category( "Battery Block" )]
 		[ReadOnly(true)]
-		[DisplayName("Power Input (MW)")]
-		public float RequiredPowerInput
-		{
-			get { return PowerReceiver.MaxRequiredInput; }
-			set
-			{
-				if ( PowerReceiver.MaxRequiredInput == value ) return;
-				PowerReceiver.MaxRequiredInput = value;
-				Changed = true;
-			}
-		}
-
-		[DataMember]
-		[Category( "Battery Block" )]
-		[ReadOnly(true)]
 		[DisplayName("Maximum Power Output")]
 		public float MaxPowerOutput
 		{
@@ -274,18 +259,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		}
 
 		#region "Internal"
-
-		protected override float InternalPowerReceiverCallback( )
-		{
-			if ( ProducerEnabled || ( CurrentStoredPower / MaxStoredPower ) >= 0.98 )
-			{
-				return 0.0f;
-			}
-			else
-			{
-				return PowerReceiver.MaxRequiredInput;
-			}
-		}
 
 		protected Object InternalGetNetManager( )
 		{

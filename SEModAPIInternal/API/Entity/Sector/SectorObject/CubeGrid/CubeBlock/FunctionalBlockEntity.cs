@@ -17,7 +17,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private PowerReceiver m_powerReceiver;
 		private bool m_enabled;
 
 		public static string FunctionalBlockNamespace = "";
@@ -48,8 +47,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			: base( parent, definition, backingObject )
 		{
 			m_enabled = definition.Enabled;
-
-			m_powerReceiver = new PowerReceiver( ActualObject, Parent.PowerManager, InternalGetPowerReceiver( ), new Func<float>( InternalPowerReceiverCallback ) );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -105,30 +102,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					MySandboxGame.Static.Invoke( InternalUpdateFunctionalBlock );
 				}
 			}
-		}
-
-		[DataMember]
-		[Category( "Functional Block" )]
-		[ReadOnly( true )]
-		public float CurrentInput
-		{
-			get
-			{
-				return PowerReceiver.CurrentInput;
-			}
-			private set
-			{
-				//Do nothing!
-			}
-		}
-
-		[IgnoreDataMember]
-		[Category( "Functional Block" )]
-		[Browsable( false )]
-		[ReadOnly( true )]
-		internal PowerReceiver PowerReceiver
-		{
-			get { return m_powerReceiver; }
 		}
 
 		#endregion "Properties"
