@@ -42,6 +42,233 @@
             </param>
             <param name="edgeTraversable">This predicate allows to make edges untraversable, blocking the paths through them.</param>
         </member>
+        <member name="T:VRage.Library.Algorithms.SequenceIdGenerator">
+            <summary>
+            Generates IDs sequentially and reuses old IDs which are returned to pool by calling Return method.
+            Protection count and time can be set to protect returned IDs. 
+            Protection is useful especially in multiplayer where clients can still have objects with those IDs.
+            </summary>
+        </member>
+        <member name="F:VRage.Library.Algorithms.SequenceIdGenerator.m_maxId">
+            <summary>
+            Max used id, zero is reserved and never used.
+            </summary>
+        </member>
+        <member name="F:VRage.Library.Algorithms.SequenceIdGenerator.m_protecionCount">
+            <summary>
+            Minimal number of items in reuse queue until first item can be taken.
+            </summary>
+        </member>
+        <member name="F:VRage.Library.Algorithms.SequenceIdGenerator.m_reuseProtectionTime">
+            <summary>
+            Minimal time if item spent in reuse queue until it can be returned.
+            Units are arbitrary
+            </summary>
+        </member>
+        <member name="F:VRage.Library.Algorithms.SequenceIdGenerator.m_timeFunc">
+            <summary>
+            Function which returns current time, units are arbitrary and same as reuse protection time.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Algorithms.SequenceIdGenerator.CreateWithStopwatch(System.TimeSpan,System.Int32)">
+            <summary>
+            Creates new sequence id generator with stopwatch to measure protection time.
+            </summary>
+            <param name="reuseProtectionTime">Time to protect returned IDs.</param>
+            <param name="reuseProtectionCount">Minimum number of IDs in protection queue, before first ID will be reused.</param>
+        </member>
+        <member name="M:VRage.Library.Algorithms.SequenceIdGenerator.Reserve(System.UInt32)">
+            <summary>
+            Reserves first several IDs, so it's never returned by generator.
+            Zero is never returned, when reservedIdCount is 2, IDs 1 and 2 won't be ever returned.
+            </summary>
+            <param name="reservedIdCount">Number of reserved IDs which will be never returned by generator.</param>
+        </member>
+        <member name="P:VRage.Library.Algorithms.SequenceIdGenerator.ReservedCount">
+            <summary>
+            Number of reserved ids, zero is also reserved, but not counted.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.BitReader">
+            <summary>
+            Lightweight bit reader which works on native pointer.
+            Stores bit length and current position.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.WriteVariantSigned(System.Int32)">
+            <summary>
+            Efficiently writes small integers. Closer to zero, less bytes.
+            From -64 to 63 (inclusive), 8 bits.
+            From -8 192 to 8 191 (inclusive), 16 bits.
+            From -1 048 576 to 1 048 575, 24 bits.
+            From -134 217 728 to 134 217 727, 32 bits.
+            Otherwise 40 bits.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.WriteVariantSigned(System.Int64)">
+            <summary>
+            Efficiently writes small integers. Closer to zero, less bytes.
+            From -64 to 63 (inclusive), 8 bits.
+            From -8192 to 8191 (inclusive), 16 bits.
+            From -1048576 to 1048575, 24 bits.
+            From -134217728 to 134217727, 32 bits.
+            Etc...
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.WriteVariant(System.UInt32)">
+            <summary>
+            Efficiently writes small integers. Closer to zero, less bytes.
+            0 - 127, 8 bits.
+            128 - 16383, 16 bits.
+            16384 - 2097151, 24 bits.
+            2097152 - 268435455, 32 bits.
+            Otherwise 40 bits.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.WriteVariant(System.UInt64)">
+            <summary>
+            Efficiently writes small integers. Closer to zero, less bytes.
+            0 - 127, 8 bits.
+            128 - 16383, 16 bits.
+            16384 - 2097151, 24 bits.
+            2097152 - 268435455, 32 bits.
+            Etc...
+            </summary>
+        </member>
+        <member name="F:VRage.Library.Collections.BitStream.BitPosition">
+            <summary>
+            Read/write bit position in stream.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.ResetRead">
+            <summary>
+            Resets stream for reading (reads what was written so far).
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.ResetRead(System.Byte[],System.Int32)">
+            <summary>
+            Resets stream for reading and copies data.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.ResetRead(System.IntPtr,System.Int32,System.Boolean)">
+            <summary>
+            Resets stream for reading.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.ResetWrite">
+            <summary>
+            Resets stream for writing.
+            Uses internal buffer for writing, it's available as DataPointer.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeVariant(System.Int32@)">
+            <summary>
+            Efficiently serializes small integers. Closer to zero, less bytes.
+            From -64 to 63 (inclusive), 8 bits.
+            From -8 192 to 8 191 (inclusive), 16 bits.
+            From -1 048 576 to 1 048 575, 24 bits.
+            From -134 217 728 to 134 217 727, 32 bits.
+            Otherwise 40 bits.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeVariant(System.Int64@)">
+            <summary>
+            Efficiently serializes small integers. Closer to zero, less bytes.
+            From -64 to 63 (inclusive), 8 bits.
+            From -8192 to 8191 (inclusive), 16 bits.
+            From -1048576 to 1048575, 24 bits.
+            From -134217728 to 134217727, 32 bits.
+            Etc...
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeVariant(System.UInt32@)">
+            <summary>
+            Efficiently serializes small integers. Closer to zero, less bytes.
+            0 - 127, 8 bits.
+            128 - 16383, 16 bits.
+            16384 - 2097151, 24 bits.
+            2097152 - 268435455, 32 bits.
+            Otherwise 40 bits.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeVariant(System.UInt64@)">
+            <summary>
+            Efficiently serializes small integers. Closer to zero, less bytes.
+            0 - 127, 8 bits.
+            128 - 16383, 16 bits.
+            16384 - 2097151, 24 bits.
+            2097152 - 268435455, 32 bits.
+            Etc...
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.Serialize(System.Char@)">
+            <summary>
+            Writes char as UTF16, 2-byte value.
+            For ASCII or different encoding, use SerializeByte() or SerializeBytes().
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeMemory(System.IntPtr,System.Int32)">
+            <summary>
+            Serializes fixed size memory region.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeMemory(System.Void*,System.Int32)">
+            <summary>
+            Serializes fixed size memory region.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializePrefixString(System.String@,System.Text.Encoding)">
+            <summary>
+            Serializes string length (as UInt32 variant) and string itself in defined encoding.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializePrefixStringAscii(System.String@)">
+            <summary>
+            Serializes string length (as UInt32 variant) and string itself encoded with ASCII encoding.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializePrefixStringUtf8(System.String@)">
+            <summary>
+            Serializes string length (as UInt32 variant) and string itself encoded with UTF8 encoding.
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializePrefixBytes(System.Byte[]@)">
+            <summary>
+            Serializes byte array length (as UInt32 variant) and bytes.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SerializeBytes(System.Byte[]@,System.Int32,System.Int32)">
+            <summary>
+            Serializes fixed-size byte array or it's part (length is NOT serialized).
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.BitStream.BitLength">
+            <summary>
+            Length of valid data (when reading) or buffer (when writing) in bits.
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.BitStream.BytePosition">
+            <summary>
+            Position in stream round up to whole bytes.
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.BitStream.ByteLength">
+            <summary>
+            Length of valid data (when reading) or buffer (when writing) round up to whole bytes
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.BitStream.OwnsBuffer">
+            <summary>
+            Returns true when owns buffers, always true when writing.
+            May or may not own buffer when reading.
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.BitStream.Writing">
+            <summary>
+            True when stream is for writing.
+            </summary>
+        </member>
         <member name="T:VRage.Collections.CachingDictionary`2">
             <summary>
             Dictionary wrapper that allows for addition and removal even during enumeration.
@@ -54,6 +281,53 @@
             Done by caching changes and allowing explicit application using Apply* methods.
             </summary>
         </member>
+        <member name="T:VRage.Library.Collections.MyIndexArray`1">
+            <summary>
+            Automatically resizing array when accessing index.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.MyIndexArray`1.TrimExcess(System.Single,System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Trims end of array which contains default elements.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.MyIndexList`1">
+            <summary>
+            Stores items in list with fixed index (no reordering).
+            Null is used as special value and cannot be added into list.
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.MyIndexList`1.NextIndex">
+            <summary>
+            Returns what will be next index returned by Add operation.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.MyConcurrentSortableQueue`1.Lock">
+            <summary>
+            For accessing unsafe members
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.MyConcurrentSortableQueue`1.Unlock">
+            <summary>
+            For accessing unsafe members
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.MyConcurrentSortableQueue`1.Add(`0)">
+            <summary>
+            Does NOT call sort
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:VRage.Library.Collections.MyConcurrentSortableQueue`1.ListUnsafe">
+            <summary>
+            Debug only!! Thread unsafe
+            </summary>
+        </member>
+        <member name="P:VRage.Library.Collections.MyConcurrentSortableQueue`1.List">
+            <summary>
+            Manage lock yourself when accesing the list!
+            </summary>
+        </member>
         <member name="T:VRage.Collections.MyIntervalList">
             <summary>
             <para>A set of integer numbers optimized for sets with long consecutive runs. Each interval is stored as two values in m_list: the lower and the upper bound.</para>
@@ -64,6 +338,59 @@
         <member name="M:VRage.Collections.MyIntervalList.Add(System.Int32)">
             <summary>
             Add a value to the list
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.MyMultiKeyDictionary`4">
+            <summary>
+            MyMultiKeyDictionary supports value lookups using multiple different keys.
+            When keys can be derived from value, use MultiKeyIndex.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.MyMultiKeyDictionary`3">
+            <summary>
+            MyMultiKeyDictionary supports value lookups using multiple different keys.
+            When keys can be derived from value, use MultiKeyIndex.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.MyMultiKeyIndex`4">
+            <summary>
+            MultiKeyIndex supports value lookups using multiple different keys.
+            The keys must derivable from value, if it's not the case use MultiKeyDictionary.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.MyMultiKeyIndex`3">
+            <summary>
+            MultiKeyIndex supports value lookups using multiple different keys.
+            The keys must derivable from value, if it's not the case use MultiKeyDictionary.
+            </summary>
+        </member>
+        <member name="P:VRage.Serialization.SerializableDictionary`2.Dictionary">
+            <summary>
+            Public stuff dictionary.
+            </summary>
+            <remarks>
+            Note the XmlIgnore attribute.
+            </remarks>
+        </member>
+        <member name="P:VRage.Serialization.SerializableDictionary`2.DictionaryEntryProp">
+            <summary>
+            Property created expressly for the XmlSerializer
+            </summary>
+            <remarks>
+            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
+            </remarks>
+        </member>
+        <member name="P:VRage.Serialization.SerializableDictionaryCompat`3.DictionaryEntryProp">
+            <summary>
+            Property created expressly for the XmlSerializer
+            </summary>
+            <remarks>
+            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
+            </remarks>
+        </member>
+        <member name="T:VRage.Library.Collections.SmallBitField">
+            <summary>
+            Bit field with up to 64 bits.
             </summary>
         </member>
         <member name="M:VRage.Collections.MySinglyLinkedList`1.Split(VRage.Collections.MySinglyLinkedList{`0}.Enumerator,System.Int32)">
@@ -141,29 +468,11 @@
             O(1)
             </summary>
         </member>
-        <member name="P:VRage.Serialization.SerializableDictionary`2.Dictionary">
+        <member name="T:System.Runtime.CompilerServices.ClassIdAttribute">
             <summary>
-            Public stuff dictionary.
+            Attribute which assigns ID to class, this id persists after obfuscation and it's same on both x86 and X64 build.
+            ID can change with different versions of source code.
             </summary>
-            <remarks>
-            Note the XmlIgnore attribute.
-            </remarks>
-        </member>
-        <member name="P:VRage.Serialization.SerializableDictionary`2.DictionaryEntryProp">
-            <summary>
-            Property created expressly for the XmlSerializer
-            </summary>
-            <remarks>
-            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
-            </remarks>
-        </member>
-        <member name="P:VRage.Serialization.SerializableDictionaryCompat`3.DictionaryEntryProp">
-            <summary>
-            Property created expressly for the XmlSerializer
-            </summary>
-            <remarks>
-            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
-            </remarks>
         </member>
         <member name="T:VRage.Compression.MyZipArchive">
             <summary>
@@ -406,7 +715,7 @@
             Returns true if float is not NaN or infinity.
             </summary>
         </member>
-        <member name="M:VRage.Groups.IGroupData`1.OnCreate">
+        <member name="M:VRage.Groups.IGroupData`1.OnCreate``1(VRage.Groups.MyGroups{`0,``0}.Group)">
             <summary>
             Group is taken from pool
             </summary>
@@ -454,13 +763,6 @@
             Returns true if the given link between parent and child exists, you can set child to null to find it by linkId.
             </summary>
         </member>
-        <member name="F:VRage.Groups.MyGroups`2.SupportsOphrans">
-            <summary>
-            When true, groups with one member are supported.
-            You can use AddNode and RemoveNode.
-            You have to manually call RemoveNode!
-            </summary>
-        </member>
         <member name="M:VRage.Groups.MyGroups`2.#ctor(System.Boolean,VRage.Groups.MyGroups{`0,`1}.MajorGroupComparer)">
             <summary>
             Initializes a new instance of MyGroups class.
@@ -494,6 +796,13 @@
         <member name="M:VRage.Groups.MyGroups`2.TryReleaseNode(VRage.Groups.MyGroups{`0,`1}.Node)">
             <summary>
             Returns true when node was released completely and returned to pool.
+            </summary>
+        </member>
+        <member name="P:VRage.Groups.MyGroups`2.SupportsOphrans">
+            <summary>
+            When true, groups with one member are supported.
+            You can use AddNode and RemoveNode.
+            You have to manually call RemoveNode!
             </summary>
         </member>
         <member name="T:VRage.Groups.MyGroups`2.MajorGroupComparer">
@@ -588,6 +897,15 @@
             Type name which does not make allocations
             </summary>
         </member>
+        <member name="M:System.ArrayExtensions.BinaryIntervalSearch``1(``0[],``0)">
+            Do a binary search in an array of interval limits, each member is the interval threshold.
+            
+            The result is the index of the interval that contains the value searched for.
+            
+            If the interval array is empty 0 is returned (as we assume we have only the (-∞,+∞) interval).
+            
+            Return range: [0, Length]
+        </member>
         <member name="M:System.ArrayExtensions.OfTypeFast``2(``0[])">
             <summary>
             OfType on array implemented without allocations
@@ -617,6 +935,20 @@
             Moves item in the list from original index to target index, reordering elements as if Remove and Insert was called.
             However, only elements in the range between the two indices are affected.
             </summary>
+        </member>
+        <member name="M:System.Collections.Generic.ListExtensions.RemoveIndices``1(System.Collections.Generic.List{``0},System.Collections.Generic.List{System.Int32})">
+            Remove each element in indices from the list.
+            
+            The list of indices must be sorted.
+        </member>
+        <member name="M:System.Collections.Generic.ListExtensions.BinaryIntervalSearch``1(System.Collections.Generic.List{``0},``0)">
+            Do a binary search in an array of interval limits, each member is the interval threshold.
+            
+            The result is the index of the interval that contains the value searched for.
+            
+            If the interval array is empty 0 is returned (as we assume we have only the (-∞,+∞) interval).
+            
+            Return range: [0, Length]
         </member>
         <member name="M:System.StreamExtensions.UnwrapGZip(System.IO.Stream)">
             <summary>
@@ -5851,6 +6183,15 @@
             <summary>
             WM_SYSTIMER is a well-known yet still undocumented message. Windows uses WM_SYSTIMER for internal actions like scrolling.
             </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.DynamicSerializerDelegate">
+            <summary>
+            Dynamic object serializer, when writing, serializes object type.
+            When reading deserializes object type and creates new instance.
+            </summary>
+            <param name="stream">Stream to read from or write to.</param>
+            <param name="baseType">Hierarchy base type of dynamically serialized object, can be used to select serialization method (e.g. object builders have something special).</param>
+            <param name="obj">Object whose type to write or read and instantiate.</param>
         </member>
     </members>
 </doc>

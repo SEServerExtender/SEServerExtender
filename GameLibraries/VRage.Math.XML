@@ -20,6 +20,246 @@
             Pre-calculated left directions for given forward (index / 6) and up (index % 6) directions
             </summary>
         </member>
+        <member name="T:VRageMath.BoundingBoxI">
+            <summary>
+            Defines an axis-aligned box-shaped 3D volume.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBoxI.CornerCount">
+            <summary>
+            Specifies the total number of corners (8) in the BoundingBoxI.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBoxI.Min">
+            <summary>
+            The minimum point the BoundingBoxI contains.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBoxI.Max">
+            <summary>
+            The maximum point the BoundingBoxI contains.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.#ctor(VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Creates an instance of BoundingBoxI.
+            </summary>
+            <param name="min">The minimum point the BoundingBoxI includes.</param><param name="max">The maximum point the BoundingBoxI includes.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates an instance of BoundingBoxI.
+            </summary>
+            <param name="min">The minimum point the BoundingBoxI includes.</param><param name="max">The maximum point the BoundingBoxI includes.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.op_Equality(VRageMath.BoundingBoxI,VRageMath.BoundingBoxI)">
+            <summary>
+            Determines whether two instances of BoundingBoxI are equal.
+            </summary>
+            <param name="a">BoundingBoxI to compare.</param><param name="b">BoundingBoxI to compare.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.op_Inequality(VRageMath.BoundingBoxI,VRageMath.BoundingBoxI)">
+            <summary>
+            Determines whether two instances of BoundingBoxI are not equal.
+            </summary>
+            <param name="a">The object to the left of the inequality operator.</param><param name="b">The object to the right of the inequality operator.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.GetCorners">
+            <summary>
+            Gets an array of points that make up the corners of the BoundingBoxI.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.GetCorners(VRageMath.Vector3I[])">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBoxI.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector3I points where the corners of the BoundingBoxI are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.GetCornersUnsafe(VRageMath.Vector3I*)">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBoxI.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector3I points where the corners of the BoundingBoxI are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Equals(VRageMath.BoundingBoxI)">
+            <summary>
+            Determines whether two instances of BoundingBoxI are equal.
+            </summary>
+            <param name="other">The BoundingBoxI to compare with the current BoundingBoxI.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Equals(System.Object)">
+            <summary>
+            Determines whether two instances of BoundingBoxI are equal.
+            </summary>
+            <param name="obj">The Object to compare with the current BoundingBoxI.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.GetHashCode">
+            <summary>
+            Gets the hash code for this instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.ToString">
+            <summary>
+            Returns a String that represents the current BoundingBoxI.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.CreateMerged(VRageMath.BoundingBoxI,VRageMath.BoundingBoxI)">
+            <summary>
+            Creates the smallest BoundingBoxI that contains the two specified BoundingBoxI instances.
+            </summary>
+            <param name="original">One of the BoundingBoxIs to contain.</param><param name="additional">One of the BoundingBoxIs to contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.CreateMerged(VRageMath.BoundingBoxI@,VRageMath.BoundingBoxI@,VRageMath.BoundingBoxI@)">
+            <summary>
+            Creates the smallest BoundingBoxI that contains the two specified BoundingBoxI instances.
+            </summary>
+            <param name="original">One of the BoundingBoxI instances to contain.</param><param name="additional">One of the BoundingBoxI instances to contain.</param><param name="result">[OutAttribute] The created BoundingBoxI.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.CreateFromSphere(VRageMath.BoundingSphere)">
+            <summary>
+            Creates the smallest BoundingBoxI that will contain the specified BoundingSphere.
+            </summary>
+            <param name="sphere">The BoundingSphere to contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.CreateFromSphere(VRageMath.BoundingSphere@,VRageMath.BoundingBoxI@)">
+            <summary>
+            Creates the smallest BoundingBoxI that will contain the specified BoundingSphere.
+            </summary>
+            <param name="sphere">The BoundingSphere to contain.</param><param name="result">[OutAttribute] The created BoundingBoxI.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.CreateFromPoints(System.Collections.Generic.IEnumerable{VRageMath.Vector3I})">
+            <summary>
+            Creates the smallest BoundingBoxI that will contain a group of points.
+            </summary>
+            <param name="points">A list of points the BoundingBoxI should contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersect(VRageMath.BoundingBoxI)">
+            <summary>
+            Returns bounding box which is intersection of this and box
+            It's called 'Prunik'
+            Result is invalid box when there's no intersection (Min > Max)
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersect(VRageMath.BoundingBox)">
+            <summary>
+            Returns bounding box which is intersection of this and box
+            It's called 'Prunik'
+            Result is invalid box when there's no intersection (Min > Max)
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.BoundingBoxI)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects another BoundingBoxI.
+            </summary>
+            <param name="box">The BoundingBoxI to check for intersection with.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.BoundingBoxI@,System.Boolean@)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects another BoundingBoxI.
+            </summary>
+            <param name="box">The BoundingBoxI to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBoxI instances intersect; false otherwise.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.Plane)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects a Plane.
+            </summary>
+            <param name="plane">The Plane to check for intersection with.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.Plane@,VRageMath.PlaneIntersectionType@)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects a Plane.
+            </summary>
+            <param name="plane">The Plane to check for intersection with.</param><param name="result">[OutAttribute] An enumeration indicating whether the BoundingBoxI intersects the Plane.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.Ray)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects a Ray.
+            </summary>
+            <param name="ray">The Ray to check for intersection with.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.Ray@,System.Nullable{System.Single}@)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects a Ray.
+            </summary>
+            <param name="ray">The Ray to check for intersection with.</param><param name="result">[OutAttribute] Distance at which the ray intersects the BoundingBoxI, or null if there is no intersection.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Distance(VRageMath.Vector3I)">
+            <summary>
+            Checks whether the current BoundingBoxI intersects a BoundingSphere.
+            </summary>
+            <param name="sphere">The BoundingSphere to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBoxI and BoundingSphere intersect; false otherwise.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Contains(VRageMath.BoundingBoxI)">
+            <summary>
+            Tests whether the BoundingBoxI contains another BoundingBoxI.
+            </summary>
+            <param name="box">The BoundingBoxI to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Contains(VRageMath.BoundingBoxI@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBoxI contains a BoundingBoxI.
+            </summary>
+            <param name="box">The BoundingBoxI to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Contains(VRageMath.Vector3I)">
+            <summary>
+            Tests whether the BoundingBoxI contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Contains(VRageMath.Vector3I@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBoxI contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.SupportMapping(VRageMath.Vector3I@,VRageMath.Vector3I@)">
+            <summary>
+            Tests whether the BoundingBoxI contains a BoundingSphere.
+            </summary>
+            <param name="sphere">The BoundingSphere to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Translate(VRageMath.Vector3I)">
+            <summary>
+            Translate
+            </summary>
+            <param name="bbox"></param>
+            <param name="vctTranlsation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Include(VRageMath.Vector3I@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="bbox"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBoxI.Include(VRageMath.BoundingBoxI@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="bbox"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBoxI.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBoxI.Size">
+            <summary>
+            Size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBoxI.Perimeter">
+            <summary>
+            return perimeter of edges
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:VRageMath.BoundingBox">
             <summary>
             Defines an axis-aligned box-shaped 3D volume.
@@ -45,6 +285,12 @@
             Creates an instance of BoundingBox.
             </summary>
             <param name="min">The minimum point the BoundingBox includes.</param><param name="max">The maximum point the BoundingBox includes.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox.#ctor(VRageMath.BoundingBoxD)">
+            <summary>
+            Creates an instance of BoundingBox from BoundingBoxD (helper for transformed BBs)
+            </summary>
+            <param name="bbd"></param>
         </member>
         <member name="M:VRageMath.BoundingBox.op_Equality(VRageMath.BoundingBox,VRageMath.BoundingBox)">
             <summary>
@@ -1351,6 +1597,9 @@
             Return minimum distance between line segment v-w and point p.
             </summary>
         </member>
+        <member name="M:VRageMath.MyMath.Clamp(System.Single,System.Single,System.Single)">
+            Clamp the provided value to an interval.
+        </member>
         <member name="T:VRageMath.Vector3Extensions">
             <summary>
             Usefull Vector3 extensions
@@ -1696,6 +1945,25 @@
             Divides a QuaternionD by another QuaternionD.
             </summary>
             <param name="quaternion1">Source QuaternionD.</param><param name="quaternion2">The divisor.</param><param name="result">[OutAttribute] Result of the division.</param>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializeNormalizedUByte(VRage.Library.Collections.BitStream,VRageMath.Vector3@)">
+            <summary>
+            Serializes Vector3 in range from 0 to 1, each component to byte precision
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.Matrix@)">
+            <summary>
+            Serializes only position and orientation
+            </summary>
+            <param name="stream"></param>
+            <param name="m"></param>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.MatrixD@)">
+            <summary>
+            Serializes only position and orientation
+            </summary>
+            <param name="stream"></param>
+            <param name="m"></param>
         </member>
         <member name="M:VRageMath.Spatial.MyVector3Grid`1.RemoveTwo(VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@,VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@)">
             <summary>
@@ -4846,6 +5114,9 @@
             Unpacks Vector3 from Vector3UByte, scales vector from (0, 255) to (-range, range)
             </summary>
         </member>
+        <member name="T:VRageMath.CubeFace">
+            Face in a cube.
+        </member>
         <member name="M:VRageMath.Vector3I.RectangularDistance(VRageMath.Vector3I)">
             <summary>
             Calculates rectangular distance.
@@ -5356,6 +5627,17 @@
             </summary>
             <param name="x"></param>
             <returns></returns>
+        </member>
+        <member name="M:VRageMath.MathHelper.Log2Floor(System.Int32)">
+            Fast integer Floor(Log2(value)).
+            
+            Uses a DeBruijn-like method to find quickly the MSB.
+            
+            Algorithm:
+            https://en.wikipedia.org/wiki/De_Bruijn_sequence#Uses
+            
+            This implementation:
+            http://stackoverflow.com/a/11398748
         </member>
         <member name="T:VRageMath.Matrix">
             <summary>
@@ -6230,11 +6512,6 @@
             Returns a value that indicates whether the current instance is equal to a specified object.
             </summary>
             <param name="other">The object with which to make the comparison.</param>
-        </member>
-        <member name="P:VRageMath.PackedVector.HalfVector4.PackedValue">
-            <summary>
-            Directly gets or sets the packed representation of the value.
-            </summary>
         </member>
         <member name="T:VRageMath.PackedVector.NormalizedByte4">
             <summary>

@@ -929,26 +929,6 @@
             Gets the current status.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.CurrentPowerOutput">
-            <summary>
-            Currently used power output of the producer in [MW].
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.MaxPowerOutput">
-            <summary>
-            Maximum power output of the producer in [MW].
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.DefinedPowerOutput">
-            <summary>
-            Max power output defined in definition [MW].
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPowerProducer.ProductionEnabled">
-            <summary>
-            Power production is enabled
-            </summary>
-        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
             <summary>
             Param - active

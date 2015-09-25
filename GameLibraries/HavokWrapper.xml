@@ -16,6 +16,91 @@ This class is used as predicate to do searches within HkRigidBody lists..
         <member name="T:Havok.HkRigidBodyPredicate">
 This class is used as predicate to do searches within HkRigidBody lists..
 </member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
+This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
+
+
+This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
+
+</member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrame(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
+Change velocities of body to move to future(position, orientation) in time deltaTime.
+
+
+Change velocities of body to move to future(position, orientation) in time deltaTime.
+
+</member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplySoftKeyFrame(Havok.HkKeyFrameInfo,Havok.HkAccelerationInfo,System.Single,System.Single,Havok.HkRigidBody)">
+Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
+
+
+Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxAllowedDistance">
+If the distance between object and keyframe gets bigger than the max allowed distance, the object is immediately "warped" to the correct keyframe position / orientation, and corresponding velocities.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxAngularAcceleration">
+The maximum angular accelerations(m / sec2).
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxLinearAcceleration">
+Maximum linear acceleration.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.AngularVelocityFactor">
+This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.LinearVelocityFactor">
+This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.AngularPositionFactor">
+This parameter controls the angular stiffness of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.LinearPositionFactor">
+This parameter controls the linear stiffness of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="T:Havok.HkAccelerationInfo">
+Specifies acceleration details for hkpKeyFrameUtility::applySoftKeyFrame()
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.AngularVelocity">
+The current angular velocity.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.LinearVelocity">
+The current velocity.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.Orientation">
+The current orientation.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.Position">
+The current "centre-of-mass" position of a keyframe.
+
+</member>
+        <member name="M:Havok.HkKeyFrameInfo.FastSetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
+Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.Uses approximation of angular velocity.
+
+</member>
+        <member name="M:Havok.HkKeyFrameInfo.SetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
+Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.
+
+</member>
+        <member name="T:Havok.HkKeyFrameInfo">
+Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame. 
+NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
+
+</member>
+        <member name="M:hkpSmartListShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
 </member>
@@ -261,6 +346,20 @@ strengths.
 </member>
         <member name="F:Havok.HkWorld.m_world">
 Our world
+</member>
+        <member name="M:hkpAllShapePairCollector.getHits">
+Get all the hits
+</member>
+        <member name="M:hkpAllShapePairCollector.reset">
+Resets the early out condition and empties the array of hits.
+You must call this function if you want to reuse an object of this class.
+</member>
+        <member name="M:hkpAllShapePairCollector.#ctor">
+Constructor calls reset()
+</member>
+        <member name="F:hkpRootBodyShapePair.m_shapeB">
+The root collidable of object B
+The shape of the colliding shape of object B
 </member>
         <member name="M:Havok.HkRagdoll.SetToDynamic(System.Int32)">
 Set all rigid bodies to dynamic

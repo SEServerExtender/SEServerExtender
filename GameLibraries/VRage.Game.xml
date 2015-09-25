@@ -263,7 +263,7 @@
             Internal local matrix relative to parent of entity.
             </summary>
         </member>
-        <member name="M:VRage.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object)">
+        <member name="M:VRage.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
             <summary>
             Sets the world matrix.
             </summary>
@@ -549,6 +549,11 @@
             The function will return the same new entityId only if the saveMapping argument is set to true.
             </summary>
         </member>
+        <member name="M:VRage.ModAPI.IMyRemapHelper.RemapGroupId(System.String,System.Int32)">
+            <summary>
+            Returns a new ID for the given old ID for specific group (multiblockIDs, ...).
+            </summary>
+        </member>
         <member name="M:VRage.ModAPI.IMyRemapHelper.Clear">
             <summary>
             Clears all the saved mappings from the remap helper and gets it ready for the next remapping operation.
@@ -710,6 +715,47 @@
             This is not synced automatically
             Call SyncOxygenContainerLevel on inventory to sync it
             </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialDefinition.HasLayers">
+            Weather this material has layers.
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialPlacementRule">
+            Important!
+            
+            Due to the geometry in question the slope is stored as the cosine (used in dot product).
+            
+            Meanwhile the dot product for the latitude yields the cosine of the modulus of the compliment of our angle.
+            This means after the maths are done that what we have is the *sine*, so the latitude is stored as the sine.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialPlacementRule.Check(System.Single,System.Single,System.Single)">
+            Check that a rule matches terrain properties.
+            
+            @param height Height ration to the height map.
+            @param latitude Latitude cosine
+            @param slope Surface dominant angle sine.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetSurfaceRule.Check(System.Single,System.Single,System.Single)">
+            Check that a rule matches terrain properties.
+            
+            @param height Height ration to the height map.
+            @param latitude Latitude cosine
+            @param slope Surface dominant angle cosine.
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialGroup">
+            Rule group defines a material mappable set of surface rules.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangedValue.ConvertToCosine">
+            When the range is an angle this method changes it to the cosines of the angle.
+            
+            The angle is expected to be in degrees.
+            
+            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
+            
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangedValue.ConvertToSine">
+            When the range is an angle this method changes it to the sines of the angle.
+            
+            The angle is expected to be in degrees.
         </member>
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_SwitchBlockDefinition">
             <summary>

@@ -890,14 +890,14 @@
             Needs resolve cast shadows flag (done by parallel raycast to sun)
             </summary>
         </member>
-        <member name="F:VRageRender.RenderFlags.CastShadowsResolved">
-            <summary>
-            Tells if this object is visible from sun. If not, it does not casts shadows
-            </summary>
-        </member>
         <member name="F:VRageRender.RenderFlags.FastCastShadowResolve">
             <summary>
             Casts only one raycast to determine shadow casting
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.CastShadows">
+            <summary>
+            Tells if this object should cast shadows
             </summary>
         </member>
         <member name="F:VRageRender.RenderFlags.Visible">
@@ -915,11 +915,6 @@
             Specifies whether entity is "near", near entities are cockpit and weapons, these entities are rendered in special way
             </summary>
         </member>
-        <member name="F:VRageRender.RenderFlags.CastShadows">
-            <summary>
-            Tells if this object should cast shadows
-            </summary>
-        </member>
         <member name="F:VRageRender.RenderFlags.UseCustomDrawMatrix">
             <summary>
             Tells if this object should use PlayerHeadMatrix as matrix for draw
@@ -928,6 +923,11 @@
         <member name="F:VRageRender.RenderFlags.ShadowLodBox">
             <summary>
             Use local AABB box for shadow LOD
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderFlags.NoBackFaceCulling">
+            <summary>
+            No culling of back faces
             </summary>
         </member>
         <member name="T:VRageRender.LightTypeEnum">
@@ -1147,14 +1147,151 @@
             Rotate 180 degress around both the X and Y axis before rendering.
             </summary>
         </member>
+        <member name="T:VRage.Serialization.MyPrimitiveFlags">
+            <summary>
+            Primitive flags are passed down the object hierarchy.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.None">
+            <summary>
+            No primitive flags.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.Signed">
+            <summary>
+            Flag which indicates whether primitive is signed.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.Normalized">
+            <summary>
+            Flag which indicates whether primitive is normalized.
+            Exact behavior depends on actual type (0..1, -1..1, normalized vector, etc)
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.Variant">
+            <summary>
+            Serialize member as unsigned variant (variable length integer, 0-127...1-byte, 127-32767...2-byte, etc)
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.VariantSigned">
+            <summary>
+            Serialize member as unsigned signed (-63..64, 1-byte etc, -32767..32768, 2-byte, etc)
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.Ascii">
+            <summary>
+            Serialize string in ascii encoding
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.Utf8">
+            <summary>
+            Serialize string in UTF8 encoding
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.FixedPoint8">
+            <summary>
+            Fixed point 8-bit precision, use with normalized
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyPrimitiveFlags.FixedPoint16">
+            <summary>
+            Fixed point 16-bit precision, use with normalized
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MySerializeInfo.KeyInfo">
+            <summary>
+            Serialization settings for dictionar key.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MySerializeInfo.ItemInfo">
+            <summary>
+            Serialization settings for dictionary value or collection / array elements
+            </summary>
+        </member>
+        <member name="M:VRage.Serialization.MySerializer`1.Clone(`0@)">
+            <summary>
+            In-place clone.
+            Primitive and immutable types can implements this as empty method.
+            Reference types must create new instance a fill it's members.
+            </summary>
+        </member>
+        <member name="M:VRage.Serialization.MySerializer`1.Equals(`0@,`0@)">
+            <summary>
+            Tests equality.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeBaseAttribute.Flags">
+            <summary>
+            Serialization flags for member itself.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeBaseAttribute.PrimitiveFlags">
+            <summary>
+            Serialization flags for primitive types, when defined for types, passed down the hierarchy.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeBaseAttribute.FixedLength">
+            <summary>
+            Length for fixed length arrays, collections and strings.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyObjectFlags.None">
+            <summary>
+            No serialization flags
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyObjectFlags.DefaultZero">
+            <summary>
+            Do not serialize member when it has default value, null for objects, zeros for structs.
+            In binary streams, bit is written to indicate whether object had a value or not.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyObjectFlags.Nullable">
+            <summary>
+            Alias to default value.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyObjectFlags.Dynamic">
+            <summary>
+            Member can store subclasses of specified type, actual member type will be serialized as well.
+            Valid only on class members (not for value types).
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyObjectFlags.DefaultValueOrEmpty">
+            <summary>
+            Applies only to collections.
+            When serializing empty collection (zero element count) it will behave like DefaultValue.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.MyObjectFlags.DynamicDefault">
+            <summary>
+            Same as dynamic, but stores a bit indicating whether serialized type is different from member type or not.
+            When it's same, type is not serialized. Usefull when some instances have default type.
+            </summary>
+        </member>
+        <member name="M:VRage.Serialization.MyMemberSerializer`1.Clone(`0@,`0@)">
+            <summary>
+            Makes clone of object member.
+            </summary>
+        </member>
+        <member name="M:VRage.Serialization.MyMemberSerializer`1.Equals(`0@,`0@)">
+            <summary>
+            Tests equality of object members.
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyDiscreteSampler`1">
+            <summary>
+            A templated class for sampling from a set of objects with given probabilities. Uses MyDiscreteSampler.
+            </summary>
+        </member>
         <member name="T:VRage.Utils.MyDiscreteSampler">
             <summary>
-            Provides a simple and efficient way of sampling a discrete probability distribution.
+            Provides a simple and efficient way of sampling a discrete probability distribution as described in http://www.jstatsoft.org/v11/i03/paper
             Instances can be reused by calling the Prepare method every time you want to change the distribution.
             Sampling a value is O(1), while the storage requirements are O(N), where N is number of possible values
             </summary>
         </member>
-        <member name="M:VRage.Utils.MyDiscreteSampler.Prepare(System.Collections.Generic.List{System.Single})">
+        <member name="M:VRage.Utils.MyDiscreteSampler.Prepare(System.Collections.Generic.IEnumerable{System.Single})">
             The list supplied to the method does not have to add up to 1.0f, that's why it's called "densities" instead of "probabilities"
         </member>
         <member name="T:VRage.Utils.MyStringHash">
@@ -1308,6 +1445,12 @@
             </summary>
             <param name="vec"></param>
             <returns></returns>
+        </member>
+        <member name="M:VRage.Utils.MyUtils.Init``1(``0@)">
+            <summary>
+            When location is null, creates new instance, stores it in location and returns it.
+            When location is not null, returns it.
+            </summary>
         </member>
         <member name="F:VRage.Utils.MyUtils.DefaultNumberSuffix">
             <summary>
@@ -1665,14 +1808,32 @@
             0 is the most detailed.
             </summary>
         </member>
+        <member name="F:VRage.Voxels.MyClipmap.m_clipingAdjustment">
+            <summary>
+            adjusts loaded terrain quality
+            negative value represents lowes loaded lod
+            positive value extends number of loaded surrounding lod0 cells
+            </summary>
+        </member>
         <member name="M:VRage.Voxels.MyClipmap.InvalidateRange(VRageMath.Vector3I,VRageMath.Vector3I)">
             <param name="minCellLod0">Inclusive.</param>
             <param name="maxCellLod0">Inclusive.</param>
         </member>
-        <member name="F:VRage.Voxels.MyClipmap.LodLevel.m_fitsInFrustum">
+        <member name="F:VRage.Voxels.MyClipmap.RequestCollector.m_clipmapId">
             <summary>
-            Indicator that LoD is too large to even render with current setttings.
+            Sent requests + low priority requests are checked against this.
+            High priority requests should be sent even when they are over limit.
             </summary>
+        </member>
+        <member name="M:VRage.Voxels.MyClipmap.LodLevel.PriorityFunc(VRageMath.BoundingBoxD,VRage.Voxels.MyClipmap.LodLevel,System.UInt64,VRage.Voxels.MyCellCoord)">
+            <summary>
+            Priority function for sorting render cell precalc jobs
+            </summary>
+            <param name="cellWorldPos"></param>
+            <param name="parent"></param>
+            <param name="parentCellId"></param>
+            <param name="cell"></param>
+            <returns></returns>
         </member>
         <member name="M:VRage.Voxels.MyClipmap.LodLevel.WasAncestorCellLoaded(VRage.Voxels.MyClipmap.LodLevel,VRage.Voxels.MyCellCoord@)">
             <summary>
@@ -1684,11 +1845,23 @@
             Checks only immediate children (any deeper would take too long).
             </summary>
         </member>
-        <member name="F:VRage.Voxels.MyClipmap.RequestCollector.m_maxRequests">
+        <member name="M:VRage.Voxels.MyClipmap.LodLevel.DoClipping(VRageMath.Vector3D,VRage.Voxels.MyClipmap.RequestCollector,System.Int32)">
             <summary>
-            Sent requests + low priority requests are checked against this.
-            High priority requests should be sent even when they are over limit.
+            New clipping routine, call on lowest desired lod with position of camera
+            Should be later enhanced with spread if desired lod would be lower than 0
+            Finaly it will be used as hint for structure managing cells to be calculated and rendered
             </summary>
+            <param name="localPosition"></param>
+            <param name="collector"></param>
+        </member>
+        <member name="M:VRage.Voxels.MyClipmap.LodLevel.DoClipping(VRage.Voxels.MyClipmap.RequestCollector,VRageMath.Vector3I,VRageMath.Vector3I,VRageMath.BoundingBox@)">
+            <summary>
+            Recursive clipping function requests cells in provided range and
+            cells needed from parent to wrap the lod safely
+            </summary>
+            <param name="collector"></param>
+            <param name="it0">requested range</param>
+            <param name="ignore">inner range filled by children</param>
         </member>
         <member name="M:VRage.Voxels.MyStorageDataCache.Resize(VRageMath.Vector3I,VRageMath.Vector3I)">
             <param name="start">Inclusive.</param>
