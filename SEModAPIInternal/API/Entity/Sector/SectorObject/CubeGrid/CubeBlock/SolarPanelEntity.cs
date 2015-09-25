@@ -15,7 +15,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	{
 		#region "Attributes"
 
-		private PowerProducer m_powerProducer;
 		private float m_maxPowerOutput;
 
 		public static string SolarPanelNamespace = "Sandbox.Game.Entities.Blocks";
@@ -35,7 +34,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public SolarPanelEntity( CubeGridEntity parent, MyObjectBuilder_SolarPanel definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
-			m_powerProducer = new PowerProducer( Parent.PowerManager, ActualObject );
 		}
 
 		#endregion "Constructors and Intializers"
@@ -57,33 +55,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 		[DataMember]
 		[Category( "Solar Panel" )]
-		public float MaxPower
-		{
-			get { return PowerProducer.MaxPowerOutput; }
-			set
-			{
-				m_maxPowerOutput = value;
-
-				MySandboxGame.Static.Invoke( InternalUpdateMaxPowerOutput );
-			}
-		}
+		public float TotalPower => Parent.TotalPower;
 
 		[DataMember]
 		[Category( "Solar Panel" )]
-		public float Power
-		{
-			get { return PowerProducer.PowerOutput; }
-			set { PowerProducer.PowerOutput = value; }
-		}
-
-		[IgnoreDataMember]
-		[Category( "Solar Panel" )]
-		[Browsable( false )]
-		[ReadOnly( true )]
-		internal PowerProducer PowerProducer
-		{
-			get { return m_powerProducer; }
-		}
+		public float AvailablePower => Parent.AvailablePower;
 
 		#endregion "Properties"
 

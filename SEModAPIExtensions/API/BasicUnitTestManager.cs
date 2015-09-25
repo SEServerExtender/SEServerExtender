@@ -219,12 +219,6 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn("InventoryItemEntity reflection validation failed!");
 			}
 
-			if (!PowerProducer.ReflectionUnitTest())
-			{
-				result = false;
-				BaseLog.Warn("PowerProducer reflection validation failed!");
-			}
-
 			if (!VoxelMap.ReflectionUnitTest())
 			{
 				result = false;
