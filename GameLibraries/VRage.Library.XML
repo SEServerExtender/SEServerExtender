@@ -281,6 +281,12 @@
             Done by caching changes and allowing explicit application using Apply* methods.
             </summary>
         </member>
+        <member name="T:VRage.Collections.MyConcurrentHashSet`1">
+            <summary>
+            Simple thread-safe queue.
+            Uses spin-lock
+            </summary>
+        </member>
         <member name="T:VRage.Library.Collections.MyIndexArray`1">
             <summary>
             Automatically resizing array when accessing index.
