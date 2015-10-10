@@ -121,7 +121,7 @@ namespace SEModAPIExtensions.API
 						Vector3 shipVelocity = travelVector * Math.Min( cubeGrid.MaxLinearVelocity, Math.Max( 1.0f, entry.Speed ) );
 						cubeGrid.LinearVelocity = shipVelocity;
 
-						cubeGrid.IsDampenersEnabled = false;
+						//cubeGrid.IsDampenersEnabled = false;
 
 						foreach ( MyObjectBuilder_CubeBlock cubeBlock in cubeGrid.BaseCubeBlocks )
 						{

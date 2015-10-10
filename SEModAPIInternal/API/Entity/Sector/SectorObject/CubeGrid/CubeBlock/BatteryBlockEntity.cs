@@ -6,6 +6,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Game.EntityComponents;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -35,6 +36,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		public static string BatteryBlockSetProducerEnabledMethod = "set_ProductionEnabled";
 		public static string BatteryBlockGetSemiautoEnabledMethod = "get_SemiautoEnabled";
 		public static string BatteryBlockSetSemiautoEnabledMethod = "set_SemiautoEnabled";
+		public const string BatteryBlockSourceCompProperty = "SourceComp";
 
 		//Internal fields
 		public static string BatteryBlockCurrentStoredPowerField = "m_currentStoredPower";
@@ -234,20 +236,19 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 					throw new Exception( "Could not find internal type for BatteryBlockEntity" );
 
 				result &= Reflection.HasMethod( type, BatteryBlockGetCurrentStoredPowerMethod );
-				result &= Reflection.HasMethod( type, BatteryBlockSetCurrentStoredPowerMethod );
+				result &= Reflection.HasProperty( type, "CurrentStoredPower" );
 				result &= Reflection.HasMethod( type, BatteryBlockGetMaxStoredPowerMethod );
 				result &= Reflection.HasMethod( type, BatteryBlockSetMaxStoredPowerMethod );
-				result &= Reflection.HasMethod( type, BatteryBlockGetProducerEnabledMethod );
-				result &= Reflection.HasMethod( type, BatteryBlockSetProducerEnabledMethod );
 				result &= Reflection.HasMethod( type, BatteryBlockGetSemiautoEnabledMethod );
 				result &= Reflection.HasMethod( type, BatteryBlockSetSemiautoEnabledMethod );
 
 				result &= Reflection.HasField( type, BatteryBlockCurrentStoredPowerField );
 				result &= Reflection.HasField( type, BatteryBlockMaxStoredPowerField );
-				result &= Reflection.HasField( type, BatteryBlockProducerEnabledField );
 				result &= Reflection.HasField( type, BatteryBlockSemiautoEnabledField );
 				result &= Reflection.HasField( type, BatteryBlockBatteryDefinitionField );
 				result &= Reflection.HasField( type, BatteryBlockNetManagerField );
+
+				result &= Reflection.HasProperty( type, BatteryBlockSourceCompProperty );
 
 				return result;
 			}
@@ -397,6 +398,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				return type;
 			}
 		}
+
+
 
 		#endregion "Properties"
 

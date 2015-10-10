@@ -12,14 +12,13 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		private CubeGridEntity m_parent;
 		private Object m_backingObject;
 
-		private PowerManager m_powerManager;
-		private CubeGridThrusterManager m_thrusterManager;
+		//private CubeGridThrusterManager m_thrusterManager;
 
 		public static string CubeGridManagerManagerNamespace = "";
 		public static string CubeGridManagerManagerClass = "Sandbox.Game.Entities.Cube.MyCubeGridSystems";
 
-		public static string CubeGridManagerManagerGetPowerManagerMethod = "get_PowerDistributor";
-		public static string CubeGridManagerManagerGetThrusterManagerMethod = "get_ThrustSystem";
+		//public static string CubeGridManagerManagerGetPowerManagerMethod = "get_PowerDistributor";
+		//public static string CubeGridManagerManagerGetThrusterManagerMethod = "get_ThrustSystem";
 
 		#endregion "Attributes"
 
@@ -30,8 +29,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			m_parent = parent;
 			m_backingObject = backingObject;
 
-			m_powerManager = new PowerManager( GetPowerManager( ) );
-			m_thrusterManager = new CubeGridThrusterManager( GetThrusterManager( ), m_parent );
+			//m_thrusterManager = new CubeGridThrusterManager( GetThrusterManager( ), m_parent );
 		}
 
 		#endregion "Constructors and Initializers"
@@ -52,15 +50,10 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			get { return m_backingObject; }
 		}
 
-		public PowerManager PowerManager
-		{
-			get { return m_powerManager; }
-		}
-
-		public CubeGridThrusterManager ThrusterManager
-		{
-			get { return m_thrusterManager; }
-		}
+		//public CubeGridThrusterManager ThrusterManager
+		//{
+		//	get { return m_thrusterManager; }
+		//}
 
 		#endregion "Properties"
 
@@ -74,8 +67,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 				if ( type == null )
 					throw new Exception( "Could not find internal type for CubeGridManagerManager" );
 				bool result = true;
-				result &= Reflection.HasMethod( type, CubeGridManagerManagerGetPowerManagerMethod );
-				result &= Reflection.HasMethod( type, CubeGridManagerManagerGetThrusterManagerMethod );
+				//result &= Reflection.HasMethod( type, CubeGridManagerManagerGetPowerManagerMethod );
+				//result &= Reflection.HasMethod( type, CubeGridManagerManagerGetThrusterManagerMethod );
 
 				return result;
 			}
@@ -86,17 +79,11 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 		}
 
-		private Object GetPowerManager( )
-		{
-			Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetPowerManagerMethod );
-			return manager;
-		}
-
-		private Object GetThrusterManager( )
-		{
-			Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetThrusterManagerMethod );
-			return manager;
-		}
+		//private Object GetThrusterManager( )
+		//{
+		//	Object manager = BaseObject.InvokeEntityMethod( BackingObject, CubeGridManagerManagerGetThrusterManagerMethod );
+		//	return manager;
+		//}
 
 		#endregion "Methods"
 	}
