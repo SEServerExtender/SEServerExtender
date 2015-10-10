@@ -13,6 +13,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
+	using VRage.ObjectBuilders;
 	using VRage.Utils;
 
 	[DataContract]
@@ -331,7 +332,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 		public override void Export( FileInfo fileInfo )
 		{
-			BaseObjectManager.SaveContentFile( ObjectBuilder, fileInfo );
+			MyObjectBuilderSerializer.SerializeXML( fileInfo.FullName, false, ObjectBuilder );
 		}
 
 		#region "Internal"
