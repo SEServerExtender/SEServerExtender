@@ -563,14 +563,15 @@
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "nopower" ) )
 				{
 					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-					List<CubeGridEntity> entitiesToDispose = entities.Where( entity => entity.TotalPower <= 0 ).ToList( );
+					//List<CubeGridEntity> entitiesToDispose = entities.Where( entity => entity.TotalPower <= 0 ).ToList( );
 
-					foreach ( CubeGridEntity entity in entitiesToDispose )
-					{
-						entity.Dispose( );
-					}
+					//foreach ( CubeGridEntity entity in entitiesToDispose )
+					//{
+					//	entity.Dispose( );
+					//}
 
-					SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
+					//SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
+					SendPrivateChatMessage( remoteUserId, "Unpowered grids removal temporarily unavailable in this version." );
 				}
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "floatingobjects" ) )	//All floating objects
 				{
