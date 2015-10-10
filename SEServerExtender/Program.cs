@@ -394,7 +394,7 @@ namespace SEServerExtender
 			catch ( Exception ex )
 			{
 				if ( !extenderArgs.NoConsole )
-					BaseLog.Info( "Exception - {0}", ex );
+					BaseLog.Info( ex, "Exception - {0}", ex );
 				if ( !extenderArgs.NoGui )
 					MessageBox.Show( ex.ToString( ), @"SEServerExtender", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
@@ -439,7 +439,7 @@ namespace SEServerExtender
 
 		public static void Application_ThreadException( Object sender, ThreadExceptionEventArgs e )
 		{
-			BaseLog.Error( "Application Thread Exception", e.Exception );
+			BaseLog.Error( e.Exception, "Application Thread Exception" );
 		}
 
 		public static void AppDomain_UnhandledException( Object sender, UnhandledExceptionEventArgs e )

@@ -50,9 +50,9 @@ namespace SEModAPIInternal.Support
 			BaseLog.Info( text );
 		}
 
-		public static void Error( string text, Exception ex )
+		public static void Error( Exception ex, string text )
 		{
-			BaseLog.Error( text, ex );
+			BaseLog.Error( ex, text, ex );
 		}
 
 		public static void Error( string text )
