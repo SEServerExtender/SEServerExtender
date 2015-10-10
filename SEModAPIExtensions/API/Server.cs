@@ -458,7 +458,7 @@ namespace SEModAPIExtensions.API
 		[SecurityCritical]
 		static void Application_ThreadException( object sender, ThreadExceptionEventArgs e )
 		{
-			ApplicationLog.BaseLog.Fatal( "Application.ThreadException - {0}", e.Exception );
+			ApplicationLog.BaseLog.Fatal( e.Exception,"Application.ThreadException - {0}", e.Exception );
 		}
 
 		[HandleProcessCorruptedStateExceptions]

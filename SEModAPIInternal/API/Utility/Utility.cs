@@ -238,7 +238,7 @@ namespace SEModAPIInternal.API.Utility
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to generate entity id", ex );
+				ApplicationLog.BaseLog.Error( ex, "Failed to generate entity id", ex );
 				return 0;
 			}
 		}

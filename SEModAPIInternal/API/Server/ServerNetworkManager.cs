@@ -872,7 +872,7 @@ namespace SEModAPIInternal.API.Server
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "SendWorldData Error: {0}", ex );
+				ApplicationLog.BaseLog.Error( ex, "SendWorldData Error: {0}", ex );
 			}
 		}
 
