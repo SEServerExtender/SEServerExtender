@@ -393,6 +393,26 @@
             Implementation should only store and return passed object.
             </summary>
         </member>
+        <member name="M:VRage.Components.MyResourceSourceComponentBase.CurrentOutputByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Currently used power output of the producer in MW or litres/h.
+            </summary>
+        </member>
+        <member name="M:VRage.Components.MyResourceSourceComponentBase.MaxOutputByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Maximum power output of the producer in MW or litres/h.
+            </summary>
+        </member>
+        <member name="M:VRage.Components.MyResourceSourceComponentBase.DefinedOutputByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Max resource output defined in definition in MW or litres/h.
+            </summary>
+        </member>
+        <member name="M:VRage.Components.MyResourceSourceComponentBase.ProductionEnabledByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Resource production is enabled
+            </summary>
+        </member>
         <member name="M:VRage.MyEntityIdentifier.MarkIdUsed(System.Int64)">
             <summary>
             This method is used when loading existing entity IDs to track the last generated ID
