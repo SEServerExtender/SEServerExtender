@@ -5,6 +5,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Game.EntityComponents;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
@@ -109,16 +110,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 				//Do nothing!
 			}
 		}
-
-		[DataMember]
-		[Category( "Reactor" )]
-		[DisplayName("Total Power Output (MW)")]
-		public float TotalPower => Parent.TotalPower;
-
-		[DataMember]
-		[Category( "Reactor" )]
-		[DisplayName( "Available Power (MW)" )]
-		public float Power => Parent.AvailablePower;
 
 		#endregion "Properties"
 

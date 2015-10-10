@@ -53,14 +53,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			}
 		}
 
-		[DataMember]
-		[Category( "Solar Panel" )]
-		public float TotalPower => Parent.TotalPower;
-
-		[DataMember]
-		[Category( "Solar Panel" )]
-		public float AvailablePower => Parent.AvailablePower;
-
 		#endregion "Properties"
 
 		#region "Methods"

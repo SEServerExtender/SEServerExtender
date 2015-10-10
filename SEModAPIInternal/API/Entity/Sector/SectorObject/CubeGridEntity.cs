@@ -344,19 +344,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 		[Category( "Cube Grid" )]
 		[Browsable( false )]
 		[ReadOnly( true )]
-		public PowerManager PowerManager
-		{
-			get { return _managerManager.PowerManager; }
-			private set
-			{
-				//Do nothing!
-			}
-		}
-
-		[IgnoreDataMember]
-		[Category( "Cube Grid" )]
-		[Browsable( false )]
-		[ReadOnly( true )]
 		public CubeGridThrusterManager ThrusterManager
 		{
 			get { return _managerManager.ThrusterManager; }
@@ -379,30 +366,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 
 				return isLoading;
 			}
-			private set
-			{
-				//Do nothing!
-			}
-		}
-
-		[IgnoreDataMember]
-		[Category( "Cube Grid" )]
-		[ReadOnly( true )]
-		public float TotalPower
-		{
-			get { return PowerManager.TotalPower; }
-			private set
-			{
-				//Do nothing!
-			}
-		}
-
-		[IgnoreDataMember]
-		[Category( "Cube Grid" )]
-		[ReadOnly( true )]
-		public float AvailablePower
-		{
-			get { return PowerManager.AvailablePower; }
 			private set
 			{
 				//Do nothing!
