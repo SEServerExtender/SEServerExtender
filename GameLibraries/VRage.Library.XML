@@ -89,10 +89,27 @@
             Number of reserved ids, zero is also reserved, but not counted.
             </summary>
         </member>
+        <member name="M:VRage.Library.Collections.BitReaderWriter.ReadData(VRage.Library.Collections.IBitSerializable,System.Boolean)">
+            <summary>
+            Returns false when validation was required and failed, otherwise true.
+            </summary>
+        </member>
         <member name="T:VRage.Library.Collections.BitReader">
             <summary>
             Lightweight bit reader which works on native pointer.
             Stores bit length and current position.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.BitStream">
+            <summary>
+            Stream which writes data based on bits.
+            When writing, buffer must be reset to zero to write values correctly, this is done by ResetWrite() methods or SetPositionAndClearForward()
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.SetBitPositionWrite(System.Int32)">
+            <summary>
+            Use when you need to overwrite part of the data.
+            Sets new bit position and clears everything from min(old position, new position) to end of stream.
             </summary>
         </member>
         <member name="M:VRage.Library.Collections.BitStream.WriteVariantSigned(System.Int32)">
@@ -135,10 +152,12 @@
             Etc...
             </summary>
         </member>
-        <member name="F:VRage.Library.Collections.BitStream.BitPosition">
+        <member name="M:VRage.Library.Collections.BitStream.ReadPrefixLengthString(System.Char[]@,System.Text.Encoding)">
             <summary>
-            Read/write bit position in stream.
+            Reads prefixed length string, returns nubmer of characters read.
+            Passed array is automatically resized when needed.
             </summary>
+            <returns>Nubmer of characters read.</returns>
         </member>
         <member name="M:VRage.Library.Collections.BitStream.ResetRead">
             <summary>
@@ -146,6 +165,11 @@
             </summary>
         </member>
         <member name="M:VRage.Library.Collections.BitStream.ResetRead(System.Byte[],System.Int32)">
+            <summary>
+            Resets stream for reading and copies data.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.ResetRead(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Resets stream for reading and copies data.
             </summary>
@@ -243,6 +267,11 @@
             Serializes fixed-size byte array or it's part (length is NOT serialized).
             </summary>
         </member>
+        <member name="P:VRage.Library.Collections.BitStream.BitPosition">
+            <summary>
+            Read/write bit position in stream.
+            </summary>
+        </member>
         <member name="P:VRage.Library.Collections.BitStream.BitLength">
             <summary>
             Length of valid data (when reading) or buffer (when writing) in bits.
@@ -279,6 +308,26 @@
             <summary>
             List wrapper that allows for addition and removal even during enumeration.
             Done by caching changes and allowing explicit application using Apply* methods.
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.DynamicSerializerDelegate">
+            <summary>
+            Dynamic object serializer, when writing, serializes object type.
+            When reading deserializes object type and creates new instance.
+            </summary>
+            <param name="stream">Stream to read from or write to.</param>
+            <param name="baseType">Hierarchy base type of dynamically serialized object, can be used to select serialization method (e.g. object builders have something special).</param>
+            <param name="obj">Object whose type to write or read and instantiate.</param>
+        </member>
+        <member name="M:VRage.Library.Collections.IBitSerializable.Serialize(VRage.Library.Collections.BitStream,System.Boolean)">
+            <summary>
+            When reading, returns false when validation was required and failed, otherwise true.
+            </summary>
+        </member>
+        <member name="T:VRage.Collections.MyConcurrentDictionary`2">
+            <summary>
+            Simple thread-safe queue.
+            Uses spin-lock
             </summary>
         </member>
         <member name="T:VRage.Collections.MyConcurrentHashSet`1">
@@ -370,7 +419,7 @@
             The keys must derivable from value, if it's not the case use MultiKeyDictionary.
             </summary>
         </member>
-        <member name="P:VRage.Serialization.SerializableDictionary`2.Dictionary">
+        <member name="P:VRage.Serialization.SerializableDictionaryHack`2.Dictionary">
             <summary>
             Public stuff dictionary.
             </summary>
@@ -378,15 +427,7 @@
             Note the XmlIgnore attribute.
             </remarks>
         </member>
-        <member name="P:VRage.Serialization.SerializableDictionary`2.DictionaryEntryProp">
-            <summary>
-            Property created expressly for the XmlSerializer
-            </summary>
-            <remarks>
-            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
-            </remarks>
-        </member>
-        <member name="P:VRage.Serialization.SerializableDictionaryCompat`3.DictionaryEntryProp">
+        <member name="P:VRage.Serialization.SerializableDictionaryHack`2.DictionaryEntryProp">
             <summary>
             Property created expressly for the XmlSerializer
             </summary>
@@ -768,6 +809,14 @@
             <summary>
             Returns true if the given link between parent and child exists, you can set child to null to find it by linkId.
             </summary>
+        </member>
+        <member name="M:VRage.Groups.MyGroupsBase`1.GetGroupNodes(`0)">
+            <summary>
+            Allocates!!
+            Returns list of nodes datas in group
+            </summary>
+            <param name="nodeInGroup"></param>
+            <returns></returns>
         </member>
         <member name="M:VRage.Groups.MyGroups`2.#ctor(System.Boolean,VRage.Groups.MyGroups{`0,`1}.MajorGroupComparer)">
             <summary>
@@ -6189,15 +6238,6 @@
             <summary>
             WM_SYSTIMER is a well-known yet still undocumented message. Windows uses WM_SYSTIMER for internal actions like scrolling.
             </summary>
-        </member>
-        <member name="T:VRage.Library.Collections.DynamicSerializerDelegate">
-            <summary>
-            Dynamic object serializer, when writing, serializes object type.
-            When reading deserializes object type and creates new instance.
-            </summary>
-            <param name="stream">Stream to read from or write to.</param>
-            <param name="baseType">Hierarchy base type of dynamically serialized object, can be used to select serialization method (e.g. object builders have something special).</param>
-            <param name="obj">Object whose type to write or read and instantiate.</param>
         </member>
     </members>
 </doc>

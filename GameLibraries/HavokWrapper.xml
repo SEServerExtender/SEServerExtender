@@ -4,9 +4,6 @@
         "HavokWrapper"
     </assembly>
     <members>
-        <member name="M:hkpSmartListShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
 </member>
@@ -162,6 +159,9 @@ Input value is rounded down to a multiple of 8. Values between 8 and 128 are acc
 Gets shape keys, for debug purposes, allocates!
 </summary>
         </member>
+        <member name="M:hkpSmartListShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
         <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
 This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
 

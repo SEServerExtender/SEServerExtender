@@ -765,14 +765,6 @@
             <param name="gridOffset"></param>
             <returns></returns>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.MergeGrid_CopyPaste(Sandbox.ModAPI.IMyCubeGrid,VRageMath.MatrixI)">
-            <summary>
-            Merge used when pasting grid into existing one
-            </summary>
-            <param name="gridToMerge"></param>
-            <param name="mergeTransform"></param>
-            <returns></returns>
-        </member>
         <member name="M:Sandbox.ModAPI.IMyCubeGrid.MergeGrid_MergeBlock(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
             <summary>
             Merge used by merge blocks
@@ -1236,6 +1228,25 @@
             Set/get brake applied to the wheel.
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
+            <summary>
+            Attempts to run this programmable block using the given argument. An already running
+            programmable block cannot be run again.
+            This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
+            </summary>
+            <param name="argument"></param>
+            <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.IsRunning">
+            <summary>
+            This programmable block is currently running its program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TerminalRunArgument">
+            <summary>
+            Contains the value of the default terminal argument.
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.Ingame.PistonStatus">
             <summary>
             Describes the current status of the piston.
@@ -1441,14 +1452,14 @@
             Gets compressed voxel data
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.ReadRange(VRage.Voxels.MyStorageDataCache,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.ReadRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
             </summary>
             <param name="lodVoxelRangeMin">Inclusive.</param>
             <param name="lodVoxelRangeMax">Inclusive.</param>
         </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.WriteRange(VRage.Voxels.MyStorageDataCache,VRage.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.WriteRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Writes range of content and/or materials from cache to storage. Note that this can only write to LOD0 (higher LODs must be computed based on that).
             </summary>

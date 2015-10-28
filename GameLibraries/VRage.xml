@@ -117,8 +117,59 @@
             Enumerator of available curve types
             </summary>
         </member>
+        <member name="M:System.BitCompressionExtensions.ReadQuaternionNormCompressed(VRage.Library.Collections.BitStream)">
+            <summary>
+            Serializes normalized quaternion into 29 bits
+            </summary>
+        </member>
+        <member name="M:System.BitCompressionExtensions.WriteQuaternionNormCompressed(VRage.Library.Collections.BitStream,VRageMath.Quaternion)">
+            <summary>
+            Serializes normalized quaternion into 29 bits
+            </summary>
+        </member>
+        <member name="M:System.BitCompressionExtensions.SerializeNormCompressed(VRage.Library.Collections.BitStream,VRageMath.Quaternion@)">
+            <summary>
+            Serializes normalized quaternion into 29 bits
+            </summary>
+        </member>
+        <member name="M:System.BitCompressionExtensions.ReadQuaternionNormCompressedIdentity(VRage.Library.Collections.BitStream)">
+            <summary>
+            Serializes normalized quaternion into 1 or 30 bits
+            </summary>
+        </member>
+        <member name="M:System.BitCompressionExtensions.WriteQuaternionNormCompressedIdentity(VRage.Library.Collections.BitStream,VRageMath.Quaternion)">
+            <summary>
+            Serializes normalized quaternion into 1 or 30 bits
+            </summary>
+        </member>
+        <member name="M:System.BitCompressionExtensions.SerializeNormCompressedIdentity(VRage.Library.Collections.BitStream,VRageMath.Quaternion@)">
+            <summary>
+            Serializes normalized quaternion into 1 or 30 bits
+            </summary>
+        </member>
         <member name="T:VRage.WoodFractureSettings.Rotation">
             How to rotate the splitting geometry
+        </member>
+        <member name="T:VRage.Generics.MyCachingDynamicObjectsPool`2">
+            This class provides similar functionality to MyDynamicObjectsPool with the addition of caching facilities.
+            
+            The cache is intended to be used for objects that once allocated either perform expensive computations
+            or allocate a lot of memory *and* that may be needed again after disposed in the same state.
+        </member>
+        <member name="M:VRage.Generics.MyCachingDynamicObjectsPool`2.Deallocate(`1)">
+            Deallocate object without key.
+            
+            Object is disposed be callee.
+        </member>
+        <member name="M:VRage.Generics.MyCachingDynamicObjectsPool`2.Deallocate(`0,`1)">
+            Deallocate object with key.
+            
+            Object is cached and disposed if necessary.
+        </member>
+        <member name="M:VRage.Generics.MyCachingDynamicObjectsPool`2.TryAllocateCached(`0,`1@)">
+            Allocate an object that may be cached.
+            
+            Returns true if the object was found in the cache and false otherwise.
         </member>
         <member name="M:VRage.Import.ModelAutoRebuild.IsModelActual(System.String,System.String,System.String,System.String)">
             <summary>
@@ -351,6 +402,29 @@
             This is reliable, enforced by .NET documentation.
             Without this environment variable, CLR won't attach profiler.
             </summary>
+        </member>
+        <member name="T:VRage.MyDeltaTransform">
+            <summary>
+            Transform structure for delta-transforms with small to medium positional delta (stored as HalfVector3)
+            </summary>
+        </member>
+        <member name="T:VRage.NetProfiler">
+            <summary>
+            Shortcut class for network profiler.
+            </summary>
+        </member>
+        <member name="M:VRage.NetProfiler.Begin(System.String,System.Int32,System.String,System.Int32,System.String)">
+            <summary>
+            Starts net profiling block.
+            </summary>
+        </member>
+        <member name="M:VRage.NetProfiler.End(System.Nullable{System.Single},System.Single,System.String,System.String,System.String,System.String,System.Int32,System.String)">
+            <summary>
+            End net profiling block.
+            </summary>
+            <param name="bytesTransfered">Specify number of bytes transferred or null to automatically calculate number of bytes from inner blocks.</param>
+            <param name="customValue">You can put any number here.</param>
+            <param name="customValueFormat">This is formatting string how the number will be written on screen, use something like: 'MyNumber: {0} foos/s'</param>
         </member>
         <member name="T:VRage.Noise.MyModule">
             <summary>
@@ -754,6 +828,50 @@
             Helper class, "shortcuts" to profiler
             </summary>
         </member>
+        <member name="T:VRageRender.Profiler.MyRenderProfiler">
+            <summary>
+            Provides profiling capability
+            </summary>
+            <remarks>
+            Non-locking way of render profiler is used. Each thread has it's own profiler is ThreadStatic variable.
+            Data for each profiling block are of two kinds: Immediate (current frame being profiled) and History (previous finished frames)
+            Start/End locking is not necessary, because Start/Stop uses only immediate data and nothing else uses it at the moment.
+            Commit is only other place which uses Immediate data, but it must be called from same thead, no racing condition.
+            Draw and Commit both uses History data, and both can be called from different thread, so there's lock.
+            This way everything runs with no waiting, unless Draw obtains lock in which case Commit wait for Draw to finish (Start/End is still exact).
+            
+            For threads which does not call commit (background workers, parallel tasks), mechanism which calls commit automatically after each top level End should be added.
+            This way each task will be one "frame" on display
+            </remarks>
+        </member>
+        <member name="M:VRageRender.Profiler.MyRenderProfiler.CreateProfiler(System.String,System.String,System.Boolean)">
+            <summary>
+            Creates new profiler which can be used to profile anything (e.g. network stats).
+            </summary>
+        </member>
+        <member name="P:VRageRender.Profiler.MyRenderProfiler.ProfilerVisible">
+            <summary>
+            Returns true when profiler is visible.
+            </summary>
+        </member>
+        <member name="F:VRageRender.Profiler.MyDrawArea.m_index">
+            <summary>
+            Index 0, 1, 2, 3, 4, 5...
+            Makes range 1, 1.5, 2, 3, 4, 6, 8, 12, 24, 32, 48, 64...
+            Negative index is supported as well.
+            </summary>
+        </member>
+        <member name="M:VRageRender.Profiler.MyDrawArea.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes draw area.
+            </summary>
+            <param name="yRange">Range of y axis, will be rounded to 2^n or 2^n * 1.5</param>
+        </member>
+        <member name="P:VRageRender.Profiler.MyRenderProfilerRendering.ViewportSize">
+            <summary>
+            Returns viewport size in pixels
+            </summary>
+        </member>
         <member name="T:VRageRender.MyRenderStats">
             <summary>
             Draws statistics
@@ -983,22 +1101,6 @@
             1/16 quality
             </summary>
         </member>
-        <member name="T:VRageRender.Profiler.MyRenderProfiler">
-            <summary>
-            Provides profiling capability
-            </summary>
-            <remarks>
-            Non-locking way of render profiler is used. Each thread has it's own profiler is ThreadStatic variable.
-            Data for each profiling block are of two kinds: Immediate (current frame being profiled) and History (previous finished frames)
-            Start/End locking is not necessary, because Start/Stop uses only immediate data and nothing else uses it at the moment.
-            Commit is only other place which uses Immediate data, but it must be called from same thead, no racing condition.
-            Draw and Commit both uses History data, and both can be called from different thread, so there's lock.
-            This way everything runs with no waiting, unless Draw obtains lock in which case Commit wait for Draw to finish (Start/End is still exact).
-            
-            For threads which does not call commit (background workers, parallel tasks), mechanism which calls commit automatically after each top level End should be added.
-            This way each task will be one "frame" on display
-            </remarks>
-        </member>
         <member name="T:VRageRender.MyRenderSettings">
             <summary>
             Settings for whole render. To make settings per draw, use RenderSetup
@@ -1147,6 +1249,442 @@
             Rotate 180 degress around both the X and Y axis before rendering.
             </summary>
         </member>
+        <member name="T:VRage.Network.BroadcastExceptAttribute">
+            <summary>
+            Client method. Decorated method is be called by server on all clients (except the one who invoked it on server or the one specified in RaiseEvent...when called from server).
+            Clients always trust server and does not perform any validation.
+            When used together with Server attribute, server validates data, invokes the method on server and then sends it to all clients except the client who invoked it on server.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.BroadcastAttribute">
+            <summary>
+            Client method. Decorated method is be called by server on all clients.
+            Clients always trust server and does not perform any validation.
+            When used together with Server attribute, server validates data, invokes the method on server and then sends it to all clients.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.ClientAttribute">
+            <summary>
+            Client method. Decorated method is be called by server on client.
+            Clients always trust server and does not perform any validation.
+            When used together with Server attribute, server validates data, invokes the method on server and then sends it to client who invoked it on server.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.EndpointId">
+            <summary>
+            Id of network endpoint, opaque struct, internal value should not be accessed outside VRage.Network.
+            EndpointId is not guid and can change when client reconnects to server.
+            Internally it's SteamId or RakNetGUID.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyClientInfo.GetPriority(VRage.Network.IMyReplicable)">
+            <summary>
+            Gets priority of different replicable.
+            E.g. can be used to get priority of grid when calling GetPriority on cube block.
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyReplicables.Add(VRage.Network.IMyReplicable,VRage.Network.IMyReplicable@)">
+            <summary>
+            Sets or resets replicable (updates child status and parent).
+            Returns true if replicable is root, otherwise false.
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyReplicables.RefreshChildrenHierarchy(VRage.Network.IMyReplicable)">
+            <summary>
+            Refreshes all children.
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyReplicables.Refresh(VRage.Network.IMyReplicable)">
+            <summary>
+            Refreshes replicable, updates it's child status and parent.
+            Returns true if replicable is root.
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyReplicables.Remove(VRage.Network.IMyReplicable)">
+            <summary>
+            Removes replicable, children should be already removed
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyReplicables.RemoveHierarchy(VRage.Network.IMyReplicable)">
+            <summary>
+            Removes replicable with all children, children of children, etc.
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyReplicables.RemoveChildren(VRage.Network.IMyReplicable)">
+            <summary>
+            Removes all children of replicable.
+            Children of children should be already removed!
+            </summary>
+        </member>
+        <member name="T:VRage.Network.NotReplicableAttribute">
+            <summary>
+            Marks class which should be never replicated.
+            </summary>
+        </member>
+        <member name="M:System.Extensions.FindStateGroup``1(VRage.Network.IMyReplicable)">
+            <summary>
+            Finds state group of specified type.
+            Returns null when group of specified type not found.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.IMyEventOwner">
+            <summary>
+            Common interface for IMyNetObject and IMyEventProxy used to raise events.
+            Base interface for classes passed as event instance.
+            Custom implementations not supported.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.IMyNetObject">
+            <summary>
+            Base interface for networked object.
+            Derived interfaces are so far IMyReplicable and IMyStateGroup.
+            </summary>
+        </member>
+        <member name="P:VRage.Network.IMyProxyTarget.Target">
+            <summary>
+            Gets target object.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.GetDependency">
+            <summary>
+            Gets dependency which must be replicated first.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.GetPriority(VRage.Network.MyClientInfo)">
+            <summary>
+            Gets priority related to client.
+            When priority is lower than zero, it means the object is not relevant for client.
+            Default priority is 1.0f.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.OnSave(VRage.Library.Collections.BitStream)">
+            <summary>
+            Serializes object for replication to client.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.OnLoad(VRage.Library.Collections.BitStream,System.Action{System.Boolean})">
+            <summary>
+            Client deserializes object and adds it to proper collection (e.g. MyEntities).
+            Loading done handler can be called synchronously or asynchronously (but always from Update thread).
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.OnDestroy">
+            <summary>
+            Called on client when server destroyed this replicable.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.GetStateGroups(System.Collections.Generic.List{VRage.Network.IMyStateGroup})">
+            <summary>
+            Returns state groups for replicable in a list.
+            This method can has to return objects in same order every time (e.g. first terminal, second physics etc).
+            It does not have to return same instances every time.
+            </summary>
+        </member>
+        <member name="P:VRage.Network.IMyReplicable.IsChild">
+            <summary>
+            Child replicables are strongly dependent on parent.
+            When parent is replicated, children are replicated, priority is never checked for children.
+            Dependency can change during replicable runtime, IsChild can not.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.CreateClientData(VRage.Network.MyClientStateBase)">
+            <summary>
+            Called on server new clients starts replicating this group.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.DestroyClientData(VRage.Network.MyClientStateBase)">
+            <summary>
+            Called on server when client stops replicating this group.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.ClientUpdate">
+            <summary>
+            Update method called on client.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.Destroy">
+            <summary>
+            Called when state group is being destroyed.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.GetGroupPriority(System.Int32,VRage.Network.MyClientInfo)">
+            <summary>
+            Gets priority related to client.
+            When priority is lower than zero, it means the object is not relevant for client.
+            Default priority is 1.0f.
+            </summary>
+            <param name="frameCountWithoutSync">How long (in update frame count) has client not received sync of this state group.</param>
+            <param name="forClient">Client for whom is the priority get.</param>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.MyClientStateBase,System.Byte,System.Int32)">
+            <summary>
+            (De)serializes group state or it's diff for client.
+            When writing, you can write beyond maxBitPosition, but message won't be sent and ACKs won't be received for it.
+            ReplicationServer will detect, that state group written beyond packet size and revert it.
+            When nothing written, ReplicationServer will detect that and state group won't receive ACK for that packet id.
+            </summary>
+            <param name="stream">Stream to write to or read from.</param>
+            <param name="forClient">When writing the client which will receive the data. When reading, it's null.</param>
+            <param name="packetId">Id of packet in which the data will be sent or from which the data is received.</param>
+            <param name="maxBitPosition">Maximum position in bit stream where you can write data, it's inclusive.</param>
+        </member>
+        <member name="M:VRage.Network.IMyStateGroup.OnAck(VRage.Network.MyClientStateBase,System.Byte,System.Boolean)">
+            <summary>
+            Called for each packet id sent to client from this state group.
+            When ACK received, called immediatelly.
+            When several other packets received from client, but some were missing, called for each missing packet.
+            </summary>
+            <param name="forClient">The client.</param>
+            <param name="packetId">Id of the delivered or lost packet.</param>
+            <param name="delivered">True when packet was delivered, false when packet is considered lost.</param>
+        </member>
+        <member name="M:VRage.Network.MyReplicationLayerBase.InvokeLocally``7(VRage.Network.CallSite{``0,``1,``2,``3,``4,``5,``6},``0,``1,``2,``3,``4,``5,``6)">
+            <summary>
+            Invokes event locally without validation and with empty Sender and ClientData.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.RefreshReplicableAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:VRage.Network.MyClientStateBase">
+            <summary>
+            Base class for game-defined client state.
+            It's set of data required by server, sent from client.
+            E.g. current client area of interest, context (game, terminal, inventory etc...)
+            Abstract class for performance reasons (often casting)
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyClientStateBase.Serialize(VRage.Library.Collections.BitStream)">
+            <summary>
+            Serializes state into/from bit stream.
+            EndpointId should be ignored.
+            </summary>
+        </member>
+        <member name="P:VRage.Network.MyClientStateBase.EndpointId">
+            <summary>
+            Client endpoint, don't serialize it in Serialize()
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyEventContext.Sender">
+            <summary>
+            Event sender, default(EndpointId) when invoked locally.
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyEventContext.ClientState">
+            <summary>
+            Event sender client data, valid only when invoked remotely on server, otherwise null.
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyEventContext.IsValidationRequired">
+            <summary>
+            True if validation is required.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyPacketQueue.Clear">
+            <summary>
+            Clears whole queue.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyPacketQueue.Enqueue(VRage.Library.Collections.BitStream,System.Single,VRage.Network.EndpointId)">
+            <summary>
+            Sends message, when broadcasting, recipient is peer who won't receive the message.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyPacketQueue.Send(System.Int32)">
+            <summary>
+            Sends packets in queue, sends no more than maxBytesToSend.
+            Returns number of bytes sent.
+            </summary>
+        </member>
+        <member name="P:VRage.Replication.MyReplicableClientData.IsSleeping">
+            <summary>
+            When replicable is sleeping, it should not receive state updates. But it has to receive events.
+            </summary>
+        </member>
+        <member name="P:VRage.Replication.MyReplicableClientData.HasActiveStateSync">
+            <summary>
+            Returns true when replicable is not pending and is not sleeping.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationLayer.ReserveFixedIds(System.UInt32)">
+            <summary>
+            Reserves IDs for fixed objects.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationLayer.AddFixedNetworkObject(System.UInt32,VRage.Network.IMyNetObject)">
+            <summary>
+            Add network object with fixed ID.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationLayer.DispatchEvent(VRage.Library.Collections.BitStream,VRage.Network.CallSite,VRage.Network.EndpointId,VRage.Network.IMyNetObject,System.Single)">
+            <summary>
+            Called when event is raised locally to send it to other peer(s).
+            Return true to invoke event locally.
+            </summary>
+            <remarks>
+            Invoking event locally is important to be done AFTER event is sent to other peers, 
+            because invocation can raise another event and order must be preserved.
+            Local event invocation is done in optimized way without unnecessary deserialization.
+            </remarks>
+        </member>
+        <member name="M:VRage.Network.MyReplicationLayer.ProcessEvent(VRage.Library.Collections.BitStream,VRage.Network.CallSite,System.Object,VRage.Network.IMyNetObject,VRage.Network.EndpointId)">
+            <summary>
+            Called when event is received over network.
+            Event can be validated, invoked and/or transferred to other peers.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationLayer.Invoke(VRage.Network.CallSite,VRage.Library.Collections.BitStream,System.Object,VRage.Network.EndpointId,VRage.Network.MyClientStateBase,System.Boolean)">
+            <summary>
+            Reads arguments from stream and invokes event. Returns false when validation failed, otherwise true.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationClient.SetReplicableReady(VRage.Network.NetworkId,VRage.Network.IMyReplicable,System.Boolean)">
+            <summary>
+            Marks replicable as successfully created, ready to receive events and state groups data.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationClient.ProcessStateSync(VRage.MyPacket)">
+            <summary>
+            Processes state sync sent by server.
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyReplicationServer.m_replicables">
+            <summary>
+            All replicables on server.
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyReplicationServer.m_replicableGroups">
+            <summary>
+            All replicable state groups.
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyReplicationServer.m_clientStates">
+            <summary>
+            Network objects and states which are actively replicating to clients.
+            </summary>
+        </member>
+        <member name="F:VRage.Network.MyReplicationServer.m_timeFunc">
+            <summary>
+            Function which provides current update time
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationServer.PauseReplication">
+            <summary>
+            Stops sending replication create until resumed.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationServer.ForceReplicable(VRage.Network.IMyReplicable,VRage.Network.IMyReplicable)">
+            <summary>
+            Hack to allow thing like: CreateCharacter, Respawn sent from server
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationServer.ForceReplicable(VRage.Network.IMyReplicable,VRage.Network.EndpointId)">
+            <summary>
+            Hack to allow thing like: CreateCharacter, Respawn sent from server
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationServer.ResetForClients(VRage.Network.IMyReplicable)">
+            <summary>
+            Destroys replicable for all clients (used for testing and debugging).
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationServer.IsPreceding(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns true when current packet is closely preceding last packet (is within threshold)
+            </summary>
+        </member>
+        <member name="T:VRage.Network.MySynchronizedTypeInfo">
+            <summary>
+            Type descriptor for synchronized type.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.MyTypeTable.Serialize(VRage.Library.Collections.BitStream)">
+            <summary>
+            Serializes id to hash list.
+            Server sends the hashlist to client, client reorders type table to same order as server.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.NetworkId">
+            <summary>
+            Network object identifier. Similar to entity id, but on network.
+            Also one entity can have multiple NetworkIds, one main, one for physics sync, one for terminal sync and more.
+            Opaque struct, it should not be necessary to internal member outside VRage.Network.
+            NetworkId is not persistent and changes with server restart, never store it in persistent storage (saves).
+            Internally takes advantage of small numbers.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.ReliableAttribute">
+            <summary>
+            Event which is sent reliably, use with caution and only when necessary!
+            </summary>
+        </member>
+        <member name="T:VRage.Network.ServerAttribute">
+            <summary>
+            Server method. Decorated method is be called by client on server or by server locally.
+            Server performs validation. Pass null as validation method to perform no validation (not recommended)
+            </summary>
+        </member>
+        <member name="P:VRage.Serialization.SerializableDictionary`2.Dictionary">
+            <summary>
+            Public stuff dictionary.
+            </summary>
+            <remarks>
+            Note the XmlIgnore attribute.
+            </remarks>
+        </member>
+        <member name="P:VRage.Serialization.SerializableDictionary`2.DictionaryEntryProp">
+            <summary>
+            Property created expressly for the XmlSerializer
+            </summary>
+            <remarks>
+            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
+            </remarks>
+        </member>
+        <member name="P:VRage.Serialization.SerializableDictionaryCompat`3.DictionaryEntryProp">
+            <summary>
+            Property created expressly for the XmlSerializer
+            </summary>
+            <remarks>
+            Note the XML Serialiazation attributes; they control what elements are named when this object is serialized.
+            </remarks>
+        </member>
+        <member name="F:VRage.Serialization.SerializeAttribute.Flags">
+            <summary>
+            Serialization flags for member itself.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeAttribute.PrimitiveFlags">
+            <summary>
+            Serialization flags for primitive types, when defined for types, passed down the hierarchy.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeAttribute.FixedLength">
+            <summary>
+            Length for fixed length arrays, collections and strings.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeAttribute.DynamicSerializerType">
+            <summary>
+            Type of dynamic resolver.
+            </summary>
+        </member>
+        <member name="F:VRage.Serialization.SerializeAttribute.Kind">
+            <summary>
+            Kind of attribute, specify Item for collections like list, array or dictionary value, specify Key for dictionary key.
+            </summary>
+        </member>
+        <member name="M:VRage.Serialization.MyMemberSerializer.Clone(System.Object,System.Object)">
+            <summary>
+            Makes clone of object member.
+            </summary>
+        </member>
+        <member name="M:VRage.Serialization.MyMemberSerializer.Equals(System.Object,System.Object)">
+            <summary>
+            Tests equality of object members.
+            </summary>
+        </member>
         <member name="T:VRage.Serialization.MyPrimitiveFlags">
             <summary>
             Primitive flags are passed down the object hierarchy.
@@ -1220,21 +1758,6 @@
             Tests equality.
             </summary>
         </member>
-        <member name="F:VRage.Serialization.SerializeBaseAttribute.Flags">
-            <summary>
-            Serialization flags for member itself.
-            </summary>
-        </member>
-        <member name="F:VRage.Serialization.SerializeBaseAttribute.PrimitiveFlags">
-            <summary>
-            Serialization flags for primitive types, when defined for types, passed down the hierarchy.
-            </summary>
-        </member>
-        <member name="F:VRage.Serialization.SerializeBaseAttribute.FixedLength">
-            <summary>
-            Length for fixed length arrays, collections and strings.
-            </summary>
-        </member>
         <member name="F:VRage.Serialization.MyObjectFlags.None">
             <summary>
             No serialization flags
@@ -1277,6 +1800,47 @@
         <member name="M:VRage.Serialization.MyMemberSerializer`1.Equals(`0@,`0@)">
             <summary>
             Tests equality of object members.
+            </summary>
+        </member>
+        <member name="M:VRage.SyncExtensions.ValidateNever``1(VRage.Sync{``0})">
+            <summary>
+            Sets validation handler to always return false.
+            </summary>
+        </member>
+        <member name="M:VRage.SyncExtensions.ValidateRange(VRage.Sync{System.Single},System.Single,System.Single)">
+            <summary>
+            Sets validate handler to validate that value is in range.
+            </summary>
+        </member>
+        <member name="M:VRage.SyncExtensions.ValidateRange(VRage.Sync{System.Single},System.Func{System.Single},System.Func{System.Single})">
+            <summary>
+            Sets validate handler to validate that value is in range.
+            </summary>
+        </member>
+        <member name="M:VRage.SyncExtensions.ValidateRange(VRage.Sync{System.Single},System.Func{VRageMath.MyBounds})">
+            <summary>
+            Sets validate handler to validate that value is withing bounds.
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Sync.SyncHelpers.Compose(System.Object,System.Int32,System.Collections.Generic.List{VRage.SyncBase})">
+            <summary>
+            Takes objects and creates instances of Sync fields.
+            </summary>
+        </member>
+        <member name="E:VRage.SyncBase.ValueChanged">
+            <summary>
+            ValueChanged event is raised when value is set locally (settings Value property) or remotely (through deserialization).
+            When validation fails, value is not changed and ValueChanged is not raised.
+            </summary>
+        </member>
+        <member name="F:VRage.Sync`1.Validate">
+            <summary>
+            Validate handler is raised on server after deserialization.
+            </summary>
+        </member>
+        <member name="M:VRage.Sync`1.ValidateAndSet(`0)">
+            <summary>
+            Validates the value and sets it (when valid).
             </summary>
         </member>
         <member name="T:VRage.Utils.MyDiscreteSampler`1">
@@ -1808,32 +2372,9 @@
             0 is the most detailed.
             </summary>
         </member>
-        <member name="F:VRage.Voxels.MyClipmap.m_clipingAdjustment">
-            <summary>
-            adjusts loaded terrain quality
-            negative value represents lowes loaded lod
-            positive value extends number of loaded surrounding lod0 cells
-            </summary>
-        </member>
         <member name="M:VRage.Voxels.MyClipmap.InvalidateRange(VRageMath.Vector3I,VRageMath.Vector3I)">
             <param name="minCellLod0">Inclusive.</param>
             <param name="maxCellLod0">Inclusive.</param>
-        </member>
-        <member name="F:VRage.Voxels.MyClipmap.RequestCollector.m_clipmapId">
-            <summary>
-            Sent requests + low priority requests are checked against this.
-            High priority requests should be sent even when they are over limit.
-            </summary>
-        </member>
-        <member name="M:VRage.Voxels.MyClipmap.LodLevel.PriorityFunc(VRageMath.BoundingBoxD,VRage.Voxels.MyClipmap.LodLevel,System.UInt64,VRage.Voxels.MyCellCoord)">
-            <summary>
-            Priority function for sorting render cell precalc jobs
-            </summary>
-            <param name="cellWorldPos"></param>
-            <param name="parent"></param>
-            <param name="parentCellId"></param>
-            <param name="cell"></param>
-            <returns></returns>
         </member>
         <member name="M:VRage.Voxels.MyClipmap.LodLevel.WasAncestorCellLoaded(VRage.Voxels.MyClipmap.LodLevel,VRage.Voxels.MyCellCoord@)">
             <summary>
@@ -1845,25 +2386,7 @@
             Checks only immediate children (any deeper would take too long).
             </summary>
         </member>
-        <member name="M:VRage.Voxels.MyClipmap.LodLevel.DoClipping(VRageMath.Vector3D,VRage.Voxels.MyClipmap.RequestCollector,System.Int32)">
-            <summary>
-            New clipping routine, call on lowest desired lod with position of camera
-            Should be later enhanced with spread if desired lod would be lower than 0
-            Finaly it will be used as hint for structure managing cells to be calculated and rendered
-            </summary>
-            <param name="localPosition"></param>
-            <param name="collector"></param>
-        </member>
-        <member name="M:VRage.Voxels.MyClipmap.LodLevel.DoClipping(VRage.Voxels.MyClipmap.RequestCollector,VRageMath.Vector3I,VRageMath.Vector3I,VRageMath.BoundingBox@)">
-            <summary>
-            Recursive clipping function requests cells in provided range and
-            cells needed from parent to wrap the lod safely
-            </summary>
-            <param name="collector"></param>
-            <param name="it0">requested range</param>
-            <param name="ignore">inner range filled by children</param>
-        </member>
-        <member name="M:VRage.Voxels.MyStorageDataCache.Resize(VRageMath.Vector3I,VRageMath.Vector3I)">
+        <member name="M:VRage.Voxels.MyStorageData.Resize(VRageMath.Vector3I,VRageMath.Vector3I)">
             <param name="start">Inclusive.</param>
             <param name="end">Inclusive.</param>
         </member>

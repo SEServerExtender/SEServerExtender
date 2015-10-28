@@ -133,7 +133,7 @@
             </summary>
             <param name="points">A list of points the BoundingBoxI should contain.</param>
         </member>
-        <member name="M:VRageMath.BoundingBoxI.Intersect(VRageMath.BoundingBoxI)">
+        <member name="M:VRageMath.BoundingBoxI.Intersect(VRageMath.BoundingBoxI@)">
             <summary>
             Returns bounding box which is intersection of this and box
             It's called 'Prunik'
@@ -1951,19 +1951,60 @@
             Serializes Vector3 in range from 0 to 1, each component to byte precision
             </summary>
         </member>
+        <member name="M:System.SerializationExtensionsMath.ReadQuaternionNorm(VRage.Library.Collections.BitStream)">
+            <summary>
+            Serializes normalized quaternion into 52 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.WriteQuaternionNorm(VRage.Library.Collections.BitStream,VRageMath.Quaternion)">
+            <summary>
+            Serializes normalized quaternion into 52 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializeNorm(VRage.Library.Collections.BitStream,VRageMath.Quaternion@)">
+            <summary>
+            Serializes normalized quaternion into 52 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Serialize(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector4@)">
+            <summary>
+            64 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Serialize(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector3@)">
+            <summary>
+            48 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Write(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector4)">
+            <summary>
+            64 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Write(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector3)">
+            <summary>
+            48 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.ReadHalfVector4(VRage.Library.Collections.BitStream)">
+            <summary>
+            64 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.ReadHalfVector3(VRage.Library.Collections.BitStream)">
+            <summary>
+            48 bits
+            </summary>
+        </member>
         <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.Matrix@)">
             <summary>
-            Serializes only position and orientation
+            Serializes only position and orientation, 12 + 6.5 = 18.5 bytes
             </summary>
-            <param name="stream"></param>
-            <param name="m"></param>
         </member>
         <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.MatrixD@)">
             <summary>
-            Serializes only position and orientation
+            Serializes only position and orientation, 24 + 6.5 = 30.5 bytes
             </summary>
-            <param name="stream"></param>
-            <param name="m"></param>
         </member>
         <member name="M:VRageMath.Spatial.MyVector3Grid`1.RemoveTwo(VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@,VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@)">
             <summary>
@@ -4180,6 +4221,11 @@
             Directly gets or sets the packed representation of the value.
             </summary>
         </member>
+        <member name="F:VRageMath.Color.PackedValue">
+            <summary>
+            Gets the current color as a packed value.
+            </summary>
+        </member>
         <member name="M:VRageMath.Color.#ctor(System.Int32,System.Int32,System.Int32)">
             <summary>
             Creates a new instance of the class.
@@ -4308,11 +4354,6 @@
         <member name="P:VRageMath.Color.A">
             <summary>
             Gets or sets the alpha component value.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Color.PackedValue">
-            <summary>
-            Gets the current color as a packed value.
             </summary>
         </member>
         <member name="P:VRageMath.Color.Transparent">
@@ -5466,6 +5507,11 @@
             Represents the value of pi times two.
             </summary>
         </member>
+        <member name="F:VRageMath.MathHelper.FourPi">
+            <summary>
+            Represents the value of pi times two.
+            </summary>
+        </member>
         <member name="F:VRageMath.MathHelper.PiOver2">
             <summary>
             Represents the value of pi divided by two.
@@ -5638,6 +5684,35 @@
             
             This implementation:
             http://stackoverflow.com/a/11398748
+        </member>
+        <member name="M:VRageMath.MathHelper.Pow2(System.Int32)">
+            <summary>
+            Returns 2^n
+            </summary>
+        </member>
+        <member name="M:VRageMath.MathHelper.LimitRadians2PI(System.Double@)">
+            <summary>
+            Returns angle in range 0..2*PI
+            </summary>
+            <param name="angle">in radians</param>
+        </member>
+        <member name="M:VRageMath.MathHelper.LimitRadians(System.Single@)">
+            <summary>
+            Returns angle in range 0..2*PI
+            </summary>
+            <param name="angle">in radians</param>
+        </member>
+        <member name="M:VRageMath.MathHelper.LimitRadiansPI(System.Double@)">
+            <summary>
+            Returns angle in range -PI..PI
+            </summary>
+            <param name="angle">radians</param>
+        </member>
+        <member name="M:VRageMath.MathHelper.LimitRadiansPI(System.Single@)">
+            <summary>
+            Returns angle in range -PI..PI
+            </summary>
+            <param name="angle">radians</param>
         </member>
         <member name="T:VRageMath.Matrix">
             <summary>
@@ -7139,6 +7214,21 @@
             Divides a Quaternion by another Quaternion.
             </summary>
             <param name="quaternion1">Source Quaternion.</param><param name="quaternion2">The divisor.</param><param name="result">[OutAttribute] Result of the division.</param>
+        </member>
+        <member name="M:VRageMath.Quaternion.GetForward(VRageMath.Quaternion@,VRageMath.Vector3@)">
+            <summary>
+            Gets forward vector (0,0,-1) transformed by quaternion.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Quaternion.GetRight(VRageMath.Quaternion@,VRageMath.Vector3@)">
+            <summary>
+            Gets right vector (1,0,0) transformed by quaternion.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Quaternion.GetUp(VRageMath.Quaternion@,VRageMath.Vector3@)">
+            <summary>
+            Gets up vector (0,1,0) transformed by quaternion.
+            </summary>
         </member>
         <member name="T:VRageMath.Ray">
             <summary>

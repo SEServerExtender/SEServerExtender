@@ -579,6 +579,3477 @@
             Clears all the saved mappings from the remap helper and gets it ready for the next remapping operation.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToExit">
+            <summary>
+            Are you sure you want to exit?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AssignControlKeyboard">
+            <summary>
+            Please press a key
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AssignControlMouse">
+            <summary>
+            Please click a mouse button
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonAudio">
+            <summary>
+            Audio
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionAudioOptions">
+            <summary>
+            Audio options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Cancel">
+            <summary>
+            Cancel
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CanNotAssignControl">
+            <summary>
+            CANNOT ASSIGN CONTROL
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonContinueLastGame">
+            <summary>
+            Continue last
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlAlreadyAssigned">
+            <summary>
+            {0} is already assigned to {1}. Remove the original control?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlIsNotValid">
+            <summary>
+            The pressed key may not be assigned to controls.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionControls">
+            <summary>
+            Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonCredits">
+            <summary>
+            Credits
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDelete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDown">
+            <summary>
+            Down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DoYouWantToKeepTheseSettingsXSecondsRemaining">
+            <summary>
+            Do you want to keep these settings? {0} seconds remaining.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysEnd">
+            <summary>
+            End
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonExitToMainMenu">
+            <summary>
+            Exit to main menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonExitToWindows">
+            <summary>
+            Exit to Windows
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.FieldOfView">
+            <summary>
+            Field of view
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonGame">
+            <summary>
+            Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionGameOptions">
+            <summary>
+            Game options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Gamepad">
+            <summary>
+            Gamepad
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_AnalogAxes">
+            <summary>
+            Analog
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.GameVolume">
+            <summary>
+            Sound volume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeGeneral">
+            <summary>
+            General
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HardwareCursor">
+            <summary>
+            Hardware cursor
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Help">
+            <summary>
+            Help
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysHome">
+            <summary>
+            Home
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysInsert">
+            <summary>
+            Insert
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.InvertMouseX">
+            <summary>
+            Invert mouse X axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.InvertMouseY">
+            <summary>
+            Invert mouse Y axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Joystick">
+            <summary>
+            Joystick or gamepad
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonLeft">
+            <summary>
+            JDLeft
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonRight">
+            <summary>
+            JDRight
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonUp">
+            <summary>
+            JDUp
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonDown">
+            <summary>
+            JDDown
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickDeadzone">
+            <summary>
+            Joystick deadzone width
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickExponent">
+            <summary>
+            Joystick gradual precision
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSensitivity">
+            <summary>
+            Joystick sensitivity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Keyboard">
+            <summary>
+            Keyboard
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Language">
+            <summary>
+            Language
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeft">
+            <summary>
+            Left
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeftAlt">
+            <summary>
+            LAlt
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeftControl">
+            <summary>
+            LCtrl
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LeftMouseButton">
+            <summary>
+            LMB
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeftShift">
+            <summary>
+            LShift
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonLoad">
+            <summary>
+            Load
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadingPleaseWaitUppercase">
+            <summary>
+            LOADING … PLEASE WAIT
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionError">
+            <summary>
+            ERROR
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionPleaseConfirm">
+            <summary>
+            PLEASE CONFIRM
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionExit">
+            <summary>
+            EXIT
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MiddleMouseButton">
+            <summary>
+            MMB
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Mouse">
+            <summary>
+            Mouse
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseSensitivity">
+            <summary>
+            Mouse sensitivity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseXButton1">
+            <summary>
+            MXB1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseXButton2">
+            <summary>
+            MXB2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeNavigation">
+            <summary>
+            Navigation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionNewWorld">
+            <summary>
+            New World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.No">
+            <summary>
+            No
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad0">
+            <summary>
+            Num 0
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad1">
+            <summary>
+            Num 1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad2">
+            <summary>
+            Num 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad3">
+            <summary>
+            Num 3
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad4">
+            <summary>
+            Num 4
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad5">
+            <summary>
+            Num 5
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad6">
+            <summary>
+            Num 6
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad7">
+            <summary>
+            Num 7
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad8">
+            <summary>
+            Num 8
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad9">
+            <summary>
+            Num 9
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Ok">
+            <summary>
+            OK
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionOptions">
+            <summary>
+            Options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPageDown">
+            <summary>
+            PgDown
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPageUp">
+            <summary>
+            PgUp
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.RecommendedAspectRatio">
+            <summary>
+            Recommended aspect ratio: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Revert">
+            <summary>
+            Defaults
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRight">
+            <summary>
+            Right
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRightAlt">
+            <summary>
+            RAlt
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRightControl">
+            <summary>
+            RCtrl
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.RightMouseButton">
+            <summary>
+            RMB
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRightShift">
+            <summary>
+            RShift
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SelectControl">
+            <summary>
+            SELECT CONTROL
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerShutdownNotificationCaption">
+            <summary>
+            SCHEDULED SERVER SHUTDOWN
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SorryButSelectedSettingsAreNotSupportedByYourHardware">
+            <summary>
+            Sorry, but the settings you have chosen are not supported by your hardware.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysSpace">
+            <summary>
+            Space
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.StartGameInProgressPleaseWait">
+            <summary>
+            Starting game … please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_StrafeLeft">
+            <summary>
+            Strafe left
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_StrafeRight">
+            <summary>
+            Strafe right
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeSystems1">
+            <summary>
+            Systems 1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeSystems2">
+            <summary>
+            Systems 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysTab">
+            <summary>
+            Tab
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.TitleFailedToStartInternetBrowser">
+            <summary>
+            Failed to start the browser.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.UnknownControl_None">
+            <summary>
+            none
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysUp">
+            <summary>
+            Up
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_UseOrInteract">
+            <summary>
+            Use / Interact
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VerticalSync">
+            <summary>
+            Vertical sync
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VideoMode">
+            <summary>
+            Video mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeToolsOrWeapons">
+            <summary>
+            Tools / Weapons
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Yes">
+            <summary>
+            Yes
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Disabled">
+            <summary>
+            Disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationXpos">
+            <summary>
+            JRX+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationYpos">
+            <summary>
+            JRY+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationZpos">
+            <summary>
+            JRZ+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider1pos">
+            <summary>
+            JS1+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider2pos">
+            <summary>
+            JS2+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationXneg">
+            <summary>
+            JRX-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationYneg">
+            <summary>
+            JRY-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationZneg">
+            <summary>
+            JRZ-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider1neg">
+            <summary>
+            JS1-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider2neg">
+            <summary>
+            JS2-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDecimal">
+            <summary>
+            Num .
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysBackslash">
+            <summary>
+            Bkslash
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysComma">
+            <summary>
+            Comma
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysMinus">
+            <summary>
+            Minus
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysOpenBracket">
+            <summary>
+            [
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysCloseBracket">
+            <summary>
+            ]
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPeriod">
+            <summary>
+            Period
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPipe">
+            <summary>
+            Pipe
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPlus">
+            <summary>
+            Plus
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysQuestion">
+            <summary>
+            Slash
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysQuotes">
+            <summary>
+            Quote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysSemicolon">
+            <summary>
+            Colon
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysTilde">
+            <summary>
+            ~
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysMultiply">
+            <summary>
+            Num *
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDivide">
+            <summary>
+            Num /
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysAdd">
+            <summary>
+            Num +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysSubtract">
+            <summary>
+            Num −
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysCapsLock">
+            <summary>
+            Caps Lock
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysEnter">
+            <summary>
+            Enter
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysBackspace">
+            <summary>
+            Backsp.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ApplyingPleaseWait">
+            <summary>
+            Applying changes … please wait
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MP_YouHaveBeenKilled">
+            <summary>
+            You have been killed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MusicVolume">
+            <summary>
+            Music volume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VideoAdapter">
+            <summary>
+            Video adapter
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DefaultFOV">
+            <summary>
+            Default: {0:F1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldLoaded">
+            <summary>
+            World {0} loaded
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Screenshot">
+            <summary>
+            Screenshot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_PreviousColor">
+            <summary>
+            Prev. Color or Camera
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_NextColor">
+            <summary>
+            Next Color or Camera
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSaved">
+            <summary>
+            World '{0}' saved
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Blueprints">
+            <summary>
+            Blueprints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Factions">
+            <summary>
+            Factions
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlueprintMaterials">
+            <summary>
+            Blueprint Materials
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProductionQueue">
+            <summary>
+            Production Queue
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonEditSettings">
+            <summary>
+            Edit Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionCustomWorld">
+            <summary>
+            Custom World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorNameTooLong">
+            <summary>
+            Name is too long (max 128 characters allowed)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorNameTooShort">
+            <summary>
+            Name is too short (min 5 characters required)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GameMode">
+            <summary>
+            Game mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GameModeSurvival">
+            <summary>
+            Survival
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonJoinWorld">
+            <summary>
+            Join World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineMode">
+            <summary>
+            Online mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModeOffline">
+            <summary>
+            Offline
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModePrivate">
+            <summary>
+            Private
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModePublic">
+            <summary>
+            Public
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenNewWorldButtonQuickstart">
+            <summary>
+            Quickstart
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsName">
+            <summary>
+            Name must be {0} to {1} alpha-numeric characters
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToDeleteSave">
+            <summary>
+            Are you sure you want to delete '{0}'?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionLoadWorld">
+            <summary>
+            Load World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonSaveAs">
+            <summary>
+            Save As
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GameModeCreative">
+            <summary>
+            Creative
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerCharacter">
+            <summary>
+            Player Character
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_AutoSave">
+            <summary>
+            Auto-save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsAutoSave">
+            <summary>
+            Auto-save saves the state of your world every {0} minutes or when exiting the game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWantToSaveYourProgress">
+            <summary>
+            Do you want to save your progress?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SaveWorld">
+            <summary>
+            Save World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonSave">
+            <summary>
+            Save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SavingPleaseWait">
+            <summary>
+            Saving ... please wait
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Advanced">
+            <summary>
+            Advanced
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AdvancedControls">
+            <summary>
+            Advanced Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Backward">
+            <summary>
+            Backward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BasicControls">
+            <summary>
+            Basic Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Close">
+            <summary>
+            Close
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_DownOrCrouch">
+            <summary>
+            Down or Crouch
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_FirstOrThirdPerson">
+            <summary>
+            First-person / Third-person
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Forward">
+            <summary>
+            Forward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NextPage">
+            <summary>
+            NextPage
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNeedShowHelpScreen">
+            <summary>
+            Press {0} for help and tutorials
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PreviousPage">
+            <summary>
+            Previous Page
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShowControlsHints">
+            <summary>
+            Show controls hints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SteamGuide">
+            <summary>
+            Tutorials
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_UpOrJump">
+            <summary>
+            Up or Jump
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateVerticalNeg">
+            <summary>
+            Rotate block vertical -
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateVerticalPos">
+            <summary>
+            Rotate block vertical +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateHorizontalNeg">
+            <summary>
+            Rotate block horizontal -
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateHorizontalPos">
+            <summary>
+            Rotate block horizontal +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateRollNeg">
+            <summary>
+            Rotate block roll -
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateRollPos">
+            <summary>
+            Rotate block roll +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot0">
+            <summary>
+            Unequip
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot1">
+            <summary>
+            Equip item from slot 1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot2">
+            <summary>
+            Equip item from slot 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot3">
+            <summary>
+            Equip item from slot 3
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot4">
+            <summary>
+            Equip item from slot 4
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot5">
+            <summary>
+            Equip item from slot 5
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot6">
+            <summary>
+            Equip item from slot 6
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot7">
+            <summary>
+            Equip item from slot 7
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot8">
+            <summary>
+            Equip item from slot 8
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot9">
+            <summary>
+            Equip item from slot 9
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToQuickLoad">
+            <summary>
+            Are you sure you want to quick-load?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToQuickSave">
+            <summary>
+            Are you sure you want to quick-save?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarConfig">
+            <summary>
+            Toolbar config
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_HoldToLookAround">
+            <summary>
+            Hold to look around
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_HoldToSprint">
+            <summary>
+            Hold to sprint
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadingPleaseWait">
+            <summary>
+            Loading ... please wait
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NoPlaceToCreateGrid">
+            <summary>
+            There's no place to create a new block. Point your view to an empty space.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_HudOnOff">
+            <summary>
+            HUD on / off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderHint">
+            <summary>
+            Hint: Drag an icon to a toolbar slot and activate by a numeric key
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Saved">
+            <summary>
+            Saved
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HideWeapon">
+            <summary>
+            Hide weapon
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust">
+            <summary>
+            Thrust
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SomeWorldFilesCouldNotBeLoaded">
+            <summary>
+            One of the world/save files is corrupted and can't be loaded. See log for details.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldFileIsCorruptedAndCouldNotBeLoaded">
+            <summary>
+            World file is corrupted and could not be loaded.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipNewWorldCustomWorld">
+            <summary>
+            Create a new world with custom settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsRenderQuality">
+            <summary>
+            Higher rendering quality means better visuals, larger view distance and more special effects - however, it is more demanding on your computer's performance (CPU and GPU).  If the game doesn't run smoothly, decrease it.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoAdapter">
+            <summary>
+            Select a graphic adapter and/or a monitor
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoMode">
+            <summary>
+            Select a screen resolution. We recommend using an aspect ratio compatible with your monitor. If the game doesn't run smoothly, decrease your screen resolution.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsHardwareCursor">
+            <summary>
+            HW mouse cursor is independent of game framerate. We recommend to turn it on.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsVerticalSync">
+            <summary>
+            The game will synchronize with the refresh rate of the monitor. We recommend to turn it off.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsFieldOfView">
+            <summary>
+            Horizontal field of view angle
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowControlsHints">
+            <summary>
+            Show on-screen control hints during gameplay
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldNotSaved">
+            <summary>
+            World '{0}' failed to save. This can be caused by running out of memory or problems when writing files. Working on this world any longer may result in loss of progress. You can check log file to find out more about what caused this error.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMemoryOverload">
+            <summary>
+            Not enough memory to add new objects
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BetterGCIsAvailable">
+            <summary>
+            We have detected a better graphics card in your computer than the one the game currently runs on. Please check your NVIDIA/AMD Control Panel settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionWarning">
+            <summary>
+            WARNING
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextOpenBrowser">
+            <summary>
+            This will open {0} in your internet browser. The game will keep running. Do you want to continue?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Loaded">
+            <summary>
+            Loaded
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextNoSavedWorlds">
+            <summary>
+            There are no saved worlds yet. Please start by creating a new world.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionVideoTutorial">
+            <summary>
+            Video Tutorial
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextSaveChangesBeforeExit">
+            <summary>
+            Save changes before quitting?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorNameAlreadyExists">
+            <summary>
+            Name is already used. Please choose a different name.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationBuildingFormat">
+            <summary>
+            Press {0} to place cube
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationColorFormat">
+            <summary>
+            Press {0} or {1} to change color. Hold {2} to apply color. Hold {3} or {4} to increase brush size.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHideHintsInGameOptions">
+            <summary>
+            You can hide these hints in Game Options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHudHideFormat">
+            <summary>
+            Press {0} to hide/unhide the HUD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationRotationFormat">
+            <summary>
+            Press {0}, {1}, {2}, {3}, {4}, {5} to rotate
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationScreenFormat">
+            <summary>
+            Press {0} to configure toolbar or create new objects
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSlotEquipFormat">
+            <summary>
+            Press {0}, {1}, {2}, ... to equip from slot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationToolDisabled">
+            <summary>
+            This tool/weapon is disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationUnlimitedBuildingFormat">
+            <summary>
+            Press {0} to add block, press {1} to remove block. Hold {2} to build fast
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescQuickLoad">
+            <summary>
+            Quick Load
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescQuickSave">
+            <summary>
+            Quick Save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseWheel">
+            <summary>
+            Mouse wheel
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderBuildingBlocks">
+            <summary>
+            Tab content:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderCreativeMode">
+            <summary>
+            Creative mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderSubtitle">
+            <summary>
+            Configure your toolbar (assign building blocks, tools and weapons)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderToolbar">
+            <summary>
+            Toolbar
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderToolbarConfig">
+            <summary>
+            Toolbar Config
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SteamOverlayDisabledCaption">
+            <summary>
+            Steam Overlay is disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonPublish">
+            <summary>
+            Publish
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextWorldPublished">
+            <summary>
+            Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextWorldPublishFailed">
+            <summary>
+            Failed to publish on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextModPublished">
+            <summary>
+            Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextModPublishFailed">
+            <summary>
+            Failed to publish on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextPublishingWorld">
+            <summary>
+            Publishing ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextUploadingWorld">
+            <summary>
+            Uploading ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonSubscribedWorlds">
+            <summary>
+            Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextCreatingWorld">
+            <summary>
+            Creating world ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionWorkshop">
+            <summary>
+            Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonRecommend">
+            <summary>
+            Recommend
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionWorldPublished">
+            <summary>
+            WORLD PUBLISHED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionWorldPublishFailed">
+            <summary>
+            WORLD PUBLISH FAILED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionModPublished">
+            <summary>
+            MOD PUBLISHED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionModPublishFailed">
+            <summary>
+            MOD PUBLISH FAILED
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MyCommonTexts.ScreenLoadSubscribedWorldCopyAndLoad" -->
+        <member name="F:MyCommonTexts.LoadScreenButtonTooltipPublish">
+            <summary>
+            Publish selected world on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipMenuSubscribedWorlds">
+            <summary>
+            View a list of worlds subscribed on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToPublishWorld">
+            <summary>
+            PUBLISH WORLD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToUpdateWorld">
+            <summary>
+            UPDATE WORLD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToPublishWorld">
+            <summary>
+            Are you sure you want to upload and publish selected world on Steam Workshop? Note that by submitting this item, you agree to the workshop terms of service (see http://steamcommunity.com/sharedfiles/workshoplegalagreement).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToUpdateWorld">
+            <summary>
+            Are you sure you want to upload and overwrite selected world on Steam Workshop?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToPublishMod">
+            <summary>
+            PUBLISH MOD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToUpdateMod">
+            <summary>
+            UPDATE MOD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToPublishMod">
+            <summary>
+            Are you sure you want to upload and publish selected mod on Steam Workshop? Note that by submitting this item, you agree to the workshop terms of service (see http://steamcommunity.com/sharedfiles/workshoplegalagreement).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToUpdateMod">
+            <summary>
+            Are you sure you want to upload and overwrite selected mod on Steam Workshop?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldBrowseWorkshop">
+            <summary>
+            Browse Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldRefresh">
+            <summary>
+            Refresh
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNoWeaponSelected">
+            <summary>
+            No weapon selected
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSwitchedToWeaponType">
+            <summary>
+            Switched to weapon type '{0}'
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInertiaDampenersOff">
+            <summary>
+            Inertia dampeners Off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInertiaDampenersOn">
+            <summary>
+            Inertia dampeners On
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonDelete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionEditSettings">
+            <summary>
+            Edit Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionSaveAs">
+            <summary>
+            Save As
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonHelp">
+            <summary>
+            Help
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonLoadWorld">
+            <summary>
+            Load World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonNewWorld">
+            <summary>
+            New World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonOptions">
+            <summary>
+            Options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenNewWorldButtonCustomWorld">
+            <summary>
+            Custom World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonControls">
+            <summary>
+            Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionResetControlsToDefault">
+            <summary>
+            RESET CONTROLS
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextResetControlsToDefault">
+            <summary>
+            Are you sure you want to reset control bindings to default?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenshotFailed">
+            <summary>
+            Screenshot failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenshotSaved">
+            <summary>
+            Screenshot {0} saved
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportToObjComplete">
+            <summary>
+            Exported to: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportToObjFailed">
+            <summary>
+            Export to obj file failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldOpenInWorkshop">
+            <summary>
+            Open in Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopBrowseWorkshop">
+            <summary>
+            Open Steam Overlay with Workshop screen
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopCopyAndLoad">
+            <summary>
+            Download selected world to your computer and load
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopOpenInWorkshop">
+            <summary>
+            Open selected world in Workshop Steam Overlay
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopRefresh">
+            <summary>
+            Refresh the list of subscribed worlds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryX">
+            <summary>
+            Symmetry X plane: {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryXOffset">
+            <summary>
+            Symmetry X plane (offset): {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryY">
+            <summary>
+            Symmetry Y plane: {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryYOffset">
+            <summary>
+            Symmetry Y plane (offset): {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryZ">
+            <summary>
+            Symmetry Z plane: {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryZOffset">
+            <summary>
+            Symmetry Z plane (offset): {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationPickupObject">
+            <summary>
+            Press {0} to pick up {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CubeBuilderPasteNotification">
+            <summary>
+            Press LMB or Ctrl+V to paste object
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextErrorLoadingEntities">
+            <summary>
+            An error occurred while adding one or more objects. See log file for more details.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureToMoveGridToClipboard">
+            <summary>
+            Are you sure you want to delete selected object? (copy will be stored in clipboard)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextMemoryLimitReachedDuringLoad">
+            <summary>
+            Memory limit has been reached while loading the world and some objects were not added. If you were using Large World fix and the game was recently updated, it may have been disabled.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Keyboard2">
+            <summary>
+            Keyboard 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadingWorld">
+            <summary>
+            Downloading world: {0}% World size: {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadWorldFailed">
+            <summary>
+            Downloading the world has failed!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextJoiningWorld">
+            <summary>
+            Joining world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextJoinWorldFailed">
+            <summary>
+            Joining world failed, reason: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.GpuUnderMinimumNotification">
+            <summary>
+            We have detected that your graphics card is under the minimum requirements and this can cause performance issues or crashes. Thank you for your understanding.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShowRotationHints">
+            <summary>
+            Show rotation hints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowRotationHints">
+            <summary>
+            Show HUD rotation hints during building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.UnknownControl_Unassigned">
+            <summary>
+            [unassigned]
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_BuildingMode">
+            <summary>
+            Building mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Line">
+            <summary>
+            Line
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Plane">
+            <summary>
+            Plane
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_SingleBlock">
+            <summary>
+            Single block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Suicide">
+            <summary>
+            Suicide
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorStartingServer">
+            <summary>
+            Multiplayer server cannot be started, error: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AlreadyUsedBySomebodyElse">
+            <summary>
+            Object is being used by somebody else
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinFriendsGames">
+            <summary>
+            Friend games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionPlayers">
+            <summary>
+            Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayersLobby_Friends">
+            <summary>
+            Friends
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayersLobby_Private">
+            <summary>
+            Private
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayersLobby_Public">
+            <summary>
+            Public
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_GameOwner">
+            <summary>
+            Game owner
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Invite">
+            <summary>
+            Invite
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Kick">
+            <summary>
+            Kick
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_PlayerName">
+            <summary>
+            Player name
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogDownloadWorld_WorldDoesNotExists">
+            <summary>
+            Game does not exist anymore.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionKicked">
+            <summary>
+            KICKED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenKicked">
+            <summary>
+            You have been kicked from the game by its owner.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModeFriends">
+            <summary>
+            Friends
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToReconnect">
+            <summary>
+            Are you sure you want to reconnect to the current multiplayer game?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMultiplayerDisabled">
+            <summary>
+            You are in offline mode and multiplayer is disabled. You have to change the settings from the main menu.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SteamIsOfflinePleaseRestart">
+            <summary>
+            Steam is offline. Please run Steam in normal mode or restart Steam if the problem persists
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerCompatibleVersions">
+            <summary>
+            Compatible versions
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MaxPlayers">
+            <summary>
+            Max players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogWaitingForWorldData">
+            <summary>
+            Waiting for world data
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorConnectionFailed">
+            <summary>
+            Connection to server failed: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerStateConnectingToServer">
+            <summary>
+            Connecting to server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerStateWaitingForServer">
+            <summary>
+            Waiting for server to respond
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HarvestingWarningInventoryMightBeTruncatedAreYouSure">
+            <summary>
+            The selected game type is more limited than the original one. This means that your inventory might be truncated and you might lose some items! Are you sure you want to change the game type?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionFriendWorlds">
+            <summary>
+            Friend worlds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionPublicWorlds">
+            <summary>
+            Public worlds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeColorChange">
+            <summary>
+            Change color / weapon mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationWeaponDisabledInSettings">
+            <summary>
+            This weapon is disabled in world settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescPlayersList">
+            <summary>
+            Show players (multiplayer only)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonPlayers">
+            <summary>
+            Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ItemDamagedDescription">
+            <summary>
+             (Damaged)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplaterJoin_ServerIsNotResponding">
+            <summary>
+            Server is not responding
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.UnsupportedAspectRatio">
+            <summary>
+            Unsupported aspect ratio
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.OnlyFriendsCanJoinThisGame">
+            <summary>
+            Only friends can join this game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsDescription">
+            <summary>
+            A description of the world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CompressSaveGames">
+            <summary>
+            Compress saved games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsCompressSaveGames">
+            <summary>
+            Whether the saved games should be compressed on the disk to save space
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Headbob">
+            <summary>
+            Disable headbob
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_ShowPlayerNames">
+            <summary>
+            Show player names
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowPlayerNames">
+            <summary>
+            Show player names above their characters. This feature must also be enabled in world settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_UIOpacity">
+            <summary>
+            UI opacity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsUIOpacity">
+            <summary>
+            Change opacity of UI dialogs.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_UIBkOpacity">
+            <summary>
+            UI background opacity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsUIBkOpacity">
+            <summary>
+            Change opacity of UI dialogs background.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInventoryFull">
+            <summary>
+            Inventory is full
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.OutOfAmmo">
+            <summary>
+            {0} is out of ammunition
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMissingComponentToPlaceBlockFormat">
+            <summary>
+            You need {0} to build {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_GameMode">
+            <summary>
+            Game mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Players">
+            <summary>
+            Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_World">
+            <summary>
+            World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_WorldSize">
+            <summary>
+            World size
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextSuicide">
+            <summary>
+            Are you sure you want to commit suicide?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorServerHasLeft">
+            <summary>
+            The server host has left the game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationRespawn">
+            <summary>
+            You died. Respawn in {0} seconds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HudBlockInfo_Required">
+            <summary>
+            Required
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_GameTypeToolTip_MultipliersFormat">
+            <summary>
+            Inventory size {0}x Assembler efficiency {1}x Refinery speed {2}x
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationClientConnected">
+            <summary>
+            Player connected: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationClientDisconnected">
+            <summary>
+            Player disconnected: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerError_IncorrectVersion">
+            <summary>
+            Server has different version of the game. Your version: {0}; Server version: {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShowCrosshair">
+            <summary>
+            Show crosshair
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowCrosshair">
+            <summary>
+            Whether the weapon crosshair should be visible
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextSavingInProgress">
+            <summary>
+            Game is already saving.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_LocalizationWarning">
+            <summary>
+            * Localized by the community.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_MoreInfo">
+            <summary>
+            Click for more info
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Multiplayer_IndirectConnection">
+            <summary>
+            No direct connection available.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Multiplayer_LastMsg">
+            <summary>
+            No message received from server for {0} seconds.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Multiplayer_NoConnection">
+            <summary>
+            No connection with server.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.GamePaused">
+            <summary>
+            Game paused
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescPauseGame">
+            <summary>
+            Pause the game (offline only)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_PauseGame">
+            <summary>
+            Pause game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPause">
+            <summary>
+            Pause
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationWeaponNotWorking">
+            <summary>
+            {0} is not working
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogAmount_AddAmountCaption">
+            <summary>
+            Amount to add
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogAmount_SetValueCaption">
+            <summary>
+            Value to set
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHealthCritical">
+            <summary>
+            Health is critical. Seek medical attention immediately.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHealthLow">
+            <summary>
+            Health is low.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerError_DifferentData">
+            <summary>
+            This server has different game data than your client
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoin_IncompatibleGameDataLabel">
+            <summary>
+            Games marked with * have incompatible game data
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_GameAdmin">
+            <summary>
+            Game admin
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinServers">
+            <summary>
+            Dedicated only
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorAlreadyJoined">
+            <summary>
+            User is already joined
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorNotInGroup">
+            <summary>
+            You are not in group {0}. Do you want to visit group web page?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorServerFull">
+            <summary>
+            Server is full
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorSteamServersOffline">
+            <summary>
+            Steam servers offline or server group does not exist
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorTicketInvalid">
+            <summary>
+            Ticket invalid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinLANServers">
+            <summary>
+            LAN only
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Friends">
+            <summary>
+            Friends
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_LAN">
+            <summary>
+            LAN
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Lobbies">
+            <summary>
+            Games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Servers">
+            <summary>
+            Servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Title">
+            <summary>
+            Join world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Ping">
+            <summary>
+            Ping
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Server">
+            <summary>
+            Server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorLoggedInElseWhere">
+            <summary>
+            Logged in elsewhere
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorNoLicenseOrExpired">
+            <summary>
+            No license or license expired
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorTicketAlreadyUsed">
+            <summary>
+            Ticket already used
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorTicketCanceled">
+            <summary>
+            Ticket cancelled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorUserNotConnected">
+            <summary>
+            User not connected
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorVACBanned">
+            <summary>
+            VAC banned
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorVACCheckTimedOut">
+            <summary>
+            VAC check timed out
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinAllowedGroups">
+            <summary>
+            Allowed groups
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NewsDownloadingFailed">
+            <summary>
+            News downloading failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionInfo">
+            <summary>
+            INFO
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorGroupIdInvalid">
+            <summary>
+            Server Group ID is invalid, server administrator should set proper group ID in server config (or zero to disable group checking)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_LAN">
+            <summary>
+            The list of local dedicated servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Lobbies">
+            <summary>
+            The list of player created games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Servers">
+            <summary>
+            The list of internet dedicated servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerCharacterColor">
+            <summary>
+            Player color
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintPressToUseWardrobe">
+            <summary>
+            Press {0} to change your appearance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode">
+            <summary>
+            Window mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode_Fullscreen">
+            <summary>
+            Fullscreen
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode_FullscreenWindow">
+            <summary>
+            Fullscreen window
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode_Window">
+            <summary>
+            Window
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls">
+            <summary>
+            Spectator Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Delta_Desc">
+            <summary>
+            Spectator with fixed view vector to controlled object
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorBannedByAdmins">
+            <summary>
+            You are banned on this server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorBannedByAdminsWithDialog">
+            <summary>
+            You are banned on this server. Open admin profile?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenBanned">
+            <summary>
+            You have been banned on this server by its admin.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Ban">
+            <summary>
+            Ban
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HudMarker_ReturnToWorld">
+            <summary>
+            Return to the game area!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationLeavingWorld">
+            <summary>
+            Warning: You will die in {0:F1} meters!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionAdvancedSettings">
+            <summary>
+            Advanced world settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Spectator">
+            <summary>
+            Spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Delta">
+            <summary>
+            Delta spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Free">
+            <summary>
+            Free spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_None">
+            <summary>
+            Player control
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Static">
+            <summary>
+            Static spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsNameAlreadyExists">
+            <summary>
+            Given faction name already exists
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsTag">
+            <summary>
+            Faction tag must be exactly 3 characters long
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsTagAlreadyExists">
+            <summary>
+            Given faction tag already exists
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsNameTooShort">
+            <summary>
+            Faction name must be at least 4 characters long
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Edit">
+            <summary>
+            Edit
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Kick">
+            <summary>
+            Kick
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Leader">
+            <summary>
+            Leader
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Member">
+            <summary>
+            Member
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsKickPlayer">
+            <summary>
+            Are you sure that you want to kick player '{0}' from your faction?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsLeave">
+            <summary>
+            Are you sure that you want to leave faction '{0}'?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Promote">
+            <summary>
+            Promote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Demote">
+            <summary>
+            Demote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AccessDenied">
+            <summary>
+            Access denied
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Founder">
+            <summary>
+            Founder
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Accept">
+            <summary>
+            Accept
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsAcceptJoin">
+            <summary>
+            Are you sure that you want to accept player '{0}' to your faction?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsDemote">
+            <summary>
+            Are you sure that you want demote '{0}' to member?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsPromote">
+            <summary>
+            Are you sure that you want promote '{0}' to leader?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Applicant">
+            <summary>
+            Applicant
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SessionDeleteFailed">
+            <summary>
+            Session delete failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Medicals_Title">
+            <summary>
+            Medical Rooms
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextChangeOwner">
+            <summary>
+            Are you sure you want to change owner to {0}?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Respawn">
+            <summary>
+            Respawn
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinSameGameData">
+            <summary>
+            Same game data
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Refresh">
+            <summary>
+            Refresh
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerInfo_Dead">
+            <summary>
+            dead
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_ActiveMods">
+            <summary>
+            Active mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_AvailableMods">
+            <summary>
+            Available mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveLeft">
+            <summary>
+            Deactivate mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveLeftAll">
+            <summary>
+            Deactivate all mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveRight">
+            <summary>
+            Activate mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveRightAll">
+            <summary>
+            Activate all mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Mods">
+            <summary>
+            Mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopOpenModInWorkshop">
+            <summary>
+            Open selected mod in Workshop Steam Overlay
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopRefreshMod">
+            <summary>
+            Refresh the list of subscribed mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_SearchLabel">
+            <summary>
+            Search game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_SearchTooltip">
+            <summary>
+            At least 3 characters must be inserted to start searching
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextDownloadingMods">
+            <summary>
+            Downloading mods ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationClientCannotSave">
+            <summary>
+            Client saving is disabled on this server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveDown">
+            <summary>
+            Move mod down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveUp">
+            <summary>
+            Move mod up
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveBottom">
+            <summary>
+            Move mod to bottom
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveTop">
+            <summary>
+            Move mod to top
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCannotCreateGroup">
+            <summary>
+            You cannot create group with blocks you don't have access rights to.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCannotDeleteGroup">
+            <summary>
+            You cannot delete group with blocks you don't have access rights to.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenKickedFromFaction">
+            <summary>
+            You have been kicked from the faction.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenAcceptedToFaction">
+            <summary>
+            You have been accepted to faction.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarDown">
+            <summary>
+            Previous toolbar
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarUp">
+            <summary>
+            Next toolbar
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Description_Animation_Wave">
+            <summary>
+            Wave to friends (or enemies!)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DisplayName_Animation_Wave">
+            <summary>
+            Wave animation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadModsFailed">
+            <summary>
+            Downloading mods has failed! Please check mods in world settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextCheckingMods">
+            <summary>
+            Checking for mod updates ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_Caption">
+            <summary>
+            Debug draw
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_EnableDebugDraw">
+            <summary>
+            Enable debug draw
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ErrorLogCaption">
+            <summary>
+            Loading error log:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ModelDummies">
+            <summary>
+            Model dummies
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_MountPoints">
+            <summary>
+            Mount points
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_NoErrorText">
+            <summary>
+            There were no loading errors
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_PhysicsPrimitives">
+            <summary>
+            Physics primitives
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_OpenErrorLog">
+            <summary>
+            Open in new window
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ReloadTextures">
+            <summary>
+            Reload textures
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextLocalModsDisabledInMultiplayer">
+            <summary>
+            Local mods are not allowed in multiplayer. Use workshop mods instead.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_LocalMod">
+            <summary>
+            Local mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_MissingDetails">
+            <summary>
+            Could not retrieve mod details from Steam
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_MissingLocalMod">
+            <summary>
+            Missing local mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_WorkshopMod">
+            <summary>
+            Workshop mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ReloadModels">
+            <summary>
+            Reload models
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_CopyErrorLogToClipboard">
+            <summary>
+            Copy log to system clipboard
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationLeavingWorld_Creative">
+            <summary>
+            Warning: All ships will be removed in {0:F1} meters!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerCharacterModel">
+            <summary>
+            Player model
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Mods">
+            <summary>
+            Mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintPressToUse">
+            <summary>
+            Press {0} to use {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_SelectServerToShowModList">
+            <summary>
+            Select server to show mod list
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_SearchLabel">
+            <summary>
+            Search
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_BadModsListResponse">
+            <summary>
+            Could not get mod list from the server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HudWarnings">
+            <summary>
+            Hud Warnings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NPCIdentityAdded">
+            <summary>
+            Identity {0} was added
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextIncompatibleWorldVersion">
+            <summary>
+            This world can not be loaded. It has been created in newer version of the game.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextPublishFailed_AccessDenied">
+            <summary>
+            This workshop item does not seem to belong to you. Make sure you are logged in with the right account.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_SavePrefab">
+            <summary>
+            Export clipboard to file
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipSaveShip">
+            <summary>
+            Save ships from clipboard to file
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AddNewNPC">
+            <summary>
+            Add New Enemy Identity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionWorkshopTags">
+            <summary>
+            Select tags
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Animation">
+            <summary>
+            Animation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Block">
+            <summary>
+            Block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Character">
+            <summary>
+            Character
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Other">
+            <summary>
+            Other
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Skybox">
+            <summary>
+            Skybox
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextPublishFailed_OwnerMismatchMod">
+            <summary>
+            Could not update because you are not the owner of this mod.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorModLoadingFailure">
+            <summary>
+            Some mods were not loaded because of errors. See log file for details or run the game in single player to access the mod debug screen.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.RenderIterpolation">
+            <summary>
+            Render interpolation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionRenderIterpolation">
+            <summary>
+            Reduces stuttering and makes game smoother.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_ModPack">
+            <summary>
+            Modpack
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CustomText">
+            <summary>
+            {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderBlockCategories">
+            <summary>
+            Tabs of tools and objects:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderBlockSearch">
+            <summary>
+            Search:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescCopyPasteMove">
+            <summary>
+            Move pasted object
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Script">
+            <summary>
+            Script
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationCopyPasteBlockNotAvailable">
+            <summary>
+            Some blocks in the pasted grid are not available in this world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ConvertingObjs">
+            <summary>
+            Converting models. Please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ConvertToObjDone">
+            <summary>
+            All models converted.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportingToObj">
+            <summary>
+            Exporting model. Please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWantToPasteGridWithMissingBlocks">
+            <summary>
+            Pasted ship contains some blocks that are not available in this world. These blocks will not be pasted, which could possibly cause the ship to split. Do you really want to paste this ship?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationCopyPasteFloatingObjectNotAvailable">
+            <summary>
+            Item is not available in this world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShipWelder_HelpOthers">
+            <summary>
+            Help Others
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlacingObjectsToScene">
+            <summary>
+            Placing objects to world. Please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeSystems3">
+            <summary>
+            Systems 3
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSwitchedToWeapon">
+            <summary>
+            Switched to weapon: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Back">
+            <summary>
+            Backward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Down">
+            <summary>
+            Down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Forward">
+            <summary>
+            Forward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Left">
+            <summary>
+            Left
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Right">
+            <summary>
+            Right
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Up">
+            <summary>
+            Up
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SelectBlueprint">
+            <summary>
+            Select
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DisplayName_Animation_Facepalm">
+            <summary>
+            Facepalm
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AvailableBlueprints">
+            <summary>
+            Available Blueprints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Sphere_Radius">
+            <summary>
+            Radius
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Box_Width">
+            <summary>
+            Width
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Box_Depth">
+            <summary>
+            Depth
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Box_Height">
+            <summary>
+            Height
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandDistance">
+            <summary>
+            Distance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandSettings">
+            <summary>
+            Brush Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandTransparency">
+            <summary>
+            Transparency
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_ShapeSettings">
+            <summary>
+            Shape Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Capsule_Length">
+            <summary>
+            Length
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Capsule_Radius">
+            <summary>
+            Radius
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportToObjModded">
+            <summary>
+            Model contains modded blocks. Only models with default blocks can be exported.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandSnapToVoxel">
+            <summary>
+            Snap to voxel grid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_Area">
+            <summary>
+            Area
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_Axis">
+            <summary>
+            Choose axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_AxisX">
+            <summary>
+            X axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_AxisY">
+            <summary>
+            Y axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_AxisZ">
+            <summary>
+            Z axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandMaterial">
+            <summary>
+            Material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNewFactionChatMessage">
+            <summary>
+            New message in {0} faction chat
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNewGlobalChatMessage">
+            <summary>
+            New global chat message
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNewPlayerChatMessage">
+            <summary>
+            New message from {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorDescriptionTooLong">
+            <summary>
+            Description is too long (max 8000 characters allowed)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.TooltipScreenMods_SelectCategories">
+            <summary>
+            Select categories
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_GameTypeToolTip_ViewDistance">
+            <summary>
+            View distance: {0}m
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandProjectToVoxel">
+            <summary>
+            Project to voxel
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescNextVoxelMaterial">
+            <summary>
+            Next voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescOpenVoxelHandSettings">
+            <summary>
+            Open voxel hand settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescPreviousVoxelMaterial">
+            <summary>
+            Previous voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlueprintsMessageBoxDesc_Replace">
+            <summary>
+            Are you sure you want to replace this blueprint with clipboard?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlueprintsMessageBoxTitle_Replace">
+            <summary>
+            Replace
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationTextPanelReadOnly">
+            <summary>
+            Text panel is read-only
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextTooLongText">
+            <summary>
+            Text is too long. Do you want to truncate it?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescExportModel">
+            <summary>
+            Export model
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandShowGizmos">
+            <summary>
+            Show bounding box
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextOpenUrlOverlayNotEnabled">
+            <summary>
+            This will open {0} in your internet browser, because Steam Overlay is either disabled or failed to open. The game will keep running. Do you want to continue?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationRotationFormatCombined">
+            <summary>
+            Press {0} to rotate the block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationCompoundBuildingFormat">
+            <summary>
+            Press {0} or {1} to toggle compound building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSwitchBuildingModeFormat">
+            <summary>
+            Press {0} to toggle dynamic building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_SwitchWalk">
+            <summary>
+            Switch walk
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Favorites">
+            <summary>
+            The list of favorite servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Favorites">
+            <summary>
+            Favorites
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_History">
+            <summary>
+            History
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Friends">
+            <summary>
+            The list of friends servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_History">
+            <summary>
+            The list of previously visited servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Favorites_Add">
+            <summary>
+            Add server to favorites
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Favorites_Remove">
+            <summary>
+            Remove server from favorites
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_VoxelHandSettings">
+            <summary>
+            Open voxel hand settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationVoxelHandHintFormat">
+            <summary>
+            Press {0} to open voxel hand settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationVoxelMaterialFormat">
+            <summary>
+            Press {0} or {1} to change voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_EnableBotsDebugging">
+            <summary>
+            Enable bots debugging
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_NextBot">
+            <summary>
+            Next bot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_PreviousBot">
+            <summary>
+            Previous bot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_Title">
+            <summary>
+            Bots settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_BotSettings">
+            <summary>
+            Bots settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ReportBug">
+            <summary>
+            Report a Bug
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarNextItem">
+            <summary>
+            Next toolbar item
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarPreviousItem">
+            <summary>
+            Previous toolbar item
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeToolsOrWeapons2">
+            <summary>
+            Tools / Weapons 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_BuildMode">
+            <summary>
+            Build mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenControlMenu_Title">
+            <summary>
+            Control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ControlMenu">
+            <summary>
+            Open control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_Off">
+            <summary>
+            Off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_On">
+            <summary>
+            On
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_CameraMode">
+            <summary>
+            Camera mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_FPP">
+            <summary>
+            FPP
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_TPP">
+            <summary>
+            TPP
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_CommitSuicide">
+            <summary>
+            Suicide
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_QuickLoad">
+            <summary>
+            Quick load / reconnect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_ShowColorPicker">
+            <summary>
+            Show color picker
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_ShowToolbarScreen">
+            <summary>
+            Show toolbar screen
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_ToggleHud">
+            <summary>
+            Toggle HUD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_PauseGame">
+            <summary>
+            Pause game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextErrorFeatureNotAvailableYet">
+            <summary>
+            Feature is not available yet
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMaximumNumberBots">
+            <summary>
+            Maximum number of bots has been reached
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Hud_BuildMode">
+            <summary>
+            Build mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickCompoundBuildingFormat">
+            <summary>
+            Press {0} to toggle compound building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickControlMenuFormat">
+            <summary>
+            Press {0} to access control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickMenus">
+            <summary>
+            In order to show help or modify toolbar, open control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickSlotEquipFormat">
+            <summary>
+            Press {0} or {1} to select toolbar slots
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickUnlimitedBuildingFormat">
+            <summary>
+            Press {0} to add block, press {1} to remove block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickVoxelMaterialFormat">
+            <summary>
+            Press {0} to change voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Notification_GameplayOptions">
+            <summary>
+            Press {0} to change Gameplay options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_Wardrobe">
+            <summary>
+            Change appearance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintJoystickPressToOpenInventory">
+            <summary>
+            Access control menu to open inventory of {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintPressToOpenBuildMode">
+            <summary>
+            Press {0} to enter build mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics">
+            <summary>
+            Physics
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Fast">
+            <summary>
+            Fast
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Normal">
+            <summary>
+            Normal
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Precise">
+            <summary>
+            Precise
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Tooltip">
+            <summary>
+            Higher settings improve simulation BUT directly affects performance.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionGraphicsOptions">
+            <summary>
+            Graphics options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AnisotropicFiltering">
+            <summary>
+            Anisotropic filtering
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AnisotropicFiltering_Off">
+            <summary>
+            Off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AntiAliasing">
+            <summary>
+            Anti-aliasing
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AntiAliasing_None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails">
+            <summary>
+            Foliage details
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_Disabled">
+            <summary>
+            Disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_Medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_MultiThreadedRendering">
+            <summary>
+            Multi-threaded rendering
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset">
+            <summary>
+            Quality preset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_Custom">
+            <summary>
+            Custom
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_Medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_ShadowMapResolution_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_ShadowMapResolution_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality">
+            <summary>
+            Texture quality
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality_Medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_VoiceChat">
+            <summary>
+            Push-to-talk voice chat
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.EnableVoiceChat">
+            <summary>
+            Enable voice chat
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_Tonemapping">
+            <summary>
+            Tonemapping
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GrassDensity">
+            <summary>
+            Grass density
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextGuideQuestion">
+            <summary>
+            Do you want to start by watching the video tutorial? Remember: you can always come back by clicking "Tutorials" in the "Help" screen (press F1).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationIncompleteGrid">
+            <summary>
+            You can place only completely constructed and undamaged blocks in the inventory
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Muted">
+            <summary>
+            Muted
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoiceChatVolume">
+            <summary>
+            Voice chat volume
+            </summary>
+        </member>
         <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
             <summary>
             Enum used for localization of display name. Null for player created definitions.
@@ -764,7 +4235,7 @@
         <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialGroup">
             Rule group defines a material mappable set of surface rules.
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangedValue.ConvertToCosine">
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangeValue.ConvertToCosine">
             When the range is an angle this method changes it to the cosines of the angle.
             
             The angle is expected to be in degrees.
@@ -772,7 +4243,7 @@
             Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
             
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangedValue.ConvertToSine">
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangeValue.ConvertToSine">
             When the range is an angle this method changes it to the sines of the angle.
             
             The angle is expected to be in degrees.
@@ -859,6 +4330,16 @@
             Obsolete. Use ElapsedGameTime
             </summary>
         </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Inventory.Size">
+            <summary>
+            Obsolete: kept for backward compatibility
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Inventory.InventoryFlags">
+            <summary>
+            Obsolete: kept for backward compatibility
+            </summary>
+        </member>
         <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_InventoryItem.Content">
             <summary>
             Obsolete. It is here only to keep backwards compatibility with old saves
@@ -889,6 +4370,11 @@
         <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ShipConnector.Connected">
             <summary>
             When ConnectedEntityId is not null, this tells whether the connection is only approach (yellow) or locked connection (green)
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ShipConnector.MasterToSlaveTransform">
+            <summary>
+            Master is connector with higher EntityId
             </summary>
         </member>
         <member name="F:Sandbox.Common.ObjectBuilders.MyToolbarType.Spectator">
@@ -928,6 +4414,11 @@
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
             <summary>
             Can handle old values as well.
+            </summary>
+        </member>
+        <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">
+            <summary>
+            This is object builder for MyReplicableEntity : MyEntity, not for thje 
             </summary>
         </member>
     </members>
