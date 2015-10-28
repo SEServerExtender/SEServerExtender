@@ -22,7 +22,7 @@
 		private static Type m_internalType;
 
 		private VoxelMapMaterialManager m_materialManager;
-		private MyStorageDataCache m_cache;
+		private MyStorageData m_cache;
 		private Dictionary<MyVoxelMaterialDefinition, float> m_materialTotals;
 
 		public static string VoxelMapNamespace = "";
@@ -274,7 +274,7 @@
 		protected void RefreshCache( )
 		{
 			IMyVoxelMap voxelMap = (IMyVoxelMap)BackingObject;
-			m_cache = new MyStorageDataCache( );
+			m_cache = new MyStorageData( );
 			Vector3I size = voxelMap.Storage.Size;
 			m_cache.Resize( size );
 

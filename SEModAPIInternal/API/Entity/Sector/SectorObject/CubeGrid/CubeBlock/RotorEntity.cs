@@ -91,7 +91,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		[DataMember]
 		[Category( "Rotor" )]
 		[ReadOnly( true )]
-		public long TopBlockId
+		public long? TopBlockId
 		{
 			get
 			{
