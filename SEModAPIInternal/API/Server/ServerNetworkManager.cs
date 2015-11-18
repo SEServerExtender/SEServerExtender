@@ -406,7 +406,7 @@ namespace SEModAPIInternal.API.Server
 			                                           {
 				                                           JoinGame = true,
 				                                           NewIdentity = true,
-				                                           MedicalRoom = 0,
+														   RespawnEntityId = 0,
 				                                           RespawnShipId = "",
 				                                           PlayerSerialId = 0
 			                                           };
