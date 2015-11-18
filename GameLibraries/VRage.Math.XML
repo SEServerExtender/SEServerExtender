@@ -40,6 +40,12 @@
             The maximum point the BoundingBoxI contains.
             </summary>
         </member>
+        <member name="M:VRageMath.BoundingBoxI.#ctor(VRageMath.BoundingBox)">
+            <summary>
+            Creates an instance of BoundingBoxI.
+            </summary>
+            <param name="min">The minimum point the BoundingBoxI includes.</param><param name="max">The maximum point the BoundingBoxI includes.</param>
+        </member>
         <member name="M:VRageMath.BoundingBoxI.#ctor(VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Creates an instance of BoundingBoxI.
@@ -133,7 +139,7 @@
             </summary>
             <param name="points">A list of points the BoundingBoxI should contain.</param>
         </member>
-        <member name="M:VRageMath.BoundingBoxI.Intersect(VRageMath.BoundingBoxI@)">
+        <member name="M:VRageMath.BoundingBoxI.IntersectWith(VRageMath.BoundingBoxI@)">
             <summary>
             Returns bounding box which is intersection of this and box
             It's called 'Prunik'
@@ -1946,11 +1952,6 @@
             </summary>
             <param name="quaternion1">Source QuaternionD.</param><param name="quaternion2">The divisor.</param><param name="result">[OutAttribute] Result of the division.</param>
         </member>
-        <member name="M:System.SerializationExtensionsMath.SerializeNormalizedUByte(VRage.Library.Collections.BitStream,VRageMath.Vector3@)">
-            <summary>
-            Serializes Vector3 in range from 0 to 1, each component to byte precision
-            </summary>
-        </member>
         <member name="M:System.SerializationExtensionsMath.ReadQuaternionNorm(VRage.Library.Collections.BitStream)">
             <summary>
             Serializes normalized quaternion into 52 bits
@@ -1986,6 +1987,11 @@
             48 bits
             </summary>
         </member>
+        <member name="M:System.SerializationExtensionsMath.WriteNormalizedSignedVector3(VRage.Library.Collections.BitStream,VRageMath.Vector3,System.Int32)">
+            <summary>
+            Writes Vector3 with -1, 1 range (uniform-spacing) with specified bit precision.
+            </summary>
+        </member>
         <member name="M:System.SerializationExtensionsMath.ReadHalfVector4(VRage.Library.Collections.BitStream)">
             <summary>
             64 bits
@@ -1996,6 +2002,11 @@
             48 bits
             </summary>
         </member>
+        <member name="M:System.SerializationExtensionsMath.ReadNormalizedSignedVector3(VRage.Library.Collections.BitStream,System.Int32)">
+            <summary>
+            Reads Vector3 with -1, 1 range (uniform-spacing) with specified bit precision.
+            </summary>
+        </member>
         <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.Matrix@)">
             <summary>
             Serializes only position and orientation, 12 + 6.5 = 18.5 bytes
@@ -2004,6 +2015,33 @@
         <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.MatrixD@)">
             <summary>
             Serializes only position and orientation, 24 + 6.5 = 30.5 bytes
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3DGrid`1.ClearFast">
+            <summary>
+            Clears the storage faster than clear. Only use for value type T
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3DGrid`1.RemoveTwo(VRageMath.Spatial.MyVector3DGrid{`0}.Enumerator@,VRageMath.Spatial.MyVector3DGrid{`0}.Enumerator@)">
+            <summary>
+            Removes values pointed at by en0 and en1 and ensures that the enumerators both stay consistent
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3DGrid`1.RemoveEntry(System.Int32)">
+            <summary>
+            Removes entry with the given index and returns the index of the next entry (or -1 if the removed entry was the last one)
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3DGrid`1.Enumerator.RemoveCurrent">
+            <summary>
+            Removes the current entry and returns true whether there is another entry.
+            May invalidate enumerators in the same bin.
+            To remove values from more enumerators while ensuring their validity use MyVector3Grid.RemoveTwo(...).
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.ClearFast">
+            <summary>
+            Clears the storage faster than clear. Only use for value type T
             </summary>
         </member>
         <member name="M:VRageMath.Spatial.MyVector3Grid`1.RemoveTwo(VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@,VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@)">
@@ -2020,7 +2058,7 @@
             <summary>
             Removes the current entry and returns true whether there is another entry.
             May invalidate enumerators in the same bin.
-            To remove values from more enumerators while ensuring their validity use MyVector3Grid.Remove(...).
+            To remove values from more enumerators while ensuring their validity use MyVector3Grid.RemoveTwo(...).
             </summary>
         </member>
         <member name="T:VRageMath.Vector4D">

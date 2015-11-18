@@ -112,6 +112,11 @@
             Sets new bit position and clears everything from min(old position, new position) to end of stream.
             </summary>
         </member>
+        <member name="M:VRage.Library.Collections.BitStream.WriteNormalizedSignedFloat(System.Single,System.Int32)">
+            <summary>
+            Writes uniform-spaced float within -1,1 range with specified number of bits.
+            </summary>
+        </member>
         <member name="M:VRage.Library.Collections.BitStream.WriteVariantSigned(System.Int32)">
             <summary>
             Efficiently writes small integers. Closer to zero, less bytes.
@@ -150,6 +155,11 @@
             16384 - 2097151, 24 bits.
             2097152 - 268435455, 32 bits.
             Etc...
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Collections.BitStream.ReadNormalizedSignedFloat(System.Int32)">
+            <summary>
+            Reads uniform-spaced float within -1,1 range with specified number of bits.
             </summary>
         </member>
         <member name="M:VRage.Library.Collections.BitStream.ReadPrefixLengthString(System.Char[]@,System.Text.Encoding)">
@@ -393,6 +403,12 @@
         <member name="M:VRage.Collections.MyIntervalList.Add(System.Int32)">
             <summary>
             Add a value to the list
+            </summary>
+        </member>
+        <member name="T:VRage.Library.Collections.MyListDictionary`2">
+            <summary>
+            Collection which stores multiple elements under same key by using list.
+            Collection does not allow removing single value, only all items with same key.
             </summary>
         </member>
         <member name="T:VRage.Library.Collections.MyMultiKeyDictionary`4">
@@ -1331,6 +1347,11 @@
             <summary>
             Simple thread-safe queue.
             Uses spin-lock
+            </summary>
+        </member>
+        <member name="T:VRage.Ref`1">
+            <summary>
+            Good for struct wrapping to store it as ref value in dictionary.
             </summary>
         </member>
         <member name="M:VRage.IResourceLock.AcquireExclusive">
@@ -4974,6 +4995,11 @@
             Other - one
             </summary>
         </member>
+        <member name="T:Sandbox.Engine.Platform.FixedLoopThreadSleep">
+            <summary>
+            60 FPS fixed loop that uses Thread.Sleep while waiting for update.
+            </summary>
+        </member>
         <member name="T:VRage.Common.Utils.MyChecksums">
             <summary>
             Helper class for serializing and deserializing checksum file.
@@ -5073,6 +5099,30 @@
         <member name="P:VRage.Library.Utils.MyTimeSpan.TimeSpan">
             <summary>
             This may not be accurate for large values - double accuracy
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Utils.MyLibraryUtils.NormalizeFloat(System.Single,System.Single,System.Single,System.Int32)">
+            <summary>
+            Normalizes uniform-spaced float within min/max into uint with specified number of bits.
+            This does not preserve 0 when min = -max
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Utils.MyLibraryUtils.DenormalizeFloat(System.UInt32,System.Single,System.Single,System.Int32)">
+            <summary>
+            Denormalizes uint with specified number of bits into uniform-space float within min/max.
+            This does not preserve 0 when min = -max
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Utils.MyLibraryUtils.NormalizeFloatCenter(System.Single,System.Single,System.Single,System.Int32)">
+            <summary>
+            Normalizes uniform-spaced float within min/max into uint with specified number of bits.
+            This preserves 0 when min = -max
+            </summary>
+        </member>
+        <member name="M:VRage.Library.Utils.MyLibraryUtils.DenormalizeFloatCenter(System.UInt32,System.Single,System.Single,System.Int32)">
+            <summary>
+            Denormalizes uint with specified number of bits into uniform-space float within min/max.
+            This preserves 0 when min = -max
             </summary>
         </member>
         <member name="P:VRage.Win32.WinApi.WorkingSet">

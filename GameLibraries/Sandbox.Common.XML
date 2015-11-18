@@ -510,22 +510,6 @@
             Activates the building mode
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.ActivateShipCreationClipboard(Sandbox.Common.ObjectBuilders.MyObjectBuilder_CubeGrid,VRageMath.Vector3,System.Single)">
-            <summary>
-            Activates creating grids
-            </summary>
-            <param name="grid">grid to be created</param>
-            <param name="centerDeltaDirection"></param>
-            <param name="dragVectorLength"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.ActivateShipCreationClipboard(Sandbox.Common.ObjectBuilders.MyObjectBuilder_CubeGrid[],VRageMath.Vector3,System.Single)">
-            <summary>
-            Activates creating grids
-            </summary>
-            <param name="grid">grids to be created</param>
-            <param name="centerDeltaDirection"></param>
-            <param name="dragVectorLength"></param>
-        </member>
         <member name="M:Sandbox.ModAPI.IMyCubeBuilder.AddConstruction(VRage.ModAPI.IMyEntity)">
             <summary>
             Adds construction site of block with currently selected definition

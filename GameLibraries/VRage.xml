@@ -405,7 +405,7 @@
         </member>
         <member name="T:VRage.MyDeltaTransform">
             <summary>
-            Transform structure for delta-transforms with small to medium positional delta (stored as HalfVector3)
+            Transform structure for delta-transforms.
             </summary>
         </member>
         <member name="T:VRage.NetProfiler">
@@ -1277,6 +1277,19 @@
             Internally it's SteamId or RakNetGUID.
             </summary>
         </member>
+        <member name="M:VRage.Replication.MyBandwidthLimits.GetLimit(VRage.Network.StateGroupEnum)">
+            <summary>
+            Gets current limit for group (how many bits can be written per frame).
+            Return zero when there's no limit.
+            </summary>
+        </member>
+        <member name="M:VRage.Replication.MyBandwidthLimits.SetLimit(VRage.Network.StateGroupEnum,System.Int32)">
+            <summary>
+            Sets limit for group (how many bits can be written per frame).
+            It's ensured that at least one item is sent every frame.
+            Setting limit to zero disables limit.
+            </summary>
+        </member>
         <member name="M:VRage.Network.MyClientInfo.GetPriority(VRage.Network.IMyReplicable)">
             <summary>
             Gets priority of different replicable.
@@ -1325,6 +1338,14 @@
             <summary>
             Finds state group of specified type.
             Returns null when group of specified type not found.
+            </summary>
+        </member>
+        <member name="T:VRage.Network.IMyEventProxy">
+            <summary>
+            Interface which only marks class as event owner.
+            Object itself must be replicated in network to allow raising events.
+            If you considering to add this to object, it's probably wrong and you should use static events in most cases.
+            This is commonly implemented only by entities which has it's external replicable.
             </summary>
         </member>
         <member name="T:VRage.Network.IMyEventOwner">
@@ -1585,6 +1606,11 @@
             Hack to allow thing like: CreateCharacter, Respawn sent from server
             </summary>
         </member>
+        <member name="M:VRage.Network.MyReplicationServer.ForceEverything(VRage.Network.EndpointId)">
+            <summary>
+            Sends everything in the world to client. Use with extreme caution!
+            </summary>
+        </member>
         <member name="M:VRage.Network.MyReplicationServer.ResetForClients(VRage.Network.IMyReplicable)">
             <summary>
             Destroys replicable for all clients (used for testing and debugging).
@@ -1624,6 +1650,11 @@
             <summary>
             Server method. Decorated method is be called by client on server or by server locally.
             Server performs validation. Pass null as validation method to perform no validation (not recommended)
+            </summary>
+        </member>
+        <member name="T:VRage.Network.StateGroupEnum">
+            <summary>
+            State groups, used to limit bandwidth by group.
             </summary>
         </member>
         <member name="P:VRage.Serialization.SerializableDictionary`2.Dictionary">
@@ -2121,6 +2152,12 @@
             This "assert" is executed in DEBUG and RELEASE modes. Use it in code that that won't suffer from more work (e.g. loading), not in frequently used loops
             </summary>
             <param name="condition"></param>
+        </member>
+        <member name="M:VRage.Utils.MyDebug.FailRelease(System.String)">
+            <summary>
+            Logs the message on release and also displays a message on DEBUG.
+            </summary>
+            <param name="message"></param>
         </member>
         <member name="M:VRage.Utils.MyDebug.AssertDebug(System.Boolean)">
             <summary>
