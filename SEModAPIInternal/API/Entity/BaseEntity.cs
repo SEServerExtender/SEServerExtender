@@ -899,7 +899,7 @@ namespace SEModAPIInternal.API.Entity
 		}
 
 		#endregion "Internal"
-
+        
 		#endregion "Methods"
 	}
 

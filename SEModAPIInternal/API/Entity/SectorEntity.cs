@@ -9,6 +9,7 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox.Common.ObjectBuilders.Voxels;
 	using Sandbox.Game.Entities;
 	using Sandbox.Game.Multiplayer;
+    using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
@@ -515,7 +516,7 @@ namespace SEModAPIInternal.API.Entity
 				}
 
 				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Debug( entity.GetType( ).Name + " '" + entity.Name + "' is being added ..." );
+					ApplicationLog.BaseLog.Debug(String.Format("{0} '{1}': Is being added...", entity.GetType().Name, entity.DisplayName));
 
 				AddEntityQueue.Enqueue( entity );
 
@@ -536,8 +537,8 @@ namespace SEModAPIInternal.API.Entity
 
 				BaseEntity entityToAdd = AddEntityQueue.Dequeue( );
 
-				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Debug( entityToAdd.GetType( ).Name + " '" + entityToAdd.GetType( ).Name + "': Adding to scene ..." );
+                if (ExtenderOptions.IsDebugging)
+                    ApplicationLog.BaseLog.Debug(String.Format("{0} '{1}': Adding to scene...", entityToAdd.GetType().Name, entityToAdd.DisplayName));
 
 				//Create the backing object
 				Type entityType = entityToAdd.GetType( );
@@ -548,8 +549,9 @@ namespace SEModAPIInternal.API.Entity
 
 				//Add the backing object to the main game object manager
 				MyEntity backingObject = (MyEntity)entityToAdd.BackingObject;
-				backingObject.Init( entityToAdd.ObjectBuilder );
-				MyEntities.Add( backingObject );
+				//backingObject.Init( entityToAdd.ObjectBuilder );
+                
+                MyAPIGateway.Entities.CreateFromObjectBuilderAndAdd(entityToAdd.ObjectBuilder);
 
 				if ( entityToAdd is FloatingObject )
 				{
@@ -572,10 +574,11 @@ namespace SEModAPIInternal.API.Entity
 					try
 					{
 						//Broadcast the new entity to the clients
-						MyObjectBuilder_EntityBase baseEntity = backingObject.GetObjectBuilder( );
-						MySyncCreate.SendEntityCreated( baseEntity );
+						//MyObjectBuilder_EntityBase baseEntity = backingObject.GetObjectBuilder( );
+						MySyncCreate.SendEntityCreated( entityToAdd.ObjectBuilder);
+                        ApplicationLog.BaseLog.Info("Broadcasted entity to clients.");
 
-						entityToAdd.ObjectBuilder = baseEntity;
+						//entityToAdd.ObjectBuilder = baseEntity;
 					}
 					catch ( Exception ex )
 					{
@@ -587,7 +590,7 @@ namespace SEModAPIInternal.API.Entity
 				if ( ExtenderOptions.IsDebugging )
 				{
 					Type type = entityToAdd.GetType( );
-					ApplicationLog.BaseLog.Debug( type.Name + " '" + entityToAdd.Name + "': Finished adding to scene" );
+					ApplicationLog.BaseLog.Debug(String.Format("{0} '{1}': Finished adding to scene", entityToAdd.GetType().Name, entityToAdd.DisplayName));
 				}
 			}
 			catch ( Exception ex )
