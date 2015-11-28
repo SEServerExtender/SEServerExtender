@@ -11,3 +11,5 @@ Versions follow Space Engineers, indicating which version of SE each version of 
 For example, v1.72.08.146 supports SE version 1.72.08.
 
 For more information, including an installation guide, command reference, and examples, see the SEServerExtender wiki at http://wiki.seserverextender.com
+
+Generated documentation available at http://brantmartin.com/SESE/index.html

@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 
 packages/*/*
 local/*
+
+Docs/html
+Docs/latex
