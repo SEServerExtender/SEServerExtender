@@ -1,0 +1,216 @@
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service}{}\section{S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service Class Reference}
+\label{class_s_e_server_extender_1_1_server_service_1_1_server_service}\index{S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service@{S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service}}
+Inheritance diagram for S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_e_server_extender_1_1_server_service_1_1_server_service}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_s_e_comm_1_1_start_server_response}{Start\+Server\+Response} \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a28b157cacb532e4a5149e2fb234eb253}{Start\+Server} (\hyperlink{class_s_e_comm_1_1_start_server_request}{Start\+Server\+Request} request)
+\begin{DoxyCompactList}\small\item\em Starts the S\+E server with the given configuration name. \end{DoxyCompactList}\item 
+void \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a2bc751bdb04de0a8cb7ba76c4d02fc13}{Stop\+Server} ()
+\begin{DoxyCompactList}\small\item\em Stops the S\+E server, if it is running. \end{DoxyCompactList}\item 
+void \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a03dff0c8a36f28e65a17f7d711c97496}{Exit} (int exit\+Code)
+\begin{DoxyCompactList}\small\item\em Immediately un-\/gracefully shuts the application down. \end{DoxyCompactList}\item 
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a446718001a4a356fd7c97c95625e3dc6}{}I\+Enumerable$<$ \hyperlink{class_s_e_mod_a_p_i_internal_1_1_chat_user_item}{Chat\+User\+Item} $>$ {\bfseries Get\+Players\+Online} ()\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a446718001a4a356fd7c97c95625e3dc6}
+
+\item 
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a5f42d93fa845026710373d3d327e297b}{}void {\bfseries Kick\+Player} (ulong steam\+Id)\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a5f42d93fa845026710373d3d327e297b}
+
+\item 
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a1265393107b3253bad30729b3f58264f}{}void {\bfseries Ban\+Player} (ulong steam\+Id)\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a1265393107b3253bad30729b3f58264f}
+
+\item 
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae964ae5c3961d8df12f8842738646064}{}void {\bfseries Un\+Ban\+Player} (ulong steam\+Id)\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae964ae5c3961d8df12f8842738646064}
+
+\item 
+Version \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_aa6d19ffd61bdbdfa66e140e5b877d56e}{Get\+Extender\+Version} ()
+\begin{DoxyCompactList}\small\item\em Gets the version of S\+E\+S\+E that is currently running. \end{DoxyCompactList}\item 
+I\+Enumerable$<$ \hyperlink{class_s_e_comm_1_1_plugins_1_1_plugin_info}{Plugin\+Info} $>$ \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae5fb06c94f75d7cf1f87a39ffa1024de}{Get\+Loaded\+Plugin\+List} ()
+\begin{DoxyCompactList}\small\item\em Gets the list of plugins currently loaded by the server. \end{DoxyCompactList}\item 
+Guid \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_afe7ef92d2bb28d88f0483886be990e41}{Begin\+Chat\+Session} ()
+\begin{DoxyCompactList}\small\item\em Begins a chat monitoring session. \end{DoxyCompactList}\item 
+I\+Enumerable$<$ \hyperlink{class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_chat_1_1_chat_message}{Chat\+Message} $>$ \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae144f3cb0cccb40c6c59e80041ae7e77}{Get\+Chat\+Messages} (Guid session\+Guid)
+\begin{DoxyCompactList}\small\item\em Gets all the messages that have not yet been delivered to the chat monitoring session. \end{DoxyCompactList}\item 
+void \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_aa783734e6fcbab8ab0b0cdb985d01407}{End\+Chat\+Session} (Guid session\+Guid)
+\begin{DoxyCompactList}\small\item\em Ends a chat monitoring session explicitly. \end{DoxyCompactList}\item 
+void \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a027df7d9b658ca67735f462dac4f5e7d}{Send\+Public\+Chat\+Message} (string message)
+\begin{DoxyCompactList}\small\item\em Sends a public chat message to all users, as the Server user. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_afe7ef92d2bb28d88f0483886be990e41}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Begin\+Chat\+Session@{Begin\+Chat\+Session}}
+\index{Begin\+Chat\+Session@{Begin\+Chat\+Session}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Begin\+Chat\+Session()}]{\setlength{\rightskip}{0pt plus 5cm}Guid S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Begin\+Chat\+Session (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_afe7ef92d2bb28d88f0483886be990e41}
+
+
+Begins a chat monitoring session. 
+
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_aa783734e6fcbab8ab0b0cdb985d01407}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!End\+Chat\+Session@{End\+Chat\+Session}}
+\index{End\+Chat\+Session@{End\+Chat\+Session}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{End\+Chat\+Session(\+Guid session\+Guid)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+End\+Chat\+Session (
+\begin{DoxyParamCaption}
+\item[{Guid}]{session\+Guid}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_aa783734e6fcbab8ab0b0cdb985d01407}
+
+
+Ends a chat monitoring session explicitly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em session\+Guid} & The session identifier to terminate\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a03dff0c8a36f28e65a17f7d711c97496}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Exit@{Exit}}
+\index{Exit@{Exit}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Exit(int exit\+Code)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Exit (
+\begin{DoxyParamCaption}
+\item[{int}]{exit\+Code}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a03dff0c8a36f28e65a17f7d711c97496}
+
+
+Immediately un-\/gracefully shuts the application down. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exit\+Code} & An exit code to attempt to return to the operating system.\\
+\hline
+\end{DoxyParams}
+
+
+Since S\+E\+S\+E doesn\textquotesingle{}t generally close all that cleanly anyway, the exit code probably won\textquotesingle{}t work and you\textquotesingle{}ll probably get an exception.
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service_a3ac39f5e58c50a4c4bc92b576774f749}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae144f3cb0cccb40c6c59e80041ae7e77}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Get\+Chat\+Messages@{Get\+Chat\+Messages}}
+\index{Get\+Chat\+Messages@{Get\+Chat\+Messages}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Get\+Chat\+Messages(\+Guid session\+Guid)}]{\setlength{\rightskip}{0pt plus 5cm}I\+Enumerable$<${\bf Chat\+Message}$>$ S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Get\+Chat\+Messages (
+\begin{DoxyParamCaption}
+\item[{Guid}]{session\+Guid}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae144f3cb0cccb40c6c59e80041ae7e77}
+
+
+Gets all the messages that have not yet been delivered to the chat monitoring session. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em session\+Guid} & The session identifier to retrieve messages for\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_aa6d19ffd61bdbdfa66e140e5b877d56e}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Get\+Extender\+Version@{Get\+Extender\+Version}}
+\index{Get\+Extender\+Version@{Get\+Extender\+Version}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Get\+Extender\+Version()}]{\setlength{\rightskip}{0pt plus 5cm}Version S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Get\+Extender\+Version (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_aa6d19ffd61bdbdfa66e140e5b877d56e}
+
+
+Gets the version of S\+E\+S\+E that is currently running. 
+
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae5fb06c94f75d7cf1f87a39ffa1024de}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Get\+Loaded\+Plugin\+List@{Get\+Loaded\+Plugin\+List}}
+\index{Get\+Loaded\+Plugin\+List@{Get\+Loaded\+Plugin\+List}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Get\+Loaded\+Plugin\+List()}]{\setlength{\rightskip}{0pt plus 5cm}I\+Enumerable$<${\bf Plugin\+Info}$>$ S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Get\+Loaded\+Plugin\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_ae5fb06c94f75d7cf1f87a39ffa1024de}
+
+
+Gets the list of plugins currently loaded by the server. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a027df7d9b658ca67735f462dac4f5e7d}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Send\+Public\+Chat\+Message@{Send\+Public\+Chat\+Message}}
+\index{Send\+Public\+Chat\+Message@{Send\+Public\+Chat\+Message}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Send\+Public\+Chat\+Message(string message)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Send\+Public\+Chat\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a027df7d9b658ca67735f462dac4f5e7d}
+
+
+Sends a public chat message to all users, as the Server user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The text of the message to send.\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a28b157cacb532e4a5149e2fb234eb253}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Start\+Server@{Start\+Server}}
+\index{Start\+Server@{Start\+Server}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Start\+Server(\+Start\+Server\+Request request)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Start\+Server\+Response} S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Start\+Server (
+\begin{DoxyParamCaption}
+\item[{{\bf Start\+Server\+Request}}]{request}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a28b157cacb532e4a5149e2fb234eb253}
+
+
+Starts the S\+E server with the given configuration name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & \\
+\hline
+\end{DoxyParams}
+
+
+Should not be called if a server is already running for this instance of S\+E\+S\+E.
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service_a2df8b69afdb995c1d2ad7b5a39f59feb}{S\+E\+Comm.\+I\+Server\+Service}.
+
+\hypertarget{class_s_e_server_extender_1_1_server_service_1_1_server_service_a2bc751bdb04de0a8cb7ba76c4d02fc13}{}\index{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}!Stop\+Server@{Stop\+Server}}
+\index{Stop\+Server@{Stop\+Server}!S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service@{S\+E\+Server\+Extender\+::\+Server\+Service\+::\+Server\+Service}}
+\subsubsection[{Stop\+Server()}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service.\+Stop\+Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_s_e_server_extender_1_1_server_service_1_1_server_service_a2bc751bdb04de0a8cb7ba76c4d02fc13}
+
+
+Stops the S\+E server, if it is running. 
+
+
+
+Implements \hyperlink{interface_s_e_comm_1_1_i_server_service_af0faa9bdfebe1514e6dec2a5d54aca94}{S\+E\+Comm.\+I\+Server\+Service}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/\+Git\+Hub/\+S\+E\+Server\+Extender/\+S\+E\+Server\+Extender/\+Server\+Service/Server\+Service.\+cs\end{DoxyCompactItemize}

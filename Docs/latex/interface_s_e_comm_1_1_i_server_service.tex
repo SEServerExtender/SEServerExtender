@@ -1,0 +1,115 @@
+\hypertarget{interface_s_e_comm_1_1_i_server_service}{}\section{S\+E\+Comm.\+I\+Server\+Service Interface Reference}
+\label{interface_s_e_comm_1_1_i_server_service}\index{S\+E\+Comm.\+I\+Server\+Service@{S\+E\+Comm.\+I\+Server\+Service}}
+Inheritance diagram for S\+E\+Comm.\+I\+Server\+Service\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.872910cm]{interface_s_e_comm_1_1_i_server_service}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_s_e_comm_1_1_start_server_response}{Start\+Server\+Response} \hyperlink{interface_s_e_comm_1_1_i_server_service_a2df8b69afdb995c1d2ad7b5a39f59feb}{Start\+Server} (\hyperlink{class_s_e_comm_1_1_start_server_request}{Start\+Server\+Request} request)
+\begin{DoxyCompactList}\small\item\em Attempts to start the server and returns basic information about the server. \end{DoxyCompactList}\item 
+void \hyperlink{interface_s_e_comm_1_1_i_server_service_af0faa9bdfebe1514e6dec2a5d54aca94}{Stop\+Server} ()
+\begin{DoxyCompactList}\small\item\em Attempts to stop the currently running S\+E instance. \end{DoxyCompactList}\item 
+void \hyperlink{interface_s_e_comm_1_1_i_server_service_a3ac39f5e58c50a4c4bc92b576774f749}{Exit} (int exit\+Code)
+\begin{DoxyCompactList}\small\item\em Immediately un-\/gracefully shuts the application down. \end{DoxyCompactList}\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a1d0873cf58e433ee8434898cf92659bb}{}I\+Enumerable$<$ \hyperlink{class_s_e_mod_a_p_i_internal_1_1_chat_user_item}{Chat\+User\+Item} $>$ {\bfseries Get\+Players\+Online} ()\label{interface_s_e_comm_1_1_i_server_service_a1d0873cf58e433ee8434898cf92659bb}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a8095aceeea7e5f7af615a6b033765648}{}void {\bfseries Kick\+Player} (ulong steam\+Id)\label{interface_s_e_comm_1_1_i_server_service_a8095aceeea7e5f7af615a6b033765648}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_ae18e13cf7f5475ee8ec6d698d6929993}{}void {\bfseries Ban\+Player} (ulong steam\+Id)\label{interface_s_e_comm_1_1_i_server_service_ae18e13cf7f5475ee8ec6d698d6929993}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_aee78dbffac6d3ded48f2d6d58a25b93d}{}void {\bfseries Un\+Ban\+Player} (ulong steam\+Id)\label{interface_s_e_comm_1_1_i_server_service_aee78dbffac6d3ded48f2d6d58a25b93d}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a11315e2f6e20dceb527f574d0d920aad}{}Version {\bfseries Get\+Extender\+Version} ()\label{interface_s_e_comm_1_1_i_server_service_a11315e2f6e20dceb527f574d0d920aad}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_aae61a35ae16e2af49b8c1e8af48ee4d6}{}I\+Enumerable$<$ Plugin\+Info $>$ {\bfseries Get\+Loaded\+Plugin\+List} ()\label{interface_s_e_comm_1_1_i_server_service_aae61a35ae16e2af49b8c1e8af48ee4d6}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a31473a0de8d75cb994a52eb5b4552282}{}Guid {\bfseries Begin\+Chat\+Session} ()\label{interface_s_e_comm_1_1_i_server_service_a31473a0de8d75cb994a52eb5b4552282}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a1e98f4992a4dd3abba12f0fb33a6c973}{}I\+Enumerable$<$ \hyperlink{class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_chat_1_1_chat_message}{Chat\+Message} $>$ {\bfseries Get\+Chat\+Messages} (Guid session\+Guid)\label{interface_s_e_comm_1_1_i_server_service_a1e98f4992a4dd3abba12f0fb33a6c973}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_ae155c0123d1a5c2d959fab27af827e4c}{}void {\bfseries End\+Chat\+Session} (Guid session\+Guid)\label{interface_s_e_comm_1_1_i_server_service_ae155c0123d1a5c2d959fab27af827e4c}
+
+\item 
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a6042b2fada58c327f5a616bed89c2fc4}{}void {\bfseries Send\+Public\+Chat\+Message} (string message)\label{interface_s_e_comm_1_1_i_server_service_a6042b2fada58c327f5a616bed89c2fc4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a3ac39f5e58c50a4c4bc92b576774f749}{}\index{S\+E\+Comm\+::\+I\+Server\+Service@{S\+E\+Comm\+::\+I\+Server\+Service}!Exit@{Exit}}
+\index{Exit@{Exit}!S\+E\+Comm\+::\+I\+Server\+Service@{S\+E\+Comm\+::\+I\+Server\+Service}}
+\subsubsection[{Exit(int exit\+Code)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+Comm.\+I\+Server\+Service.\+Exit (
+\begin{DoxyParamCaption}
+\item[{int}]{exit\+Code}
+\end{DoxyParamCaption}
+)}\label{interface_s_e_comm_1_1_i_server_service_a3ac39f5e58c50a4c4bc92b576774f749}
+
+
+Immediately un-\/gracefully shuts the application down. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exit\+Code} & An exit code to attempt to return to the operating system.\\
+\hline
+\end{DoxyParams}
+
+
+Since S\+E\+S\+E doesn\textquotesingle{}t generally close all that cleanly anyway, the exit code probably won\textquotesingle{}t work and you\textquotesingle{}ll probably get an exception.
+
+Implemented in \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a03dff0c8a36f28e65a17f7d711c97496}{S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service}, and \hyperlink{class_s_e_server_g_u_i_1_1_server_service_proxy_aecca063219e49d3b2ea6d93f74fc27c5}{S\+E\+Server\+G\+U\+I.\+Server\+Service\+Proxy}.
+
+\hypertarget{interface_s_e_comm_1_1_i_server_service_a2df8b69afdb995c1d2ad7b5a39f59feb}{}\index{S\+E\+Comm\+::\+I\+Server\+Service@{S\+E\+Comm\+::\+I\+Server\+Service}!Start\+Server@{Start\+Server}}
+\index{Start\+Server@{Start\+Server}!S\+E\+Comm\+::\+I\+Server\+Service@{S\+E\+Comm\+::\+I\+Server\+Service}}
+\subsubsection[{Start\+Server(\+Start\+Server\+Request request)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Start\+Server\+Response} S\+E\+Comm.\+I\+Server\+Service.\+Start\+Server (
+\begin{DoxyParamCaption}
+\item[{{\bf Start\+Server\+Request}}]{request}
+\end{DoxyParamCaption}
+)}\label{interface_s_e_comm_1_1_i_server_service_a2df8b69afdb995c1d2ad7b5a39f59feb}
+
+
+Attempts to start the server and returns basic information about the server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & A request including, most importantly, the configuration name of the S\+E instance to start.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a28b157cacb532e4a5149e2fb234eb253}{S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service}, and \hyperlink{class_s_e_server_g_u_i_1_1_server_service_proxy_a95562f47e8f388a07190067367292e15}{S\+E\+Server\+G\+U\+I.\+Server\+Service\+Proxy}.
+
+\hypertarget{interface_s_e_comm_1_1_i_server_service_af0faa9bdfebe1514e6dec2a5d54aca94}{}\index{S\+E\+Comm\+::\+I\+Server\+Service@{S\+E\+Comm\+::\+I\+Server\+Service}!Stop\+Server@{Stop\+Server}}
+\index{Stop\+Server@{Stop\+Server}!S\+E\+Comm\+::\+I\+Server\+Service@{S\+E\+Comm\+::\+I\+Server\+Service}}
+\subsubsection[{Stop\+Server()}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+Comm.\+I\+Server\+Service.\+Stop\+Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_s_e_comm_1_1_i_server_service_af0faa9bdfebe1514e6dec2a5d54aca94}
+
+
+Attempts to stop the currently running S\+E instance. 
+
+
+
+Implemented in \hyperlink{class_s_e_server_extender_1_1_server_service_1_1_server_service_a2bc751bdb04de0a8cb7ba76c4d02fc13}{S\+E\+Server\+Extender.\+Server\+Service.\+Server\+Service}, and \hyperlink{class_s_e_server_g_u_i_1_1_server_service_proxy_a2e54e596eaa27b95e010b89a2f09be5d}{S\+E\+Server\+G\+U\+I.\+Server\+Service\+Proxy}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/\+Git\+Hub/\+S\+E\+Server\+Extender/\+S\+E\+Comm/I\+Server\+Service.\+cs\end{DoxyCompactItemize}

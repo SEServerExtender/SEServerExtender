@@ -1,0 +1,8 @@
+var class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_thruster_manager =
+[
+    [ "CubeGridThrusterManager", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_thruster_manager.html#a39ba165865c0542d1782f3fc6d1a216c", null ],
+    [ "InternalGetDampenersEnabled", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_thruster_manager.html#ad392cefa70eda53269827faf8cbfcb5d", null ],
+    [ "InternalUpdateDampenersEnabled", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_thruster_manager.html#aeb925e4f1a59bed3d15cf9801541ac6d", null ],
+    [ "BackingObject", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_thruster_manager.html#a0c2a0f5fd3b3113b6e7629a405d7f966", null ],
+    [ "DampenersEnabled", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_thruster_manager.html#acc2db616c44e5d00ba9c007dd02b7968", null ]
+];

@@ -1,0 +1,164 @@
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception}{}\section{S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception Class Reference}
+\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception}\index{S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception}}
+
+
+ 
+
+
+Inheritance diagram for S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a2c8c870c502f75895fbc4e49a58137e3}{State\+To\+String} ()
+\begin{DoxyCompactList}\small\item\em returns the value of the current state to string \end{DoxyCompactList}\item 
+string \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a4a7fa0c4dced6441b9823c89408dd0ef}{Get\+Debug\+String} ()
+\begin{DoxyCompactList}\small\item\em Method intended to return a standardized and simplified information about exceptions of the \hyperlink{namespace_s_e_mod_a_p_i_1_1_a_p_i}{A\+P\+I} to ease the debugging \end{DoxyCompactList}\item 
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_aaf6d54f34e06dcdd16f7cf4863d5bb6f}{}override void {\bfseries Get\+Object\+Data} (Serialization\+Info info, Streaming\+Context context)\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_aaf6d54f34e06dcdd16f7cf4863d5bb6f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a8bc13e6e7ed2e84bb9c2ab361eac9fa3}{Auto\+Exception} (Enum exception\+State, string additionnal\+Info=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Class to handle exceptions to ease debbuging by handling their context \end{DoxyCompactList}\item 
+\hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a624297a79a9452a2b1748502684625ec}{Auto\+Exception} (Serialization\+Info info, Streaming\+Context context)
+\begin{DoxyCompactList}\small\item\em The serialization constructor of \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception}{Auto\+Exception} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_af89caadb564bfd7603206a1ecbd7b638}{}string {\bfseries m\+\_\+\+Additionnal\+Info}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_af89caadb564bfd7603206a1ecbd7b638}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a0cbf7eddd61b642a5db5d80a391f350d}{}int {\bfseries m\+\_\+\+Exception\+State}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a0cbf7eddd61b642a5db5d80a391f350d}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a655b72cb700f1fa436ecb7bc84f16778}{}string\mbox{[}$\,$\mbox{]} {\bfseries State\+Representation}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a655b72cb700f1fa436ecb7bc84f16778}
+
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a27225fa200b9e876403b30c8e3179179}{Exception\+State\+Id}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the value representing the state of the exception \end{DoxyCompactList}\item 
+string \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_ac4b82e79569eae8a61710e98246cc994}{Additionnal\+Info}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the Custom\+Message \end{DoxyCompactList}\item 
+string \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a0583b17fad60a355f23cffa1885e5d7e}{Object}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the Object context as string \end{DoxyCompactList}\item 
+string \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_aecf1db9ecc69bc498a8e606fde1185d8}{Method}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the Method context as string \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+
+\begin{DoxyItemize}
+\item Class to easily handle exceptions
+\item The derived class must instantiate their exception state representation as string for their exception state enum
+\item See Game\+Installation\+Exception\+Info for example 
+\end{DoxyItemize}
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a8bc13e6e7ed2e84bb9c2ab361eac9fa3}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Auto\+Exception@{Auto\+Exception}}
+\index{Auto\+Exception@{Auto\+Exception}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Auto\+Exception(\+Enum exception\+State, string additionnal\+Info="""")}]{\setlength{\rightskip}{0pt plus 5cm}S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Auto\+Exception (
+\begin{DoxyParamCaption}
+\item[{Enum}]{exception\+State, }
+\item[{string}]{additionnal\+Info = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a8bc13e6e7ed2e84bb9c2ab361eac9fa3}
+
+
+Class to handle exceptions to ease debbuging by handling their context 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exception\+State} & An instance of a derived class of I\+Exception\+State\\
+\hline
+{\em additionnal\+Info} & Give additionnal information about the exception\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a624297a79a9452a2b1748502684625ec}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Auto\+Exception@{Auto\+Exception}}
+\index{Auto\+Exception@{Auto\+Exception}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Auto\+Exception(\+Serialization\+Info info, Streaming\+Context context)}]{\setlength{\rightskip}{0pt plus 5cm}S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Auto\+Exception (
+\begin{DoxyParamCaption}
+\item[{Serialization\+Info}]{info, }
+\item[{Streaming\+Context}]{context}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a624297a79a9452a2b1748502684625ec}
+
+
+The serialization constructor of \hyperlink{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception}{Auto\+Exception} 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a4a7fa0c4dced6441b9823c89408dd0ef}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Get\+Debug\+String@{Get\+Debug\+String}}
+\index{Get\+Debug\+String@{Get\+Debug\+String}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Get\+Debug\+String()}]{\setlength{\rightskip}{0pt plus 5cm}string S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Get\+Debug\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a4a7fa0c4dced6441b9823c89408dd0ef}
+
+
+Method intended to return a standardized and simplified information about exceptions of the \hyperlink{namespace_s_e_mod_a_p_i_1_1_a_p_i}{A\+P\+I} to ease the debugging 
+
+\begin{DoxyReturn}{Returns}
+Simplified
+\end{DoxyReturn}
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a2c8c870c502f75895fbc4e49a58137e3}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!State\+To\+String@{State\+To\+String}}
+\index{State\+To\+String@{State\+To\+String}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{State\+To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}string S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+State\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a2c8c870c502f75895fbc4e49a58137e3}
+
+
+returns the value of the current state to string 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_ac4b82e79569eae8a61710e98246cc994}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Additionnal\+Info@{Additionnal\+Info}}
+\index{Additionnal\+Info@{Additionnal\+Info}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Additionnal\+Info}]{\setlength{\rightskip}{0pt plus 5cm}string S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Additionnal\+Info\hspace{0.3cm}{\ttfamily [get]}}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_ac4b82e79569eae8a61710e98246cc994}
+
+
+Get the Custom\+Message 
+
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a27225fa200b9e876403b30c8e3179179}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Exception\+State\+Id@{Exception\+State\+Id}}
+\index{Exception\+State\+Id@{Exception\+State\+Id}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Exception\+State\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Exception\+State\+Id\hspace{0.3cm}{\ttfamily [get]}}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a27225fa200b9e876403b30c8e3179179}
+
+
+Get the value representing the state of the exception 
+
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_aecf1db9ecc69bc498a8e606fde1185d8}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Method@{Method}}
+\index{Method@{Method}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Method}]{\setlength{\rightskip}{0pt plus 5cm}string S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Method\hspace{0.3cm}{\ttfamily [get]}}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_aecf1db9ecc69bc498a8e606fde1185d8}
+
+
+Get the Method context as string 
+
+\hypertarget{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a0583b17fad60a355f23cffa1885e5d7e}{}\index{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}!Object@{Object}}
+\index{Object@{Object}!S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception@{S\+E\+Mod\+A\+P\+I\+::\+Support\+::\+Auto\+Exception}}
+\subsubsection[{Object}]{\setlength{\rightskip}{0pt plus 5cm}string S\+E\+Mod\+A\+P\+I.\+Support.\+Auto\+Exception.\+Object\hspace{0.3cm}{\ttfamily [get]}}\label{class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception_a0583b17fad60a355f23cffa1885e5d7e}
+
+
+Get the Object context as string 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/\+Git\+Hub/\+S\+E\+Server\+Extender/\+S\+E\+Mod\+A\+P\+I/\+Support/Auto\+Exception.\+cs\end{DoxyCompactItemize}

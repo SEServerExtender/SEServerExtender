@@ -1,0 +1,58 @@
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager}{}\section{S\+E\+Mod\+A\+P\+I\+Extensions.\+A\+P\+I.\+Plugin\+Manager Class Reference}
+\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager}\index{S\+E\+Mod\+A\+P\+I\+Extensions.\+A\+P\+I.\+Plugin\+Manager@{S\+E\+Mod\+A\+P\+I\+Extensions.\+A\+P\+I.\+Plugin\+Manager}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a08e32b15a8d576be163020fbdeb37732}{}void {\bfseries Load\+Plugins} (bool force\+Load=false)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a08e32b15a8d576be163020fbdeb37732}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a75f9dcbc7bd3e4a63052a3882d31e00d}{}void {\bfseries Init} ()\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a75f9dcbc7bd3e4a63052a3882d31e00d}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a92a89aaa8ac849539e6e135fcb33fef7}{}void {\bfseries Update} ()\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a92a89aaa8ac849539e6e135fcb33fef7}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a8c2b614f4e66d3850b93e686ae8b303a}{}void {\bfseries Shutdown} ()\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a8c2b614f4e66d3850b93e686ae8b303a}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a6df85232226c6537ce0cfadf03ca5312}{}void {\bfseries Init\+Plugin} (Guid key)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a6df85232226c6537ce0cfadf03ca5312}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_abf94502c6d02b6e94f5bbfd0de2d24cb}{}void {\bfseries Unload\+Plugin} (Guid key)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_abf94502c6d02b6e94f5bbfd0de2d24cb}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_aff7cf01854e347555a91ea895cc2e10b}{}bool {\bfseries Get\+Plugin\+State} (Guid key)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_aff7cf01854e347555a91ea895cc2e10b}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_ac1a6abdac77bf9b4d3f0264cd23cbf5e}{}static void {\bfseries Do\+Update} (object args)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_ac1a6abdac77bf9b4d3f0264cd23cbf5e}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a1772f3fc3ffbf6547e6618b00a9d4d7c}{}static void {\bfseries Hook\+Chat\+Message} (Object plugin, Dictionary$<$ Guid, \hyperlink{interface_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_1_1_i_plugin}{I\+Plugin} $>$ plugins, Dictionary$<$ Guid, bool $>$ plugin\+State, \hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Manager.\+Chat\+Event} chat\+Event, out bool discard)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a1772f3fc3ffbf6547e6618b00a9d4d7c}
+
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_af47c339f9d4c116870ee16944be5849e}{}static \hyperlink{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager}{Plugin\+Manager} {\bfseries Instance}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_af47c339f9d4c116870ee16944be5849e}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_abc049c877cc6cd15ef2674499f98bfbd}{}bool {\bfseries Loaded}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_abc049c877cc6cd15ef2674499f98bfbd}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a14fd79f81163e783efa536a11b612f66}{}bool {\bfseries Initialized}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a14fd79f81163e783efa536a11b612f66}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_aa7fc93cbd1cebc91bb1a2a7e82649f8f}{}Dictionary$<$ Guid, \hyperlink{interface_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_1_1_i_plugin}{I\+Plugin} $>$ {\bfseries Plugins}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_aa7fc93cbd1cebc91bb1a2a7e82649f8f}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a117110d7c7fdc583732d8e012083fe4a}{}Dictionary$<$ Guid, bool $>$ {\bfseries Plugin\+States}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_plugin_manager_a117110d7c7fdc583732d8e012083fe4a}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/\+Git\+Hub/\+S\+E\+Server\+Extender/\+S\+E\+Mod\+A\+P\+I\+Extensions/\+A\+P\+I/Plugin\+Manager.\+cs\end{DoxyCompactItemize}

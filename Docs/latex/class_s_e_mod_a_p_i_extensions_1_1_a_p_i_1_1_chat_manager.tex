@@ -1,0 +1,148 @@
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager}{}\section{S\+E\+Mod\+A\+P\+I\+Extensions.\+A\+P\+I.\+Chat\+Manager Class Reference}
+\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager}\index{S\+E\+Mod\+A\+P\+I\+Extensions.\+A\+P\+I.\+Chat\+Manager@{S\+E\+Mod\+A\+P\+I\+Extensions.\+A\+P\+I.\+Chat\+Manager}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_command}{Chat\+Command}
+\item 
+struct \hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a43f27d287f9ad4c54baf0c8a95f9a971}{}enum {\bfseries Chat\+Event\+Type} \{ {\bfseries On\+Chat\+Received}, 
+{\bfseries On\+Chat\+Sent}
+ \}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a43f27d287f9ad4c54baf0c8a95f9a971}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a5dbbe134fd56accdaf6385c31318fb62}{}void {\bfseries Send\+Private\+Chat\+Message} (ulong remote\+User\+Id, string message)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a5dbbe134fd56accdaf6385c31318fb62}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a4e575b7bbb82880e949bbc71ba90947e}{}void {\bfseries Send\+Public\+Chat\+Message} (string message)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a4e575b7bbb82880e949bbc71ba90947e}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ab16a08640180aa005b61baf7438a5ea9}{}void {\bfseries Register\+Chat\+Command} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_command}{Chat\+Command} command)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ab16a08640180aa005b61baf7438a5ea9}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a2ca3454b20d4bb85cef9cafba33c77f4}{}void {\bfseries Unregister\+Chat\+Commands} ()\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a2ca3454b20d4bb85cef9cafba33c77f4}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a286d52744105a9468b0cc1d5265aca79}{}void {\bfseries Add\+Event} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} new\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a286d52744105a9468b0cc1d5265aca79}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a52f2c358cf5e58d2ca607d7a6e5b364c}{}void {\bfseries Clear\+Events} ()\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a52f2c358cf5e58d2ca607d7a6e5b364c}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_abefb7e02f882c9ddb843dbdadf1b3e60}{}static bool {\bfseries Reflection\+Unit\+Test} ()\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_abefb7e02f882c9ddb843dbdadf1b3e60}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aa6ad0901939df2f972dc324591e6358c}{}static string {\bfseries Chat\+Message\+Struct\+Namespace} = \char`\"{}Sandbox.\+Engine.\+Multiplayer\char`\"{}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aa6ad0901939df2f972dc324591e6358c}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ab3db9f7af8261901aab6da7e070bfe83}{}static string {\bfseries Chat\+Message\+Struct\+Class} = \char`\"{}Chat\+Msg\char`\"{}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ab3db9f7af8261901aab6da7e070bfe83}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a429e7f19cb602c42f1acbe46ec9ae531}{}static string {\bfseries Chat\+Message\+Message\+Field} = \char`\"{}Text\char`\"{}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a429e7f19cb602c42f1acbe46ec9ae531}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a111d606a5653057afce66d3956ca4b55}{}Object {\bfseries Create\+Chat\+Message\+Struct} (string message)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a111d606a5653057afce66d3956ca4b55}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a6cf6a198738238d81b677f98d571e8c1}{}void {\bfseries Receive\+Chat\+Message} (ulong remote\+User\+Id, string message, Chat\+Entry\+Type\+Enum entry\+Type)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a6cf6a198738238d81b677f98d571e8c1}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a519751197b3d8b6e0a93acba41de009c}{}bool {\bfseries Parse\+Chat\+Commands} (string message, ulong remote\+User\+Id=0)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a519751197b3d8b6e0a93acba41de009c}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ad6e44b8007f77416ebdddb5e6dfc79b8}{}void {\bfseries Command\+\_\+\+Delete} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ad6e44b8007f77416ebdddb5e6dfc79b8}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a48bf11e9a24bec9753e21db859453cb9}{}void {\bfseries Command\+\_\+\+Teleport} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a48bf11e9a24bec9753e21db859453cb9}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_af775203c1392e9402dba87a9eb09f405}{}void {\bfseries Command\+\_\+\+Stop} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_af775203c1392e9402dba87a9eb09f405}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a298e37724e4342f1b278a2c0be68418f}{}void {\bfseries Command\+\_\+\+Get\+Id} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a298e37724e4342f1b278a2c0be68418f}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a33d4381fb8f818a923092a8da6ddf377}{}void {\bfseries Command\+\_\+\+Save} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a33d4381fb8f818a923092a8da6ddf377}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a847ea1bdcf0d5171f5f974a77a0969dc}{}void {\bfseries Command\+\_\+\+Sync\+Save} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a847ea1bdcf0d5171f5f974a77a0969dc}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aba472ab3800515861cfb7dec55f8ce87}{}void {\bfseries Command\+\_\+\+Owner} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aba472ab3800515861cfb7dec55f8ce87}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_af1bfe242c9f70d21954abef8bd748086}{}void {\bfseries Command\+\_\+\+Export} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_af1bfe242c9f70d21954abef8bd748086}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a3b75359729240a29e29f7d12d431ca81}{}void {\bfseries Command\+\_\+\+Import} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a3b75359729240a29e29f7d12d431ca81}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ade45f331b09b784ca7e8619fad61d1c4}{}void {\bfseries Command\+\_\+\+Spawn} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ade45f331b09b784ca7e8619fad61d1c4}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a9daf6651f0bc59e7783de5f4b5abfae4}{}void {\bfseries Command\+\_\+\+Clear} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a9daf6651f0bc59e7783de5f4b5abfae4}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aaa23adbcc2770a1bdb5279f91ab7af4b}{}void {\bfseries Command\+\_\+\+List} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aaa23adbcc2770a1bdb5279f91ab7af4b}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a84f6c4a059a36fcfba557ea78936ba5d}{}void {\bfseries Command\+\_\+\+Off} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a84f6c4a059a36fcfba557ea78936ba5d}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a62147b3fe731af404fbc3ed81e550541}{}void {\bfseries Command\+\_\+\+On} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a62147b3fe731af404fbc3ed81e550541}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a77ef80aafa1da3df3afb46da237e2390}{}void {\bfseries Command\+\_\+\+Kick} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a77ef80aafa1da3df3afb46da237e2390}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ab7448cfd69311a2db83115348e86dcef}{}void {\bfseries Command\+\_\+\+Ban} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ab7448cfd69311a2db83115348e86dcef}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_abb83a76e97a7717a5d9dc4e4e97f7e66}{}void {\bfseries Command\+\_\+\+Unban} (\hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} chat\+Event)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_abb83a76e97a7717a5d9dc4e4e97f7e66}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a0b40f857bbd93abd9067e447216dbfe6}{}virtual void {\bfseries On\+Chat\+Message} (ulong steamid, string playername, string message)\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a0b40f857bbd93abd9067e447216dbfe6}
+
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aad7ec3c4d480c9ea6c43ab78630b2f53}{}static \hyperlink{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager}{Chat\+Manager} {\bfseries Instance}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_aad7ec3c4d480c9ea6c43ab78630b2f53}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a1c12d98f73057b0569ed3589a122641a}{}List$<$ string $>$ {\bfseries Chat\+Messages}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a1c12d98f73057b0569ed3589a122641a}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a1aea0139b936dc39cb56e5becd724a66}{}List$<$ \hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} $>$ {\bfseries Chat\+History}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a1aea0139b936dc39cb56e5becd724a66}
+
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ac5e352d2ccee8c41bba272bf9903be8c}{}List$<$ \hyperlink{struct_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_1_1_chat_event}{Chat\+Event} $>$ {\bfseries Chat\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_ac5e352d2ccee8c41bba272bf9903be8c}
+
+\end{DoxyCompactItemize}
+\subsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a58e8b41c56704dbd3a3a25bff399b65c}{}Chat\+Event\+Delegate {\bfseries Chat\+Message}\label{class_s_e_mod_a_p_i_extensions_1_1_a_p_i_1_1_chat_manager_a58e8b41c56704dbd3a3a25bff399b65c}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/\+Git\+Hub/\+S\+E\+Server\+Extender/\+S\+E\+Mod\+A\+P\+I\+Extensions/\+A\+P\+I/Chat\+Manager.\+cs\end{DoxyCompactItemize}

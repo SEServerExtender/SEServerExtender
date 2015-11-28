@@ -1,0 +1,6 @@
+var class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_floating_object_manager =
+[
+    [ "FloatingObjectManager", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_floating_object_manager.html#a0cb2343f71b37ecfbcac650f09c33663", null ],
+    [ "InternalRemoveFloatingObject", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_floating_object_manager.html#a66960260c1366eaa5a0d16c438372370", null ],
+    [ "RemoveFloatingObject", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_floating_object_manager.html#a5f6f1cf739bde796ff9819dc405d1080", null ]
+];
