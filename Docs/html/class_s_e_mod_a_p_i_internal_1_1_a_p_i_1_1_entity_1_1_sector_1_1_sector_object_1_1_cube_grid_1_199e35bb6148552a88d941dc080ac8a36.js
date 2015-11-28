@@ -1,8 +1,0 @@
-var class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_199e35bb6148552a88d941dc080ac8a36 =
-[
-    [ "ProductionQueueItem", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_199e35bb6148552a88d941dc080ac8a36.html#acf0c75b8ce4cd4129a7814f8dd610966", null ],
-    [ "ProductionQueueItem", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_199e35bb6148552a88d941dc080ac8a36.html#ac47af8f15a31bdc56c1aaf50bf5f8b32", null ],
-    [ "Amount", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_199e35bb6148552a88d941dc080ac8a36.html#a4cb8badf7c8ff912b9d3b1c45b32ae38", null ],
-    [ "Id", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_199e35bb6148552a88d941dc080ac8a36.html#a710bb5dd2f69caa26260b61e1318f4f7", null ],
-    [ "ItemId", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_199e35bb6148552a88d941dc080ac8a36.html#a7babdfee39b1a00a57af8e9c0cf25573", null ]
-];

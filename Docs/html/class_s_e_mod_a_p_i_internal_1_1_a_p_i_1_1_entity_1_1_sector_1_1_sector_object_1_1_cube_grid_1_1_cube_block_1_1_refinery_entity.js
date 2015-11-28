@@ -1,5 +1,0 @@
-var class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1_cube_block_1_1_refinery_entity =
-[
-    [ "RefineryEntity", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1_cube_block_1_1_refinery_entity.html#aa8137e31f535b80ae62a3e6899db875d", null ],
-    [ "RefineryEntity", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1_cube_block_1_1_refinery_entity.html#aa60303e55a4cc18653d0abc869d8278f", null ]
-];

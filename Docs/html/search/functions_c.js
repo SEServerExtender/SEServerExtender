@@ -1,8 +1,0 @@
-var searchData=
-[
-  ['sendpublicchatmessage',['SendPublicChatMessage',['../class_s_e_server_extender_1_1_server_service_1_1_server_service.html#a027df7d9b658ca67735f462dac4f5e7d',1,'SEServerExtender::ServerService::ServerService']]],
-  ['serialize',['Serialize',['../class_s_e_mod_a_p_i_1_1_a_p_i_1_1_definitions_1_1_config_file_serializer.html#aa27def4995c05849bbe2e6a5e39f1f6e',1,'SEModAPI.API.Definitions.ConfigFileSerializer.Serialize()'],['../class_s_e_mod_a_p_i_1_1_a_p_i_1_1_definitions_1_1_cube_blocks_1_1_blocks_manager.html#ab57ffe7ba4a0b3d8a86803b45c6338ac',1,'SEModAPI.API.Definitions.CubeBlocks.BlocksManager.Serialize()']]],
-  ['startserver',['StartServer',['../interface_s_e_comm_1_1_i_server_service.html#a2df8b69afdb995c1d2ad7b5a39f59feb',1,'SEComm.IServerService.StartServer()'],['../class_s_e_server_extender_1_1_server_service_1_1_server_service.html#a28b157cacb532e4a5149e2fb234eb253',1,'SEServerExtender.ServerService.ServerService.StartServer()'],['../class_s_e_server_g_u_i_1_1_server_service_proxy.html#a95562f47e8f388a07190067367292e15',1,'SEServerGUI.ServerServiceProxy.StartServer()']]],
-  ['statetostring',['StateToString',['../class_s_e_mod_a_p_i_1_1_support_1_1_auto_exception.html#a2c8c870c502f75895fbc4e49a58137e3',1,'SEModAPI::Support::AutoException']]],
-  ['stopserver',['StopServer',['../interface_s_e_comm_1_1_i_server_service.html#af0faa9bdfebe1514e6dec2a5d54aca94',1,'SEComm.IServerService.StopServer()'],['../class_s_e_server_extender_1_1_server_service_1_1_server_service.html#a2bc751bdb04de0a8cb7ba76c4d02fc13',1,'SEServerExtender.ServerService.ServerService.StopServer()'],['../class_s_e_server_g_u_i_1_1_server_service_proxy.html#a2e54e596eaa27b95e010b89a2f09be5d',1,'SEServerGUI.ServerServiceProxy.StopServer()']]]
-];

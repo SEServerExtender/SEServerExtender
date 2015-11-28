@@ -1,7 +1,0 @@
-var class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1d51c0ecece4b059e03822a2f6c969595 =
-[
-    [ "ShipDrillEntity", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1d51c0ecece4b059e03822a2f6c969595.html#a4a0e9a83057b56c9d7748ca306426f50", null ],
-    [ "ShipDrillEntity", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1d51c0ecece4b059e03822a2f6c969595.html#af0f00b974a05b79efa7ebf72372d6a7f", null ],
-    [ "InternalGetContainerInventory", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1d51c0ecece4b059e03822a2f6c969595.html#ad39160b69b24fc26d21d4d472192114f", null ],
-    [ "Inventory", "class_s_e_mod_a_p_i_internal_1_1_a_p_i_1_1_entity_1_1_sector_1_1_sector_object_1_1_cube_grid_1_1d51c0ecece4b059e03822a2f6c969595.html#a4aa20dbee07409638faf503cb71d61d8", null ]
-];
