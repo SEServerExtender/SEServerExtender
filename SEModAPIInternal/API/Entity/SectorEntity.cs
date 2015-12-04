@@ -9,6 +9,8 @@ namespace SEModAPIInternal.API.Entity
 	using Sandbox.Common.ObjectBuilders.Voxels;
 	using Sandbox.Game.Entities;
 	using Sandbox.Game.Multiplayer;
+    using Sandbox.Engine;
+    using Sandbox.Engine.Multiplayer;
     using Sandbox.ModAPI;
 	using SEModAPI.API;
 	using SEModAPI.API.Utility;
@@ -19,6 +21,11 @@ namespace SEModAPIInternal.API.Entity
 	using SEModAPIInternal.Support;
 	using VRage.ObjectBuilders;
 	using VRageMath;
+    using VRage.Replication;
+    using VRage.Network;
+    using Sandbox.Common;
+    using Sandbox.Game.Replication;
+    using VRage.ObjectBuilders;
 
 	public class SectorEntity : BaseObject
 	{
@@ -540,6 +547,7 @@ namespace SEModAPIInternal.API.Entity
                 if (ExtenderOptions.IsDebugging)
                     ApplicationLog.BaseLog.Debug(String.Format("{0} '{1}': Adding to scene...", entityToAdd.GetType().Name, entityToAdd.DisplayName));
 
+
 				//Create the backing object
 				Type entityType = entityToAdd.GetType( );
 				Type internalType = (Type)BaseEntity.InvokeStaticMethod( entityType, "get_InternalType" );
@@ -547,12 +555,16 @@ namespace SEModAPIInternal.API.Entity
 					throw new Exception( "Could not get internal type of entity" );
 				entityToAdd.BackingObject = Activator.CreateInstance( internalType );
 
-				//Add the backing object to the main game object manager
-				MyEntity backingObject = (MyEntity)entityToAdd.BackingObject;
-				//backingObject.Init( entityToAdd.ObjectBuilder );
+                List<MyObjectBuilder_EntityBase> entityList = new List<MyObjectBuilder_EntityBase> { entityToAdd.ObjectBuilder };
                 
-                MyAPIGateway.Entities.CreateFromObjectBuilderAndAdd(entityToAdd.ObjectBuilder);
 
+                //Add the backing object to the main game object manager
+                MyEntity backingObject = (MyEntity)entityToAdd.BackingObject;
+
+                MyAPIGateway.Entities.RemapObjectBuilderCollection(entityList);
+                //MyAPIGateway.Entities.CreateFromObjectBuilderAndAdd(entityToAdd.ObjectBuilder);
+                entityList.ForEach(item => MyAPIGateway.Entities.CreateFromObjectBuilderAndAdd(item));
+                /*
 				if ( entityToAdd is FloatingObject )
 				{
 					try
@@ -570,22 +582,29 @@ namespace SEModAPIInternal.API.Entity
 					}
 				}
 				else
-				{
+				{*/
 					try
 					{
-						//Broadcast the new entity to the clients
-						//MyObjectBuilder_EntityBase baseEntity = backingObject.GetObjectBuilder( );
-						MySyncCreate.SendEntityCreated( entityToAdd.ObjectBuilder);
-                        ApplicationLog.BaseLog.Info("Broadcasted entity to clients.");
+                        //Broadcast the new entity to the clients
+                        
+                        
+                            ApplicationLog.BaseLog.Info("Broadcasted entity to clients.");
 
-						//entityToAdd.ObjectBuilder = baseEntity;
-					}
+                        MyAPIGateway.Multiplayer.SendEntitiesCreated( entityList );
+                        entityList.Clear();
+                    //IMySlimBlock repgrid = null;
+                    //repgrid = (IMySlimBlock)entityToAdd.ObjectBuilder;
+                    //MyMultiplayer.ReplicateImmediatelly(MyExternalReplicable.FindByObject(repgrid.FatBlock.CubeGrid));
+                    //repServ.ForceEverything(MyEventContext.Current.Sender);
+
+                    //entityToAdd.ObjectBuilder = baseEntity;
+                }
 					catch ( Exception ex )
 					{
 						ApplicationLog.BaseLog.Error( "Failed to broadcast new entity" );
 						ApplicationLog.BaseLog.Error( ex );
 					}
-				}
+				//}
 
 				if ( ExtenderOptions.IsDebugging )
 				{

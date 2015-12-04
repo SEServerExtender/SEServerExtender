@@ -152,7 +152,7 @@ namespace SEServerExtender
 								  NoConsole = false,
 								  Debug = false,
 								  GamePath = new DirectoryInfo( PathManager.BasePath ).Parent.FullName,
-								  NoWcf = false,
+								  NoWcf = true,
 								  Autosave = 0,
 								  InstancePath = string.Empty,
 								  CloseOnCrash = false,
