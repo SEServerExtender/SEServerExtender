@@ -290,7 +290,7 @@ namespace SEServerExtender
 					}
 					else if ( lowerCaseArgument.Equals( "nowcf" ) )
 					{
-						extenderArgs.NoWcf = true;
+						extenderArgs.NoWcf = false;
 					}
 					else if ( lowerCaseArgument.Equals( "closeoncrash" ) )
 					{
