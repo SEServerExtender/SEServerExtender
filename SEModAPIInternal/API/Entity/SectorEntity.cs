@@ -1,26 +1,28 @@
 namespace SEModAPIInternal.API.Entity
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.IO;
-	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Voxels;
-	using Sandbox.Game.Entities;
-	using Sandbox.Game.Multiplayer;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.IO;
+    using Sandbox;
+    using Sandbox.Common.ObjectBuilders;
+    using Sandbox.Common.ObjectBuilders.Voxels;
+    using Sandbox.Game.Entities;
+    using Sandbox.Game.Multiplayer;
     using Sandbox.ModAPI;
-	using SEModAPI.API;
-	using SEModAPI.API.Utility;
-	using SEModAPIInternal.API.Common;
-	using SEModAPIInternal.API.Entity.Sector;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject;
-	using SEModAPIInternal.API.Utility;
-	using SEModAPIInternal.Support;
-	using VRage.ObjectBuilders;
-	using VRageMath;
+    using SEModAPI.API;
+    using SEModAPI.API.Utility;
+    using SEModAPIInternal.API.Common;
+    using SEModAPIInternal.API.Entity.Sector;
+    using SEModAPIInternal.API.Entity.Sector.SectorObject;
+    using SEModAPIInternal.API.Utility;
+    using SEModAPIInternal.Support;
+    using VRage.ObjectBuilders;
+    using VRageMath;
+    using Sandbox.Engine.Multiplayer;
+    using Sandbox.Game.Replication;
 
-	public class SectorEntity : BaseObject
+    public class SectorEntity : BaseObject
 	{
 		#region "Attributes"
 
@@ -548,12 +550,13 @@ namespace SEModAPIInternal.API.Entity
 				entityToAdd.BackingObject = Activator.CreateInstance( internalType );
 
 				//Add the backing object to the main game object manager
+                //I don't think this is actually used anywhere?
 				MyEntity backingObject = (MyEntity)entityToAdd.BackingObject;
-				//backingObject.Init( entityToAdd.ObjectBuilder );
-                
-                MyAPIGateway.Entities.CreateFromObjectBuilderAndAdd(entityToAdd.ObjectBuilder);
 
-				if ( entityToAdd is FloatingObject )
+                MyEntity newEntity = MyEntities.CreateFromObjectBuilderAndAdd(entityToAdd.ObjectBuilder);
+                
+
+                if ( entityToAdd is FloatingObject )
 				{
 					try
 					{
@@ -574,12 +577,10 @@ namespace SEModAPIInternal.API.Entity
 					try
 					{
 						//Broadcast the new entity to the clients
-						//MyObjectBuilder_EntityBase baseEntity = backingObject.GetObjectBuilder( );
-						MySyncCreate.SendEntityCreated( entityToAdd.ObjectBuilder);
                         ApplicationLog.BaseLog.Info("Broadcasted entity to clients.");
-
-						//entityToAdd.ObjectBuilder = baseEntity;
-					}
+                        MyMultiplayer.ReplicateImmediatelly( MyExternalReplicable.FindByObject( newEntity ) );
+                        //the misspelling in this function name is driving me  i n s a n e
+                    }
 					catch ( Exception ex )
 					{
 						ApplicationLog.BaseLog.Error( "Failed to broadcast new entity" );
