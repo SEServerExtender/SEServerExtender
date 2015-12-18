@@ -1256,7 +1256,7 @@
             </summary>
             <param name="box">The BoundingBoxD to create the BoundingSphereD from.</param><param name="result">[OutAttribute] The created BoundingSphereD.</param>
         </member>
-        <member name="M:VRageMath.BoundingSphereD.CreateFromPoints(System.Collections.Generic.IEnumerable{VRageMath.Vector3D})">
+        <member name="M:VRageMath.BoundingSphereD.CreateFromPoints(VRageMath.Vector3D[])">
             <summary>
             Creates a BoundingSphereD that can contain a specified list of points.
             </summary>

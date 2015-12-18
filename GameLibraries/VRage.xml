@@ -103,6 +103,183 @@
             Warning this will do allocations, use only in editor!
             </summary>
         </member>
+        <member name="T:VRage.Animations.MyAnimationController">
+            <summary>
+            Animation controller contains and drives skeletal animations.
+            It also serves as an abstraction layer, hiding low/level classes.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationStateMachine">
+            <summary>
+            Animation state machine selects the animation to match current state.
+            When it finds valid transition to some next state, transition is performed automatically.
+            </summary>
+        </member>
+        <member name="T:VRage.Generics.MyStateMachine">
+            <summary>
+            Implementation of generic state machine. Inherit from this class to create your own state machine.
+            Transitions are performed automatically on each update (if conditions of transition are fulfilled).
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationStateMachineNode">
+            <summary>
+            Animation state machine node is a representation of one state inside MyAnimationStateMachine.
+            </summary>
+        </member>
+        <member name="T:VRage.Generics.MyStateMachineNode">
+            <summary>
+            Node of the state machine.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationStateMachineTransition">
+            <summary>
+            Description of transition to another state (MyAnimationStateMachineNode) in the state machine (MyAnimationStateMachine).
+            </summary>
+        </member>
+        <member name="T:VRage.Generics.MyStateMachineTransition">
+            <summary>
+            Definition of transition to some node.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationTreeNode">
+            <summary>
+            Interface representing one node in animation tree.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationUpdateData">
+            <summary>
+            Helper structure passed as an parameter during computation of current pose.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationVariableStorage">
+            <summary>
+            Key-value storage of float values, other types are implicitly converted.
+            </summary>
+        </member>
+        <member name="T:VRage.Generics.IMyVariableStorage`1">
+            <summary>
+            Interface of variable storage (key-value principle).
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyCharacterBone">
+            <summary>
+            Bones in this model are represented by this class, which
+            allows a bone to have more detail associatd with it.
+            
+            This class allows you to manipulate the local coordinate system
+            for objects by changing the scaling, translation, and rotation.
+            These are indepenent of the bind transformation originally supplied
+            for the model. So, the actual transformation for a bone is
+            the product of the:
+            
+            Scaling
+            Bind scaling (scaling removed from the bind transform)
+            Rotation
+            Translation
+            Bind Transformation
+            Parent Absolute Transformation
+            
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_parent">
+            <summary>
+            Any parent for this bone
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_bindTransform">
+            <summary>
+            The bind transform is the transform for this bone
+            as loaded from the original model. It's the base pose.
+            I do remove any scaling, though.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_translation">
+            <summary>
+            Any translation applied to the bone
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_rotation">
+            <summary>
+            Any rotation applied to the bone
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_transform">
+            <summary>
+            computed bone transform
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_changed">
+            <summary>
+            indicates whether bone needs recalculation
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.m_hierarchyUpdate">
+            <summary>
+            indicates whether hierarchy of bones is updating
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.Name">
+            <summary>
+            The bone name
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyCharacterBone.AbsoluteTransform">
+            <summary>
+            The bone absolute transform
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.#ctor(System.String,VRageMath.Matrix,VRage.Animations.MyCharacterBone)">
+            <summary>
+            Constructor for a bone object
+            </summary>
+            <param name="name">The name of the bone</param>
+            <param name="bindTransform">The initial bind transform for the bone</param>
+            <param name="parent">A parent for this bone</param>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.ComputeAbsoluteTransform">
+            <summary>
+            Compute the absolute transformation for this bone.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.SetCompleteTransform(VRageMath.Vector3@,VRageMath.Quaternion@,System.Single)">
+            <summary>
+            This sets the rotation and translation such that the
+            rotation times the translation times the bind after set
+            equals this matrix. This is used to set animation values.
+            </summary>
+            <param name="m">A matrix include translation and rotation</param>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.GetAbsoluteRigTransform">
+            <summary>
+            Returns bone's rig absolute transform - including transforms of all parent bones
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.BindTransform">
+            <summary>
+            The bone bind transform
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.SkinTransform">
+            <summary>
+            Inverse of absolute bind transform for skinnning
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.Rotation">
+            <summary>
+            Bone rotation
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.Translation">
+            <summary>
+            Any translations
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.Parent">
+            <summary>
+            The parent bone or null for the root bone
+            </summary>
+        </member>
         <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Utils.MyStringHash,VRage.Audio.MyCueId[],System.Nullable{System.Single})">
             <summary>
             Creates effect on input emitter
@@ -150,6 +327,16 @@
         <member name="T:VRage.WoodFractureSettings.Rotation">
             How to rotate the splitting geometry
         </member>
+        <member name="T:VRage.Generics.IMyCondition">
+            <summary>
+            Interface of totally generic condition.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.IMyCondition.Evaluate">
+            <summary>
+            Evaluate the condition, it can be true/false.
+            </summary>
+        </member>
         <member name="T:VRage.Generics.MyCachingDynamicObjectsPool`2">
             This class provides similar functionality to MyDynamicObjectsPool with the addition of caching facilities.
             
@@ -170,6 +357,16 @@
             Allocate an object that may be cached.
             
             Returns true if the object was found in the cache and false otherwise.
+        </member>
+        <member name="T:VRage.Generics.StateMachine.MyCondition`1">
+            <summary>
+            Implementation of generic condition.
+            </summary>
+        </member>
+        <member name="T:VRage.Generics.MyStateMachineTransitionWithStart">
+            <summary>
+            Pair holding transition and its starting node.
+            </summary>
         </member>
         <member name="M:VRage.Import.ModelAutoRebuild.IsModelActual(System.String,System.String,System.String,System.String)">
             <summary>
@@ -433,12 +630,12 @@
             It's so called Value-Gradient noise.
             </summary>
         </member>
-        <member name="P:VRageRender.IMyRenderMessage.MessageClass">
+        <member name="P:VRageRender.MyRenderMessageBase.MessageClass">
             <summary>
             Get message class
             </summary>
         </member>
-        <member name="P:VRageRender.IMyRenderMessage.MessageType">
+        <member name="P:VRageRender.MyRenderMessageBase.MessageType">
             <summary>
             Gets message type
             </summary>
@@ -1048,6 +1245,11 @@
             No culling of back faces
             </summary>
         </member>
+        <member name="F:VRageRender.RenderFlags.OffsetInVertexShader">
+            <summary>
+            Offset the vertices a little bit in the vertex shader to fix Z-fighting
+            </summary>
+        </member>
         <member name="T:VRageRender.LightTypeEnum">
             <summary>
             Light type, flags, could be combined
@@ -1384,6 +1586,12 @@
             </summary>
         </member>
         <member name="M:VRage.Network.IMyReplicable.OnLoad(VRage.Library.Collections.BitStream,System.Action{System.Boolean})">
+            <summary>
+            Client deserializes object and adds it to proper collection (e.g. MyEntities).
+            Loading done handler can be called synchronously or asynchronously (but always from Update thread).
+            </summary>
+        </member>
+        <member name="M:VRage.Network.IMyReplicable.OnLoadBegin(VRage.Library.Collections.BitStream,System.Action{System.Boolean})">
             <summary>
             Client deserializes object and adds it to proper collection (e.g. MyEntities).
             Loading done handler can be called synchronously or asynchronously (but always from Update thread).

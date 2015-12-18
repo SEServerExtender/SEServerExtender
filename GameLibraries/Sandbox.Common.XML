@@ -15,6 +15,14 @@
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
+            <summary>
+            Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
+            WARNING: Y is from bottom to top.
+            </summary>
+            <param name="worldPos">World position.</param>
+            <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
         <member name="T:Sandbox.ModAPI.BeforeDamageApplied">
             <summary>
             This delegate is used to handle damage before it's applied to an object.  This returns a modified damage that is used in DoDamage.  Return damage if no change.

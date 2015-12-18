@@ -4,6 +4,88 @@
         "HavokWrapper"
     </assembly>
     <members>
+        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
+This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
+
+
+This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
+
+</member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrame(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
+Change velocities of body to move to future(position, orientation) in time deltaTime.
+
+
+Change velocities of body to move to future(position, orientation) in time deltaTime.
+
+</member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplySoftKeyFrame(Havok.HkKeyFrameInfo,Havok.HkAccelerationInfo,System.Single,System.Single,Havok.HkRigidBody)">
+Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
+
+
+Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxAllowedDistance">
+If the distance between object and keyframe gets bigger than the max allowed distance, the object is immediately "warped" to the correct keyframe position / orientation, and corresponding velocities.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxAngularAcceleration">
+The maximum angular accelerations(m / sec2).
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxLinearAcceleration">
+Maximum linear acceleration.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.AngularVelocityFactor">
+This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.LinearVelocityFactor">
+This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.AngularPositionFactor">
+This parameter controls the angular stiffness of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.LinearPositionFactor">
+This parameter controls the linear stiffness of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="T:Havok.HkAccelerationInfo">
+Specifies acceleration details for hkpKeyFrameUtility::applySoftKeyFrame()
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.AngularVelocity">
+The current angular velocity.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.LinearVelocity">
+The current velocity.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.Orientation">
+The current orientation.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.Position">
+The current "centre-of-mass" position of a keyframe.
+
+</member>
+        <member name="M:Havok.HkKeyFrameInfo.FastSetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
+Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.Uses approximation of angular velocity.
+
+</member>
+        <member name="M:Havok.HkKeyFrameInfo.SetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
+Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.
+
+</member>
+        <member name="T:Havok.HkKeyFrameInfo">
+Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame. 
+NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
+
+</member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
 </member>
@@ -113,6 +195,78 @@ If set to false, a random shape will be chosen for splitting on each recursion l
         <member name="P:Havok.HkdDecomposeFracture.ShiftToSmallerCrossSection">
 The actual position of the split can be shifted towards (or away from) the physics object (out of the two "connected" parts) with the smaller cross-section. See the user guide for more details on this.
 </member>
+        <member name="M:hkpGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
+Call this to update the triggerVolume outside the physics step.
+triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
+You may want to re-collide the entities before calling this.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
+Character proxies process their own collisions, so they call this method to inform
+the trigger volume that they touched it during the frame.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
+Subclasses should implement this function to be informed of events involving
+rigid bodies (including the bodies of hkpCharacterRigidBodies).
+</member>
+        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
+Fired for any overlapping body when the trigger body leaves the world or is deleted.
+</member>
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
+            <summary>
+Gets geometry
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
+            <summary>
+Gets faces
+</summary>
+        </member>
+        <member name="P:Havok.HkConvexVerticesShape.Center">
+            <summary>
+Gets center
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
+            <summary>
+Gets vertices
+</summary>
+        </member>
+        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
+            <summary>
+Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
+</summary>
+        </member>
+        <member name="P:Havok.HkListShape.DebugShapeKeys">
+            <summary>
+Gets shape keys, for debug purposes, allocates!
+</summary>
+        </member>
+        <member name="M:hkpSmartListShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
+</member>
+        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="T:Havok.HkRigidBodyNamePredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
+        <member name="T:Havok.HkRigidBodyPredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
         <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Sets the color properties of the material
 </member>
@@ -152,173 +306,6 @@ Returns a vertex buffer format that is compatible with this material
 !! IMPORTANT : Use only its id as identifier to our material !!
 
 </member>
-        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
-Call this to update the triggerVolume outside the physics step.
-triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
-You may want to re-collide the entities before calling this.
-</member>
-        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
-Character proxies process their own collisions, so they call this method to inform
-the trigger volume that they touched it during the frame.
-</member>
-        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
-Subclasses should implement this function to be informed of events involving
-rigid bodies (including the bodies of hkpCharacterRigidBodies).
-</member>
-        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
-Fired for any overlapping body when the trigger body leaves the world or is deleted.
-</member>
-        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
-            <summary>
-Gets geometry
-</summary>
-        </member>
-        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
-            <summary>
-Gets faces
-</summary>
-        </member>
-        <member name="P:Havok.HkConvexVerticesShape.Center">
-            <summary>
-Gets center
-</summary>
-        </member>
-        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
-            <summary>
-Gets vertices
-</summary>
-        </member>
-        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
-            <summary>
-Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
-</summary>
-        </member>
-        <member name="P:Havok.HkListShape.DebugShapeKeys">
-            <summary>
-Gets shape keys, for debug purposes, allocates!
-</summary>
-        </member>
-        <member name="M:hkpSmartListShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:hkpGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:hkpUniformGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
-This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
-
-
-This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
-
-</member>
-        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrame(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
-Change velocities of body to move to future(position, orientation) in time deltaTime.
-
-
-Change velocities of body to move to future(position, orientation) in time deltaTime.
-
-</member>
-        <member name="M:Havok.HkKeyFrameUtility.ApplySoftKeyFrame(Havok.HkKeyFrameInfo,Havok.HkAccelerationInfo,System.Single,System.Single,Havok.HkRigidBody)">
-Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
-
-
-Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.MaxAllowedDistance">
-If the distance between object and keyframe gets bigger than the max allowed distance, the object is immediately "warped" to the correct keyframe position / orientation, and corresponding velocities.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.MaxAngularAcceleration">
-The maximum angular accelerations(m / sec2).
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.MaxLinearAcceleration">
-Maximum linear acceleration.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.AngularVelocityFactor">
-This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.LinearVelocityFactor">
-This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.AngularPositionFactor">
-This parameter controls the angular stiffness of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.LinearPositionFactor">
-This parameter controls the linear stiffness of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="T:Havok.HkAccelerationInfo">
-Specifies acceleration details for hkpKeyFrameUtility::applySoftKeyFrame()
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.AngularVelocity">
-The current angular velocity.
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.LinearVelocity">
-The current velocity.
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.Orientation">
-The current orientation.
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.Position">
-The current "centre-of-mass" position of a keyframe.
-
-</member>
-        <member name="M:Havok.HkKeyFrameInfo.FastSetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
-Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.Uses approximation of angular velocity.
-
-</member>
-        <member name="M:Havok.HkKeyFrameInfo.SetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
-Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.
-
-</member>
-        <member name="T:Havok.HkKeyFrameInfo">
-Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame. 
-NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
-
-</member>
-        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="T:Havok.HkRigidBodyNamePredicate">
-This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="T:Havok.HkRigidBodyPredicate">
-This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="P:Havok.HkdFracture.FlattenHierarchy">
-Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
-</member>
-        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
-This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
-It is used to prevent infinite recursion.
-</member>
-        <member name="T:Havok.HkdFracture.RefitPhysicsType">
-Defines how the physics for the broken shapes should be calculated
-</member>
-        <member name="T:Havok.HkdFracture.Type">
-The algorithm type
-</member>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
-</member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyControllerOperation(hkdBreakableBody*)">
 Called after the breakable body's controller world operation has executed
 
@@ -334,6 +321,19 @@ Called after a breakable body is replaced with new bodies.
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.beforeBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Called before a breakable body is replaced with new bodies.
+</member>
+        <member name="P:Havok.HkdFracture.FlattenHierarchy">
+Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
+</member>
+        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
+This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
+It is used to prevent infinite recursion.
+</member>
+        <member name="T:Havok.HkdFracture.RefitPhysicsType">
+Defines how the physics for the broken shapes should be calculated
+</member>
+        <member name="T:Havok.HkdFracture.Type">
+The algorithm type
 </member>
         <member name="F:Havok.HkdWorld.m_havokWorld">
 Our world
@@ -493,6 +493,13 @@ This resulting collision filter info can be used in entities and hkEntityCinfo.
         <member name="M:Havok.HkGroupFilter.DisableCollisionsUsingBitfield(System.UInt32,System.UInt32)">
 Disables collisions between the specified collision layers.
 See enableCollisionsUsingBitfield for how to use bitfields.
+</member>
+        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
+Gets/Sets the inertia stabilization factor.
+Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
+</member>
+        <member name="P:Havok.HkConstraintData.BreachImpulse">
+Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
 </member>
         <member name="P:Havok.HkCharacterRigidBody.LinearVelocity">
             <summary>
@@ -686,13 +693,6 @@ Add instance, returns instance id
 Creates new instance
 </summary>
         </member>
-        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
-Gets/Sets the inertia stabilization factor.
-Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
-</member>
-        <member name="P:Havok.HkConstraintData.BreachImpulse">
-Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
-</member>
         <member name="M:Havok.HkRigidBody.ApplyTorque(System.Single,VRageMath.Vector3)">
             <summary>
 Applies torque to rigid body.
