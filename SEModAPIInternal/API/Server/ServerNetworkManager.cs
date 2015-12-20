@@ -258,7 +258,7 @@ namespace SEModAPIInternal.API.Server
 			{
 				MySandboxGame.Static.Invoke( ( ) =>
 				                             {
-					                             MyMultiplayer.Static.BanClient( remoteUserId, true );
+					                             MyMultiplayer.Static.BanClient( remoteUserId, isBanned );
 				                             } );
 
 				KickPlayer( remoteUserId );

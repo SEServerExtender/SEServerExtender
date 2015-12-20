@@ -1,35 +1,36 @@
 ﻿namespace SEModAPIExtensions.API
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using System.Runtime.InteropServices;
-	using System.Text.RegularExpressions;
-	using System.Threading;
-	using System.Xml;
-	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Engine.Multiplayer;
-	using Sandbox.ModAPI;
-	using SEModAPI.API.Sandbox;
-	using SEModAPI.API.Utility;
-	using SEModAPIInternal.API.Common;
-	using SEModAPIInternal.API.Entity;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-	using SEModAPIInternal.API.Server;
-	using SEModAPIInternal.Support;
-	using SteamSDK;
-	using VRage;
-	using VRage.FileSystem;
-	using VRage.ModAPI;
-	using VRage.ObjectBuilders;
-	using VRageMath;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Xml;
+    using Sandbox;
+    using Sandbox.Common.ObjectBuilders;
+    using Sandbox.Engine.Multiplayer;
+    using Sandbox.Game.Replication;
+    using Sandbox.ModAPI;
+    using SEModAPI.API.Sandbox;
+    using SEModAPI.API.Utility;
+    using SEModAPIInternal.API.Common;
+    using SEModAPIInternal.API.Entity;
+    using SEModAPIInternal.API.Entity.Sector.SectorObject;
+    using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+    using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
+    using SEModAPIInternal.API.Server;
+    using SEModAPIInternal.Support;
+    using SteamSDK;
+    using VRage;
+    using VRage.FileSystem;
+    using VRage.ModAPI;
+    using VRage.ObjectBuilders;
+    using VRageMath;
 
-	public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
+    public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
 	public class ChatManager
 	{
 		public struct ChatCommand
@@ -575,7 +576,7 @@
 				}
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "floatingobjects" ) )	//All floating objects
 				{
-					/*
+                    /*
 					List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
 					int floatingObjectCount = entities.Count;
 					foreach (FloatingObject entity in entities)
@@ -584,40 +585,42 @@
 					}
 					 */
 
-					int count = 0;
-					MySandboxGame.Static.Invoke( ( ) =>
-					                             {
-						                             HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
-						                             MyAPIGateway.Entities.GetEntities( entities );
-						                             List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
+                    MySandboxGame.Static.Invoke( ( ) =>
+                                                 {
+                                                     int count = 0;
+                                                     HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
+                                                     MyAPIGateway.Entities.GetEntities( entities );
+                                                     List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
 
-						                             foreach ( IMyEntity entity in entities )
-						                             {
-							                             MyObjectBuilder_Base objectBuilder;
-							                             try
-							                             {
-								                             objectBuilder = entity.GetObjectBuilder( );
-							                             }
-							                             catch
-							                             {
-								                             continue;
-							                             }
+                                                     foreach ( IMyEntity entity in entities )
+                                                     {
+                                                         MyObjectBuilder_Base objectBuilder;
+                                                         try
+                                                         {
+                                                             objectBuilder = entity.GetObjectBuilder( );
+                                                         }
+                                                         catch
+                                                         {
+                                                             continue;
+                                                         }
 
-							                             if ( objectBuilder is MyObjectBuilder_FloatingObject )
-								                             entitiesToRemove.Add( entity );
-						                             }
+                                                         if ( objectBuilder is MyObjectBuilder_FloatingObject )
+                                                             entitiesToRemove.Add( entity );
+                                                     }
 
-						                             for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
-						                             {
-							                             IMyEntity entity = entitiesToRemove[ r ];
-							                             MyAPIGateway.Entities.RemoveEntity( entity );
-							                             count++;
-						                             }
-					                             } );
-					
+                                                     for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
+                                                     {
+                                                         IMyEntity entity = entitiesToRemove[r];
+                                                         //MyAPIGateway.Entities.RemoveEntity( entity );
+                                                         entity.Close( );
+                                                         MyMultiplayer.ReplicateImmediatelly( MyExternalReplicable.FindByObject( entity ) );
+                                                         count++;
+                                                     }
+                                                     SendPrivateChatMessage( remoteUserId, count + " floating objects have been removed" );
+                                                 } );
 
-					SendPrivateChatMessage( remoteUserId, count + " floating objects have been removed" );
-				}
+
+                }
 				else
 				{
 					string entityName = commandParts[ 2 ];
@@ -926,8 +929,9 @@
 
 						entity.LinearVelocity = Vector3.Zero;
 						entity.AngularVelocity = Vector3.Zero;
-
-						SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' is no longer moving or rotating", entity.EntityId ) );
+                        MyMultiplayer.ReplicateImmediatelly( MyExternalReplicable.FindByObject( entity ) );
+                        //added replication here because sometimes the velocity changes don't sync immediately. Shouldn't be necessary, but Keen.
+                        SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' is no longer moving or rotating", entity.EntityId ) );
 					}
 				}
 				catch ( Exception ex )
