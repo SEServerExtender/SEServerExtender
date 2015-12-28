@@ -965,8 +965,6 @@ namespace SEModAPIInternal.API.Entity
 			{
 				BaseObject.InvokeEntityMethod( result, BaseEntityBroadcastRemovalMethod );
             }
-            MyMultiplayer.ReplicateImmediatelly( MyExternalReplicable.FindByObject( entity ) );
-            //this replication shouldn't be necessary, but Keen.
         }
 
         public Object NetworkManager
