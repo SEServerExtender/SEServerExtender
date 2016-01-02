@@ -24,12 +24,32 @@ namespace SEModAPI.API.Definitions
 			_definition = definition;
 		}
 
-		#region "Properties"
+        #region "Properties"
 
-		/// <summary>
-		/// Get or set the server's name
-		/// </summary>
-		[DataMember]
+        // I'll figure out how to save this later. For now it's hardcoded to "Server"
+        /// <summary>
+        /// Get or set the server's name
+        /// </summary>
+        [DataMember]
+        [Browsable( true )]
+        [ReadOnly( true )]
+        [Description( "Chat messages sent by the server will show this name. You MUST have the Essentials client mod installed for this to work. " +
+            "\r\nNote: Changing this is temporarily disabled. This is set separately from Essentials, you may want to change them to match." )]
+        [Category( "Extender Settings" )]
+        [DisplayName( "Server Chat Name" )]
+        public string ServerChatName
+        {
+            get
+            {
+                return "Server";
+            }
+        }
+        
+
+        /// <summary>
+        /// Get or set the server's name
+        /// </summary>
+        [DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
 		[Description( "Get or set the server's name" )]

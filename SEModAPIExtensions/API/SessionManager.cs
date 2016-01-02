@@ -81,7 +81,7 @@ namespace SEModAPIExtensions.API
 			}
 			catch (Exception ex)
 			{
-				ApplicationLog.BaseLog.Error( ex, "Session Manager Exception: {0}", ex );
+				ApplicationLog.BaseLog.Error( ex, "Session Manager Exception: {0}" );
 			}
 		}
 	}

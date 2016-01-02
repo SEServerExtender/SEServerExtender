@@ -14,6 +14,7 @@
     using Sandbox.Engine.Multiplayer;
     using Sandbox.Game.Replication;
     using Sandbox.ModAPI;
+    using SEModAPI.API.Definitions;
     using SEModAPI.API.Sandbox;
     using SEModAPI.API.Utility;
     using SEModAPIInternal.API.Common;
@@ -33,7 +34,9 @@
     public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
 	public class ChatManager
 	{
-		public struct ChatCommand
+        private static bool _enableData = false;
+
+        public struct ChatCommand
 		{
 			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
 			{
@@ -252,7 +255,12 @@
 			if ( !MySandboxGameWrapper.IsGameStarted )
 				return;
 
-			try
+            //check if we have the Essentials client mod installed so we can use dataMessages instead of chat messages
+            if ( !_enableData )
+                if ( Server.Instance.Config.Mods.Contains( "559202083" ) || Server.Instance.Config.Mods.Contains( "558596580" ) )
+                    _enableData = true;
+
+            try
 			{
 				object netManager = NetworkManager.GetNetworkManager( );
 				if ( netManager == null )
@@ -260,6 +268,7 @@
 
 				Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
 				ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
+                MyAPIGateway.Multiplayer.RegisterMessageHandler( 9001, RecieveDataMessage );
 
 				m_chatHandlerSetup = true;
 			}
@@ -280,7 +289,75 @@
 			return chatMessageStruct;
 		}
 
-		protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
+        public static bool EnableData
+        {
+            get
+            {
+                return _enableData;
+            }
+        }
+
+        private class MessageRecieveItem
+        {
+            public ulong fromID { get; set; }
+            public long msgID { get; set; }
+            public string message { get; set; }
+        }
+
+        public class ServerMessageItem
+	{
+		public string From { get; set; }
+		public string Message { get; set; }
+	}
+
+        protected void RecieveDataMessage( byte[ ] data )
+        {
+            string text = "";
+            for ( int r = 0; r < data.Length; r++ )
+                text += (char)data[r];
+
+            MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
+
+            if ( item.msgID != 5010 )
+            {
+                ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
+                return;
+            }
+            
+            ReceiveChatMessage( item.fromID, item.message, ChatEntryTypeEnum.ChatMsg );
+        }
+
+        protected void SendDataMessage( string message, ulong userId = 0 )
+        {
+            ServerMessageItem item = new ServerMessageItem( );
+            item.From = Server.Instance.Config.ServerChatName;
+            item.Message = message;
+
+            string messageString = MyAPIGateway.Utilities.SerializeToXML( item );
+            byte[ ] data = new byte[messageString.Length];
+
+            for ( int r = 0; r < messageString.Length; r++ )
+            {
+                data[r] = (byte)messageString[r];
+            }
+            long msgId = 5003;
+
+            string msgIdString = msgId.ToString( );
+            byte[ ] newData = new byte[data.Length + msgIdString.Length + 1];
+            newData[0] = (byte)msgIdString.Length;
+            for ( int r = 0; r < msgIdString.Length; r++ )
+                newData[r + 1] = (byte)msgIdString[r];
+
+            Buffer.BlockCopy( data, 0, newData, msgIdString.Length + 1, data.Length );
+
+            if ( userId == 0 )
+                MyAPIGateway.Multiplayer.SendMessageToOthers( 9000, newData );
+            else
+                MyAPIGateway.Multiplayer.SendMessageTo( 9000, newData, userId );
+        }
+
+
+        protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
 			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
 
@@ -310,11 +387,17 @@
 
 			try
 			{
-				if ( remoteUserId != 0 )
-				{
-					Object chatMessageStruct = CreateChatMessageStruct( message );
-					ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
-				}
+                if ( remoteUserId != 0 )
+                {
+                    if ( _enableData )
+                        SendDataMessage( message );
+
+                    else
+                    {
+                        Object chatMessageStruct = CreateChatMessageStruct( message );
+                        ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
+                    }
+                }
 
 				m_chatMessages.Add( string.Format( "Server: {0}", message ) );
 
@@ -345,21 +428,27 @@
 
 			try
 			{
-				if ( !commandParsed && message[ 0 ] != '/' )
-				{
-					Object chatMessageStruct = CreateChatMessageStruct( message );
-					List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
-					foreach ( ulong remoteUserId in connectedPlayers )
-					{
-						if ( !remoteUserId.ToString( ).StartsWith( "9009" ) )
-							ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
+                if ( !commandParsed && message[0] != '/' )
+                {
+                    if ( _enableData )
+                        SendDataMessage( message );
 
-						ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
-						Instance.AddEvent( chatEvent );
-					}
-					m_chatMessages.Add( string.Format( "Server: {0}", message ) );
-					ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
-				}
+                    else
+                    {
+                        Object chatMessageStruct = CreateChatMessageStruct( message );
+                        List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
+                        foreach ( ulong remoteUserId in connectedPlayers )
+                        {
+                            if ( !remoteUserId.ToString( ).StartsWith( "9009" ) )
+                                ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
+
+                            ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
+                            Instance.AddEvent( chatEvent );
+                        }
+                        m_chatMessages.Add( string.Format( "Server: {0}", message ) );
+                        ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
+                    }
+                }
 
 				//Send a loopback chat event for server-sent messages
 				ChatEvent selfChatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, 0, 0, message, 0 );
