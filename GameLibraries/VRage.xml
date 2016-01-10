@@ -1451,6 +1451,16 @@
             Rotate 180 degress around both the X and Y axis before rendering.
             </summary>
         </member>
+        <member name="T:VRage.Network.BlockingAttribute">
+            <summary>
+            Indicates that event will be blocking all other events.
+            </summary>
+        </member>
+        <member name="M:VRage.Network.BlockingAttribute.#ctor">
+            <summary>
+            Creates attribute that indicates that event will be blocking all other events until this is resolved.
+            </summary>
+        </member>
         <member name="T:VRage.Network.BroadcastExceptAttribute">
             <summary>
             Client method. Decorated method is be called by server on all clients (except the one who invoked it on server or the one specified in RaiseEvent...when called from server).
@@ -1667,6 +1677,106 @@
             <param name="packetId">Id of the delivered or lost packet.</param>
             <param name="delivered">True when packet was delivered, false when packet is considered lost.</param>
         </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.EnqueueEvent(VRage.Library.Collections.BitStream,VRage.Network.NetworkId,VRage.Network.NetworkId,System.UInt32,VRage.Network.EndpointId)">
+            <summary>
+            Enqueues event that have to be done on target object.
+            </summary>
+            <param name="stream">Stream with event data.</param>
+            <param name="targetObjectId">Object id that is a target of the event.</param>
+            <param name="blockingObjectId">Object id that is blocking target to be processed. 'NetworkId.Invalid' if none.</param>
+            <param name="eventId">Event id.</param>
+            <param name="sender">Endpoint.</param>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.EnqueueBarrier(VRage.Network.NetworkId,VRage.Network.NetworkId)">
+            <summary>
+            Enqueues barrier for an entity that is targeting network object with blocking event. WARNING: Have to be in
+            pair with blocking event!
+            </summary>
+            <param name="targetObjectId">Network object id that will get barrier event.</param>
+            <param name="blockingObjectId">Network object that have blocking event.</param>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.RemoveEvents(VRage.Network.NetworkId)">
+            <summary>
+            Removes all events from target id.
+            </summary>
+            <param name="objectInstance">Target object network id.</param>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.TryLiftBarrier(VRage.Network.NetworkId)">
+            <summary>
+            Tries to lift barrier from target network object. If successfull, removes this barrier from
+            target object events queue. Also barrier must be aiming target object id.
+            </summary>
+            <param name="targetObjectId">Target network object id.</param>
+            <returns>True if barrier found on the top of target object events queue. Otherwise false.</returns>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.ProcessEvents(VRage.Network.NetworkId,VRage.Replication.MyEventsBuffer.Handler,VRage.Replication.MyEventsBuffer.IsBlockedHandler,VRage.Network.NetworkId)">
+            <summary>
+            Tries to process events for prarticular object id (network id).
+            </summary>
+            <param name="targetObjectId">Target object network id.</param>
+            <param name="eventHandler">Handler for processing events.</param>
+            <param name="isBlockedHandler">Handler for checking if processing of events should be canceled.</param>
+            <param name="caller">Parent Network id from which this is called. Set NetworkId.Invalid if no parent.</param>
+            <returns>True if all sucessfull.</returns>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.ProcessBarrierEvent(VRage.Network.NetworkId,VRage.Replication.MyEventsBuffer.MyBufferedEvent,VRage.Replication.MyEventsBuffer.Handler,VRage.Replication.MyEventsBuffer.IsBlockedHandler)">
+            <summary>
+            Process barrier event.
+            </summary>
+            <param name="targetObjectId">Target of the barrier event.</param>
+            <param name="eventToProcess">Event to process.</param>
+            <param name="eventHandler">Handler for processing event.</param>
+            <param name="isBlockedHandler">Handler for checking if processing of events should be canceled.</param>
+            <returns>True if success.</returns>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.ProcessBlockingEvent(VRage.Network.NetworkId,VRage.Replication.MyEventsBuffer.MyBufferedEvent,VRage.Network.NetworkId,VRage.Replication.MyEventsBuffer.Handler,VRage.Replication.MyEventsBuffer.IsBlockedHandler,System.Collections.Generic.Queue{VRage.Network.NetworkId}@)">
+            <summary>
+            Process blocking event.
+            </summary>
+            <param name="targetObjectId">Target object id for which to process.</param>
+            <param name="eventToProcess">Event to be processed.</param>
+            <param name="caller">Parent Network id from which this is called. Set NetworkId.Invalid if no parent.</param>
+            <param name="eventHandler">Handler for processing event.</param>
+            <param name="isBlockedHandler">Handler for checking if processing of events should be canceled.</param>
+            <param name="postProcessQueue">Queue that should be post processed.</param>
+            <returns>True if was success.</returns>
+        </member>
+        <member name="M:VRage.Replication.MyEventsBuffer.GetEventsBufferStat">
+            <summary>
+            Gets events buffer statistics.
+            </summary>
+            <returns>Formatted events buffer statistics.</returns>
+        </member>
+        <member name="F:VRage.Replication.MyEventsBuffer.MyBufferedEvent.Stream">
+            <summary>
+            Stream with the event
+            </summary>
+        </member>
+        <member name="F:VRage.Replication.MyEventsBuffer.MyBufferedEvent.TargetObjectId">
+            <summary>
+            Target object net id of the event.
+            </summary>
+        </member>
+        <member name="F:VRage.Replication.MyEventsBuffer.MyBufferedEvent.BlockingObjectId">
+            <summary>
+            Object network id that is blocking this event. If 'NetworkId.Invalid' than no blocking object.
+            </summary>
+        </member>
+        <member name="F:VRage.Replication.MyEventsBuffer.MyBufferedEvent.IsBarrier">
+            <summary>
+            Indicates if this event is a barrier.
+            </summary>
+        </member>
+        <member name="F:VRage.Replication.MyEventsBuffer.MyObjectEventsBuffer.Events">
+            <summary>
+            Events to be processed for network object.
+            </summary>
+        </member>
+        <member name="F:VRage.Replication.MyEventsBuffer.MyObjectEventsBuffer.IsProcessing">
+            <summary>
+            Indicates if events are currently processed.
+            </summary>
+        </member>
         <member name="M:VRage.Network.MyReplicationLayerBase.InvokeLocally``7(VRage.Network.CallSite{``0,``1,``2,``3,``4,``5,``6},``0,``1,``2,``3,``4,``5,``6)">
             <summary>
             Invokes event locally without validation and with empty Sender and ClientData.
@@ -1747,6 +1857,12 @@
             Add network object with fixed ID.
             </summary>
         </member>
+        <member name="M:VRage.Network.MyReplicationLayer.GetMultiplayerStat">
+            <summary>
+            Returns string with current multiplayer status. Use only for debugging.
+            </summary>
+            <returns>Already formatted string with current multiplayer status.</returns>
+        </member>
         <member name="M:VRage.Network.MyReplicationLayer.DispatchEvent(VRage.Library.Collections.BitStream,VRage.Network.CallSite,VRage.Network.EndpointId,VRage.Network.IMyNetObject,System.Single)">
             <summary>
             Called when event is raised locally to send it to other peer(s).
@@ -1773,6 +1889,14 @@
             <summary>
             Marks replicable as successfully created, ready to receive events and state groups data.
             </summary>
+        </member>
+        <member name="M:VRage.Network.MyReplicationClient.IsBlocked(VRage.Network.NetworkId,VRage.Network.NetworkId)">
+            <summary>
+            Checks if network id is blocked by other network id.
+            </summary>
+            <param name="networkId">Target network id.</param>
+            <param name="blockedNetId">Blocking network id.</param>
+            <returns></returns>
         </member>
         <member name="M:VRage.Network.MyReplicationClient.ProcessStateSync(VRage.MyPacket)">
             <summary>

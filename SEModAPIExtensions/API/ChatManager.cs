@@ -32,228 +32,228 @@
     using VRageMath;
 
     public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
-	public class ChatManager
-	{
+    public class ChatManager
+    {
         private static bool _enableData = false;
 
         public struct ChatCommand
-		{
-			public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
-			{
-				Command = command;
-				Callback = callback;
-				RequiresAdmin = requiresAdmin;
-			}
-			public string Command;
-			public Action<ChatEvent> Callback;
-			public bool RequiresAdmin;
-		}
+        {
+            public ChatCommand( string command, Action<ChatEvent> callback, bool requiresAdmin )
+            {
+                Command = command;
+                Callback = callback;
+                RequiresAdmin = requiresAdmin;
+            }
+            public string Command;
+            public Action<ChatEvent> Callback;
+            public bool RequiresAdmin;
+        }
 
-		public enum ChatEventType
-		{
-			OnChatReceived,
-			OnChatSent,
-		}
+        public enum ChatEventType
+        {
+            OnChatReceived,
+            OnChatSent,
+        }
 
-		public struct ChatEvent
-		{
-			public ChatEvent( ChatEventType type, DateTime timestamp, ulong sourceUserId, ulong remoteUserId, string message, ushort priority )
-			{
-				Type = type;
-				Timestamp = timestamp;
-				SourceUserId = sourceUserId;
-				RemoteUserId = remoteUserId;
-				Message = message;
-				Priority = priority;
-			}
+        public struct ChatEvent
+        {
+            public ChatEvent( ChatEventType type, DateTime timestamp, ulong sourceUserId, ulong remoteUserId, string message, ushort priority )
+            {
+                Type = type;
+                Timestamp = timestamp;
+                SourceUserId = sourceUserId;
+                RemoteUserId = remoteUserId;
+                Message = message;
+                Priority = priority;
+            }
 
-			public ChatEventType Type;
-			public DateTime Timestamp;
-			public ulong SourceUserId;
-			public ulong RemoteUserId;
-			public string Message;
-			public ushort Priority;
+            public ChatEventType Type;
+            public DateTime Timestamp;
+            public ulong SourceUserId;
+            public ulong RemoteUserId;
+            public string Message;
+            public ushort Priority;
 
-			public ChatEvent( DateTime timestamp, ulong remoteUserId, string message )
-			{
-				Timestamp = timestamp;
-				RemoteUserId = remoteUserId;
-				Message = message;
+            public ChatEvent( DateTime timestamp, ulong remoteUserId, string message )
+            {
+                Timestamp = timestamp;
+                RemoteUserId = remoteUserId;
+                Message = message;
 
-				//Defaults
-				Type = ChatEventType.OnChatReceived;
-				SourceUserId = 0;
-				Priority = 0;
-			}
-		}
+                //Defaults
+                Type = ChatEventType.OnChatReceived;
+                SourceUserId = 0;
+                Priority = 0;
+            }
+        }
 
-		#region "Attributes"
+        #region "Attributes"
 
-		private static ChatManager m_instance;
+        private static ChatManager m_instance;
 
-		private static List<string> m_chatMessages;
-		private static List<ChatEvent> m_chatHistory;
-		private static bool m_chatHandlerSetup;
-		private static FastResourceLock m_resourceLock;
+        private static List<string> m_chatMessages;
+        private static List<ChatEvent> m_chatHistory;
+        private static bool m_chatHandlerSetup;
+        private static FastResourceLock m_resourceLock;
 
-		private List<ChatEvent> m_chatEvents;
-		private Dictionary<ChatCommand, Guid> m_chatCommands;
+        private List<ChatEvent> m_chatEvents;
+        private Dictionary<ChatCommand, Guid> m_chatCommands;
 
-		/////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////
 
-		public static string ChatMessageStructNamespace = "Sandbox.Engine.Multiplayer";
-		public static string ChatMessageStructClass = "ChatMsg";
+        public static string ChatMessageStructNamespace = "Sandbox.Engine.Multiplayer";
+        public static string ChatMessageStructClass = "ChatMsg";
 
-		public static string ChatMessageMessageField = "Text";
+        public static string ChatMessageMessageField = "Text";
 
-		public event ChatEventDelegate ChatMessage;
+        public event ChatEventDelegate ChatMessage;
 
-		#endregion
+        #endregion
 
-		#region "Constructors and Initializers"
+        #region "Constructors and Initializers"
 
-		protected ChatManager( )
-		{
-			m_instance = this;
+        protected ChatManager( )
+        {
+            m_instance = this;
 
-			m_chatMessages = new List<string>( );
-			m_chatHistory = new List<ChatEvent>( );
-			m_chatHandlerSetup = false;
-			m_resourceLock = new FastResourceLock( );
-			m_chatEvents = new List<ChatEvent>( );
-			m_chatCommands = new Dictionary<ChatCommand, Guid>( );
+            m_chatMessages = new List<string>( );
+            m_chatHistory = new List<ChatEvent>( );
+            m_chatHandlerSetup = false;
+            m_resourceLock = new FastResourceLock( );
+            m_chatEvents = new List<ChatEvent>( );
+            m_chatCommands = new Dictionary<ChatCommand, Guid>( );
 
-			ChatCommand deleteCommand = new ChatCommand( "delete", Command_Delete, true );
+            ChatCommand deleteCommand = new ChatCommand( "delete", Command_Delete, true );
 
-			ChatCommand tpCommand = new ChatCommand( "tp", Command_Teleport, true );
+            ChatCommand tpCommand = new ChatCommand( "tp", Command_Teleport, true );
 
-			ChatCommand stopCommand = new ChatCommand( "stop", Command_Stop, true );
+            ChatCommand stopCommand = new ChatCommand( "stop", Command_Stop, true );
 
-			ChatCommand getIdCommand = new ChatCommand( "getid", Command_GetId, true );
+            ChatCommand getIdCommand = new ChatCommand( "getid", Command_GetId, true );
 
-			ChatCommand saveCommand = new ChatCommand( "save", Command_Save, true );
+            ChatCommand saveCommand = new ChatCommand( "save", Command_Save, true );
 
-			ChatCommand ownerCommand = new ChatCommand( "owner", Command_Owner, true );
+            ChatCommand ownerCommand = new ChatCommand( "owner", Command_Owner, true );
 
-			ChatCommand exportCommand = new ChatCommand( "export", Command_Export, true );
+            ChatCommand exportCommand = new ChatCommand( "export", Command_Export, true );
 
-			ChatCommand importCommand = new ChatCommand( "import", Command_Import, true );
+            ChatCommand importCommand = new ChatCommand( "import", Command_Import, true );
 
-			ChatCommand spawnCommand = new ChatCommand( "spawn", Command_Spawn, true );
+            ChatCommand spawnCommand = new ChatCommand( "spawn", Command_Spawn, true );
 
-			ChatCommand clearCommand = new ChatCommand( "clear", Command_Clear, true );
+            ChatCommand clearCommand = new ChatCommand( "clear", Command_Clear, true );
 
-			ChatCommand listCommand = new ChatCommand( "list", Command_List, true );
+            ChatCommand listCommand = new ChatCommand( "list", Command_List, true );
 
-			ChatCommand kickCommand = new ChatCommand( "kick", Command_Kick, true );
+            ChatCommand kickCommand = new ChatCommand( "kick", Command_Kick, true );
 
-			ChatCommand onCommand = new ChatCommand( "on", Command_On, true );
+            ChatCommand onCommand = new ChatCommand( "on", Command_On, true );
 
-			ChatCommand offCommand = new ChatCommand( "off", Command_Off, true );
+            ChatCommand offCommand = new ChatCommand( "off", Command_Off, true );
 
-			ChatCommand banCommand = new ChatCommand( "ban", Command_Ban, true );
+            ChatCommand banCommand = new ChatCommand( "ban", Command_Ban, true );
 
-			ChatCommand unbanCommand = new ChatCommand( "unban", Command_Unban, true );
+            ChatCommand unbanCommand = new ChatCommand( "unban", Command_Unban, true );
 
-			ChatCommand asyncSaveCommand = new ChatCommand( "savesync", Command_SyncSave, true );
+            ChatCommand asyncSaveCommand = new ChatCommand( "savesync", Command_SyncSave, true );
 
-			RegisterChatCommand( offCommand );
-			RegisterChatCommand( onCommand );
-			RegisterChatCommand( deleteCommand );
-			RegisterChatCommand( tpCommand );
-			RegisterChatCommand( stopCommand );
-			RegisterChatCommand( getIdCommand );
-			RegisterChatCommand( saveCommand );
-			RegisterChatCommand( ownerCommand );
-			RegisterChatCommand( exportCommand );
-			RegisterChatCommand( importCommand );
-			RegisterChatCommand( spawnCommand );
-			RegisterChatCommand( clearCommand );
-			RegisterChatCommand( listCommand );
-			RegisterChatCommand( kickCommand );
-			RegisterChatCommand( banCommand );
-			RegisterChatCommand( unbanCommand );
-			RegisterChatCommand( asyncSaveCommand );
+            RegisterChatCommand( offCommand );
+            RegisterChatCommand( onCommand );
+            RegisterChatCommand( deleteCommand );
+            RegisterChatCommand( tpCommand );
+            RegisterChatCommand( stopCommand );
+            RegisterChatCommand( getIdCommand );
+            RegisterChatCommand( saveCommand );
+            RegisterChatCommand( ownerCommand );
+            RegisterChatCommand( exportCommand );
+            RegisterChatCommand( importCommand );
+            RegisterChatCommand( spawnCommand );
+            RegisterChatCommand( clearCommand );
+            RegisterChatCommand( listCommand );
+            RegisterChatCommand( kickCommand );
+            RegisterChatCommand( banCommand );
+            RegisterChatCommand( unbanCommand );
+            RegisterChatCommand( asyncSaveCommand );
 
-			ApplicationLog.BaseLog.Info( "Finished loading ChatManager" );
-		}
+            ApplicationLog.BaseLog.Info( "Finished loading ChatManager" );
+        }
 
-		#endregion
+        #endregion
 
-		#region "Properties"
+        #region "Properties"
 
-		public static ChatManager Instance
-		{
-			get { return m_instance ?? ( m_instance = new ChatManager( ) ); }
-		}
+        public static ChatManager Instance
+        {
+            get { return m_instance ?? (m_instance = new ChatManager( )); }
+        }
 
-		public List<string> ChatMessages
-		{
-			get
-			{
-				SetupChatHandlers( );
+        public List<string> ChatMessages
+        {
+            get
+            {
+                SetupChatHandlers( );
 
-				return m_chatMessages;
-			}
-		}
+                return m_chatMessages;
+            }
+        }
 
-		public List<ChatEvent> ChatHistory
-		{
-			get
-			{
-				SetupChatHandlers( );
+        public List<ChatEvent> ChatHistory
+        {
+            get
+            {
+                SetupChatHandlers( );
 
-				m_resourceLock.AcquireShared( );
+                m_resourceLock.AcquireShared( );
 
-				List<ChatEvent> history = new List<ChatEvent>( m_chatHistory );
+                List<ChatEvent> history = new List<ChatEvent>( m_chatHistory );
 
-				m_resourceLock.ReleaseShared( );
+                m_resourceLock.ReleaseShared( );
 
-				return history;
-			}
-		}
+                return history;
+            }
+        }
 
-		public List<ChatEvent> ChatEvents
-		{
-			get
-			{
-				SetupChatHandlers( );
+        public List<ChatEvent> ChatEvents
+        {
+            get
+            {
+                SetupChatHandlers( );
 
-				List<ChatEvent> copy = new List<ChatEvent>( m_chatEvents.ToArray( ) );
-				return copy;
-			}
-		}
+                List<ChatEvent> copy = new List<ChatEvent>( m_chatEvents.ToArray( ) );
+                return copy;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region "Methods"
+        #region "Methods"
 
-		#region "General"
+        #region "General"
 
-		public static bool ReflectionUnitTest( )
-		{
-			try
-			{
-				Type type = typeof ( Sandbox.Engine.Multiplayer.ChatMsg );
-				bool result = true;
-				result &= Reflection.HasField( type, ChatMessageMessageField );
+        public static bool ReflectionUnitTest( )
+        {
+            try
+            {
+                Type type = typeof( Sandbox.Engine.Multiplayer.ChatMsg );
+                bool result = true;
+                result &= Reflection.HasField( type, ChatMessageMessageField );
 
-				return result;
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
-				return false;
-			}
-		}
+                return result;
+            }
+            catch ( Exception ex )
+            {
+                ApplicationLog.BaseLog.Error( ex );
+                return false;
+            }
+        }
 
-		private void SetupChatHandlers( )
-		{
-			if ( m_chatHandlerSetup )
-				return;
+        private void SetupChatHandlers( )
+        {
+            if ( m_chatHandlerSetup )
+                return;
 
-			if ( !MySandboxGameWrapper.IsGameStarted )
-				return;
+            if ( !MySandboxGameWrapper.IsGameStarted )
+                return;
 
             //check if we have the Essentials client mod installed so we can use dataMessages instead of chat messages
             if ( !_enableData )
@@ -261,33 +261,33 @@
                     _enableData = true;
 
             try
-			{
-				object netManager = NetworkManager.GetNetworkManager( );
-				if ( netManager == null )
-					return;
+            {
+                object netManager = NetworkManager.GetNetworkManager( );
+                if ( netManager == null )
+                    return;
 
-				Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
-				ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
-                MyAPIGateway.Multiplayer.RegisterMessageHandler( 9001, RecieveDataMessage );
+                Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
+                ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
+                MyAPIGateway.Multiplayer.RegisterMessageHandler( 9001, ReceiveDataMessage );
 
-				m_chatHandlerSetup = true;
-			}
-			catch ( Exception ex )
-			{
-				ApplicationLog.BaseLog.Error( ex );
-			}
-		}
+                m_chatHandlerSetup = true;
+            }
+            catch ( Exception ex )
+            {
+                ApplicationLog.BaseLog.Error( ex );
+            }
+        }
 
-		protected Object CreateChatMessageStruct( string message )
-		{
-			Type chatMessageStructType = typeof ( ChatMsg );
-			FieldInfo messageField = chatMessageStructType.GetField( ChatMessageMessageField );
+        protected Object CreateChatMessageStruct( string message )
+        {
+            Type chatMessageStructType = typeof( ChatMsg );
+            FieldInfo messageField = chatMessageStructType.GetField( ChatMessageMessageField );
 
-			Object chatMessageStruct = Activator.CreateInstance( chatMessageStructType );
-			messageField.SetValue( chatMessageStruct, message );
+            Object chatMessageStruct = Activator.CreateInstance( chatMessageStructType );
+            messageField.SetValue( chatMessageStruct, message );
 
-			return chatMessageStruct;
-		}
+            return chatMessageStruct;
+        }
 
         public static bool EnableData
         {
@@ -305,12 +305,12 @@
         }
 
         public class ServerMessageItem
-	{
-		public string From { get; set; }
-		public string Message { get; set; }
-	}
+        {
+            public string From { get; set; }
+            public string Message { get; set; }
+        }
 
-        protected void RecieveDataMessage( byte[ ] data )
+        protected void ReceiveDataMessage( byte[ ] data )
         {
             string text = "";
             for ( int r = 0; r < data.Length; r++ )
@@ -318,15 +318,45 @@
 
             MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
 
-            if ( item.msgID != 5010 )
+            if ( item.msgID == 5010 )
+            {
+                string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
+
+                bool commandParsed = ParseChatCommands( item.message, item.fromID );
+
+                if ( !commandParsed )
+                {
+                    //somehow silently pass commands to Essentials here?
+
+                    m_chatMessages.Add( string.Format( "{0}: {1}", playerName, item.message ) );
+                    ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, item.message );
+                }
+
+                ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
+
+                m_resourceLock.AcquireExclusive( );
+                m_chatHistory.Add( chatEvent );
+
+                //delete this line when we figure out how to quietly send messages to Essentials
+                //the if will keep other players from seeing the command
+                if ( !commandParsed )
+                    OnChatMessage( item.fromID, playerName, item.message );
+                m_resourceLock.ReleaseExclusive( );
+            }
+            else if ( item.msgID == 5015 )
+            {
+                //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
+                if ( item.message == "init" )
+                    MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
+            }
+            else
             {
                 ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
                 return;
             }
-            
-            ReceiveChatMessage( item.fromID, item.message, ChatEntryTypeEnum.ChatMsg );
-        }
 
+        }
+        
         protected void SendDataMessage( string message, ulong userId = 0 )
         {
             ServerMessageItem item = new ServerMessageItem( );
@@ -355,8 +385,7 @@
             else
                 MyAPIGateway.Multiplayer.SendMessageTo( 9000, newData, userId );
         }
-
-
+        
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
 			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );

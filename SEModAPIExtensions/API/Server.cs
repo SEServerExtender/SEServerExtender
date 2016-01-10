@@ -1,31 +1,32 @@
 namespace SEModAPIExtensions.API
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Linq;
-	using System.Runtime.ExceptionServices;
-	using System.Runtime.Serialization;
-	using System.Security;
-	using System.ServiceModel;
-	using System.Threading;
-	using System.Windows.Forms;
-	using NLog;
-	using NLog.Targets;
-	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
-	using SEModAPI.API;
-	using SEModAPI.API.Definitions;
-	using SEModAPI.API.Sandbox;
-	using SEModAPI.API.Utility;
-	using SEModAPIInternal.API.Chat;
-	using SEModAPIInternal.API.Common;
-	using SEModAPIInternal.API.Server;
-	using SEModAPIInternal.Support;
-	using Timer = System.Timers.Timer;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.ExceptionServices;
+    using System.Runtime.Serialization;
+    using System.Security;
+    using System.ServiceModel;
+    using System.Threading;
+    using System.Windows.Forms;
+    using NLog;
+    using NLog.Targets;
+    using Sandbox;
+    using Sandbox.Common.ObjectBuilders;
+    using SEModAPI.API;
+    using SEModAPI.API.Definitions;
+    using SEModAPI.API.Sandbox;
+    using SEModAPI.API.Utility;
+    using SEModAPIInternal.API.Chat;
+    using SEModAPIInternal.API.Common;
+    using SEModAPIInternal.API.Server;
+    using SEModAPIInternal.Support;
+    using Timer = System.Timers.Timer;
 
-	[DataContract]
+    [DataContract]
 	public class Server
 	{
 		private static Server _instance;
@@ -614,18 +615,22 @@ namespace SEModAPIExtensions.API
 				File.Delete( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg.restart" ) );
 			}
 
-			if ( File.Exists( System.IO.Path.Combine( Path,"SpaceEngineers-Dedicated.cfg" ) ) )
-			{
-				MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = DedicatedConfigDefinition.Load( new FileInfo( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) );
-				_dedicatedConfigDefinition = new DedicatedConfigDefinition( config );
-				_cfgWatch = new FileSystemWatcher( Path, "*.cfg" );
-				_cfgWatch.Changed += Config_Changed;
-				_cfgWatch.NotifyFilter = NotifyFilters.Size;
-				_cfgWatch.EnableRaisingEvents = true;
-				return config;
-			}
-			else
-				return null;
+            if ( File.Exists( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) )
+            {
+                MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = DedicatedConfigDefinition.Load( new FileInfo( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) );
+                _dedicatedConfigDefinition = new DedicatedConfigDefinition( config );
+                _cfgWatch = new FileSystemWatcher( Path, "*.cfg" );
+                _cfgWatch.Changed += Config_Changed;
+                _cfgWatch.NotifyFilter = NotifyFilters.Size;
+                _cfgWatch.EnableRaisingEvents = true;
+                return config;
+            }
+            else
+            {
+                ApplicationLog.BaseLog.Info( "Failed to load session settings" );
+                ApplicationLog.BaseLog.Info(Path );
+                return null;
+            }
 
 
 			/*

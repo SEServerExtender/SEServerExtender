@@ -384,6 +384,14 @@
             The local volume.
             </value>
         </member>
+        <member name="P:VRage.Components.MyPositionComponentBase.MaximalSize">
+            <summary>
+            Gets the maximal size.
+            </summary>
+            <value>
+            The Maximal size.
+            </value>
+        </member>
         <member name="P:VRage.Components.MyPositionComponentBase.LocalVolumeOffset">
             <summary>
             Gets or sets the local volume offset.
@@ -4306,6 +4314,13 @@
             </summary>
             <returns>64-bit hash code.</returns>
         </member>
+        <member name="M:Sandbox.Definitions.MyContainerDefinition.HasDefaultComponent(System.String)">
+            <summary>
+            This will search through definitions to find if Default Components contains the searched component either as BuilderType, InstanceType, or ComponentType
+            </summary>
+            <param name="component">Name of the type to search for in defined default components</param>
+            <returns>true if is defined component with the matching BuilderType, InstanceType or ComponentType </returns>
+        </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
             <summary>
             Color is used to get Color(4 bytes) as well as
@@ -4342,6 +4357,17 @@
             will be visible in Ownership dropdown.
             </summary>
         </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_OxygenContainerObject.OxygenLevel">
+            <summary>
+            This is not synced automatically
+            Call SyncOxygenContainerLevel on inventory to sync it
+            </summary>
+        </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
@@ -4356,6 +4382,11 @@
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.PhysicalMaterial">
             <summary>
             Physical material of the character.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.DeadBodyShape">
+            <summary>
+            Physics shape used after character's death.
             </summary>
         </member>
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_CogWheelBlockDefinition">
@@ -4392,11 +4423,6 @@
             Otherwise, full range of rotations is allowed.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_PhysicalObject.DurabilityHP">
-            <summary>
-            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
-            </summary>
-        </member>
         <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyGlobalEventTypeEnum">
             <summary>
             Defines the event type.
@@ -4407,12 +4433,6 @@
         <member name="T:Medieval.ObjectBuilders.Definitions.MyObjectBuilder_LockBlockDefinition">
             <summary>
             Definition for one small grid lock block (used inside large block as mechanical subblock).
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_OxygenContainerObject.OxygenLevel">
-            <summary>
-            This is not synced automatically
-            Call SyncOxygenContainerLevel on inventory to sync it
             </summary>
         </member>
         <member name="P:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialDefinition.HasLayers">
@@ -4541,11 +4561,6 @@
             Whether the given block should be used when spawning the component which it contains
             </summary>
         </member>
-        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ProductionBlock.Inventory">
-            <summary>
-            Don't use. Backward compatibility only. Use InputInventory and OutputInventory instead.
-            </summary>
-        </member>
         <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.ElapsedGameTime">
             <summary>
             This is long because TimeSpan is not serialized
@@ -4566,31 +4581,6 @@
             Size of the edge of the world area cube.
             Don't use directly, as it is error-prone (it's km instead of m and edge size instead of half-extent)
             Rather use MyEntities.WorldHalfExtent()
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_RemoteControl.Coords">
-            <summary>
-            Obsolete. Use Waypoints instead.
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_RemoteControl.Names">
-            <summary>
-            Obsolete. Use Waypoints instead.
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_RemoteControl.AutoPilotToolbar">
-            <summary>
-            Obsolete. Use Waypoints instead.
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ShipConnector.Connected">
-            <summary>
-            When ConnectedEntityId is not null, this tells whether the connection is only approach (yellow) or locked connection (green)
-            </summary>
-        </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_ShipConnector.MasterToSlaveTransform">
-            <summary>
-            Master is connector with higher EntityId
             </summary>
         </member>
         <member name="F:Sandbox.Common.ObjectBuilders.MyToolbarType.Spectator">
@@ -4620,6 +4610,12 @@
             <summary>
             [Concrete] Data to be stored/is stored as XML.
             </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.GenerateAssemblyId(System.Type)">
+            <summary>Generates an identifier for the assembly of a specified type</summary>
+            <remarks>Code copied from the .NET serialization classes - to emulate the same bahavior</remarks>
+            <param name="type">The type</param>
+            <returns>String identifying the type's assembly</returns>
         </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.MemberwiseAssignment(VRage.ObjectBuilders.MyObjectBuilder_Base,VRage.ObjectBuilders.MyObjectBuilder_Base)">
             <summary>

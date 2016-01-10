@@ -134,8 +134,12 @@ namespace SEServerExtender
 
 		private static void Start( string[ ] args )
 		{
-			//Setup error handling for unmanaged exceptions
-			AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
+            //register object builder assembly
+            string path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.ObjectBuilders.DLL" );
+            VRage.Plugins.MyPlugins.RegisterGameObjectBuildersAssemblyFile( path );
+
+            //Setup error handling for unmanaged exceptions
+            AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
 			Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
 
@@ -152,7 +156,7 @@ namespace SEServerExtender
 								  NoConsole = false,
 								  Debug = false,
 								  GamePath = new DirectoryInfo( PathManager.BasePath ).Parent.FullName,
-								  NoWcf = false,
+								  NoWcf = true,
 								  Autosave = 0,
 								  InstancePath = string.Empty,
 								  CloseOnCrash = false,
@@ -290,7 +294,7 @@ namespace SEServerExtender
 					}
 					else if ( lowerCaseArgument.Equals( "nowcf" ) )
 					{
-						extenderArgs.NoWcf = true;
+						extenderArgs.NoWcf = false;
 					}
 					else if ( lowerCaseArgument.Equals( "closeoncrash" ) )
 					{

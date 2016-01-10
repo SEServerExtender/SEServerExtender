@@ -25,23 +25,27 @@ namespace SEModAPI.API.Definitions
 		}
 
         #region "Properties"
-
+        private string chatname = "Server";
         // I'll figure out how to save this later. For now it's hardcoded to "Server"
         /// <summary>
         /// Get or set the server's name
         /// </summary>
         [DataMember]
         [Browsable( true )]
-        [ReadOnly( true )]
+        [ReadOnly( false )]
         [Description( "Chat messages sent by the server will show this name. You MUST have the Essentials client mod installed for this to work. " +
-            "\r\nNote: Changing this is temporarily disabled. This is set separately from Essentials, you may want to change them to match." )]
+            "\r\nNote: This value isn't saved between sessions (temporary). This is set separately from Essentials, you may want to change them to match." )]
         [Category( "Extender Settings" )]
         [DisplayName( "Server Chat Name" )]
         public string ServerChatName
         {
             get
             {
-                return "Server";
+                return chatname;
+            }
+            set
+            {
+                chatname = value;
             }
         }
         

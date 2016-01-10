@@ -1190,6 +1190,36 @@
             Checks is AI is enabled for turret
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.RespawnAllowed">
+            <summary>
+            Disable to remove respawn component from medical room.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.HealingAllowed">
+            <summary>
+            Disabling prevents healing characters.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.RefuelAllowed">
+            <summary>
+            Disabling prevents refueling suits.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.SuitChangeAllowed">
+            <summary>
+            Disable to prevent players from changing their suits.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.CustomWardrobesEnabled">
+            <summary>
+            If set to true CustomWardrobeNames are used instead of all definitions when instantiating WardrobeScreen.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.CustomWardrobeNames">
+            <summary>
+            Used when CustomWardrobes are enabled.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
             <summary>
             Wheel's current steering angle
