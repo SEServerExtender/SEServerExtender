@@ -156,7 +156,7 @@ namespace SEServerExtender
 								  NoConsole = false,
 								  Debug = false,
 								  GamePath = new DirectoryInfo( PathManager.BasePath ).Parent.FullName,
-								  NoWcf = true,
+								  NoWcf = false,
 								  Autosave = 0,
 								  InstancePath = string.Empty,
 								  CloseOnCrash = false,
@@ -294,7 +294,7 @@ namespace SEServerExtender
 					}
 					else if ( lowerCaseArgument.Equals( "nowcf" ) )
 					{
-						extenderArgs.NoWcf = false;
+						extenderArgs.NoWcf = true;
 					}
 					else if ( lowerCaseArgument.Equals( "closeoncrash" ) )
 					{

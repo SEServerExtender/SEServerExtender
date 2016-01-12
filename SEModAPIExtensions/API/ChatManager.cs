@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Runtime.InteropServices;
+    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Xml;
@@ -35,6 +36,8 @@
     public class ChatManager
     {
         private static bool _enableData = false;
+        private static DateTime lastMessageTime = DateTime.Now;
+        private static string lastMessageString = "";
 
         public struct ChatCommand
         {
@@ -213,6 +216,17 @@
             }
         }
 
+        public void AddChatHistory( ChatEvent chatItem )
+        {
+            m_resourceLock.AcquireExclusive( );
+            m_chatHistory.Add( chatItem );
+            m_resourceLock.ReleaseExclusive( );
+            if ( chatItem.RemoteUserId == 0 )
+                ApplicationLog.ChatLog.Info( "Chat - Server: " + chatItem.Message );
+            else
+                ApplicationLog.ChatLog.Info( string.Format( "Chat - Client '{0}': {1}", PlayerMap.Instance.GetFastPlayerNameFromSteamId( chatItem.RemoteUserId ), chatItem.Message ) );
+        }
+
         public List<ChatEvent> ChatEvents
         {
             get
@@ -258,7 +272,10 @@
             //check if we have the Essentials client mod installed so we can use dataMessages instead of chat messages
             if ( !_enableData )
                 if ( Server.Instance.Config.Mods.Contains( "559202083" ) || Server.Instance.Config.Mods.Contains( "558596580" ) )
+                {
                     _enableData = true;
+                    ApplicationLog.Info( "Found Essentials client mod, enabling data messages" );
+                }
 
             try
             {
@@ -312,11 +329,20 @@
 
         protected void ReceiveDataMessage( byte[ ] data )
         {
+            /*
             string text = "";
             for ( int r = 0; r < data.Length; r++ )
                 text += (char)data[r];
-
+            */
+            string text = Encoding.Unicode.GetString( data );
             MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
+
+            //this should hopefully stop the duplicate command bug
+            if ( item.message == lastMessageString && DateTime.Now - lastMessageTime < TimeSpan.FromMilliseconds( 200 ) )
+                return;
+
+            lastMessageTime = DateTime.Now;
+            lastMessageString = item.message;
 
             if ( item.msgID == 5010 )
             {
@@ -364,12 +390,15 @@
             item.Message = message;
 
             string messageString = MyAPIGateway.Utilities.SerializeToXML( item );
+            /*
             byte[ ] data = new byte[messageString.Length];
 
             for ( int r = 0; r < messageString.Length; r++ )
             {
                 data[r] = (byte)messageString[r];
             }
+            */
+            byte[ ] data = Encoding.Unicode.GetBytes( messageString );
             long msgId = 5003;
 
             string msgIdString = msgId.ToString( );
