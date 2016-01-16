@@ -939,6 +939,12 @@
             Draw sprite, debug draw...
             </summary>
         </member>
+        <member name="F:VRageRender.MyRenderMessageType.DebugDraw">
+            <summary>
+            Debug Draw message, in render11 this messages are queued internally 
+            Draw sprite, debug draw...
+            </summary>
+        </member>
         <member name="F:VRageRender.MyRenderMessageType.StateChangeOnce">
             <summary>
             State change which can be applied only once, not applied when rendering same frame second time or more
@@ -1024,6 +1030,13 @@
             <summary>
             Helper class, "shortcuts" to profiler
             </summary>
+        </member>
+        <member name="M:VRage.Render.Models.MyMesh.#ctor(VRage.Import.MyMeshPartInfo,System.String)">
+            <summary>
+            c-tor - generic way for collecting resources
+            </summary>
+            <param name="meshInfo"></param>
+            assetName - just for debug output
         </member>
         <member name="T:VRageRender.Profiler.MyRenderProfiler">
             <summary>

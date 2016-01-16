@@ -3663,6 +3663,9 @@
             Compute the height of the binary tree in O(N) time. Should not be
             called often.
         </member>
+        <member name="M:VRageMath.MyDynamicAABBTreeD.GetAproximateClustersForAabb(VRageMath.BoundingBoxD@,System.Double,System.Collections.Generic.List{VRageMath.BoundingBoxD})">
+            Use the tree to produce a list of clusters aproximatelly the requested size, while intersecting those with the provided bounding box.
+        </member>
         <member name="T:VRageMath.MyDynamicAABBTreeD.DynamicTreeNode">
             <summary>
             A node in the dynamic tree. The client does not interact with this directly.
@@ -4104,6 +4107,14 @@
             </summary>
             <param name="sourceArray">The source array.</param><param name="matrix">The transform Matrix to apply.</param><param name="destinationArray">An existing destination array into which the transformed Vector3s are written.</param>
         </member>
+        <member name="M:VRageMath.Vector3D.Transform(VRageMath.Vector3D[],VRageMath.MatrixD@,VRageMath.Vector3D*)">
+            <summary>
+            Transforms a source array of Vector3s by a specified Matrix and writes the results to an existing destination array.
+            </summary>
+            <param name="sourceArray">The source array.</param>
+            <param name="matrix">The transform Matrix to apply.</param>
+            <param name="destinationArray">An existing destination array into which the transformed Vector3s are written.</param>
+        </member>
         <member name="M:VRageMath.Vector3D.Transform(VRageMath.Vector3D[],System.Int32,VRageMath.Matrix@,VRageMath.Vector3D[],System.Int32,System.Int32)">
             <summary>
             Applies a specified transform Matrix to a specified range of an array of Vector3s and writes the results into a specified range of a destination array.
@@ -4115,6 +4126,14 @@
             Transforms an array of 3D vector normals by a specified Matrix.
             </summary>
             <param name="sourceArray">The array of Vector3 normals to transform.</param><param name="matrix">The transform matrix to apply.</param><param name="destinationArray">An existing Vector3 array into which the results of the transforms are written.</param>
+        </member>
+        <member name="M:VRageMath.Vector3D.TransformNormal(VRageMath.Vector3D[],VRageMath.Matrix@,VRageMath.Vector3D*)">
+            <summary>
+            Transforms an array of 3D vector normals by a specified Matrix.
+            </summary>
+            <param name="sourceArray">The array of Vector3 normals to transform.</param>
+            <param name="matrix">The transform matrix to apply.</param>
+            <param name="destinationArray">An existing Vector3 array into which the results of the transforms are written.</param>
         </member>
         <member name="M:VRageMath.Vector3D.TransformNormal(VRageMath.Vector3D[],System.Int32,VRageMath.Matrix@,VRageMath.Vector3D[],System.Int32,System.Int32)">
             <summary>
@@ -5722,6 +5741,11 @@
             
             This implementation:
             http://stackoverflow.com/a/11398748
+        </member>
+        <member name="M:VRageMath.MathHelper.Log2Ceiling(System.Int32)">
+            Based on the above and this discussion:
+            http://stackoverflow.com/questions/3272424/compute-fast-log-base-2-ceiling
+            
         </member>
         <member name="M:VRageMath.MathHelper.Pow2(System.Int32)">
             <summary>
@@ -7709,6 +7733,9 @@
         <member name="M:VRageMath.MyDynamicAABBTree.GetHeight">
             Compute the height of the binary tree in O(N) time. Should not be
             called often.
+        </member>
+        <member name="M:VRageMath.MyDynamicAABBTree.OverlapSizeableClusters(VRageMath.BoundingBox@,System.Collections.Generic.List{VRageMath.BoundingBox},System.Double)">
+            Use the tree to produce a list of clusters aproximatelly the requested size, while intersecting those with the provided bounding box.
         </member>
         <member name="T:VRageMath.MyDynamicAABBTree.DynamicTreeNode">
             <summary>

@@ -4,17 +4,6 @@
         <name>Sandbox.Common</name>
     </assembly>
     <members>
-        <member name="F:Sandbox.Common.MySessionComponentDescriptor.Priority">
-            <summary>
-            Lower Priority is loaded before higher Priority
-            </summary>
-        </member>
-        <member name="P:Sandbox.Common.MySessionComponentBase.IsRequiredByGame">
-            <summary>
-            Indicates whether a session component should be used in current configuration.
-            Example: MyDestructionData component returns true only when game uses Havok Destruction
-            </summary>
-        </member>
         <member name="M:Sandbox.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
             <summary>
             Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
@@ -1190,36 +1179,6 @@
             Checks is AI is enabled for turret
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.RespawnAllowed">
-            <summary>
-            Disable to remove respawn component from medical room.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.HealingAllowed">
-            <summary>
-            Disabling prevents healing characters.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.RefuelAllowed">
-            <summary>
-            Disabling prevents refueling suits.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.SuitChangeAllowed">
-            <summary>
-            Disable to prevent players from changing their suits.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.CustomWardrobesEnabled">
-            <summary>
-            If set to true CustomWardrobeNames are used instead of all definitions when instantiating WardrobeScreen.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMedicalRoom.CustomWardrobeNames">
-            <summary>
-            Used when CustomWardrobes are enabled.
-            </summary>
-        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
             <summary>
             Wheel's current steering angle
@@ -1437,7 +1396,7 @@
             <param name="position">The Min corner position of the voxel within the world.</param>
             <returns>The newly added voxel map. Returns null if the prefabVoxelMapName does not exist.</returns>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(Sandbox.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(VRage.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
             <summary>
             Will paint given material with given shape
             </summary>
@@ -1445,14 +1404,14 @@
             <param name="voxelShape"></param>
             <param name="materialIdx"></param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CutOutShape(Sandbox.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape)">
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CutOutShape(VRage.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape)">
             <summary>
             Will cut out given shape
             </summary>
             <param name="voxelMap"></param>
             <param name="voxelShape"></param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.FillInShape(Sandbox.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
+        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.FillInShape(VRage.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
             <summary>
             Will fill given material with given shape
             </summary>
@@ -1468,25 +1427,6 @@
             Return value indicates if the camera controller handled the use button.
             If not, it should fall to ControlledObject
             </returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.Save(System.Byte[]@)">
-            <summary>
-            Gets compressed voxel data
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.ReadRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
-            <summary>
-            Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
-            </summary>
-            <param name="lodVoxelRangeMin">Inclusive.</param>
-            <param name="lodVoxelRangeMax">Inclusive.</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyStorage.WriteRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
-            <summary>
-            Writes range of content and/or materials from cache to storage. Note that this can only write to LOD0 (higher LODs must be computed based on that).
-            </summary>
-            <param name="voxelRangeMin">Inclusive.</param>
-            <param name="voxelRangeMax">Inclusive.</param>
         </member>
         <member name="T:Sandbox.ModAPI.MyAPIGateway">
             <summary>
@@ -1537,13 +1477,6 @@
             <summary>
             This structure contains all information about damage being done.
             </summary>
-        </member>
-        <member name="M:Sandbox.Common.MyMesh.#ctor(VRage.Import.MyMeshPartInfo,System.String)">
-            <summary>
-            c-tor - generic way for collecting resources
-            </summary>
-            <param name="meshInfo"></param>
-            assetName - just for debug output
         </member>
         <member name="T:Sandbox.Engine.Multiplayer.Container`1">
             <summary>

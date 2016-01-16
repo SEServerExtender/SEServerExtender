@@ -15,7 +15,7 @@ namespace SEModAPIInternal.API.Entity
     using SEModAPIInternal.API.Utility;
     using SEModAPIInternal.Support;
     using VRage;
-    using VRage.Components;
+    using VRage.Game.Components;
     using VRage.ModAPI;
     using VRage.ObjectBuilders;
     using VRageMath;

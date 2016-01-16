@@ -1,23 +1,26 @@
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.IO;
-	using System.Runtime.Serialization;
-	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Definitions;
-	using SEModAPI.API;
-	using SEModAPI.API.Utility;
-	using SEModAPIInternal.API.Common;
-	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
-	using SEModAPIInternal.API.Utility;
-	using SEModAPIInternal.Support;
-	using VRage.ObjectBuilders;
-	using VRageMath;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using Sandbox;
+    using Sandbox.Common.ObjectBuilders;
+    using Sandbox.Definitions;
+    using Sandbox.Game.Entities;
+    using Sandbox.Game.Entities.Cube;
+    using Sandbox.ModAPI;
+    using SEModAPI.API;
+    using SEModAPI.API.Utility;
+    using SEModAPIInternal.API.Common;
+    using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
+    using SEModAPIInternal.API.Utility;
+    using SEModAPIInternal.Support;
+    using VRage.ObjectBuilders;
+    using VRageMath;
 
-	[DataContract( Name = "CubeGridEntityProxy" )]
+    [DataContract( Name = "CubeGridEntityProxy" )]
 	[KnownType( "KnownTypes" )]
 	public class CubeGridEntity : BaseEntity
 	{
@@ -507,6 +510,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			{
 				block.Repair( );
 			}
+            MyCubeGrid newEntity = (MyCubeGrid)Entity;
+            foreach ( MySlimBlock slimBlock in newEntity.CubeBlocks )
+                newEntity.ResetBlockSkeleton( slimBlock, true );            
 		}
 
 		#region "Internal"
