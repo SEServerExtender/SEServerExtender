@@ -34,9 +34,9 @@ namespace SEModAPIExtensions.API
 		public bool Run()
 		{
 			bool result = true;
-			result &= RunBaseReflectionUnitTests();
-			result &= RunEntityReflectionUnitTests();
-			result &= RunCubeBlockReflectionTests();
+			//result &= RunBaseReflectionUnitTests();
+			//result &= RunEntityReflectionUnitTests();
+			//result &= RunCubeBlockReflectionTests();
 
 			return result;
 		}

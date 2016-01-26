@@ -21,7 +21,7 @@ namespace SEModAPIInternal.API.Entity
     using VRageMath;
     using Sandbox.Engine.Multiplayer;
     using Sandbox.Game.Replication;
-
+    using VRage.Game.Entity;
     public class SectorEntity : BaseObject
 	{
 		#region "Attributes"
@@ -484,7 +484,7 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch ( Exception ex )
 					{
-						ApplicationLog.BaseLog.Error( ex );
+						//ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 
@@ -498,13 +498,13 @@ namespace SEModAPIInternal.API.Entity
 					}
 					catch ( Exception ex )
 					{
-						ApplicationLog.BaseLog.Error( ex );
+						//ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

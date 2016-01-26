@@ -38,6 +38,266 @@
             Name of the base component type for debug purposes (e.g.: "Position")
             </summary>
         </member>
+        <member name="F:VRage.Game.Entity.MyInventoryBase.RemoveEntityOnEmpty">
+            <summary>
+            Setting this flag to true causes to call Close() on the Entity of Container, when the GetItemsCount() == 0.
+            This causes to remove entity from the world, when this inventory is empty.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.AddItems(VRage.MyFixedPoint,VRage.ObjectBuilders.MyObjectBuilder_Base,System.Int32,System.Boolean)">
+            <summary>
+            Adds item to inventory
+            </summary>
+            <param name="amount"></param>
+            <param name="objectBuilder"></param>
+            <param name="index"></param>
+            <returns>true if items were added, false if items didn't fit</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.RemoveItemsOfType(VRage.MyFixedPoint,Sandbox.Definitions.MyDefinitionId,Sandbox.Common.ObjectBuilders.MyItemFlags,System.Boolean)">
+            <summary>
+            Remove items of a given amount and definition
+            </summary>
+            <param name="amount">amount ot remove</param>
+            <param name="contentId">definition id of items to be removed</param>
+            <param name="spawn">Set tru to spawn object in the world, after it was removed</param>
+            <returns>Returns the actually removed amount</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,Sandbox.ModAPI.Interfaces.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
+            <summary>
+            Transfers safely given item from inventory given as parameter to this instance.
+            </summary>
+            <returns>true if items were succesfully transfered, otherwise, false</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.GetItemsCount">
+            <summary>
+            Returns the number of items in the inventory. This needs to be overrided, otherwise it returns 0!
+            </summary>
+            <returns>int - number of items in inventory</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.GetInventoryCount">
+            <summary>
+            Returns number of embedded inventories - this inventory can be aggregation of other inventories.
+            </summary>
+            <returns>Return one for simple inventory, different number when this instance is an aggregation.</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.IterateInventory(System.Int32,System.Int32)">
+            <summary>
+            Search for inventory having given search index. 
+            Aggregate inventory: Iterates through aggregate inventory until simple inventory with matching index is found.
+            Simple inventory: Returns itself if currentIndex == searchIndex.
+            
+            Usage: searchIndex = index of inventory being searched, leave currentIndex = 0.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyInventoryBase.InventoryId">
+            <summary>
+            This is for the purpose of identifying the inventory in aggregates (i.e. "Backpack", "LeftHand", ...)
+            </summary>
+        </member>
+        <member name="E:VRage.Game.Entity.MyInventoryBase.ContentsChanged">
+            <summary>
+            Called when items were added or removed, or their amount has changed
+            </summary>
+        </member>
+        <member name="E:VRage.Game.Entity.MyInventoryBase.OwnerChanged">
+            <summary>
+            Called if this inventory changed its owner
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetTopMostParent(System.Type)">
+            <summary>
+            Return top most parent of this entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntity.m_physics">
+            Optimized link to physics component.
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VRage.Game.Entity.MyEntity"/> class.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.UpdateBeforeSimulation10">
+            <summary>
+            Called each 10th frame if registered for update10
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.UpdateBeforeSimulation100">
+            <summary>
+            Called each 100th frame if registered for update100
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.DebugDrawPhysics">
+            <summary>
+            Draw physical representation of entity
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.OnAddedToScene(System.Object)">
+            <summary>
+            Called when [activated] which for entity means that was added to scene.
+            </summary>
+            <param name="source">The source of activation.</param>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.Delete">
+            <summary>
+            Every object must have this method, but not every phys object must necessarily have something to cleanup
+            <remarks>
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.Close">
+            <summary>
+            This method marks this entity for close which means, that Close
+            will be called after all entities are updated
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetObjectBuilder(System.Boolean)">
+            <summary>
+            Gets object builder from object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.BeforeSave">
+            <summary>
+            Called before method GetObjectBuilder, when saving sector
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.PrepareForDraw">
+            <summary>
+            Method is called defacto from Update, preparation fo Draw
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetInventoryBase(System.Int32)">
+            <summary>
+            Search for inventory component with maching index.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetInventoryBase">
+            <summary>
+            Simply get the MyInventoryBase component stored in this entity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.EntityId">
+            <summary>
+            Entity id, can be set by subclasses (for example when using pool...)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.Parent">
+            <summary>
+            Gets or sets the parent.
+            </summary>
+            <value>
+            The parent.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.VRage#ModAPI#IMyEntity#Physics">
+            Implementing interface IMyEntity - get/set physics component.
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.Physics">
+            Gets the physic component of the entity.
+        </member>
+        <member name="E:VRage.Game.Entity.MyEntity.OnMarkForClose">
+            <summary>
+            This event may not be invoked at all, when calling MyEntities.CloseAll, marking is bypassed
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.InventoryCount">
+            <summary>
+            Iterate through inventories and return their count.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.HasInventory">
+            <summary>
+            Returns true if this entity has got at least one inventory. 
+            Note that one aggregate inventory can contain zero simple inventories => zero will be returned even if GetInventoryBase() != null.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.DisplayNameText">
+            <summary>
+            Display Name for GUI etc. Override in descendant classes. Usually used to display in terminal or inventory controls.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Gui.MyHudEntityParams.ShouldDraw">
+            <summary>
+            Function that checks whether indicator should be drawn.
+            Useful when reacting to some player settings.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
+            <summary>
+            Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
+            WARNING: Y is from bottom to top.
+            </summary>
+            <param name="worldPos">World position.</param>
+            <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
+        <member name="T:VRage.Game.Entity.MyEntitiesInterface">
+            <summary>
+            Callbacks to various MyEntities methods.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.RegisterUpdate">
+            <summary>
+            Register entity for updating.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.UnregisterUpdate">
+            <summary>
+            Unregister entity from updating.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.RegisterDraw">
+            <summary>
+            Register entity for drawing.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.UnregisterDraw">
+            <summary>
+            Unregister entity from drawing.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.SetEntityName">
+            <summary>
+            Callback to public static void MyEntities.SetEntityName(MyEntity myEntity, bool possibleRename = true).
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.IsUpdateInProgress">
+            <summary>
+            Is update of all entities in progress?
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.IsCloseAllowed">
+            <summary>
+            Is closing of objects allowed?
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Utils.MyCamera.ChangeFov(System.Single)">
+            <summary>
+            Changes FOV for ForwardCamera (updates projection matrix)
+            SetViewMatrix overwrites this changes
+            </summary>
+            <param name="fov"></param>
+        </member>
+        <member name="M:VRage.Game.Utils.MyCamera.WorldToScreen(VRageMath.Vector3D@)">
+            <summary>
+            Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
+            WARNING: Y is from bottom to top.
+            </summary>
+            <param name="worldPos">World position.</param>
+            <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoom">
+            <summary>
+            Gets current fov with considering if zoom is enabled
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoomForNearObjects">
+            <summary>
+            Gets current fov with considering if zoom is enabled
+            </summary>
+        </member>
         <member name="M:VRage.Game.Components.MyHierarchyComponentBase.GetTopMostParent(System.Type)">
             <summary>
             Return top most parent of this entity
@@ -79,6 +339,180 @@
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
+        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_invalidBox">
+            <summary>
+            Internal world matrix of entity.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_localMatrix">
+            <summary>
+            Internal local matrix relative to parent of entity.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
+            <summary>
+            Sets the world matrix.
+            </summary>
+            <param name="worldMatrix">The world matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetLocalMatrix(VRageMath.MatrixD,System.Object)">
+            <summary>
+            Sets the local matrix.
+            </summary>
+            <param name="localMatrix">The local matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetPosition">
+            <summary>
+            Gets the entity position.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetPosition(VRageMath.Vector3D)">
+            <summary>
+            Sets the position.
+            </summary>
+            <param name="pos">The pos.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetWorldMatrixNormalizedInv">
+            <summary>
+            Inverted world matrix of this physic object calculated on-demand (non cached).
+            Use it whenever you want to do world-matrix transformations with this physic objects.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(System.Object)">
+            <summary>
+            Updates the world matrix (change caused by this entity)
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(VRageMath.MatrixD@,System.Object)">
+            <summary>
+            Updates the world matrix (change caused by parent)
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldVolume">
+            <summary>
+            Updates the volume of this entity.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateAABBHr(VRageMath.BoundingBoxD@)">
+            <summary>
+            Update volume hr and of all children.
+            </summary>
+            <param name="volume"></param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldMatrix">
+            <summary>
+            World matrix of this physic object. Use it whenever you want to do world-matrix transformations with this physic objects.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalMatrix">
+            <summary>
+            Gets or sets the local matrix.
+            </summary>
+            <value>
+            The local matrix.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABB">
+            <summary>
+            Gets the world aabb.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolume">
+            <summary>
+            Gets the world volume.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABBHr">
+            <summary>
+            Gets the hiearchical box in world.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolumeHr">
+            <summary>
+            Gets the hiearchical volume in world.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABB">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABBHr">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolume">
+            <summary>
+            Sets the local volume.
+            </summary>
+            <value>
+            The local volume.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.MaximalSize">
+            <summary>
+            Gets the maximal size.
+            </summary>
+            <value>
+            The Maximal size.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolumeOffset">
+            <summary>
+            Gets or sets the local volume offset.
+            </summary>
+            <value>
+            The local volume offset.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyRenderComponentBase.ModelStorage">
+            <summary>
+            Used by game to store model here. In game this is always of type MyModel.
+            Implementation should only store and return passed object.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponent.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
+            <summary>
+            Sets the world matrix.
+            </summary>
+            <param name="worldMatrix">The world matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponent.UpdateChildren(System.Object)">
+            <summary>
+            Updates the childs of this entity.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponent.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponent.LocalAABB">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
         <member name="M:VRage.ModAPI.IMyStorage.Save(System.Byte[]@)">
             <summary>
             Gets compressed voxel data
@@ -97,6 +531,49 @@
             </summary>
             <param name="voxelRangeMin">Inclusive.</param>
             <param name="voxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="T:VRage.ModAPI.MyAPIGatewayShortcuts">
+            <summary>
+            Links to modapi actions. Delegates are set inside MyAPIGateway.
+            VRAGE TODO: This is probably a temporary class helping us to remove sandbox.
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.MyAPIGatewayShortcuts.RegisterEntityUpdate">
+            <summary>
+            Registers entity in update loop.
+            Parameters: IMyEntity entity (ref to entity to be registered)
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.MyAPIGatewayShortcuts.UnregisterEntityUpdate">
+            <summary>
+            Unregisters entity from update loop.
+            Parameters: IMyEntity entity (ref to entity to be unregistered), bool immediate (default is false)
+            </summary>
+        </member>
+        <member name="T:VRage.Game.Models.MyTriangleVertexIndices">
+            <summary>
+            structure used to set up the mesh
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Models.MyModel.#ctor(System.String,System.Boolean)">
+            <summary>
+            c-tor - this constructor should be used just for max models - not voxels!
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Models.MyModel.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Models.MyModel.AssetName">
+            <summary>
+            File path of the model
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Models.MyModels.m_loadModelEvent">
+            <summary>
+            Event that occures when some model needs to be loaded.
+            </summary>
         </member>
         <member name="T:VRage.Game.MyVRageConstants">
             <summary>
@@ -318,154 +795,6 @@
         <member name="P:VRage.Game.Components.MyPhysicsComponentBase.RigidBody2">
             <summary>
             Obtain/set secondary rigid body of this physics object (not used by default, it is used sometimes on grids for kinematic layer).
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_invalidBox">
-            <summary>
-            Internal world matrix of entity.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_localMatrix">
-            <summary>
-            Internal local matrix relative to parent of entity.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
-            <summary>
-            Sets the world matrix.
-            </summary>
-            <param name="worldMatrix">The world matrix.</param>
-            <param name="source">The source object that caused this change or null when not important.</param>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetLocalMatrix(VRageMath.MatrixD,System.Object)">
-            <summary>
-            Sets the local matrix.
-            </summary>
-            <param name="localMatrix">The local matrix.</param>
-            <param name="source">The source object that caused this change or null when not important.</param>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetPosition">
-            <summary>
-            Gets the entity position.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetPosition(VRageMath.Vector3D)">
-            <summary>
-            Sets the position.
-            </summary>
-            <param name="pos">The pos.</param>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetWorldMatrixNormalizedInv">
-            <summary>
-            Inverted world matrix of this physic object calculated on-demand (non cached).
-            Use it whenever you want to do world-matrix transformations with this physic objects.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(System.Object)">
-            <summary>
-            Updates the world matrix (change caused by this entity)
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(VRageMath.MatrixD@,System.Object)">
-            <summary>
-            Updates the world matrix (change caused by parent)
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldVolume">
-            <summary>
-            Updates the volume of this entity.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateAABBHr(VRageMath.BoundingBoxD@)">
-            <summary>
-            Update volume hr and of all children.
-            </summary>
-            <param name="volume"></param>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
-            <summary>
-            Called when [world position changed].
-            </summary>
-            <param name="source">The source object that caused this event.</param>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldMatrix">
-            <summary>
-            World matrix of this physic object. Use it whenever you want to do world-matrix transformations with this physic objects.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalMatrix">
-            <summary>
-            Gets or sets the local matrix.
-            </summary>
-            <value>
-            The local matrix.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABB">
-            <summary>
-            Gets the world aabb.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolume">
-            <summary>
-            Gets the world volume.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABBHr">
-            <summary>
-            Gets the hiearchical box in world.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolumeHr">
-            <summary>
-            Gets the hiearchical volume in world.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABB">
-            <summary>
-            Sets the local aabb.
-            </summary>
-            <value>
-            The local aabb.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABBHr">
-            <summary>
-            Sets the local aabb.
-            </summary>
-            <value>
-            The local aabb.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolume">
-            <summary>
-            Sets the local volume.
-            </summary>
-            <value>
-            The local volume.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.MaximalSize">
-            <summary>
-            Gets the maximal size.
-            </summary>
-            <value>
-            The Maximal size.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolumeOffset">
-            <summary>
-            Gets or sets the local volume offset.
-            </summary>
-            <value>
-            The local volume offset.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyRenderComponentBase.ModelStorage">
-            <summary>
-            Used by game to store model here. In game this is always of type MyModel.
-            Implementation should only store and return passed object.
             </summary>
         </member>
         <member name="M:VRage.Game.Components.MyResourceSinkComponentBase.SetRequiredInputFuncByType(Sandbox.Definitions.MyDefinitionId,System.Func{System.Single})">
@@ -2318,6 +2647,21 @@
         <member name="F:MyCommonTexts.ScreenPlayersLobby_Public">
             <summary>
             Public
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_FactionName">
+            <summary>
+            Faction
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_FactionTag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Factions">
+            <summary>
+            Factions
             </summary>
         </member>
         <member name="F:MyCommonTexts.ScreenPlayers_GameOwner">
@@ -4315,6 +4659,16 @@
             When the button for looking around is released, camera resets automatically.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionNotReady">
+            <summary>
+            Selected medical room is not ready.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextNotReady">
+            <summary>
+            Selected medical room is not ready. Please wait until it is streamed from server.
+            </summary>
+        </member>
         <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
             <summary>
             Enum used for localization of display name. Null for player created definitions.
@@ -4598,6 +4952,12 @@
         <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">
             <summary>
             This is object builder for MyReplicableEntity : MyEntity, not for thje 
+            </summary>
+        </member>
+        <member name="F:Sandbox.Engine.Utils.MyMissileConstants.DISTANCE_TO_CHECK_MISSILE_CORRECTION">
+            <summary>
+            The distance to check whether missile will collide soon after launch with something.
+            For more info, see ticket 3422.
             </summary>
         </member>
     </members>

@@ -435,6 +435,20 @@
             The keys must derivable from value, if it's not the case use MultiKeyDictionary.
             </summary>
         </member>
+        <member name="T:VRage.Collections.MyTransparentQueue`1">
+            Helper queue class that exposes the internals of the queue.
+            
+            Useful when custom operations are necessary but one does not want to extend the queue itself to keep code organised.
+        </member>
+        <member name="T:VRage.Collections.MyQueue`1">
+            <summary>
+            Allows access to queue by index
+            Otherwise implementation is similar to regular queue
+            </summary>
+        </member>
+        <member name="M:VRage.Collections.MyTransparentQueue`1.Enqueue(`0)">
+            Returns true if the queue had to be resized.
+        </member>
         <member name="P:VRage.Serialization.SerializableDictionaryHack`2.Dictionary">
             <summary>
             Public stuff dictionary.
@@ -493,12 +507,6 @@
         <member name="T:VRage.Collections.MyCommitQueue`1">
             <summary>
             Basic copy-on-commit implementation, later it will be faster by using one queue with 2 tails
-            </summary>
-        </member>
-        <member name="T:VRage.Collections.MyQueue`1">
-            <summary>
-            Allows access to queue by index
-            Otherwise implementation is similar to regular queue
             </summary>
         </member>
         <member name="M:VRage.Collections.MyUniqueList`1.Add(`0)">

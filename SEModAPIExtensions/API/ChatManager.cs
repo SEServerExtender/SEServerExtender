@@ -314,7 +314,7 @@
             }
         }
 
-        private class MessageRecieveItem
+        public class MessageRecieveItem
         {
             public ulong fromID { get; set; }
             public long msgID { get; set; }
@@ -329,58 +329,62 @@
 
         protected void ReceiveDataMessage( byte[ ] data )
         {
-            /*
-            string text = "";
-            for ( int r = 0; r < data.Length; r++ )
-                text += (char)data[r];
-            */
-            string text = Encoding.Unicode.GetString( data );
-            MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
-
-            //this should hopefully stop the duplicate command bug
-            if ( item.message == lastMessageString && DateTime.Now - lastMessageTime < TimeSpan.FromMilliseconds( 200 ) )
-                return;
-
-            lastMessageTime = DateTime.Now;
-            lastMessageString = item.message;
-
-            if ( item.msgID == 5010 )
+            try
             {
-                string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
+                /*
+                string text = "";
+                for ( int r = 0; r < data.Length; r++ )
+                    text += (char)data[r];
+                */
+                string text = Encoding.Unicode.GetString( data );
+                MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
+                ApplicationLog.Info( text );
+                ApplicationLog.Info( item.fromID.ToString( ) );
+                ApplicationLog.Info( item.msgID.ToString( ) );
+                ApplicationLog.Info( item.message );
 
-                bool commandParsed = ParseChatCommands( item.message, item.fromID );
 
-                if ( !commandParsed )
+                if ( item.msgID == 5010 )
                 {
-                    //somehow silently pass commands to Essentials here?
+                    string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
 
+                    bool commandParsed = ParseChatCommands( item.message, item.fromID );
+
+                    //if ( !commandParsed )
+                    //{
                     m_chatMessages.Add( string.Format( "{0}: {1}", playerName, item.message ) );
                     ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, item.message );
+                    //}
+
+                    ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
+
+                    m_resourceLock.AcquireExclusive( );
+                    m_chatHistory.Add( chatEvent );
+                    //if ( !commandParsed )
+                    //    OnChatMessage( item.fromID, playerName, item.message );
+                    m_resourceLock.ReleaseExclusive( );
+                }
+                else if ( item.msgID == 5012 )
+                {
+                    //player has loaded in. Do something else with this info. for now we'll send dataReady
+                    //MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
                 }
 
-                ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
-
-                m_resourceLock.AcquireExclusive( );
-                m_chatHistory.Add( chatEvent );
-
-                //delete this line when we figure out how to quietly send messages to Essentials
-                //the if will keep other players from seeing the command
-                if ( !commandParsed )
-                    OnChatMessage( item.fromID, playerName, item.message );
-                m_resourceLock.ReleaseExclusive( );
+                else if ( item.msgID == 5015 )
+                {
+                    //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
+                    //if ( item.message == "init" )
+                      //  MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
+                }
+                else
+                {
+                    ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
+                }
             }
-            else if ( item.msgID == 5015 )
+            catch ( Exception ex )
             {
-                //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
-                if ( item.message == "init" )
-                    MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
+                ApplicationLog.BaseLog.Debug( ex, "ReceiveDataMessage" );
             }
-            else
-            {
-                ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
-                return;
-            }
-
         }
         
         protected void SendDataMessage( string message, ulong userId = 0 )

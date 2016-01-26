@@ -4,14 +4,6 @@
         <name>Sandbox.Common</name>
     </assembly>
     <members>
-        <member name="M:Sandbox.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
-            <summary>
-            Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
-            WARNING: Y is from bottom to top.
-            </summary>
-            <param name="worldPos">World position.</param>
-            <returns>Screen coordinate in 0-1 distance.</returns>
-        </member>
         <member name="T:Sandbox.ModAPI.BeforeDamageApplied">
             <summary>
             This delegate is used to handle damage before it's applied to an object.  This returns a modified damage that is used in DoDamage.  Return damage if no change.
@@ -1433,16 +1425,6 @@
             This is entry point for entire scripting possibilities in game
             </summary>
         </member>
-        <member name="F:Sandbox.ModAPI.MyAPIGateway.Session">
-            <summary>
-            IMySession represents session object e.g. current world and its settings
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.MyAPIGateway.Entities">
-            <summary>
-            IMyEntities represents all objects that currently in world 
-            </summary>
-        </member>
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Players">
             <summary>
             IMyPlayerCollection contains all players that are in world 
@@ -1471,6 +1453,16 @@
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Parallel">
             <summary>
             IMyParallelTask allows to run tasks on baground threads 
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.MyAPIGateway.Session">
+            <summary>
+            IMySession represents session object e.g. current world and its settings
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.MyAPIGateway.Entities">
+            <summary>
+            IMyEntities represents all objects that currently in world 
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.MyDamageInformation">

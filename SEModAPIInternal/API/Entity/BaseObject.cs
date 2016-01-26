@@ -317,8 +317,8 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get static field '" + fieldName + "'" );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( "Failed to get static field '" + fieldName + "'" );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -345,8 +345,8 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get entity field '{0}'", fieldName );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( "Failed to get entity field '{0}'", fieldName );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -377,7 +377,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( $"Failed to get static method '{methodName}'" );
+				//ApplicationLog.BaseLog.Error( $"Failed to get static method '{methodName}'" );
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
 				ApplicationLog.BaseLog.Error( ex );
@@ -414,10 +414,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get static method '" + methodName + "'" );
+				//ApplicationLog.BaseLog.Error( "Failed to get static method '" + methodName + "'" );
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -450,10 +450,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get entity method '" + methodName + "': " + ex.Message );
-				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( "Failed to get entity method '" + methodName + "': " + ex.Message );
+				//if ( ExtenderOptions.IsDebugging )
+				//	ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -489,10 +489,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get entity method '" + methodName + "': " + ex.Message );
-				if ( ExtenderOptions.IsDebugging )
-					ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( "Failed to get entity method '" + methodName + "': " + ex.Message );
+				//if ( ExtenderOptions.IsDebugging )
+				//	ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -509,7 +509,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -525,7 +525,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -541,7 +541,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -557,7 +557,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 
@@ -579,9 +579,9 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( $"Failed to invoke static method '{methodName}': {ex.Message}" );
-				ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( $"Failed to invoke static method '{methodName}': {ex.Message}" );
+				//ApplicationLog.BaseLog.Error( Environment.StackTrace );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -609,7 +609,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to invoke entity method '" + methodName + "' on type '" + gameEntity.GetType( ).FullName + "': " + ex.Message );
+				//ApplicationLog.BaseLog.Error( "Failed to invoke entity method '" + methodName + "' on type '" + gameEntity.GetType( ).FullName + "': " + ex.Message );
 
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
@@ -631,10 +631,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get entity property '" + propertyName + "'" );
+				//ApplicationLog.BaseLog.Error( "Failed to get entity property '" + propertyName + "'" );
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -652,10 +652,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to get entity property value '" + propertyName + "'" );
+				//ApplicationLog.BaseLog.Error( "Failed to get entity property value '" + propertyName + "'" );
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return null;
 			}
 		}
@@ -672,10 +672,10 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( "Failed to set entity property value '" + propertyName + "'" );
+				//ApplicationLog.BaseLog.Error( "Failed to set entity property value '" + propertyName + "'" );
 				if ( ExtenderOptions.IsDebugging )
 					ApplicationLog.BaseLog.Error( Environment.StackTrace );
-				ApplicationLog.BaseLog.Error( ex );
+				// ApplicationLog.BaseLog.Error( ex );
 				return;
 			}
 		}

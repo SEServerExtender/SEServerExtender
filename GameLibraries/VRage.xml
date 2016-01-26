@@ -1250,7 +1250,7 @@
         </member>
         <member name="F:VRageRender.RenderFlags.ShadowLodBox">
             <summary>
-            Use local AABB box for shadow LOD
+            Use local AABB box for shadow LOD, not used
             </summary>
         </member>
         <member name="F:VRageRender.RenderFlags.NoBackFaceCulling">
