@@ -149,6 +149,7 @@ namespace SEServerExtender
 
 			CommandLineArgs extenderArgs = CommandLineArgs = new CommandLineArgs
 							  {
+                                  ConsoleTitle = string.Empty,
 								  AutoStart = false,
 								  WorldName = string.Empty,
 								  InstanceName = string.Empty,
@@ -235,7 +236,13 @@ namespace SEServerExtender
 							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstancePath = argValue;
 					}
-					else if ( lowerCaseArgument == "logpath" )
+                    else if (lowerCaseArgument.Equals("consoletitle") )
+                    {
+                        if (argValue[argValue.Length - 1] == '"')
+                            argValue = argValue.Substring(1, argValue.Length - 2);
+                        extenderArgs.ConsoleTitle = argValue;
+                    }
+                    else if ( lowerCaseArgument == "logpath" )
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 1, argValue.Length - 2 );
@@ -350,6 +357,11 @@ namespace SEServerExtender
 
 				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
+
+                if (extenderArgs.ConsoleTitle != null)
+                {
+                    Console.Title = extenderArgs.ConsoleTitle;
+                }
 
 				if ( extenderArgs.AutoStart )
 				{
