@@ -212,7 +212,7 @@ namespace SEModAPIExtensions.API
 				result = false;
 				BaseLog.Warn("InventoryItemEntity reflection validation failed!");
 			}
-
+/*
 			if (!VoxelMap.ReflectionUnitTest())
 			{
 				result = false;
@@ -224,7 +224,7 @@ namespace SEModAPIExtensions.API
 				result = false;
 				BaseLog.Warn("VoxelMapMaterialManager reflection validation failed!");
 			}
-
+            */
 			if (result)
 			{
 				BaseLog.Info( "All entity types passed reflection unit tests!" );

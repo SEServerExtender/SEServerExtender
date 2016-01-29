@@ -564,7 +564,7 @@ namespace SEModAPIExtensions.API
 
 				if ( _dedicatedConfigDefinition == null )
 					LoadServerConfig( );
-
+                
 				if ( Config.AutoSave )
 				{
 					Config.AutoSave = false;

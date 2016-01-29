@@ -56,7 +56,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 
 			List<CubeGridEntity> cubeGrids = new List<CubeGridEntity>( );
-			List<VoxelMap> voxelMaps = new List<VoxelMap>( );
+			//List<VoxelMap> voxelMaps = new List<VoxelMap>( );
 			List<FloatingObject> floatingObjects = new List<FloatingObject>( );
 			List<Meteor> meteors = new List<Meteor>( );
 			foreach ( MyObjectBuilder_EntityBase sectorObject in definition.SectorObjects )
@@ -65,10 +65,10 @@ namespace SEModAPIInternal.API.Entity
 				{
 					cubeGrids.Add( new CubeGridEntity( (MyObjectBuilder_CubeGrid)sectorObject ) );
 				}
-				else if ( sectorObject.TypeId == typeof( MyObjectBuilder_VoxelMap ) )
-				{
-					voxelMaps.Add( new VoxelMap( (MyObjectBuilder_VoxelMap)sectorObject ) );
-				}
+				//else if ( sectorObject.TypeId == typeof( MyObjectBuilder_VoxelMap ) )
+				//{
+					//voxelMaps.Add( new VoxelMap( (MyObjectBuilder_VoxelMap)sectorObject ) );
+				//}
 				else if ( sectorObject.TypeId == typeof( MyObjectBuilder_FloatingObject ) )
 				{
 					floatingObjects.Add( new FloatingObject( (MyObjectBuilder_FloatingObject)sectorObject ) );
@@ -82,7 +82,7 @@ namespace SEModAPIInternal.API.Entity
 			//Build the managers from the lists
 			m_eventManager.Load( events );
 			m_cubeGridManager.Load( cubeGrids );
-			m_voxelMapManager.Load( voxelMaps );
+			//m_voxelMapManager.Load( voxelMaps );
 			m_floatingObjectManager.Load( floatingObjects );
 			m_meteorManager.Load( meteors );
 		}
@@ -127,10 +127,10 @@ namespace SEModAPIInternal.API.Entity
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
 					}
-					foreach ( VoxelMap item in m_voxelMapManager.GetTypedInternalData<VoxelMap>( ) )
-					{
-						baseSector.SectorObjects.Add( item.ObjectBuilder );
-					}
+					//foreach ( VoxelMap item in m_voxelMapManager.GetTypedInternalData<VoxelMap>( ) )
+					//{
+					//	baseSector.SectorObjects.Add( item.ObjectBuilder );
+					//}
 					foreach ( FloatingObject item in m_floatingObjectManager.GetTypedInternalData<FloatingObject>( ) )
 					{
 						baseSector.SectorObjects.Add( item.ObjectBuilder );
@@ -185,7 +185,7 @@ namespace SEModAPIInternal.API.Entity
 				return newList;
 			}
 		}
-
+        /*
 		[Category( "Sector" )]
 		[Browsable( false )]
 		public List<VoxelMap> VoxelMaps
@@ -196,7 +196,7 @@ namespace SEModAPIInternal.API.Entity
 				return newList;
 			}
 		}
-
+        */
 		[Category( "Sector" )]
 		[Browsable( false )]
 		public List<FloatingObject> FloatingObjects
@@ -227,8 +227,8 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( newType == typeof( CubeGridEntity ) )
 				return m_cubeGridManager.NewEntry<CubeGridEntity>( );
-			if ( newType == typeof( VoxelMap ) )
-				return m_voxelMapManager.NewEntry<VoxelMap>( );
+			//if ( newType == typeof( VoxelMap ) )
+			//	return m_voxelMapManager.NewEntry<VoxelMap>( );
 			if ( newType == typeof( FloatingObject ) )
 				return m_floatingObjectManager.NewEntry<FloatingObject>( );
 			if ( newType == typeof( Meteor ) )
@@ -242,8 +242,8 @@ namespace SEModAPIInternal.API.Entity
 			Type deleteType = source.GetType( );
 			if ( deleteType == typeof( CubeGridEntity ) )
 				return m_cubeGridManager.DeleteEntry( (CubeGridEntity)source );
-			if ( deleteType == typeof( VoxelMap ) )
-				return m_voxelMapManager.DeleteEntry( (VoxelMap)source );
+			//if ( deleteType == typeof( VoxelMap ) )
+			//	return m_voxelMapManager.DeleteEntry( (VoxelMap)source );
 			if ( deleteType == typeof( FloatingObject ) )
 				return m_floatingObjectManager.DeleteEntry( (FloatingObject)source );
 			if ( deleteType == typeof( Meteor ) )
@@ -367,7 +367,7 @@ namespace SEModAPIInternal.API.Entity
 				Type entityType = entity.GetType( );
 				if ( entityType != CharacterEntity.InternalType &&
 					entityType != CubeGridEntity.InternalType &&
-					entityType != VoxelMap.InternalType &&
+					//entityType != VoxelMap.InternalType &&
 					entityType != FloatingObject.InternalType &&
 					entityType != Meteor.InternalType
 					)

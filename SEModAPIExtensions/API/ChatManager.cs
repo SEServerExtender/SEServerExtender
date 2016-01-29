@@ -276,7 +276,7 @@
                     _enableData = true;
                     ApplicationLog.Info( "Found Essentials client mod, enabling data messages" );
                 }
-
+                
             try
             {
                 object netManager = NetworkManager.GetNetworkManager( );
@@ -339,9 +339,6 @@
                 string text = Encoding.Unicode.GetString( data );
                 MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
                 ApplicationLog.Info( text );
-                ApplicationLog.Info( item.fromID.ToString( ) );
-                ApplicationLog.Info( item.msgID.ToString( ) );
-                ApplicationLog.Info( item.message );
 
 
                 if ( item.msgID == 5010 )
@@ -357,6 +354,8 @@
                     //}
 
                     ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
+                    if(!commandParsed)
+                    Instance.AddEvent( chatEvent );
 
                     m_resourceLock.AcquireExclusive( );
                     m_chatHistory.Add( chatEvent );
@@ -364,10 +363,13 @@
                     //    OnChatMessage( item.fromID, playerName, item.message );
                     m_resourceLock.ReleaseExclusive( );
                 }
-                else if ( item.msgID == 5012 )
+                else if ( item.msgID == 5011 )
                 {
                     //player has loaded in. Do something else with this info. for now we'll send dataReady
-                    //MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
+                    MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
+
+                    if(!_enableData )
+                        _enableData = true;
                 }
 
                 else if ( item.msgID == 5015 )
@@ -405,6 +407,8 @@
             byte[ ] data = Encoding.Unicode.GetBytes( messageString );
             long msgId = 5003;
 
+            //this block adds the length and message id to the outside of the message packet
+            //so the mod can quickly determine where the message should go
             string msgIdString = msgId.ToString( );
             byte[ ] newData = new byte[data.Length + msgIdString.Length + 1];
             newData[0] = (byte)msgIdString.Length;
@@ -1370,13 +1374,13 @@
 
 				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count + "'" );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
-			{
-				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
-				ApplicationLog.BaseLog.Info( "Voxelmap entities: '" + entities.Count + "'" );
+			//if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
+			//{
+			//	List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
+			//	ApplicationLog.BaseLog.Info( "Voxelmap entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
-			}
+			//	SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
+			//}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "meteor" ) )
 			{
 				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );

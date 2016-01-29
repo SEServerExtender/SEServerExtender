@@ -150,7 +150,6 @@
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\TerminalBlockEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\FloatingObject.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\Meteor.cs" />
-    <Compile Include="API\Entity\Sector\SectorObject\VoxelMap.cs" />
     <Compile Include="API\Common\SandboxGameAssemblyWrapper.cs" />
     <Compile Include="API\Server\DedicatedServerAssemblyWrapper.cs" />
     <Compile Include="AssemblyFileVersion.cs">

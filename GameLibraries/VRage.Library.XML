@@ -545,6 +545,16 @@
             ID can change with different versions of source code.
             </summary>
         </member>
+        <member name="M:VRage.Compiler.IlCompiler.CheckResultInternal(System.Reflection.Assembly@,System.Collections.Generic.List{System.String},System.CodeDom.Compiler.CompilerResults,System.Boolean)">
+            <summary>
+            Checks assembly for not allowed operations (ie. accesing file system, network)
+            </summary>
+            <param name="tmpAssembly">output assembly</param>
+            <param name="errors">compilation or check errors</param>
+            <param name="result">compiled assembly</param>
+            <param name="isIngameScript"></param>
+            <returns>wheter the check was sucessflu (false AND null asembly on fail)</returns>
+        </member>
         <member name="T:VRage.Compression.MyZipArchive">
             <summary>
             Class based on http://www.codeproject.com/Articles/209731/Csharp-use-Zip-archives-without-external-libraries.
@@ -5001,11 +5011,6 @@
             MinMaxAvg - three
             MinMax - two
             Other - one
-            </summary>
-        </member>
-        <member name="T:Sandbox.Engine.Platform.FixedLoopThreadSleep">
-            <summary>
-            60 FPS fixed loop that uses Thread.Sleep while waiting for update.
             </summary>
         </member>
         <member name="T:VRage.Common.Utils.MyChecksums">

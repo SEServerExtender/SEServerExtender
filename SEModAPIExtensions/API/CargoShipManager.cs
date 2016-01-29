@@ -44,14 +44,14 @@ namespace SEModAPIExtensions.API
 			{
 				double farthestAsteroidDistance = 0;
 				double nearestAsteroidDistance = double.MaxValue;
-				foreach ( VoxelMap voxelMap in SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( ) )
+				/*foreach ( VoxelMap voxelMap in SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( ) )
 				{
 					Vector3D asteroidPositon = voxelMap.Position;
 					if ( asteroidPositon.Length( ) > farthestAsteroidDistance )
 						farthestAsteroidDistance = asteroidPositon.Length( );
 					if ( asteroidPositon.Length( ) < nearestAsteroidDistance )
 						nearestAsteroidDistance = asteroidPositon.Length( );
-				}
+				}*/
 
 				spawnSize = farthestAsteroidDistance * 2d + 10000d;
 				destinationSize = nearestAsteroidDistance * 2d + 2000d;

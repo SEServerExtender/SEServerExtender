@@ -4,26 +4,26 @@ using SEModAPIInternal.Support;
 
 namespace SEServerExtender
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Configuration;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using System.ServiceModel;
-	using System.ServiceProcess;
-	using System.Threading;
-	using System.Windows.Forms;
-	using NLog;
-	using NLog.Layouts;
-	using NLog.Targets;
-	using SEModAPI.API;
-	using SEModAPI.Support;
-	using SEModAPIExtensions.API;
-	using SEModAPIInternal.API.Chat;
-	using SEModAPIInternal.API.Common;
-
-	public static class Program
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.ServiceModel;
+    using System.ServiceProcess;
+    using System.Threading;
+    using System.Windows.Forms;
+    using NLog;
+    using NLog.Layouts;
+    using NLog.Targets;
+    using SEModAPI.API;
+    using SEModAPI.Support;
+    using SEModAPIExtensions.API;
+    using SEModAPIInternal.API.Chat;
+    using SEModAPIInternal.API.Common;
+    using VRage.ObjectBuilders;
+    public static class Program
 	{
 		private static int _maxChatHistoryMessageAge = 3600;
 		private static int _maxChatHistoryMessageCount = 100;

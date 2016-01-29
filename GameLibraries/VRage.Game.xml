@@ -4,6 +4,11 @@
         <name>VRage.Game</name>
     </assembly>
     <members>
+        <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
+            <summary>
+            Entity component containing animation controller.
+            </summary>
+        </member>
         <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
             <summary>
             Sets the container of this component.
@@ -36,6 +41,31 @@
         <member name="P:VRage.Game.Components.MyEntityComponentBase.ComponentTypeDebugString">
             <summary>
             Name of the base component type for debug purposes (e.g.: "Position")
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyAnimationControllerComponent.OnAddedToContainer">
+            <summary>
+            Component was added in the entity component container.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyAnimationControllerComponent.OnBeforeRemovedFromContainer">
+            <summary>
+            Component will be removed from entity component container.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.ComponentTypeDebugString">
+            <summary>
+            Name of the component type for debug purposes (e.g.: "Position")
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.AnimationController">
+            <summary>
+            Get the animation controller instance.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.CharacterBones">
+            <summary>
+            Get or set reference to array of character bones and its contents.
             </summary>
         </member>
         <member name="F:VRage.Game.Entity.MyInventoryBase.RemoveEntityOnEmpty">
@@ -273,6 +303,29 @@
             Is closing of objects allowed?
             </summary>
         </member>
+        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
+            <summary>
+            Indicates whether a session component should be used in current configuration.
+            Example: MyDestructionData component returns true only when game uses Havok Destruction
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.RegisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
+            <summary>
+            Register entity component.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.UnregisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
+            <summary>
+            Unregister entity component.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
+            <summary>
+            Remaps this entity's entityId to a new value.
+            If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
+            references and retrieve them.
+            </summary>
+        </member>
         <member name="M:VRage.Game.Utils.MyCamera.ChangeFov(System.Single)">
             <summary>
             Changes FOV for ForwardCamera (updates projection matrix)
@@ -331,12 +384,6 @@
         <member name="F:VRage.Game.Components.MySessionComponentDescriptor.Priority">
             <summary>
             Lower Priority is loaded before higher Priority
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
-            <summary>
-            Indicates whether a session component should be used in current configuration.
-            Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
         <member name="F:VRage.Game.Components.MyPositionComponentBase.m_invalidBox">
@@ -3334,9 +3381,19 @@
             Accept
             </summary>
         </member>
+        <member name="F:MyCommonTexts.Deny">
+            <summary>
+            Deny
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.MessageBoxConfirmFactionsAcceptJoin">
             <summary>
             Are you sure that you want to accept player '{0}' to your faction?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsDenyJoin">
+            <summary>
+            Are you sure that you don't want to accept player '{0}' to your faction?
             </summary>
         </member>
         <member name="F:MyCommonTexts.MessageBoxConfirmFactionsDemote">
@@ -4753,6 +4810,12 @@
             will be visible in Ownership dropdown.
             </summary>
         </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.MyObjectBuilder_FactionDefinition.DefaultRelation">
+            <summary>
+            Default faction relation to the other factions. 
+            Enemies state is with highest prority and does not care if other faction want to be friend.
+            </summary>
+        </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
@@ -4778,6 +4841,11 @@
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.DeadBodyShape">
             <summary>
             Physics shape used after character's death.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.UseNewAnimationSystem">
+            <summary>
+            VRAGE TODO: THIS IS TEMPORARY! Remove when by the time we use only the new animation system.
             </summary>
         </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OneDirection">
@@ -4870,13 +4938,6 @@
             This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
             </summary>
         </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
-            <summary>
-            Remaps this entity's entityId to a new value.
-            If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
-            references and retrieve them.
-            </summary>
-        </member>
         <member name="F:VRage.Game.ObjectBuilders.MyComponentBlockEntry.Main">
             <summary>
             Whether the given block should be used when spawning the component which it contains
@@ -4932,6 +4993,12 @@
             [Concrete] Data to be stored/is stored as XML.
             </summary>
         </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers">
+            <summary>
+            Register all object builders in game assemblies and loads serializers. This function must be called after links to assemblies in MyPlugins are set!
+            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
+            </summary>
+        </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.GenerateAssemblyId(System.Type)">
             <summary>Generates an identifier for the assembly of a specified type</summary>
             <remarks>Code copied from the .NET serialization classes - to emulate the same bahavior</remarks>
@@ -4949,9 +5016,15 @@
             Can handle old values as well.
             </summary>
         </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.RegisterAssemblies">
+            <summary>
+            Register all object builders types from game assemblies. This function must be called after links to assemblies in MyPlugins are set!
+            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
+            </summary>
+        </member>
         <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">
             <summary>
-            This is object builder for MyReplicableEntity : MyEntity, not for thje 
+            This object builder is old and is for "MyInventoryBagEntity". Do not use it as base class or for anything. It is here only for backward compatibility.
             </summary>
         </member>
         <member name="F:Sandbox.Engine.Utils.MyMissileConstants.DISTANCE_TO_CHECK_MISSILE_CORRECTION">

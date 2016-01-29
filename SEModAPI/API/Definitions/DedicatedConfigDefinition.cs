@@ -22,6 +22,7 @@ namespace SEModAPI.API.Definitions
 		public DedicatedConfigDefinition( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> definition )
 		{
 			_definition = definition;
+            
 		}
 
         #region "Properties"
@@ -542,7 +543,7 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Determine whether spectator mode is enable" )]
+		[Description( "Determine whether spectator mode is enabled" )]
 		[Category( "Global Settings" )]
 		[DisplayName( "Allow Spectators" )]
 		[DefaultValue( true )]
@@ -1201,8 +1202,10 @@ namespace SEModAPI.API.Definitions
 			}
 
 			try
-			{
-				using ( TextReader rdr = File.OpenText( filePath ) )
+            {
+                bool registerResult = MyObjectBuilderType.RegisterAssemblies( );
+                registerResult = MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
+                using ( TextReader rdr = File.OpenText( filePath ) )
 				{
 					XmlSerializer deserializer = new XmlSerializer( typeof( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> ) );
 					MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = (MyConfigDedicatedData<MyObjectBuilder_SessionSettings>)deserializer.Deserialize( rdr );

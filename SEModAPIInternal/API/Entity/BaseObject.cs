@@ -25,7 +25,7 @@ namespace SEModAPIInternal.API.Entity
 	[KnownType( typeof( CubeGridEntity ) )]
 	[KnownType( typeof( FloatingObject ) )]
 	[KnownType( typeof( Meteor ) )]
-	[KnownType( typeof( VoxelMap ) )]
+	//[KnownType( typeof( VoxelMap ) )]
 	public class BaseObject : IDisposable
 	{
 		#region "Attributes"
