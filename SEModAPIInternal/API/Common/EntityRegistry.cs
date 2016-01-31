@@ -20,7 +20,7 @@ namespace SEModAPIInternal.API.Common
 			Register( typeof( MyObjectBuilder_CubeGrid ), typeof( CubeGridEntity ) );
 			Register( typeof( MyObjectBuilder_FloatingObject ), typeof( FloatingObject ) );
 			Register( typeof( MyObjectBuilder_Meteor ), typeof( Meteor ) );
-			Register( typeof( MyObjectBuilder_VoxelMap ), typeof( VoxelMap ) );
+			//Register( typeof( MyObjectBuilder_VoxelMap ), typeof( VoxelMap ) );
 		}
 
 		#endregion "Constructors and Initializers"

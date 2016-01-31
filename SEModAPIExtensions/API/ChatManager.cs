@@ -15,6 +15,7 @@
     using Sandbox.Engine.Multiplayer;
     using Sandbox.Game.Replication;
     using Sandbox.ModAPI;
+    using SEModAPI.API;
     using SEModAPI.API.Definitions;
     using SEModAPI.API.Sandbox;
     using SEModAPI.API.Utility;
@@ -271,12 +272,14 @@
 
             //check if we have the Essentials client mod installed so we can use dataMessages instead of chat messages
             if ( !_enableData )
+            {
                 if ( Server.Instance.Config.Mods.Contains( "559202083" ) || Server.Instance.Config.Mods.Contains( "558596580" ) )
                 {
                     _enableData = true;
                     ApplicationLog.Info( "Found Essentials client mod, enabling data messages" );
                 }
-
+            }
+                
             try
             {
                 object netManager = NetworkManager.GetNetworkManager( );
@@ -314,7 +317,7 @@
             }
         }
 
-        private class MessageRecieveItem
+        public class MessageRecieveItem
         {
             public ulong fromID { get; set; }
             public long msgID { get; set; }
@@ -329,58 +332,68 @@
 
         protected void ReceiveDataMessage( byte[ ] data )
         {
-            /*
-            string text = "";
-            for ( int r = 0; r < data.Length; r++ )
-                text += (char)data[r];
-            */
-            string text = Encoding.Unicode.GetString( data );
-            MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
-
-            //this should hopefully stop the duplicate command bug
-            if ( item.message == lastMessageString && DateTime.Now - lastMessageTime < TimeSpan.FromMilliseconds( 200 ) )
-                return;
-
-            lastMessageTime = DateTime.Now;
-            lastMessageString = item.message;
-
-            if ( item.msgID == 5010 )
+            try
             {
-                string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
+                /*
+                string text = "";
+                for ( int r = 0; r < data.Length; r++ )
+                    text += (char)data[r];
+                */
+                string text = Encoding.Unicode.GetString( data );
+                MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
+                if(ExtenderOptions.IsDebugging )
+                    ApplicationLog.Info( text );
 
-                bool commandParsed = ParseChatCommands( item.message, item.fromID );
 
-                if ( !commandParsed )
+                if ( item.msgID == 5010 )
                 {
-                    //somehow silently pass commands to Essentials here?
+                    string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
 
+                    bool commandParsed = ParseChatCommands( item.message, item.fromID );
+
+                    //if ( !commandParsed )
+                    //{
                     m_chatMessages.Add( string.Format( "{0}: {1}", playerName, item.message ) );
                     ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, item.message );
+                    //}
+
+                    ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
+                    if(!commandParsed)
+                    Instance.AddEvent( chatEvent );
+
+                    m_resourceLock.AcquireExclusive( );
+                    m_chatHistory.Add( chatEvent );
+                    //if ( !commandParsed )
+                    //    OnChatMessage( item.fromID, playerName, item.message );
+                    m_resourceLock.ReleaseExclusive( );
                 }
+                else if ( item.msgID == 5011 )
+                {
+                    //player has loaded in. Do something else with this info. for now we'll send dataReady
+                    MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
 
-                ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
+                    if ( !_enableData )
+                    {
+                        _enableData = true;
+                        ApplicationLog.Info( "Found Essentials client mod login, enabling data messages" );
+                    }
+                    }
 
-                m_resourceLock.AcquireExclusive( );
-                m_chatHistory.Add( chatEvent );
-
-                //delete this line when we figure out how to quietly send messages to Essentials
-                //the if will keep other players from seeing the command
-                if ( !commandParsed )
-                    OnChatMessage( item.fromID, playerName, item.message );
-                m_resourceLock.ReleaseExclusive( );
+                else if ( item.msgID == 5015 )
+                {
+                    //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
+                    //if ( item.message == "init" )
+                      //  MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
+                }
+                else
+                {
+                    ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
+                }
             }
-            else if ( item.msgID == 5015 )
+            catch ( Exception ex )
             {
-                //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
-                if ( item.message == "init" )
-                    MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
+                ApplicationLog.BaseLog.Debug( ex, "ReceiveDataMessage" );
             }
-            else
-            {
-                ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
-                return;
-            }
-
         }
         
         protected void SendDataMessage( string message, ulong userId = 0 )
@@ -401,6 +414,8 @@
             byte[ ] data = Encoding.Unicode.GetBytes( messageString );
             long msgId = 5003;
 
+            //this block adds the length and message id to the outside of the message packet
+            //so the mod can quickly determine where the message should go
             string msgIdString = msgId.ToString( );
             byte[ ] newData = new byte[data.Length + msgIdString.Length + 1];
             newData[0] = (byte)msgIdString.Length;
@@ -1366,13 +1381,13 @@
 
 				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count + "'" );
 			}
-			if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
-			{
-				List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
-				ApplicationLog.BaseLog.Info( "Voxelmap entities: '" + entities.Count + "'" );
+			//if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
+			//{
+			//	List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
+			//	ApplicationLog.BaseLog.Info( "Voxelmap entities: '" + entities.Count + "'" );
 
-				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
-			}
+			//	SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
+			//}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "meteor" ) )
 			{
 				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );

@@ -142,7 +142,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

@@ -198,7 +198,7 @@ namespace SEModAPIInternal.API.Server
 					throw new TypeLoadException( "Could not find internal type for MySyncCharacterClass" );
 
 				Type attachMsgType = type6.GetNestedType( AttachToCockpitMsg, BindingFlags.NonPublic | BindingFlags.Public );
-				if ( attachMsgType == null )
+                if ( attachMsgType == null )
 					throw new TypeLoadException( "Could not find internal type for AttachToCockpitMsg" );
 
 				result &= Reflection.HasField( attachMsgType, AttachCharacterId );
@@ -227,7 +227,7 @@ namespace SEModAPIInternal.API.Server
 			}
 			catch ( TypeLoadException ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 				return false;
 			}
 		}

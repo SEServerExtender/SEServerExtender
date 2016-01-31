@@ -435,6 +435,20 @@
             The keys must derivable from value, if it's not the case use MultiKeyDictionary.
             </summary>
         </member>
+        <member name="T:VRage.Collections.MyTransparentQueue`1">
+            Helper queue class that exposes the internals of the queue.
+            
+            Useful when custom operations are necessary but one does not want to extend the queue itself to keep code organised.
+        </member>
+        <member name="T:VRage.Collections.MyQueue`1">
+            <summary>
+            Allows access to queue by index
+            Otherwise implementation is similar to regular queue
+            </summary>
+        </member>
+        <member name="M:VRage.Collections.MyTransparentQueue`1.Enqueue(`0)">
+            Returns true if the queue had to be resized.
+        </member>
         <member name="P:VRage.Serialization.SerializableDictionaryHack`2.Dictionary">
             <summary>
             Public stuff dictionary.
@@ -495,12 +509,6 @@
             Basic copy-on-commit implementation, later it will be faster by using one queue with 2 tails
             </summary>
         </member>
-        <member name="T:VRage.Collections.MyQueue`1">
-            <summary>
-            Allows access to queue by index
-            Otherwise implementation is similar to regular queue
-            </summary>
-        </member>
         <member name="M:VRage.Collections.MyUniqueList`1.Add(`0)">
             <summary>
             O(1)
@@ -536,6 +544,16 @@
             Attribute which assigns ID to class, this id persists after obfuscation and it's same on both x86 and X64 build.
             ID can change with different versions of source code.
             </summary>
+        </member>
+        <member name="M:VRage.Compiler.IlCompiler.CheckResultInternal(System.Reflection.Assembly@,System.Collections.Generic.List{System.String},System.CodeDom.Compiler.CompilerResults,System.Boolean)">
+            <summary>
+            Checks assembly for not allowed operations (ie. accesing file system, network)
+            </summary>
+            <param name="tmpAssembly">output assembly</param>
+            <param name="errors">compilation or check errors</param>
+            <param name="result">compiled assembly</param>
+            <param name="isIngameScript"></param>
+            <returns>wheter the check was sucessflu (false AND null asembly on fail)</returns>
         </member>
         <member name="T:VRage.Compression.MyZipArchive">
             <summary>
@@ -4993,11 +5011,6 @@
             MinMaxAvg - three
             MinMax - two
             Other - one
-            </summary>
-        </member>
-        <member name="T:Sandbox.Engine.Platform.FixedLoopThreadSleep">
-            <summary>
-            60 FPS fixed loop that uses Thread.Sleep while waiting for update.
             </summary>
         </member>
         <member name="T:VRage.Common.Utils.MyChecksums">

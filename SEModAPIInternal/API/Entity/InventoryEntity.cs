@@ -838,7 +838,7 @@ namespace SEModAPIInternal.API.Entity
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

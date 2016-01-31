@@ -43,7 +43,7 @@ namespace SEServerExtender
 		private List<BaseEntity> m_sectorEntities;
 		private readonly List<CubeGridEntity> m_cubeGridEntities;
 		private readonly List<CharacterEntity> m_characterEntities;
-		private readonly List<VoxelMap> m_voxelMapEntities;
+		//private readonly List<VoxelMap> m_voxelMapEntities;
 		private readonly List<FloatingObject> m_floatingObjectEntities;
 		private readonly List<Meteor> m_meteorEntities;
 
@@ -74,7 +74,7 @@ namespace SEServerExtender
 			m_sectorEntities = new List<BaseEntity>( );
 			m_cubeGridEntities = new List<CubeGridEntity>( );
 			m_characterEntities = new List<CharacterEntity>( );
-			m_voxelMapEntities = new List<VoxelMap>( );
+			//m_voxelMapEntities = new List<VoxelMap>( );
 			m_floatingObjectEntities = new List<FloatingObject>( );
 			m_meteorEntities = new List<Meteor>( );
 
@@ -536,9 +536,9 @@ namespace SEServerExtender
 				CharacterEntity characterEntity = entry as CharacterEntity;
 				if ( characterEntity != null )
 					m_characterEntities.Add( characterEntity );
-				VoxelMap voxelMap = entry as VoxelMap;
-				if ( voxelMap != null )
-					m_voxelMapEntities.Add( voxelMap );
+				//VoxelMap voxelMap = entry as VoxelMap;
+				//if ( voxelMap != null )
+				//	m_voxelMapEntities.Add( voxelMap );
 				FloatingObject floatingObject = entry as FloatingObject;
 				if ( floatingObject != null )
 					m_floatingObjectEntities.Add( floatingObject );
@@ -760,7 +760,7 @@ namespace SEServerExtender
 				return;
 
 			//Get entities from sector object manager
-			List<VoxelMap> list = m_voxelMapEntities;
+			//List<VoxelMap> list = m_voxelMapEntities;
 
 			//Cleanup and update the existing nodes
 			foreach ( TreeNode node in rootNode.Nodes )
@@ -769,8 +769,8 @@ namespace SEServerExtender
 				{
 					if ( node == null )
 						continue;
-
-					if ( node.Tag != null && list.Contains( node.Tag ) )
+                    /*
+				    if ( node.Tag != null && list.Contains( node.Tag ) )
 					{
 						VoxelMap item = (VoxelMap)node.Tag;
 
@@ -786,7 +786,7 @@ namespace SEServerExtender
 					else
 					{
 						node.Remove( );
-					}
+					}*/
 				}
 				catch ( Exception ex )
 				{
@@ -795,7 +795,7 @@ namespace SEServerExtender
 			}
 
 			//Add new nodes
-			foreach ( VoxelMap item in list )
+			/*foreach ( VoxelMap item in list )
 			{
 				try
 				{
@@ -817,7 +817,7 @@ namespace SEServerExtender
 					ApplicationLog.BaseLog.Error( ex );
 				}
 			}
-
+            */
 			//Update node text
 			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
@@ -1231,7 +1231,7 @@ namespace SEServerExtender
 
 				TRV_Entities.EndUpdate( );
 			}
-
+            /*
 			VoxelMap map = linkedObject as VoxelMap;
 			if ( map != null )
 			{
@@ -1276,7 +1276,7 @@ namespace SEServerExtender
 											 } );
 
 			}
-
+            */
 			CharacterEntity characterEntity = linkedObject as CharacterEntity;
 			if ( characterEntity != null )
 			{

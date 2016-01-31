@@ -4,60 +4,76 @@
         <name>VRage</name>
     </assembly>
     <members>
-        <member name="T:VRage.Animations.AnimationClip">
+        <member name="T:VRage.Animations.MyAnimationClip">
             <summary>
             An animation clip is a set of keyframes with associated bones.
+            VRAGE TODO: Any link to actual animation collection? Or at least to rest pose? Please?
             </summary>
         </member>
-        <member name="F:VRage.Animations.AnimationClip.bones">
+        <member name="F:VRage.Animations.MyAnimationClip.bones">
             <summary>
             The bones for this animation
             </summary>
         </member>
-        <member name="F:VRage.Animations.AnimationClip.Name">
+        <member name="F:VRage.Animations.MyAnimationClip.Name">
             <summary>
             Name of the animation clip
             </summary>
         </member>
-        <member name="F:VRage.Animations.AnimationClip.Duration">
+        <member name="F:VRage.Animations.MyAnimationClip.Duration">
             <summary>
             Duration of the animation clip
             </summary>
         </member>
-        <member name="P:VRage.Animations.AnimationClip.Bones">
+        <member name="P:VRage.Animations.MyAnimationClip.Bones">
             <summary>
             The bones for this animation clip with their keyframes
             </summary>
         </member>
-        <member name="T:VRage.Animations.AnimationClip.Keyframe">
+        <member name="T:VRage.Animations.MyAnimationClip.BoneState">
             <summary>
-            An Keyframe is a rotation and translation for a moment in time.
+            BoneState is a rotation and translation of the bone.
             It would be easy to extend this to include scaling as well.
             </summary>
         </member>
-        <member name="T:VRage.Animations.AnimationClip.Bone">
+        <member name="T:VRage.Animations.MyAnimationClip.Keyframe">
+            <summary>
+            An Keyframe extends rotation and translation of the bone by specifying time of the event.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationClip.Bone">
             <summary>
             Keyframes are grouped per bone for an animation clip
             </summary>
         </member>
-        <member name="F:VRage.Animations.AnimationClip.Bone.m_name">
+        <member name="F:VRage.Animations.MyAnimationClip.Bone.m_name">
             <summary>
             Each bone has a name so we can associate it with a runtime model
             </summary>
         </member>
-        <member name="F:VRage.Animations.AnimationClip.Bone.m_keyframes">
+        <member name="F:VRage.Animations.MyAnimationClip.Bone.m_keyframes">
             <summary>
             The keyframes for this bone
             </summary>
         </member>
-        <member name="P:VRage.Animations.AnimationClip.Bone.Name">
+        <member name="P:VRage.Animations.MyAnimationClip.Bone.Name">
             <summary>
             The bone name for these keyframes
             </summary>
         </member>
-        <member name="P:VRage.Animations.AnimationClip.Bone.Keyframes">
+        <member name="P:VRage.Animations.MyAnimationClip.Bone.Keyframes">
             <summary>
             The keyframes for this bone
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.AnimationNodes.MyAnimationTreeNodeTrack">
+            <summary>
+            Node of animation tree: single track. Contains reference to animation clip.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationTreeNode">
+            <summary>
+            Interface representing one node in animation tree.
             </summary>
         </member>
         <member name="T:VRage.Animations.ModelAnimations">
@@ -109,6 +125,18 @@
             It also serves as an abstraction layer, hiding low/level classes.
             </summary>
         </member>
+        <member name="M:VRage.Animations.MyAnimationController.CreateLayer(System.String,System.Int32)">
+            <summary>
+            Create animation layer with unique name. Parameter insertionIndex can be left -1 to add the layer at the end.
+            If layer with same name is already present, method fails and returns null.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationController.Update(VRage.Animations.MyAnimationUpdateData@)">
+            <summary>
+            Update this animation controller.
+            </summary>
+            <param name="animationUpdateData">See commentary in MyAnimationUpdateData</param>
+        </member>
         <member name="T:VRage.Animations.MyAnimationStateMachine">
             <summary>
             Animation state machine selects the animation to match current state.
@@ -119,6 +147,12 @@
             <summary>
             Implementation of generic state machine. Inherit from this class to create your own state machine.
             Transitions are performed automatically on each update (if conditions of transition are fulfilled).
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachine.SetState">
+            <summary>
+            Set the current state. Warning - this is not a thing that you would like to normally do, 
+            state machine should live its own life (based on transition condition).
             </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationStateMachineNode">
@@ -139,11 +173,6 @@
         <member name="T:VRage.Generics.MyStateMachineTransition">
             <summary>
             Definition of transition to some node.
-            </summary>
-        </member>
-        <member name="T:VRage.Animations.MyAnimationTreeNode">
-            <summary>
-            Interface representing one node in animation tree.
             </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationUpdateData">
@@ -366,6 +395,11 @@
         <member name="T:VRage.Generics.MyStateMachineTransitionWithStart">
             <summary>
             Pair holding transition and its starting node.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachineTransitionWithStart.#ctor(VRage.Generics.MyStateMachineNode,VRage.Generics.MyStateMachineTransition)">
+            <summary>
+            Full constructor.
             </summary>
         </member>
         <member name="M:VRage.Import.ModelAutoRebuild.IsModelActual(System.String,System.String,System.String,System.String)">
@@ -926,7 +960,7 @@
             <param name="reader"></param>
             <returns></returns>
         </member>
-        <member name="M:VRage.Import.MyModelImporter.LinearKeyframeReduction(System.Collections.Generic.LinkedList{VRage.Animations.AnimationClip.Keyframe},System.Single,System.Single)">
+        <member name="M:VRage.Import.MyModelImporter.LinearKeyframeReduction(System.Collections.Generic.LinkedList{VRage.Animations.MyAnimationClip.Keyframe},System.Single,System.Single)">
             <summary>
             This function filters out keyframes that can be approximated well with 
             linear interpolation.
@@ -936,6 +970,12 @@
         <member name="F:VRageRender.MyRenderMessageType.Draw">
             <summary>
             Draw message, skipped when processing multiple updates (only handled in last update before draw)
+            Draw sprite, debug draw...
+            </summary>
+        </member>
+        <member name="F:VRageRender.MyRenderMessageType.DebugDraw">
+            <summary>
+            Debug Draw message, in render11 this messages are queued internally 
             Draw sprite, debug draw...
             </summary>
         </member>
@@ -1024,6 +1064,13 @@
             <summary>
             Helper class, "shortcuts" to profiler
             </summary>
+        </member>
+        <member name="M:VRage.Render.Models.MyMesh.#ctor(VRage.Import.MyMeshPartInfo,System.String)">
+            <summary>
+            c-tor - generic way for collecting resources
+            </summary>
+            <param name="meshInfo"></param>
+            assetName - just for debug output
         </member>
         <member name="T:VRageRender.Profiler.MyRenderProfiler">
             <summary>
@@ -1237,7 +1284,7 @@
         </member>
         <member name="F:VRageRender.RenderFlags.ShadowLodBox">
             <summary>
-            Use local AABB box for shadow LOD
+            Use local AABB box for shadow LOD, not used
             </summary>
         </member>
         <member name="F:VRageRender.RenderFlags.NoBackFaceCulling">
@@ -2758,6 +2805,9 @@
         <member name="M:VRage.Voxels.MyStorageData.Resize(VRageMath.Vector3I,VRageMath.Vector3I)">
             <param name="start">Inclusive.</param>
             <param name="end">Inclusive.</param>
+        </member>
+        <member name="P:VRage.Voxels.MyStorageData.StoreOcclusion">
+            Wreather this storage data should keep occlusion values.
         </member>
         <member name="T:VRage.Voxels.MyVoxelCoordSystems">
             <summary>

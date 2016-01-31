@@ -4,26 +4,28 @@ using SEModAPIInternal.Support;
 
 namespace SEServerExtender
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Configuration;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using System.ServiceModel;
-	using System.ServiceProcess;
-	using System.Threading;
-	using System.Windows.Forms;
-	using NLog;
-	using NLog.Layouts;
-	using NLog.Targets;
-	using SEModAPI.API;
-	using SEModAPI.Support;
-	using SEModAPIExtensions.API;
-	using SEModAPIInternal.API.Chat;
-	using SEModAPIInternal.API.Common;
-
-	public static class Program
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.ServiceModel;
+    using System.ServiceProcess;
+    using System.Threading;
+    using System.Windows.Forms;
+    using NLog;
+    using NLog.Layouts;
+    using NLog.Targets;
+    using SEModAPI.API;
+    using SEModAPI.Support;
+    using SEModAPIExtensions.API;
+    using SEModAPIInternal.API.Chat;
+    using SEModAPIInternal.API.Common;
+    using VRage;
+    using VRage.ObjectBuilders;
+    public static class Program
 	{
 		private static int _maxChatHistoryMessageAge = 3600;
 		private static int _maxChatHistoryMessageCount = 100;
@@ -131,12 +133,24 @@ namespace SEServerExtender
 				Start( args );
 			}
 		}
-
+        
 		private static void Start( string[ ] args )
 		{
             //register object builder assembly
             string path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.ObjectBuilders.DLL" );
             VRage.Plugins.MyPlugins.RegisterGameObjectBuildersAssemblyFile( path );
+            //path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.Game.dll" );
+            //VRage.Plugins.MyPlugins.RegisterGameAssemblyFile( path );
+            //path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Common.dll" );
+            //VRage.Plugins.MyPlugins.RegisterSandboxAssemblyFile( path );
+            //path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll" );
+            //VRage.Plugins.MyPlugins.RegisterSandboxGameAssemblyFile( path );
+            /*VRage.Plugins.MyPlugins.RegisterFromArgs( args );
+            VRage.Plugins.MyPlugins.Load( );
+            bool resultRegisterAssemblies = MyObjectBuilderType.RegisterAssemblies( );
+            Debug.Assert( resultRegisterAssemblies, "Registering object builders types from assemblies failed." );
+            resultRegisterAssemblies = MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
+            Debug.Assert( resultRegisterAssemblies, "Registering object builders serializers from assemblies failed." );*/
 
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;

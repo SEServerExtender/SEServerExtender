@@ -952,7 +952,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 					}
 					catch ( Exception ex )
 					{
-						ApplicationLog.BaseLog.Error( ex );
+						//ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 
@@ -966,7 +966,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 					}
 					catch ( Exception ex )
 					{
-						ApplicationLog.BaseLog.Error( ex );
+						//ApplicationLog.BaseLog.Error( ex );
 					}
 				}
 
@@ -985,7 +985,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 			}
 			catch ( Exception ex )
 			{
-				ApplicationLog.BaseLog.Error( ex );
+				//ApplicationLog.BaseLog.Error( ex );
 			}
 		}
 

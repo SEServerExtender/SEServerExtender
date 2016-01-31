@@ -250,23 +250,6 @@ Gets shape keys, for debug purposes, allocates!
         <member name="M:hkpSmartListShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
 </member>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
-</member>
-        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="T:Havok.HkRigidBodyNamePredicate">
-This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="T:Havok.HkRigidBodyPredicate">
-This class is used as predicate to do searches within HkRigidBody lists..
-</member>
         <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Sets the color properties of the material
 </member>
@@ -306,6 +289,24 @@ Returns a vertex buffer format that is compatible with this material
 !! IMPORTANT : Use only its id as identifier to our material !!
 
 </member>
+        <member name="P:Havok.HkdFracture.FlattenHierarchy">
+Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
+</member>
+        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
+This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
+It is used to prevent infinite recursion.
+</member>
+        <member name="T:Havok.HkdFracture.RefitPhysicsType">
+Defines how the physics for the broken shapes should be calculated
+</member>
+        <member name="T:Havok.HkdFracture.Type">
+The algorithm type
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
+</member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyControllerOperation(hkdBreakableBody*)">
 Called after the breakable body's controller world operation has executed
 
@@ -321,19 +322,6 @@ Called after a breakable body is replaced with new bodies.
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.beforeBreakableBodyReplaced(hkdReplaceBodyEvent!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Called before a breakable body is replaced with new bodies.
-</member>
-        <member name="P:Havok.HkdFracture.FlattenHierarchy">
-Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
-</member>
-        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
-This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
-It is used to prevent infinite recursion.
-</member>
-        <member name="T:Havok.HkdFracture.RefitPhysicsType">
-Defines how the physics for the broken shapes should be calculated
-</member>
-        <member name="T:Havok.HkdFracture.Type">
-The algorithm type
 </member>
         <member name="F:Havok.HkdWorld.m_havokWorld">
 Our world
@@ -367,107 +355,6 @@ Constructor calls reset()
 The root collidable of object B
 The shape of the colliding shape of object B
 </member>
-        <member name="M:Havok.HkRagdoll.SetToDynamic(System.Int32)">
-Set all rigid bodies to dynamic
-</member>
-        <member name="M:Havok.HkRagdoll.SetToDynamic">
-Set all rigid bodies to dynamic
-</member>
-        <member name="M:Havok.HkRagdoll.SetToKeyframed(System.Int32)">
-Set rigid body to keyframed
-</member>
-        <member name="M:Havok.HkRagdoll.SetToKeyframed">
-Set all rigid bodies to keyframed
-</member>
-        <member name="M:Havok.HkRagdoll.DisableConstraints">
-Disables ragdoll constraints
-</member>
-        <member name="M:Havok.HkRagdoll.EnableConstraints">
-Enables ragdoll constraints
-</member>
-        <member name="M:Havok.HkRagdoll.Deactivate">
-Deactivates the ragdoll physics system
-</member>
-        <member name="M:Havok.HkRagdoll.Activate">
-Activates the ragdoll physics system
-</member>
-        <member name="M:Havok.HkRagdoll.UpdateWorldMatrixAfterSimulation">
-Ragdoll update after simulation
-
-Update's ragdoll transformation after simulation step
-</member>
-        <member name="M:Havok.HkRagdoll.SetRigidBodyLocalTransform(System.Int32,VRageMath.Matrix)">
-Set's the rigid body local transform (related to the whole system)
-
-Set's the rigid body local transform (related to the whole system)
-</member>
-        <member name="M:Havok.HkRagdoll.GetRigidBodyLocalTransform(System.Int32)">
-Returns local rigid body world matrix (related to the whole system)
-
-Returns local rigid body world matrix (related to the whole system)
-</member>
-        <member name="M:Havok.HkRagdoll.SetWorldMatrix(VRageMath.MatrixD)">
-Updates Ragdoll's transformation World Matrix including the keyframed bodies
-</member>
-        <member name="M:Havok.HkRagdoll.SetWorldMatrix(VRageMath.MatrixD,System.Boolean)">
-Updates Ragdoll's transformation World Matrix, if updateBodies is false, it just set's the world matrix, but doesn't transform bodies matrices
-</member>
-        <member name="M:Havok.HkRagdoll.GenerateRigidBodiesCollisionFilters(System.Int32,System.Int32,System.Int32)">
-Generates and sets collision filters on all rigid bodies in the ragdoll system, with the given layer, system group and will start indexing sub system ids with the passed startSubsystemIdsFrom
-
-Generate rigid bodies collision filters - this starts from so startSubsystemIdsFrom, so eventually ID 0 can be used for any other body	
-</member>
-        <member name="M:Havok.HkRagdoll.FindRigidBodyIndex(System.String)">
-Finds the rigidid body index with the given rigid body name
-</member>
-        <member name="M:Havok.HkRagdoll.FindRigidBody(System.String)">
-Finds the rigid body in the ragdoll system with the given name
-</member>
-        <member name="E:Havok.HkRagdoll.Deleted">
-Called after ragdoll (last constraint) was deleted
-</member>
-        <member name="E:Havok.HkRagdoll.RemovedFromWorld">
-Called after ragdoll (last constraint) was removed from the world
-</member>
-        <member name="E:Havok.HkRagdoll.AddedToWorld">
-Called after ragdoll (last constraint) was added to the world 
-</member>
-        <member name="P:Havok.HkRagdoll.IsKeyframed">
-Return's true if whole system was set keyframed
-</member>
-        <member name="P:Havok.HkRagdoll.Layer">
-Ragdoll collision layer
-</member>
-        <member name="P:Havok.HkRagdoll.InWorld">
-Indicates whether all ragdoll parts were in the world
-</member>
-        <member name="P:Havok.HkRagdoll.IsActive">
-Indicates if the ragdoll system is active
-</member>
-        <member name="P:Havok.HkRagdoll.WorldMatrixInverted">
-Ragdoll system world matrix
-</member>
-        <member name="P:Havok.HkRagdoll.WorldMatrix">
-Ragdoll system world matrix
-</member>
-        <member name="P:Havok.HkRagdoll.Shapes">
-Get the list of the shapes
-</member>
-        <member name="P:Havok.HkRagdoll.Constraints">
-Get the list of constraints in the system
-</member>
-        <member name="P:Havok.HkRagdoll.RagdollConstraintsData">
-Get the list of ragdoll constraints data
-</member>
-        <member name="P:Havok.HkRagdoll.LocalTransforms">
-Get the ragdoll bones local transforms - relative to the ragdoll world
-</member>
-        <member name="P:Havok.HkRagdoll.RigTransforms">
-Get the ragdoll bones rig transforms - WorldMatrices of rigid bodies as when they were loaded
-</member>
-        <member name="M:Havok.HkRagdollConstraintData.SetConeLimitStabilization(System.Boolean)">
-Enable/disable cone limit stabilization.
-</member>
         <member name="M:Havok.HkGroupFilter.GetNewSystemGroup">
 Creates a new unique identifier for system groups (maximum 65k).
 </member>
@@ -494,13 +381,6 @@ This resulting collision filter info can be used in entities and hkEntityCinfo.
 Disables collisions between the specified collision layers.
 See enableCollisionsUsingBitfield for how to use bitfields.
 </member>
-        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
-Gets/Sets the inertia stabilization factor.
-Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
-</member>
-        <member name="P:Havok.HkConstraintData.BreachImpulse">
-Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
-</member>
         <member name="P:Havok.HkCharacterRigidBody.LinearVelocity">
             <summary>
 Gets or sets linear velocity of rigid body at center of mass.
@@ -511,6 +391,14 @@ The initial position for the proxy in world space.
 </member>
         <member name="M:hkpCharacterStateInAir2.getType">
 Return the state type
+</member>
+        <member name="P:Havok.HkCharacterProxy.LinearVelocity">
+            <summary>
+Gets or sets linear velocity of rigid body at center of mass.
+</summary>
+        </member>
+        <member name="P:Havok.HkCharacterProxy.Position">
+The initial position for the proxy in world space.
 </member>
         <member name="P:Havok.HkCharacterRigidBodyCinfo.HardSupportDistance">
 A character should keep falling until it is this distance or less from its supporting planes.
@@ -567,14 +455,6 @@ See hkpRigidBodyCinfo for details
         <member name="P:Havok.HkCharacterRigidBodyCinfo.CollisionFilterInfo">
 The collision filter info.
 See hkpRigidBodyCinfo for details
-</member>
-        <member name="P:Havok.HkCharacterProxy.LinearVelocity">
-            <summary>
-Gets or sets linear velocity of rigid body at center of mass.
-</summary>
-        </member>
-        <member name="P:Havok.HkCharacterProxy.Position">
-The initial position for the proxy in world space.
 </member>
         <member name="P:Havok.HkCharacterProxyCinfo.RefreshManifoldInCheckSupport">
 This flag determines whether the character controller refreshes the manifold when checkSupport is called.
@@ -693,6 +573,126 @@ Add instance, returns instance id
 Creates new instance
 </summary>
         </member>
+        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="T:Havok.HkRigidBodyNamePredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
+        <member name="T:Havok.HkRigidBodyPredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
+        <member name="M:Havok.HkRagdoll.SetToDynamic(System.Int32)">
+Set all rigid bodies to dynamic
+</member>
+        <member name="M:Havok.HkRagdoll.SetToDynamic">
+Set all rigid bodies to dynamic
+</member>
+        <member name="M:Havok.HkRagdoll.SetToKeyframed(System.Int32)">
+Set rigid body to keyframed
+</member>
+        <member name="M:Havok.HkRagdoll.SetToKeyframed">
+Set all rigid bodies to keyframed
+</member>
+        <member name="M:Havok.HkRagdoll.DisableConstraints">
+Disables ragdoll constraints
+</member>
+        <member name="M:Havok.HkRagdoll.EnableConstraints">
+Enables ragdoll constraints
+</member>
+        <member name="M:Havok.HkRagdoll.Deactivate">
+Deactivates the ragdoll physics system
+</member>
+        <member name="M:Havok.HkRagdoll.Activate">
+Activates the ragdoll physics system
+</member>
+        <member name="M:Havok.HkRagdoll.UpdateWorldMatrixAfterSimulation">
+Ragdoll update after simulation
+
+Update's ragdoll transformation after simulation step
+</member>
+        <member name="M:Havok.HkRagdoll.SetRigidBodyLocalTransform(System.Int32,VRageMath.Matrix)">
+Set's the rigid body local transform (related to the whole system)
+
+Set's the rigid body local transform (related to the whole system)
+</member>
+        <member name="M:Havok.HkRagdoll.GetRigidBodyLocalTransform(System.Int32)">
+Returns local rigid body world matrix (related to the whole system)
+
+Returns local rigid body world matrix (related to the whole system)
+</member>
+        <member name="M:Havok.HkRagdoll.SetWorldMatrix(VRageMath.MatrixD)">
+Updates Ragdoll's transformation World Matrix including the keyframed bodies
+</member>
+        <member name="M:Havok.HkRagdoll.SetWorldMatrix(VRageMath.MatrixD,System.Boolean)">
+Updates Ragdoll's transformation World Matrix, if updateBodies is false, it just set's the world matrix, but doesn't transform bodies matrices
+</member>
+        <member name="M:Havok.HkRagdoll.GenerateRigidBodiesCollisionFilters(System.Int32,System.Int32,System.Int32)">
+Generates and sets collision filters on all rigid bodies in the ragdoll system, with the given layer, system group and will start indexing sub system ids with the passed startSubsystemIdsFrom
+
+Generate rigid bodies collision filters - this starts from so startSubsystemIdsFrom, so eventually ID 0 can be used for any other body	
+</member>
+        <member name="M:Havok.HkRagdoll.FindRigidBodyIndex(System.String)">
+Finds the rigidid body index with the given rigid body name
+</member>
+        <member name="M:Havok.HkRagdoll.FindRigidBody(System.String)">
+Finds the rigid body in the ragdoll system with the given name
+</member>
+        <member name="E:Havok.HkRagdoll.Deleted">
+Called after ragdoll (last constraint) was deleted
+</member>
+        <member name="E:Havok.HkRagdoll.RemovedFromWorld">
+Called after ragdoll (last constraint) was removed from the world
+</member>
+        <member name="E:Havok.HkRagdoll.AddedToWorld">
+Called after ragdoll (last constraint) was added to the world 
+</member>
+        <member name="P:Havok.HkRagdoll.IsKeyframed">
+Return's true if whole system was set keyframed
+</member>
+        <member name="P:Havok.HkRagdoll.Layer">
+Ragdoll collision layer
+</member>
+        <member name="P:Havok.HkRagdoll.InWorld">
+Indicates whether all ragdoll parts were in the world
+</member>
+        <member name="P:Havok.HkRagdoll.IsActive">
+Indicates if the ragdoll system is active
+</member>
+        <member name="P:Havok.HkRagdoll.WorldMatrixInverted">
+Ragdoll system world matrix
+</member>
+        <member name="P:Havok.HkRagdoll.WorldMatrix">
+Ragdoll system world matrix
+</member>
+        <member name="P:Havok.HkRagdoll.Shapes">
+Get the list of the shapes
+</member>
+        <member name="P:Havok.HkRagdoll.Constraints">
+Get the list of constraints in the system
+</member>
+        <member name="P:Havok.HkRagdoll.RagdollConstraintsData">
+Get the list of ragdoll constraints data
+</member>
+        <member name="P:Havok.HkRagdoll.LocalTransforms">
+Get the ragdoll bones local transforms - relative to the ragdoll world
+</member>
+        <member name="P:Havok.HkRagdoll.RigTransforms">
+Get the ragdoll bones rig transforms - WorldMatrices of rigid bodies as when they were loaded
+</member>
+        <member name="M:Havok.HkRagdollConstraintData.SetConeLimitStabilization(System.Boolean)">
+Enable/disable cone limit stabilization.
+</member>
+        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
+Gets/Sets the inertia stabilization factor.
+Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
+</member>
+        <member name="P:Havok.HkConstraintData.BreachImpulse">
+Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
+</member>
         <member name="M:Havok.HkRigidBody.ApplyTorque(System.Single,VRageMath.Vector3)">
             <summary>
 Applies torque to rigid body.
