@@ -223,8 +223,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\NLog.config E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\NLog.dll E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\SEComm.dll E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\SEModAPI.dll E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\SEModAPIExtensions.dll E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\SEModAPIInternal.dll E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\SEServerExtender.exe E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64
+copy /Y E:\GitHub\SEServerExtender\SEServerExtender\bin\x64\Debug\SEServerExtender.exe.config E:\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>set textTemplatingPath="%25CommonProgramFiles(x86)%25\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe"

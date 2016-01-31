@@ -15,6 +15,7 @@
     using Sandbox.Engine.Multiplayer;
     using Sandbox.Game.Replication;
     using Sandbox.ModAPI;
+    using SEModAPI.API;
     using SEModAPI.API.Definitions;
     using SEModAPI.API.Sandbox;
     using SEModAPI.API.Utility;
@@ -271,11 +272,13 @@
 
             //check if we have the Essentials client mod installed so we can use dataMessages instead of chat messages
             if ( !_enableData )
+            {
                 if ( Server.Instance.Config.Mods.Contains( "559202083" ) || Server.Instance.Config.Mods.Contains( "558596580" ) )
                 {
                     _enableData = true;
                     ApplicationLog.Info( "Found Essentials client mod, enabling data messages" );
                 }
+            }
                 
             try
             {
@@ -338,7 +341,8 @@
                 */
                 string text = Encoding.Unicode.GetString( data );
                 MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
-                ApplicationLog.Info( text );
+                if(ExtenderOptions.IsDebugging )
+                    ApplicationLog.Info( text );
 
 
                 if ( item.msgID == 5010 )
@@ -368,9 +372,12 @@
                     //player has loaded in. Do something else with this info. for now we'll send dataReady
                     MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
 
-                    if(!_enableData )
+                    if ( !_enableData )
+                    {
                         _enableData = true;
-                }
+                        ApplicationLog.Info( "Found Essentials client mod login, enabling data messages" );
+                    }
+                    }
 
                 else if ( item.msgID == 5015 )
                 {

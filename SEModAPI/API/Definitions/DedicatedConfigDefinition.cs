@@ -13,6 +13,8 @@ namespace SEModAPI.API.Definitions
 	using System.Xml.Serialization;
 	using global::Sandbox.Common.ObjectBuilders;
 	using VRage.ObjectBuilders;
+    using SEModAPIInternal.Support;
+    using SEModAPIExtensions.API;
 
 	[DataContract]
 	public class DedicatedConfigDefinition
@@ -1179,20 +1181,19 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region "Methods"
-
-		/// <summary>
-		/// Load the dedicated server configuration file
-		/// </summary>
-		/// <param name="fileInfo">Path to the configuration file</param>
-		/// <exception cref="FileNotFoundException">Thrown if configuration file cannot be found at the path specified.</exception>
-		/// <returns></returns>
-		/// <exception cref="ConfigurationErrorsException">Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.</exception>
-		public static MyConfigDedicatedData<MyObjectBuilder_SessionSettings> Load( FileInfo fileInfo )
-		{
-			object fileContent;
+        #region "Methods"
+        /// <summary>
+        /// Load the dedicated server configuration file
+        /// </summary>
+        /// <param name="fileInfo">Path to the configuration file</param>
+        /// <exception cref="FileNotFoundException">Thrown if configuration file cannot be found at the path specified.</exception>
+        /// <returns></returns>
+        /// <exception cref="ConfigurationErrorsException">Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.</exception>
+        public static MyConfigDedicatedData<MyObjectBuilder_SessionSettings> Load( FileInfo fileInfo )
+        {
+            object fileContent;
 
 			string filePath = fileInfo.FullName;
 
@@ -1203,8 +1204,6 @@ namespace SEModAPI.API.Definitions
 
 			try
             {
-                bool registerResult = MyObjectBuilderType.RegisterAssemblies( );
-                registerResult = MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
                 using ( TextReader rdr = File.OpenText( filePath ) )
 				{
 					XmlSerializer deserializer = new XmlSerializer( typeof( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> ) );

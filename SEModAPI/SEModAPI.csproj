@@ -80,6 +80,18 @@
     <Reference Include="Sandbox.Game">
       <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>
     </Reference>
+    <Reference Include="SEModAPIExtensions, Version=1.118.11.42, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SEServerExtender\bin\x64\Debug\SEModAPIExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SEModAPIInternal, Version=1.118.11.25, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SEServerExtender\bin\x64\Debug\SEModAPIInternal.dll</HintPath>
+    </Reference>
+    <Reference Include="SEServerExtender, Version=1.118.11.50, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SEServerExtender\bin\x64\Debug\SEServerExtender.exe</HintPath>
+    </Reference>
     <Reference Include="SpaceEngineers.Game">
       <HintPath>..\GameLibraries\SpaceEngineers.Game.dll</HintPath>
     </Reference>

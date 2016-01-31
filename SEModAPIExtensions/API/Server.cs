@@ -24,6 +24,7 @@ namespace SEModAPIExtensions.API
     using SEModAPIInternal.API.Common;
     using SEModAPIInternal.API.Server;
     using SEModAPIInternal.Support;
+    using VRage.ObjectBuilders;
     using Timer = System.Timers.Timer;
 
     [DataContract]
@@ -493,9 +494,12 @@ namespace SEModAPIExtensions.API
 			try
 			{
 				ExtenderOptions.InstanceName = InstanceName;
+                ApplicationLog.BaseLog.Error( "5" );
 				_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
-				bool result = _dedicatedServerWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
-				ApplicationLog.BaseLog.Info( "Server has stopped running" );
+                ApplicationLog.BaseLog.Error( "6" );
+                bool result = _dedicatedServerWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
+                ApplicationLog.BaseLog.Error( "7" );
+                ApplicationLog.BaseLog.Info( "Server has stopped running" );
 
 				_isServerRunning = false;
 
@@ -572,15 +576,20 @@ namespace SEModAPIExtensions.API
 				}
 
 				_sessionManager.UpdateSessionSettings( );
+                ApplicationLog.BaseLog.Error( "0" );
 				_pluginMainLoop.Start( );
-				_autosaveTimer.Start( );
+                ApplicationLog.BaseLog.Error( "1" );
+                _autosaveTimer.Start( );
+                ApplicationLog.BaseLog.Error( "2" );
 
-				_isServerRunning = true;
+                _isServerRunning = true;
 				_serverRan = true;
 
 				_runServerThread = new Thread( RunServer ) { IsBackground = true };
-				_runServerThread.Start( );
-			}
+                ApplicationLog.BaseLog.Error( "3" );
+                _runServerThread.Start( );
+                ApplicationLog.BaseLog.Error( "4" );
+            }
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
@@ -607,9 +616,39 @@ namespace SEModAPIExtensions.API
 			ApplicationLog.BaseLog.Info(  "Server has been stopped" );
 		}
 
+        public static bool registerResult = false;
+        public static bool serializerResult = false;
+        public static bool registered = false;
 		public MyConfigDedicatedData<MyObjectBuilder_SessionSettings> LoadServerConfig( )
-		{
-			if ( File.Exists( System.IO.Path.Combine(Path,"SpaceEngineers-Dedicated.cfg.restart") ) )
+        {
+            if ( !registered )
+            {
+                registered = true;
+                MyObjectBuilderType.RegisterAssemblies( );
+            }
+            /*
+            try
+            {
+                if ( !registerResult )
+                {
+                    registerResult = MyObjectBuilderType.RegisterAssemblies( );
+                    if ( !registerResult )
+                        ApplicationLog.BaseLog.Error( "Failed register objectbuilder types" );
+                }
+                if ( !serializerResult )
+                {
+                    serializerResult = MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
+                    if ( !serializerResult )
+                        ApplicationLog.BaseLog.Error( "Failed register objectbuilder serializers" );
+                }
+            }
+            catch(Exception ex)
+            {
+                if ( ExtenderOptions.IsDebugging )
+                    ApplicationLog.BaseLog.Debug( ex, "Faild register objectbuilder" );
+            }*/
+
+            if ( File.Exists( System.IO.Path.Combine(Path,"SpaceEngineers-Dedicated.cfg.restart") ) )
 			{
 				File.Copy( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg.restart" ), System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ), true );
 				File.Delete( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg.restart" ) );
