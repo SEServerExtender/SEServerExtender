@@ -494,11 +494,9 @@ namespace SEModAPIExtensions.API
 			try
 			{
 				ExtenderOptions.InstanceName = InstanceName;
-                ApplicationLog.BaseLog.Error( "5" );
 				_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
-                ApplicationLog.BaseLog.Error( "6" );
                 bool result = _dedicatedServerWrapper.StartServer( _commandLineArgs.InstanceName, _commandLineArgs.InstancePath, !_commandLineArgs.NoConsole );
-                ApplicationLog.BaseLog.Error( "7" );
+                
                 ApplicationLog.BaseLog.Info( "Server has stopped running" );
 
 				_isServerRunning = false;
@@ -576,19 +574,14 @@ namespace SEModAPIExtensions.API
 				}
 
 				_sessionManager.UpdateSessionSettings( );
-                ApplicationLog.BaseLog.Error( "0" );
 				_pluginMainLoop.Start( );
-                ApplicationLog.BaseLog.Error( "1" );
                 _autosaveTimer.Start( );
-                ApplicationLog.BaseLog.Error( "2" );
 
                 _isServerRunning = true;
 				_serverRan = true;
 
 				_runServerThread = new Thread( RunServer ) { IsBackground = true };
-                ApplicationLog.BaseLog.Error( "3" );
                 _runServerThread.Start( );
-                ApplicationLog.BaseLog.Error( "4" );
             }
 			catch ( Exception ex )
 			{
@@ -621,31 +614,11 @@ namespace SEModAPIExtensions.API
         public static bool registered = false;
 		public MyConfigDedicatedData<MyObjectBuilder_SessionSettings> LoadServerConfig( )
         {
+            /*
             if ( !registered )
             {
                 registered = true;
                 MyObjectBuilderType.RegisterAssemblies( );
-            }
-            /*
-            try
-            {
-                if ( !registerResult )
-                {
-                    registerResult = MyObjectBuilderType.RegisterAssemblies( );
-                    if ( !registerResult )
-                        ApplicationLog.BaseLog.Error( "Failed register objectbuilder types" );
-                }
-                if ( !serializerResult )
-                {
-                    serializerResult = MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
-                    if ( !serializerResult )
-                        ApplicationLog.BaseLog.Error( "Failed register objectbuilder serializers" );
-                }
-            }
-            catch(Exception ex)
-            {
-                if ( ExtenderOptions.IsDebugging )
-                    ApplicationLog.BaseLog.Debug( ex, "Faild register objectbuilder" );
             }*/
 
             if ( File.Exists( System.IO.Path.Combine(Path,"SpaceEngineers-Dedicated.cfg.restart") ) )
@@ -666,8 +639,11 @@ namespace SEModAPIExtensions.API
             }
             else
             {
-                ApplicationLog.BaseLog.Info( "Failed to load session settings" );
-                ApplicationLog.BaseLog.Info(Path );
+                if ( ExtenderOptions.IsDebugging )
+                {
+                    ApplicationLog.BaseLog.Info( "Failed to load session settings" );
+                    ApplicationLog.BaseLog.Info( Path );
+                }
                 return null;
             }
 

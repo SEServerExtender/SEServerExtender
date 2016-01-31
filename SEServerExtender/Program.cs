@@ -139,18 +139,8 @@ namespace SEServerExtender
             //register object builder assembly
             string path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.ObjectBuilders.DLL" );
             VRage.Plugins.MyPlugins.RegisterGameObjectBuildersAssemblyFile( path );
-            //path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.Game.dll" );
-            //VRage.Plugins.MyPlugins.RegisterGameAssemblyFile( path );
-            //path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Common.dll" );
-            //VRage.Plugins.MyPlugins.RegisterSandboxAssemblyFile( path );
-            //path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Sandbox.Game.dll" );
-            //VRage.Plugins.MyPlugins.RegisterSandboxGameAssemblyFile( path );
-            /*VRage.Plugins.MyPlugins.RegisterFromArgs( args );
-            VRage.Plugins.MyPlugins.Load( );
-            bool resultRegisterAssemblies = MyObjectBuilderType.RegisterAssemblies( );
-            Debug.Assert( resultRegisterAssemblies, "Registering object builders types from assemblies failed." );
-            resultRegisterAssemblies = MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
-            Debug.Assert( resultRegisterAssemblies, "Registering object builders serializers from assemblies failed." );*/
+
+            MyObjectBuilderType.RegisterAssemblies( );
 
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;

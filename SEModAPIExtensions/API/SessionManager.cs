@@ -1,12 +1,13 @@
 namespace SEModAPIExtensions.API
 {
-	using System;
-	using System.IO;
-	using Sandbox.Common.ObjectBuilders;
-	using SEModAPIInternal.Support;
-	using VRage.ObjectBuilders;
+    using System;
+    using System.IO;
+    using Sandbox.Common.ObjectBuilders;
+    using SEModAPI.API;
+    using SEModAPIInternal.Support;
+    using VRage.ObjectBuilders;
 
-	public class SessionManager
+    public class SessionManager
 	{
 		private static MyObjectBuilder_Checkpoint m_checkPoint;
 		private static SessionManager m_instance;
@@ -81,7 +82,8 @@ namespace SEModAPIExtensions.API
 			}
 			catch (Exception ex)
 			{
-				ApplicationLog.BaseLog.Error( ex, "Session Manager Exception: {0}" );
+                if ( ExtenderOptions.IsDebugging )
+                    ApplicationLog.BaseLog.Error( ex, "Session Manager Exception: {0}" );
 			}
 		}
 	}
