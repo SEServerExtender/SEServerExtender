@@ -379,7 +379,7 @@ namespace SEModAPIExtensions.API
 		}
 
         [IgnoreDataMember]
-        public string title
+        public string Title
         {
             get
             {

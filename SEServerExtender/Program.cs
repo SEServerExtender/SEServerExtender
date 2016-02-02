@@ -250,7 +250,7 @@ namespace SEServerExtender
 							argValue = argValue.Substring( 1, argValue.Length - 2 );
 						extenderArgs.InstancePath = argValue;
 					}
-                    else if (lowerCaseArgument.Equals("consoletitle") )
+                    else if (lowerCaseArgument.Equals("title") )
                     {
                         if (argValue[argValue.Length - 1] == '"')
                             argValue = argValue.Substring(1, argValue.Length - 2);
