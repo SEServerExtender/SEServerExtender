@@ -249,6 +249,10 @@ namespace SEModAPIExtensions.API
 				{
 					ApplicationLog.BaseLog.Info( "World Request Replace: Enabled" );
 				}
+                if (_commandLineArgs.ConsoleTitle.Length != 0 )
+                {
+                    ApplicationLog.BaseLog.Info("Console title set to '" + _commandLineArgs.ConsoleTitle + "'");
+                }
                 ApplicationLog.BaseLog.Info("end parsing");
 			}
 			catch ( Exception ex )
@@ -374,7 +378,18 @@ namespace SEModAPIExtensions.API
 			set { _commandLineArgs.InstancePath = value; }
 		}
 
-		[IgnoreDataMember]
+        [IgnoreDataMember]
+        public string Title
+        {
+            get
+            {
+                string title = _commandLineArgs.ConsoleTitle;
+                return title;
+            }
+            set { _commandLineArgs.ConsoleTitle = value; }
+        }
+
+        [IgnoreDataMember]
 		public Thread ServerThread
 		{
 			get { return _runServerThread; }
