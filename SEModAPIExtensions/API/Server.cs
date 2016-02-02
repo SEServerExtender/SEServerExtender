@@ -384,11 +384,6 @@ namespace SEModAPIExtensions.API
             get
             {
                 string title = _commandLineArgs.ConsoleTitle;
-                if (string.IsNullOrEmpty(title))
-                {
-                    Console.Title = "SESE";
-                }
-
                 return title;
             }
             set { _commandLineArgs.ConsoleTitle = value; }

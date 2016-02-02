@@ -372,7 +372,11 @@ namespace SEServerExtender
 				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
-                if (extenderArgs.ConsoleTitle != null)
+                if (string.IsNullOrEmpty (extenderArgs.ConsoleTitle) || string.IsNullOrWhiteSpace(extenderArgs.ConsoleTitle))
+                {
+                    Console.Title = "SESE";
+                }
+                else
                 {
                     Console.Title = extenderArgs.ConsoleTitle;
                 }
