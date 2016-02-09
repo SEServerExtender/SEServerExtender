@@ -137,6 +137,11 @@
             </summary>
             <param name="animationUpdateData">See commentary in MyAnimationUpdateData</param>
         </member>
+        <member name="M:VRage.Animations.MyAnimationController.MyResultBonesPool.Reset(VRage.Animations.MyCharacterBone[])">
+            <summary>
+            Set the new bone count and default (rest) pose.
+            </summary>
+        </member>
         <member name="T:VRage.Animations.MyAnimationStateMachine">
             <summary>
             Animation state machine selects the animation to match current state.
@@ -149,10 +154,11 @@
             Transitions are performed automatically on each update (if conditions of transition are fulfilled).
             </summary>
         </member>
-        <member name="M:VRage.Generics.MyStateMachine.SetState">
+        <member name="M:VRage.Generics.MyStateMachine.SetState(System.String)">
             <summary>
             Set the current state. Warning - this is not a thing that you would like to normally do, 
             state machine should live its own life (based on transition condition).
+            Returns true on success.
             </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationStateMachineNode">

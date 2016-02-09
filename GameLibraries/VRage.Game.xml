@@ -58,7 +58,7 @@
             Name of the component type for debug purposes (e.g.: "Position")
             </summary>
         </member>
-        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.AnimationController">
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.Controller">
             <summary>
             Get the animation controller instance.
             </summary>
@@ -317,6 +317,16 @@
         <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.UnregisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
             <summary>
             Unregister entity component.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.AnimationName">
+            <summary>
+            Name of used track (animation).
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Loop">
+            <summary>
+            If true, animation will be looped. Default value is true.
             </summary>
         </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
@@ -4726,6 +4736,26 @@
             Selected medical room is not ready. Please wait until it is streamed from server.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.MessageBoxF12Question">
+            <summary>
+            WARNING
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextF12Question">
+            <summary>
+            You are entering the developer debug screen. Some of the features may crash the game or cause other errors. Continue?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationStatNotEnough">
+            <summary>
+            Not enough {0}.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationStatZero">
+            <summary>
+            You are out of {0}.
+            </summary>
+        </member>
         <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
             <summary>
             Enum used for localization of display name. Null for player created definitions.
@@ -4843,9 +4873,10 @@
             Physics shape used after character's death.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.UseNewAnimationSystem">
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.AnimationController">
             <summary>
-            VRAGE TODO: THIS IS TEMPORARY! Remove when by the time we use only the new animation system.
+            VRAGE TODO: This should be probably moved elsewhere, so character contains only link (name)?
+                        Unfortunatelly, all definitions are in sandbox.
             </summary>
         </member>
         <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OneDirection">
