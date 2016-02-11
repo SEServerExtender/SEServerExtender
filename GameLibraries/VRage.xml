@@ -4,6 +4,16 @@
         <name>VRage</name>
     </assembly>
     <members>
+        <member name="T:VRage.Animations.AnimationNodes.MyAnimationTreeNodeMix1D">
+            <summary>
+            Mixing between animation nodes on 1D axis.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationTreeNode">
+            <summary>
+            Interface representing one node in animation tree.
+            </summary>
+        </member>
         <member name="T:VRage.Animations.MyAnimationClip">
             <summary>
             An animation clip is a set of keyframes with associated bones.
@@ -71,11 +81,6 @@
             Node of animation tree: single track. Contains reference to animation clip.
             </summary>
         </member>
-        <member name="T:VRage.Animations.MyAnimationTreeNode">
-            <summary>
-            Interface representing one node in animation tree.
-            </summary>
-        </member>
         <member name="T:VRage.Animations.ModelAnimations">
             <summary>
             Class that contains additional information attached to the model and
@@ -137,10 +142,28 @@
             </summary>
             <param name="animationUpdateData">See commentary in MyAnimationUpdateData</param>
         </member>
+        <member name="M:VRage.Animations.MyAnimationController.TriggerAction(VRage.Utils.MyStringId)">
+            <summary>
+            Trigger an action in all layers. 
+            If there is a transition having given (non-null) name, it is followed immediatelly.
+            Conditions of transition are ignored.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationController.MyResultBonesPool">
+            <summary>
+            Simple pool allocator for bone results.
+            </summary>
+        </member>
         <member name="M:VRage.Animations.MyAnimationController.MyResultBonesPool.Reset(VRage.Animations.MyCharacterBone[])">
             <summary>
             Set the new bone count and default (rest) pose.
             </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationController.MyResultBonesPool.Alloc">
+            <summary>
+            Allocate array of bones from pool. Bones are in the rest (bind) position by default.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:VRage.Animations.MyAnimationStateMachine">
             <summary>
@@ -161,6 +184,13 @@
             Returns true on success.
             </summary>
         </member>
+        <member name="M:VRage.Generics.MyStateMachine.TriggerAction(VRage.Utils.MyStringId)">
+            <summary>
+            Trigger an action in this layer. 
+            If there is a transition having given (non-null) name, it is followed immediatelly.
+            Conditions of transition are ignored.
+            </summary>
+        </member>
         <member name="T:VRage.Animations.MyAnimationStateMachineNode">
             <summary>
             Animation state machine node is a representation of one state inside MyAnimationStateMachine.
@@ -179,6 +209,12 @@
         <member name="T:VRage.Generics.MyStateMachineTransition">
             <summary>
             Definition of transition to some node.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationStateMachineTransition.Evaluate">
+            <summary>
+            Animation transition evaluation - different behavior from default transition. 
+            If no conditions are given, it must be triggered manually.
             </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationUpdateData">
@@ -282,7 +318,18 @@
             rotation times the translation times the bind after set
             equals this matrix. This is used to set animation values.
             </summary>
-            <param name="m">A matrix include translation and rotation</param>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.SetCompleteTransform(VRageMath.Vector3@,VRageMath.Quaternion@)">
+            <summary>
+            This sets the rotation and translation such that the
+            rotation times the translation times the bind after set
+            equals this matrix. This is used to set animation values.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.GetCompleteTransform(VRageMath.Vector3@,VRageMath.Quaternion@,VRageMath.Vector3@,VRageMath.Quaternion@)">
+            <summary>
+            Same as SetCompleteTransform, but result is not stored internally, it is returned instead.
+            </summary>
         </member>
         <member name="M:VRage.Animations.MyCharacterBone.GetAbsoluteRigTransform">
             <summary>
@@ -395,7 +442,7 @@
         </member>
         <member name="T:VRage.Generics.StateMachine.MyCondition`1">
             <summary>
-            Implementation of generic condition.
+            Implementation of generic condition. Immutable class, once set, its parameters cant be changed.
             </summary>
         </member>
         <member name="T:VRage.Generics.MyStateMachineTransitionWithStart">
@@ -415,6 +462,16 @@
             <param name="modelFile"></param>
             <returns>true - if data hashes of source files are valid </returns>
             <returns>false - if data has been changed</returns>
+        </member>
+        <member name="F:VRage.Import.Mesh.VertexOffset">
+            <summary>
+            Offset on the vertex buffer
+            </summary>
+        </member>
+        <member name="F:VRage.Import.Mesh.StartIndex">
+            <summary>
+            Offset on the indices buffer
+            </summary>
         </member>
         <member name="M:VRage.Import.MyModelExporter.#ctor(System.String)">
             <summary>
@@ -804,6 +861,12 @@
             </summary>
             <param name="writer"></param>
             <returns></returns>
+        </member>
+        <member name="P:VRage.Import.MyMeshSectionMeshInfo.StartIndex">
+            <summary>Offset in index list</summary>
+        </member>
+        <member name="P:VRage.Import.MyMeshSectionMeshInfo.IndexCount">
+            <summary>Offset in index list</summary>
         </member>
         <member name="M:VRage.Import.MyModelImporter.ReadVector3(System.IO.BinaryReader)">
             <summary>
@@ -1466,6 +1529,9 @@
             <summary>
             Must be possible to query during startup before render thread and window is created.
             </summary>
+        </member>
+        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32,System.String,System.Int32,System.String,System.Nullable{VRageMath.Color},System.Single)">
+            <param name="thickness">Zero or negative to remove highlight</param>
         </member>
         <member name="M:VRageRender.MyRenderProxy.ChangeModel(System.UInt32,System.Int32,System.String,System.Boolean)">
             <summary>
