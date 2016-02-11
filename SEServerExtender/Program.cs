@@ -142,6 +142,7 @@ namespace SEServerExtender
 
             MyObjectBuilderType.RegisterAssemblies( );
             MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
+
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
