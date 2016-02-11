@@ -160,3 +160,5 @@ local/*
 
 Docs/html
 Docs/latex
+GameLibraries/copy libs.bat
+GameLibraries/file.lst

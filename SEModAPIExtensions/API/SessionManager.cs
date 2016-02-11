@@ -52,7 +52,7 @@ namespace SEModAPIExtensions.API
 		{
 			MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = Server.Instance.LoadServerConfig( );
 
-			ApplicationLog.BaseLog.Info( "Loading Session Settings" );
+            ApplicationLog.BaseLog.Info( "Loading Session Settings" );
 			try
 			{
 				string worldPath = config.LoadWorld;
@@ -84,7 +84,8 @@ namespace SEModAPIExtensions.API
 			{
                 if ( ExtenderOptions.IsDebugging )
                     ApplicationLog.BaseLog.Error( ex, "Session Manager Exception: {0}" );
-			}
-		}
+            }
+            MyObjectBuilderSerializer.UnregisterAssembliesAndSerializers( );
+        }
 	}
 }
