@@ -85,7 +85,6 @@ namespace SEModAPIExtensions.API
                 if ( ExtenderOptions.IsDebugging )
                     ApplicationLog.BaseLog.Error( ex, "Session Manager Exception: {0}" );
             }
-            MyObjectBuilderSerializer.UnregisterAssembliesAndSerializers( );
         }
 	}
 }

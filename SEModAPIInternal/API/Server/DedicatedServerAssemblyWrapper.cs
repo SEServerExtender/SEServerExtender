@@ -1,4 +1,7 @@
-﻿namespace SEModAPIInternal.API.Server
+﻿using SEModAPI.API;
+using VRage.ObjectBuilders;
+
+namespace SEModAPIInternal.API.Server
 {
 	using System;
 	using System.ComponentModel;
@@ -184,9 +187,9 @@
 				MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
 				MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
 				MyPerServerSettings.AppId = 0x3bc72;
-
-				//Start the server
-				MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
+                MyObjectBuilderSerializer.UnregisterAssembliesAndSerializers( );
+                //Start the server
+                MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
 				dedicatedServerRunMainMethod.Invoke( null, methodParams );
 				return true;
 			}
@@ -204,11 +207,12 @@
 			}
 			catch ( TargetInvocationException ex )
 			{
-				//Generally, we won't log this, since it will always be thrown on server stop.
-				if ( ApplicationLog.BaseLog.IsTraceEnabled )
-					ApplicationLog.BaseLog.Trace( ex );
+                //Generally, we won't log this, since it will always be thrown on server stop.
+                if ( ExtenderOptions.IsDebugging )
+                    ApplicationLog.BaseLog.Error( ex );
+                //ApplicationLog.BaseLog.Trace( ex );
 
-				return false;
+                return false;
 			}
 			catch ( Exception ex )
 			{

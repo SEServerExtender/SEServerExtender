@@ -16,7 +16,6 @@
     using Sandbox.Game.Replication;
     using Sandbox.ModAPI;
     using SEModAPI.API;
-    using SEModAPI.API.Definitions;
     using SEModAPI.API.Sandbox;
     using SEModAPI.API.Utility;
     using SEModAPIInternal.API.Common;
@@ -36,9 +35,9 @@
     public delegate void ChatEventDelegate( ulong steamId, string playerName, string message );
     public class ChatManager
     {
-        private static bool _enableData = false;
-        private static DateTime lastMessageTime = DateTime.Now;
-        private static string lastMessageString = "";
+        private static bool _enableData;
+        private static DateTime _lastMessageTime = DateTime.Now;
+        private static string _lastMessageString = "";
 
         public struct ChatCommand
         {
@@ -340,9 +339,23 @@
                     text += (char)data[r];
                 */
                 string text = Encoding.Unicode.GetString( data );
+
+                if (DateTime.Now - _lastMessageTime < TimeSpan.FromMilliseconds(50) && text == _lastMessageString)
+                {
+                    //if we've received a duplicate message, discard it
+                    _lastMessageTime = DateTime.Now;
+                    _lastMessageString = text;
+                    if(ExtenderOptions.IsDebugging)
+                        ApplicationLog.BaseLog.Debug("Received duplicate message: " + System.Environment.NewLine + text );
+                    return;
+                }
+
+                _lastMessageTime = DateTime.Now;
+                _lastMessageString = text;
+
                 MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
                 if(ExtenderOptions.IsDebugging )
-                    ApplicationLog.Info( text );
+                    ApplicationLog.BaseLog.Debug( text );
 
 
                 if ( item.msgID == 5010 )
@@ -725,7 +738,7 @@
 				//All cube grids that have no power
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "nopower" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+					//List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
 					//List<CubeGridEntity> entitiesToDispose = entities.Where( entity => entity.TotalPower <= 0 ).ToList( );
 
 					//foreach ( CubeGridEntity entity in entitiesToDispose )
@@ -1271,16 +1284,12 @@
 								if ( string.IsNullOrEmpty( objectBuilderTypeName ) )
 									return;
 
-								switch ( objectBuilderTypeName )
-								{
-									case "MyObjectBuilder_CubeGrid":
-										CubeGridEntity cubeGrid = new CubeGridEntity( importFile );
-										SectorObjectManager.Instance.AddEntity( cubeGrid );
-										break;
-									default:
-										break;
-								}
-							}
+                                if ( objectBuilderTypeName == "MyObjectBuilder_CubeGrid" )
+                                {
+                                    CubeGridEntity cubeGrid = new CubeGridEntity( importFile );
+                                    SectorObjectManager.Instance.AddEntity( cubeGrid );
+                                }
+                            }
 						}
 					}
 				}

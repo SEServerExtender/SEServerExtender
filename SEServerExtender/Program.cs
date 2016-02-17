@@ -162,7 +162,8 @@ namespace SEServerExtender
 								  NoConsole = false,
 								  Debug = false,
 								  GamePath = new DirectoryInfo( PathManager.BasePath ).Parent.FullName,
-								  NoWcf = false,
+                                  //TODO: turn noWFC back to off by default whenever WCF gets fixed
+								  NoWcf = true,
 								  Autosave = 0,
 								  InstancePath = string.Empty,
 								  CloseOnCrash = false,
@@ -308,7 +309,11 @@ namespace SEServerExtender
 					{
 						extenderArgs.NoWcf = true;
 					}
-					else if ( lowerCaseArgument.Equals( "closeoncrash" ) )
+                    else if ( lowerCaseArgument.Equals( "wcfon" ) )
+                    {
+                        extenderArgs.NoWcf = false;
+                    }
+                    else if ( lowerCaseArgument.Equals( "closeoncrash" ) )
 					{
 						extenderArgs.CloseOnCrash = true;
 					}
