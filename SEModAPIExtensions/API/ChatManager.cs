@@ -437,10 +437,13 @@
 
             Buffer.BlockCopy( data, 0, newData, msgIdString.Length + 1, data.Length );
 
-            if ( userId == 0 )
-                MyAPIGateway.Multiplayer.SendMessageToOthers( 9000, newData );
-            else
-                MyAPIGateway.Multiplayer.SendMessageTo( 9000, newData, userId );
+            SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+            {
+                if (userId == 0)
+                    MyAPIGateway.Multiplayer.SendMessageToOthers(9000, newData);
+                else
+                    MyAPIGateway.Multiplayer.SendMessageTo(9000, newData, userId);
+            });
         }
         
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
