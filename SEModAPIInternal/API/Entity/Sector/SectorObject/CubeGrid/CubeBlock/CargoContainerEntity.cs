@@ -1,9 +1,10 @@
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
-	using Sandbox.Common.ObjectBuilders;
 	using SEModAPIInternal.Support;
 
 	[DataContract( Name = "CargoContainerEntityProxy" )]

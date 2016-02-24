@@ -1,7 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
 	using System.ComponentModel;
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRageMath;
 
 	public class SolarPanelDefinition : BlockDefinition

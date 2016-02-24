@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPIExtensions.API
 {
     using System;
@@ -5,7 +7,6 @@ namespace SEModAPIExtensions.API
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Runtime.ExceptionServices;
     using System.Runtime.Serialization;
     using System.Security;
@@ -15,16 +16,13 @@ namespace SEModAPIExtensions.API
     using NLog;
     using NLog.Targets;
     using Sandbox;
-    using Sandbox.Common.ObjectBuilders;
     using SEModAPI.API;
     using SEModAPI.API.Definitions;
     using SEModAPI.API.Sandbox;
     using SEModAPI.API.Utility;
-    using SEModAPIInternal.API.Chat;
     using SEModAPIInternal.API.Common;
     using SEModAPIInternal.API.Server;
     using SEModAPIInternal.Support;
-    using VRage.ObjectBuilders;
     using Timer = System.Timers.Timer;
 
     [DataContract]

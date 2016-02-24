@@ -332,7 +332,7 @@
             Reloads block model and interactive objects (doors, terminals, etc...)
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.Init(Sandbox.Common.ObjectBuilders.MyObjectBuilder_CubeBlock,Sandbox.ModAPI.IMyCubeGrid)">
+        <member name="M:Sandbox.ModAPI.IMyCubeBlock.Init(VRage.Game.MyObjectBuilder_CubeBlock,Sandbox.ModAPI.IMyCubeGrid)">
             <summary>
             Initializes block state from object builder
             </summary>
@@ -525,7 +525,7 @@
             Deactivates creating grids
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.StartNewGridPlacement(Sandbox.Common.ObjectBuilders.MyCubeSize,System.Boolean)">
+        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.StartNewGridPlacement(VRage.Game.MyCubeSize,System.Boolean)">
             <summary>
             Creates new grid 
             </summary>
@@ -636,7 +636,7 @@
             </summary>
             <param name="block">block to be deformed</param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ChangeGridOwnership(System.Int64,Sandbox.Common.ObjectBuilders.MyOwnershipShareModeEnum)">
+        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ChangeGridOwnership(System.Int64,VRage.Game.MyOwnershipShareModeEnum)">
             <summary>
             Changes owner of all blocks on grid
             Call only on server!
@@ -1368,7 +1368,7 @@
             Block mass
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,Sandbox.Common.MyFontEnum)">
+        <member name="M:Sandbox.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,VRage.Game.MyFontEnum)">
             <summary>
             Create a notification object.
             The object needs to have Show() called on it to be shown.
@@ -1423,6 +1423,11 @@
         <member name="T:Sandbox.ModAPI.MyAPIGateway">
             <summary>
             This is entry point for entire scripting possibilities in game
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.GuiControlCreated">
+            <summary>
+            Event triggered on gui control created.
             </summary>
         </member>
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Players">

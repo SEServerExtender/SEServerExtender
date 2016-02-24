@@ -8,7 +8,6 @@ namespace SEModAPIExtensions.API
 	using System.Reflection;
 	using System.Runtime.InteropServices;
 	using System.Threading;
-	using Sandbox;
 	using SEModAPI.API;
 	using SEModAPI.API.Sandbox;
 	using SEModAPIExtensions.API.Plugin;

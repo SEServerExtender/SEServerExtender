@@ -1,7 +1,8 @@
-﻿namespace SEModAPI.API.Definitions
+﻿using VRage.Game;
+
+namespace SEModAPI.API.Definitions
 {
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
-	using VRage.ObjectBuilders;
+    using VRage.ObjectBuilders;
 	using VRage.Utils;
 
 	public class ContainerTypesDefinition : OverLayerDefinition<MyObjectBuilder_ContainerTypeDefinition>

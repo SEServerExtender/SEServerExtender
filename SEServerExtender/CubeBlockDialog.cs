@@ -1,10 +1,11 @@
+using VRage.Game;
+
 namespace SEServerExtender
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Windows.Forms;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;

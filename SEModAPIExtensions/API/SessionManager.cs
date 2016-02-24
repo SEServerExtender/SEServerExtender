@@ -1,8 +1,9 @@
+using VRage.Game;
+
 namespace SEModAPIExtensions.API
 {
     using System;
     using System.IO;
-    using Sandbox.Common.ObjectBuilders;
     using SEModAPI.API;
     using SEModAPIInternal.Support;
     using VRage.ObjectBuilders;

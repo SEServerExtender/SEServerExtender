@@ -1,10 +1,11 @@
-﻿namespace SEModAPI.API.Definitions.CubeBlocks
+﻿using VRage.Game;
+
+namespace SEModAPI.API.Definitions.CubeBlocks
 {
 	using System.Collections.Generic;
 	using System.Linq;
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
 
-	/// <summary>
+    /// <summary>
 	/// This class is intended to manage the modification and persistence of CubeBlocks.sbc
 	/// </summary>
 	public class BlocksManager

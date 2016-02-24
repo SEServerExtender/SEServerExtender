@@ -1,8 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
-
-	public class VoxelMaterialsDefinition : OverLayerDefinition<MyObjectBuilder_VoxelMaterialDefinition>
+    public class VoxelMaterialsDefinition : OverLayerDefinition<MyObjectBuilder_VoxelMaterialDefinition>
 	{
 		#region "Constructors and Initializers"
 

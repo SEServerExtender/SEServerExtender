@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPIExtensions.API
 {
 	using System;

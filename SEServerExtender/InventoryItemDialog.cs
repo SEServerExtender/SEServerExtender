@@ -1,9 +1,10 @@
+using VRage.Game;
+
 namespace SEServerExtender
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Windows.Forms;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;

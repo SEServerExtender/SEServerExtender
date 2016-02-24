@@ -1,4 +1,6 @@
-﻿namespace SEModAPI.API.Definitions.CubeBlocks
+﻿using VRage.Game;
+
+namespace SEModAPI.API.Definitions.CubeBlocks
 {
 	using System.ComponentModel;
 	using global::Sandbox.Common.ObjectBuilders.Definitions;

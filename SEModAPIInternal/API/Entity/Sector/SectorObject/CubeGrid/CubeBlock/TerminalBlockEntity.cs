@@ -1,3 +1,6 @@
+using Sandbox.Common.ObjectBuilders;
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 {
 	using System;
@@ -5,7 +8,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using System.Text;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.ModAPI.Ingame;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
@@ -38,7 +40,7 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 			m_customName = definition.CustomName;
 		}
 
-		public TerminalBlockEntity( CubeGridEntity parent, MyObjectBuilder_TerminalBlock definition, Object backingObject )
+		public TerminalBlockEntity( CubeGridEntity parent, MyObjectBuilder_FunctionalBlock definition, Object backingObject )
 			: base( parent, definition, backingObject )
 		{
 			m_customName = definition.CustomName;

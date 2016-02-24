@@ -2044,9 +2044,30 @@
             Clears the storage faster than clear. Only use for value type T
             </summary>
         </member>
-        <member name="M:VRageMath.Spatial.MyVector3Grid`1.RemoveTwo(VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@,VRageMath.Spatial.MyVector3Grid{`0}.Enumerator@)">
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.FindPointIndex(VRageMath.Vector3@,`0)">
             <summary>
-            Removes values pointed at by en0 and en1 and ensures that the enumerators both stay consistent
+            Returns the index of the point containing the given data on the given position
+            The index is only valid as long as the grid does not change!
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.GetData(System.Int32)">
+            <summary>
+            Returns the data stored at the given index
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.GetPoint(System.Int32)">
+            <summary>
+            Returns the point at which the data is stored at the given index
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.QueryPointsSphere(VRageMath.Vector3@,System.Single)">
+            <summary>
+            Returns a query for iterating over points inside a sphere of radius dist around the given point
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.RemoveTwo(VRageMath.Spatial.MyVector3Grid{`0}.SphereQuery@,VRageMath.Spatial.MyVector3Grid{`0}.SphereQuery@)">
+            <summary>
+            Removes values pointed at by en0 and en1 and ensures that the queries both stay consistent
             </summary>
         </member>
         <member name="M:VRageMath.Spatial.MyVector3Grid`1.RemoveEntry(System.Int32)">
@@ -2054,11 +2075,11 @@
             Removes entry with the given index and returns the index of the next entry (or -1 if the removed entry was the last one)
             </summary>
         </member>
-        <member name="M:VRageMath.Spatial.MyVector3Grid`1.Enumerator.RemoveCurrent">
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.SphereQuery.RemoveCurrent">
             <summary>
             Removes the current entry and returns true whether there is another entry.
-            May invalidate enumerators in the same bin.
-            To remove values from more enumerators while ensuring their validity use MyVector3Grid.RemoveTwo(...).
+            May invalidate indices and queries in the same bin.
+            To remove values from more queries while ensuring their validity use MyVector3Grid.RemoveTwo(...).
             </summary>
         </member>
         <member name="T:VRageMath.Vector4D">

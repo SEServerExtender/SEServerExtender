@@ -3,7 +3,6 @@
 	using System;
 	using System.Collections.Generic;
 	using System.ServiceModel;
-	using SEModAPIExtensions.API.Plugin;
 	using SEModAPIInternal;
 	using SEModAPIInternal.API.Chat;
 	using PluginInfo = SEComm.Plugins.PluginInfo;

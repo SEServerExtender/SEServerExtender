@@ -1,14 +1,15 @@
 //using Sandbox.ModAPI.Interfaces;
 
+using VRage.Game;
+using VRage.ModAPI;
+
 namespace SEModAPIInternal.API.Entity
 {
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Runtime.Serialization;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
-	using Sandbox.ModAPI.Interfaces;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;

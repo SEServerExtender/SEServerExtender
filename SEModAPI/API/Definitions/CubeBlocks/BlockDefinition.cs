@@ -1,9 +1,10 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
 	using System.ComponentModel;
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
 
-	public abstract class BlockDefinition : DefinitionOverLayer
+    public abstract class BlockDefinition : DefinitionOverLayer
 	{
 		#region "Constructors and Initializers"
 

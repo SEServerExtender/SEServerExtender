@@ -6,8 +6,6 @@ namespace SEModAPIInternal.API.Entity
     using System.Runtime.Serialization;
     using Havok;
     using Sandbox;
-    using Sandbox.Engine.Multiplayer;
-    using Sandbox.Game.Replication;
     using SEModAPI.API;
     using SEModAPI.API.TypeConverters;
     using SEModAPI.API.Utility;

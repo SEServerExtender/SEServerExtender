@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
 	using System;
@@ -6,7 +8,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 	using System.IO;
 	using System.Runtime.Serialization;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI;
 	using SEModAPI.API.TypeConverters;

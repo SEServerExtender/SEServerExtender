@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Entity
 {
 	using System;
@@ -7,7 +9,6 @@ namespace SEModAPIInternal.API.Entity
 	using System.Reflection;
 	using System.Runtime.Serialization;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Definitions;
 	using SEModAPI.API;
 	using SEModAPI.API.Sandbox;

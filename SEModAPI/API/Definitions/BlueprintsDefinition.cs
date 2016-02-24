@@ -1,8 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
-
-	public class BlueprintsDefinition : OverLayerDefinition<MyObjectBuilder_BlueprintDefinition>
+    public class BlueprintsDefinition : OverLayerDefinition<MyObjectBuilder_BlueprintDefinition>
 	{
         /*
 		#region "Attributes"

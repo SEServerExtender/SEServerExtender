@@ -10,70 +10,70 @@
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
-        <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
+        <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
             <summary>
             Enum used for localization of display name. Null for player created definitions.
             </summary>
         </member>
-        <member name="F:Sandbox.Definitions.MyDefinitionBase.DescriptionEnum">
+        <member name="F:VRage.Game.MyDefinitionBase.DescriptionEnum">
             <summary>
             Enum used for localization of description. Null for player created definitions.
             </summary>
         </member>
-        <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameString">
+        <member name="F:VRage.Game.MyDefinitionBase.DisplayNameString">
             <summary>
             String name used for user created definitions which do not have localization support.
             </summary>
         </member>
-        <member name="F:Sandbox.Definitions.MyDefinitionBase.DescriptionString">
+        <member name="F:VRage.Game.MyDefinitionBase.DescriptionString">
             <summary>
             String used for user created description which do not have localization support.
             </summary>
         </member>
-        <member name="F:Sandbox.Definitions.MyDefinitionBase.Enabled">
+        <member name="F:VRage.Game.MyDefinitionBase.Enabled">
             <summary>
             Definition can be disabled by mod, then it will be removed from definition manager
             </summary>
         </member>
-        <member name="F:Sandbox.Definitions.MyDefinitionBase.Public">
+        <member name="F:VRage.Game.MyDefinitionBase.Public">
             <summary>
             Indicates if definition should be offered in Cube builder
             </summary>
         </member>
-        <member name="M:Sandbox.Definitions.MyDefinitionBase.Postprocess">
+        <member name="M:VRage.Game.MyDefinitionBase.Postprocess">
             <summary>
             Override this in case you want to do some postprocessing of the definition before the game starts.
             <para>Postprocess is useful if you want to process the definition before the game begins,</para>
             <para>but you only want to do it when all the definitions are loaded and merged.</para>
             </summary>
         </member>
-        <member name="P:Sandbox.Definitions.MyDefinitionBase.DisplayNameText">
+        <member name="P:VRage.Game.MyDefinitionBase.DisplayNameText">
             <summary>
             Use this property when showing name in GUI instead of DisplayName. This takes into
             account more complex name construction.
             </summary>
         </member>
-        <member name="P:Sandbox.Definitions.MyDefinitionBase.DescriptionText">
+        <member name="P:VRage.Game.MyDefinitionBase.DescriptionText">
             <summary>
             Use this property when showing description in GUI, as it takes into account more
             complex description construction.
             </summary>
         </member>
-        <member name="M:VRage.Game.Definitions.MyDefinitionSet.AddDefinition(Sandbox.Definitions.MyDefinitionBase)">
+        <member name="M:VRage.Game.MyDefinitionSet.AddDefinition(VRage.Game.MyDefinitionBase)">
             Add a new definition to the set.
             
             Crashes if existing.
         </member>
-        <member name="M:VRage.Game.Definitions.MyDefinitionSet.AddOrRelaceDefinition(Sandbox.Definitions.MyDefinitionBase)">
+        <member name="M:VRage.Game.MyDefinitionSet.AddOrRelaceDefinition(VRage.Game.MyDefinitionBase)">
             Add or replace an existing definition.
         </member>
-        <member name="M:VRage.Game.Definitions.MyDefinitionSet.RemoveDefinition(Sandbox.Definitions.MyDefinitionId@)">
+        <member name="M:VRage.Game.MyDefinitionSet.RemoveDefinition(VRage.Game.MyDefinitionId@)">
             Remove a definition if on the set.
         </member>
-        <member name="M:VRage.Game.Definitions.MyDefinitionSet.GetDefinitionsOfType``1">
+        <member name="M:VRage.Game.MyDefinitionSet.GetDefinitionsOfType``1">
             Get all definitions of a given type.
         </member>
-        <member name="M:VRage.Game.Definitions.MyDefinitionSet.OverrideBy(VRage.Game.Definitions.MyDefinitionSet)">
+        <member name="M:VRage.Game.MyDefinitionSet.OverrideBy(VRage.Game.MyDefinitionSet)">
             Override the contents of this definition set with another.
         </member>
         <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
@@ -168,7 +168,7 @@
             <param name="index"></param>
             <returns>true if items were added, false if items didn't fit</returns>
         </member>
-        <member name="M:VRage.Game.Entity.MyInventoryBase.RemoveItemsOfType(VRage.MyFixedPoint,Sandbox.Definitions.MyDefinitionId,Sandbox.Common.ObjectBuilders.MyItemFlags,System.Boolean)">
+        <member name="M:VRage.Game.Entity.MyInventoryBase.RemoveItemsOfType(VRage.MyFixedPoint,VRage.Game.MyDefinitionId,VRage.Game.MyItemFlags,System.Boolean)">
             <summary>
             Remove items of a given amount and definition
             </summary>
@@ -177,7 +177,7 @@
             <param name="spawn">Set tru to spawn object in the world, after it was removed</param>
             <returns>Returns the actually removed amount</returns>
         </member>
-        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,Sandbox.ModAPI.Interfaces.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
+        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,VRage.ModAPI.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
             <summary>
             Transfers safely given item from inventory given as parameter to this instance.
             </summary>
@@ -381,13 +381,18 @@
             When true, use will be called every frame
             </summary>
         </member>
+        <member name="P:VRage.Game.MyParticleLight.Position">
+            <summary>
+            Public members to easy access
+            </summary>
+        </member>
         <member name="P:VRage.Game.Gui.MyHudEntityParams.ShouldDraw">
             <summary>
             Function that checks whether indicator should be drawn.
             Useful when reacting to some player settings.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
+        <member name="M:VRage.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
             <summary>
             Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
             WARNING: Y is from bottom to top.
@@ -470,12 +475,84 @@
             Mapping children to axis. Each child has assigned its value.
             </summary>
         </member>
+        <member name="T:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationSMConditionsConjunction">
+            <summary>
+            Conjunction of several simple conditions. This conjunction is true if all contained conditions are true.
+            </summary>
+        </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
             <summary>
             Remaps this entity's entityId to a new value.
             If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
             references and retrieve them.
             </summary>
+        </member>
+        <member name="M:VRage.Game.MyMeshHelper.GenerateSphere(VRageMath.MatrixD@,System.Single,System.Int32,System.Collections.Generic.List{VRageMath.Vector3D})">
+            <summary>
+            GenerateSphere
+            </summary>
+            <param name="vctPos"></param>
+            <param name="radius"></param>
+            <param name="steps"></param>
+        </member>
+        <member name="M:VRage.Game.MyAnimatedParticle.GetBillboardQuadRotated(VRageRender.MyBillboard,VRageMath.Vector3D@,System.Single,System.Single)">
+            <summary>
+            Return quad whos face is always looking to the camera. 
+            IMPORTANT: This bilboard looks same as point vertexes (point sprites) - horizontal and vertical axes of billboard are always parallel to screen
+            That means, if billboard is in the left-up corner of screen, it won't be distorted by perspective. If will look as 2D quad on screen. As I said, it's same as GPU points.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MyParticleEffect.Stop(System.Boolean)">
+            <summary>
+            This methods stops generating any new particles
+            </summary>
+        </member>
+        <member name="P:VRage.Game.MyParticleEmitter.Type">
+            <summary>
+            Public members to easy access
+            </summary>
+        </member>
+        <member name="P:VRage.Game.MyParticleGeneration.Birth">
+            <summary>
+            Public members to easy access
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            DrawTransparentBox
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawWireFramedBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,System.Single,VRageMath.Vector3I,System.String,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            DrawWireFramedBox
+            </summary>
+            <param name="worldMatrix"></param>
+            <param name="localbox"></param>
+            <param name="color"></param>
+            <param name="bWireFramed"></param>
+            <param name="wireDivideRatio"></param>
+            <param name="wireDivideRatio"></param>
+        </member>
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentSphere(VRageMath.MatrixD@,System.Single,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,System.Int32,System.String,System.String,System.Single,System.Int32)">
+            <summary>
+            DrawTransparentSphere
+            </summary>
+            <param name="vctPos"></param>
+            <param name="radius"></param>
+            <param name="color"></param>
+            <param name="bWireFramed"></param>
+            <param name="wireDivideRatio"></param>
+        </member>
+        <member name="M:VRage.Game.MySimpleObjectDraw.GenerateLines(VRageMath.Vector3D,VRageMath.Vector3D,VRageMath.Vector3D@,VRageMath.MatrixD@,System.Collections.Generic.List{VRageMath.LineD}@,System.Int32)">
+            <summary>
+            GenerateLines
+            </summary>
+            <param name="vctStart"></param>
+            <param name="vctEnd"></param>
+            <param name="vctSideStep"></param>
+            <param name="worldMatrix"></param>
+            <param name="lineBuffer"></param>
+            <param name="divideRatio"></param>
         </member>
         <member name="M:VRage.Game.Utils.MyCamera.ChangeFov(System.Single)">
             <summary>
@@ -572,12 +649,6 @@
             Sets the position.
             </summary>
             <param name="pos">The pos.</param>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetWorldMatrixNormalizedInv">
-            <summary>
-            Inverted world matrix of this physic object calculated on-demand (non cached).
-            Use it whenever you want to do world-matrix transformations with this physic objects.
-            </summary>
         </member>
         <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(System.Object)">
             <summary>
@@ -995,27 +1066,27 @@
             Obtain/set secondary rigid body of this physics object (not used by default, it is used sometimes on grids for kinematic layer).
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyResourceSinkComponentBase.SetRequiredInputFuncByType(Sandbox.Definitions.MyDefinitionId,System.Func{System.Single})">
+        <member name="M:VRage.Game.Components.MyResourceSinkComponentBase.SetRequiredInputFuncByType(VRage.Game.MyDefinitionId,System.Func{System.Single})">
             <summary>
             Change the required input function (callback) for given type of resource. It does not call it immediatelly to update required input value.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.CurrentOutputByType(Sandbox.Definitions.MyDefinitionId)">
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.CurrentOutputByType(VRage.Game.MyDefinitionId)">
             <summary>
             Currently used power output of the producer in MW or litres/h.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.MaxOutputByType(Sandbox.Definitions.MyDefinitionId)">
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.MaxOutputByType(VRage.Game.MyDefinitionId)">
             <summary>
             Maximum power output of the producer in MW or litres/h.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.DefinedOutputByType(Sandbox.Definitions.MyDefinitionId)">
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.DefinedOutputByType(VRage.Game.MyDefinitionId)">
             <summary>
             Max resource output defined in definition in MW or litres/h.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.ProductionEnabledByType(Sandbox.Definitions.MyDefinitionId)">
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.ProductionEnabledByType(VRage.Game.MyDefinitionId)">
             <summary>
             Resource production is enabled
             </summary>
@@ -4850,13 +4921,18 @@
             You are out of {0}.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.BlueprintItem.Amount">
+        <member name="F:MyCommonTexts.MuteWhenNotInFocus">
+            <summary>
+            Mute when inactive
+            </summary>
+        </member>
+        <member name="F:VRage.Game.BlueprintItem.Amount">
             <summary>
             Amount of item required or produced. For discrete objects this refers to
             pieces. For ingots and ore, this refers to volume in m^3.
             </summary>
         </member>
-        <member name="T:Sandbox.Definitions.MyDefinitionId">
+        <member name="T:VRage.Game.MyDefinitionId">
             <summary>
             Prefer getting definition ID using object builder used to create the item.
             If you have automatic rifle, in its Init method create new MyDefinitionId
@@ -4865,14 +4941,14 @@
             change, code needs to change as well.
             </summary>
         </member>
-        <member name="M:Sandbox.Definitions.MyDefinitionId.GetHashCodeLong">
+        <member name="M:VRage.Game.MyDefinitionId.GetHashCodeLong">
             <summary>
             Safer hash code. It is unique in more situations than GetHashCode would be,
             but it may still require full check.
             </summary>
             <returns>64-bit hash code.</returns>
         </member>
-        <member name="M:Sandbox.Definitions.MyContainerDefinition.HasDefaultComponent(System.String)">
+        <member name="M:VRage.Game.MyContainerDefinition.HasDefaultComponent(System.String)">
             <summary>
             This will search through definitions to find if Default Components contains the searched component either as BuilderType, InstanceType, or ComponentType
             </summary>
@@ -4891,68 +4967,68 @@
             Enemies state is with highest prority and does not care if other faction want to be friend.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.Result">
+        <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.BaseProductionTimeInSeconds">
+        <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.BaseProductionTimeInSeconds">
             <summary>
             Base production time in seconds, which is affected by speed increase of
             refinery or assembler.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
+        <member name="F:VRage.Game.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
             <summary>
             Color is used to get Color(4 bytes) as well as
             MyStringId value for localization.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.PhysicalMaterial">
+        <member name="F:VRage.Game.MyObjectBuilder_CharacterDefinition.PhysicalMaterial">
             <summary>
             Physical material of the character.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.DeadBodyShape">
+        <member name="F:VRage.Game.MyObjectBuilder_CharacterDefinition.DeadBodyShape">
             <summary>
             Physics shape used after character's death.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.AnimationController">
+        <member name="F:VRage.Game.MyObjectBuilder_CharacterDefinition.AnimationController">
             <summary>
             Name of used animation controller.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OneDirection">
+        <member name="F:VRage.Game.MyAutorotateMode.OneDirection">
             <summary>
             When block has mount points only on one side, it will autorotate so that side is touching the surface.
             Otherwise, full range of rotations is allowed.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OppositeDirections">
+        <member name="F:VRage.Game.MyAutorotateMode.OppositeDirections">
             <summary>
             When block has mount points only on two sides and those sides are opposite each other (eg. Top and Bottom),
             it will autorotate so that one of these sides is touching the surface. Otherwise, full range of rotations
             is allowed.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.FirstDirection">
+        <member name="F:VRage.Game.MyAutorotateMode.FirstDirection">
             <summary>
             When block has mountpoint on at least one side, it will autorotate so that this side is touching the surface.
             Otherwise, full range of rotations is allowed.
             </summary>
         </member>
-        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyGlobalEventTypeEnum">
+        <member name="T:VRage.Game.MyGlobalEventTypeEnum">
             <summary>
             Defines the event type.
             Each event type has its assigned handler method and data class type.
             Multiple event definitions can have the same event type.
             </summary>
         </member>
-        <member name="P:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialDefinition.HasLayers">
+        <member name="P:VRage.Game.MyPlanetMaterialDefinition.HasLayers">
             Weather this material has layers.
         </member>
-        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialPlacementRule">
+        <member name="T:VRage.Game.MyPlanetMaterialPlacementRule">
             Important!
             
             Due to the geometry in question the slope is stored as the cosine (used in dot product).
@@ -4960,24 +5036,24 @@
             Meanwhile the dot product for the latitude yields the cosine of the modulus of the compliment of our angle.
             This means after the maths are done that what we have is the *sine*, so the latitude is stored as the sine.
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialPlacementRule.Check(System.Single,System.Single,System.Single)">
+        <member name="M:VRage.Game.MyPlanetMaterialPlacementRule.Check(System.Single,System.Single,System.Single)">
             Check that a rule matches terrain properties.
             
             @param height Height ration to the height map.
             @param latitude Latitude cosine
             @param slope Surface dominant angle sine.
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetSurfaceRule.Check(System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:VRage.Game.MyPlanetSurfaceRule.Check(System.Single,System.Single,System.Single,System.Single)">
             Check that a rule matches terrain properties.
             
             @param height Height ration to the height map.
             @param latitude Latitude cosine
             @param slope Surface dominant angle cosine.
         </member>
-        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialGroup">
+        <member name="T:VRage.Game.MyPlanetMaterialGroup">
             Rule group defines a material mappable set of surface rules.
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangeValue.ConvertToCosine">
+        <member name="M:VRage.Game.MyRangeValue.ConvertToCosine">
             When the range is an angle this method changes it to the cosines of the angle.
             
             The angle is expected to be in degrees.
@@ -4985,17 +5061,17 @@
             Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
             
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangeValue.ConvertToSine">
+        <member name="M:VRage.Game.MyRangeValue.ConvertToSine">
             When the range is an angle this method changes it to the sines of the angle.
             
             The angle is expected to be in degrees.
         </member>
-        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyReflectiveRangeValue">
+        <member name="T:VRage.Game.MyReflectiveRangeValue">
             Reflective because it can be reflected to the oposite range.
             
             Structs not inheriting from structs is stupid.
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyReflectiveRangeValue.ConvertToCosine">
+        <member name="M:VRage.Game.MyReflectiveRangeValue.ConvertToCosine">
             When the range is an angle this method changes it to the cosines of the angle.
             
             The angle is expected to be in degrees.
@@ -5003,12 +5079,12 @@
             Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
             
         </member>
-        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyReflectiveRangeValue.ConvertToSine">
+        <member name="M:VRage.Game.MyReflectiveRangeValue.ConvertToSine">
             When the range is an angle this method changes it to the sines of the angle.
             
             The angle is expected to be in degrees.
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_PhysicalObject.DurabilityHP">
+        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
             <summary>
             This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
             </summary>
@@ -5018,52 +5094,52 @@
             Whether the given block should be used when spawning the component which it contains
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.ElapsedGameTime">
+        <member name="F:VRage.Game.MyObjectBuilder_Checkpoint.ElapsedGameTime">
             <summary>
             This is long because TimeSpan is not serialized
             </summary>
         </member>
-        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.GameTime">
+        <member name="P:VRage.Game.MyObjectBuilder_Checkpoint.GameTime">
             <summary>
             Obsolete. Use ElapsedGameTime
             </summary>
         </member>
-        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_InventoryItem.Content">
+        <member name="P:VRage.Game.MyObjectBuilder_InventoryItem.Content">
             <summary>
             Obsolete. It is here only to keep LIMITED backwards compatibility with old saves. Nulls content when unsupported.
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_SessionSettings.WorldSizeKm">
+        <member name="F:VRage.Game.MyObjectBuilder_SessionSettings.WorldSizeKm">
             <summary>
             Size of the edge of the world area cube.
             Don't use directly, as it is error-prone (it's km instead of m and edge size instead of half-extent)
             Rather use MyEntities.WorldHalfExtent()
             </summary>
         </member>
-        <member name="F:Sandbox.Common.ObjectBuilders.MyToolbarType.Spectator">
+        <member name="F:VRage.Game.MyToolbarType.Spectator">
             <summary>
             This is character toolbar that allows building everything.
             </summary>
         </member>
-        <member name="T:Sandbox.Common.ObjectBuilders.GameRelationAttribute">
+        <member name="T:VRage.Game.GameRelationAttribute">
             <summary>
             This class is here only to distinguish fields in SessionSettings
             Will be removed after correct hierarchy and usage of session settings is made
             </summary>
         </member>
-        <member name="M:Sandbox.Common.MyAbstractXmlSerializer`1.#ctor">
+        <member name="M:VRage.Game.MyAbstractXmlSerializer`1.#ctor">
             <summary>
             **DO NOT USE** This is only added to enable XML Serialization.
             </summary>
             <remarks>DO NOT USE THIS CONSTRUCTOR</remarks>
         </member>
-        <member name="M:Sandbox.Common.MyAbstractXmlSerializer`1.#ctor(`0)">
+        <member name="M:VRage.Game.MyAbstractXmlSerializer`1.#ctor(`0)">
             <summary>
             Initialises the Serializer to work with the given data.
             </summary>
             <param name="data">Concrete Object of the AbstractType Specified.</param>
         </member>
-        <member name="P:Sandbox.Common.MyAbstractXmlSerializer`1.Data">
+        <member name="P:VRage.Game.MyAbstractXmlSerializer`1.Data">
             <summary>
             [Concrete] Data to be stored/is stored as XML.
             </summary>
@@ -5102,7 +5178,7 @@
             This object builder is old and is for "MyInventoryBagEntity". Do not use it as base class or for anything. It is here only for backward compatibility.
             </summary>
         </member>
-        <member name="F:Sandbox.Engine.Utils.MyMissileConstants.DISTANCE_TO_CHECK_MISSILE_CORRECTION">
+        <member name="F:VRage.Game.MyMissileConstants.DISTANCE_TO_CHECK_MISSILE_CORRECTION">
             <summary>
             The distance to check whether missile will collide soon after launch with something.
             For more info, see ticket 3422.

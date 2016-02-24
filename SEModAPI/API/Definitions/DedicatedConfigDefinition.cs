@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
 	using System;
@@ -11,12 +13,9 @@ namespace SEModAPI.API.Definitions
 	using System.Windows.Forms.Design;
 	using System.Xml;
 	using System.Xml.Serialization;
-	using global::Sandbox.Common.ObjectBuilders;
 	using VRage.ObjectBuilders;
-    using SEModAPIInternal.Support;
-    using SEModAPIExtensions.API;
 
-	[DataContract]
+    [DataContract]
 	public class DedicatedConfigDefinition
 	{
 		private readonly MyConfigDedicatedData<MyObjectBuilder_SessionSettings> _definition;

@@ -109,21 +109,6 @@
             Animation clips associated with this model
             </summary>
         </member>
-        <member name="M:VRage.Animations.IMyConstProperty.EditorGetValue">
-            <summary>
-            Warning, this does allocation, use only in editor!
-            </summary>
-        </member>
-        <member name="M:VRage.Animations.IMyAnimatedProperty.EditorSetKey(System.Int32,System.Single,System.Object)">
-            <summary>
-            Warning this will do allocations, use only in editor!
-            </summary>
-        </member>
-        <member name="M:VRage.Animations.IMyAnimatedProperty.EditorGetKey(System.Int32,System.Single@,System.Object@)">
-            <summary>
-            Warning this will do allocations, use only in editor!
-            </summary>
-        </member>
         <member name="T:VRage.Animations.MyAnimationController">
             <summary>
             Animation controller contains and drives skeletal animations.
@@ -1036,6 +1021,66 @@
             </summary>
             <param name="keyframes"></param>
         </member>
+        <member name="F:VRageRender.RenderProfilerCommand.Enable">
+            <summary>
+            Only enables the profiler, used by the developer debug window
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerCommand.ToggleEnabled">
+            <summary>
+            Toggles profiler enabled/disabled state, doesn't reset profiler level
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerCommand.JumpToRoot">
+            <summary>
+            Jumps all the way to the root element
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerCommand.DisableFrameSelection">
+            <summary>
+            Disables the current selection again
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerCommand.ChangeSortingOrder">
+            <summary>
+            Changes the profiler's sorting order, see ProfilerSortingOptions for the possible sorting options
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerCommand.CopyPathToClipboard">
+            <summary>
+            Copies the current path to clipboard
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerCommand.TryGoToPathInClipboard">
+            <summary>
+            Tries to navigate to the path in the clipboard
+            </summary>
+        </member>
+        <member name="T:VRageRender.RenderProfilerSortingOrder">
+            <summary>
+            Profiler sorting order types
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerSortingOrder.Id">
+            <summary>
+            Order in which the elements are logged
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerSortingOrder.MillisecondsLastFrame">
+            <summary>
+            Milliseconds spent in the previous frame, sorted from slowest to fastest
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerSortingOrder.MillisecondsAverage">
+            <summary>
+            Milliseconds spent on average, sorted from slowest to fastest
+            </summary>
+        </member>
+        <member name="F:VRageRender.RenderProfilerSortingOrder.NumSortingTypes">
+            <summary>
+            Total number of sorting types
+            </summary>
+        </member>
         <member name="F:VRageRender.MyRenderMessageType.Draw">
             <summary>
             Draw message, skipped when processing multiple updates (only handled in last update before draw)
@@ -1156,6 +1201,11 @@
             For threads which does not call commit (background workers, parallel tasks), mechanism which calls commit automatically after each top level End should be added.
             This way each task will be one "frame" on display
             </remarks>
+        </member>
+        <member name="F:VRageRender.Profiler.MyRenderProfiler.m_sortingOrder">
+            <summary>
+            Sorting order will sort the listed elements in the profiler by the specified ProfilerSortingOrder
+            </summary>
         </member>
         <member name="M:VRageRender.Profiler.MyRenderProfiler.CreateProfiler(System.String,System.String,System.Boolean)">
             <summary>
@@ -1530,7 +1580,7 @@
             Must be possible to query during startup before render thread and window is created.
             </summary>
         </member>
-        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32,System.String,System.Int32,System.String,System.Nullable{VRageMath.Color},System.Single)">
+        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32,System.String,System.Int32[],System.String,System.Nullable{VRageMath.Color},System.Single)">
             <param name="thickness">Zero or negative to remove highlight</param>
         </member>
         <member name="M:VRageRender.MyRenderProxy.ChangeModel(System.UInt32,System.Int32,System.String,System.Boolean)">
@@ -2827,6 +2877,11 @@
             </summary>
         </member>
         <member name="T:VRage.Utils.MyWingedEdgeMesh.Face">
+            <summary>
+            Note: This is invalid after the mesh changes!
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyWingedEdgeMesh.VertexEdgeEnumerator">
             <summary>
             Note: This is invalid after the mesh changes!
             </summary>

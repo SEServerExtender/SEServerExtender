@@ -1,7 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
-	using VRageMath;
+    using VRageMath;
 
 	public class AmmoMagazinesDefinition : ObjectOverLayerDefinition<MyObjectBuilder_AmmoMagazineDefinition>
     {

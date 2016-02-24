@@ -1,4 +1,6 @@
-﻿namespace SEModAPIExtensions.API
+﻿using VRage.Game;
+
+namespace SEModAPIExtensions.API
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +13,6 @@
     using System.Threading;
     using System.Xml;
     using Sandbox;
-    using Sandbox.Common.ObjectBuilders;
     using Sandbox.Engine.Multiplayer;
     using Sandbox.Game.Replication;
     using Sandbox.ModAPI;

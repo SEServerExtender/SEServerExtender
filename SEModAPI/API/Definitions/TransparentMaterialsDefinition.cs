@@ -1,7 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
 	using System;
-	using global::Sandbox.Common.ObjectBuilders.VRageData;
 	using VRageMath;
 
 	public class TransparentMaterialsDefinition : OverLayerDefinition<MyObjectBuilder_TransparentMaterial>

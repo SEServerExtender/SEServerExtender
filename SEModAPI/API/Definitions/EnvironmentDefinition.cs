@@ -1,7 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
-	using VRage;
+    using VRage;
 
 	public class EnvironmentDefinition
 	{

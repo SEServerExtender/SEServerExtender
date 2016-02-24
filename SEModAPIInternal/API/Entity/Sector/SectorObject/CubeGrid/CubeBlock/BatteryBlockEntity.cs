@@ -6,7 +6,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 	using System.Runtime.Serialization;
 	using Sandbox;
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Game.EntityComponents;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;

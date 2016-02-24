@@ -6,9 +6,8 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock;
-	using SEModAPIInternal.Support;
 
-	public class CubeGridThrusterManager
+    public class CubeGridThrusterManager
 	{
 		#region "Attributes"
 

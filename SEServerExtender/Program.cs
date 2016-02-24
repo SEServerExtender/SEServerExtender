@@ -7,7 +7,6 @@ namespace SEServerExtender
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -23,7 +22,6 @@ namespace SEServerExtender
     using SEModAPIExtensions.API;
     using SEModAPIInternal.API.Chat;
     using SEModAPIInternal.API.Common;
-    using VRage;
     using VRage.ObjectBuilders;
     public static class Program
 	{

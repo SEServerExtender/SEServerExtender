@@ -1,7 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Common
 {
 	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Voxels;
 	using SEModAPIInternal.API.Entity.Sector.SectorObject;
 
 	public class EntityRegistry : GameObjectRegistry

@@ -1,7 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
 	using System.ComponentModel;
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRage.ObjectBuilders;
 
 	/// <summary>
@@ -23,7 +24,7 @@ namespace SEModAPI.API.Definitions
 
 		#region "Constructors and Initializers"
 
-		protected DefinitionOverLayer(MyObjectBuilder_DefinitionBase baseDefinition)
+		protected DefinitionOverLayer(MyObjectBuilder_CubeBlockDefinition baseDefinition)
 		{
 			BaseDefinition = baseDefinition;
 		}

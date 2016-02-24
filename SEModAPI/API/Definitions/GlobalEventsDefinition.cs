@@ -1,8 +1,8 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
-
-	public class GlobalEventsDefinition : ObjectOverLayerDefinition<MyObjectBuilder_GlobalEventDefinition>
+    public class GlobalEventsDefinition : ObjectOverLayerDefinition<MyObjectBuilder_GlobalEventDefinition>
 	{
 		#region "Constructors and Initializers"
 

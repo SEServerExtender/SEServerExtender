@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Server
 {
 	using System;
@@ -9,9 +11,6 @@ namespace SEModAPIInternal.API.Server
 	using System.Security;
 	using System.Threading;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
-	using Sandbox.Common.ObjectBuilders.Definitions;
-	using Sandbox.Common.ObjectBuilders.Voxels;
 	using Sandbox.Engine.Multiplayer;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.ModAPI;

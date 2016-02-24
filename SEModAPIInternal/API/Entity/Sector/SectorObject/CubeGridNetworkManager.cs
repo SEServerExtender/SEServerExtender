@@ -1,9 +1,10 @@
+using VRage.Game;
+
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
 	using System.Collections.Generic;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using Sandbox.ModAPI;
 	using SEModAPI.API.Utility;

@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
 	using System;
@@ -7,7 +9,6 @@ namespace SEModAPI.API.Definitions
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRage.ObjectBuilders;
 
 	/// <summary>
@@ -73,7 +74,7 @@ namespace SEModAPI.API.Definitions
 		#endregion
 	}
 
-	public abstract class ObjectOverLayerDefinition<TMyObjectBuilder_Definitions_SubType> : OverLayerDefinition<TMyObjectBuilder_Definitions_SubType> where TMyObjectBuilder_Definitions_SubType : MyObjectBuilder_DefinitionBase
+	public abstract class ObjectOverLayerDefinition<TMyObjectBuilder_Definitions_SubType> : OverLayerDefinition<TMyObjectBuilder_Definitions_SubType>
 	{
 		#region "Constructors and Initializers"
 

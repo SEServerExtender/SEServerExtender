@@ -1,10 +1,11 @@
+using VRage.Game;
+
 namespace SEModAPI.API.Definitions
 {
 	using System;
 	using System.Configuration;
 	using System.IO;
 	using System.Security;
-	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRage.ObjectBuilders;
 
 	public class ConfigFileSerializer

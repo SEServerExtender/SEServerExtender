@@ -1,11 +1,12 @@
-﻿namespace SEModAPIInternal.API.Common
+﻿using VRage.Game;
+
+namespace SEModAPIInternal.API.Common
 {
 	using System;
 	using System.IO;
 	using System.Reflection;
 	using System.Threading;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
 	using SEModAPI.API;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
