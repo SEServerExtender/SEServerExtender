@@ -3,6 +3,7 @@ using VRage.Game;
 namespace SEModAPI.API.Definitions
 {
 	using System.ComponentModel;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 	using VRageMath;
 
 	public class HandItemsDefinition : OverLayerDefinition<MyObjectBuilder_HandItemDefinition>

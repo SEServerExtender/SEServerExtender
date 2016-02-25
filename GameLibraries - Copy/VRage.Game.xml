@@ -1,0 +1,5112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VRage.Game</name>
+    </assembly>
+    <members>
+        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
+            <summary>
+            Indicates whether a session component should be used in current configuration.
+            Example: MyDestructionData component returns true only when game uses Havok Destruction
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameEnum">
+            <summary>
+            Enum used for localization of display name. Null for player created definitions.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DescriptionEnum">
+            <summary>
+            Enum used for localization of description. Null for player created definitions.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DisplayNameString">
+            <summary>
+            String name used for user created definitions which do not have localization support.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.DescriptionString">
+            <summary>
+            String used for user created description which do not have localization support.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.Enabled">
+            <summary>
+            Definition can be disabled by mod, then it will be removed from definition manager
+            </summary>
+        </member>
+        <member name="F:Sandbox.Definitions.MyDefinitionBase.Public">
+            <summary>
+            Indicates if definition should be offered in Cube builder
+            </summary>
+        </member>
+        <member name="M:Sandbox.Definitions.MyDefinitionBase.Postprocess">
+            <summary>
+            Override this in case you want to do some postprocessing of the definition before the game starts.
+            <para>Postprocess is useful if you want to process the definition before the game begins,</para>
+            <para>but you only want to do it when all the definitions are loaded and merged.</para>
+            </summary>
+        </member>
+        <member name="P:Sandbox.Definitions.MyDefinitionBase.DisplayNameText">
+            <summary>
+            Use this property when showing name in GUI instead of DisplayName. This takes into
+            account more complex name construction.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Definitions.MyDefinitionBase.DescriptionText">
+            <summary>
+            Use this property when showing description in GUI, as it takes into account more
+            complex description construction.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Definitions.MyDefinitionSet.AddDefinition(Sandbox.Definitions.MyDefinitionBase)">
+            Add a new definition to the set.
+            
+            Crashes if existing.
+        </member>
+        <member name="M:VRage.Game.Definitions.MyDefinitionSet.AddOrRelaceDefinition(Sandbox.Definitions.MyDefinitionBase)">
+            Add or replace an existing definition.
+        </member>
+        <member name="M:VRage.Game.Definitions.MyDefinitionSet.RemoveDefinition(Sandbox.Definitions.MyDefinitionId@)">
+            Remove a definition if on the set.
+        </member>
+        <member name="M:VRage.Game.Definitions.MyDefinitionSet.GetDefinitionsOfType``1">
+            Get all definitions of a given type.
+        </member>
+        <member name="M:VRage.Game.Definitions.MyDefinitionSet.OverrideBy(VRage.Game.Definitions.MyDefinitionSet)">
+            Override the contents of this definition set with another.
+        </member>
+        <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
+            <summary>
+            Entity component containing animation controller.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
+            <summary>
+            Sets the container of this component.
+            Note that the component is not added to the container here! Therefore, use MyComponentContainer.Add(...) method and it
+            will in turn call this method. Actually, you should seldom have the need to call this method yourself.
+            </summary>
+            <param name="container">The new container of the component</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.OnAddedToContainer">
+            <summary>
+            Gets called after the container of this component changes
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.OnBeforeRemovedFromContainer">
+            <summary>
+            Gets called before the removal of this component from a container
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.IsSerialized">
+            <summary>
+            Tells the component container serializer whether this component should be saved
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.Components.MyComponentBase.ContainerBase">
+            <summary>
+            This cannot be named Container to not conflict with the definition of Container in MyEntityComponentBase.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyEntityComponentBase.ComponentTypeDebugString">
+            <summary>
+            Name of the base component type for debug purposes (e.g.: "Position")
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyAnimationControllerComponent.OnAddedToContainer">
+            <summary>
+            Component was added in the entity component container.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyAnimationControllerComponent.OnBeforeRemovedFromContainer">
+            <summary>
+            Component will be removed from entity component container.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyAnimationControllerComponent.TriggerAction(VRage.Utils.MyStringId)">
+            <summary>
+            Trigger an action in this layer. 
+            If there is a transition having given (non-null) name, it is followed immediatelly.
+            Conditions of transition are ignored.
+            This is a shortcut to Controller.TriggerAction.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.ComponentTypeDebugString">
+            <summary>
+            Name of the component type for debug purposes (e.g.: "Position")
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.Controller">
+            <summary>
+            Get the animation controller instance.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.Variables">
+            <summary>
+            Get the variable storage of animation controller instance. Shortcut.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.CharacterBones">
+            <summary>
+            Get or set reference to array of character bones and its contents.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyInventoryBase.RemoveEntityOnEmpty">
+            <summary>
+            Setting this flag to true causes to call Close() on the Entity of Container, when the GetItemsCount() == 0.
+            This causes to remove entity from the world, when this inventory is empty.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.AddItems(VRage.MyFixedPoint,VRage.ObjectBuilders.MyObjectBuilder_Base,System.Int32,System.Boolean)">
+            <summary>
+            Adds item to inventory
+            </summary>
+            <param name="amount"></param>
+            <param name="objectBuilder"></param>
+            <param name="index"></param>
+            <returns>true if items were added, false if items didn't fit</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.RemoveItemsOfType(VRage.MyFixedPoint,Sandbox.Definitions.MyDefinitionId,Sandbox.Common.ObjectBuilders.MyItemFlags,System.Boolean)">
+            <summary>
+            Remove items of a given amount and definition
+            </summary>
+            <param name="amount">amount ot remove</param>
+            <param name="contentId">definition id of items to be removed</param>
+            <param name="spawn">Set tru to spawn object in the world, after it was removed</param>
+            <returns>Returns the actually removed amount</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,Sandbox.ModAPI.Interfaces.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
+            <summary>
+            Transfers safely given item from inventory given as parameter to this instance.
+            </summary>
+            <returns>true if items were succesfully transfered, otherwise, false</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.GetItemsCount">
+            <summary>
+            Returns the number of items in the inventory. This needs to be overrided, otherwise it returns 0!
+            </summary>
+            <returns>int - number of items in inventory</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.GetInventoryCount">
+            <summary>
+            Returns number of embedded inventories - this inventory can be aggregation of other inventories.
+            </summary>
+            <returns>Return one for simple inventory, different number when this instance is an aggregation.</returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyInventoryBase.IterateInventory(System.Int32,System.Int32)">
+            <summary>
+            Search for inventory having given search index. 
+            Aggregate inventory: Iterates through aggregate inventory until simple inventory with matching index is found.
+            Simple inventory: Returns itself if currentIndex == searchIndex.
+            
+            Usage: searchIndex = index of inventory being searched, leave currentIndex = 0.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyInventoryBase.InventoryId">
+            <summary>
+            This is for the purpose of identifying the inventory in aggregates (i.e. "Backpack", "LeftHand", ...)
+            </summary>
+        </member>
+        <member name="E:VRage.Game.Entity.MyInventoryBase.ContentsChanged">
+            <summary>
+            Called when items were added or removed, or their amount has changed
+            </summary>
+        </member>
+        <member name="E:VRage.Game.Entity.MyInventoryBase.OwnerChanged">
+            <summary>
+            Called if this inventory changed its owner
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetTopMostParent(System.Type)">
+            <summary>
+            Return top most parent of this entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntity.m_physics">
+            Optimized link to physics component.
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VRage.Game.Entity.MyEntity"/> class.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.UpdateBeforeSimulation10">
+            <summary>
+            Called each 10th frame if registered for update10
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.UpdateBeforeSimulation100">
+            <summary>
+            Called each 100th frame if registered for update100
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.DebugDrawPhysics">
+            <summary>
+            Draw physical representation of entity
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.OnAddedToScene(System.Object)">
+            <summary>
+            Called when [activated] which for entity means that was added to scene.
+            </summary>
+            <param name="source">The source of activation.</param>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.Delete">
+            <summary>
+            Every object must have this method, but not every phys object must necessarily have something to cleanup
+            <remarks>
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.Close">
+            <summary>
+            This method marks this entity for close which means, that Close
+            will be called after all entities are updated
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetObjectBuilder(System.Boolean)">
+            <summary>
+            Gets object builder from object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.BeforeSave">
+            <summary>
+            Called before method GetObjectBuilder, when saving sector
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.PrepareForDraw">
+            <summary>
+            Method is called defacto from Update, preparation fo Draw
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetInventoryBase(System.Int32)">
+            <summary>
+            Search for inventory component with maching index.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.GetInventoryBase">
+            <summary>
+            Simply get the MyInventoryBase component stored in this entity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.EntityId">
+            <summary>
+            Entity id, can be set by subclasses (for example when using pool...)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.Parent">
+            <summary>
+            Gets or sets the parent.
+            </summary>
+            <value>
+            The parent.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.VRage#ModAPI#IMyEntity#Physics">
+            Implementing interface IMyEntity - get/set physics component.
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.Physics">
+            Gets the physic component of the entity.
+        </member>
+        <member name="E:VRage.Game.Entity.MyEntity.OnMarkForClose">
+            <summary>
+            This event may not be invoked at all, when calling MyEntities.CloseAll, marking is bypassed
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.InventoryCount">
+            <summary>
+            Iterate through inventories and return their count.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.HasInventory">
+            <summary>
+            Returns true if this entity has got at least one inventory. 
+            Note that one aggregate inventory can contain zero simple inventories => zero will be returned even if GetInventoryBase() != null.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.MyEntity.DisplayNameText">
+            <summary>
+            Display Name for GUI etc. Override in descendant classes. Usually used to display in terminal or inventory controls.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.UseObject.IMyUseObject.Use(VRage.Game.Entity.UseObject.UseActionEnum,VRage.ModAPI.IMyEntity)">
+            <summary>
+            Uses object by specified action
+            Caller calls this method only on supported actions
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Entity.UseObject.IMyUseObject.GetActionInfo(VRage.Game.Entity.UseObject.UseActionEnum)">
+            <summary>
+            Gets action text
+            Caller calls this method only on supported actions
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.InteractiveDistance">
+            <summary>
+            Consider object as being in interactive range only if distance from character is smaller or equal to this value
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.ActivationMatrix">
+            <summary>
+            Matrix of object, scale represents size of object
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.WorldMatrix">
+            <summary>
+            Matrix of object, scale represents size of object
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.RenderObjectID">
+            <summary>
+            Render ID of objects 
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.ShowOverlay">
+            <summary>
+            Show overlay (semitransparent bounding box)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.SupportedActions">
+            <summary>
+            Returns supported actions
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.ContinuousUsage">
+            <summary>
+            When true, use will be called every frame
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Gui.MyHudEntityParams.ShouldDraw">
+            <summary>
+            Function that checks whether indicator should be drawn.
+            Useful when reacting to some player settings.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
+            <summary>
+            Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
+            WARNING: Y is from bottom to top.
+            </summary>
+            <param name="worldPos">World position.</param>
+            <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
+        <member name="T:VRage.Game.Entity.MyEntitiesInterface">
+            <summary>
+            Callbacks to various MyEntities methods.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.RegisterUpdate">
+            <summary>
+            Register entity for updating.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.UnregisterUpdate">
+            <summary>
+            Unregister entity from updating.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.RegisterDraw">
+            <summary>
+            Register entity for drawing.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.UnregisterDraw">
+            <summary>
+            Unregister entity from drawing.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.SetEntityName">
+            <summary>
+            Callback to public static void MyEntities.SetEntityName(MyEntity myEntity, bool possibleRename = true).
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.IsUpdateInProgress">
+            <summary>
+            Is update of all entities in progress?
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Entity.MyEntitiesInterface.IsCloseAllowed">
+            <summary>
+            Is closing of objects allowed?
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.RegisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
+            <summary>
+            Register entity component.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.UnregisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
+            <summary>
+            Unregister entity component.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.AnimationName">
+            <summary>
+            Name of used track (animation).
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Loop">
+            <summary>
+            If true, animation will be looped. Default value is true.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Speed">
+            <summary>
+            Playing speed.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.ParameterName">
+            <summary>
+            Name of parameter controlling blending inside this node.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.Children">
+            <summary>
+            Mapping children to axis. Each child has assigned its value.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
+            <summary>
+            Remaps this entity's entityId to a new value.
+            If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
+            references and retrieve them.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Utils.MyCamera.ChangeFov(System.Single)">
+            <summary>
+            Changes FOV for ForwardCamera (updates projection matrix)
+            SetViewMatrix overwrites this changes
+            </summary>
+            <param name="fov"></param>
+        </member>
+        <member name="M:VRage.Game.Utils.MyCamera.WorldToScreen(VRageMath.Vector3D@)">
+            <summary>
+            Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
+            WARNING: Y is from bottom to top.
+            </summary>
+            <param name="worldPos">World position.</param>
+            <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoom">
+            <summary>
+            Gets current fov with considering if zoom is enabled
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoomForNearObjects">
+            <summary>
+            Gets current fov with considering if zoom is enabled
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyHierarchyComponentBase.GetTopMostParent(System.Type)">
+            <summary>
+            Return top most parent of this entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:VRage.Game.Components.MyHierarchyComponentBase.ChildId">
+            Identifier for the parent hierarchy.
+            
+            This is should be reliably unique within a hierarchy level but only usable by the parent.
+        </member>
+        <member name="M:VRage.Game.Components.MyHierarchyComponentBase.AddChild(VRage.ModAPI.IMyEntity,System.Boolean,System.Boolean)">
+            <summary>
+            Adds the child.
+            </summary>
+            <param name="child">The child.</param>
+            <param name="preserveWorldPos">if set to <c>true</c> [preserve absolute position].</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyHierarchyComponentBase.RemoveChild(VRage.ModAPI.IMyEntity,System.Boolean)">
+            <summary>
+            Adds the child.
+            </summary>
+            <param name="child">The child.</param>
+            <param name="preserveWorldPos">if set to <c>true</c> [preserve absolute position].</param>
+        </member>
+        <member name="P:VRage.Game.Components.MyHierarchyComponentBase.Children">
+            <summary>
+            Gets the childs collection.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MySessionComponentDescriptor.Priority">
+            <summary>
+            Lower Priority is loaded before higher Priority
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_invalidBox">
+            <summary>
+            Internal world matrix of entity.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_localMatrix">
+            <summary>
+            Internal local matrix relative to parent of entity.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
+            <summary>
+            Sets the world matrix.
+            </summary>
+            <param name="worldMatrix">The world matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetLocalMatrix(VRageMath.MatrixD,System.Object)">
+            <summary>
+            Sets the local matrix.
+            </summary>
+            <param name="localMatrix">The local matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetPosition">
+            <summary>
+            Gets the entity position.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetPosition(VRageMath.Vector3D)">
+            <summary>
+            Sets the position.
+            </summary>
+            <param name="pos">The pos.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetWorldMatrixNormalizedInv">
+            <summary>
+            Inverted world matrix of this physic object calculated on-demand (non cached).
+            Use it whenever you want to do world-matrix transformations with this physic objects.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(System.Object)">
+            <summary>
+            Updates the world matrix (change caused by this entity)
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(VRageMath.MatrixD@,System.Object)">
+            <summary>
+            Updates the world matrix (change caused by parent)
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldVolume">
+            <summary>
+            Updates the volume of this entity.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateAABBHr(VRageMath.BoundingBoxD@)">
+            <summary>
+            Update volume hr and of all children.
+            </summary>
+            <param name="volume"></param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldMatrix">
+            <summary>
+            World matrix of this physic object. Use it whenever you want to do world-matrix transformations with this physic objects.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalMatrix">
+            <summary>
+            Gets or sets the local matrix.
+            </summary>
+            <value>
+            The local matrix.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABB">
+            <summary>
+            Gets the world aabb.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolume">
+            <summary>
+            Gets the world volume.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABBHr">
+            <summary>
+            Gets the hiearchical box in world.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolumeHr">
+            <summary>
+            Gets the hiearchical volume in world.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABB">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABBHr">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolume">
+            <summary>
+            Sets the local volume.
+            </summary>
+            <value>
+            The local volume.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.MaximalSize">
+            <summary>
+            Gets the maximal size.
+            </summary>
+            <value>
+            The Maximal size.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolumeOffset">
+            <summary>
+            Gets or sets the local volume offset.
+            </summary>
+            <value>
+            The local volume offset.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyRenderComponentBase.ModelStorage">
+            <summary>
+            Used by game to store model here. In game this is always of type MyModel.
+            Implementation should only store and return passed object.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponent.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
+            <summary>
+            Sets the world matrix.
+            </summary>
+            <param name="worldMatrix">The world matrix.</param>
+            <param name="source">The source object that caused this change or null when not important.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponent.UpdateChildren(System.Object)">
+            <summary>
+            Updates the childs of this entity.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponent.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:VRage.Game.Components.MyPositionComponent.LocalAABB">
+            <summary>
+            Sets the local aabb.
+            </summary>
+            <value>
+            The local aabb.
+            </value>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.Save(System.Byte[]@)">
+            <summary>
+            Gets compressed voxel data
+            </summary>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.ReadRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
+            </summary>
+            <param name="lodVoxelRangeMin">Inclusive.</param>
+            <param name="lodVoxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.WriteRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Writes range of content and/or materials from cache to storage. Note that this can only write to LOD0 (higher LODs must be computed based on that).
+            </summary>
+            <param name="voxelRangeMin">Inclusive.</param>
+            <param name="voxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="T:VRage.ModAPI.MyAPIGatewayShortcuts">
+            <summary>
+            Links to modapi actions. Delegates are set inside MyAPIGateway.
+            VRAGE TODO: This is probably a temporary class helping us to remove sandbox.
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.MyAPIGatewayShortcuts.RegisterEntityUpdate">
+            <summary>
+            Registers entity in update loop.
+            Parameters: IMyEntity entity (ref to entity to be registered)
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.MyAPIGatewayShortcuts.UnregisterEntityUpdate">
+            <summary>
+            Unregisters entity from update loop.
+            Parameters: IMyEntity entity (ref to entity to be unregistered), bool immediate (default is false)
+            </summary>
+        </member>
+        <member name="T:VRage.Game.Models.MyTriangleVertexIndices">
+            <summary>
+            structure used to set up the mesh
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Models.MyModel.#ctor(System.String,System.Boolean)">
+            <summary>
+            c-tor - this constructor should be used just for max models - not voxels!
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Models.MyModel.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Models.MyModel.AssetName">
+            <summary>
+            File path of the model
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Models.MyModels.m_loadModelEvent">
+            <summary>
+            Event that occures when some model needs to be loaded.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.MyVRageConstants">
+            <summary>
+            All common constants for use in game engine.
+            Note: The name is probably temporary - avoiding colision with Sandbox.Engine.Utils during sandbox removement.
+                  I guess it can be renamed to MyConstants once we are finished with sandbox deletion.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.Components.IMyComponentAggregate">
+            <summary>
+            When creating a new aggregate component type, derive from this interface so that you can use extension methods
+            AddComponent and RemoveComponent
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentAggregateExtensions.AttachComponent(VRage.Game.Components.IMyComponentAggregate,VRage.Game.Components.MyComponentBase)">
+            <summary>
+            Adds to list but doesn't change ownership
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentAggregateExtensions.DetachComponent(VRage.Game.Components.IMyComponentAggregate,VRage.Game.Components.MyComponentBase)">
+            <summary>
+            Removes from list, but doesn't change ownership
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentContainer.Contains(System.Type)">
+            <summary>
+            Returns if any component is assignable from type
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:VRage.Game.Components.MyPhysicsForceType">
+            <summary>
+            Force type applied to physic object.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPhysicsForceType.APPLY_WORLD_IMPULSE_AND_WORLD_ANGULAR_IMPULSE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPhysicsForceType.ADD_BODY_FORCE_AND_BODY_TORQUE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPhysicsComponentBase.ContactPointDelay">
+            <summary>
+            Must be set before creating rigid body
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Components.MyPhysicsComponentBase.IsPhantom">
+            <summary>
+            Use something from Havok to detect this
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.Close">
+            <summary>
+            Initializes a new instance of the <see cref="!:MyPhysicsBody"/> class.
+            </summary>
+            <param name="entity">The entity.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.AddForce(VRage.Game.Components.MyPhysicsForceType,System.Nullable{VRageMath.Vector3},System.Nullable{VRageMath.Vector3D},System.Nullable{VRageMath.Vector3})">
+            <summary>
+            Applies external force to the physics object.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="force">The force.</param>
+            <param name="position">The position.</param>
+            <param name="torque">The torque.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.ApplyImpulse(VRageMath.Vector3,VRageMath.Vector3D)">
+            <summary>
+            Applies the impulse.
+            </summary>
+            <param name="dir">The dir.</param>
+            <param name="pos">The pos.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.ClearSpeed">
+            <summary>
+            Clears the speeds.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.Clear">
+            <summary>
+            Clear all dynamic values of physics object.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.DebugDraw">
+            <summary>
+            Debug draw of this physics object.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.Activate">
+            <summary>
+            Activates this rigid body in physics.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.Deactivate">
+            <summary>
+            Deactivates this rigid body in physics.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VRage.Game.Components.MyPhysicsComponentBase.ForceActivate" -->
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.SetSpeeds(VRageMath.Vector3,VRageMath.Vector3)">
+            <summary>
+            Set the current linear and angular velocities of this physics body.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.WorldToCluster(VRageMath.Vector3D)">
+            <summary>
+            Converts global space position to local cluster space.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.ClusterToWorld(VRageMath.Vector3)">
+            <summary>
+            Converts local cluster position to global space.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.OnWorldPositionChanged(System.Object)">
+            <summary>
+            Called when [world position changed].
+            </summary>
+            <param name="source">The source object that caused this event.</param>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.MaterialType">
+            <summary>
+            Gets or sets the type of the material.
+            </summary>
+            <value>
+            The type of the material.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.IsStatic">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="!:MyGameRigidBody"/> is static.
+            </summary>
+            <value>
+              <c>true</c> if static; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.IsKinematic">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="!:MyGameRigidBody"/> is kinematic.
+            </summary>
+            <value>
+              <c>true</c> if kinematic; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.Enabled">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="!:MyPhysicsBody"/> is enabled.
+            </summary>
+            <value>
+              <c>true</c> if enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.PlayCollisionCueEnabled">
+            <summary>
+            Gets or sets a value indicating whether [play collision cue enabled].
+            </summary>
+            <value>
+            	<c>true</c> if [play collision cue enabled]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.Mass">
+            <summary>
+            Gets or sets the mass.
+            </summary>
+            <value>
+            The mass.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.LinearVelocity">
+            <summary>
+            Gets or sets the linear velocity.
+            </summary>
+            <value>
+            The linear velocity.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.LinearDamping">
+            <summary>
+            Gets or sets the linear damping.
+            </summary>
+            <value>
+            The linear damping.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.AngularDamping">
+            <summary>
+            Gets or sets the angular damping.
+            </summary>
+            <value>
+            The angular damping.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.AngularVelocity">
+            <summary>
+            Gets or sets the angular velocity.
+            </summary>
+            <value>
+            The angular velocity.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.Speed">
+            <summary>
+            Gets or sets the speed.
+            </summary>
+            <value>
+            The speed.
+            </value>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.RigidBody">
+            <summary>
+            Obtain/set (default) rigid body of this physics object.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyPhysicsComponentBase.RigidBody2">
+            <summary>
+            Obtain/set secondary rigid body of this physics object (not used by default, it is used sometimes on grids for kinematic layer).
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyResourceSinkComponentBase.SetRequiredInputFuncByType(Sandbox.Definitions.MyDefinitionId,System.Func{System.Single})">
+            <summary>
+            Change the required input function (callback) for given type of resource. It does not call it immediatelly to update required input value.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.CurrentOutputByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Currently used power output of the producer in MW or litres/h.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.MaxOutputByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Maximum power output of the producer in MW or litres/h.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.DefinedOutputByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Max resource output defined in definition in MW or litres/h.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.ProductionEnabledByType(Sandbox.Definitions.MyDefinitionId)">
+            <summary>
+            Resource production is enabled
+            </summary>
+        </member>
+        <member name="M:VRage.MyEntityIdentifier.MarkIdUsed(System.Int64)">
+            <summary>
+            This method is used when loading existing entity IDs to track the last generated ID
+            </summary>
+        </member>
+        <member name="M:VRage.MyEntityIdentifier.AddEntityWithId(VRage.ModAPI.IMyEntity)">
+            <summary>
+            Registers entity with given ID. Do not call this directly, it is called automatically
+            when EntityID is first time assigned.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:VRage.MyEntityIdentifier.AllocateId(VRage.MyEntityIdentifier.ID_OBJECT_TYPE,VRage.MyEntityIdentifier.ID_ALLOCATION_METHOD)">
+            <summary>
+            Allocated new entity ID (won't add to list)
+            Entity with this ID should be added immediatelly
+            </summary>
+        </member>
+        <member name="M:VRage.MyEntityIdentifier.SwapRegisteredEntityId(VRage.ModAPI.IMyEntity,System.Int64,System.Int64)">
+            <summary>
+            Changes ID by which an entity is registered. Do not call this directly, it is called automatically when
+            EntityID changes.
+            </summary>
+            <param name="entity">Entity whose ID has changed.</param>
+            <param name="oldId">Old ID of the entity.</param>
+            <param name="newId">New ID of the entity.</param>
+        </member>
+        <member name="P:VRage.MyEntityIdentifier.AllocationSuspended">
+            <summary>
+            Freezes allocating entity ids.
+            This is important, because during load, no entity cannot allocate new id, because it could allocate id which already has entity which will be loaded soon.
+            </summary>
+        </member>
+        <member name="T:VRage.ModAPI.EntityFlags">
+            <summary>
+            Entity flags.
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.None">
+            <summary>
+            No flags
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.Visible">
+            <summary>
+            Specifies whether draw this entity or not.
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.Save">
+            <summary>
+            Specifies whether save entity when saving sector or not
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.Near">
+            <summary>
+            Specifies whether entity is "near", near entities are cockpit and weapons, these entities are rendered in special way
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.NeedsUpdate">
+            <summary>
+            On this entity and its children will be called UpdateBeforeSimulation and UpdateAfterSimulation each frame
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.NeedsDraw">
+            <summary>
+            Draw method of this entity will be called when suitable
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.InvalidateOnMove">
+            <summary>
+            If object is moved, invalidate its renderobjects (update render)
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.Sync">
+            <summary>
+            Synchronize object during multiplayer
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.NeedsDrawFromParent">
+            <summary>
+            Draw method of this entity will be called when suitable and only from parent
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.ShadowBoxLod">
+            <summary>
+            Draw LOD shadow as box
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.Transparent">
+            <summary>
+            Render the entity using dithering to simulate transparency
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.NeedsUpdateBeforeNextFrame">
+            <summary>
+            Entity updated once before first frame.
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.MyEntityUpdateEnum.BEFORE_NEXT_FRAME">
+            <summary>
+            Separate update performed once before any other updates are called.
+            </summary>
+        </member>
+        <member name="M:VRage.ModAPI.IMyRemapHelper.RemapEntityId(System.Int64)">
+            <summary>
+            Returns a new entity ID for the entity with the given old entity ID.
+            The function will return the same new entityId only if the saveMapping argument is set to true.
+            </summary>
+        </member>
+        <member name="M:VRage.ModAPI.IMyRemapHelper.RemapGroupId(System.String,System.Int32)">
+            <summary>
+            Returns a new ID for the given old ID for specific group (multiblockIDs, ...).
+            </summary>
+        </member>
+        <member name="M:VRage.ModAPI.IMyRemapHelper.Clear">
+            <summary>
+            Clears all the saved mappings from the remap helper and gets it ready for the next remapping operation.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToExit">
+            <summary>
+            Are you sure you want to exit?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AssignControlKeyboard">
+            <summary>
+            Please press a key
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AssignControlMouse">
+            <summary>
+            Please click a mouse button
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonAudio">
+            <summary>
+            Audio
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionAudioOptions">
+            <summary>
+            Audio options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Cancel">
+            <summary>
+            Cancel
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CanNotAssignControl">
+            <summary>
+            CANNOT ASSIGN CONTROL
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonContinueLastGame">
+            <summary>
+            Continue last
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlAlreadyAssigned">
+            <summary>
+            {0} is already assigned to {1}. Remove the original control?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlIsNotValid">
+            <summary>
+            The pressed key may not be assigned to controls.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionControls">
+            <summary>
+            Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonCredits">
+            <summary>
+            Credits
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDelete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDown">
+            <summary>
+            Down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DoYouWantToKeepTheseSettingsXSecondsRemaining">
+            <summary>
+            Do you want to keep these settings? {0} seconds remaining.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysEnd">
+            <summary>
+            End
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonExitToMainMenu">
+            <summary>
+            Exit to main menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonExitToWindows">
+            <summary>
+            Exit to Windows
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.FieldOfView">
+            <summary>
+            Field of view
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonGame">
+            <summary>
+            Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionGameOptions">
+            <summary>
+            Game options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Gamepad">
+            <summary>
+            Gamepad
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_AnalogAxes">
+            <summary>
+            Analog
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.GameVolume">
+            <summary>
+            Sound volume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeGeneral">
+            <summary>
+            General
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HardwareCursor">
+            <summary>
+            Hardware cursor
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Help">
+            <summary>
+            Help
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysHome">
+            <summary>
+            Home
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysInsert">
+            <summary>
+            Insert
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.InvertMouseX">
+            <summary>
+            Invert mouse X axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.InvertMouseY">
+            <summary>
+            Invert mouse Y axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Joystick">
+            <summary>
+            Joystick or gamepad
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonLeft">
+            <summary>
+            JDLeft
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonRight">
+            <summary>
+            JDRight
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonUp">
+            <summary>
+            JDUp
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickButtonDown">
+            <summary>
+            JDDown
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickDeadzone">
+            <summary>
+            Joystick deadzone width
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickExponent">
+            <summary>
+            Joystick gradual precision
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSensitivity">
+            <summary>
+            Joystick sensitivity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Keyboard">
+            <summary>
+            Keyboard
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Language">
+            <summary>
+            Language
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeft">
+            <summary>
+            Left
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeftAlt">
+            <summary>
+            LAlt
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeftControl">
+            <summary>
+            LCtrl
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LeftMouseButton">
+            <summary>
+            LMB
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysLeftShift">
+            <summary>
+            LShift
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonLoad">
+            <summary>
+            Load
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadingPleaseWaitUppercase">
+            <summary>
+            LOADING … PLEASE WAIT
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionError">
+            <summary>
+            ERROR
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionPleaseConfirm">
+            <summary>
+            PLEASE CONFIRM
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionExit">
+            <summary>
+            EXIT
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MiddleMouseButton">
+            <summary>
+            MMB
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Mouse">
+            <summary>
+            Mouse
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseSensitivity">
+            <summary>
+            Mouse sensitivity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseXButton1">
+            <summary>
+            MXB1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseXButton2">
+            <summary>
+            MXB2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeNavigation">
+            <summary>
+            Navigation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionNewWorld">
+            <summary>
+            New World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.No">
+            <summary>
+            No
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad0">
+            <summary>
+            Num 0
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad1">
+            <summary>
+            Num 1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad2">
+            <summary>
+            Num 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad3">
+            <summary>
+            Num 3
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad4">
+            <summary>
+            Num 4
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad5">
+            <summary>
+            Num 5
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad6">
+            <summary>
+            Num 6
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad7">
+            <summary>
+            Num 7
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad8">
+            <summary>
+            Num 8
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysNumPad9">
+            <summary>
+            Num 9
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Ok">
+            <summary>
+            OK
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionOptions">
+            <summary>
+            Options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPageDown">
+            <summary>
+            PgDown
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPageUp">
+            <summary>
+            PgUp
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.RecommendedAspectRatio">
+            <summary>
+            Recommended aspect ratio: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Revert">
+            <summary>
+            Defaults
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRight">
+            <summary>
+            Right
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRightAlt">
+            <summary>
+            RAlt
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRightControl">
+            <summary>
+            RCtrl
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.RightMouseButton">
+            <summary>
+            RMB
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysRightShift">
+            <summary>
+            RShift
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SelectControl">
+            <summary>
+            SELECT CONTROL
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerShutdownNotificationCaption">
+            <summary>
+            SCHEDULED SERVER SHUTDOWN
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SorryButSelectedSettingsAreNotSupportedByYourHardware">
+            <summary>
+            Sorry, but the settings you have chosen are not supported by your hardware.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysSpace">
+            <summary>
+            Space
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.StartGameInProgressPleaseWait">
+            <summary>
+            Starting game … please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_StrafeLeft">
+            <summary>
+            Strafe left
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_StrafeRight">
+            <summary>
+            Strafe right
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeSystems1">
+            <summary>
+            Systems 1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeSystems2">
+            <summary>
+            Systems 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysTab">
+            <summary>
+            Tab
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.TitleFailedToStartInternetBrowser">
+            <summary>
+            Failed to start the browser.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.UnknownControl_None">
+            <summary>
+            none
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysUp">
+            <summary>
+            Up
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_UseOrInteract">
+            <summary>
+            Use / Interact
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VerticalSync">
+            <summary>
+            Vertical sync
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CaptureMouse">
+            <summary>
+            Capture Mouse
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VideoMode">
+            <summary>
+            Video mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeToolsOrWeapons">
+            <summary>
+            Tools / Weapons
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Yes">
+            <summary>
+            Yes
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Disabled">
+            <summary>
+            Disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationXpos">
+            <summary>
+            JRX+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationYpos">
+            <summary>
+            JRY+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationZpos">
+            <summary>
+            JRZ+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider1pos">
+            <summary>
+            JS1+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider2pos">
+            <summary>
+            JS2+
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationXneg">
+            <summary>
+            JRX-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationYneg">
+            <summary>
+            JRY-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickRotationZneg">
+            <summary>
+            JRZ-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider1neg">
+            <summary>
+            JS1-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoystickSlider2neg">
+            <summary>
+            JS2-
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDecimal">
+            <summary>
+            Num .
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysBackslash">
+            <summary>
+            Bkslash
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysComma">
+            <summary>
+            Comma
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysMinus">
+            <summary>
+            Minus
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysOpenBracket">
+            <summary>
+            [
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysCloseBracket">
+            <summary>
+            ]
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPeriod">
+            <summary>
+            Period
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPipe">
+            <summary>
+            Pipe
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPlus">
+            <summary>
+            Plus
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysQuestion">
+            <summary>
+            Slash
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysQuotes">
+            <summary>
+            Quote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysSemicolon">
+            <summary>
+            Colon
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysTilde">
+            <summary>
+            ~
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysMultiply">
+            <summary>
+            Num *
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysDivide">
+            <summary>
+            Num /
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysAdd">
+            <summary>
+            Num +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysSubtract">
+            <summary>
+            Num −
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysCapsLock">
+            <summary>
+            Caps Lock
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysEnter">
+            <summary>
+            Enter
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysBackspace">
+            <summary>
+            Backsp.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ApplyingPleaseWait">
+            <summary>
+            Applying changes … please wait
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MP_YouHaveBeenKilled">
+            <summary>
+            You have been killed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MusicVolume">
+            <summary>
+            Music volume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VideoAdapter">
+            <summary>
+            Video adapter
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DefaultFOV">
+            <summary>
+            Default: {0:F1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldLoaded">
+            <summary>
+            World {0} loaded
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Screenshot">
+            <summary>
+            Screenshot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_PreviousColor">
+            <summary>
+            Prev. Color or Camera
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_NextColor">
+            <summary>
+            Next Color or Camera
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSaved">
+            <summary>
+            World '{0}' saved
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Blueprints">
+            <summary>
+            Blueprints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Factions">
+            <summary>
+            Factions
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlueprintMaterials">
+            <summary>
+            Blueprint Materials
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProductionQueue">
+            <summary>
+            Production Queue
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonEditSettings">
+            <summary>
+            Edit Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionCustomWorld">
+            <summary>
+            Custom World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorNameTooLong">
+            <summary>
+            Name is too long (max 128 characters allowed)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorNameTooShort">
+            <summary>
+            Name is too short (min 5 characters required)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GameModeSurvival">
+            <summary>
+            Survival
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonJoinWorld">
+            <summary>
+            Join World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineMode">
+            <summary>
+            Online mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModeOffline">
+            <summary>
+            Offline
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModePrivate">
+            <summary>
+            Private
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModePublic">
+            <summary>
+            Public
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenNewWorldButtonQuickstart">
+            <summary>
+            Quickstart
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsName">
+            <summary>
+            Name must be {0} to {1} alpha-numeric characters
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToDeleteSave">
+            <summary>
+            Are you sure you want to delete '{0}'?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionLoadWorld">
+            <summary>
+            Load World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonSaveAs">
+            <summary>
+            Save As
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GameModeCreative">
+            <summary>
+            Creative
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerCharacter">
+            <summary>
+            Player Character
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_AutoSave">
+            <summary>
+            Auto-save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsAutoSave">
+            <summary>
+            Auto-save saves the state of your world every {0} minutes or when exiting the game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWantToSaveYourProgress">
+            <summary>
+            Do you want to save your progress?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SaveWorld">
+            <summary>
+            Save World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonSave">
+            <summary>
+            Save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SavingPleaseWait">
+            <summary>
+            Saving ... please wait
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Advanced">
+            <summary>
+            Advanced
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AdvancedControls">
+            <summary>
+            Advanced Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Backward">
+            <summary>
+            Backward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BasicControls">
+            <summary>
+            Basic Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Close">
+            <summary>
+            Close
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_DownOrCrouch">
+            <summary>
+            Down or Crouch
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_FirstOrThirdPerson">
+            <summary>
+            First-person / Third-person
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Forward">
+            <summary>
+            Forward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NextPage">
+            <summary>
+            NextPage
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNeedShowHelpScreen">
+            <summary>
+            Press {0} for help and tutorials
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PreviousPage">
+            <summary>
+            Previous Page
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShowControlsHints">
+            <summary>
+            Show controls hints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SteamGuide">
+            <summary>
+            Tutorials
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_UpOrJump">
+            <summary>
+            Up or Jump
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateVerticalNeg">
+            <summary>
+            Rotate block vertical -
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateVerticalPos">
+            <summary>
+            Rotate block vertical +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateHorizontalNeg">
+            <summary>
+            Rotate block horizontal -
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateHorizontalPos">
+            <summary>
+            Rotate block horizontal +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateRollNeg">
+            <summary>
+            Rotate block roll -
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeRotateRollPos">
+            <summary>
+            Rotate block roll +
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot0">
+            <summary>
+            Unequip
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot1">
+            <summary>
+            Equip item from slot 1
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot2">
+            <summary>
+            Equip item from slot 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot3">
+            <summary>
+            Equip item from slot 3
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot4">
+            <summary>
+            Equip item from slot 4
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot5">
+            <summary>
+            Equip item from slot 5
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot6">
+            <summary>
+            Equip item from slot 6
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot7">
+            <summary>
+            Equip item from slot 7
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot8">
+            <summary>
+            Equip item from slot 8
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Slot9">
+            <summary>
+            Equip item from slot 9
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToQuickLoad">
+            <summary>
+            Are you sure you want to quick-load?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToQuickSave">
+            <summary>
+            Are you sure you want to quick-save?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarConfig">
+            <summary>
+            Toolbar config
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_HoldToLookAround">
+            <summary>
+            Hold to look around
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_HoldToSprint">
+            <summary>
+            Hold to sprint
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadingPleaseWait">
+            <summary>
+            Loading ... please wait
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NoPlaceToCreateGrid">
+            <summary>
+            There's no place to create a new block. Point your view to an empty space.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_HudOnOff">
+            <summary>
+            HUD on / off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderHint">
+            <summary>
+            Hint: Drag an icon to a toolbar slot and activate by a numeric key
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Saved">
+            <summary>
+            Saved
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HideWeapon">
+            <summary>
+            Hide weapon
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust">
+            <summary>
+            Thrust
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SomeWorldFilesCouldNotBeLoaded">
+            <summary>
+            One of the world/save files is corrupted and can't be loaded. See log for details.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldFileIsCorruptedAndCouldNotBeLoaded">
+            <summary>
+            World file is corrupted and could not be loaded.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipNewWorldCustomWorld">
+            <summary>
+            Create a new world with custom settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsRenderQuality">
+            <summary>
+            Higher rendering quality means better visuals, larger view distance and more special effects - however, it is more demanding on your computer's performance (CPU and GPU).  If the game doesn't run smoothly, decrease it.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoAdapter">
+            <summary>
+            Select a graphic adapter and/or a monitor
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoMode">
+            <summary>
+            Select a screen resolution. We recommend using an aspect ratio compatible with your monitor. If the game doesn't run smoothly, decrease your screen resolution.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsHardwareCursor">
+            <summary>
+            HW mouse cursor is independent of game framerate. We recommend to turn it on.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsCaptureMouse">
+            <summary>
+            Weather the cursor should be captured by the game window (for Windowed and Fullscreen Window modes).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsVerticalSync">
+            <summary>
+            The game will synchronize with the refresh rate of the monitor. We recommend to turn it off.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionsFieldOfView">
+            <summary>
+            Horizontal field of view angle
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowControlsHints">
+            <summary>
+            Show on-screen control hints during gameplay
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldNotSaved">
+            <summary>
+            World '{0}' failed to save. This can be caused by running out of memory or problems when writing files. Working on this world any longer may result in loss of progress. You can check log file to find out more about what caused this error.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMemoryOverload">
+            <summary>
+            Not enough memory to add new objects
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BetterGCIsAvailable">
+            <summary>
+            We have detected a better graphics card in your computer than the one the game currently runs on. Please check your NVIDIA/AMD Control Panel settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionWarning">
+            <summary>
+            WARNING
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextOpenBrowser">
+            <summary>
+            This will open {0} in your internet browser. The game will keep running. Do you want to continue?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Loaded">
+            <summary>
+            Loaded
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextNoSavedWorlds">
+            <summary>
+            There are no saved worlds yet. Please start by creating a new world.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionVideoTutorial">
+            <summary>
+            Video Tutorial
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextSaveChangesBeforeExit">
+            <summary>
+            Save changes before quitting?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorNameAlreadyExists">
+            <summary>
+            Name is already used. Please choose a different name.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationBuildingFormat">
+            <summary>
+            Press {0} to place cube
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationColorFormat">
+            <summary>
+            Press {0} or {1} to change color. Hold {2} to apply color. Hold {3} or {4} to increase brush size.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHideHintsInGameOptions">
+            <summary>
+            You can hide these hints in Game Options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHudHideFormat">
+            <summary>
+            Press {0} to hide/unhide the HUD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationRotationFormat">
+            <summary>
+            Press {0}, {1}, {2}, {3}, {4}, {5} to rotate
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationScreenFormat">
+            <summary>
+            Press {0} to configure toolbar or create new objects
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSlotEquipFormat">
+            <summary>
+            Press {0}, {1}, {2}, ... to equip from slot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationToolDisabled">
+            <summary>
+            This tool/weapon is disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationUnlimitedBuildingFormat">
+            <summary>
+            Press {0} to add block, press {1} to remove block. Hold {2} to build fast
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescQuickLoad">
+            <summary>
+            Quick Load
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescQuickSave">
+            <summary>
+            Quick Save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MouseWheel">
+            <summary>
+            Mouse wheel
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderBuildingBlocks">
+            <summary>
+            Tab content:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderCreativeMode">
+            <summary>
+            Creative mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderSubtitle">
+            <summary>
+            Configure your toolbar (assign building blocks, tools and weapons)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderToolbar">
+            <summary>
+            Toolbar
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderToolbarConfig">
+            <summary>
+            Toolbar Config
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SteamOverlayDisabledCaption">
+            <summary>
+            Steam Overlay is disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonPublish">
+            <summary>
+            Publish
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextWorldPublished">
+            <summary>
+            Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextWorldPublishFailed">
+            <summary>
+            Failed to publish on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextModPublished">
+            <summary>
+            Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextModPublishFailed">
+            <summary>
+            Failed to publish on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextPublishingWorld">
+            <summary>
+            Publishing ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextUploadingWorld">
+            <summary>
+            Uploading ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonSubscribedWorlds">
+            <summary>
+            Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextCreatingWorld">
+            <summary>
+            Creating world ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionWorkshop">
+            <summary>
+            Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonRecommend">
+            <summary>
+            Recommend
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionWorldPublished">
+            <summary>
+            WORLD PUBLISHED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionWorldPublishFailed">
+            <summary>
+            WORLD PUBLISH FAILED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionModPublished">
+            <summary>
+            MOD PUBLISHED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionModPublishFailed">
+            <summary>
+            MOD PUBLISH FAILED
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MyCommonTexts.ScreenLoadSubscribedWorldCopyAndLoad" -->
+        <member name="F:MyCommonTexts.LoadScreenButtonTooltipPublish">
+            <summary>
+            Publish selected world on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipMenuSubscribedWorlds">
+            <summary>
+            View a list of worlds subscribed on Steam Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToPublishWorld">
+            <summary>
+            PUBLISH WORLD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToUpdateWorld">
+            <summary>
+            UPDATE WORLD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToPublishWorld">
+            <summary>
+            Are you sure you want to upload and publish selected world on Steam Workshop? Note that by submitting this item, you agree to the workshop terms of service (see http://steamcommunity.com/sharedfiles/workshoplegalagreement).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToUpdateWorld">
+            <summary>
+            Are you sure you want to upload and overwrite selected world on Steam Workshop?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToPublishMod">
+            <summary>
+            PUBLISH MOD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToUpdateMod">
+            <summary>
+            UPDATE MOD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToPublishMod">
+            <summary>
+            Are you sure you want to upload and publish selected mod on Steam Workshop? Note that by submitting this item, you agree to the workshop terms of service (see http://steamcommunity.com/sharedfiles/workshoplegalagreement).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToUpdateMod">
+            <summary>
+            Are you sure you want to upload and overwrite selected mod on Steam Workshop?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldBrowseWorkshop">
+            <summary>
+            Browse Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldRefresh">
+            <summary>
+            Refresh
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNoWeaponSelected">
+            <summary>
+            No weapon selected
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSwitchedToWeaponType">
+            <summary>
+            Switched to weapon type '{0}'
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInertiaDampenersOff">
+            <summary>
+            Inertia dampeners Off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInertiaDampenersOn">
+            <summary>
+            Inertia dampeners On
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonDelete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionEditSettings">
+            <summary>
+            Edit Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionSaveAs">
+            <summary>
+            Save As
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonHelp">
+            <summary>
+            Help
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonLoadWorld">
+            <summary>
+            Load World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonNewWorld">
+            <summary>
+            New World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonOptions">
+            <summary>
+            Options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenNewWorldButtonCustomWorld">
+            <summary>
+            Custom World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonControls">
+            <summary>
+            Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionResetControlsToDefault">
+            <summary>
+            RESET CONTROLS
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextResetControlsToDefault">
+            <summary>
+            Are you sure you want to reset control bindings to default?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenshotFailed">
+            <summary>
+            Screenshot failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenshotSaved">
+            <summary>
+            Screenshot {0} saved
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportToObjComplete">
+            <summary>
+            Exported to: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportToObjFailed">
+            <summary>
+            Export to obj file failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldOpenInWorkshop">
+            <summary>
+            Open in Workshop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopBrowseWorkshop">
+            <summary>
+            Open Steam Overlay with Workshop screen
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopCopyAndLoad">
+            <summary>
+            Download selected world to your computer and load
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopOpenInWorkshop">
+            <summary>
+            Open selected world in Workshop Steam Overlay
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopRefresh">
+            <summary>
+            Refresh the list of subscribed worlds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryX">
+            <summary>
+            Symmetry X plane: {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryXOffset">
+            <summary>
+            Symmetry X plane (offset): {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryY">
+            <summary>
+            Symmetry Y plane: {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryYOffset">
+            <summary>
+            Symmetry Y plane (offset): {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryZ">
+            <summary>
+            Symmetry Z plane: {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SettingSymmetryZOffset">
+            <summary>
+            Symmetry Z plane (offset): {0} to set, {1} to reset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationPickupObject">
+            <summary>
+            Press {0} to pick up {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CubeBuilderPasteNotification">
+            <summary>
+            Press LMB or Ctrl+V to paste object
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextErrorLoadingEntities">
+            <summary>
+            An error occurred while adding one or more objects. See log file for more details.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureToMoveGridToClipboard">
+            <summary>
+            Are you sure you want to delete selected object? (copy will be stored in clipboard)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextMemoryLimitReachedDuringLoad">
+            <summary>
+            Memory limit has been reached while loading the world and some objects were not added. If you were using Large World fix and the game was recently updated, it may have been disabled.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsControls_Keyboard2">
+            <summary>
+            Keyboard 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadingWorld">
+            <summary>
+            Downloading world: {0}% World size: {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadWorldFailed">
+            <summary>
+            Downloading the world has failed!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextJoiningWorld">
+            <summary>
+            Joining world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextJoinWorldFailed">
+            <summary>
+            Joining world failed, reason: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.GpuUnderMinimumNotification">
+            <summary>
+            We have detected that your graphics card is under the minimum requirements and this can cause performance issues or crashes. Thank you for your understanding.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShowRotationHints">
+            <summary>
+            Show rotation hints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowRotationHints">
+            <summary>
+            Show HUD rotation hints during building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.UnknownControl_Unassigned">
+            <summary>
+            [unassigned]
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_BuildingMode">
+            <summary>
+            Building mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Line">
+            <summary>
+            Line
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Plane">
+            <summary>
+            Plane
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_SingleBlock">
+            <summary>
+            Single block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_Suicide">
+            <summary>
+            Suicide
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorStartingServer">
+            <summary>
+            Multiplayer server cannot be started, error: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AlreadyUsedBySomebodyElse">
+            <summary>
+            Object is being used by somebody else
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinFriendsGames">
+            <summary>
+            Friend games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionPlayers">
+            <summary>
+            Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayersLobby_Friends">
+            <summary>
+            Friends
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayersLobby_Private">
+            <summary>
+            Private
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayersLobby_Public">
+            <summary>
+            Public
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_FactionName">
+            <summary>
+            Faction
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_FactionTag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Factions">
+            <summary>
+            Factions
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_GameOwner">
+            <summary>
+            Game owner
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Invite">
+            <summary>
+            Invite
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Kick">
+            <summary>
+            Kick
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_PlayerName">
+            <summary>
+            Player name
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogDownloadWorld_WorldDoesNotExists">
+            <summary>
+            Game does not exist anymore.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionKicked">
+            <summary>
+            KICKED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenKicked">
+            <summary>
+            You have been kicked from the game by its owner.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_OnlineModeFriends">
+            <summary>
+            Friends
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextAreYouSureYouWantToReconnect">
+            <summary>
+            Are you sure you want to reconnect to the current multiplayer game?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMultiplayerDisabled">
+            <summary>
+            You are in offline mode and multiplayer is disabled. You have to change the settings from the main menu.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SteamIsOfflinePleaseRestart">
+            <summary>
+            Steam is offline. Please run Steam in normal mode or restart Steam if the problem persists
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerCompatibleVersions">
+            <summary>
+            Compatible versions
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MaxPlayers">
+            <summary>
+            Max players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogWaitingForWorldData">
+            <summary>
+            Waiting for world data
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorConnectionFailed">
+            <summary>
+            Connection to server failed: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerStateConnectingToServer">
+            <summary>
+            Connecting to server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerStateWaitingForServer">
+            <summary>
+            Waiting for server to respond
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HarvestingWarningInventoryMightBeTruncatedAreYouSure">
+            <summary>
+            The selected game type is more limited than the original one. This means that your inventory might be truncated and you might lose some items! Are you sure you want to change the game type?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionFriendWorlds">
+            <summary>
+            Friend worlds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionPublicWorlds">
+            <summary>
+            Public worlds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeColorChange">
+            <summary>
+            Change color / weapon mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationWeaponDisabledInSettings">
+            <summary>
+            This weapon is disabled in world settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescPlayersList">
+            <summary>
+            Show players (multiplayer only)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonPlayers">
+            <summary>
+            Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ItemDamagedDescription">
+            <summary>
+             (Damaged)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplaterJoin_ServerIsNotResponding">
+            <summary>
+            Server is not responding
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.UnsupportedAspectRatio">
+            <summary>
+            Unsupported aspect ratio
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.OnlyFriendsCanJoinThisGame">
+            <summary>
+            Only friends can join this game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsDescription">
+            <summary>
+            A description of the world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CompressSaveGames">
+            <summary>
+            Compress saved games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsCompressSaveGames">
+            <summary>
+            Whether the saved games should be compressed on the disk to save space
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Headbob">
+            <summary>
+            Disable headbob
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_ShowPlayerNames">
+            <summary>
+            Show player names
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowPlayerNames">
+            <summary>
+            Show player names above their characters. This feature must also be enabled in world settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_UIOpacity">
+            <summary>
+            UI opacity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_UIBkOpacity">
+            <summary>
+            UI background opacity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInventoryFull">
+            <summary>
+            Inventory is full
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.OutOfAmmo">
+            <summary>
+            {0} is out of ammunition
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMissingComponentToPlaceBlockFormat">
+            <summary>
+            You need {0} to build {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_GameMode">
+            <summary>
+            Game mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Players">
+            <summary>
+            Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_World">
+            <summary>
+            World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_WorldSize">
+            <summary>
+            World size
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextSuicide">
+            <summary>
+            Are you sure you want to commit suicide?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorServerHasLeft">
+            <summary>
+            The server host has left the game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationRespawn">
+            <summary>
+            You died. Respawn in {0} seconds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HudBlockInfo_Required">
+            <summary>
+            Required
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_GameTypeToolTip_MultipliersFormat">
+            <summary>
+            Inventory size {0}x Assembler efficiency {1}x Refinery speed {2}x
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationClientConnected">
+            <summary>
+            Player connected: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationClientDisconnected">
+            <summary>
+            Player disconnected: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerError_IncorrectVersion">
+            <summary>
+            Server has different version of the game. Your version: {0}; Server version: {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShowCrosshair">
+            <summary>
+            Show crosshair
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsShowCrosshair">
+            <summary>
+            Whether the weapon crosshair should be visible
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextSavingInProgress">
+            <summary>
+            Game is already saving.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_LocalizationWarning">
+            <summary>
+            * Localized by the community.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_MoreInfo">
+            <summary>
+            Click for more info
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Multiplayer_IndirectConnection">
+            <summary>
+            No direct connection available.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Multiplayer_NoConnection">
+            <summary>
+            No connection with server.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.GamePaused">
+            <summary>
+            Game paused
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescPauseGame">
+            <summary>
+            Pause the game (offline only)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_PauseGame">
+            <summary>
+            Pause game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.KeysPause">
+            <summary>
+            Pause
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationWeaponNotWorking">
+            <summary>
+            {0} is not working
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogAmount_AddAmountCaption">
+            <summary>
+            Amount to add
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogAmount_SetValueCaption">
+            <summary>
+            Value to set
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHealthCritical">
+            <summary>
+            Health is critical. Seek medical attention immediately.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHealthLow">
+            <summary>
+            Health is low.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerError_DifferentData">
+            <summary>
+            This server has different game data than your client
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoin_IncompatibleGameDataLabel">
+            <summary>
+            Games marked with * have incompatible game data
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_GameAdmin">
+            <summary>
+            Game admin
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinServers">
+            <summary>
+            Dedicated only
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorAlreadyJoined">
+            <summary>
+            User is already joined
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorNotInGroup">
+            <summary>
+            You are not in group {0}. Do you want to visit group web page?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorServerFull">
+            <summary>
+            Server is full
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorSteamServersOffline">
+            <summary>
+            Steam servers offline or server group does not exist
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorTicketInvalid">
+            <summary>
+            Ticket invalid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinLANServers">
+            <summary>
+            LAN only
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Friends">
+            <summary>
+            Friends
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_LAN">
+            <summary>
+            LAN
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Lobbies">
+            <summary>
+            Games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Servers">
+            <summary>
+            Servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Title">
+            <summary>
+            Join world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Ping">
+            <summary>
+            Ping
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Server">
+            <summary>
+            Server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorLoggedInElseWhere">
+            <summary>
+            Logged in elsewhere
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorNoLicenseOrExpired">
+            <summary>
+            No license or license expired
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorTicketAlreadyUsed">
+            <summary>
+            Ticket already used
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorTicketCanceled">
+            <summary>
+            Ticket cancelled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorUserNotConnected">
+            <summary>
+            User not connected
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorVACBanned">
+            <summary>
+            VAC banned
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorVACCheckTimedOut">
+            <summary>
+            VAC check timed out
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinAllowedGroups">
+            <summary>
+            Allowed groups
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NewsDownloadingFailed">
+            <summary>
+            News downloading failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionInfo">
+            <summary>
+            INFO
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorGroupIdInvalid">
+            <summary>
+            Server Group ID is invalid, server administrator should set proper group ID in server config (or zero to disable group checking)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_LAN">
+            <summary>
+            The list of local dedicated servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Lobbies">
+            <summary>
+            The list of player created games
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Servers">
+            <summary>
+            The list of internet dedicated servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerCharacterColor">
+            <summary>
+            Player color
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintPressToUseWardrobe">
+            <summary>
+            Press {0} to change your appearance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode">
+            <summary>
+            Window mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode_Fullscreen">
+            <summary>
+            Fullscreen
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode_FullscreenWindow">
+            <summary>
+            Fullscreen window
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsVideo_WindowMode_Window">
+            <summary>
+            Window
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls">
+            <summary>
+            Spectator Controls
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Delta_Desc">
+            <summary>
+            Spectator with fixed view vector to controlled object
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorBannedByAdmins">
+            <summary>
+            You are banned on this server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorBannedByAdminsWithDialog">
+            <summary>
+            You are banned on this server. Open admin profile?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenBanned">
+            <summary>
+            You have been banned on this server by its admin.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Ban">
+            <summary>
+            Ban
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HudMarker_ReturnToWorld">
+            <summary>
+            Return to the game area!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationLeavingWorld">
+            <summary>
+            Warning: You will die in {0:F1} meters!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionAdvancedSettings">
+            <summary>
+            Advanced world settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Spectator">
+            <summary>
+            Spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Delta">
+            <summary>
+            Delta spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Free">
+            <summary>
+            Free spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_None">
+            <summary>
+            Player control
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SpectatorControls_Static">
+            <summary>
+            Static spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsNameAlreadyExists">
+            <summary>
+            Given faction name already exists
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsTagAlreadyExists">
+            <summary>
+            Given faction tag already exists
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsNameTooShort">
+            <summary>
+            Faction name must be at least 4 characters long
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Edit">
+            <summary>
+            Edit
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Kick">
+            <summary>
+            Kick
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Leader">
+            <summary>
+            Leader
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Member">
+            <summary>
+            Member
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsKickPlayer">
+            <summary>
+            Are you sure that you want to kick player '{0}' from your faction?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsLeave">
+            <summary>
+            Are you sure that you want to leave faction '{0}'?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Promote">
+            <summary>
+            Promote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Demote">
+            <summary>
+            Demote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AccessDenied">
+            <summary>
+            Access denied
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Founder">
+            <summary>
+            Founder
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Accept">
+            <summary>
+            Accept
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Deny">
+            <summary>
+            Deny
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsAcceptJoin">
+            <summary>
+            Are you sure that you want to accept player '{0}' to your faction?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsDenyJoin">
+            <summary>
+            Are you sure that you don't want to accept player '{0}' to your faction?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsDemote">
+            <summary>
+            Are you sure that you want demote '{0}' to member?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxConfirmFactionsPromote">
+            <summary>
+            Are you sure that you want promote '{0}' to leader?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Applicant">
+            <summary>
+            Applicant
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SessionDeleteFailed">
+            <summary>
+            Session delete failed
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Medicals_Title">
+            <summary>
+            Medical Rooms
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextChangeOwner">
+            <summary>
+            Are you sure you want to change owner to {0}?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Respawn">
+            <summary>
+            Respawn
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinSameGameData">
+            <summary>
+            Same game data
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Refresh">
+            <summary>
+            Refresh
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerInfo_Dead">
+            <summary>
+            dead
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_ActiveMods">
+            <summary>
+            Active mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_AvailableMods">
+            <summary>
+            Available mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveLeft">
+            <summary>
+            Deactivate mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveLeftAll">
+            <summary>
+            Deactivate all mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveRight">
+            <summary>
+            Activate mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveRightAll">
+            <summary>
+            Activate all mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Mods">
+            <summary>
+            Mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopOpenModInWorkshop">
+            <summary>
+            Open selected mod in Workshop Steam Overlay
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopRefreshMod">
+            <summary>
+            Refresh the list of subscribed mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_SearchLabel">
+            <summary>
+            Search game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_SearchTooltip">
+            <summary>
+            At least 3 characters must be inserted to start searching
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextDownloadingMods">
+            <summary>
+            Downloading mods ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationClientCannotSave">
+            <summary>
+            Client saving is disabled on this server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveDown">
+            <summary>
+            Move mod down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveUp">
+            <summary>
+            Move mod up
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveBottom">
+            <summary>
+            Move mod to bottom
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipScreenMods_MoveTop">
+            <summary>
+            Move mod to top
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCannotCreateGroup">
+            <summary>
+            You cannot create group with blocks you don't have access rights to.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCannotDeleteGroup">
+            <summary>
+            You cannot delete group with blocks you don't have access rights to.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenKickedFromFaction">
+            <summary>
+            You have been kicked from the faction.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextYouHaveBeenAcceptedToFaction">
+            <summary>
+            You have been accepted to faction.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarDown">
+            <summary>
+            Previous toolbar
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarUp">
+            <summary>
+            Next toolbar
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadModsFailed">
+            <summary>
+            Downloading mods has failed! Please check mods in world settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ProgressTextCheckingMods">
+            <summary>
+            Checking for mod updates ... please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_Caption">
+            <summary>
+            Debug draw
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_EnableDebugDraw">
+            <summary>
+            Enable debug draw
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ErrorLogCaption">
+            <summary>
+            Loading error log:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ModelDummies">
+            <summary>
+            Model dummies
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_MountPoints">
+            <summary>
+            Mount points
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_NoErrorText">
+            <summary>
+            There were no loading errors
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_PhysicsPrimitives">
+            <summary>
+            Physics primitives
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_OpenErrorLog">
+            <summary>
+            Open in new window
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ReloadTextures">
+            <summary>
+            Reload textures
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextLocalModsDisabledInMultiplayer">
+            <summary>
+            Local mods are not allowed in multiplayer. Use workshop mods instead.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_LocalMod">
+            <summary>
+            Local mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_MissingDetails">
+            <summary>
+            Could not retrieve mod details from Steam
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_MissingLocalMod">
+            <summary>
+            Missing local mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_WorkshopMod">
+            <summary>
+            Workshop mod
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_ReloadModels">
+            <summary>
+            Reload models
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_CopyErrorLogToClipboard">
+            <summary>
+            Copy log to system clipboard
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationLeavingWorld_Creative">
+            <summary>
+            Warning: All ships will be removed in {0:F1} meters!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerCharacterModel">
+            <summary>
+            Player model
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_Mods">
+            <summary>
+            Mods
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintPressToUse">
+            <summary>
+            Press {0} to use {1}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_SelectServerToShowModList">
+            <summary>
+            Select server to show mod list
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMods_SearchLabel">
+            <summary>
+            Search
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_BadModsListResponse">
+            <summary>
+            Could not get mod list from the server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.HudWarnings">
+            <summary>
+            Hud Warnings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DialogTextIncompatibleWorldVersion">
+            <summary>
+            This world can not be loaded. It has been created in newer version of the game.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextPublishFailed_AccessDenied">
+            <summary>
+            This workshop item does not seem to belong to you. Make sure you are logged in with the right account.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_SavePrefab">
+            <summary>
+            Export clipboard to file
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipSaveShip">
+            <summary>
+            Save ships from clipboard to file
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AddNewNPC">
+            <summary>
+            Add New Enemy Identity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DisplayName_BlueprintClass_Tools">
+            <summary>
+            Tools
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionWorkshopTags">
+            <summary>
+            Select tags
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Animation">
+            <summary>
+            Animation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Block">
+            <summary>
+            Block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Character">
+            <summary>
+            Character
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Other">
+            <summary>
+            Other
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Skybox">
+            <summary>
+            Skybox
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextPublishFailed_OwnerMismatchMod">
+            <summary>
+            Could not update because you are not the owner of this mod.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorModLoadingFailure">
+            <summary>
+            Some mods were not loaded because of errors. See log file for details or run the game in single player to access the mod debug screen.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.RenderIterpolation">
+            <summary>
+            Render interpolation
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipVideoOptionRenderIterpolation">
+            <summary>
+            Reduces stuttering and makes game smoother.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_ModPack">
+            <summary>
+            Modpack
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CustomText">
+            <summary>
+            {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderBlockCategories">
+            <summary>
+            Tabs of tools and objects:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCubeBuilderBlockSearch">
+            <summary>
+            Search:
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescCopyPasteMove">
+            <summary>
+            Move pasted object
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorkshopTag_Script">
+            <summary>
+            Script
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationCopyPasteBlockNotAvailable">
+            <summary>
+            Some blocks in the pasted grid are not available in this world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ConvertingObjs">
+            <summary>
+            Converting models. Please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ConvertToObjDone">
+            <summary>
+            All models converted.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportingToObj">
+            <summary>
+            Exporting model. Please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWantToPasteGridWithMissingBlocks">
+            <summary>
+            Pasted ship contains some blocks that are not available in this world. These blocks will not be pasted, which could possibly cause the ship to split. Do you really want to paste this ship?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationCopyPasteFloatingObjectNotAvailable">
+            <summary>
+            Item is not available in this world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ShipWelder_HelpOthers">
+            <summary>
+            Help Others
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlacingObjectsToScene">
+            <summary>
+            Placing objects to world. Please wait.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeSystems3">
+            <summary>
+            Systems 3
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSwitchedToWeapon">
+            <summary>
+            Switched to weapon: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Back">
+            <summary>
+            Backward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Down">
+            <summary>
+            Down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Forward">
+            <summary>
+            Forward
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Left">
+            <summary>
+            Left
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Right">
+            <summary>
+            Right
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Thrust_Up">
+            <summary>
+            Up
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SelectBlueprint">
+            <summary>
+            Select
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DisplayName_Animation_Facepalm">
+            <summary>
+            Facepalm
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AvailableBlueprints">
+            <summary>
+            Available Blueprints
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Sphere_Radius">
+            <summary>
+            Radius
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Box_Width">
+            <summary>
+            Width
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Box_Depth">
+            <summary>
+            Depth
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Box_Height">
+            <summary>
+            Height
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandDistance">
+            <summary>
+            Distance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandSettings">
+            <summary>
+            Brush Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandTransparency">
+            <summary>
+            Transparency
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_ShapeSettings">
+            <summary>
+            Shape Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Capsule_Length">
+            <summary>
+            Length
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_Capsule_Radius">
+            <summary>
+            Radius
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ExportToObjModded">
+            <summary>
+            Model contains modded blocks. Only models with default blocks can be exported.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandSnapToVoxel">
+            <summary>
+            Snap to voxel grid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_FreezePhysics">
+            <summary>
+            Freeze Physics
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_Area">
+            <summary>
+            Area
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_Axis">
+            <summary>
+            Choose axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_AxisX">
+            <summary>
+            X axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_AxisY">
+            <summary>
+            Y axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandProperty_AutoLevel_AxisZ">
+            <summary>
+            Z axis
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandMaterial">
+            <summary>
+            Material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNewFactionChatMessage">
+            <summary>
+            New message in {0} faction chat
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNewGlobalChatMessage">
+            <summary>
+            New global chat message
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationNewPlayerChatMessage">
+            <summary>
+            New message from {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ErrorDescriptionTooLong">
+            <summary>
+            Description is too long (max 8000 characters allowed)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.TooltipScreenMods_SelectCategories">
+            <summary>
+            Select categories
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_GameTypeToolTip_ViewDistance">
+            <summary>
+            View distance: {0}m
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandProjectToVoxel">
+            <summary>
+            Project to voxel
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescNextVoxelMaterial">
+            <summary>
+            Next voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescOpenVoxelHandSettings">
+            <summary>
+            Open voxel hand settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescPreviousVoxelMaterial">
+            <summary>
+            Previous voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlueprintsMessageBoxDesc_Replace">
+            <summary>
+            Are you sure you want to replace this blueprint with clipboard?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlueprintsMessageBoxTitle_Replace">
+            <summary>
+            Replace
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationTextPanelReadOnly">
+            <summary>
+            Text panel is read-only
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextTooLongText">
+            <summary>
+            Text is too long. Do you want to truncate it?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlDescExportModel">
+            <summary>
+            Export model
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoxelHandSettingScreen_HandShowGizmos">
+            <summary>
+            Show bounding box
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextOpenUrlOverlayNotEnabled">
+            <summary>
+            This will open {0} in your internet browser, because Steam Overlay is either disabled or failed to open. The game will keep running. Do you want to continue?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationRotationFormatCombined">
+            <summary>
+            Press {0} to rotate the block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationCompoundBuildingFormat">
+            <summary>
+            Press {0} or {1} to toggle compound building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationSwitchBuildingModeFormat">
+            <summary>
+            Press {0} to toggle dynamic building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_SwitchWalk">
+            <summary>
+            Switch walk
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Favorites">
+            <summary>
+            The list of favorite servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_Favorites">
+            <summary>
+            Favorites
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTitle_History">
+            <summary>
+            History
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_Friends">
+            <summary>
+            The list of friends servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_TabTooltip_History">
+            <summary>
+            The list of previously visited servers
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Favorites_Add">
+            <summary>
+            Add server to favorites
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Favorites_Remove">
+            <summary>
+            Remove server from favorites
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_VoxelHandSettings">
+            <summary>
+            Open voxel hand settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationVoxelHandHintFormat">
+            <summary>
+            Press {0} to open voxel hand settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationVoxelMaterialFormat">
+            <summary>
+            Press {0} or {1} to change voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_EnableBotsDebugging">
+            <summary>
+            Enable bots debugging
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_NextBot">
+            <summary>
+            Next bot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_PreviousBot">
+            <summary>
+            Previous bot
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BotSettingsScreen_Title">
+            <summary>
+            Bots settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugOfficial_BotSettings">
+            <summary>
+            Bots settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ReportBug">
+            <summary>
+            Report a Bug
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarNextItem">
+            <summary>
+            Next toolbar item
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToolbarPreviousItem">
+            <summary>
+            Previous toolbar item
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlTypeToolsOrWeapons2">
+            <summary>
+            Tools / Weapons 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_BuildMode">
+            <summary>
+            Build mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenControlMenu_Title">
+            <summary>
+            Control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ControlMenu">
+            <summary>
+            Open control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_Off">
+            <summary>
+            Off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_On">
+            <summary>
+            On
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_CameraMode">
+            <summary>
+            Camera mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_FPP">
+            <summary>
+            FPP
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemValue_TPP">
+            <summary>
+            TPP
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_CommitSuicide">
+            <summary>
+            Suicide
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_QuickLoad">
+            <summary>
+            Quick load / reconnect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_ShowColorPicker">
+            <summary>
+            Show color picker
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_ShowToolbarScreen">
+            <summary>
+            Show toolbar screen
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_ToggleHud">
+            <summary>
+            Toggle HUD
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_PauseGame">
+            <summary>
+            Pause game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextErrorFeatureNotAvailableYet">
+            <summary>
+            Feature is not available yet
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationMaximumNumberBots">
+            <summary>
+            Maximum number of bots has been reached
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Hud_BuildMode">
+            <summary>
+            Build mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickCompoundBuildingFormat">
+            <summary>
+            Press {0} to toggle compound building
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickControlMenuFormat">
+            <summary>
+            Press {0} to access control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickMenus">
+            <summary>
+            In order to show help or modify toolbar, open control menu
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickSlotEquipFormat">
+            <summary>
+            Press {0} or {1} to select toolbar slots
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickUnlimitedBuildingFormat">
+            <summary>
+            Press {0} to add block, press {1} to remove block
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationJoystickVoxelMaterialFormat">
+            <summary>
+            Press {0} to change voxel material
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Notification_GameplayOptions">
+            <summary>
+            Press {0} to change Gameplay options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlMenuItemLabel_Wardrobe">
+            <summary>
+            Change appearance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintJoystickPressToOpenInventory">
+            <summary>
+            Access control menu to open inventory of {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationHintPressToOpenBuildMode">
+            <summary>
+            Press {0} to enter build mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics">
+            <summary>
+            Physics
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Fast">
+            <summary>
+            Fast
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Normal">
+            <summary>
+            Normal
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Precise">
+            <summary>
+            Precise
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_Physics_Tooltip">
+            <summary>
+            Higher settings improve simulation BUT directly affects performance.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionGraphicsOptions">
+            <summary>
+            Graphics options
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AnisotropicFiltering">
+            <summary>
+            Anisotropic filtering
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AnisotropicFiltering_Off">
+            <summary>
+            Off
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AntiAliasing">
+            <summary>
+            Anti-aliasing
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AntiAliasing_None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails">
+            <summary>
+            Foliage details
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_Disabled">
+            <summary>
+            Disabled
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_FoliageDetails_Medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_MultiThreadedRendering">
+            <summary>
+            Multi-threaded rendering
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset">
+            <summary>
+            Quality preset
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_Custom">
+            <summary>
+            Custom
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_QualityPreset_Medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_ShadowMapResolution_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_ShadowMapResolution_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality">
+            <summary>
+            Texture quality
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality_High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality_Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_TextureQuality_Medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_VoiceChat">
+            <summary>
+            Push-to-talk voice chat
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.EnableVoiceChat">
+            <summary>
+            Enable voice chat
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_Tonemapping">
+            <summary>
+            Tonemapping
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GrassDensity">
+            <summary>
+            Grass density
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextGuideQuestion">
+            <summary>
+            Do you want to start by watching the video tutorial? Remember: you can always come back by clicking "Tutorials" in the "Help" screen (press F1).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationIncompleteGrid">
+            <summary>
+            You can place only completely constructed and undamaged blocks in the inventory
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Muted">
+            <summary>
+            Muted
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.VoiceChatVolume">
+            <summary>
+            Voice chat volume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ColumnTitle_RemainingTime">
+            <summary>
+            Time remaining
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Lobby">
+            <summary>
+            Lobby
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_Waiting">
+            <summary>
+            Waiting
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorSessionEnded">
+            <summary>
+            The game session has ended. Feel free to join another one.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_EnableAdminMode">
+            <summary>
+            Enable creative mode tools
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_EnableAdminMode_Tooltip">
+            <summary>
+            Enables master to copy / paste ships, stations, spawn objects (SHIFT+F10), spectate (F8) and teleport (CTRL+Space)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Demote">
+            <summary>
+            Demote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenPlayers_Promote">
+            <summary>
+            Promote
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_Accelerating">
+            <summary>
+            Accelerating
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_DistanceFromPlayer">
+            <summary>
+            Further from player than {0} (m)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_Linear">
+            <summary>
+            Linearly moving
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_WithBlockCount">
+            <summary>
+            With less blocks than {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_RemoveTrash">
+            <summary>
+            Remove trash
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_StopTrash">
+            <summary>
+            Stop trash
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_NumberOfLocalTrash">
+            <summary>
+            Local trash count: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_TrashRemoval">
+            <summary>
+            Include in removal
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_ShowTrashAdminView">
+            <summary>
+            Show trash information
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_ReplicateEverything">
+            <summary>
+            Simulate all Locally
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_ReplicateEverything_Tooltip">
+            <summary>
+            USE WITH EXTREME CAUTION!      Your game may freeze until you receive everything.      Danger, this is mainly for debug purposes. This setting will make your computer simulate everything happening on server.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_CurrentValue">
+            <summary>
+            Current value: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_CycleObjects">
+            <summary>
+            Cycle objects
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_Next">
+            <summary>
+            Next
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_Previous">
+            <summary>
+            Previous
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_First">
+            <summary>
+            First
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_Remove">
+            <summary>
+            Remove
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_Stop">
+            <summary>
+            Stop
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DisplayName_Flammables">
+            <summary>
+            Flammables
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxErrorFactionsTag">
+            <summary>
+            Faction tag must be exactly 3 characters long
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Multiplayer_LastMsg">
+            <summary>
+            No message received from server for {0} seconds.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NPCIdentityAdded">
+            <summary>
+            Identity {0} was added
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsUIOpacity">
+            <summary>
+            Change opacity of UI dialogs.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsUIBkOpacity">
+            <summary>
+            Change opacity of UI dialogs background.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GameMode">
+            <summary>
+            Game mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_LargeGrids">
+            <summary>
+            Find only large grids
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_SmallGrids">
+            <summary>
+            Find only small grids
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BlockPropertiesText_Type">
+            <summary>
+            Type: 
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DetailLargeGrid">
+            <summary>
+            Large Grid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DetailSmallGrid">
+            <summary>
+            Small Grid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.DetailStaticGrid">
+            <summary>
+            Static Grid
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_ReleasingAltResetsCamera">
+            <summary>
+            Releasing Alt Resets Camera
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsReleasingAltResetsCamera">
+            <summary>
+            When the button for looking around is released, camera resets automatically.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionNotReady">
+            <summary>
+            Selected medical room is not ready.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextNotReady">
+            <summary>
+            Selected medical room is not ready. Please wait until it is streamed from server.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxF12Question">
+            <summary>
+            WARNING
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextF12Question">
+            <summary>
+            You are entering the developer debug screen. Some of the features may crash the game or cause other errors. Continue?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationStatNotEnough">
+            <summary>
+            Not enough {0}.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationStatZero">
+            <summary>
+            You are out of {0}.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.BlueprintItem.Amount">
+            <summary>
+            Amount of item required or produced. For discrete objects this refers to
+            pieces. For ingots and ore, this refers to volume in m^3.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Definitions.MyDefinitionId">
+            <summary>
+            Prefer getting definition ID using object builder used to create the item.
+            If you have automatic rifle, in its Init method create new MyDefinitionId
+            using TypeId and SubtypeName of object builder.
+            Do not write specific values in code, as data comes from XML and if those
+            change, code needs to change as well.
+            </summary>
+        </member>
+        <member name="M:Sandbox.Definitions.MyDefinitionId.GetHashCodeLong">
+            <summary>
+            Safer hash code. It is unique in more situations than GetHashCode would be,
+            but it may still require full check.
+            </summary>
+            <returns>64-bit hash code.</returns>
+        </member>
+        <member name="M:Sandbox.Definitions.MyContainerDefinition.HasDefaultComponent(System.String)">
+            <summary>
+            This will search through definitions to find if Default Components contains the searched component either as BuilderType, InstanceType, or ComponentType
+            </summary>
+            <param name="component">Name of the type to search for in defined default components</param>
+            <returns>true if is defined component with the matching BuilderType, InstanceType or ComponentType </returns>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.MyObjectBuilder_FactionDefinition.IsDefault">
+            <summary>
+            This value indicates if fraction should be created by default for every new world and its owner
+            will be visible in Ownership dropdown.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.MyObjectBuilder_FactionDefinition.DefaultRelation">
+            <summary>
+            Default faction relation to the other factions. 
+            Enemies state is with highest prority and does not care if other faction want to be friend.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.Result">
+            <summary>
+            THIS IS OBSOLETE
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_BlueprintDefinition.BaseProductionTimeInSeconds">
+            <summary>
+            Base production time in seconds, which is affected by speed increase of
+            refinery or assembler.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
+            <summary>
+            Color is used to get Color(4 bytes) as well as
+            MyStringId value for localization.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.PhysicalMaterial">
+            <summary>
+            Physical material of the character.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.DeadBodyShape">
+            <summary>
+            Physics shape used after character's death.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyObjectBuilder_CharacterDefinition.AnimationController">
+            <summary>
+            Name of used animation controller.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OneDirection">
+            <summary>
+            When block has mount points only on one side, it will autorotate so that side is touching the surface.
+            Otherwise, full range of rotations is allowed.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.OppositeDirections">
+            <summary>
+            When block has mount points only on two sides and those sides are opposite each other (eg. Top and Bottom),
+            it will autorotate so that one of these sides is touching the surface. Otherwise, full range of rotations
+            is allowed.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.Definitions.MyAutorotateMode.FirstDirection">
+            <summary>
+            When block has mountpoint on at least one side, it will autorotate so that this side is touching the surface.
+            Otherwise, full range of rotations is allowed.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyGlobalEventTypeEnum">
+            <summary>
+            Defines the event type.
+            Each event type has its assigned handler method and data class type.
+            Multiple event definitions can have the same event type.
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialDefinition.HasLayers">
+            Weather this material has layers.
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialPlacementRule">
+            Important!
+            
+            Due to the geometry in question the slope is stored as the cosine (used in dot product).
+            
+            Meanwhile the dot product for the latitude yields the cosine of the modulus of the compliment of our angle.
+            This means after the maths are done that what we have is the *sine*, so the latitude is stored as the sine.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialPlacementRule.Check(System.Single,System.Single,System.Single)">
+            Check that a rule matches terrain properties.
+            
+            @param height Height ration to the height map.
+            @param latitude Latitude cosine
+            @param slope Surface dominant angle sine.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetSurfaceRule.Check(System.Single,System.Single,System.Single,System.Single)">
+            Check that a rule matches terrain properties.
+            
+            @param height Height ration to the height map.
+            @param latitude Latitude cosine
+            @param slope Surface dominant angle cosine.
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyPlanetMaterialGroup">
+            Rule group defines a material mappable set of surface rules.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangeValue.ConvertToCosine">
+            When the range is an angle this method changes it to the cosines of the angle.
+            
+            The angle is expected to be in degrees.
+            
+            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
+            
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyRangeValue.ConvertToSine">
+            When the range is an angle this method changes it to the sines of the angle.
+            
+            The angle is expected to be in degrees.
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.Definitions.MyReflectiveRangeValue">
+            Reflective because it can be reflected to the oposite range.
+            
+            Structs not inheriting from structs is stupid.
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyReflectiveRangeValue.ConvertToCosine">
+            When the range is an angle this method changes it to the cosines of the angle.
+            
+            The angle is expected to be in degrees.
+            
+            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
+            
+        </member>
+        <member name="M:Sandbox.Common.ObjectBuilders.Definitions.MyReflectiveRangeValue.ConvertToSine">
+            When the range is an angle this method changes it to the sines of the angle.
+            
+            The angle is expected to be in degrees.
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyComponentBlockEntry.Main">
+            <summary>
+            Whether the given block should be used when spawning the component which it contains
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.ElapsedGameTime">
+            <summary>
+            This is long because TimeSpan is not serialized
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_Checkpoint.GameTime">
+            <summary>
+            Obsolete. Use ElapsedGameTime
+            </summary>
+        </member>
+        <member name="P:Sandbox.Common.ObjectBuilders.MyObjectBuilder_InventoryItem.Content">
+            <summary>
+            Obsolete. It is here only to keep LIMITED backwards compatibility with old saves. Nulls content when unsupported.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyObjectBuilder_SessionSettings.WorldSizeKm">
+            <summary>
+            Size of the edge of the world area cube.
+            Don't use directly, as it is error-prone (it's km instead of m and edge size instead of half-extent)
+            Rather use MyEntities.WorldHalfExtent()
+            </summary>
+        </member>
+        <member name="F:Sandbox.Common.ObjectBuilders.MyToolbarType.Spectator">
+            <summary>
+            This is character toolbar that allows building everything.
+            </summary>
+        </member>
+        <member name="T:Sandbox.Common.ObjectBuilders.GameRelationAttribute">
+            <summary>
+            This class is here only to distinguish fields in SessionSettings
+            Will be removed after correct hierarchy and usage of session settings is made
+            </summary>
+        </member>
+        <member name="M:Sandbox.Common.MyAbstractXmlSerializer`1.#ctor">
+            <summary>
+            **DO NOT USE** This is only added to enable XML Serialization.
+            </summary>
+            <remarks>DO NOT USE THIS CONSTRUCTOR</remarks>
+        </member>
+        <member name="M:Sandbox.Common.MyAbstractXmlSerializer`1.#ctor(`0)">
+            <summary>
+            Initialises the Serializer to work with the given data.
+            </summary>
+            <param name="data">Concrete Object of the AbstractType Specified.</param>
+        </member>
+        <member name="P:Sandbox.Common.MyAbstractXmlSerializer`1.Data">
+            <summary>
+            [Concrete] Data to be stored/is stored as XML.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers">
+            <summary>
+            Register all object builders in game assemblies and loads serializers. This function must be called after links to assemblies in MyPlugins are set!
+            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.GenerateAssemblyId(System.Type)">
+            <summary>Generates an identifier for the assembly of a specified type</summary>
+            <remarks>Code copied from the .NET serialization classes - to emulate the same bahavior</remarks>
+            <param name="type">The type</param>
+            <returns>String identifying the type's assembly</returns>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.MemberwiseAssignment(VRage.ObjectBuilders.MyObjectBuilder_Base,VRage.ObjectBuilders.MyObjectBuilder_Base)">
+            <summary>
+            Performs shallow copy of data between members of the same name and type from source to target.
+            This method can be slow and inefficient, so use only when needed.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
+            <summary>
+            Can handle old values as well.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.RegisterAssemblies">
+            <summary>
+            Register all object builders types from game assemblies. This function must be called after links to assemblies in MyPlugins are set!
+            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
+            </summary>
+        </member>
+        <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">
+            <summary>
+            This object builder is old and is for "MyInventoryBagEntity". Do not use it as base class or for anything. It is here only for backward compatibility.
+            </summary>
+        </member>
+        <member name="F:Sandbox.Engine.Utils.MyMissileConstants.DISTANCE_TO_CHECK_MISSILE_CORRECTION">
+            <summary>
+            The distance to check whether missile will collide soon after launch with something.
+            For more info, see ticket 3422.
+            </summary>
+        </member>
+    </members>
+</doc>

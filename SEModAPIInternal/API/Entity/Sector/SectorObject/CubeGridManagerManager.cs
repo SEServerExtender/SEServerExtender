@@ -1,6 +1,7 @@
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 {
 	using System;
+	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;
 	using SEModAPIInternal.Support;
 

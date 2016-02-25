@@ -7,8 +7,11 @@ namespace SEModAPIInternal.API.Common
 	using System.ComponentModel;
 	using NLog;
 	using Sandbox;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.Game.World;
+	using Sandbox.ModAPI;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Entity;
 	using SEModAPIInternal.Support;

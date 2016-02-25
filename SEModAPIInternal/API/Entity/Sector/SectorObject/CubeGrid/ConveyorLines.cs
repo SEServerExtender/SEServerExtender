@@ -2,7 +2,9 @@ using VRage.Game;
 
 namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid
 {
-    internal class ConveyorLine : BaseObject
+	using Sandbox.Common.ObjectBuilders;
+
+	internal class ConveyorLine : BaseObject
 	{
 		public ConveyorLine( CubeGridEntity parent, MyObjectBuilder_ConveyorLine definition )
 			: base( definition )

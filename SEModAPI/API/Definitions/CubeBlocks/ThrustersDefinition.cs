@@ -3,8 +3,9 @@ using VRage.Game;
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
 	using System.ComponentModel;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 
-    public class ThrusterDefinition : BlockDefinition
+	public class ThrusterDefinition : BlockDefinition
 	{
 		#region "Constructors and Initializers"
 

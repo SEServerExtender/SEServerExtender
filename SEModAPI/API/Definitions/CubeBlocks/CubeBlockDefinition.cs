@@ -2,7 +2,9 @@ using VRage.Game;
 
 namespace SEModAPI.API.Definitions.CubeBlocks
 {
-    public class CubeBlockDef : BlockDefinition
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
+
+	public class CubeBlockDef : BlockDefinition
 	{
 		#region "Constructors and Initializers"
 

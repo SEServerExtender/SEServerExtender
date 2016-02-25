@@ -3,8 +3,9 @@ using VRage.Game;
 namespace SEModAPI.API.Definitions
 {
 	using System;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 
-    public class ScenariosDefinition : OverLayerDefinition<MyObjectBuilder_ScenarioDefinition>
+	public class ScenariosDefinition : OverLayerDefinition<MyObjectBuilder_ScenarioDefinition>
 	{
 		#region "Attributes"
 

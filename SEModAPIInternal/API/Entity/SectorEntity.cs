@@ -9,6 +9,8 @@ namespace SEModAPIInternal.API.Entity
     using Sandbox;
     using Sandbox.Common.ObjectBuilders;
     using Sandbox.Game.Entities;
+    using Sandbox.Game.Multiplayer;
+    using Sandbox.ModAPI;
     using SEModAPI.API;
     using SEModAPI.API.Utility;
     using SEModAPIInternal.API.Common;

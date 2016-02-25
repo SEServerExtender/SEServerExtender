@@ -8,6 +8,9 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject
 	using System.Reflection;
 	using System.Runtime.Serialization;
 	using Sandbox;
+	using Sandbox.Common.ObjectBuilders;
+	using Sandbox.Common.ObjectBuilders.Definitions;
+	using Sandbox.Game.Components;
 	using Sandbox.Game.Entities.Character;
 	using SEModAPI.API.Utility;
 	using SEModAPIInternal.API.Common;

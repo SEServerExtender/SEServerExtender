@@ -13,6 +13,7 @@ namespace SEModAPIExtensions.API
     using System.Threading;
     using System.Xml;
     using Sandbox;
+    using Sandbox.Common.ObjectBuilders;
     using Sandbox.Engine.Multiplayer;
     using Sandbox.Game.Replication;
     using Sandbox.ModAPI;

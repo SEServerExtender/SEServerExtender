@@ -3,8 +3,9 @@ using VRage.Game;
 namespace SEModAPI.API.Definitions
 {
 	using System;
+	using global::Sandbox.Common.ObjectBuilders.Definitions;
 
-    public class ConfigurationDefinition
+	public class ConfigurationDefinition
 	{
 		private MyObjectBuilder_Configuration _baseDefinition;
 
