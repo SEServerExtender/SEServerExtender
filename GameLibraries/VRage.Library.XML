@@ -356,6 +356,9 @@
             Trims end of array which contains default elements.
             </summary>
         </member>
+        <member name="M:VRage.Library.Collections.MyIndexedComponentContainer`1.#ctor(VRage.Library.Collections.MyComponentContainerTemplate{`0})">
+            Create a component from a template.
+        </member>
         <member name="T:VRage.Library.Collections.MyIndexList`1">
             <summary>
             Stores items in list with fixed index (no reordering).

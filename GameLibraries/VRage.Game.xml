@@ -177,7 +177,7 @@
             <param name="spawn">Set tru to spawn object in the world, after it was removed</param>
             <returns>Returns the actually removed amount</returns>
         </member>
-        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,VRage.ModAPI.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
+        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,VRage.ModAPI.Ingame.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
             <summary>
             Transfers safely given item from inventory given as parameter to this instance.
             </summary>
@@ -450,6 +450,11 @@
             Unregister entity component.
             </summary>
         </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNode.EdPos">
+            <summary>
+            Position in editor.
+            </summary>
+        </member>
         <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.AnimationName">
             <summary>
             Name of used track (animation).
@@ -463,6 +468,11 @@
         <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Speed">
             <summary>
             Playing speed.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Interpolate">
+            <summary>
+            Interpolate between keyframes.
             </summary>
         </member>
         <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.ParameterName">
@@ -505,11 +515,6 @@
         <member name="M:VRage.Game.MyParticleEffect.Stop(System.Boolean)">
             <summary>
             This methods stops generating any new particles
-            </summary>
-        </member>
-        <member name="P:VRage.Game.MyParticleEmitter.Type">
-            <summary>
-            Public members to easy access
             </summary>
         </member>
         <member name="P:VRage.Game.MyParticleGeneration.Birth">
@@ -2092,7 +2097,7 @@
         </member>
         <member name="F:MyCommonTexts.NextPage">
             <summary>
-            NextPage
+            Next page
             </summary>
         </member>
         <member name="F:MyCommonTexts.NotificationNeedShowHelpScreen">
@@ -2102,7 +2107,7 @@
         </member>
         <member name="F:MyCommonTexts.PreviousPage">
             <summary>
-            Previous Page
+            Previous page
             </summary>
         </member>
         <member name="F:MyCommonTexts.ShowControlsHints">
@@ -3746,6 +3751,11 @@
             Downloading mods has failed! Please check mods in world settings.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.DialogTextDownloadModsFailedSteamOffline">
+            <summary>
+            Steam is offline. Please try to change world settings to offline and load the world again.
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ProgressTextCheckingMods">
             <summary>
             Checking for mod updates ... please wait.
@@ -4913,12 +4923,12 @@
         </member>
         <member name="F:MyCommonTexts.NotificationStatNotEnough">
             <summary>
-            Not enough {0}.
+            Not enough {0}
             </summary>
         </member>
         <member name="F:MyCommonTexts.NotificationStatZero">
             <summary>
-            You are out of {0}.
+            You are out of {0}
             </summary>
         </member>
         <member name="F:MyCommonTexts.MuteWhenNotInFocus">

@@ -50,6 +50,7 @@
             <summary>
             An Keyframe extends rotation and translation of the bone by specifying time of the event.
             </summary>
+            Beware, this class is used also in MWM builder and changing it to struct may cause problems during MWM generation.
         </member>
         <member name="T:VRage.Animations.MyAnimationClip.Bone">
             <summary>
@@ -1409,11 +1410,6 @@
         <member name="F:VRageRender.RenderFlags.NoBackFaceCulling">
             <summary>
             No culling of back faces
-            </summary>
-        </member>
-        <member name="F:VRageRender.RenderFlags.OffsetInVertexShader">
-            <summary>
-            Offset the vertices a little bit in the vertex shader to fix Z-fighting
             </summary>
         </member>
         <member name="T:VRageRender.LightTypeEnum">
