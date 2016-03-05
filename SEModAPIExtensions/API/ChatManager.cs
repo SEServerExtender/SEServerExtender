@@ -340,9 +340,9 @@ namespace SEModAPIExtensions.API
                 for ( int r = 0; r < data.Length; r++ )
                     text += (char)data[r];
                 */
-                string text = Encoding.Unicode.GetString( data );
-
-                if (DateTime.Now - _lastMessageTime < TimeSpan.FromMilliseconds(50) && text == _lastMessageString)
+                string text = Encoding.UTF8.GetString( data );
+                ApplicationLog.BaseLog.Debug( text );
+                if (DateTime.Now - _lastMessageTime < TimeSpan.FromMilliseconds(200) && text == _lastMessageString)
                 {
                     //if we've received a duplicate message, discard it
                     _lastMessageTime = DateTime.Now;
@@ -398,7 +398,7 @@ namespace SEModAPIExtensions.API
                 {
                     //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
                     //if ( item.message == "init" )
-                      //  MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
+                    //  MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
                 }
                 else
                 {
@@ -413,6 +413,7 @@ namespace SEModAPIExtensions.API
         
         protected void SendDataMessage( string message, ulong userId = 0 )
         {
+            InitUTF();
             ServerMessageItem item = new ServerMessageItem( );
             item.From = Server.Instance.Config.ServerChatName;
             item.Message = message;
@@ -426,7 +427,7 @@ namespace SEModAPIExtensions.API
                 data[r] = (byte)messageString[r];
             }
             */
-            byte[ ] data = Encoding.Unicode.GetBytes( messageString );
+            byte[ ] data = Encoding.UTF8.GetBytes( messageString );
             long msgId = 5003;
 
             //this block adds the length and message id to the outside of the message packet
@@ -447,7 +448,28 @@ namespace SEModAPIExtensions.API
                     MyAPIGateway.Multiplayer.SendMessageTo(9000, newData, userId);
             });
         }
-        
+
+        protected void InitUTF()
+        {
+            byte[ ] data = Encoding.UTF8.GetBytes( "UTF MESSAGE" );
+            long msgId = 5024;
+
+            //this block adds the length and message id to the outside of the message packet
+            //so the mod can quickly determine where the message should go
+            string msgIdString = msgId.ToString( );
+            byte[ ] newData = new byte[data.Length + msgIdString.Length + 1];
+            newData[0] = (byte)msgIdString.Length;
+            for ( int r = 0; r < msgIdString.Length; r++ )
+                newData[r + 1] = (byte)msgIdString[r];
+
+            Buffer.BlockCopy( data, 0, newData, msgIdString.Length + 1, data.Length );
+
+            SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
+             {
+                     MyAPIGateway.Multiplayer.SendMessageToOthers( 9000, newData );
+             } );
+        }
+
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
 			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );

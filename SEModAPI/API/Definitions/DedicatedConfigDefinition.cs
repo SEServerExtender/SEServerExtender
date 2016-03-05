@@ -1131,7 +1131,7 @@ namespace SEModAPI.API.Definitions
 		[ReadOnly( false )]
 		[Description( "Enable or disable sun rotation." )]
 		[Category( "World Settings" )]
-		[DisplayName( "Sun Eotation Enabled" )]
+		[DisplayName( "Sun Rotation Enabled" )]
 		[DefaultValue( true )]
 		public bool EnableSunRotation
 		{
@@ -1178,11 +1178,211 @@ namespace SEModAPI.API.Definitions
 			get { return _definition.SessionSettings.PhysicsIterations; }
 			set
 			{
-				if ( _definition.SessionSettings.PhysicsIterations != value )
 					_definition.SessionSettings.PhysicsIterations = value;
 			}
 		}
 
+        /// <summary>
+		/// Get or set the Cyberhounds setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables Cyberhounds" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable Cyberhounds" )]
+        [DefaultValue( false )]
+        public bool EnableCyberhounds
+        {
+            get
+            {
+                if ( !_definition.SessionSettings.EnableCyberhounds.HasValue )
+                    _definition.SessionSettings.EnableCyberhounds = false;
+                return _definition.SessionSettings.EnableCyberhounds.Value;
+            }
+            set
+            {
+                    _definition.SessionSettings.EnableCyberhounds = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the spiders setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables spiders" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable Spiders" )]
+        [DefaultValue( true )]
+        public bool EnableSpiders
+        {
+            get
+            {
+                if ( !_definition.SessionSettings.EnableSpiders.HasValue )
+                    _definition.SessionSettings.EnableSpiders = true;
+                return _definition.SessionSettings.EnableSpiders.Value;
+            }
+            set
+            {
+                _definition.SessionSettings.EnableCyberhounds = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the drones setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables drones" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable Drones" )]
+        [DefaultValue( true )]
+        public bool EnableDrones
+        {
+            get
+            {
+                return _definition.SessionSettings.EnableDrones;
+            }
+            set
+            {
+                _definition.SessionSettings.EnableDrones = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the voxel destruction setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables voxel destruction" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable Voxel Destruction" )]
+        [DefaultValue( false )]
+        public bool EnableVoxelDesctruction
+        {
+            get
+            {
+                return _definition.SessionSettings.EnableVoxelDestruction;
+            }
+            set
+            {
+                _definition.SessionSettings.EnableVoxelDestruction = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the Enable Flora setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables flora" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable Flora" )]
+        [DefaultValue( true )]
+        public bool EnableFlora
+        {
+            get
+            {
+                return _definition.SessionSettings.EnableFlora;
+            }
+            set
+            {
+                _definition.SessionSettings.EnableFlora = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the Flora Density Multiplier setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Sets the Flora Density Multiplier setting" )]
+        [Category( "World Settings" )]
+        [DisplayName( "FloraDensityMultiplier" )]
+        [DefaultValue( 1.00 )]
+        public float FloraDensityMultiplier
+        {
+            get
+            {
+                return _definition.SessionSettings.FloraDensityMultiplier;
+            }
+            set
+            {
+                _definition.SessionSettings.FloraDensityMultiplier = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the Flora Density setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Sets Flora Density" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Flora Density" )]
+        [DefaultValue( 20 )]
+        public int FloraDensity
+        {
+            get
+            {
+                return _definition.SessionSettings.FloraDensity;
+            }
+            set
+            {
+                _definition.SessionSettings.FloraDensity = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the Voxel Support setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables Voxel Support" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable Station Voxel Support" )]
+        [DefaultValue( true )]
+        public bool EnableVoxelSupport
+        {
+            get
+            {
+                return _definition.SessionSettings.EnableStationVoxelSupport;
+            }
+            set
+            {
+                _definition.SessionSettings.EnableStationVoxelSupport = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the Enable 3rd Person View setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables 3rd Person View" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable 3rd Person View" )]
+        [DefaultValue( true )]
+        public bool Enable3rdPersonView
+        {
+            get
+            {
+                return _definition.SessionSettings.Enable3rdPersonView;
+            }
+            set
+            {
+                _definition.SessionSettings.Enable3rdPersonView = value;
+            }
+        }
         #endregion
 
         #region "Methods"
@@ -1195,8 +1395,6 @@ namespace SEModAPI.API.Definitions
         /// <exception cref="ConfigurationErrorsException">Configuration file not understood. See inner exception for details. Ignore configuration file line number in outer exception.</exception>
         public static MyConfigDedicatedData<MyObjectBuilder_SessionSettings> Load( FileInfo fileInfo )
         {
-            object fileContent;
-
 			string filePath = fileInfo.FullName;
 
 			if ( !File.Exists( filePath ) )

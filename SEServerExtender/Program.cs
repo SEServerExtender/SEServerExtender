@@ -329,6 +329,8 @@ namespace SEServerExtender
 					{
 						extenderArgs.RestartOnCrash = true;
 					}
+                    //these things are legacy and don't work anyway
+                    /*
 					else if ( lowerCaseArgument.Equals( "wrr" ) )
 					{
 						extenderArgs.WorldRequestReplace = true;
@@ -341,6 +343,7 @@ namespace SEServerExtender
                     {
                         extenderArgs.WorldVoxelModify = true;
                     }
+                    */
 				}
 			}
 

@@ -2,6 +2,7 @@
 
 using VRage.Game;
 using VRage.ModAPI;
+using VRage.ModAPI.Ingame;
 
 namespace SEModAPIInternal.API.Entity
 {
