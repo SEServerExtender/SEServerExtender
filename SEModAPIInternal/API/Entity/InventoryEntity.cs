@@ -1,8 +1,8 @@
 //using Sandbox.ModAPI.Interfaces;
 
 using VRage.Game;
+using VRage.Game.ModAPI.Ingame;
 using VRage.ModAPI;
-using VRage.ModAPI.Ingame;
 
 namespace SEModAPIInternal.API.Entity
 {
@@ -18,7 +18,7 @@ namespace SEModAPIInternal.API.Entity
 	using SEModAPIInternal.Support;
 	using VRage;
 	using VRage.ObjectBuilders;
-	using IMyInventory = Sandbox.ModAPI.IMyInventory;
+	//using IMyInventory = Sandbox.ModAPI.IMyInventory;
 
 	public struct InventoryDelta
 	{
@@ -272,7 +272,7 @@ namespace SEModAPIInternal.API.Entity
 				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 					{
 						IMyInventory inventory = (IMyInventory)BackingObject;
-						inventory.AddItems( (MyFixedPoint)source.Amount, source.PhysicalContent );
+						//inventory.AddItems( (MyFixedPoint)source.Amount, source.PhysicalContent );
 					} ) );
 			}
 
@@ -286,7 +286,7 @@ namespace SEModAPIInternal.API.Entity
 				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 				{
 					IMyInventory myInventory = (IMyInventory)BackingObject;
-					myInventory.RemoveItems( source.ItemId );
+					//myInventory.RemoveItems( source.ItemId );
 				} ) );
 			}
 
@@ -341,6 +341,7 @@ namespace SEModAPIInternal.API.Entity
 		{
 			if ( BackingObject != null )
 			{
+                /*
 				SandboxGameAssemblyWrapper.Instance.GameAction( new Action( delegate( )
 				{
 					IMyInventory myInventory = (IMyInventory)BackingObject;
@@ -351,6 +352,7 @@ namespace SEModAPIInternal.API.Entity
 					else if ( newAmount < item.Amount )
 						myInventory.RemoveItemsAt( (int)item.ItemId, (MyFixedPoint)( item.Amount - newAmount ), true );
 				} ) );
+                */
 			}
 
 			/*

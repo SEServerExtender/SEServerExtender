@@ -4,7 +4,7 @@
         <name>VRage</name>
     </assembly>
     <members>
-        <member name="T:VRage.Animations.AnimationNodes.MyAnimationTreeNodeMix1D">
+        <member name="T:VRage.Animations.MyAnimationTreeNodeMix1D">
             <summary>
             Mixing between animation nodes on 1D axis.
             </summary>
@@ -12,6 +12,26 @@
         <member name="T:VRage.Animations.MyAnimationTreeNode">
             <summary>
             Interface representing one node in animation tree.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationTreeNodeDummy">
+            <summary>
+            Node of animation tree: single track. Contains reference to animation clip.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationVariableStorageHints">
+            <summary>
+            Variable storage - Hints for the user, common variable names, descriptions, string ids.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationVariableStorageHints.MyVariableNameHint.Name">
+            <summary>
+            Variable name.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationVariableStorageHints.MyVariableNameHint.Hint">
+            <summary>
+            Description of the variable.
             </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationClip">
@@ -77,7 +97,7 @@
             The keyframes for this bone
             </summary>
         </member>
-        <member name="T:VRage.Animations.AnimationNodes.MyAnimationTreeNodeTrack">
+        <member name="T:VRage.Animations.MyAnimationTreeNodeTrack">
             <summary>
             Node of animation tree: single track. Contains reference to animation clip.
             </summary>
@@ -177,6 +197,11 @@
             Conditions of transition are ignored.
             </summary>
         </member>
+        <member name="M:VRage.Generics.MyStateMachine.SortTransitions">
+            <summary>
+            Sort the transitions between states according to their priorities.
+            </summary>
+        </member>
         <member name="T:VRage.Animations.MyAnimationStateMachineNode">
             <summary>
             Animation state machine node is a representation of one state inside MyAnimationStateMachine.
@@ -200,7 +225,8 @@
         <member name="M:VRage.Animations.MyAnimationStateMachineTransition.Evaluate">
             <summary>
             Animation transition evaluation - different behavior from default transition. 
-            If no conditions are given, it must be triggered manually.
+            If no conditions are given and it has a name, it must be triggered manually.
+            
             </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationUpdateData">
@@ -654,6 +680,12 @@
             WriteQuaternion
             </summary>
             <param name="vct"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyControl.GetAnalogState">
+            <summary>
+            Return the analog state between 0 (not pressed at all) and 1 (fully pressed).
+            If a digital button is mapped to an analog control, it can return only 0 or 1.
+            </summary>
         </member>
         <member name="M:VRage.Input.MyControl.GetAnalogState">
             <summary>
@@ -1576,7 +1608,7 @@
             Must be possible to query during startup before render thread and window is created.
             </summary>
         </member>
-        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32,System.String,System.Int32[],System.String,System.Nullable{VRageMath.Color},System.Single)">
+        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32[],System.UInt32[],System.Nullable{VRageMath.Color},System.Single,System.UInt64)">
             <param name="thickness">Zero or negative to remove highlight</param>
         </member>
         <member name="M:VRageRender.MyRenderProxy.ChangeModel(System.UInt32,System.Int32,System.String,System.Boolean)">
@@ -2400,6 +2432,17 @@
         <member name="M:VRage.Utils.MyStringHash.TryGet(System.Int32)">
             <summary>
             Think HARD before using this. Usually you should be able to use MyStringHash as it is without conversion to int.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyCopyDataStructures.CommonMsg.ConvertHeaderFrom(VRage.Win32.WinApi.MyCopyData,VRage.Utils.MyCopyDataStructures.CommonMsg@)">
+            <summary>
+            Convert from raw winapi data. User will get only the header.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyCopyDataStructures.CommonMsg.ConvertFrom``1(VRage.Win32.WinApi.MyCopyData,``0@)">
+            <summary>
+            Convert from raw winapi data to DERIVED message.
+            DERIVED message must be struct with sequential layout having first field "Header" of type "CommonMsg".
             </summary>
         </member>
         <member name="T:VRage.Utils.MyStringId">

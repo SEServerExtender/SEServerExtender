@@ -4,170 +4,17 @@
         <name>Sandbox.Common</name>
     </assembly>
     <members>
-        <member name="T:Sandbox.Common.Input.MyInputSnapshot">
-            <summary>
-            Snapshot of an input state, so it can be pumped to the game for testing
-            </summary>
-        </member>
-        <member name="P:Sandbox.Common.Input.MyInputSnapshot.KeyboardSnapshot">
-            <summary>
-            List of keys pressed when the frame was captured.
-            </summary>
-        </member>
-        <member name="P:Sandbox.Common.Input.MyInputSnapshot.SnapshotTimestamp">
-            <summary>
-            In milliseconds.
-            </summary>
-        </member>
-        <member name="T:Sandbox.ModAPI.BeforeDamageApplied">
-            <summary>
-            This delegate is used to handle damage before it's applied to an object.  This returns a modified damage that is used in DoDamage.  Return damage if no change.
-            </summary>
-            <param name="target">The object that is damaged</param>
-            <param name="damage">Amount of damage being applied</param>
-            <param name="damageType">Type of damage being applied</param>
-            <param name="attackerId">The entity ID of the attacker</param>
-            <returns>Modified damage.  Return damage parameter if damage is not modified.</returns>
-        </member>
-        <member name="T:Sandbox.ModAPI.MyDamageSystemPriority">
-            <summary>
-             Standard priority values
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyDamageSystem.RegisterDestroyHandler(System.Int32,System.Action{System.Object,Sandbox.ModAPI.MyDamageInformation})">
-            <summary>
-            Registers a handler for when an object in game is destroyed.
-            </summary>
-            <param name="priority">Priority level.  Lower means higher priority.</param>
-            <param name="handler">Actual handler delegate</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyDamageSystem.RegisterBeforeDamageHandler(System.Int32,Sandbox.ModAPI.BeforeDamageApplied)">
-            <summary>
-            Registers a handler that is called before an object in game is damaged.  The damage can be modified in this handler.
-            </summary>
-            <param name="priority">Priority level.  Lower means higher priority.</param>
-            <param name="handler">Actual handler delegate</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyDamageSystem.RegisterAfterDamageHandler(System.Int32,System.Action{System.Object,Sandbox.ModAPI.MyDamageInformation})">
-            <summary>
-            Registers a handler that is called after an object in game is damaged.
-            </summary>
-            <param name="priority">Priority level.  Lower means higher priority.</param>
-            <param name="handler">Actual handler delegate</param>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyGps.Hash">
-            <summary>
-            The GPS entry id hash which is generated using the GPS name and coordinates.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGps.UpdateHash">
-            <summary>
-            Updates the hash id if you've changed the name or the coordinates.
-            NOTE: Do not use this if you plan on using this object to update existing GPS entries.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyGps.DiscardAt">
-            <summary>
-            If it's null then the GPS is confirmed (does not expire automatically).
-            Otherwise, time at which we should drop it from the list, relative to ElapsedPlayTime
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.GetGpsList(System.Int64)">
-            <summary>
-            Gets the GPS entries from the specified identity (does not use network traffic).
-            </summary>
-            <param name="identityId"></param>
-            <returns>The GPS entry list.</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.GetGpsList(System.Int64,System.Collections.Generic.List{Sandbox.ModAPI.IMyGps})">
-            <summary>
-            Gets the GPS entries from the specified identity (does not use network traffic).
-            </summary>
-            <param name="identityId"></param>
-            <param name="list">GPS entries will be added to this list. The list is not cleared internally.</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.Create(System.String,System.String,VRageMath.Vector3D,System.Boolean,System.Boolean)">
-            <summary>
-            Creates a GPS entry object. Does not automatically add it, you need to use AddGps() or AddLocalGps().
-            </summary>
-            <param name="name"></param>
-            <param name="description"></param>
-            <param name="coords"></param>
-            <param name="showOnHud"></param>
-            <param name="temporary">wether it automatically expires or not (DiscardAt field)</param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.AddGps(System.Int64,Sandbox.ModAPI.IMyGps)">
-            <summary>
-            Sends a network request to add the GPS entry for the said player, which will also save it to the server.
-            </summary>
-            <param name="playerId"></param>
-            <param name="gps">Use the Create() method to get this object</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.ModifyGps(System.Int64,Sandbox.ModAPI.IMyGps)">
-            <summary>
-            Sends a network request to modify the contents of an existing GPS entry.
-            </summary>
-            <param name="identityId"></param>
-            <param name="gps">NOTE: it must contain the original hash id</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveGps(System.Int64,Sandbox.ModAPI.IMyGps)">
-            <summary>
-            Sends a network request to remove the specified GPS entry.
-            </summary>
-            <param name="identityId"></param>
-            <param name="gps"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveGps(System.Int64,System.Int32)">
-            <summary>
-            Sends a network request to remove the specified GPS entry.
-            </summary>
-            <param name="identityId"></param>
-            <param name="gpsHash"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.SetShowOnHud(System.Int64,Sandbox.ModAPI.IMyGps,System.Boolean)">
-            <summary>
-            Sends a network request to set the GPS entry if it's shown on HUD or not.
-            </summary>
-            <param name="identityId"></param>
-            <param name="gps"></param>
-            <param name="show"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.SetShowOnHud(System.Int64,System.Int32,System.Boolean)">
-            <summary>
-            Sends a network request to set the GPS entry if it's shown on HUD or not.
-            </summary>
-            <param name="identityId"></param>
-            <param name="gpsHash"></param>
-            <param name="show"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.AddLocalGps(Sandbox.ModAPI.IMyGps)">
-            <summary>
-            Adds a GPS entry only for this client which won't be synchronized or saved.
-            </summary>
-            <param name="gps"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveLocalGps(Sandbox.ModAPI.IMyGps)">
-            <summary>
-            Remove a local GPS entry, no network updates sent.
-            
-            NOTE: This can remove synchronized ones too.
-            </summary>
-            <param name="gps"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyGpsCollection.RemoveLocalGps(System.Int32)">
-            <summary>
-            Remove a local GPS entry, no network updates sent.
-            
-            NOTE: This can remove synchronized ones too.
-            </summary>
-            <param name="gpsHash"></param>
-        </member>
         <member name="T:Sandbox.ModAPI.IMyGridProgram">
             <summary>
             The interface for the grid program provides extra access for the game and for mods. See <see cref="T:Sandbox.ModAPI.Ingame.MyGridProgram"/> for the class the scripts
             actually derive from.
             </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGridProgram.Main(System.String)">
+            <summary>
+            Invokes this grid program.
+            </summary>
+            <param name="argument"></param>
         </member>
         <member name="P:Sandbox.ModAPI.IMyGridProgram.GridTerminalSystem">
             <summary>
@@ -199,15 +46,50 @@
             Determines whether this grid program has a valid Main method.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyGridProgram.Main(System.String)">
+        <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
             <summary>
-            Invokes this grid program.
+            Raises AppendingCustomInfo so every subscriber can append custom info.
             </summary>
-            <param name="argument"></param>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyTerminalBlock.AppendingCustomInfo">
+            <summary>
+            Event to append custom info.
+            </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyLaserAntenna">
             <summary>
             ModAPI laserantenna block interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyLaserAntenna">
+            <summary>
+            Laser antenna block interface
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.SetTargetCoords(System.String)">
+            <summary>
+            Set coordinates of target
+            </summary>
+            <param name="coords">GPS coordinates string</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.Connect">
+            <summary>
+            Connect to target defined by SetTargetCoords
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TargetCoords">
+            <summary>
+            get target coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsPermanent">
+            <summary>
+            Connection is permanent
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsOutsideLimits">
+            <summary>
+            Target is outside movement limits of antenna
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.IMyLaserAntenna.RequireLoS">
@@ -215,535 +97,29 @@
             Flag if antenna requires LoS - for modded antenas
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.IMyCubeBlock">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
             <summary>
-            base block interface, block can be affected by upgrade modules, and you can retrieve upgrade list from <see cref="T:Sandbox.ModAPI.IMyUpgradableBlock"/>
+            Indicates whether door is opened or closed. True when door is opened.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.CalcLocalMatrix(VRageMath.Matrix@,System.String@)">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
             <summary>
-            
-            </summary>
-            <param name="localMatrix"></param>
-            <param name="currModel"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.CalculateCurrentModel(VRageMath.Matrix@)">
-            <summary>
-            Calculates model currently used by block depending on its build progress and other factors
-            </summary>
-            <param name="orientation">Model orientation</param>
-            <returns>Model path</returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.CheckConnectionAllowed">
-             <summary>
-             Whether the grid should call the ConnectionAllowed method for this block 
-            (ConnectionAllowed checks mount points and other per-block requirements)
-             </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.CubeGrid">
-            <summary>
-            Grid in which the block is placed
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.DebugDraw">
-            <summary>
-            Debug only method. Effects may wary through time.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.DefinitionDisplayNameText">
-            <summary>
-            Definition name
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.DisassembleRatio">
-            <summary>
-            Is set in definition
-            Ratio at which is the block disassembled (grinding) 
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.DisplayNameText">
-            <summary>
-            Translated block name
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetObjectBuilderCubeBlock(System.Boolean)">
-            <summary>
-            Returns block object builder which can be serialized or added to grid
-            </summary>
-            <param name="copy">Set if creating a copy of block</param>
-            <returns>Block object builder</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetOwnerFactionTag">
-            <summary>
-            
-            </summary>
-            <returns>Tag of faction owning block</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetPlayerRelationToOwner">
-            <summary>
-            
-            </summary>
-            <returns>Relation of local player to the block</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.GetUserRelationToOwner(System.Int64)">
-            <summary>
-            
-            </summary>
-            <param name="playerId">Id of player to check relation with (not steam id!)</param>
-            <returns>Relation of defined player to the block</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.Init">
-            <summary>
-            Reloads block model and interactive objects (doors, terminals, etc...)
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.Init(VRage.Game.MyObjectBuilder_CubeBlock,Sandbox.ModAPI.IMyCubeGrid)">
-            <summary>
-            Initializes block state from object builder
-            </summary>
-            <param name="builder">Object builder of block (should correspond with block type)</param>
-            <param name="cubeGrid">Owning grid</param>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.IsFunctional">
-            <summary>
-            True if integrity is above breaking threshold
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.IsWorking">
-            <summary>
-            True if block is able to do its work depening on block type (is functional, powered, enabled, etc...)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Max">
-            <summary>
-            Maximum coordinates of grid cells occupied by this block
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Mass">
-            <summary>
-            Block mass
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Min">
-            <summary>
-            Minimum coordinates of grid cells occupied by this block
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.NumberInGrid">
-            <summary>
-            Order in which were the blocks of same type added to grid
-            Used in default display name
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnBuildSuccess(System.Int64)">
-            <summary>
-            Method called when a block has been built (after adding to the grid).
-            This is called right after placing the block and it doesn't matter whether
-            it is fully built (creative mode) or is only construction site.
-            Note that it is not called for blocks which do not create FatBlock at that moment.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnDestroy">
-            <summary>
-            Called when block is destroyed before being removed from grid
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnModelChange">
-            <summary>
-            Called when the model referred by the block is changed
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnRegisteredToGridSystems">
-            <summary>
-            Called at the end of registration from grid systems (after block has been registered).
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnRemovedByCubeBuilder">
-            <summary>
-            Method called when user removes a cube block from grid. Useful when block
-            has to remove some other attached block (like motors).
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.OnUnregisteredFromGridSystems">
-            <summary>
-            Called at the end of unregistration from grid systems (after block has been unregistered).
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Orientation">
-            <summary>
-            Returns block orientation in base 6 directions
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.OwnerId">
-            <summary>
-            Id of player owning block (not steam Id)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.Position">
-            <summary>
-            Position in grid coordinates
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.RaycastDetectors(VRageMath.Vector3,VRageMath.Vector3)">
-            <summary>
-            Gets the name of interactive object intersected by defined line
-            </summary>
-            <param name="worldFrom">Line from point in world coordinates</param>
-            <param name="worldTo">Line to point in world coordinates</param>
-            <returns>Name of intersected detector (interactive object)</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.ReloadDetectors(System.Boolean)">
-            <summary>
-            Reloads detectors (interactive objects) in model
-            </summary>
-            <param name="refreshNetworks">ie conweyor network</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.UpdateIsWorking">
-            <summary>
-            Force refresh working state. Call if you change block state that could affect its working status.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.UpdateVisual">
-            <summary>
-            Updates block visuals (ie. block emissivity)
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.SetDamageEffect(System.Boolean)">
-            <summary>
-            Start or stop dammage effect on cube block
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBlock.UpgradeValues">
-            <summary>
-            Get all values changed by upgrade modules
-            Should only be used as read-only
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBlock.AddUpgradeValue(System.String,System.Single)">
-            <summary>
-            Preferred way of registering a block for upgrades
-            Adding directly to the dictionary can have unintended consequences
-            when multiple mods are involved.
-            </summary>
-        </member>
-        <member name="E:Sandbox.ModAPI.IMyCubeBlock.OnUpgradeValuesChanged">
-            <summary>
-            Event called when upgrade values are changed
-            Either upgrades were built or destroyed, or they become damaged or unpowered
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.Activate">
-            <summary>
-            Activates the building mode
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.AddConstruction(VRage.ModAPI.IMyEntity)">
-            <summary>
-            Adds construction site of block with currently selected definition
-            </summary>
-            <param name="buildingEntity"></param>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.BlockCreationIsActivated">
-            <summary>
-            Returns state of building mode
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.CopyPasteIsActivated">
-            <summary>
-            Returns state of copy pasting mode
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.Deactivate">
-            <summary>
-            Deactivates all modes
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.DeactivateBlockCreation">
-            <summary>
-            Deactivates building mode
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.DeactivateCopyPaste">
-            <summary>
-            Deactivates copy pasting mode
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.DeactivateShipCreationClipboard">
-            <summary>
-            Deactivates creating grids
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.FreezeGizmo">
-            <summary>
-            Freezes the built object preview in current position
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.ShipCreationIsActivated">
-            <summary>
-            Current stat of grid creation mode
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.ShowRemoveGizmo">
-            <summary>
-            Shows the delete area preview
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.StartNewGridPlacement(VRage.Game.MyCubeSize,System.Boolean)">
-            <summary>
-            Creates new grid 
-            </summary>
-            <param name="cubeSize">Grid size</param>
-            <param name="isStatic">Station = static</param>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.UseSymmetry">
-            <summary>
-            Enables synmetry block placing
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.UseTransparency">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeBuilder.FindClosestGrid">
-            <summary>
-            Finds grid to build on
-            </summary>
-            <returns>found grid</returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeBuilder.IsActivated">
-            <summary>
-            Is any mode active
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ApplyDestructionDeformation(Sandbox.ModAPI.IMySlimBlock)">
-            <summary>
-            Applies random deformation to given block
-            </summary>
-            <param name="block">block to be deformed</param>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.BigOwners">
-            <summary>
-            List of players with majority of blocks on grid
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.SmallOwners">
-            <summary>
-            List of players with any blocks on grid
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ChangeGridOwnership(System.Int64,VRage.Game.MyOwnershipShareModeEnum)">
-            <summary>
-            Changes owner of all blocks on grid
-            Call only on server!
-            </summary>
-            <param name="playerId">new owner id</param>
-            <param name="shareMode">new share mode</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ClearSymmetries">
-            <summary>
-            Clears symmetry planes
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ColorBlocks(VRageMath.Vector3I,VRageMath.Vector3I,VRageMath.Vector3)">
-            <summary>
-            Sets given color mask to range of blocks
-            </summary>
-            <param name="min">Starting coordinates of collored area</param>
-            <param name="max">End coordinates of collored area</param>
-            <param name="newHSV">new color mask (Saturation and Value are offsets)</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.ConvertToDynamic">
-            <summary>
-            Converts station to ship
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.CubeExists(VRageMath.Vector3I)">
-            <summary>
-            Returns true if there is any block occupying given position
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.FixTargetCube(VRageMath.Vector3I@,VRageMath.Vector3)">
-            <summary>
-            Clamps fractional grid position to nearest cell (prefers neighboring occupied cell before empty) 
-            </summary>
-            <param name="cube">Return value</param>
-            <param name="fractionalGridPosition">Fractional position in grid space</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetClosestCorner(VRageMath.Vector3I,VRageMath.Vector3)">
-            <summary>
-            Gets position of closest cell corner
-            </summary>
-            <param name="gridPos">Cell coordinates</param>
-            <param name="position">Position to find nearest corner to. Grid space</param>
-            <returns>Fractional position of corner in grid space</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetCubeBlock(VRageMath.Vector3I)">
-            <summary>
-            Get cube block at given position
-            </summary>
-            <param name="pos">Block position</param>
-            <returns>Block or null if none is present at given position</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetLineIntersectionExactAll(VRageMath.LineD@,System.Double@,Sandbox.ModAPI.IMySlimBlock@)">
-            <summary>
-            Returns point of intersection with line
-            </summary>
-            <param name="line">Intersecting line</param>
-            <param name="distance">Distance of intersection</param>
-            <param name="intersectedBlock"></param>
-            <returns>Point of intersection</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetLineIntersectionExactGrid(VRageMath.LineD@,VRageMath.Vector3I@,System.Double@)">
-            <summary>
-            Same as GetLineIntersectionExactAll just without intersected block
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GridIntegerToWorld(VRageMath.Vector3I)">
-            <summary>
-            Converts grid coordinates to world space
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.GridSize">
-            <summary>
-            Grid size in meters
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.GridSizeEnum">
-            <summary>
-            Grid size enumeration
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.IsStatic">
-            <summary>
-            Station = static
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.IsTouchingAnyNeighbor(VRageMath.Vector3I,VRageMath.Vector3I)">
-            <summary>
-            Finds out if given area has any neighboring block
-            </summary>
-            <param name="min"></param>
-            <param name="max"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.IsTrash">
-            <summary>
-            Algorithm used by game to define useless grids to be deleted
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.Max">
-            <summary>
-            Maximum coordinates of blocks in grid
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.CanMergeCubes(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
-            <summary>
-            Determines if merge between grids is possible with given offset
-            </summary>
-            <param name="gridToMerge"></param>
-            <param name="gridOffset">offset to merged grid (in grid space)</param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.CalculateMergeTransform(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
-            <summary>
-            Transformation matrix that has to be applied to grid blocks to correctly merge it
-            used because ie. ships can be turned 90 degrees along X axis when being merged
-            </summary>
-            <param name="gridToMerge"></param>
-            <param name="gridOffset"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.MergeGrid_MergeBlock(Sandbox.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
-            <summary>
-            Merge used by merge blocks
-            </summary>
-            <param name="gridToMerge"></param>
-            <param name="gridOffset"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyCubeGrid.Min">
-            <summary>
-            Minimum coordinates of blocks in grid
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RayCastBlocks(VRageMath.Vector3D,VRageMath.Vector3D)">
-            <summary>
-            Returns cell with block intersecting given line
-            </summary>
-            <param name="worldStart"></param>
-            <param name="worldEnd"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RayCastCells(VRageMath.Vector3D,VRageMath.Vector3D,System.Collections.Generic.List{VRageMath.Vector3I},System.Nullable{VRageMath.Vector3I},System.Boolean)">
-            <summary>
-            Returns list of cells with blocks intersected by line
-            </summary>
-            <param name="worldStart"></param>
-            <param name="worldEnd"></param>
-            <param name="outHitPositions"></param>
-            <param name="gridSizeInflate"></param>
-            <param name="havokWorld">use physics intersection</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RazeBlock(VRageMath.Vector3I)">
-            <summary>
-            Remove block at given position
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RazeBlocks(VRageMath.Vector3I@,VRageMath.Vector3UByte@)">
-            <summary>
-            Remove blocks in given area
-            </summary>
-            <param name="pos">Starting position</param>
-            <param name="size">Area extents</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RazeBlocks(System.Collections.Generic.List{VRageMath.Vector3I})">
-            <summary>
-            Remove blocks at given positions
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RemoveBlock(Sandbox.ModAPI.IMySlimBlock,System.Boolean)">
-            <summary>
-            Removes given block
-            </summary>
-            <param name="block"></param>
-            <param name="updatePhysics">Update grid physics</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.RemoveDestroyedBlock(Sandbox.ModAPI.IMySlimBlock)">
-            <summary>
-            Removes block and deformates neighboring blocks
-            </summary>
-            <param name="block"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.UpdateBlockNeighbours(Sandbox.ModAPI.IMySlimBlock)">
-            <summary>
-            Refreshes block neighbors (checks connections)
-            </summary>
-            <param name="block"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.WorldToGridInteger(VRageMath.Vector3)">
-            <summary>
-            Converts world coordinates to grid space cell coordinates
-            </summary>
-            <param name="coords"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetBlocks(System.Collections.Generic.List{Sandbox.ModAPI.IMySlimBlock},System.Func{Sandbox.ModAPI.IMySlimBlock,System.Boolean})">
-            <summary>
-            Returns blocks in grid
-            </summary>
-            <param name="blocks">List of returned blocks</param>
-            <param name="collect">Filter - function called on each block telling if it should be added to result</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyCubeGrid.GetBlocksInsideSphere(VRageMath.BoundingSphereD@)">
-            <summary>
-            Returns blocks inside given sphere (world space)
+            Door state, zero is fully closed. One is fully opened.
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyOxygenGenerator">
             <summary>
             Oxygen generator interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyOxygenGenerator">
+            <summary>
+            Oxygen generator interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyOxygenGenerator.AutoRefill">
+            <summary>
+            Autorefill enabled
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.ProductionCapacityMultiplier">
@@ -756,24 +132,49 @@
             Increase/decrese power consumption
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
+            <summary>
+            Param - limit is top
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.CurrentPosition">
+            <summary>
+            Gets the current position of the piston head relative to the base.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Status">
+            <summary>
+            Gets the current status.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.CurrentOutput">
+            <summary>
+            Current output of reactor in Megawatts
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.MaxOutput">
+            <summary>
+            Maximum output of reactor in Megawatts
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
+            <summary>
+            Param - active
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.IMyShipWelder">
             <summary>
             Ship welder interface
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.IMySpaceBall">
+        <member name="T:Sandbox.ModAPI.Ingame.IMyShipWelder">
             <summary>
-            ModAPI Spaceball interface
+            Ship welder interface
             </summary>
         </member>
-        <member name="E:Sandbox.ModAPI.IMyTerminalBlock.AppendingCustomInfo">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipWelder.HelpOthers">
             <summary>
-            Event to append custom info.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
-            <summary>
-            Raises AppendingCustomInfo so every subscriber can append custom info.
+            True if welder is set to helper mode
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyUpgradableBlock">
@@ -781,95 +182,20 @@
             interface to retrieve upgrade effects from block <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock"/>
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.IMyUpgradeModule">
+        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock">
             <summary>
-            Interface to access upgrade module properties <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradeModule"/>
+            interface to retrieve upgrade effects on block
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.IMyVirtualMass">
+        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.GetUpgrades(System.Collections.Generic.Dictionary{System.String,System.Single}@)">
             <summary>
-            ModAPI VirtualMass Interface
+            get list of upgrades (r/o);
+            string - upgrade type, float - effect value as float (1 = 100%)
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyVoxelShape.Transform">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.UpgradeCount">
             <summary>
-            World matrix of voxel shape
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelShape.GetWorldBoundary">
-            <summary>
-            Gets current world boundaries
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelShape.PeekWorldBoundary(VRageMath.Vector3D@)">
-            <summary>
-            Peeks world boundaries at given position
-            </summary>
-            <param name="targetPosition"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelShape.GetIntersectionVolume(VRageMath.Vector3D@)">
-            <summary>
-            Gets volume of intersection of shape and voxel
-            </summary>
-            <param name="voxelPosition">Left bottom point of voxel</param>
-            <returns>Normalized volume of intersection</returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyVoxelShapeBox.Boundaries">
-            <summary>
-            Boundaries are in local space, you need to use transform property to rotate/translate shape 
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyVoxelShapeCapsule.A">
-            <summary>
-            In world Coordinates
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyVoxelShapeCapsule.B">
-            <summary>
-            In world Coordinates
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyVoxelShapeRamp.RampNormal">
-            <summary>
-            normal of the sloped plane
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyVoxelShapeSphere.Center">
-            <summary>
-            In World Space
-            </summary>
-        </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyAirVent">
-            <summary>
-            AirVent block for pressurizing and depresurizing rooms
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyAirVent.IsPressurized">
-            <summary>
-            Room can be pressurized
-            </summary>
-            <returns>true if containing room is airtight</returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyAirVent.CanPressurize">
-            <summary>
-            Can fill room with air 
-            true - room is airtight
-            false - room is not airtight
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyAirVent.GetOxygenLevel">
-            <summary>
-            Oxygen level in room
-            </summary>
-            <returns>Oxygen fill level as decimal (0.5 = 50%)</returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyAirVent.IsDepressurizing">
-            <summary>
-            Vent mode
-            false - pressurize (filling room)
-            true - depressurize (sucking air out)
+            number of upgrades applied
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.Ingame.IMyRadioAntenna">
@@ -892,7 +218,7 @@
             Returns true if antena is broadcasting (read-only)
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.IsUnderControl">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
             <summary>
             Indicates whether a block is locally or remotely controlled.
             </summary>
@@ -922,19 +248,9 @@
             </summary>
             <param name="pos"></param>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
-            <summary>
-            Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
-            </summary>
-        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncElevation">
             <summary>
             method used to sync elevation of turret , you need to call it to sync elevation for other clients/server
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Azimuth">
-            <summary>
-            Sets/gets azimuth of turret, this method is not synced, you need to sync azimuth manually
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncAzimuth">
@@ -942,19 +258,9 @@
             method used to sync azimuth, you need to call it to sync azimuth for other clients/server
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.EnableIdleRotation">
-            <summary>
-            enable/disable idle rotation for turret, this method is not synced, you need to sync manually
-            </summary>
-        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncEnableIdleRotation">
             <summary>
             method used to sync idle rotation and elevation, you need to call it to sync rotation and elevation for other clients/server
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.AIEnabled">
-            <summary>
-            Checks is AI is enabled for turret
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.ResetTargetingToDefault">
@@ -962,35 +268,29 @@
             resert targeting to default values
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyLaserAntenna">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.IsUnderControl">
             <summary>
-            Laser antenna block interface
+            Indicates whether a block is locally or remotely controlled.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TargetCoords">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
             <summary>
-            get target coordinates
+            Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.SetTargetCoords(System.String)">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Azimuth">
             <summary>
-            Set coordinates of target
-            </summary>
-            <param name="coords">GPS coordinates string</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.Connect">
-            <summary>
-            Connect to target defined by SetTargetCoords
+            Sets/gets azimuth of turret, this method is not synced, you need to sync azimuth manually
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsPermanent">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.EnableIdleRotation">
             <summary>
-            Connection is permanent
+            enable/disable idle rotation for turret, this method is not synced, you need to sync manually
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsOutsideLimits">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.AIEnabled">
             <summary>
-            Target is outside movement limits of antenna
+            Checks is AI is enabled for turret
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
@@ -1023,15 +323,14 @@
             Set/get brake applied to the wheel.
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyOxygenGenerator">
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
             <summary>
-            Oxygen generator interface
+            Attempts to run this programmable block using the given argument. An already running
+            programmable block cannot be run again.
+            This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
             </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyOxygenGenerator.AutoRefill">
-            <summary>
-            Autorefill enabled
-            </summary>
+            <param name="argument"></param>
+            <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.IsRunning">
             <summary>
@@ -1043,89 +342,29 @@
             Contains the value of the default terminal argument.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
+        <member name="M:Sandbox.ModAPI.Ingame.IMyTextPanel.GetSelectedImages(System.Collections.Generic.List{System.String})">
             <summary>
-            Attempts to run this programmable block using the given argument. An already running
-            programmable block cannot be run again.
-            This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
+            Outputs the selected image ids to the specified list.
+            
+            NOTE: List is not cleared internally.
             </summary>
-            <param name="argument"></param>
-            <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
+            <param name="output"></param>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTextPanel.CurrentlyShownImage">
             <summary>
-            Indicates whether a block is locally or remotely controlled.
-            </summary>
-        </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyShipWelder">
-            <summary>
-            Ship welder interface
+            The image that is currently shown on the screen.
+            
+            Returns NULL if there are no images selected OR the screen is in text mode.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipWelder.HelpOthers">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTextPanel.ShowOnScreen">
             <summary>
-            True if welder is set to helper mode
+            Indicates what should be shown on the screen, none being an image.
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMySpaceBall">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTextPanel.ShowText">
             <summary>
-            Spaceball interface
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.Friction">
-            <summary>
-            Ball friction
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.Restitution">
-            <summary>
-            Ball restitution
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMySpaceBall.IsBroadcasting">
-            <summary>
-            Is broadcasting
-            </summary>
-        </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock">
-            <summary>
-            interface to retrieve upgrade effects on block
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.GetUpgrades(System.Collections.Generic.Dictionary{System.String,System.Single}@)">
-            <summary>
-            get list of upgrades (r/o);
-            string - upgrade type, float - effect value as float (1 = 100%)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.UpgradeCount">
-            <summary>
-            number of upgrades applied
-            </summary>
-        </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradeModule">
-            <summary>
-            Interface to access module upgrades properties
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradeModule.GetUpgradeList(System.Collections.Generic.List{Sandbox.Common.ObjectBuilders.Definitions.MyUpgradeModuleInfo}@)">
-            <summary>
-            Retrieve list of upgrades from this block (r/o), see <see cref='T:Sandbox.Common.ObjectBuilders.Definitions.MyUpgradeModuleInfo'>MyUpgradeModuleInfo</see> for details
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradeModule.UpgradeCount">
-            <summary>
-            Retrieve number of upgrade effects this block has (r/o)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradeModule.Connections">
-            <summary>
-            Retrieve number of blocks this block is connected to (r/o)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyVirtualMass.VirtualMass">
-            <summary>
-            Virtualmass weight
+            Returns true if the ShowOnScreen flag is set to either PUBLIC or PRIVATE
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.Ingame.PistonStatus">
@@ -1222,203 +461,223 @@
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
+        <member name="T:Sandbox.ModAPI.Interfaces.ITerminalProperty">
             <summary>
-            Indicates whether door is opened or closed. True when door is opened.
+            Terminal block property definition
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
+        <member name="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.Id">
             <summary>
-            Door state, zero is fully closed. One is fully opened.
+            Property Id (value name)
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
+        <member name="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName">
             <summary>
-            Param - limit is top
+            Property type (bool - <see cref="T:System.Boolean"/>, float - <see cref="T:System.Single"/>, color - <see cref="T:VRageMath.Color"/>)
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.CurrentPosition">
+        <member name="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1">
             <summary>
-            Gets the current position of the piston head relative to the base.
+            Terminal block property access
+            </summary>
+            <typeparam name="TValue">Property type (<see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>)</typeparam>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetValue(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Retrieve property value
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.SetValue(VRage.Game.ModAPI.Ingame.IMyCubeBlock,`0)">
+            <summary>
+            Set property value
+            </summary>
+            <param name="block">block reference</param>
+            <param name="value">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetDefaultValue(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Default value of property (if value is not set, or value from block definition)
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetMininum(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Minimum value of property (value from block definition) - this function is obsolete, because it contains typo in name, use <see cref="!:GetMinimum(Sandbox.ModAPI.Ingame.IMyCubeBlock)"/>
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetMinimum(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Minimum value of property (value from block definition)
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetMaximum(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Maximum value of property (value from block definition)
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions">
+            <summary>
+            Terminal block extension for property access
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Status">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.As``1(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
             <summary>
-            Gets the current status.
+            Property type cast
             </summary>
+            <typeparam name="TValue">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type</returns>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyCubeBlock">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.Cast``1(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
             <summary>
-            Basic cube interface
+            Property type cast
             </summary>
+            <typeparam name="TValue">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type</returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeBlock.Mass">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.Is``1(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
             <summary>
-            Block mass
+            Check property type
             </summary>
+            <typeparam name="TValue">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>true if type matches</returns>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyCubeGrid">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.AsFloat(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
             <summary>
-            Grid interface
+            Property type cast
             </summary>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type (float)</returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.GridSize">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.AsColor(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
             <summary>
-            Grid size in meters
+            Property type cast
             </summary>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type (Color)</returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.GridSizeEnum">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.AsBool(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
             <summary>
-            Grid size enum
+            Property type cast
             </summary>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type (bool)</returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.IsStatic">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValueFloat(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Station = static
+            Returns value of specified property
             </summary>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as float</returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.Max">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValueFloat(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,System.Single)">
             <summary>
-            Maximum coordinates of blocks in grid
+            Set float value of property
             </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCubeGrid.Min">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValueBool(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Minimum coordinates of blocks in grid
+            Returns value of specified property
             </summary>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as bool</returns>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.CubeExists(VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValueBool(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,System.Boolean)">
             <summary>
-            Returns true if there is any block occupying given position
+            Set bool value of property
             </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.GetCubeBlock(VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValueColor(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Get cube block at given position
+            Returns value of specified property
             </summary>
-            <param name="pos">Block position</param>
-            <returns>Block or null if none is present at given position</returns>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as Color</returns>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.GridIntegerToWorld(VRageMath.Vector3I)">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValueColor(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,VRageMath.Color)">
             <summary>
-            Converts grid coordinates to world space
+            Set bool value of property
             </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCubeGrid.WorldToGridInteger(VRageMath.Vector3D)">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValue``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Converts world coordinates to grid space cell coordinates
+            Returns value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
             </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetDefaultValue``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Param - active
+            Returns default value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
             </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMySlimBlock">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMininum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            basic block interface
+            Returns minimum value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/> - this call is obsolete due typo in name, use <see cref="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMinimum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)"/>
             </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMySlimBlock.Mass">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMinimum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Block mass
+            Returns minimum value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
             </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyHudNotification.Text">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMaximum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
             <summary>
-            Get or set the notification text.
-            Setting the text will immediatly update it if the notification is shown.
+            Returns maximum value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
             </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyHudNotification.Font">
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValue``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,``0)">
             <summary>
-            Get or set the font for this notification.
-            Setting it will immediatly update it if the notification is shown.
+            Set value of property with type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
             </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyHudNotification.AliveTime">
-            <summary>
-            Get or set the time for the notification to be shown, in miliseconds.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyHudNotification.Show">
-            <summary>
-            Shows the notification on the HUD.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyHudNotification.Hide">
-            <summary>
-            Hides the notification on the HUD even if it was supposed to show for longer.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyHudNotification.ResetAliveTime">
-            <summary>
-            Reset the alive time for the text.
-            This is called when setting AliveTime as well.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Interfaces.IMyDestroyableObject.UseDamageSystem">
-            <summary>
-            When set to true, it should use MyDamageSystem damage routing.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Interfaces.IMyCameraController.HandleUse">
-            <summary>
-            Used to send "use" commands to camera controller
-            </summary>
-            <returns>
-            Return value indicates if the camera controller handled the use button.
-            If not, it should fall to ControlledObject
-            </returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMySession.Config">
-            <summary>
-            Obtaining values from config is slow and can allocate memory!
-            Do it only when necessary.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,VRage.Game.MyFontEnum)">
-            <summary>
-            Create a notification object.
-            The object needs to have Show() called on it to be shown.
-            On top of that you can dynamically change the text, font and adjust the time to live.
-            </summary>
-            <param name="message"></param>
-            <param name="disappearTimeMs"></param>
-            <param name="font"></param>
-            <returns>The notification object.</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CreateVoxelMapFromStorageName(System.String,System.String,VRageMath.Vector3D)">
-            <summary>
-            Adds a prefab voxel to the game world.
-            </summary>
-            <param name="storageName">The name of which the voxel storage will be called within the world.</param>
-            <param name="prefabVoxelMapName">The prefab voxel to add.</param>
-            <param name="position">The Min corner position of the voxel within the world.</param>
-            <returns>The newly added voxel map. Returns null if the prefabVoxelMapName does not exist.</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.PaintInShape(VRage.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
-            <summary>
-            Will paint given material with given shape
-            </summary>
-            <param name="voxelMap"></param>
-            <param name="voxelShape"></param>
-            <param name="materialIdx"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.CutOutShape(VRage.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape)">
-            <summary>
-            Will cut out given shape
-            </summary>
-            <param name="voxelMap"></param>
-            <param name="voxelShape"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyVoxelMaps.FillInShape(VRage.ModAPI.IMyVoxelBase,Sandbox.ModAPI.IMyVoxelShape,System.Byte)">
-            <summary>
-            Will fill given material with given shape
-            </summary>
-            <param name="voxelMap"></param>
-            <param name="voxelShape"></param>
-            <param name="materialIdx"></param>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
         </member>
         <member name="T:Sandbox.ModAPI.MyAPIGateway">
             <summary>
@@ -1428,16 +687,6 @@
         <member name="F:Sandbox.ModAPI.MyAPIGateway.GuiControlCreated">
             <summary>
             Event triggered on gui control created.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.MyAPIGateway.Session">
-            <summary>
-            IMySession represents session object e.g. current world and its settings
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.MyAPIGateway.Entities">
-            <summary>
-            IMyEntities represents all objects that currently in world 
             </summary>
         </member>
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Players">
@@ -1470,14 +719,19 @@
             IMyParallelTask allows to run tasks on baground threads 
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.MyDamageInformation">
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Input">
             <summary>
-            This structure contains all information about damage being done.
+            IMyInput allows accessing direct input device states
             </summary>
         </member>
-        <member name="T:Sandbox.Engine.Multiplayer.Container`1">
+        <member name="P:Sandbox.ModAPI.MyAPIGateway.Session">
             <summary>
-            Container class to prevent boxing in ProtoBuf
+            IMySession represents session object e.g. current world and its settings
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.MyAPIGateway.Entities">
+            <summary>
+            IMyEntities represents all objects that currently in world 
             </summary>
         </member>
     </members>

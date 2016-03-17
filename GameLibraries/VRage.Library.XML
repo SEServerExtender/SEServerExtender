@@ -314,11 +314,32 @@
             Done by caching changes and allowing explicit application using Apply* methods.
             </summary>
         </member>
+        <member name="T:VRage.Collections.ConcurrentCachingList`1">
+            <summary>
+            List wrapper that allows for addition and removal even during enumeration.
+            Done by caching changes and allowing explicit application using Apply* methods.
+            
+            This version has individual locks for cached and non-cached versions, allowing
+            each to be managed efficiently even across multiple threads
+            </summary>
+        </member>
+        <member name="M:VRage.Collections.ConcurrentCachingList`1.RemoveAtImmediately(System.Int32)">
+            <summary>
+            Immediately removes an element at the specified index.
+            </summary>
+            <param name="index">Index of the element to remove immediately.</param>
+        </member>
         <member name="T:VRage.Collections.CachingList`1">
             <summary>
             List wrapper that allows for addition and removal even during enumeration.
             Done by caching changes and allowing explicit application using Apply* methods.
             </summary>
+        </member>
+        <member name="M:VRage.Collections.CachingList`1.RemoveAtImmediately(System.Int32)">
+            <summary>
+            Immediately removes an element at the specified index.
+            </summary>
+            <param name="index">Index of the element to remove immediately.</param>
         </member>
         <member name="T:VRage.Library.Collections.DynamicSerializerDelegate">
             <summary>
@@ -546,6 +567,11 @@
             <summary>
             Attribute which assigns ID to class, this id persists after obfuscation and it's same on both x86 and X64 build.
             ID can change with different versions of source code.
+            </summary>
+        </member>
+        <member name="F:VRage.Compiler.IlCompiler.CompatibilityUsings">
+            <summary>
+            Usings that will be added to scripts before compilation. Those usings will replace default ones.
             </summary>
         </member>
         <member name="M:VRage.Compiler.IlCompiler.CheckResultInternal(System.Reflection.Assembly@,System.Collections.Generic.List{System.String},System.CodeDom.Compiler.CompilerResults,System.Boolean)">
@@ -1427,7 +1453,7 @@
             An interface for a piece of work which can be executed by ParallelTasks.
             </summary>
         </member>
-        <member name="M:ParallelTasks.IWork.DoWork">
+        <member name="M:ParallelTasks.IWork.DoWork(ParallelTasks.WorkData)">
             <summary>
             Executes the work.
             </summary>
@@ -1552,8 +1578,8 @@
         </member>
         <member name="M:ParallelTasks.Parallel.RunCallbacks">
             <summary>
-            Executes all task callbacks on a single thread.
-            This method is not re-entrant. It is suggested you call it only on the main thread.
+            Executes all task callbacks for the thread calling this function.
+            It is thread safe.
             </summary>
         </member>
         <member name="M:ParallelTasks.Parallel.StartBackground(ParallelTasks.IWork)">
@@ -1594,6 +1620,18 @@
             </summary>
             <param name="action">The work to execute.</param>
             <param name="completionCallback">A method which will be called in Parallel.RunCallbacks() once this task has completed.</param>
+            <returns>A task which represents one execution of the action.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="action"/> is <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:ParallelTasks.Parallel.StartBackground(System.Action{ParallelTasks.WorkData},System.Action{ParallelTasks.WorkData},ParallelTasks.WorkData)">
+            <summary>
+            Starts a task in a secondary worker thread. Intended for long running, blocking work such as I/O.
+            </summary>
+            <param name="action">The work to execute.</param>
+            <param name="completionCallback">A method which will be called in Parallel.RunCallbacks() once this task has completed.</param>
+            <param name="workData">Data to be passed along both the work and the completion callback.</param>
             <returns>A task which represents one execution of the action.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="action"/> is <see langword="null"/>.
@@ -1651,6 +1689,15 @@
             <param name="options">The work options to use with this action.</param>
             <param name="completionCallback">A method which will be called in Parallel.RunCallbacks() once this task has completed.</param>
             <returns>A task which represents one execution of the work.</returns>
+        </member>
+        <member name="M:ParallelTasks.Parallel.Start(System.Action{ParallelTasks.WorkData},System.Action{ParallelTasks.WorkData},ParallelTasks.WorkData)">
+            <summary>
+            Creates and schedules a task to execute the given work with the given work data.
+            </summary>
+            <param name="action">The work to execute in parallel.</param>
+            <param name="completionCallback">A method which will be called in Parallel.RunCallbacks() once this task has completed.</param>
+            <param name="workData">Data to be passed along both the work and the completion callback.</param>
+            <returns>A task which represents one execution of the action.</returns>
         </member>
         <member name="M:ParallelTasks.Parallel.StartOnEachWorker(System.Action,System.Boolean)">
             <summary>
@@ -5095,6 +5142,12 @@
             Setting seed for RNG used for EntityId without reverting to previous state is dangerous.
             Use PushSeed for EntityId random generator.
             </summary>
+        </member>
+        <member name="M:VRage.Library.Utils.MyRandom.NextFloat">
+            Returns random number between 0 and 1.
+        </member>
+        <member name="M:VRage.Library.Utils.MyRandom.NextDouble">
+            Returns random number between 0 and 1.
         </member>
         <member name="T:VRage.Library.Utils.MyTimer">
             <summary>

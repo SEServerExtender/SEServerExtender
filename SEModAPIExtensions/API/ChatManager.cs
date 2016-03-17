@@ -290,7 +290,6 @@ namespace SEModAPIExtensions.API
                 Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
                 ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
                 MyAPIGateway.Multiplayer.RegisterMessageHandler( 9001, ReceiveDataMessage );
-
                 m_chatHandlerSetup = true;
             }
             catch ( Exception ex )

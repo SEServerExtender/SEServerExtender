@@ -1,4 +1,5 @@
 using VRage.Game;
+using VRage.Game.ModAPI;
 
 namespace SEModAPIInternal.API.Server
 {
@@ -205,6 +206,7 @@ namespace SEModAPIInternal.API.Server
 				result &= Reflection.HasField( attachMsgType, AttachCharacterId );
 				result &= Reflection.HasField( attachMsgType, AttachCockpitId );
 
+                /*
 				Type controllableClassType = typeof ( MySyncControllableEntity );
 
 				Type useMsgType = controllableClassType.GetNestedType( UseMsg, BindingFlags.NonPublic | BindingFlags.Public );
@@ -214,7 +216,7 @@ namespace SEModAPIInternal.API.Server
 				result &= Reflection.HasField( useMsgType, UseMsgEntityId );
 				result &= Reflection.HasField( useMsgType, UseMsgUsedByEntityId );
 				result &= Reflection.HasField( useMsgType, UseMsgUseAction );
-
+                
 				Type sendDataMessageClassType = typeof ( MyModAPIHelper.MyMultiplayerSyncObject );
 
 				Type sendReliableMsgType = sendDataMessageClassType.GetNestedType( SendReliableMsg, BindingFlags.Public | BindingFlags.NonPublic );
@@ -223,7 +225,7 @@ namespace SEModAPIInternal.API.Server
 
 				result &= Reflection.HasField( sendReliableMsgType, SendReliableMsgId );
 				result &= Reflection.HasField( sendReliableMsgType, SendReliableMsgData );
-
+                */
 				return result;
 			}
 			catch ( TypeLoadException ex )

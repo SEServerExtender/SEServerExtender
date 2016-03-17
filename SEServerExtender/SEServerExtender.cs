@@ -1,3 +1,5 @@
+using VRage.Game;
+
 namespace SEServerExtender
 {
 	using System;

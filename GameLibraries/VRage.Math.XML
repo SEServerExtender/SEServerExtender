@@ -165,11 +165,6 @@
             </summary>
             <param name="box">The BoundingBoxI to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBoxI instances intersect; false otherwise.</param>
         </member>
-        <member name="P:VRageMath.BoundingBoxI.Center">
-            <summary>
-            Calculates center
-            </summary>
-        </member>
         <member name="M:VRageMath.BoundingBoxI.Intersects(VRageMath.Plane)">
             <summary>
             Checks whether the current BoundingBoxI intersects a Plane.
@@ -238,12 +233,6 @@
             <param name="vctTranlsation"></param>
             <returns></returns>
         </member>
-        <member name="P:VRageMath.BoundingBoxI.Size">
-            <summary>
-            Size
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:VRageMath.BoundingBoxI.Include(VRageMath.Vector3I@)">
             <summary>
             return expanded aabb (abb include point)
@@ -258,6 +247,17 @@
             </summary>
             <param name="bbox"></param>
             <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBoxI.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBoxI.Size">
+            <summary>
+            Size
+            </summary>
             <returns></returns>
         </member>
         <member name="P:VRageMath.BoundingBoxI.Perimeter">
@@ -398,11 +398,6 @@
             </summary>
             <param name="box">The BoundingBox to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBox instances intersect; false otherwise.</param>
         </member>
-        <member name="P:VRageMath.BoundingBox.Center">
-            <summary>
-            Calculates center
-            </summary>
-        </member>
         <member name="M:VRageMath.BoundingBox.Intersects(VRageMath.BoundingFrustum)">
             <summary>
             Checks whether the current BoundingBox intersects a BoundingFrustum.
@@ -496,17 +491,6 @@
             <param name="vctTranlsation"></param>
             <returns></returns>
         </member>
-        <member name="P:VRageMath.BoundingBox.Size">
-            <summary>
-            Size
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:VRageMath.BoundingBox.Matrix">
-            <summary>
-            Matrix of AABB, respection center and size
-            </summary>
-        </member>
         <member name="M:VRageMath.BoundingBox.Include(VRageMath.Vector3@)">
             <summary>
             return expanded aabb (abb include point)
@@ -523,6 +507,22 @@
             <param name="point"></param>
             <returns></returns>
         </member>
+        <member name="P:VRageMath.BoundingBox.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBox.Size">
+            <summary>
+            Size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBox.Matrix">
+            <summary>
+            Matrix of AABB, respection center and size
+            </summary>
+        </member>
         <member name="P:VRageMath.BoundingBox.Perimeter">
             <summary>
             return perimeter of edges
@@ -537,41 +537,6 @@
         <member name="F:VRageMath.BoundingFrustum.CornerCount">
             <summary>
             Specifies the total number of corners (8) in the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Near">
-            <summary>
-            Gets the near plane of the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Far">
-            <summary>
-            Gets the far plane of the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Left">
-            <summary>
-            Gets the left plane of the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Right">
-            <summary>
-            Gets the right plane of the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Top">
-            <summary>
-            Gets the top plane of the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Bottom">
-            <summary>
-            Gets the bottom plane of the BoundingFrustum.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustum.Matrix">
-            <summary>
-            Gets or sets the Matrix that describes this bounding frustum.
             </summary>
         </member>
         <member name="M:VRageMath.BoundingFrustum.#ctor(VRageMath.Matrix)">
@@ -720,6 +685,41 @@
             Checks whether the current BoundingFrustum contains the specified BoundingSphere.
             </summary>
             <param name="sphere">The BoundingSphere to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Near">
+            <summary>
+            Gets the near plane of the BoundingFrustum.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Far">
+            <summary>
+            Gets the far plane of the BoundingFrustum.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Left">
+            <summary>
+            Gets the left plane of the BoundingFrustum.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Right">
+            <summary>
+            Gets the right plane of the BoundingFrustum.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Top">
+            <summary>
+            Gets the top plane of the BoundingFrustum.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Bottom">
+            <summary>
+            Gets the bottom plane of the BoundingFrustum.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustum.Matrix">
+            <summary>
+            Gets or sets the Matrix that describes this bounding frustum.
+            </summary>
         </member>
         <member name="T:VRageMath.BoundingSphere">
             <summary>
@@ -1046,11 +1046,6 @@
             </summary>
             <param name="box">The BoundingBox to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBox instances intersect; false otherwise.</param>
         </member>
-        <member name="P:VRageMath.BoundingBoxD.Center">
-            <summary>
-            Calculates center
-            </summary>
-        </member>
         <member name="M:VRageMath.BoundingBoxD.Intersects(VRageMath.BoundingFrustumD)">
             <summary>
             Checks whether the current BoundingBox intersects a BoundingFrustum.
@@ -1144,17 +1139,6 @@
             <param name="vctTranlsation"></param>
             <returns></returns>
         </member>
-        <member name="P:VRageMath.BoundingBoxD.Size">
-            <summary>
-            Size
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:VRageMath.BoundingBoxD.Matrix">
-            <summary>
-            Matrix of AABB, respection center and size
-            </summary>
-        </member>
         <member name="M:VRageMath.BoundingBoxD.Include(VRageMath.Vector3D@)">
             <summary>
             return expanded aabb (abb include point)
@@ -1170,6 +1154,22 @@
             <param name="bbox"></param>
             <param name="point"></param>
             <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBoxD.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBoxD.Size">
+            <summary>
+            Size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBoxD.Matrix">
+            <summary>
+            Matrix of AABB, respection center and size
+            </summary>
         </member>
         <member name="P:VRageMath.BoundingBoxD.Perimeter">
             <summary>
@@ -1362,41 +1362,6 @@
             Specifies the total number of corners (8) in the BoundingFrustumD.
             </summary>
         </member>
-        <member name="P:VRageMath.BoundingFrustumD.Near">
-            <summary>
-            Gets the near plane of the BoundingFrustumD.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustumD.Far">
-            <summary>
-            Gets the far plane of the BoundingFrustumD.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustumD.Left">
-            <summary>
-            Gets the left plane of the BoundingFrustumD.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustumD.Right">
-            <summary>
-            Gets the right plane of the BoundingFrustumD.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustumD.Top">
-            <summary>
-            Gets the top plane of the BoundingFrustumD.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustumD.Bottom">
-            <summary>
-            Gets the bottom plane of the BoundingFrustumD.
-            </summary>
-        </member>
-        <member name="P:VRageMath.BoundingFrustumD.Matrix">
-            <summary>
-            Gets or sets the Matrix that describes this bounding frustum.
-            </summary>
-        </member>
         <member name="M:VRageMath.BoundingFrustumD.#ctor(VRageMath.MatrixD)">
             <summary>
             Creates a new instance of BoundingFrustumD.
@@ -1544,9 +1509,52 @@
             </summary>
             <param name="sphere">The BoundingSphere to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
         </member>
+        <member name="P:VRageMath.BoundingFrustumD.Near">
+            <summary>
+            Gets the near plane of the BoundingFrustumD.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustumD.Far">
+            <summary>
+            Gets the far plane of the BoundingFrustumD.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustumD.Left">
+            <summary>
+            Gets the left plane of the BoundingFrustumD.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustumD.Right">
+            <summary>
+            Gets the right plane of the BoundingFrustumD.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustumD.Top">
+            <summary>
+            Gets the top plane of the BoundingFrustumD.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustumD.Bottom">
+            <summary>
+            Gets the bottom plane of the BoundingFrustumD.
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingFrustumD.Matrix">
+            <summary>
+            Gets or sets the Matrix that describes this bounding frustum.
+            </summary>
+        </member>
         <member name="T:VRageMath.CompressedPositionOrientation">
             <summary>
             Defines a matrix.
+            </summary>
+        </member>
+        <member name="T:Havok.IPhysicsMesh">
+            <summary>
+            Interface through which physics can work with graphical meshes.
+            This has been moved here due to problems with obfuscator and to reduce dependencies of Havok!
+            You should treat this as part of HavokWrapper (not accessible when there is no reference to HavokWrapper)!
+            Exception to this can only be rare cases such as avoiding code duplication.
             </summary>
         </member>
         <member name="M:VRageMath.MyMath.ArcTanAngle(System.Single,System.Single)">
@@ -1944,11 +1952,69 @@
             </summary>
             <param name="quaternion1">Source QuaternionD.</param><param name="quaternion2">The divisor.</param><param name="result">[OutAttribute] Result of the division.</param>
         </member>
-        <member name="M:VRageMath.Spatial.MyVector3DGrid`1.Enumerator.RemoveCurrent">
+        <member name="M:System.SerializationExtensionsMath.ReadQuaternionNorm(VRage.Library.Collections.BitStream)">
             <summary>
-            Removes the current entry and returns true whether there is another entry.
-            May invalidate enumerators in the same bin.
-            To remove values from more enumerators while ensuring their validity use MyVector3Grid.RemoveTwo(...).
+            Serializes normalized quaternion into 52 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.WriteQuaternionNorm(VRage.Library.Collections.BitStream,VRageMath.Quaternion)">
+            <summary>
+            Serializes normalized quaternion into 52 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializeNorm(VRage.Library.Collections.BitStream,VRageMath.Quaternion@)">
+            <summary>
+            Serializes normalized quaternion into 52 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Serialize(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector4@)">
+            <summary>
+            64 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Serialize(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector3@)">
+            <summary>
+            48 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Write(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector4)">
+            <summary>
+            64 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.Write(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector3)">
+            <summary>
+            48 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.WriteNormalizedSignedVector3(VRage.Library.Collections.BitStream,VRageMath.Vector3,System.Int32)">
+            <summary>
+            Writes Vector3 with -1, 1 range (uniform-spacing) with specified bit precision.
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.ReadHalfVector4(VRage.Library.Collections.BitStream)">
+            <summary>
+            64 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.ReadHalfVector3(VRage.Library.Collections.BitStream)">
+            <summary>
+            48 bits
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.ReadNormalizedSignedVector3(VRage.Library.Collections.BitStream,System.Int32)">
+            <summary>
+            Reads Vector3 with -1, 1 range (uniform-spacing) with specified bit precision.
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.Matrix@)">
+            <summary>
+            Serializes only position and orientation, 12 + 6.5 = 18.5 bytes
+            </summary>
+        </member>
+        <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.MatrixD@)">
+            <summary>
+            Serializes only position and orientation, 24 + 6.5 = 30.5 bytes
             </summary>
         </member>
         <member name="M:VRageMath.Spatial.MyVector3DGrid`1.ClearFast">
@@ -1966,11 +2032,11 @@
             Removes entry with the given index and returns the index of the next entry (or -1 if the removed entry was the last one)
             </summary>
         </member>
-        <member name="M:VRageMath.Spatial.MyVector3Grid`1.SphereQuery.RemoveCurrent">
+        <member name="M:VRageMath.Spatial.MyVector3DGrid`1.Enumerator.RemoveCurrent">
             <summary>
             Removes the current entry and returns true whether there is another entry.
-            May invalidate indices and queries in the same bin.
-            To remove values from more queries while ensuring their validity use MyVector3Grid.RemoveTwo(...).
+            May invalidate enumerators in the same bin.
+            To remove values from more enumerators while ensuring their validity use MyVector3Grid.RemoveTwo(...).
             </summary>
         </member>
         <member name="M:VRageMath.Spatial.MyVector3Grid`1.ClearFast">
@@ -2009,47 +2075,11 @@
             Removes entry with the given index and returns the index of the next entry (or -1 if the removed entry was the last one)
             </summary>
         </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.Activate(System.Object,System.UInt64)">
+        <member name="M:VRageMath.Spatial.MyVector3Grid`1.SphereQuery.RemoveCurrent">
             <summary>
-            Called when standalone object is added to cluster
-            </summary>
-            <param name="userData"></param>
-            <param name="clusterObjectID"></param>
-        </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.Deactivate(System.Object)">
-            <summary>
-            Called when standalone object is removed from cluster
-            </summary>
-            <param name="userData"></param>
-            <param name="clusterObjectID"></param>
-        </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.ActivateBatch(System.Object,System.UInt64)">
-            <summary>
-            Called when multiple objects are added to cluster.
-            </summary>
-            <param name="userData"></param>
-            <param name="clusterObjectID"></param>
-        </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.DeactivateBatch(System.Object)">
-            <summary>
-            Called when multiple objects are removed from cluster.
-            </summary>
-            <param name="userData"></param>
-            <param name="clusterObjectID"></param>
-        </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.FinishAddBatch">
-            <summary>
-            Called when adding multiple objects is finished.
-            </summary>
-        </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.FinishRemoveBatch(System.Object)">
-            <summary>
-            Called when removing multiple objects is finished.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.IsStaticForCluster">
-            <summary>
-            If true, than this object is not calculated into cluster division algorithm. It is just added or removed if dynamic object is in range.
+            Removes the current entry and returns true whether there is another entry.
+            May invalidate indices and queries in the same bin.
+            To remove values from more queries while ensuring their validity use MyVector3Grid.RemoveTwo(...).
             </summary>
         </member>
         <member name="T:VRageMath.Vector4D">
@@ -2913,36 +2943,6 @@
             Value at row 4 column 4 of the matrix.
             </summary>
         </member>
-        <member name="P:VRageMath.MatrixD.Up">
-            <summary>
-            Gets and sets the up vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.MatrixD.Down">
-            <summary>
-            Gets and sets the down vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.MatrixD.Right">
-            <summary>
-            Gets and sets the right vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.MatrixD.Left">
-            <summary>
-            Gets and sets the left vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.MatrixD.Forward">
-            <summary>
-            Gets and sets the forward vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.MatrixD.Backward">
-            <summary>
-            Gets and sets the backward vector of the Matrix.
-            </summary>
-        </member>
         <member name="M:VRageMath.MatrixD.GetDirectionVector(VRageMath.Base6Directions.Direction)">
             <summary>
             Gets the base vector of the matrix, corresponding to the given direction
@@ -2966,11 +2966,6 @@
         <member name="M:VRageMath.MatrixD.Rescale(VRageMath.MatrixD@,VRageMath.Vector3D@)">
             <summary>
             Same result as Matrix.CreateScale(scale) * matrix, but much faster
-            </summary>
-        </member>
-        <member name="P:VRageMath.MatrixD.Translation">
-            <summary>
-            Gets and sets the translation vector of the Matrix.
             </summary>
         </member>
         <member name="M:VRageMath.MatrixD.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
@@ -3539,18 +3534,88 @@
             Such matrix consist solely of rotations, shearing, mirroring and scaling. It can be orthogonalized to create an orthogonal rotation matrix.
             </summary>
         </member>
+        <member name="P:VRageMath.MatrixD.Up">
+            <summary>
+            Gets and sets the up vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.MatrixD.Down">
+            <summary>
+            Gets and sets the down vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.MatrixD.Right">
+            <summary>
+            Gets and sets the right vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.MatrixD.Left">
+            <summary>
+            Gets and sets the left vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.MatrixD.Forward">
+            <summary>
+            Gets and sets the forward vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.MatrixD.Backward">
+            <summary>
+            Gets and sets the backward vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.MatrixD.Translation">
+            <summary>
+            Gets and sets the translation vector of the Matrix.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.Activate(System.Object,System.UInt64)">
+            <summary>
+            Called when standalone object is added to cluster
+            </summary>
+            <param name="userData"></param>
+            <param name="clusterObjectID"></param>
+        </member>
+        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.Deactivate(System.Object)">
+            <summary>
+            Called when standalone object is removed from cluster
+            </summary>
+            <param name="userData"></param>
+            <param name="clusterObjectID"></param>
+        </member>
+        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.ActivateBatch(System.Object,System.UInt64)">
+            <summary>
+            Called when multiple objects are added to cluster.
+            </summary>
+            <param name="userData"></param>
+            <param name="clusterObjectID"></param>
+        </member>
+        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.DeactivateBatch(System.Object)">
+            <summary>
+            Called when multiple objects are removed from cluster.
+            </summary>
+            <param name="userData"></param>
+            <param name="clusterObjectID"></param>
+        </member>
+        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.FinishAddBatch">
+            <summary>
+            Called when adding multiple objects is finished.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.FinishRemoveBatch(System.Object)">
+            <summary>
+            Called when removing multiple objects is finished.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.IsStaticForCluster">
+            <summary>
+            If true, than this object is not calculated into cluster division algorithm. It is just added or removed if dynamic object is in range.
+            </summary>
+        </member>
         <member name="T:VRageMath.MyDynamicAABBTreeD">
             <summary>
             Dynamic aabb tree implementation as a prunning structure
             </summary>
-        </member>
-        <member name="T:VRageMath.MyDynamicAABBTreeD.DynamicTreeNode">
-            <summary>
-            A node in the dynamic tree. The client does not interact with this directly.
-            </summary>
-        </member>
-        <member name="F:VRageMath.MyDynamicAABBTreeD.DynamicTreeNode.Aabb">
-            This is the fattened BoundingBox.
         </member>
         <member name="F:VRageMath.MyDynamicAABBTreeD.NullNode">
             <summary>
@@ -3621,6 +3686,14 @@
         </member>
         <member name="M:VRageMath.MyDynamicAABBTreeD.GetAproximateClustersForAabb(VRageMath.BoundingBoxD@,System.Double,System.Collections.Generic.List{VRageMath.BoundingBoxD})">
             Use the tree to produce a list of clusters aproximatelly the requested size, while intersecting those with the provided bounding box.
+        </member>
+        <member name="T:VRageMath.MyDynamicAABBTreeD.DynamicTreeNode">
+            <summary>
+            A node in the dynamic tree. The client does not interact with this directly.
+            </summary>
+        </member>
+        <member name="F:VRageMath.MyDynamicAABBTreeD.DynamicTreeNode.Aabb">
+            This is the fattened BoundingBox.
         </member>
         <member name="T:VRageMath.Vector3D">
             <summary>
@@ -4200,10 +4273,146 @@
             Represents a four-component color using red, green, blue, and alpha data.
             </summary>
         </member>
+        <member name="T:VRageMath.PackedVector.IPackedVector`1">
+            <summary>
+            Converts packed vector types to and from Vector4 values.
+            </summary>
+        </member>
+        <member name="T:VRageMath.PackedVector.IPackedVector">
+            <summary>
+            Interface that converts packed vector types to and from Vector4 values, allowing multiple encodings to be manipulated in a generic way.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.IPackedVector.ToVector4">
+            <summary>
+            Expands the packed representation into a Vector4.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.IPackedVector.PackFromVector4(VRageMath.Vector4)">
+            <summary>
+            Sets the packed representation from a Vector4.
+            </summary>
+            <param name="vector">The vector to create the packed representation from.</param>
+        </member>
+        <member name="P:VRageMath.PackedVector.IPackedVector`1.PackedValue">
+            <summary>
+            Directly gets or sets the packed representation of the value.
+            </summary>
+        </member>
         <member name="F:VRageMath.Color.PackedValue">
             <summary>
             Gets the current color as a packed value.
             </summary>
+        </member>
+        <member name="M:VRageMath.Color.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of the class.
+            </summary>
+            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param>
+        </member>
+        <member name="M:VRageMath.Color.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of the class.
+            </summary>
+            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param><param name="a">Alpha component.</param>
+        </member>
+        <member name="M:VRageMath.Color.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a new instance of the class.
+            </summary>
+            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param>
+        </member>
+        <member name="M:VRageMath.Color.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a new instance of the class.
+            </summary>
+            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param><param name="a">Alpha component.</param>
+        </member>
+        <member name="M:VRageMath.Color.#ctor(VRageMath.Vector3)">
+            <summary>
+            Creates a new instance of the class.
+            </summary>
+            <param name="vector">A three-component color.</param>
+        </member>
+        <member name="M:VRageMath.Color.#ctor(VRageMath.Vector4)">
+            <summary>
+            Creates a new instance of the class.
+            </summary>
+            <param name="vector">A four-component color.</param>
+        </member>
+        <member name="M:VRageMath.Color.op_Multiply(VRageMath.Color,System.Single)">
+            <summary>
+            Multiply operator.
+            </summary>
+            <param name="value">A four-component color</param><param name="scale">Scale factor.</param>
+        </member>
+        <member name="M:VRageMath.Color.op_Equality(VRageMath.Color,VRageMath.Color)">
+            <summary>
+            Equality operator.
+            </summary>
+            <param name="a">A four-component color.</param><param name="b">A four-component color.</param>
+        </member>
+        <member name="M:VRageMath.Color.op_Inequality(VRageMath.Color,VRageMath.Color)">
+            <summary>
+            Equality operator for Testing two color objects to see if they are equal.
+            </summary>
+            <param name="a">A four-component color.</param><param name="b">A four-component color.</param>
+        </member>
+        <member name="M:VRageMath.Color.FromNonPremultiplied(VRageMath.Vector4)">
+            <summary>
+            Convert a non premultipled color into color data that contains alpha.
+            </summary>
+            <param name="vector">A four-component color.</param>
+        </member>
+        <member name="M:VRageMath.Color.FromNonPremultiplied(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Converts a non-premultipled alpha color to a color that contains premultiplied alpha.
+            </summary>
+            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param><param name="a">Alpha component.</param>
+        </member>
+        <member name="M:VRageMath.Color.ToVector3">
+            <summary>
+            Gets a three-component vector representation for this object.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Color.ToVector4">
+            <summary>
+            Gets a four-component vector representation for this object.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Color.Lerp(VRageMath.Color,VRageMath.Color,System.Single)">
+            <summary>
+            Linearly interpolate a color.
+            </summary>
+            <param name="value1">A four-component color.</param><param name="value2">A four-component color.</param><param name="amount">Interpolation factor.</param>
+        </member>
+        <member name="M:VRageMath.Color.Multiply(VRageMath.Color,System.Single)">
+            <summary>
+            Multiply each color component by the scale factor.
+            </summary>
+            <param name="value">The source, four-component color.</param><param name="scale">The scale factor.</param>
+        </member>
+        <member name="M:VRageMath.Color.ToString">
+            <summary>
+            Gets a string representation of this object.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Color.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Color.Equals(System.Object)">
+            <summary>
+            Test an instance of a color object to see if it is equal to this object.
+            </summary>
+            <param name="obj">A color object.</param>
+        </member>
+        <member name="M:VRageMath.Color.Equals(VRageMath.Color)">
+            <summary>
+            Test a color to see if it is equal to the color in this instance.
+            </summary>
+            <param name="other">A four-component color.</param>
         </member>
         <member name="P:VRageMath.Color.R">
             <summary>
@@ -4930,116 +5139,6 @@
             Gets a system-defined color with the value R:154 G:205 B:50 A:255.
             </summary>
         </member>
-        <member name="M:VRageMath.Color.#ctor(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Creates a new instance of the class.
-            </summary>
-            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param>
-        </member>
-        <member name="M:VRageMath.Color.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Creates a new instance of the class.
-            </summary>
-            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param><param name="a">Alpha component.</param>
-        </member>
-        <member name="M:VRageMath.Color.#ctor(System.Single,System.Single,System.Single)">
-            <summary>
-            Creates a new instance of the class.
-            </summary>
-            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param>
-        </member>
-        <member name="M:VRageMath.Color.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Creates a new instance of the class.
-            </summary>
-            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param><param name="a">Alpha component.</param>
-        </member>
-        <member name="M:VRageMath.Color.#ctor(VRageMath.Vector3)">
-            <summary>
-            Creates a new instance of the class.
-            </summary>
-            <param name="vector">A three-component color.</param>
-        </member>
-        <member name="M:VRageMath.Color.#ctor(VRageMath.Vector4)">
-            <summary>
-            Creates a new instance of the class.
-            </summary>
-            <param name="vector">A four-component color.</param>
-        </member>
-        <member name="M:VRageMath.Color.op_Multiply(VRageMath.Color,System.Single)">
-            <summary>
-            Multiply operator.
-            </summary>
-            <param name="value">A four-component color</param><param name="scale">Scale factor.</param>
-        </member>
-        <member name="M:VRageMath.Color.op_Equality(VRageMath.Color,VRageMath.Color)">
-            <summary>
-            Equality operator.
-            </summary>
-            <param name="a">A four-component color.</param><param name="b">A four-component color.</param>
-        </member>
-        <member name="M:VRageMath.Color.op_Inequality(VRageMath.Color,VRageMath.Color)">
-            <summary>
-            Equality operator for Testing two color objects to see if they are equal.
-            </summary>
-            <param name="a">A four-component color.</param><param name="b">A four-component color.</param>
-        </member>
-        <member name="M:VRageMath.Color.FromNonPremultiplied(VRageMath.Vector4)">
-            <summary>
-            Convert a non premultipled color into color data that contains alpha.
-            </summary>
-            <param name="vector">A four-component color.</param>
-        </member>
-        <member name="M:VRageMath.Color.FromNonPremultiplied(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Converts a non-premultipled alpha color to a color that contains premultiplied alpha.
-            </summary>
-            <param name="r">Red component.</param><param name="g">Green component.</param><param name="b">Blue component.</param><param name="a">Alpha component.</param>
-        </member>
-        <member name="M:VRageMath.Color.ToVector3">
-            <summary>
-            Gets a three-component vector representation for this object.
-            </summary>
-        </member>
-        <member name="M:VRageMath.Color.ToVector4">
-            <summary>
-            Gets a four-component vector representation for this object.
-            </summary>
-        </member>
-        <member name="M:VRageMath.Color.Lerp(VRageMath.Color,VRageMath.Color,System.Single)">
-            <summary>
-            Linearly interpolate a color.
-            </summary>
-            <param name="value1">A four-component color.</param><param name="value2">A four-component color.</param><param name="amount">Interpolation factor.</param>
-        </member>
-        <member name="M:VRageMath.Color.Multiply(VRageMath.Color,System.Single)">
-            <summary>
-            Multiply each color component by the scale factor.
-            </summary>
-            <param name="value">The source, four-component color.</param><param name="scale">The scale factor.</param>
-        </member>
-        <member name="M:VRageMath.Color.ToString">
-            <summary>
-            Gets a string representation of this object.
-            </summary>
-        </member>
-        <member name="M:VRageMath.Color.GetHashCode">
-            <summary>
-            Serves as a hash function for a particular type.
-            </summary>
-        </member>
-        <member name="M:VRageMath.Color.Equals(System.Object)">
-            <summary>
-            Test an instance of a color object to see if it is equal to this object.
-            </summary>
-            <param name="obj">A color object.</param>
-        </member>
-        <member name="M:VRageMath.Color.Equals(VRageMath.Color)">
-            <summary>
-            Test a color to see if it is equal to the color in this instance.
-            </summary>
-            <param name="other">A four-component color.</param>
-        </member>
         <member name="M:VRageMath.ColorExtensions.ColorToHSVDX11(VRageMath.Color)">
             <summary>
             Use this for HSV in DX11 Renderer, X = Hue 0..1, Y = Saturation -1..1, Z = Value -1..1
@@ -5109,271 +5208,6 @@
             Returns a string representation of the current instance.
             </summary>
         </member>
-        <member name="T:VRageMath.PackedVector.Byte4">
-            <summary>
-            Packed vector type containing four 8-bit unsigned integer values, ranging from 0 to 255.
-            </summary>
-        </member>
-        <member name="P:VRageMath.PackedVector.Byte4.PackedValue">
-            <summary>
-            Directly gets or sets the packed representation of the value.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the Byte4 class.
-            </summary>
-            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param><param name="z">Initial value for the z component.</param><param name="w">Initial value for the w component.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.#ctor(VRageMath.Vector4)">
-            <summary>
-            Initializes a new instance of the Byte4 structure.
-            </summary>
-            <param name="vector">A vector containing the initial values for the components of the Byte4 structure.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.op_Equality(VRageMath.PackedVector.Byte4,VRageMath.PackedVector.Byte4)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are the same.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.op_Inequality(VRageMath.PackedVector.Byte4,VRageMath.PackedVector.Byte4)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are different.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.ToVector4">
-            <summary>
-            Expands the packed representation into a Vector4.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.ToString">
-            <summary>
-            Returns a string representation of the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.GetHashCode">
-            <summary>
-            Gets the hash code for the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.Equals(System.Object)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="obj">The object with which to make the comparison.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.Byte4.Equals(VRageMath.PackedVector.Byte4)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="other">The object with which to make the comparison.</param>
-        </member>
-        <member name="T:VRageMath.PackedVector.HalfVector2">
-            <summary>
-            Packed vector type containing two 16-bit floating-point values.
-            </summary>
-        </member>
-        <member name="P:VRageMath.PackedVector.HalfVector2.PackedValue">
-            <summary>
-            Directly gets or sets the packed representation of the value.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.#ctor(System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the HalfVector2 structure.
-            </summary>
-            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.#ctor(VRageMath.Vector2)">
-            <summary>
-            Initializes a new instance of the HalfVector2 structure.
-            </summary>
-            <param name="vector">A vector containing the initial values for the components of the HalfVector2 structure.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.op_Equality(VRageMath.PackedVector.HalfVector2,VRageMath.PackedVector.HalfVector2)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are the same.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.op_Inequality(VRageMath.PackedVector.HalfVector2,VRageMath.PackedVector.HalfVector2)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are different.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.ToVector2">
-            <summary>
-            Expands the HalfVector2 to a Vector2.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.ToString">
-            <summary>
-            Returns a string representation of the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.GetHashCode">
-            <summary>
-            Gets the hash code for the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.Equals(System.Object)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="obj">The object with which to make the comparison.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector2.Equals(VRageMath.PackedVector.HalfVector2)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="other">The object with which to make the comparison.</param>
-        </member>
-        <member name="T:VRageMath.PackedVector.HalfVector4">
-            <summary>
-            Packed vector type containing four 16-bit floating-point values.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the HalfVector4 class.
-            </summary>
-            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param><param name="z">Initial value for the z component.</param><param name="w">Initial value for the w component.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.#ctor(VRageMath.Vector4)">
-            <summary>
-            Initializes a new instance of the HalfVector4 structure.
-            </summary>
-            <param name="vector">A vector containing the initial values for the components of the HalfVector4 structure.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.op_Equality(VRageMath.PackedVector.HalfVector4,VRageMath.PackedVector.HalfVector4)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are the same.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.op_Inequality(VRageMath.PackedVector.HalfVector4,VRageMath.PackedVector.HalfVector4)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are different.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.ToVector4">
-            <summary>
-            Expands the packed representation into a Vector4.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.ToString">
-            <summary>
-            Returns a string representation of the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.GetHashCode">
-            <summary>
-            Gets the hash code for the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.Equals(System.Object)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="obj">The object with which to make the comparison.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.HalfVector4.Equals(VRageMath.PackedVector.HalfVector4)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="other">The object with which to make the comparison.</param>
-        </member>
-        <member name="T:VRageMath.PackedVector.IPackedVector">
-            <summary>
-            Interface that converts packed vector types to and from Vector4 values, allowing multiple encodings to be manipulated in a generic way.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.IPackedVector.ToVector4">
-            <summary>
-            Expands the packed representation into a Vector4.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.IPackedVector.PackFromVector4(VRageMath.Vector4)">
-            <summary>
-            Sets the packed representation from a Vector4.
-            </summary>
-            <param name="vector">The vector to create the packed representation from.</param>
-        </member>
-        <member name="T:VRageMath.PackedVector.IPackedVector`1">
-            <summary>
-            Converts packed vector types to and from Vector4 values.
-            </summary>
-        </member>
-        <member name="P:VRageMath.PackedVector.IPackedVector`1.PackedValue">
-            <summary>
-            Directly gets or sets the packed representation of the value.
-            </summary>
-        </member>
-        <member name="T:VRageMath.PackedVector.NormalizedByte4">
-            <summary>
-            Packed vector type containing four 8-bit signed normalized values, ranging from −1 to 1.
-            </summary>
-        </member>
-        <member name="P:VRageMath.PackedVector.NormalizedByte4.PackedValue">
-            <summary>
-            Directly gets or sets the packed representation of the value.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the NormalizedByte4 class.
-            </summary>
-            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param><param name="z">Initial value for the z component.</param><param name="w">Initial value for the w component.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.#ctor(VRageMath.Vector4)">
-            <summary>
-            Initializes a new instance of the NormalizedByte4 structure.
-            </summary>
-            <param name="vector">A vector containing the initial values for the components of the NormalizedByte4 structure.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.op_Equality(VRageMath.PackedVector.NormalizedByte4,VRageMath.PackedVector.NormalizedByte4)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are the same.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.op_Inequality(VRageMath.PackedVector.NormalizedByte4,VRageMath.PackedVector.NormalizedByte4)">
-            <summary>
-            Compares the current instance of a class to another instance to determine whether they are different.
-            </summary>
-            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.ToVector4">
-            <summary>
-            Expands the packed representation into a Vector4.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.ToString">
-            <summary>
-            Returns a string representation of the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.GetHashCode">
-            <summary>
-            Gets the hash code for the current instance.
-            </summary>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.Equals(System.Object)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="obj">The object with which to make the comparison.</param>
-        </member>
-        <member name="M:VRageMath.PackedVector.NormalizedByte4.Equals(VRageMath.PackedVector.NormalizedByte4)">
-            <summary>
-            Returns a value that indicates whether the current instance is equal to a specified object.
-            </summary>
-            <param name="other">The object with which to make the comparison.</param>
-        </member>
         <member name="M:VRageMath.Vector3B.Fit(VRageMath.Vector3,System.Single)">
             <summary>
             Puts Vector3 into Vector3B, value -127 represents -range, 128 represents range
@@ -5401,21 +5235,6 @@
         </member>
         <member name="T:VRageMath.CubeFace">
             Face in a cube.
-        </member>
-        <member name="T:VRageMath.Vector3I.RangeIterator">
-            <summary>
-            A class for simpler traversal of ranges of integer vectors
-            </summary>
-        </member>
-        <member name="F:VRageMath.Vector3I.RangeIterator.Current">
-            <summary>
-            Do not modify, public only for optimization!
-            </summary>
-        </member>
-        <member name="M:VRageMath.Vector3I.RangeIterator.#ctor(VRageMath.Vector3I@,VRageMath.Vector3I@)">
-            <summary>
-            Note: both start and end are inclusive
-            </summary>
         </member>
         <member name="M:VRageMath.Vector3I.RectangularDistance(VRageMath.Vector3I)">
             <summary>
@@ -5471,41 +5290,36 @@
             </summary>
             <param name="vector1">Source vector.</param><param name="vector2">Source vector.</param><param name="result">[OutAttribute] The cross product of the vectors.</param>
         </member>
-        <member name="P:VRageMath.Vector3I.Size">
-            <summary>
-            How many cubes are in block with this size
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:VRageMath.Vector3I.DistanceManhattan(VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Manhattan distance (cube distance)
             X + Y + Z of Abs(first - second)
             </summary>
         </member>
+        <member name="P:VRageMath.Vector3I.Size">
+            <summary>
+            How many cubes are in block with this size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:VRageMath.Vector3I.RangeIterator">
+            <summary>
+            A class for simpler traversal of ranges of integer vectors
+            </summary>
+        </member>
+        <member name="F:VRageMath.Vector3I.RangeIterator.Current">
+            <summary>
+            Do not modify, public only for optimization!
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector3I.RangeIterator.#ctor(VRageMath.Vector3I@,VRageMath.Vector3I@)">
+            <summary>
+            Note: both start and end are inclusive
+            </summary>
+        </member>
         <member name="T:VRageMath.Curve">
             <summary>
             Stores an arbitrary collection of 2D CurveKey points, and provides methods for evaluating features of the curve they define.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Curve.PreLoop">
-            <summary>
-            Specifies how to handle weighting values that are less than the first control point in the curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Curve.PostLoop">
-            <summary>
-            Specifies how to handle weighting values that are greater than the last control point in the curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Curve.Keys">
-            <summary>
-            The points that make up the curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Curve.IsConstant">
-            <summary>
-            Gets a value indicating whether the curve is constant.
             </summary>
         </member>
         <member name="M:VRageMath.Curve.Clone">
@@ -5543,6 +5357,26 @@
             </summary>
             <param name="position">The position on the Curve.</param>
         </member>
+        <member name="P:VRageMath.Curve.PreLoop">
+            <summary>
+            Specifies how to handle weighting values that are less than the first control point in the curve.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Curve.PostLoop">
+            <summary>
+            Specifies how to handle weighting values that are greater than the last control point in the curve.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Curve.Keys">
+            <summary>
+            The points that make up the curve.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Curve.IsConstant">
+            <summary>
+            Gets a value indicating whether the curve is constant.
+            </summary>
+        </member>
         <member name="T:VRageMath.CurveContinuity">
             <summary>
             Defines the continuity of CurveKeys on a Curve.
@@ -5552,31 +5386,6 @@
         <member name="T:VRageMath.CurveKey">
             <summary>
             Represents a point in a multi-point curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKey.Position">
-            <summary>
-            Position of the CurveKey in the curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKey.Value">
-            <summary>
-            Describes the value of this point.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKey.TangentIn">
-            <summary>
-            Describes the tangent when approaching this point from the previous point in the curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKey.TangentOut">
-            <summary>
-            Describes the tangent when leaving this point to the next point in the curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKey.Continuity">
-            <summary>
-            Describes whether the segment between this point and the next point in the curve is discrete or continuous.
             </summary>
         </member>
         <member name="M:VRageMath.CurveKey.#ctor(System.Single,System.Single)">
@@ -5637,25 +5446,34 @@
             </summary>
             <param name="other">CurveKey to compare to.</param>
         </member>
+        <member name="P:VRageMath.CurveKey.Position">
+            <summary>
+            Position of the CurveKey in the curve.
+            </summary>
+        </member>
+        <member name="P:VRageMath.CurveKey.Value">
+            <summary>
+            Describes the value of this point.
+            </summary>
+        </member>
+        <member name="P:VRageMath.CurveKey.TangentIn">
+            <summary>
+            Describes the tangent when approaching this point from the previous point in the curve.
+            </summary>
+        </member>
+        <member name="P:VRageMath.CurveKey.TangentOut">
+            <summary>
+            Describes the tangent when leaving this point to the next point in the curve.
+            </summary>
+        </member>
+        <member name="P:VRageMath.CurveKey.Continuity">
+            <summary>
+            Describes whether the segment between this point and the next point in the curve is discrete or continuous.
+            </summary>
+        </member>
         <member name="T:VRageMath.CurveKeyCollection">
             <summary>
             Contains the CurveKeys making up a Curve.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKeyCollection.Item(System.Int32)">
-            <summary>
-            Gets or sets the element at the specified index.
-            </summary>
-            <param name="index">The array index of the element.</param>
-        </member>
-        <member name="P:VRageMath.CurveKeyCollection.Count">
-            <summary>
-            Gets the number of elements contained in the CurveKeyCollection.
-            </summary>
-        </member>
-        <member name="P:VRageMath.CurveKeyCollection.IsReadOnly">
-            <summary>
-            Returns a value indicating whether the CurveKeyCollection is read-only.
             </summary>
         </member>
         <member name="M:VRageMath.CurveKeyCollection.IndexOf(VRageMath.CurveKey)">
@@ -5707,6 +5525,22 @@
         <member name="M:VRageMath.CurveKeyCollection.Clone">
             <summary>
             Creates a copy of the CurveKeyCollection.
+            </summary>
+        </member>
+        <member name="P:VRageMath.CurveKeyCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <param name="index">The array index of the element.</param>
+        </member>
+        <member name="P:VRageMath.CurveKeyCollection.Count">
+            <summary>
+            Gets the number of elements contained in the CurveKeyCollection.
+            </summary>
+        </member>
+        <member name="P:VRageMath.CurveKeyCollection.IsReadOnly">
+            <summary>
+            Returns a value indicating whether the CurveKeyCollection is read-only.
             </summary>
         </member>
         <member name="T:VRageMath.CurveLoopType">
@@ -6053,36 +5887,6 @@
             Value at row 4 column 4 of the matrix.
             </summary>
         </member>
-        <member name="P:VRageMath.Matrix.Up">
-            <summary>
-            Gets and sets the up vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Matrix.Down">
-            <summary>
-            Gets and sets the down vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Matrix.Right">
-            <summary>
-            Gets and sets the right vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Matrix.Left">
-            <summary>
-            Gets and sets the left vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Matrix.Forward">
-            <summary>
-            Gets and sets the forward vector of the Matrix.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Matrix.Backward">
-            <summary>
-            Gets and sets the backward vector of the Matrix.
-            </summary>
-        </member>
         <member name="M:VRageMath.Matrix.GetDirectionVector(VRageMath.Base6Directions.Direction)">
             <summary>
             Gets the base vector of the matrix, corresponding to the given direction
@@ -6101,11 +5905,6 @@
         <member name="M:VRageMath.Matrix.Rescale(VRageMath.Matrix@,VRageMath.Vector3@)">
             <summary>
             Same result as Matrix.CreateScale(scale) * matrix, but much faster
-            </summary>
-        </member>
-        <member name="P:VRageMath.Matrix.Translation">
-            <summary>
-            Gets and sets the translation vector of the Matrix.
             </summary>
         </member>
         <member name="M:VRageMath.Matrix.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
@@ -6659,6 +6458,280 @@
             Such matrix consist solely of rotations, shearing, mirroring and scaling. It can be orthogonalized to create an orthogonal rotation matrix.
             </summary>
         </member>
+        <member name="P:VRageMath.Matrix.Up">
+            <summary>
+            Gets and sets the up vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Matrix.Down">
+            <summary>
+            Gets and sets the down vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Matrix.Right">
+            <summary>
+            Gets and sets the right vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Matrix.Left">
+            <summary>
+            Gets and sets the left vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Matrix.Forward">
+            <summary>
+            Gets and sets the forward vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Matrix.Backward">
+            <summary>
+            Gets and sets the backward vector of the Matrix.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Matrix.Translation">
+            <summary>
+            Gets and sets the translation vector of the Matrix.
+            </summary>
+        </member>
+        <member name="T:VRageMath.PackedVector.Byte4">
+            <summary>
+            Packed vector type containing four 8-bit unsigned integer values, ranging from 0 to 255.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the Byte4 class.
+            </summary>
+            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param><param name="z">Initial value for the z component.</param><param name="w">Initial value for the w component.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.#ctor(VRageMath.Vector4)">
+            <summary>
+            Initializes a new instance of the Byte4 structure.
+            </summary>
+            <param name="vector">A vector containing the initial values for the components of the Byte4 structure.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.op_Equality(VRageMath.PackedVector.Byte4,VRageMath.PackedVector.Byte4)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are the same.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.op_Inequality(VRageMath.PackedVector.Byte4,VRageMath.PackedVector.Byte4)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are different.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.ToVector4">
+            <summary>
+            Expands the packed representation into a Vector4.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.ToString">
+            <summary>
+            Returns a string representation of the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.GetHashCode">
+            <summary>
+            Gets the hash code for the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.Equals(System.Object)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="obj">The object with which to make the comparison.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.Byte4.Equals(VRageMath.PackedVector.Byte4)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="other">The object with which to make the comparison.</param>
+        </member>
+        <member name="P:VRageMath.PackedVector.Byte4.PackedValue">
+            <summary>
+            Directly gets or sets the packed representation of the value.
+            </summary>
+        </member>
+        <member name="T:VRageMath.PackedVector.HalfVector2">
+            <summary>
+            Packed vector type containing two 16-bit floating-point values.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the HalfVector2 structure.
+            </summary>
+            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.#ctor(VRageMath.Vector2)">
+            <summary>
+            Initializes a new instance of the HalfVector2 structure.
+            </summary>
+            <param name="vector">A vector containing the initial values for the components of the HalfVector2 structure.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.op_Equality(VRageMath.PackedVector.HalfVector2,VRageMath.PackedVector.HalfVector2)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are the same.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.op_Inequality(VRageMath.PackedVector.HalfVector2,VRageMath.PackedVector.HalfVector2)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are different.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.ToVector2">
+            <summary>
+            Expands the HalfVector2 to a Vector2.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.ToString">
+            <summary>
+            Returns a string representation of the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.GetHashCode">
+            <summary>
+            Gets the hash code for the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.Equals(System.Object)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="obj">The object with which to make the comparison.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector2.Equals(VRageMath.PackedVector.HalfVector2)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="other">The object with which to make the comparison.</param>
+        </member>
+        <member name="P:VRageMath.PackedVector.HalfVector2.PackedValue">
+            <summary>
+            Directly gets or sets the packed representation of the value.
+            </summary>
+        </member>
+        <member name="T:VRageMath.PackedVector.HalfVector4">
+            <summary>
+            Packed vector type containing four 16-bit floating-point values.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the HalfVector4 class.
+            </summary>
+            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param><param name="z">Initial value for the z component.</param><param name="w">Initial value for the w component.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.#ctor(VRageMath.Vector4)">
+            <summary>
+            Initializes a new instance of the HalfVector4 structure.
+            </summary>
+            <param name="vector">A vector containing the initial values for the components of the HalfVector4 structure.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.op_Equality(VRageMath.PackedVector.HalfVector4,VRageMath.PackedVector.HalfVector4)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are the same.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.op_Inequality(VRageMath.PackedVector.HalfVector4,VRageMath.PackedVector.HalfVector4)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are different.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.ToVector4">
+            <summary>
+            Expands the packed representation into a Vector4.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.ToString">
+            <summary>
+            Returns a string representation of the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.GetHashCode">
+            <summary>
+            Gets the hash code for the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.Equals(System.Object)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="obj">The object with which to make the comparison.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.HalfVector4.Equals(VRageMath.PackedVector.HalfVector4)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="other">The object with which to make the comparison.</param>
+        </member>
+        <member name="T:VRageMath.PackedVector.NormalizedByte4">
+            <summary>
+            Packed vector type containing four 8-bit signed normalized values, ranging from −1 to 1.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the NormalizedByte4 class.
+            </summary>
+            <param name="x">Initial value for the x component.</param><param name="y">Initial value for the y component.</param><param name="z">Initial value for the z component.</param><param name="w">Initial value for the w component.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.#ctor(VRageMath.Vector4)">
+            <summary>
+            Initializes a new instance of the NormalizedByte4 structure.
+            </summary>
+            <param name="vector">A vector containing the initial values for the components of the NormalizedByte4 structure.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.op_Equality(VRageMath.PackedVector.NormalizedByte4,VRageMath.PackedVector.NormalizedByte4)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are the same.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.op_Inequality(VRageMath.PackedVector.NormalizedByte4,VRageMath.PackedVector.NormalizedByte4)">
+            <summary>
+            Compares the current instance of a class to another instance to determine whether they are different.
+            </summary>
+            <param name="a">The object to the left of the equality operator.</param><param name="b">The object to the right of the equality operator.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.ToVector4">
+            <summary>
+            Expands the packed representation into a Vector4.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.ToString">
+            <summary>
+            Returns a string representation of the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.GetHashCode">
+            <summary>
+            Gets the hash code for the current instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.Equals(System.Object)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="obj">The object with which to make the comparison.</param>
+        </member>
+        <member name="M:VRageMath.PackedVector.NormalizedByte4.Equals(VRageMath.PackedVector.NormalizedByte4)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="other">The object with which to make the comparison.</param>
+        </member>
+        <member name="P:VRageMath.PackedVector.NormalizedByte4.PackedValue">
+            <summary>
+            Directly gets or sets the packed representation of the value.
+            </summary>
+        </member>
         <member name="T:VRageMath.Plane">
             <summary>
             Defines a plane.
@@ -6856,11 +6929,6 @@
             Specifies the y-coordinate of the Point.
             </summary>
         </member>
-        <member name="P:VRageMath.Point.Zero">
-            <summary>
-            Returns the point (0,0).
-            </summary>
-        </member>
         <member name="M:VRageMath.Point.#ctor(System.Int32,System.Int32)">
             <summary>
             Initializes a new instance of Point.
@@ -6899,6 +6967,11 @@
         <member name="M:VRageMath.Point.ToString">
             <summary>
             Returns a String that represents the current Point.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Point.Zero">
+            <summary>
+            Returns the point (0,0).
             </summary>
         </member>
         <member name="T:VRageMath.Quaternion">
@@ -7362,36 +7435,6 @@
             Specifies the height of the rectangle.
             </summary>
         </member>
-        <member name="P:VRageMath.Rectangle.Left">
-            <summary>
-            Returns the x-coordinate of the left side of the rectangle.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Rectangle.Right">
-            <summary>
-            Returns the x-coordinate of the right side of the rectangle.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Rectangle.Top">
-            <summary>
-            Returns the y-coordinate of the top of the rectangle.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Rectangle.Bottom">
-            <summary>
-            Returns the y-coordinate of the bottom of the rectangle.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Rectangle.Location">
-            <summary>
-            Gets or sets the upper-left value of the Rectangle.
-            </summary>
-        </member>
-        <member name="P:VRageMath.Rectangle.Center">
-            <summary>
-            Gets the Point that specifies the center of the rectangle.
-            </summary>
-        </member>
         <member name="M:VRageMath.Rectangle.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             Initializes a new instance of Rectangle.
@@ -7516,6 +7559,36 @@
             Gets the hash code for this object.
             </summary>
         </member>
+        <member name="P:VRageMath.Rectangle.Left">
+            <summary>
+            Returns the x-coordinate of the left side of the rectangle.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Rectangle.Right">
+            <summary>
+            Returns the x-coordinate of the right side of the rectangle.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Rectangle.Top">
+            <summary>
+            Returns the y-coordinate of the top of the rectangle.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Rectangle.Bottom">
+            <summary>
+            Returns the y-coordinate of the bottom of the rectangle.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Rectangle.Location">
+            <summary>
+            Gets or sets the upper-left value of the Rectangle.
+            </summary>
+        </member>
+        <member name="P:VRageMath.Rectangle.Center">
+            <summary>
+            Gets the Point that specifies the center of the rectangle.
+            </summary>
+        </member>
         <member name="T:VRageMath.RectangleF">
             <summary>
             Structure using the same layout than <see cref="T:System.Drawing.RectangleF"/>
@@ -7545,26 +7618,6 @@
         <member name="F:VRageMath.RectangleF.Size">
             <summary>
             The Size.
-            </summary>
-        </member>
-        <member name="P:VRageMath.RectangleF.X">
-            <summary>
-            Left coordinate.
-            </summary>
-        </member>
-        <member name="P:VRageMath.RectangleF.Y">
-            <summary>
-            Top coordinate.
-            </summary>
-        </member>
-        <member name="P:VRageMath.RectangleF.Width">
-            <summary>
-            Width of this rectangle.
-            </summary>
-        </member>
-        <member name="P:VRageMath.RectangleF.Height">
-            <summary>
-            Height of this rectangle.
             </summary>
         </member>
         <member name="M:VRageMath.RectangleF.Equals(VRageMath.RectangleF)">
@@ -7610,18 +7663,30 @@
             The result of the operator.
             </returns>
         </member>
+        <member name="P:VRageMath.RectangleF.X">
+            <summary>
+            Left coordinate.
+            </summary>
+        </member>
+        <member name="P:VRageMath.RectangleF.Y">
+            <summary>
+            Top coordinate.
+            </summary>
+        </member>
+        <member name="P:VRageMath.RectangleF.Width">
+            <summary>
+            Width of this rectangle.
+            </summary>
+        </member>
+        <member name="P:VRageMath.RectangleF.Height">
+            <summary>
+            Height of this rectangle.
+            </summary>
+        </member>
         <member name="T:VRageMath.MyDynamicAABBTree">
             <summary>
             Dynamic aabb tree implementation as a prunning structure
             </summary>
-        </member>
-        <member name="T:VRageMath.MyDynamicAABBTree.DynamicTreeNode">
-            <summary>
-            A node in the dynamic tree. The client does not interact with this directly.
-            </summary>
-        </member>
-        <member name="F:VRageMath.MyDynamicAABBTree.DynamicTreeNode.Aabb">
-            This is the fattened BoundingBox.
         </member>
         <member name="F:VRageMath.MyDynamicAABBTree.NullNode">
             <summary>
@@ -7692,6 +7757,14 @@
         </member>
         <member name="M:VRageMath.MyDynamicAABBTree.OverlapSizeableClusters(VRageMath.BoundingBox@,System.Collections.Generic.List{VRageMath.BoundingBox},System.Double)">
             Use the tree to produce a list of clusters aproximatelly the requested size, while intersecting those with the provided bounding box.
+        </member>
+        <member name="T:VRageMath.MyDynamicAABBTree.DynamicTreeNode">
+            <summary>
+            A node in the dynamic tree. The client does not interact with this directly.
+            </summary>
+        </member>
+        <member name="F:VRageMath.MyDynamicAABBTree.DynamicTreeNode.Aabb">
+            This is the fattened BoundingBox.
         </member>
         <member name="T:VRageMath.Vector2">
             <summary>
@@ -9180,79 +9253,6 @@
         <member name="M:VRageMath.Vector4UByte.Normalize(VRageMath.Vector3,System.Single)">
             <summary>
             Normalizes Vector3 into Vector4UByte, scales vector from (-range, range) to (0, 255)
-            </summary>
-        </member>
-        <member name="T:Havok.IPhysicsMesh">
-            <summary>
-            Interface through which physics can work with graphical meshes.
-            This has been moved here due to problems with obfuscator and to reduce dependencies of Havok!
-            You should treat this as part of HavokWrapper (not accessible when there is no reference to HavokWrapper)!
-            Exception to this can only be rare cases such as avoiding code duplication.
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.ReadQuaternionNorm(VRage.Library.Collections.BitStream)">
-            <summary>
-            Serializes normalized quaternion into 52 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.WriteQuaternionNorm(VRage.Library.Collections.BitStream,VRageMath.Quaternion)">
-            <summary>
-            Serializes normalized quaternion into 52 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.SerializeNorm(VRage.Library.Collections.BitStream,VRageMath.Quaternion@)">
-            <summary>
-            Serializes normalized quaternion into 52 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.Serialize(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector4@)">
-            <summary>
-            64 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.Serialize(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector3@)">
-            <summary>
-            48 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.Write(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector4)">
-            <summary>
-            64 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.Write(VRage.Library.Collections.BitStream,VRageMath.PackedVector.HalfVector3)">
-            <summary>
-            48 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.WriteNormalizedSignedVector3(VRage.Library.Collections.BitStream,VRageMath.Vector3,System.Int32)">
-            <summary>
-            Writes Vector3 with -1, 1 range (uniform-spacing) with specified bit precision.
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.ReadHalfVector4(VRage.Library.Collections.BitStream)">
-            <summary>
-            64 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.ReadHalfVector3(VRage.Library.Collections.BitStream)">
-            <summary>
-            48 bits
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.ReadNormalizedSignedVector3(VRage.Library.Collections.BitStream,System.Int32)">
-            <summary>
-            Reads Vector3 with -1, 1 range (uniform-spacing) with specified bit precision.
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.Matrix@)">
-            <summary>
-            Serializes only position and orientation, 12 + 6.5 = 18.5 bytes
-            </summary>
-        </member>
-        <member name="M:System.SerializationExtensionsMath.SerializePositionOrientation(VRage.Library.Collections.BitStream,VRageMath.MatrixD@)">
-            <summary>
-            Serializes only position and orientation, 24 + 6.5 = 30.5 bytes
             </summary>
         </member>
     </members>

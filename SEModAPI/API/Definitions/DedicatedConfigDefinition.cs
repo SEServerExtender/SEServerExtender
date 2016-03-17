@@ -1383,6 +1383,28 @@ namespace SEModAPI.API.Definitions
                 _definition.SessionSettings.Enable3rdPersonView = value;
             }
         }
+
+        /// <summary>
+		/// Get or set the Enable Block Destruction setting.
+		/// </summary>
+		[DataMember]
+        [Browsable( true )]
+        [ReadOnly( false )]
+        [Description( "Enables or disables Block Destruction" )]
+        [Category( "World Settings" )]
+        [DisplayName( "Enable 3rd Person View" )]
+        [DefaultValue( true )]
+        public bool EnableBlockDestruction
+        {
+            get
+            {
+                return _definition.SessionSettings.DestructibleBlocks;
+            }
+            set
+            {
+                _definition.SessionSettings.DestructibleBlocks = value;
+            }
+        }
         #endregion
 
         #region "Methods"
