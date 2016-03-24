@@ -165,6 +165,12 @@
             Set the new bone count and default (rest) pose.
             </summary>
         </member>
+        <member name="M:VRage.Animations.MyAnimationController.MyResultBonesPool.SetDefaultPose(System.Collections.Generic.List{VRage.Animations.MyAnimationClip.BoneState})">
+            <summary>
+            Set the link to default pose = default bone positions and rotations given when using this allocator.
+            If null is given, rest pose is used.
+            </summary>
+        </member>
         <member name="M:VRage.Animations.MyAnimationController.MyResultBonesPool.Alloc">
             <summary>
             Allocate array of bones from pool. Bones are in the rest (bind) position by default.
