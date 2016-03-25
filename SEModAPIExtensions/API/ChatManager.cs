@@ -1,4 +1,5 @@
 ﻿using VRage.Game;
+using VRage.Network;
 
 namespace SEModAPIExtensions.API
 {
@@ -250,7 +251,7 @@ namespace SEModAPIExtensions.API
         {
             try
             {
-                Type type = typeof( Sandbox.Engine.Multiplayer.ChatMsg );
+                Type type = typeof( ChatMsg );
                 bool result = true;
                 result &= Reflection.HasField( type, ChatMessageMessageField );
 
@@ -412,7 +413,6 @@ namespace SEModAPIExtensions.API
         
         protected void SendDataMessage( string message, ulong userId = 0 )
         {
-            InitUTF();
             ServerMessageItem item = new ServerMessageItem( );
             item.From = Server.Instance.Config.ServerChatName;
             item.Message = message;
@@ -447,28 +447,7 @@ namespace SEModAPIExtensions.API
                     MyAPIGateway.Multiplayer.SendMessageTo(9000, newData, userId);
             });
         }
-
-        protected void InitUTF()
-        {
-            byte[ ] data = Encoding.UTF8.GetBytes( "UTF MESSAGE" );
-            long msgId = 5024;
-
-            //this block adds the length and message id to the outside of the message packet
-            //so the mod can quickly determine where the message should go
-            string msgIdString = msgId.ToString( );
-            byte[ ] newData = new byte[data.Length + msgIdString.Length + 1];
-            newData[0] = (byte)msgIdString.Length;
-            for ( int r = 0; r < msgIdString.Length; r++ )
-                newData[r + 1] = (byte)msgIdString[r];
-
-            Buffer.BlockCopy( data, 0, newData, msgIdString.Length + 1, data.Length );
-
-            SandboxGameAssemblyWrapper.Instance.GameAction( ( ) =>
-             {
-                     MyAPIGateway.Multiplayer.SendMessageToOthers( 9000, newData );
-             } );
-        }
-
+        
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
 		{
 			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );

@@ -53,6 +53,8 @@
         <member name="M:VRage.Game.MyDefinitionBase.Postprocess">
             <summary>
             Override this in case you want to do some postprocessing of the definition before the game starts.
+            
+            TODO: Obsolete me
             <para>Postprocess is useful if you want to process the definition before the game begins,</para>
             <para>but you only want to do it when all the definitions are loaded and merged.</para>
             </summary>
@@ -169,7 +171,7 @@
             This causes to remove entity from the world, when this inventory is empty.
             </summary>
         </member>
-        <member name="M:VRage.Game.Entity.MyInventoryBase.AddItems(VRage.MyFixedPoint,VRage.ObjectBuilders.MyObjectBuilder_Base,System.Int32,System.Boolean)">
+        <member name="M:VRage.Game.Entity.MyInventoryBase.AddItems(VRage.MyFixedPoint,VRage.ObjectBuilders.MyObjectBuilder_Base)">
             <summary>
             Adds item to inventory
             </summary>
@@ -187,7 +189,7 @@
             <param name="spawn">Set tru to spawn object in the world, after it was removed</param>
             <returns>Returns the actually removed amount</returns>
         </member>
-        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,VRage.Game.ModAPI.Ingame.IMyInventoryItem,VRage.MyFixedPoint,System.Boolean)">
+        <member name="M:VRage.Game.Entity.MyInventoryBase.TransferItemsFrom(VRage.Game.Entity.MyInventoryBase,VRage.Game.ModAPI.Ingame.IMyInventoryItem,VRage.MyFixedPoint)">
             <summary>
             Transfers safely given item from inventory given as parameter to this instance.
             </summary>
@@ -1451,6 +1453,21 @@
         <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.Children">
             <summary>
             Mapping children to axis. Each child has assigned its value.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.Circular">
+            <summary>
+            True if the value wraps around.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.Sensitivity">
+            <summary>
+            Sensitivity to changes of parameter value. 1=immediate change, 0=no sensitivity.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeMix1D.MaxChange">
+            <summary>
+            Threshold: maximum change of variable to take sensitivity in account, if crossed, value is set immediatelly.
             </summary>
         </member>
         <member name="T:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeAdd">
