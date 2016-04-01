@@ -4,11 +4,6 @@
         <name>VRage.Game</name>
     </assembly>
     <members>
-        <member name="T:VRage.Game.Common.MyExtDebugClient">
-            <summary>
-            Auto-debug client.
-            </summary>
-        </member>
         <member name="T:VRage.Game.Components.IMyComponentOwner`1">
             <summary>
             Always implement explicitly, because of Obfuscation
@@ -19,64 +14,10 @@
             Always implement explicitly, because of Obfuscation
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
-            <summary>
-            Sets the container of this component.
-            Note that the component is not added to the container here! Therefore, use MyComponentContainer.Add(...) method and it
-            will in turn call this method. Actually, you should seldom have the need to call this method yourself.
-            </summary>
-            <param name="container">The new container of the component</param>
-        </member>
-        <member name="M:VRage.Game.Components.MyComponentBase.OnAddedToContainer">
-            <summary>
-            Gets called after the container of this component changes
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyComponentBase.OnBeforeRemovedFromContainer">
-            <summary>
-            Gets called before the removal of this component from a container
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyComponentBase.IsSerialized">
-            <summary>
-            Tells the component container serializer whether this component should be saved
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:VRage.Game.Components.MyComponentBase.ContainerBase">
-            <summary>
-            This cannot be named Container to not conflict with the definition of Container in MyEntityComponentBase.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyEntityComponentBase.ComponentTypeDebugString">
-            <summary>
-            Name of the base component type for debug purposes (e.g.: "Position")
-            </summary>
-        </member>
         <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
             <summary>
             Indicates whether a session component should be used in current configuration.
             Example: MyDestructionData component returns true only when game uses Havok Destruction
-            </summary>
-        </member>
-        <member name="T:VRage.Game.SessionComponents.MySessionComponentExtDebug">
-            <summary>
-            Communication between game and editor.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.StartServer">
-            <summary>
-            Start using this component as server (game side).
-            </summary>
-        </member>
-        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.StopServer">
-            <summary>
-            Stop the server on the game side. Called automatically.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.ServerListenerProc">
-            <summary>
-            Parallel thread - listener.
             </summary>
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
@@ -97,11 +38,6 @@
         <member name="F:VRage.Game.MyDefinitionBase.DescriptionString">
             <summary>
             String used for user created description which do not have localization support.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.MyDefinitionBase.Icons">
-            <summary>
-            Icons for the definition, they are used from top to bottom.
             </summary>
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.Enabled">
@@ -155,6 +91,40 @@
         <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
             <summary>
             Entity component containing animation controller.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
+            <summary>
+            Sets the container of this component.
+            Note that the component is not added to the container here! Therefore, use MyComponentContainer.Add(...) method and it
+            will in turn call this method. Actually, you should seldom have the need to call this method yourself.
+            </summary>
+            <param name="container">The new container of the component</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.OnAddedToContainer">
+            <summary>
+            Gets called after the container of this component changes
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.OnBeforeRemovedFromContainer">
+            <summary>
+            Gets called before the removal of this component from a container
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.IsSerialized">
+            <summary>
+            Tells the component container serializer whether this component should be saved
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.Components.MyComponentBase.ContainerBase">
+            <summary>
+            This cannot be named Container to not conflict with the definition of Container in MyEntityComponentBase.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyEntityComponentBase.ComponentTypeDebugString">
+            <summary>
+            Name of the base component type for debug purposes (e.g.: "Position")
             </summary>
         </member>
         <member name="M:VRage.Game.Components.MyAnimationControllerComponent.OnAddedToContainer">
@@ -1599,11 +1569,6 @@
             <param name="worldMatrix"></param>
             <param name="lineBuffer"></param>
             <param name="divideRatio"></param>
-        </member>
-        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
-            <summary>
-            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
-            </summary>
         </member>
         <member name="M:VRage.Game.Utils.MyCamera.ChangeFov(System.Single)">
             <summary>
@@ -5677,11 +5642,6 @@
             High
             </summary>
         </member>
-        <member name="F:MyCommonTexts.ScreenGraphicsOptions_ShadowMapResolution_Disabled">
-            <summary>
-            Disabled
-            </summary>
-        </member>
         <member name="F:MyCommonTexts.ScreenGraphicsOptions_ShadowMapResolution_Low">
             <summary>
             Low
@@ -6144,6 +6104,11 @@
             When the range is an angle this method changes it to the sines of the angle.
             
             The angle is expected to be in degrees.
+        </member>
+        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
         </member>
         <member name="F:VRage.Game.ObjectBuilders.MyComponentBlockEntry.Main">
             <summary>
