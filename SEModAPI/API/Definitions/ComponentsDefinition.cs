@@ -70,7 +70,7 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
-
+        /*
 		public string Icon
 		{
 			get { return m_baseDefinition.Icon; }
@@ -81,7 +81,7 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
-
+        */
 		public int MaxIntegrity
 		{
 			get { return m_baseDefinition.MaxIntegrity; }
