@@ -1839,7 +1839,7 @@
             Called on server when client stops replicating this group.
             </summary>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.ClientUpdate">
+        <member name="M:VRage.Network.IMyStateGroup.ClientUpdate(System.UInt32)">
             <summary>
             Update method called on client.
             </summary>
@@ -1858,7 +1858,7 @@
             <param name="frameCountWithoutSync">How long (in update frame count) has client not received sync of this state group.</param>
             <param name="forClient">Client for whom is the priority get.</param>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.MyClientStateBase,System.Byte,System.Int32)">
+        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.EndpointId,System.UInt32,System.Byte,System.Int32)">
             <summary>
             (De)serializes group state or it's diff for client.
             When writing, you can write beyond maxBitPosition, but message won't be sent and ACKs won't be received for it.
@@ -1998,7 +1998,7 @@
             Abstract class for performance reasons (often casting)
             </summary>
         </member>
-        <member name="M:VRage.Network.MyClientStateBase.Serialize(VRage.Library.Collections.BitStream)">
+        <member name="M:VRage.Network.MyClientStateBase.Serialize(VRage.Library.Collections.BitStream,System.UInt32)">
             <summary>
             Serializes state into/from bit stream.
             EndpointId should be ignored.
@@ -2440,15 +2440,10 @@
             Think HARD before using this. Usually you should be able to use MyStringHash as it is without conversion to int.
             </summary>
         </member>
-        <member name="M:VRage.Utils.MyCopyDataStructures.CommonMsg.ConvertHeaderFrom(VRage.Win32.WinApi.MyCopyData,VRage.Utils.MyCopyDataStructures.CommonMsg@)">
+        <member name="M:VRage.Utils.MyExternalDebugStructures.ReadMessageFromPtr``1(VRage.Utils.MyExternalDebugStructures.CommonMsgHeader@,System.IntPtr,``0@)">
             <summary>
-            Convert from raw winapi data. User will get only the header.
-            </summary>
-        </member>
-        <member name="M:VRage.Utils.MyCopyDataStructures.CommonMsg.ConvertFrom``1(VRage.Win32.WinApi.MyCopyData,``0@)">
-            <summary>
-            Convert from raw winapi data to DERIVED message.
-            DERIVED message must be struct with sequential layout having first field "Header" of type "CommonMsg".
+            Convert from raw data to message.
+            Message must be struct with sequential layout having first field "Header" of type "CommonMsg".
             </summary>
         </member>
         <member name="T:VRage.Utils.MyStringId">

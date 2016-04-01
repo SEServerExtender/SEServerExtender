@@ -27,6 +27,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+        /*
 		public string Icon
 		{
 			get { return m_baseDefinition.Icon; }
@@ -37,7 +38,7 @@ namespace SEModAPI.API.Definitions
 				Changed = true;
 			}
 		}
-
+        */
 		public string Model
 		{
 			get { return m_baseDefinition.Model; }
