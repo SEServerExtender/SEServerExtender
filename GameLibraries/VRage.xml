@@ -302,11 +302,6 @@
             indicates whether bone needs recalculation
             </summary>
         </member>
-        <member name="F:VRage.Animations.MyCharacterBone.m_hierarchyUpdate">
-            <summary>
-            indicates whether hierarchy of bones is updating
-            </summary>
-        </member>
         <member name="F:VRage.Animations.MyCharacterBone.Name">
             <summary>
             The bone name
@@ -324,6 +319,13 @@
             <param name="name">The name of the bone</param>
             <param name="bindTransform">The initial bind transform for the bone</param>
             <param name="parent">A parent for this bone</param>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.ComputeAbsoluteTransforms(VRage.Animations.MyCharacterBone[])">
+            <summary>
+            Compute absolute bone transforms for whole hierarchy.
+            Expects the array to be sorted by depth in hiearachy.
+            </summary>
+            <param name="bones"></param>
         </member>
         <member name="M:VRage.Animations.MyCharacterBone.ComputeAbsoluteTransform">
             <summary>
@@ -378,6 +380,16 @@
         <member name="P:VRage.Animations.MyCharacterBone.Parent">
             <summary>
             The parent bone or null for the root bone
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.RelativeTransform">
+            <summary>
+            The bone absolute transform
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.HasThisOrAnyParentChanged">
+            <summary>
+            Has this bone or any parent bone changed?
             </summary>
         </member>
         <member name="M:VRage.Audio.IMyAudio.ApplyEffect(VRage.Audio.IMySourceVoice,VRage.Utils.MyStringHash,VRage.Audio.MyCueId[],System.Nullable{System.Single})">

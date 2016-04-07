@@ -1,4 +1,5 @@
-﻿using VRage.Game;
+﻿using System.Threading.Tasks;
+using VRage.Game;
 using VRage.Network;
 
 namespace SEModAPIExtensions.API
@@ -291,6 +292,7 @@ namespace SEModAPIExtensions.API
                 Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
                 ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
                 MyAPIGateway.Multiplayer.RegisterMessageHandler( 9001, ReceiveDataMessage );
+                
                 m_chatHandlerSetup = true;
             }
             catch ( Exception ex )
@@ -299,6 +301,7 @@ namespace SEModAPIExtensions.API
             }
         }
 
+        [Obsolete("Create the ChatMsg struct directly")]
         protected Object CreateChatMessageStruct( string message )
         {
             Type chatMessageStructType = typeof( ChatMsg );
@@ -449,25 +452,28 @@ namespace SEModAPIExtensions.API
         }
         
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
-		{
-			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
+        {
+            Task.Run( () =>
+            {
+                string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
 
-			bool commandParsed = ParseChatCommands( message, remoteUserId );
+                bool commandParsed = ParseChatCommands( message, remoteUserId );
 
-			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
-			{
-				m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
-				ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, message );
-			}
+                if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
+                {
+                    m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
+                    ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, message );
+                }
 
-			ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
-			Instance.AddEvent( chatEvent );
+                ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
+                Instance.AddEvent( chatEvent );
 
-			m_resourceLock.AcquireExclusive( );
-			m_chatHistory.Add( chatEvent );
-			OnChatMessage( remoteUserId, playerName, message );
-			m_resourceLock.ReleaseExclusive( );
-		}
+                m_resourceLock.AcquireExclusive();
+                m_chatHistory.Add( chatEvent );
+                OnChatMessage( remoteUserId, playerName, message );
+                m_resourceLock.ReleaseExclusive();
+            } );
+        }
 
 		public void SendPrivateChatMessage( ulong remoteUserId, string message )
 		{
@@ -485,8 +491,13 @@ namespace SEModAPIExtensions.API
 
                     else
                     {
+                        MyMultiplayer.Static.SendChatMessage( message );
+                        MyMultiplayer.Static.SendChatMessage("Due to a change in SE, all chat from the server is now broadcast publicly. To get private chat, add mod 559202083.");
+                        
+                        /*
                         Object chatMessageStruct = CreateChatMessageStruct( message );
                         ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
+                        */
                     }
                 }
 
@@ -526,6 +537,8 @@ namespace SEModAPIExtensions.API
 
                     else
                     {
+                        MyMultiplayer.Static.SendChatMessage( message );
+                        /*
                         Object chatMessageStruct = CreateChatMessageStruct( message );
                         List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
                         foreach ( ulong remoteUserId in connectedPlayers )
@@ -536,6 +549,7 @@ namespace SEModAPIExtensions.API
                             ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
                             Instance.AddEvent( chatEvent );
                         }
+                        */
                         m_chatMessages.Add( string.Format( "Server: {0}", message ) );
                         ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
                     }

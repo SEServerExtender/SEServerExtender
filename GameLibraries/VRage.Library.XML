@@ -999,7 +999,7 @@
             Helper method which returns file path of caller.
             </summary>
         </member>
-        <member name="M:VRage.Compiler.IlChecker.CheckIl(System.Collections.Generic.List{VRage.Compiler.IlReader.IlInstruction},System.Type@,System.Boolean,System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Reflection.MemberInfo}})">
+        <member name="M:VRage.Compiler.IlChecker.CheckIl(System.Collections.Generic.List{VRage.Compiler.IlReader.IlInstruction},System.Type@,System.Boolean,System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.HashSet{System.Reflection.MemberInfo}})">
             <summary>
             Checks list of IL instructions against dangerous types
             </summary>

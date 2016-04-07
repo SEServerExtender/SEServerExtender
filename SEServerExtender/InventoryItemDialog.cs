@@ -110,13 +110,14 @@ namespace SEServerExtender
 
 			try
 			{
+                /*
                 MyObjectBuilder_InventoryItem objectBuilder = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>();
                 objectBuilder.Content = MyObjectBuilderSerializer.CreateNewObject(SelectedType.TypeId, SelectedType.SubtypeId.ToString());
 				objectBuilder.Amount = (MyFixedPoint)Amount;
 				InventoryItemEntity newItem = new InventoryItemEntity(objectBuilder);
 
 				InventoryContainer.NewEntry(newItem);
-
+                */
 				Close();
 			}
 			catch (Exception ex)

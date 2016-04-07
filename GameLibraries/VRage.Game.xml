@@ -261,6 +261,22 @@
             Called if this inventory changed its owner
             </summary>
         </member>
+        <member name="M:VRage.ModAPI.IMyEntity.SetEmissiveParts(System.String,VRageMath.Color,System.Single)">
+            <summary>
+            Sets the emissive value of a specific emissive material on entity.
+            </summary>
+            <param name="emissiveName">The name of the emissive material (ie. "Emissive0")</param>
+            <param name="emissivity">Level of emissivity (0 is off, 1 is full brightness)</param>
+            <param name="emissivePartColor">Color to emit</param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyEntity.SetEmissivePartsForSubparts(System.String,VRageMath.Color,System.Single)">
+            <summary>
+            Sets the emissive value of a specific emissive material on all entity subparts.
+            </summary>
+            <param name="emissiveName">The name of the emissive material (ie. "Emissive0")</param>
+            <param name="emissivity">Level of emissivity (0 is off, 1 is full brightness).</param>
+            <param name="emissivePartColor">Color to emit</param>
+        </member>
         <member name="M:VRage.Game.Entity.MyEntity.GetTopMostParent(System.Type)">
             <summary>
             Return top most parent of this entity
@@ -421,6 +437,11 @@
         <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.ContinuousUsage">
             <summary>
             When true, use will be called every frame
+            </summary>
+        </member>
+        <member name="P:VRage.Game.MyParticleGPUGeneration.ArraySize">
+            <summary>
+            Public members to easy access
             </summary>
         </member>
         <member name="P:VRage.Game.MyParticleLight.Position">
@@ -1605,13 +1626,6 @@
             This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
             </summary>
         </member>
-        <member name="M:VRage.Game.Utils.MyCamera.ChangeFov(System.Single)">
-            <summary>
-            Changes FOV for ForwardCamera (updates projection matrix)
-            SetViewMatrix overwrites this changes
-            </summary>
-            <param name="fov"></param>
-        </member>
         <member name="M:VRage.Game.Utils.MyCamera.WorldToScreen(VRageMath.Vector3D@)">
             <summary>
             Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
@@ -1620,12 +1634,32 @@
             <param name="worldPos">World position.</param>
             <returns>Screen coordinate in 0-1 distance.</returns>
         </member>
-        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoom">
+        <member name="P:VRage.Game.Utils.MyCamera.ViewMatrixAtZero">
             <summary>
-            Gets current fov with considering if zoom is enabled
+            Current view matrix without translation part.
             </summary>
         </member>
-        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoomForNearObjects">
+        <member name="P:VRage.Game.Utils.MyCamera.ForwardVector">
+            <summary>
+            Forward vector of camera world matrix ("ahead from camera")
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.LeftVector">
+            <summary>
+            Left vector of camera world matrix ("to the left from camera")
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.UpVector">
+            <summary>
+            Up vector of camera world matrix ("up from camera")
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.FieldOfViewDegrees">
+            <summary>
+            Field of view in degrees.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.FovWithZoom">
             <summary>
             Gets current fov with considering if zoom is enabled
             </summary>
@@ -2729,6 +2763,11 @@
         <member name="F:MyCommonTexts.ControlName_UseOrInteract">
             <summary>
             Use / Interact
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_PickUp">
+            <summary>
+            Pick Up
             </summary>
         </member>
         <member name="F:MyCommonTexts.VerticalSync">
@@ -4120,6 +4159,11 @@
         <member name="F:MyCommonTexts.NotificationInventoryFull">
             <summary>
             Inventory is full
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationInventoryNotEmpty">
+            <summary>
+            This inventory still contains items
             </summary>
         </member>
         <member name="F:MyCommonTexts.OutOfAmmo">
@@ -6160,9 +6204,9 @@
             Obsolete. Use ElapsedGameTime
             </summary>
         </member>
-        <member name="P:VRage.Game.MyObjectBuilder_InventoryItem.Content">
+        <member name="F:VRage.Game.MyObjectBuilder_InventoryItem.Content">
             <summary>
-            Obsolete. It is here only to keep LIMITED backwards compatibility with old saves. Nulls content when unsupported.
+            Obsolete. It is here only to keep backwards compatibility with old saves. Nulls content when unsupported.
             </summary>
         </member>
         <member name="F:VRage.Game.MyObjectBuilder_SessionSettings.WorldSizeKm">
