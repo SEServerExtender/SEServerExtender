@@ -16,6 +16,12 @@
             </summary>
             <param name="argument"></param>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyGridProgram.Save">
+            <summary>
+            If this grid program has state saving capability, calling this method
+            will invoke it.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.IMyGridProgram.GridTerminalSystem">
             <summary>
             Gets or sets the GridTerminalSystem available for the grid programs.
@@ -36,6 +42,11 @@
             Gets or sets the storage string for this grid program.
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.Runtime">
+            <summary>
+            Gets or sets the object used to provide runtime information for the running grid program.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.IMyGridProgram.Echo">
             <summary>
             Gets or sets the action which prints out text onto the currently running programmable block's detail info area.
@@ -44,6 +55,11 @@
         <member name="P:Sandbox.ModAPI.IMyGridProgram.HasMainMethod">
             <summary>
             Determines whether this grid program has a valid Main method.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.HasSaveMethod">
+            <summary>
+            Determines whether this grid program has a valid Save method.
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
@@ -107,6 +123,50 @@
             Door state, zero is fully closed. One is fully opened.
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Attach">
+            <summary>
+            Attempts to attach to a nearby rotor/wheel
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Detach">
+            <summary>
+            Detaches the rotor/wheel from the stator/suspension
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorBase.IsAttached">
+            <summary>
+            Gets if the piston top is attached to something
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorBase.PendingAttachment">
+            <summary>
+            Gets if the motor stator is looking for a rotor
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyMotorBase.Attach(Sandbox.ModAPI.IMyMotorRotor)">
+            <summary>
+            Attaches a specified nearby rotor/wheel to the stator/suspension block
+            </summary>
+            <param name="rotor">Entity to attach</param>
+            <remarks>The rotor to attach must already be in position before calling this method.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.RotorGrid">
+            <summary>
+            Gets the grid attached to the rotor part
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.Rotor">
+            <summary>
+            Gets the attached rotor part entity
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "E:Sandbox.ModAPI.IMyMotorBase.AttachedEntityChanged" -->
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.DummyPosition">
+            <summary>
+            Gets the dummy position, to aid in attachment
+            </summary>
+            <remarks>Gets the location where the top rotor piece will attach.</remarks>
+        </member>
         <member name="T:Sandbox.ModAPI.IMyOxygenGenerator">
             <summary>
             Oxygen generator interface
@@ -132,6 +192,16 @@
             Increase/decrese power consumption
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Attach">
+            <summary>
+            Attaches a nearby top part to the piston block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Detach">
+            <summary>
+            Detaches the top from the piston
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
             <summary>
             Param - limit is top
@@ -147,6 +217,43 @@
             Gets the current status.
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.IsAttached">
+            <summary>
+            Gets if the piston base is attached to the top piece
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.PendingAttachment">
+            <summary>
+            Gets if the piston is looking for a top part
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyPistonBase.Attach(Sandbox.ModAPI.IMyPistonTop)">
+            <summary>
+            Attaches a specified nearby top part to the piston block
+            </summary>
+            <param name="top">Entity to attach</param>
+            <remarks>The top to attach must already be in position before calling this method.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonBase.TopGrid">
+            <summary>
+            Gets the grid attached to the piston top part
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonBase.Top">
+            <summary>
+            Gets the attached piston top part entity
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyPistonBase.AttachedEntityChanged">
+            <summary>
+            Notifies when the top grid is attached or detached
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonTop.Piston">
+            <summary>
+            Gets the attached piston block
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.CurrentOutput">
             <summary>
             Current output of reactor in Megawatts
@@ -155,6 +262,16 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.MaxOutput">
             <summary>
             Maximum output of reactor in Megawatts
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorRotor.IsAttached">
+            <summary>
+            Gets whether the rotor is attached to a stator/suspension block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorRotor.Stator">
+            <summary>
+            Gets the attached stator/suspension block
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
@@ -196,6 +313,38 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.UpgradeCount">
             <summary>
             number of upgrades applied
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo">
+            <summary>
+            Provides runtime info for a running grid program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.TimeSinceLastRun">
+            <summary>
+            Gets the time elapsed since the last time this program was run.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.MaxInstructionCount">
+            <summary>
+            Gets the maximum number of significant instructions that can be executing during a single run, including
+            any other programmable blocks invoked immediately.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.CurrentInstructionCount">
+            <summary>
+            Gets the current number of significant instructions executed.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.MaxMethodCallCount">
+            <summary>
+            Gets the maximum number of method calls that can be executed during a single run, including
+            any other programmable blocks invoked immediately.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.CurrentMethodCallCount">
+            <summary>
+            Gets the current number of method calls.
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.Ingame.IMyRadioAntenna">
@@ -410,7 +559,7 @@
             {
                 // Print out the time elapsed since the currently running programmable block was run
                 // the last time.
-                Echo(Me.CustomName + " was last run " + ElapsedTime.TotalSeconds + " seconds ago.");
+                Echo(Me.CustomName + " was last run " + Runtime.TimeSinceLastRun.TotalSeconds + " seconds ago.");
             }
             </code>
             </example>
@@ -428,6 +577,11 @@
         <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.ElapsedTime">
             <summary>
                 Gets the amount of in-game time elapsed from the previous run.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.Runtime">
+            <summary>
+            Gets runtime information for the running grid program.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.Storage">

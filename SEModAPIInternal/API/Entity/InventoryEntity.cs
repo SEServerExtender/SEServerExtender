@@ -463,7 +463,7 @@ namespace SEModAPIInternal.API.Entity
 			IMyInventoryItem item = (IMyInventoryItem)backingObject;
 			MyObjectBuilder_InventoryItem newItem = MyObjectBuilderSerializer.CreateNewObject<MyObjectBuilder_InventoryItem>( );
 			newItem.Amount = item.Amount;
-			newItem.Content = item.Content;
+			//newItem.Content = item.Content;
 			newItem.ItemId = item.ItemId;
 			m_objectBuilder = newItem;
 

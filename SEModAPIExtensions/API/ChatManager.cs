@@ -1,4 +1,5 @@
-﻿using VRage.Game;
+﻿using System.Threading.Tasks;
+using VRage.Game;
 using VRage.Network;
 
 namespace SEModAPIExtensions.API
@@ -291,6 +292,7 @@ namespace SEModAPIExtensions.API
                 Action<ulong, string, ChatEntryTypeEnum> chatHook = ReceiveChatMessage;
                 ServerNetworkManager.Instance.RegisterChatReceiver( chatHook );
                 MyAPIGateway.Multiplayer.RegisterMessageHandler( 9001, ReceiveDataMessage );
+                
                 m_chatHandlerSetup = true;
             }
             catch ( Exception ex )
@@ -299,6 +301,7 @@ namespace SEModAPIExtensions.API
             }
         }
 
+        [Obsolete("Create the ChatMsg struct directly")]
         protected Object CreateChatMessageStruct( string message )
         {
             Type chatMessageStructType = typeof( ChatMsg );
@@ -325,90 +328,66 @@ namespace SEModAPIExtensions.API
             public string message { get; set; }
         }
 
+
         public class ServerMessageItem
         {
             public string From { get; set; }
             public string Message { get; set; }
         }
 
-        protected void ReceiveDataMessage( byte[ ] data )
+        protected void ReceiveDataMessage( byte[] data )
         {
+            string text;
+            MessageRecieveItem item;
             try
             {
-                /*
-                string text = "";
-                for ( int r = 0; r < data.Length; r++ )
-                    text += (char)data[r];
-                */
-                string text = Encoding.UTF8.GetString( data );
+                text = Encoding.UTF8.GetString( data );
+
+                item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
+            }
+            catch ( Exception ex )
+            {
+                ApplicationLog.BaseLog.Error( ex, "Failed to deserialize data message." );
+                return;
+            }
+
+            if ( ExtenderOptions.IsDebugging )
                 ApplicationLog.BaseLog.Debug( text );
-                if (DateTime.Now - _lastMessageTime < TimeSpan.FromMilliseconds(200) && text == _lastMessageString)
-                {
-                    //if we've received a duplicate message, discard it
-                    _lastMessageTime = DateTime.Now;
-                    _lastMessageString = text;
-                    if(ExtenderOptions.IsDebugging)
-                        ApplicationLog.BaseLog.Debug("Received duplicate message: " + System.Environment.NewLine + text );
-                    return;
-                }
-
-                _lastMessageTime = DateTime.Now;
-                _lastMessageString = text;
-
-                MessageRecieveItem item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
-                if(ExtenderOptions.IsDebugging )
-                    ApplicationLog.BaseLog.Debug( text );
-
-
-                if ( item.msgID == 5010 )
+            
+            if ( item.msgID == 5010 )
+            {
+                Task.Run( () =>
                 {
                     string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
 
                     bool commandParsed = ParseChatCommands( item.message, item.fromID );
 
-                    //if ( !commandParsed )
-                    //{
                     m_chatMessages.Add( string.Format( "{0}: {1}", playerName, item.message ) );
                     ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, item.message );
-                    //}
 
                     ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
-                    if(!commandParsed)
-                    Instance.AddEvent( chatEvent );
+                    if ( !commandParsed )
+                        Instance.AddEvent( chatEvent );
 
-                    m_resourceLock.AcquireExclusive( );
+                    m_resourceLock.AcquireExclusive();
                     m_chatHistory.Add( chatEvent );
-                    //if ( !commandParsed )
-                    //    OnChatMessage( item.fromID, playerName, item.message );
-                    m_resourceLock.ReleaseExclusive( );
-                }
-                else if ( item.msgID == 5011 )
-                {
-                    //player has loaded in. Do something else with this info. for now we'll send dataReady
-                    MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
-
-                    if ( !_enableData )
-                    {
-                        _enableData = true;
-                        ApplicationLog.Info( "Found Essentials client mod login, enabling data messages" );
-                    }
-                    }
-
-                else if ( item.msgID == 5015 )
-                {
-                    //essentials mod sends init message to check if this version of SESE can recieve data messages. send back the client SteamID to ack
-                    //if ( item.message == "init" )
-                    //  MyAPIGateway.Multiplayer.SendMessageTo( 5025, BitConverter.GetBytes( item.fromID ), item.fromID );
-                }
-                else
-                {
-                    ApplicationLog.Info( "Unknown data message type: " + item.msgID.ToString( ) );
-                }
+                    m_resourceLock.ReleaseExclusive();
+                } );
             }
-            catch ( Exception ex )
+
+            else if ( item.msgID == 5011 )
             {
-                ApplicationLog.BaseLog.Debug( ex, "ReceiveDataMessage" );
+                //player has loaded in. Do something else with this info. for now we'll send dataReady
+                MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
+
+                if ( !_enableData )
+                {
+                    _enableData = true;
+                    ApplicationLog.Info( "Found Essentials client mod login, enabling data messages" );
+                }
             }
+            else
+                ApplicationLog.Info( "Unknown data message type: " + item.msgID );
         }
         
         protected void SendDataMessage( string message, ulong userId = 0 )
@@ -449,25 +428,28 @@ namespace SEModAPIExtensions.API
         }
         
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
-		{
-			string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
+        {
+            Task.Run( () =>
+            {
+                string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( remoteUserId );
 
-			bool commandParsed = ParseChatCommands( message, remoteUserId );
+                bool commandParsed = ParseChatCommands( message, remoteUserId );
 
-			if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
-			{
-				m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
-				ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, message );
-			}
+                if ( !commandParsed && entryType == ChatEntryTypeEnum.ChatMsg )
+                {
+                    m_chatMessages.Add( string.Format( "{0}: {1}", playerName, message ) );
+                    ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, message );
+                }
 
-			ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
-			Instance.AddEvent( chatEvent );
+                ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, remoteUserId, 0, message, 0 );
+                Instance.AddEvent( chatEvent );
 
-			m_resourceLock.AcquireExclusive( );
-			m_chatHistory.Add( chatEvent );
-			OnChatMessage( remoteUserId, playerName, message );
-			m_resourceLock.ReleaseExclusive( );
-		}
+                m_resourceLock.AcquireExclusive();
+                m_chatHistory.Add( chatEvent );
+                OnChatMessage( remoteUserId, playerName, message );
+                m_resourceLock.ReleaseExclusive();
+            } );
+        }
 
 		public void SendPrivateChatMessage( ulong remoteUserId, string message )
 		{
@@ -485,8 +467,13 @@ namespace SEModAPIExtensions.API
 
                     else
                     {
+                        MyMultiplayer.Static.SendChatMessage( message );
+                        MyMultiplayer.Static.SendChatMessage("Due to a change in SE, all chat from the server is now broadcast publicly. To get private chat, add mod 559202083.");
+                        
+                        /*
                         Object chatMessageStruct = CreateChatMessageStruct( message );
                         ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
+                        */
                     }
                 }
 
@@ -526,6 +513,8 @@ namespace SEModAPIExtensions.API
 
                     else
                     {
+                        MyMultiplayer.Static.SendChatMessage( message );
+                        /*
                         Object chatMessageStruct = CreateChatMessageStruct( message );
                         List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
                         foreach ( ulong remoteUserId in connectedPlayers )
@@ -536,6 +525,7 @@ namespace SEModAPIExtensions.API
                             ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
                             Instance.AddEvent( chatEvent );
                         }
+                        */
                         m_chatMessages.Add( string.Format( "Server: {0}", message ) );
                         ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
                     }

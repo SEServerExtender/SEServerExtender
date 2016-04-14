@@ -679,7 +679,8 @@
             "Entity ID",
             "Distance From Center",
             "Display Name",
-            "Weight"});
+            "Weight",
+            "Owner Name"});
 			this.CB_Entity_Sort.Location = new System.Drawing.Point(0, 481);
 			this.CB_Entity_Sort.Name = "CB_Entity_Sort";
 			this.CB_Entity_Sort.Size = new System.Drawing.Size(300, 21);
