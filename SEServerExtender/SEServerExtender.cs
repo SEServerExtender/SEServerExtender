@@ -1055,9 +1055,10 @@ namespace SEServerExtender
 			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
 
+            //private DateTime renderTimer;
 		private void RenderCubeGridChildNodes( MyCubeGrid cubeGrid, TreeNode blocksNode )
 		{
-            DateTime renderTimer = DateTime.Now;
+            //renderTimer=DateTime.Now;
 		    Dictionary<string, MyGuiBlockCategoryDefinition> categories = MyDefinitionManager.Static.GetCategories();
             var taskResults = new List<Task<KeyValuePair<string, HashSet<MySlimBlock>>>>();
 
@@ -1105,13 +1106,15 @@ namespace SEServerExtender
 		    }
 
 		    taskResults.Clear();
-		    TimeSpan renderTime = DateTime.Now - renderTimer;
-            ApplicationLog.BaseLog.Info( "RenderNodeTime: " + renderTime );
-            
+            /*
+            if(ExtenderOptions.IsDebugging)
+                ApplicationLog.BaseLog.Info( "RenderNodeTime: " + (DateTime.Now - renderTimer) );
+            */
 		}
 
 	    private KeyValuePair<string, HashSet<MySlimBlock>> ProcessBlockCategories( MyCubeGrid grid, KeyValuePair<string,MyGuiBlockCategoryDefinition> definition )
 	    {
+            //DateTime processTime = DateTime.Now;
             var blockResult = new HashSet<MySlimBlock>();
 
 	        foreach ( MySlimBlock block in grid.CubeBlocks )
@@ -1119,7 +1122,13 @@ namespace SEServerExtender
 	            if ( definition.Value.HasItem( block.BlockDefinition.Id.ToString() )) 
 	                blockResult.Add( block );
             }
-            
+            /*
+	        if ( ExtenderOptions.IsDebugging )
+            {
+                ApplicationLog.BaseLog.Info("RenderNodeTime: " + (DateTime.Now - renderTimer));
+                ApplicationLog.BaseLog.Info($"Process{definition.Key}Time: {(DateTime.Now - processTime)}");
+            }
+            */
 	        return new KeyValuePair<string, HashSet<MySlimBlock>>(definition.Key, blockResult);
 	    }
 
@@ -1161,13 +1170,13 @@ namespace SEServerExtender
 			{
 				if ( selectedNode == parentNode.Nodes[ 0 ] )
 				{
-					BTN_Entities_New.Enabled = true;
+					//BTN_Entities_New.Enabled = true;
 				}
 			}
 
 			if ( parentNode.Tag is MyCubeGrid )
 			{
-				BTN_Entities_New.Enabled = false;
+				//BTN_Entities_New.Enabled = false;
 			}
 
 			if ( selectedNode.Tag == null )
@@ -1180,7 +1189,7 @@ namespace SEServerExtender
 		    var grid = linkedObject as MyCubeGrid;
 		    if (grid != null)
 		    {
-		        BTN_Entities_Export.Enabled = true;
+		        //BTN_Entities_Export.Enabled = true;
 		        btnRepairEntity.Enabled = true;
 
 		        TRV_Entities.BeginUpdate();
@@ -1313,16 +1322,15 @@ namespace SEServerExtender
 			}
             
             
-			var inventory = linkedObject as IMyInventory;
+			var inventory = linkedObject as MyInventory;
 			if ( inventory != null )
 			{
 				BTN_Entities_New.Enabled = true;
                 
 				UpdateNodeInventoryItemBranch( e.Node, inventory.GetItems() );
 			}
-
-		    var inventoryItem = linkedObject as IMyInventoryItem;
-			if ( inventoryItem != null )
+            
+			if ( linkedObject is MyPhysicalInventoryItem )
 			{
 				BTN_Entities_New.Enabled = true;
 				BTN_Entities_Delete.Enabled = true;
