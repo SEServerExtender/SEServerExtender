@@ -661,13 +661,16 @@ namespace SEServerExtender
 					//text += $" | {item.Name}";
 					break;
 				case 1:
-					text += $" | ID: {item.EntityId}";
-					break;
+                    text += $" | {(string.IsNullOrEmpty(item.GetOwner()) ? "No Owner" : $"Owner: {item.GetOwner()}")}";
+                    break;
+                case 2:
+			        text += $" | Blocks: {item.BlocksCount}";
+			        break;
 				case 4:
-					text += $" | Mass: {(item.Physics.IsStatic ? "[Station]" : Math.Floor( item.Physics.Mass ).ToString() + "kg")}";
+					text += $" | Mass: {(item.Physics.IsStatic ? "[Station]" : Math.Floor( item.Physics.Mass ) + "kg")}";
 					break;
                 case 5:
-			        text += $" | {(string.IsNullOrEmpty(item.GetOwner() ) ? "No Owner" : $"Owner: {item.GetOwner()}" )}";
+			        text += $" | EntityID: {item.EntityId}";
 			        break;
 			}
 
@@ -680,37 +683,47 @@ namespace SEServerExtender
 		{
 			int sortBy = CB_Entity_Sort.SelectedIndex;
 
-			if ( sortBy == 0 ) // Name
-			{
-				list.Sort( delegate( MyCubeGrid x, MyCubeGrid y )
-						  {
-							  if ( x.Name == null && y.Name == null ) return 0;
-							  if ( x.Name == null ) return -1;
-							  if ( y.Name == null ) return 1;
-							  return x.Name.CompareTo( y.Name );
-						  } );
-			}
-			else if ( sortBy == 1 ) // Entity ID
-			{
-				list.Sort( ( x, y ) => x.EntityId.CompareTo( y.EntityId ) );
-			}
-			else if ( sortBy == 2 ) // Distance From Center
-			{
-				list.Sort( ( x, y ) =>
-					{
-						if ( x == null || x.Closed )
-							return -1;
-
-						if ( y == null || y.Closed )
-							return 1;
-
-						return Vector3D.Distance( x.PositionComp.GetPosition(), Vector3D.Zero ).CompareTo( Vector3D.Distance( y.PositionComp.GetPosition(), Vector3D.Zero ) );
-					} );
-			}
-			else if ( sortBy == 3 ) // Display Name
+			if ( sortBy == 0 ) // Display Name
 			{
 				list.Sort( ( x, y ) => x.DisplayName.CompareTo( y.DisplayName ) );
 			}
+			else if ( sortBy == 1 ) // Owner Name
+			{
+                list.Sort((x, y) =>
+               {
+                   string yOwn = y.GetOwner();
+                   string xOwn = x.GetOwner();
+                   if (String.IsNullOrEmpty(yOwn) && !String.IsNullOrEmpty(xOwn))
+                   {
+                       return -1;
+                   }
+                   else if (!String.IsNullOrEmpty(yOwn) && String.IsNullOrEmpty(xOwn))
+                   {
+                       return 1;
+                   }
+                   else
+                   {
+                       return String.Compare(xOwn, yOwn);
+                   }
+               });
+            }
+			else if ( sortBy == 2 ) // Block Count
+			{
+                list.Sort((x,y) => x.BlocksCount.CompareTo( y.BlocksCount ));
+			}
+			else if ( sortBy == 3 ) // Distance from center
+            {
+                list.Sort((x, y) =>
+                   {
+                       if (x == null || x.Closed)
+                           return -1;
+
+                       if (y == null || y.Closed)
+                           return 1;
+
+                       return Vector3D.Distance(x.PositionComp.GetPosition(), Vector3D.Zero).CompareTo(Vector3D.Distance(y.PositionComp.GetPosition(), Vector3D.Zero));
+                   });
+            }
             else if ( sortBy == 4 ) // Weight
             {
                 list.Sort( ( x, y ) =>
@@ -720,7 +733,7 @@ namespace SEServerExtender
                     else if ( x?.Physics != null && y?.Physics == null )
                         return -1;
                     else if ( x?.Physics == null && y?.Physics == null )
-                        return 0;
+                        return 1;
                     else if (x?.Physics!=null && y?.Physics!=null)
                     {
                         if ( x.Physics.IsStatic && !y.Physics.IsStatic )
@@ -728,7 +741,7 @@ namespace SEServerExtender
                         else if ( !x.Physics.IsStatic && y.Physics.IsStatic )
                             return -1;
                         else if ( x.Physics.IsStatic && y.Physics.IsStatic )
-                            return 0;
+                            return 1;
                         else if ( !x.Physics.IsStatic && !y.Physics.IsStatic )
                         {
                             if ( Math.Floor( x.Physics.Mass ) > Math.Floor( y.Physics.Mass ) )
@@ -737,28 +750,12 @@ namespace SEServerExtender
                                 return -1;
                         }
                     }
-                    return 0;
+                    return 1;
                 });
             }
-            else if (sortBy == 5 ) // Owner Name
+            else if (sortBy == 5 ) // Entity ID
             {
-                list.Sort( ( x, y ) =>
-                {
-                    string yOwn = y.GetOwner();
-                    string xOwn = x.GetOwner();
-                    if (String.IsNullOrEmpty(yOwn) && !String.IsNullOrEmpty(xOwn))
-                    {
-                        return -1;
-                    }
-                    else if (!String.IsNullOrEmpty(yOwn) && String.IsNullOrEmpty(xOwn))
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return String.Compare(xOwn, yOwn);
-                    }
-                });
+                list.Sort( ( x, y ) => x.EntityId.CompareTo( y.EntityId ));
             }
 		}
 

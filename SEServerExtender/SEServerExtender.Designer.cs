@@ -675,12 +675,12 @@
 			this.CB_Entity_Sort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CB_Entity_Sort.FormattingEnabled = true;
 			this.CB_Entity_Sort.Items.AddRange(new object[] {
-            "Name",
-            "Entity ID",
-            "Distance From Center",
             "Display Name",
-            "Weight",
-            "Owner Name"});
+            "Owner Name",
+            "Block Count",
+            "Distance From Center",
+            "Mass",
+            "EntityId"});
 			this.CB_Entity_Sort.Location = new System.Drawing.Point(0, 481);
 			this.CB_Entity_Sort.Name = "CB_Entity_Sort";
 			this.CB_Entity_Sort.Size = new System.Drawing.Size(300, 21);
