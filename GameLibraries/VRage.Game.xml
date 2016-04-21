@@ -475,6 +475,15 @@
             <param name="gasDefinitionId">Definition Id of the gas. Common example: new MyDefinitionId(typeof(MyObjectBuilder_GasProperties), "Oxygen")</param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyCharacter.TriggerCharacterAnimationEvent(System.String,System.Boolean)">
+            <summary>
+            Trigger animation event in the new animation system.
+            If there is a transition leading from current animation state having same name as this event, 
+            animation state machine will change state accordingly.
+            </summary>
+            <param name="eventName">Event name.</param>
+            <param name="sync">Synchronize over network</param>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMyCharacter.SuitEnergyLevel">
             <summary>
             Returns the amount of energy the suit has, values will range between 0 and 1, where 0 is no charge and 1 is full charge.
@@ -1263,10 +1272,29 @@
             Get or set the time for the notification to be shown, in miliseconds.
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMySession.IsUserAdmin(System.UInt64)">
+            <summary>
+            Checks if a given player is an admin.
+            </summary>
+            <param name="steamId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySession.IsUserPromoted(System.UInt64)">
+            <summary>
+            Checks if a given player is promoted to space master.
+            </summary>
+            <param name="steamId"></param>
+            <returns></returns>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMySession.Config">
             <summary>
             Obtaining values from config is slow and can allocate memory!
             Do it only when necessary.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySession.HasAdminPrivileges">
+            <summary>
+            Checks if the local player is an admin or is promoted to space master.
             </summary>
         </member>
         <member name="T:VRage.Game.ModAPI.Ingame.IMySlimBlock">
@@ -1412,6 +1440,23 @@
             Is closing of objects allowed?
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.ControlCamera(VRage.Game.Utils.MyCamera)">
+            <summary>
+            Change camera properties now.
+            Communication: from controller to camera.
+            </summary>
+            <param name="currentCamera"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.Rotate(VRageMath.Vector2,System.Single)">
+            <summary>
+            Rotate camera controller.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.RotateStopped">
+            <summary>
+            Rotation of camera controller stopped.
+            </summary>
+        </member>
         <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.HandleUse">
             <summary>
             Used to send "use" commands to camera controller
@@ -1420,6 +1465,11 @@
             Return value indicates if the camera controller handled the use button.
             If not, it should fall to ControlledObject
             </returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.GetDecalRenderData(VRage.Game.ModAPI.MyHitInfo,VRage.Game.ModAPI.Interfaces.MyDecalRenderData@)">
+            <param name="hitInfo">Hithinfo on world coordinates</param>
+            <param name="renderable">Position and normal on local coordinates for regular actors.
+            World position on voxel maps. NB: To be changed</param>
         </member>
         <member name="P:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.UseDamageSystem">
             <summary>
@@ -1552,6 +1602,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
+            <summary>
+            THIS IS OBSOLETE
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.BaseProductionTimeInSeconds">
+            <summary>
+            Base production time in seconds, which is affected by speed increase of
+            refinery or assembler.
+            </summary>
+        </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
             <summary>
             Remaps this entity's entityId to a new value.
@@ -1626,6 +1687,20 @@
             This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
             </summary>
         </member>
+        <member name="F:VRage.Game.Utils.MyCamera.CameraShake">
+            <summary>
+            Member that shakes with the camera.
+            Note: If we start to have more cameras in the scene, this should be changed to component, because not every camera needs it.
+                  But currently - we use just one camera, so it is a member.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Utils.MyCamera.CameraSpring">
+            <summary>
+            Member that implements camera spring.
+            Note: If we start to have more cameras in the scene, this should be changed to component, because not every camera needs it.
+                  But currently - we use just one camera, so it is a member.
+            </summary>
+        </member>
         <member name="M:VRage.Game.Utils.MyCamera.WorldToScreen(VRageMath.Vector3D@)">
             <summary>
             Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
@@ -1662,6 +1737,49 @@
         <member name="P:VRage.Game.Utils.MyCamera.FovWithZoom">
             <summary>
             Gets current fov with considering if zoom is enabled
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCamera.Position">
+            <summary>
+            Get position of the camera.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.Utils.MyCameraSpring">
+            <summary>
+            Camera spring 
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Utils.MyCameraSpring.Enabled">
+            <summary>
+            Is the sprint enabled?
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Utils.MyCameraSpring.Update(System.Single,VRageMath.Vector3@)">
+            <summary>
+            Update camera spring.
+            </summary>
+            <param name="timeStep">Time passed.</param>
+            <param name="newCameraLocalOffset">Resulting local camera position.</param>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCameraSpring.SpringStiffness">
+            <summary>
+            Stiffness of the spring.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCameraSpring.SpringDampening">
+            <summary>
+            Spring velocity dampening.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCameraSpring.SpringMaxVelocity">
+            <summary>
+            Maximum speed of spring center.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Utils.MyCameraSpring.SpringMaxLength">
+            <summary>
+            Final spring length is transformed using calculation:
+            springTransformedLength = SpringMaxLength * springLength / (springLength + 2)
             </summary>
         </member>
         <member name="M:VRage.Game.Components.MyHierarchyComponentBase.GetTopMostParent(System.Type)">
@@ -6031,6 +6149,37 @@
             Mute when inactive
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ControlTypeNavigation2">
+            <summary>
+            Navigation 2
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldCopyWorld">
+            <summary>
+            Copy World
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationResearchUnlocked">
+            <summary>
+            You have unlocked new knowledge about {0}.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationResearchKnown">
+            <summary>
+            You already have knowledge about {0}!
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MyCommonTexts.MessageBoxTextWorldExistsDownloadOverwrite" -->
+        <member name="F:MyCommonTexts.MessageBoxTextWorldExistsOverwrite">
+            <summary>
+            World already exists! Overwrite?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorkshopCopyWorld">
+            <summary>
+            Download selected world to save games without loading it (Use to Edit Settings before playing world)
+            </summary>
+        </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
             <summary>
             Amount of item required or produced. For discrete objects this refers to
@@ -6070,17 +6219,6 @@
             <summary>
             Default faction relation to the other factions. 
             Enemies state is with highest prority and does not care if other faction want to be friend.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
-            <summary>
-            THIS IS OBSOLETE
-            </summary>
-        </member>
-        <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.BaseProductionTimeInSeconds">
-            <summary>
-            Base production time in seconds, which is affected by speed increase of
-            refinery or assembler.
             </summary>
         </member>
         <member name="F:VRage.Game.MyObjectBuilder_CubeBlockDefinition.Variant.Color">

@@ -222,6 +222,11 @@
             Gets if the piston base is attached to the top piece
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.IsLocked">
+            <summary>
+            Gets if the piston is safety locked (welded)
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.PendingAttachment">
             <summary>
             Gets if the piston is looking for a top part
@@ -322,7 +327,14 @@
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.TimeSinceLastRun">
             <summary>
-            Gets the time elapsed since the last time this program was run.
+            Gets the time elapsed since the last time the Main method of this program was run. This property returns no
+            valid data neither in the constructor nor the Save method.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.LastRunTimeMs">
+            <summary>
+            Gets the number of milliseconds it took to execute the Main method the last time it was run. This property returns no valid
+            data neither in the constructor nor the Save method.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.MaxInstructionCount">
