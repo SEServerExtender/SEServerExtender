@@ -1052,10 +1052,10 @@ namespace SEServerExtender
 			rootNode.Text = string.Format( "{0} ({1})", rootNode.Name, rootNode.Nodes.Count );
 		}
 
-            //private DateTime renderTimer;
+            private DateTime renderTimer;
 		private void RenderCubeGridChildNodes( MyCubeGrid cubeGrid, TreeNode blocksNode )
 		{
-            //renderTimer=DateTime.Now;
+            renderTimer=DateTime.Now;
 		    Dictionary<string, MyGuiBlockCategoryDefinition> categories = MyDefinitionManager.Static.GetCategories();
             var taskResults = new List<Task<KeyValuePair<string, HashSet<MySlimBlock>>>>();
 
@@ -1065,8 +1065,16 @@ namespace SEServerExtender
                taskResults.Add( Task.Run( () => ProcessBlockCategories( cubeGrid,category ) ) );
 		    }
 
-		    foreach (var task in taskResults)
+		    Task.WaitAll( taskResults.ToArray() );
+            if (ExtenderOptions.IsDebugging)
+                ApplicationLog.BaseLog.Info("TaskTime: " + (DateTime.Now - renderTimer));
+
+            foreach (var task in taskResults)
 		    {
+                //don't create an empty category
+		        if ( task.Result.Value.Count == 0 )
+		            continue;
+
 		        //see if this category already exists, if not create it
 		        TreeNode categoryNode;
 		        var searchNodes = blocksNode.Nodes.Find(task.Result.Key, false);
@@ -1080,33 +1088,85 @@ namespace SEServerExtender
 		            categoryNode = searchNodes[0];
 		        }
 
-		        //update node text with the count of blocks in this category
-		        categoryNode.Text = $"{categoryNode.Name} ({task.Result.Value.Count})";
 
 		        //add the blocks to the tree structure
-		        foreach (MySlimBlock block in task.Result.Value)
+                //cargo containers are lumped in with conveyors, let's create a separate category for those
+		        if ( task.Result.Key == "Conveyors" )
 		        {
-		            TreeNode cubeNode;
-		            if (block.FatBlock == null)
+		            int cargoCount = 0;
+		            int conveyorCount = 0;
+                    //see if this category already exists, if not create it
+                    TreeNode cargoNode;
+                    var cargoSearchNodes = blocksNode.Nodes.Find("Cargo Containers", false);
+                    if (cargoSearchNodes.Length == 0)
+                    {
+                        cargoNode = blocksNode.Nodes.Add("Cargo Containers");
+                        cargoNode.Name = "Cargo Containers";
+                    }
+                    else
+                    {
+                        cargoNode = cargoSearchNodes[0];
+                    }
+
+                    foreach (MySlimBlock block in task.Result.Value)
+                    {
+                        TreeNode cubeNode;
+                        if ( block.FatBlock == null )
+                        {
+                            cubeNode = categoryNode.Nodes.Add( block.BlockDefinition.Id.SubtypeName );
+                            cubeNode.Name = cubeNode.Text;
+                            cubeNode.Tag = block;
+                        }
+                        else
+                        {
+                            if ( block.FatBlock.HasInventory )
+                            {
+                                cargoCount++;
+                                cubeNode = cargoNode.Nodes.Add( block.FatBlock.DisplayNameText );
+                            }
+
+                            else
+                            {
+                                conveyorCount++;
+                                cubeNode = categoryNode.Nodes.Add( block.FatBlock.DisplayNameText );
+                            }
+
+                            cubeNode.Name = cubeNode.Text;
+                            cubeNode.Tag = block.FatBlock;
+                        }
+                    }
+		            categoryNode.Text = $"{categoryNode.Name} ({conveyorCount})";
+		            if ( cargoCount > 0 )
+		                cargoNode.Text =$"{cargoNode.Text} ({cargoCount})";
+		        }
+                    else
+                {
+                    //update node text with the count of blocks in this category
+                    categoryNode.Text = $"{categoryNode.Name} ({task.Result.Value.Count})";
+                    foreach ( MySlimBlock block in task.Result.Value )
 		            {
-		                cubeNode = categoryNode.Nodes.Add(block.BlockDefinition.Id.SubtypeName);
-		                cubeNode.Name = cubeNode.Text;
-		                cubeNode.Tag = block;
-		            }
-		            else
-		            {
-		                cubeNode = categoryNode.Nodes.Add(block.FatBlock.DisplayNameText);
-		                cubeNode.Name = cubeNode.Text;
-		                cubeNode.Tag = block.FatBlock;
+		                TreeNode cubeNode;
+		                if ( block.FatBlock == null )
+		                {
+		                    cubeNode = categoryNode.Nodes.Add( block.BlockDefinition.Id.SubtypeName );
+		                    cubeNode.Name = cubeNode.Text;
+		                    cubeNode.Tag = block;
+		                }
+		                else
+		                {
+		                    cubeNode = categoryNode.Nodes.Add( block.FatBlock.DisplayNameText );
+		                    cubeNode.Name = cubeNode.Text;
+		                    cubeNode.Tag = block.FatBlock;
+		                }
 		            }
 		        }
 		    }
 
 		    taskResults.Clear();
-            /*
+            
             if(ExtenderOptions.IsDebugging)
                 ApplicationLog.BaseLog.Info( "RenderNodeTime: " + (DateTime.Now - renderTimer) );
-            */
+            
 		}
 
 	    private KeyValuePair<string, HashSet<MySlimBlock>> ProcessBlockCategories( MyCubeGrid grid, KeyValuePair<string,MyGuiBlockCategoryDefinition> definition )
@@ -1181,19 +1241,21 @@ namespace SEServerExtender
 
 			object linkedObject = selectedNode.Tag;
 			PG_Entities_Details.SelectedObject = linkedObject;
-				BTN_Entities_Delete.Enabled = true;
 
-		    var grid = linkedObject as MyCubeGrid;
+
+            var grid = linkedObject as MyCubeGrid;
 		    if (grid != null)
 		    {
 		        //BTN_Entities_Export.Enabled = true;
 		        btnRepairEntity.Enabled = true;
+		        BTN_Entities_Delete.Enabled = true;
 
 		        TRV_Entities.BeginUpdate();
 
 		        RenderCubeGridChildNodes(grid, e.Node);
 
 		        TRV_Entities.EndUpdate();
+		        return;
 		    }
 
             /*maybe one day...
@@ -1255,11 +1317,64 @@ namespace SEServerExtender
 
 					TRV_Entities.EndUpdate( );
 				}
+			    return;
+			}
+
+            var block = linkedObject as MyCubeBlock;
+            if (block != null)
+            {
+                btnRepairEntity.Enabled = true;
+                BTN_Entities_Delete.Enabled = true;
+            }
+
+		    var cockpit = linkedObject as MyCockpit;
+			if ( cockpit?.Pilot != null)
+			{
+				if ( e.Node.Nodes.Count < 1 )
+				{
+					TRV_Entities.BeginUpdate( );
+
+					e.Node.Nodes.Clear( );
+					TreeNode node = e.Node.Nodes.Add( "Pilot" );
+					node.Name = node.Text;
+					node.Tag = cockpit.Pilot;
+
+					TRV_Entities.EndUpdate( );
+				}
+				else
+				{
+					TRV_Entities.BeginUpdate( );
+
+					TreeNode node = e.Node.Nodes[ 0 ];
+					node.Tag = cockpit.Pilot;
+
+					TRV_Entities.EndUpdate( );
+				}
+			    return;
+			}
+            
+			var inventory = linkedObject as MyInventory;
+			if ( inventory != null )
+			{
+				BTN_Entities_New.Enabled = true;
+                
+				UpdateNodeInventoryItemBranch( e.Node, inventory.GetItems() );
+
+			    return;
+			}
+            
+			if ( linkedObject is MyPhysicalInventoryItem )
+			{
+				BTN_Entities_New.Enabled = true;
+				BTN_Entities_Delete.Enabled = true;
+
+			    return;
 			}
 
             var entity = linkedObject as MyEntity;
             if (entity != null && entity.HasInventory)
             {
+                BTN_Entities_Delete.Enabled = true;
                 if (entity.InventoryCount == 1)
                 {
                     if (e.Node.Nodes.Count < 1)
@@ -1292,50 +1407,9 @@ namespace SEServerExtender
                     }
                 }
             }
-
-		    var cockpit = linkedObject as MyCockpit;
-			if ( cockpit != null && cockpit.Pilot!= null)
-			{
-				if ( e.Node.Nodes.Count < 1 )
-				{
-					TRV_Entities.BeginUpdate( );
-
-					e.Node.Nodes.Clear( );
-					TreeNode node = e.Node.Nodes.Add( "Pilot" );
-					node.Name = node.Text;
-					node.Tag = cockpit.Pilot;
-
-					TRV_Entities.EndUpdate( );
-				}
-				else
-				{
-					TRV_Entities.BeginUpdate( );
-
-					TreeNode node = e.Node.Nodes[ 0 ];
-					node.Tag = cockpit.Pilot;
-
-					TRV_Entities.EndUpdate( );
-				}
-			}
-            
-            
-			var inventory = linkedObject as MyInventory;
-			if ( inventory != null )
-			{
-				BTN_Entities_New.Enabled = true;
-                
-				UpdateNodeInventoryItemBranch( e.Node, inventory.GetItems() );
-			}
-            
-			if ( linkedObject is MyPhysicalInventoryItem )
-			{
-				BTN_Entities_New.Enabled = true;
-				BTN_Entities_Delete.Enabled = true;
-			}
-            
 		}
 
-		private void BTN_Entities_Delete_Click( object sender, EventArgs e )
+        private void BTN_Entities_Delete_Click( object sender, EventArgs e )
 		{
 			try
 			{
@@ -1349,12 +1423,15 @@ namespace SEServerExtender
 			        SandboxGameAssemblyWrapper.Instance.GameAction(() => inventory?.Remove(item, item.Amount));
 			    }
 
+                /*
                 //raze blocks on grid
 			    var block = linkedObject as MyCubeBlock;
 			    if (block != null)
 			    {
-			        block.CubeGrid.RazeBlock(block.Position);
+			       SandboxGameAssemblyWrapper.Instance.GameAction( ()=>block.CubeGrid.RazeBlock(block.Position));
+			        return;
 			    }
+                */
 
                 //entities can just be Closed
 			    var entity = linkedObject as MyEntity;

@@ -124,8 +124,7 @@ namespace SEServerExtender
 			            Content = content
 			        };
 
-			        if (InventoryContainer.CanItemsBeAdded(amount, SelectedType) &&
-			            InventoryContainer.GetItemsCount() == 0)
+			        if (InventoryContainer.CanItemsBeAdded(amount, SelectedType))
 			        {
 			            InventoryContainer.AddItems(amount, inventoryItem.Content);
 			        }

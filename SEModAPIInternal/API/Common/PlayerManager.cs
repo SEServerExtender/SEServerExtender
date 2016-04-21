@@ -1,4 +1,6 @@
-﻿using VRage.Game;
+﻿using System.Diagnostics;
+using Sandbox.Engine.Multiplayer;
+using VRage.Game;
 using VRage.Game.ModAPI;
 
 namespace SEModAPIInternal.API.Common
@@ -939,8 +941,13 @@ namespace SEModAPIInternal.API.Common
 
 		public bool IsUserAdmin(ulong remoteUserId)
 		{
-			return MySandboxGame.ConfigDedicated.Administrators.Any( userId => remoteUserId.ToString( ).Equals( userId ) );
+		    return MyMultiplayer.Static.IsAdmin( remoteUserId );
 		}
+
+	    public bool IsUserPromoted( ulong remoteUserId )
+	    {
+	        return MySession.Static.PromotedUsers.Contains( remoteUserId );
+	    }
 
 		#endregion
 	}
