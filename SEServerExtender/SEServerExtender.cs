@@ -545,9 +545,11 @@ namespace SEServerExtender
 			}
             
 		    SandboxGameAssemblyWrapper.Instance.GameAction(() => m_sectorEntities = MyEntities.GetEntities() );
+            MyEntity[] entitiesCopy = new MyEntity[m_sectorEntities.Count];
+            m_sectorEntities.CopyTo( entitiesCopy );
 			//m_sectorEntities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
 			//foreach ( BaseEntity entry in m_sectorEntities )
-            foreach(MyEntity entity in m_sectorEntities)
+            foreach(MyEntity entity in entitiesCopy)
 			{
 			    if (entity is MyCubeGrid)
 			        m_cubeGridEntities.Add(entity as MyCubeGrid);
