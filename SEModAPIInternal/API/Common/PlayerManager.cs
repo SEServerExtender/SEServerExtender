@@ -926,17 +926,20 @@ namespace SEModAPIInternal.API.Common
 
 		public void KickPlayer(ulong steamId)
 		{
-			ServerNetworkManager.Instance.KickPlayer(steamId);
+            MyMultiplayer.Static.KickClient( steamId );
+			//ServerNetworkManager.Instance.KickPlayer(steamId);
 		}
 
 		public void BanPlayer(ulong steamId)
 		{
-			ServerNetworkManager.Instance.SetPlayerBan(steamId, true);
+            MyMultiplayer.Static.BanClient( steamId, true );
+			//ServerNetworkManager.Instance.SetPlayerBan(steamId, true);
 		}
 
 		public void UnBanPlayer(ulong steamId)
 		{
-			ServerNetworkManager.Instance.SetPlayerBan(steamId, false);
+            MyMultiplayer.Static.BanClient( steamId, false );
+			//ServerNetworkManager.Instance.SetPlayerBan(steamId, false);
 		}
 
 		public bool IsUserAdmin(ulong remoteUserId)
@@ -946,7 +949,7 @@ namespace SEModAPIInternal.API.Common
 
 	    public bool IsUserPromoted( ulong remoteUserId )
 	    {
-	        return MySession.Static.PromotedUsers.Contains( remoteUserId );
+	        return MySession.Static.IsUserPromoted( remoteUserId );
 	    }
 
 		#endregion

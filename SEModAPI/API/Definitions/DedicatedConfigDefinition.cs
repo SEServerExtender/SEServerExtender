@@ -1393,7 +1393,7 @@ namespace SEModAPI.API.Definitions
         [ReadOnly( false )]
         [Description( "Enables or disables Block Destruction" )]
         [Category( "World Settings" )]
-        [DisplayName( "Enable 3rd Person View" )]
+        [DisplayName( "Enable Block Destruction" )]
         [DefaultValue( true )]
         public bool EnableBlockDestruction
         {
