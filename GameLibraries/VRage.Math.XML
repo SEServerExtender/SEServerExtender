@@ -2858,11 +2858,6 @@
             Defines a matrix.
             </summary>
         </member>
-        <member name="F:VRageMath.MatrixD.M">
-            <summary>
-            Matrix values
-            </summary>
-        </member>
         <member name="F:VRageMath.MatrixD.M11">
             <summary>
             Value at row 1 column 1 of the matrix.
@@ -5236,6 +5231,21 @@
         <member name="T:VRageMath.CubeFace">
             Face in a cube.
         </member>
+        <member name="T:VRageMath.Vector3I_RangeIterator">
+            <summary>
+            A class for simpler traversal of ranges of integer vectors
+            </summary>
+        </member>
+        <member name="F:VRageMath.Vector3I_RangeIterator.Current">
+            <summary>
+            Do not modify, public only for optimization!
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector3I_RangeIterator.#ctor(VRageMath.Vector3I@,VRageMath.Vector3I@)">
+            <summary>
+            Note: both start and end are inclusive
+            </summary>
+        </member>
         <member name="M:VRageMath.Vector3I.RectangularDistance(VRageMath.Vector3I)">
             <summary>
             Calculates rectangular distance.
@@ -5301,21 +5311,6 @@
             How many cubes are in block with this size
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:VRageMath.Vector3I.RangeIterator">
-            <summary>
-            A class for simpler traversal of ranges of integer vectors
-            </summary>
-        </member>
-        <member name="F:VRageMath.Vector3I.RangeIterator.Current">
-            <summary>
-            Do not modify, public only for optimization!
-            </summary>
-        </member>
-        <member name="M:VRageMath.Vector3I.RangeIterator.#ctor(VRageMath.Vector3I@,VRageMath.Vector3I@)">
-            <summary>
-            Note: both start and end are inclusive
-            </summary>
         </member>
         <member name="T:VRageMath.Curve">
             <summary>
@@ -6400,9 +6395,6 @@
             Multiplies a matrix by another matrix.
             </summary>
             <param name="matrix1">Source matrix.</param><param name="matrix2">Source matrix.</param>
-        </member>
-        <member name="M:VRageMath.Matrix.D3DXMatrixMultiply_(VRageMath.Matrix*,VRageMath.Matrix*,VRageMath.Matrix*)">
-            <summary>Native Interop Function</summary>
         </member>
         <member name="M:VRageMath.Matrix.Multiply(VRageMath.Matrix@,VRageMath.Matrix@,VRageMath.Matrix@)">
             <summary>
@@ -8614,9 +8606,6 @@
             Transforms a Vector3 by the given Matrix.
             </summary>
             <param name="position">The source Vector3.</param><param name="matrix">The transformation Matrix.</param><param name="result">[OutAttribute] The transformed vector.</param>
-        </member>
-        <member name="M:VRageMath.Vector3.D3DXVec3TransformCoord_(VRageMath.Vector3*,VRageMath.Vector3*,VRageMath.Matrix*)">
-            <summary>Native Interop Function</summary>
         </member>
         <member name="M:VRageMath.Vector3.TransformNormal(VRageMath.Vector3,VRageMath.Matrix)">
             <summary>

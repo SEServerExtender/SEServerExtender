@@ -1115,32 +1115,6 @@
             Note that this method may allocate if the size of encoded string exceeds size of prepared buffer.
             </summary>
         </member>
-        <member name="M:System.Text.StringBuilderExtensions.CompareUpdate(System.Text.StringBuilder,System.String)">
-            <summary>
-            Compares string builder with text,
-            when it's different, Clears string builder and Appends text.
-            Returns true when original string builder was modified.
-            </summary>
-        </member>
-        <member name="M:System.Text.StringBuilderExtensions.CompareUpdate(System.Text.StringBuilder,System.Text.StringBuilder)">
-            <summary>
-            Compares string builder with text,
-            when it's different, Clears string builder and Appends text.
-            Returns true when original string builder was modified.
-            </summary>
-        </member>
-        <member name="M:System.Text.StringBuilderExtensions.TrimEnd(System.Text.StringBuilder,System.Int32)">
-            <summary>
-            Removes the specified number of characters from the end.
-            </summary>
-            <param name="sb">The sb.</param>
-            <param name="length">The length.</param>
-        </member>
-        <member name="M:System.Text.StringBuilderExtensions.TrimTrailingWhitespace(System.Text.StringBuilder)">
-            <summary>
-            Removes whitespace from the end.
-            </summary>
-        </member>
         <member name="M:VRage.FileSystem.IFileProvider.Open(System.String,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)">
             <summary>
             Opens file, returns null when file does not exists
@@ -1374,6 +1348,32 @@
             <param name="conditions">The conditional expression to test.</param>
             <param name="args">Exception arguments.</param>
         </member>
+        <member name="M:System.Text.StringBuilderExtensions_2.CompareUpdate(System.Text.StringBuilder,System.String)">
+            <summary>
+            Compares string builder with text,
+            when it's different, Clears string builder and Appends text.
+            Returns true when original string builder was modified.
+            </summary>
+        </member>
+        <member name="M:System.Text.StringBuilderExtensions_2.CompareUpdate(System.Text.StringBuilder,System.Text.StringBuilder)">
+            <summary>
+            Compares string builder with text,
+            when it's different, Clears string builder and Appends text.
+            Returns true when original string builder was modified.
+            </summary>
+        </member>
+        <member name="M:System.Text.StringBuilderExtensions_2.TrimEnd(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Removes the specified number of characters from the end.
+            </summary>
+            <param name="sb">The sb.</param>
+            <param name="length">The length.</param>
+        </member>
+        <member name="M:System.Text.StringBuilderExtensions_2.TrimTrailingWhitespace(System.Text.StringBuilder)">
+            <summary>
+            Removes whitespace from the end.
+            </summary>
+        </member>
         <member name="M:VRage.MemberHelper`1.GetMember``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
             <summary>
              Gets the memberinfo of field/property on instance class.
@@ -1556,8 +1556,8 @@
             <summary>
             A thread safe hashtable.
             </summary>
-            <typeparam name="Key">The type of item to use as keys.</typeparam>
-            <typeparam name="Data">The type of data stored.</typeparam>
+            <typeparam name="TKey">The type of item to use as keys.</typeparam>
+            <typeparam name="TData">The type of data stored.</typeparam>
         </member>
         <member name="M:ParallelTasks.Hashtable`2.#ctor(System.Int32)">
             <summary>
@@ -2062,7 +2062,7 @@
             Clears current frame.
             </summary>
         </member>
-        <member name="M:VRage.Profiler.MyProfiler.MyProfilerBlock.Clear">
+        <member name="M:VRage.Profiler.MyProfilerBlock.Clear">
             <summary>
             Clears immediate data
             </summary>

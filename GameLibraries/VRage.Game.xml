@@ -3428,6 +3428,16 @@
             Hold to look around
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ControlName_ToggleSignalsMode">
+            <summary>
+            Toggle signal mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_ToggleSignalsMode_Tooltip">
+            <summary>
+            Toggles signals between fading mode and always visible mode.
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ControlName_HoldToSprint">
             <summary>
             Hold to sprint
