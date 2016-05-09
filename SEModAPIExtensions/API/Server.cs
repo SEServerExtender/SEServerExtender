@@ -610,10 +610,10 @@ namespace SEModAPIExtensions.API
 		public void StopServer( )
 		{
 			ApplicationLog.BaseLog.Info( "Stopping server" );
-			//MySandboxGame.Static.Exit(  );
+			MySandboxGame.Static.Exit(  );
 
-		    SandboxGameAssemblyWrapper.Instance.GameAction( () => MySandboxGame.Static.Exit() );
-            Thread.Sleep( 5000 );
+		    //SandboxGameAssemblyWrapper.Instance.GameAction( () => MySandboxGame.Static.Exit() );
+            //Thread.Sleep( 30000 );
 
 			_pluginMainLoop.Stop( );
 			_autosaveTimer.Stop( );

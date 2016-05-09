@@ -4,10 +4,17 @@
         "HavokWrapper"
     </assembly>
     <members>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
+        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
+Updates Ragdoll rigid bodies after the change of the world Matrix
+</member>
+        <member name="T:Havok.HkRigidBodyNamePredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
+</member>
+        <member name="T:Havok.HkRigidBodyPredicate">
+This class is used as predicate to do searches within HkRigidBody lists..
 </member>
         <member name="M:hkpSmartListShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
@@ -192,6 +199,9 @@ rigid bodies (including the bodies of hkpCharacterRigidBodies).
         <member name="F:Havok.EventType.TriggerBodyLeftEvent">
 Fired for any overlapping body when the trigger body leaves the world or is deleted.
 </member>
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
         <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
             <summary>
 Gets geometry
@@ -222,6 +232,11 @@ Input value is rounded down to a multiple of 8. Values between 8 and 128 are acc
 Gets shape keys, for debug purposes, allocates!
 </summary>
         </member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
+</member>
         <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
 This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
 
@@ -304,20 +319,8 @@ Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame.
 NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
 
 </member>
-        <member name="M:Havok.HkRagdoll.UpdateLocalTransforms">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="M:Havok.HkRagdoll.SetTransforms(System.Boolean)">
-Updates Ragdoll rigid bodies after the change of the world Matrix
-</member>
-        <member name="T:Havok.HkRigidBodyNamePredicate">
-This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="T:Havok.HkRigidBodyPredicate">
-This class is used as predicate to do searches within HkRigidBody lists..
-</member>
-        <member name="M:hkpUniformGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
+        <member name="F:Havok.HkdWorld.m_havokWorld">
+Our world
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyControllerOperation(hkdBreakableBody*)">
 Called after the breakable body's controller world operation has executed
@@ -1190,8 +1193,5 @@ It doesn't matter whether managed references are release first or not.
 Managed references are released by calling Dispose().
 </summary>
         </member>
-        <member name="F:Havok.HkdWorld.m_havokWorld">
-Our world
-</member>
     </members>
 </doc>

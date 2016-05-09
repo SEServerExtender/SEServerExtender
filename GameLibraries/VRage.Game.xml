@@ -1095,6 +1095,11 @@
             Minimum coordinates of blocks in grid
             </summary>
         </member>
+        <member name="T:VRage.Game.ModAPI.MyIntegrityChangeEnum">
+            <summary>
+            Types of block integrity change that can occur
+            </summary>
+        </member>
         <member name="T:VRage.Game.ModAPI.BeforeDamageApplied">
             <summary>
             This delegate is used to handle damage before it's applied to an object.  This returns a modified damage that is used in DoDamage.  Return damage if no change.
@@ -1305,6 +1310,86 @@
         <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.Mass">
             <summary>
             Block mass
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.DecreaseMountLevel(System.Single,VRage.Game.ModAPI.IMyInventory,System.Boolean)">
+            ---
+            <summary>
+            Decreases the build level of a block
+            </summary>
+            <param name="grinderAmount">The integrity amount of change</param>
+            <param name="outputInventory">The inventory where output components will be sent to</param>
+            <param name="useDefaultDeconstructEfficiency"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.IncreaseMountLevel(System.Single,System.Int64,VRage.Game.ModAPI.IMyInventory,System.Single,System.Boolean,VRage.Game.MyOwnershipShareModeEnum)">
+            <summary>
+            Increases the build level of a block
+            </summary>
+            <param name="welderMountAmount">The integrity amount of change</param>
+            <param name="welderOwnerPlayerId">The player id of the entity increasing the mount level</param>
+            <param name="outputInventory">The inventory where components are taken from</param>
+            <param name="maxAllowedBoneMovement">Maximum movement of bones</param>
+            <param name="isHelping">Is this increase helping another player</param>
+            <param name="share">ShareMode used when block becomes functional</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.GetConstructionStockpileItemAmount(VRage.Game.MyDefinitionId)">
+            <summary>
+            Get the amount of items in the construction stockpile
+            </summary>
+            <param name="id">Definition of component in stockpile to check</param>
+            <returns>Amount of components in the stockpile of this type</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.MoveItemsToConstructionStockpile(VRage.Game.ModAPI.IMyInventory)">
+            <summary>
+            Move items missing from an inventory into the construction stockpile
+            </summary>
+            <param name="fromInventory">The inventory where the components are being taken from</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.ClearConstructionStockpile(VRage.Game.ModAPI.IMyInventory)">
+            <summary>
+            Clears out the construction stockpile and moves the components into a destination inventory
+            </summary>
+            <param name="outputInventory">The inventory where the components are moved into</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.PlayConstructionSound(VRage.Game.ModAPI.MyIntegrityChangeEnum,System.Boolean)">
+            <summary>
+            Play the construction sound associated with the integrity change
+            </summary>
+            <param name="integrityChangeType">Type of integrity change</param>
+            <param name="deconstruction">Is this deconstruction?</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.CanContinueBuild(VRage.Game.ModAPI.IMyInventory)">
+            <summary>
+            Can we continue to weld this block?
+            </summary>
+            <param name="sourceInventory">Source inventory that is used for components</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.GetWorldBoundingBox(VRageMath.BoundingBoxD@,System.Boolean)">
+            <summary>
+            The AABB of this block
+            </summary>
+            <param name="aabb"></param>
+            <param name="useAABBFromBlockCubes"></param>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.BlockDefinition">
+            <summary>
+            The blocks definition
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.Max">
+            <summary>
+            Largest part of block
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.Orientation">
+            <summary>
+            Blocks orientation
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.Neighbours">
+            <summary>
+            The blocks that neighbour this block
             </summary>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,VRage.Game.MyFontEnum)">
@@ -4139,6 +4224,11 @@
             You have been kicked from the game by its owner.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.NotificationPasteFailed">
+            <summary>
+            Paste operation failed, selected area is occupied.
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.WorldSettings_OnlineModeFriends">
             <summary>
             Friends
@@ -6188,6 +6278,26 @@
         <member name="F:MyCommonTexts.ToolTipWorkshopCopyWorld">
             <summary>
             Download selected world to save games without loading it (Use to Edit Settings before playing world)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SignalMode_Switch_DefaultMode">
+            <summary>
+            Signals switched to normal display.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SignalMode_Switch_FullDisplay">
+            <summary>
+            Signals switched to fully visible.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SignalMode_Switch_NoNames">
+            <summary>
+            Signals switched to no names.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SignalMode_Switch_Off">
+            <summary>
+            Signals switched off.
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
