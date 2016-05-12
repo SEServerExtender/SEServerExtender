@@ -181,6 +181,7 @@ namespace SEModAPIInternal.API.Server
 
 				//Initialize config
 				SpaceEngineersGame.SetupPerGameSettings();
+			    SpaceEngineersGame.SetupBasicGameInfo();
 				MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
 				MyPerServerSettings.GameName = MyPerGameSettings.GameName;
 				MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
