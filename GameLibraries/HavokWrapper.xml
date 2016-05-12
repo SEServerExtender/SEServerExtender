@@ -16,9 +16,6 @@ This class is used as predicate to do searches within HkRigidBody lists..
         <member name="T:Havok.HkRigidBodyPredicate">
 This class is used as predicate to do searches within HkRigidBody lists..
 </member>
-        <member name="M:hkpSmartListShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
 </member>
@@ -128,6 +125,52 @@ If set to false, a random shape will be chosen for splitting on each recursion l
         <member name="P:Havok.HkdDecomposeFracture.ShiftToSmallerCrossSection">
 The actual position of the split can be shifted towards (or away from) the physics object (out of the two "connected" parts) with the smaller cross-section. See the user guide for more details on this.
 </member>
+        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
+Call this to update the triggerVolume outside the physics step.
+triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
+You may want to re-collide the entities before calling this.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
+Character proxies process their own collisions, so they call this method to inform
+the trigger volume that they touched it during the frame.
+</member>
+        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
+Subclasses should implement this function to be informed of events involving
+rigid bodies (including the bodies of hkpCharacterRigidBodies).
+</member>
+        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
+Fired for any overlapping body when the trigger body leaves the world or is deleted.
+</member>
+        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
+            <summary>
+Gets geometry
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
+            <summary>
+Gets faces
+</summary>
+        </member>
+        <member name="P:Havok.HkConvexVerticesShape.Center">
+            <summary>
+Gets center
+</summary>
+        </member>
+        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
+            <summary>
+Gets vertices
+</summary>
+        </member>
+        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
+            <summary>
+Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
+</summary>
+        </member>
+        <member name="P:Havok.HkListShape.DebugShapeKeys">
+            <summary>
+Gets shape keys, for debug purposes, allocates!
+</summary>
+        </member>
         <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Sets the color properties of the material
 </member>
@@ -165,76 +208,6 @@ Returns a vertex buffer format that is compatible with this material
         <member name="T:Havok.hkdMeshMaterial">
 
 !! IMPORTANT : Use only its id as identifier to our material !!
-
-</member>
-        <member name="P:Havok.HkdFracture.FlattenHierarchy">
-Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
-</member>
-        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
-This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
-It is used to prevent infinite recursion.
-</member>
-        <member name="T:Havok.HkdFracture.RefitPhysicsType">
-Defines how the physics for the broken shapes should be calculated
-</member>
-        <member name="T:Havok.HkdFracture.Type">
-The algorithm type
-</member>
-        <member name="M:hkpGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
-Call this to update the triggerVolume outside the physics step.
-triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
-You may want to re-collide the entities before calling this.
-</member>
-        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpCharacterProxy*,hkpTriggerVolume.EventType)">
-Character proxies process their own collisions, so they call this method to inform
-the trigger volume that they touched it during the frame.
-</member>
-        <member name="M:HkTriggerVolumeNative.triggerEventCallback(hkpRigidBody*,hkpTriggerVolume.EventType)">
-Subclasses should implement this function to be informed of events involving
-rigid bodies (including the bodies of hkpCharacterRigidBodies).
-</member>
-        <member name="F:Havok.EventType.TriggerBodyLeftEvent">
-Fired for any overlapping body when the trigger body leaves the world or is deleted.
-</member>
-        <member name="M:hkpUniformGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:Havok.HkConvexVerticesShape.GetGeometry(Havok.HkGeometry,VRageMath.Vector3@)">
-            <summary>
-Gets geometry
-</summary>
-        </member>
-        <member name="M:Havok.HkConvexVerticesShape.GetFaces(System.Collections.Generic.List`1{System.Int32},System.Collections.Generic.List`1{System.Byte})">
-            <summary>
-Gets faces
-</summary>
-        </member>
-        <member name="P:Havok.HkConvexVerticesShape.Center">
-            <summary>
-Gets center
-</summary>
-        </member>
-        <member name="M:Havok.HkConvexVerticesShape.GetVertices(System.Collections.Generic.List`1{VRageMath.Vector3})">
-            <summary>
-Gets vertices
-</summary>
-        </member>
-        <member name="M:Havok.HkCylinderShape.SetNumberOfVirtualSideSegments(System.Int32)">
-            <summary>
-Input value is rounded down to a multiple of 8. Values between 8 and 128 are accepted.
-</summary>
-        </member>
-        <member name="P:Havok.HkListShape.DebugShapeKeys">
-            <summary>
-Gets shape keys, for debug purposes, allocates!
-</summary>
-        </member>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
 
 </member>
         <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
@@ -319,8 +292,32 @@ Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame.
 NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
 
 </member>
-        <member name="F:Havok.HkdWorld.m_havokWorld">
-Our world
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:hkpGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:hkpSmartListShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="P:Havok.HkdFracture.FlattenHierarchy">
+Only return leaf shapes. The entire fracture hierarchy will be flattened into a flat list of children
+</member>
+        <member name="F:Havok.HkdFracture.MaxNumberOfChildNodes">
+This is the hard limit on the number of child nodes to create in a breakable shape hierarchy.
+It is used to prevent infinite recursion.
+</member>
+        <member name="T:Havok.HkdFracture.RefitPhysicsType">
+Defines how the physics for the broken shapes should be calculated
+</member>
+        <member name="T:Havok.HkdFracture.Type">
+The algorithm type
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyControllerOperation(hkdBreakableBody*)">
 Called after the breakable body's controller world operation has executed
@@ -1193,5 +1190,8 @@ It doesn't matter whether managed references are release first or not.
 Managed references are released by calling Dispose().
 </summary>
         </member>
+        <member name="F:Havok.HkdWorld.m_havokWorld">
+Our world
+</member>
     </members>
 </doc>

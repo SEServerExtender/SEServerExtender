@@ -1547,13 +1547,6 @@
             Gets an array containing any exceptions thrown by this future.
             </summary>
         </member>
-        <member name="T:ParallelTasks.Hashtable`2">
-            <summary>
-            A thread safe hashtable.
-            </summary>
-            <typeparam name="TKey">The type of item to use as keys.</typeparam>
-            <typeparam name="TData">The type of data stored.</typeparam>
-        </member>
         <member name="M:ParallelTasks.Hashtable`2.#ctor(System.Int32)">
             <summary>
             Initializes a new instance of the <see cref="T:ParallelTasks.Hashtable`2"/> class.

@@ -58,26 +58,7 @@
             Indicates whether a session component should be used in current configuration.
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
-        </member>
-        <member name="T:VRage.Game.SessionComponents.MySessionComponentExtDebug">
-            <summary>
-            Communication between game and editor.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.StartServer">
-            <summary>
-            Start using this component as server (game side).
-            </summary>
-        </member>
-        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.StopServer">
-            <summary>
-            Stop the server on the game side. Called automatically.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.ServerListenerProc">
-            <summary>
-            Parallel thread - listener.
-            </summary>
+            TODO: Make obsolete
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
             <summary>
@@ -133,6 +114,26 @@
             <summary>
             Use this property when showing description in GUI, as it takes into account more
             complex description construction.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.SessionComponents.MySessionComponentExtDebug">
+            <summary>
+            Communication between game and editor.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.StartServer">
+            <summary>
+            Start using this component as server (game side).
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.StopServer">
+            <summary>
+            Stop the server on the game side. Called automatically.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentExtDebug.ServerListenerProc">
+            <summary>
+            Parallel thread - listener.
             </summary>
         </member>
         <member name="M:VRage.Game.MyDefinitionSet.AddDefinition(VRage.Game.MyDefinitionBase)">
@@ -480,6 +481,7 @@
             Trigger animation event in the new animation system.
             If there is a transition leading from current animation state having same name as this event, 
             animation state machine will change state accordingly.
+            If not, nothing happens.
             </summary>
             <param name="eventName">Event name.</param>
             <param name="sync">Synchronize over network</param>
@@ -6298,6 +6300,16 @@
         <member name="F:MyCommonTexts.SignalMode_Switch_Off">
             <summary>
             Signals switched off.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Notification_CannotManipulateDoor">
+            <summary>
+            Cannot open or close the door. Check for blocking objects!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AudioSettings_UseMusicController">
+            <summary>
+            Use contextual music
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
