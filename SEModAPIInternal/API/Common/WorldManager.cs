@@ -31,7 +31,7 @@ namespace SEModAPIInternal.API.Common
 		public static string WorldManagerGetSessionNameMethod = "get_Name";
 
 		public static string WorldManagerInstanceField = "<Static>k__BackingField";
-		public static string WorldManagerFactionManagerField = "Factions";
+		//public static string WorldManagerFactionManagerField = "Factions";
 		public static string WorldManagerSessionSettingsField = "Settings";
 
 		public static string WorldManagerSaveSnapshot = "Save";
@@ -189,7 +189,7 @@ namespace SEModAPIInternal.API.Common
 				result &= Reflection.HasMethod( type1, WorldManagerGetSectorMethod );
 				result &= Reflection.HasMethod( type1, WorldManagerGetSessionNameMethod );
 				result &= Reflection.HasField( type1, WorldManagerInstanceField );
-				result &= Reflection.HasField( type1, WorldManagerFactionManagerField );
+				//result &= Reflection.HasField( type1, WorldManagerFactionManagerField );
 				result &= Reflection.HasField( type1, WorldManagerSessionSettingsField );
 
 				Type type2 = SandboxGameAssemblyWrapper.Instance.GetAssemblyType( WorldResourceManagerNamespace, WorldResourceManagerClass );
@@ -408,6 +408,7 @@ namespace SEModAPIInternal.API.Common
 
 		// Internals //
 
+            /*
 		internal MyFactionCollection InternalGetFactionManager( )
 		{
 			try
@@ -420,7 +421,7 @@ namespace SEModAPIInternal.API.Common
 				return null;
 			}
 		}
-
+        */
 		internal Object InternalGetPlayerManager( )
 		{
 			Object playerManager = BaseObject.InvokeEntityMethod( BackingObject, WorldManagerGetPlayerManagerMethod );

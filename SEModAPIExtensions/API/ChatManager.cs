@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Sandbox.Game.Multiplayer;
+using Sandbox.Game.World;
 using VRage.Game;
 using VRage.Network;
 
@@ -951,19 +953,20 @@ namespace SEModAPIExtensions.API
 				SendPrivateChatMessage(remoteUserId, "Deleted " + playersRemovedCount.ToString() + " player entries");
 			}
 			*/
+
 			//Prunes defunct faction entries in the faction data
 			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "faction" ) )
 			{
-				List<Faction> factionsToRemove = new List<Faction>( );
+				List<MyFaction> factionsToRemove = new List<MyFaction>( );
 				if ( commandParts[ 2 ].ToLower( ).Equals( "empty" ) )
 				{
-					factionsToRemove.AddRange( FactionsManager.Instance.Factions.Where( entry => entry.Members.Count == 0 ) );
+                    factionsToRemove.AddRange( MySession.Static.Factions.Select( x => x.Value ).Where( v => !v.Members.Any() ) );
 				}
 				if ( commandParts[ 2 ].ToLower( ).Equals( "nofounder" ) )
 				{
-					foreach ( var entry in FactionsManager.Instance.Factions )
+					foreach ( var entry in MySession.Static.Factions.Select( x => x.Value ) )
 					{
-						bool founderMatch = entry.Members.Any( member => member.IsFounder );
+					    bool founderMatch = entry.Members.Any( m => m.Value.IsFounder );
 
 						if ( !founderMatch )
 							factionsToRemove.Add( entry );
@@ -971,9 +974,9 @@ namespace SEModAPIExtensions.API
 				}
 				if ( commandParts[ 2 ].ToLower( ).Equals( "noleader" ) )
 				{
-					foreach ( var entry in FactionsManager.Instance.Factions )
+                    foreach (var entry in MySession.Static.Factions.Select(x => x.Value))
 					{
-						bool founderMatch = entry.Members.Any( member => member.IsFounder || member.IsLeader );
+						bool founderMatch = entry.Members.Any( member => member.Value.IsFounder || member.Value.IsLeader );
 
 						if ( !founderMatch )
 							factionsToRemove.Add( entry );
@@ -982,7 +985,7 @@ namespace SEModAPIExtensions.API
 
 				foreach ( var entry in factionsToRemove )
 				{
-					FactionsManager.Instance.RemoveFaction( entry.Id );
+                    MyFactionCollection.RemoveFaction( entry.FactionId );
 				}
 
 				SendPrivateChatMessage( remoteUserId, string.Format( "Deleted {0} factions", factionsToRemove.Count ) );

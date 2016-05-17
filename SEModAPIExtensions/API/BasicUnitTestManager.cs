@@ -99,6 +99,7 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn( "RadioManagerNetworkManager reflection validation failed!" );
 			}
 
+            /*
 			if (!FactionsManager.ReflectionUnitTest())
 			{
 				result = false;
@@ -110,6 +111,7 @@ namespace SEModAPIExtensions.API
 				result = false;
 				BaseLog.Warn( "Faction reflection validation failed!" );
 			}
+            */
 
 			if (!GameEntityManager.ReflectionUnitTest())
 			{

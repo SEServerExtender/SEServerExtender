@@ -1229,7 +1229,7 @@ namespace SEServerExtender
 			{
 				if ( selectedNode == parentNode.Nodes[ 0 ] )
 				{
-					//BTN_Entities_New.Enabled = true;
+					BTN_Entities_New.Enabled = true;
 				}
 			}
 
@@ -1248,7 +1248,7 @@ namespace SEServerExtender
             var grid = linkedObject as MyCubeGrid;
 		    if (grid != null)
 		    {
-		        //BTN_Entities_Export.Enabled = true;
+		        BTN_Entities_Export.Enabled = true;
 		        btnRepairEntity.Enabled = true;
 		        BTN_Entities_Delete.Enabled = true;
 
@@ -1259,51 +1259,12 @@ namespace SEServerExtender
 		        TRV_Entities.EndUpdate();
 		        return;
 		    }
-
-            /*maybe one day...
+            
 		    var map = linkedObject as MyVoxelBase;
 			if ( map != null )
 			{
-				List<MyVoxelMaterialDefinition> materialDefs = new List<MyVoxelMaterialDefinition>( MyDefinitionManager.Static.GetVoxelMaterialDefinitions( ) );
-
-				ThreadPool.QueueUserWorkItem( state =>
-											 {
-												 Dictionary<MyVoxelMaterialDefinition, float> totalMaterials = voxelMap.Materials;
-
-												 Invoke( new Action( ( ) =>
-																		{
-																			TRV_Entities.BeginUpdate( );
-																			if ( e.Node.Nodes.Count < materialDefs.Count )
-																			{
-																				e.Node.Nodes.Clear( );
-
-																				foreach ( MyVoxelMaterialDefinition material in materialDefs )
-																				{
-																					TreeNode newNode = e.Node.Nodes.Add( material.Id.SubtypeName );
-																					newNode.Name = newNode.Text;
-																					newNode.Tag = material;
-																				}
-																			}
-
-																			foreach ( TreeNode node in e.Node.Nodes )
-																			{
-																				Object tag = node.Tag;
-																				if ( !( tag is MyVoxelMaterialDefinition ) )
-																					continue;
-																				MyVoxelMaterialDefinition material = (MyVoxelMaterialDefinition)tag;
-																				float total;
-																				if ( totalMaterials.TryGetValue( material, out total ) )
-																				{
-																					node.Text = string.Format( "{0} ({1})", node.Name, total );
-																				}
-																			}
-
-																			TRV_Entities.EndUpdate( );
-																		} ) );
-											 } );
-
-			}
-            */
+                BTN_Entities_Delete.Enabled = true;
+            }
 
 			var character = linkedObject as MyCharacter;
 			if ( character != null )
@@ -1326,6 +1287,18 @@ namespace SEServerExtender
             if (block != null)
             {
                 btnRepairEntity.Enabled = true;
+                BTN_Entities_Delete.Enabled = true;
+            }
+
+		    var floating = linkedObject as MyFloatingObject;
+		    if ( floating != null )
+		    {
+		        BTN_Entities_Delete.Enabled = true;
+		    }
+
+		    var pack = linkedObject as MyInventoryBagEntity;
+            if(pack!=null)
+            {
                 BTN_Entities_Delete.Enabled = true;
             }
 
@@ -1471,10 +1444,7 @@ namespace SEServerExtender
 			{
 				TreeNode selectedNode = TRV_Entities.SelectedNode;
 
-				if ( selectedNode == null )
-					return;
-
-				TreeNode parentNode = selectedNode.Parent;
+			    TreeNode parentNode = selectedNode?.Parent;
 
 				if ( parentNode == null )
 					return;
@@ -1501,8 +1471,7 @@ namespace SEServerExtender
                     TreeViewEventArgs newEvent = new TreeViewEventArgs(selectedNode);
                     TRV_Entities_AfterSelect(sender, newEvent);
                 }
-
-                /*
+                
 				SectorObjectManager sectorObjectManager = parentNode.Tag as SectorObjectManager;
 				if ( sectorObjectManager != null )
 				{
@@ -1513,6 +1482,7 @@ namespace SEServerExtender
 					}
 				}
 
+                /*
 				CubeGridEntity cubeGridEntity = parentNode.Tag as CubeGridEntity;
 				if ( cubeGridEntity != null )
 				{
@@ -1520,44 +1490,7 @@ namespace SEServerExtender
 					dialog.ShowDialog( this );
 					return;
 				}
-
-				if ( selectedNode.Tag == null )
-					return;
-
-				if ( !( selectedNode.Tag is BaseObject ) )
-					return;
-
-				BaseObject linkedObject = (BaseObject)selectedNode.Tag;
-
-				InventoryEntity inventoryEntity = linkedObject as InventoryEntity;
-				if ( inventoryEntity != null )
-				{
-					InventoryItemDialog newItemDialog = new InventoryItemDialog { InventoryContainer = inventoryEntity };
-					newItemDialog.ShowDialog( this );
-
-					TreeViewEventArgs newEvent = new TreeViewEventArgs( selectedNode );
-					TRV_Entities_AfterSelect( sender, newEvent );
-
-					return;
-				}
-
-				InventoryItemEntity inventoryItemEntity = linkedObject as InventoryItemEntity;
-				if ( inventoryItemEntity != null )
-				{
-					InventoryItemDialog newItemDialog = new InventoryItemDialog { InventoryContainer = inventoryItemEntity.Container };
-					newItemDialog.ShowDialog( this );
-
-					TreeViewEventArgs newEvent = new TreeViewEventArgs( parentNode );
-					TRV_Entities_AfterSelect( sender, newEvent );
-
-					return;
-				}
-
-				if ( linkedObject is CubeGridEntity )
-				{
-					CreateCubeGridImportDialog( );
-					return;
-				}*/
+                */
 			}
 			catch ( Exception ex )
 			{
@@ -1569,18 +1502,10 @@ namespace SEServerExtender
 		{
 			try
 			{
-				if ( TRV_Entities.SelectedNode == null )
-					return;
-				Object linkedObject = TRV_Entities.SelectedNode.Tag;
-				
-				if ( linkedObject == null )
-					return;
-				ApplicationLog.BaseLog.Trace( "Object Type: {0}", linkedObject.GetType( ).Name );
-				if ( !( linkedObject is BaseObject ) )
-					return;
-
-				BaseObject objectToExport = (BaseObject)linkedObject;
-
+                MyCubeGrid exportGrid = (TRV_Entities.SelectedNode?.Tag as MyCubeGrid);
+			    if ( exportGrid == null )
+			        return;
+                
 				SaveFileDialog saveFileDialog = new SaveFileDialog { Filter = "sbc file (*.sbc)|*.sbc|All files (*.*)|*.*", InitialDirectory = GameInstallationInfo.GamePath };
 
 				if ( saveFileDialog.ShowDialog( ) == DialogResult.OK )
@@ -1588,8 +1513,7 @@ namespace SEServerExtender
 					FileInfo fileInfo = new FileInfo( saveFileDialog.FileName );
 					try
 					{
-						MyObjectBuilderSerializer.SerializeXML( fileInfo.FullName, false, ( (IMyEntity) objectToExport.BackingObject ).GetObjectBuilder( ) );
-						objectToExport.Export( fileInfo );
+						MyObjectBuilderSerializer.SerializeXML( fileInfo.FullName, false, exportGrid.GetObjectBuilder( ) );
 					}
 					catch ( Exception ex )
 					{
@@ -1629,9 +1553,15 @@ namespace SEServerExtender
 					{
 						try
 						{
-							CubeGridEntity cubeGrid = new CubeGridEntity( fileInfo );
+						    MyObjectBuilder_CubeGrid builder;
+						    if ( !MyObjectBuilderSerializer.DeserializeXML( fileInfo.FullName, out builder ) )
+						        return;
 
-							SectorObjectManager.Instance.AddEntity( cubeGrid );
+						    SandboxGameAssemblyWrapper.Instance.GameAction( () =>
+						    {
+						        MyEntities.RemapObjectBuilder( builder );
+						        MyEntities.CreateFromObjectBuilderAndAdd( builder );
+						    } );
 						}
 						catch ( Exception ex )
 						{
@@ -1820,8 +1750,10 @@ namespace SEServerExtender
 										membersNode.Nodes.Clear( );
 										foreach ( MyFactionMember member in item.Members.Select( m=>m.Value ) )
 										{
-											TreeNode memberNode = membersNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
-											memberNode.Name = member.PlayerId.ToString( );
+										    string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId( PlayerMap.Instance.GetSteamIdFromPlayerId( member.PlayerId ) );
+
+                                            TreeNode memberNode = membersNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
+											memberNode.Name = $"{memberName} {member.PlayerId}";
 											memberNode.Tag = member;
 										}
 									}
@@ -1829,9 +1761,11 @@ namespace SEServerExtender
 									{
 										joinRequestsNode.Nodes.Clear( );
 										foreach ( MyFactionMember member in item.JoinRequests.Select( j=>j.Value ) )
-										{
-											TreeNode joinRequestNode = joinRequestsNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
-											joinRequestNode.Name = member.PlayerId.ToString( );
+                                        {
+                                            string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId(PlayerMap.Instance.GetSteamIdFromPlayerId(member.PlayerId));
+
+                                            TreeNode joinRequestNode = joinRequestsNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
+											joinRequestNode.Name = $"{memberName} {member.PlayerId}";
 											joinRequestNode.Tag = member;
 										}
 									}
@@ -1872,15 +1806,19 @@ namespace SEServerExtender
 							TreeNode joinRequestsNode = newNode.Nodes.Add( "Join Requests" );
 
 							foreach ( MyFactionMember member in item.Members.Select( m => m.Value ) )
-							{
-								TreeNode memberNode = membersNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
-								memberNode.Name = member.PlayerId.ToString( );
+                            {
+                                string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId(PlayerMap.Instance.GetSteamIdFromPlayerId(member.PlayerId));
+
+                                TreeNode memberNode = membersNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
+								memberNode.Name = $"{memberName} {member.PlayerId}";
 								memberNode.Tag = member;
 							}
 							foreach ( MyFactionMember member in item.JoinRequests.Select( j => j.Value ) )
-							{
-								TreeNode memberNode = membersNode.Nodes.Add( member.PlayerId.ToString( ), member.PlayerId.ToString( ) );
-								memberNode.Name = member.PlayerId.ToString( );
+                            {
+                                string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId(PlayerMap.Instance.GetSteamIdFromPlayerId(member.PlayerId));
+
+                                TreeNode memberNode = joinRequestsNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
+								memberNode.Name = $"{memberName} {member.PlayerId}";
 								memberNode.Tag = member;
 							}
 						}
@@ -1937,9 +1875,20 @@ namespace SEServerExtender
 			if ( linkedObject is MyFactionMember )
 			{
 				MyFactionMember factionMember = (MyFactionMember) linkedObject;
-				MySession.Static.Factions.KickPlayerFromFaction( factionMember.PlayerId );
+				//MySession.Static.Factions.KickPlayerFromFaction( factionMember.PlayerId );
+                ((MyFaction)node.Parent.Parent.Tag).KickMember( factionMember.PlayerId );
 			}
-		}
+            
+            TreeNode parentNode = TRV_Factions.SelectedNode.Parent;
+            TRV_Factions.SelectedNode.Tag = null;
+            TreeNode newSelectedNode = (TRV_Factions.SelectedNode.NextVisibleNode ?? TRV_Factions.SelectedNode.PrevVisibleNode) ?? parentNode.FirstNode;
+
+            TRV_Factions.SelectedNode.Remove();
+            if (newSelectedNode != null)
+            {
+                TRV_Factions.SelectedNode = newSelectedNode;
+            }
+        }
 
 		#endregion
 

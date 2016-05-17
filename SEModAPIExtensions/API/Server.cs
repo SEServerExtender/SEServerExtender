@@ -49,7 +49,7 @@ namespace SEModAPIExtensions.API
 
 		//Managers
 		private PluginManager _pluginManager;
-		private FactionsManager _factionsManager;
+		//private FactionsManager _factionsManager;
 		private DedicatedServerAssemblyWrapper _dedicatedServerWrapper;
 		private LogManager _logManager;
 		private EntityEventManager _entityEventManager;
@@ -194,7 +194,7 @@ namespace SEModAPIExtensions.API
 		{
 			_dedicatedServerWrapper = DedicatedServerAssemblyWrapper.Instance;
 			_pluginManager = PluginManager.Instance;
-			_factionsManager = FactionsManager.Instance;
+			//_factionsManager = FactionsManager.Instance;
 			_entityEventManager = EntityEventManager.Instance;
 			_chatManager = ChatManager.Instance;
 			_sessionManager = SessionManager.Instance;
