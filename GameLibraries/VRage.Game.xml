@@ -1062,6 +1062,13 @@
             <param name="testMerge">test for grid merging</param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.WillRemoveBlockSplitGrid(VRage.Game.ModAPI.IMySlimBlock)">
+            <summary>
+            Checks if removing a block will cause the grid to split
+            </summary>
+            <param name="testBlock"></param>
+            <returns></returns>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeGrid.BigOwners">
             <summary>
             List of players with majority of blocks on grid
@@ -1566,6 +1573,34 @@
         <member name="T:VRage.Game.ModAPI.MyDamageInformation">
             <summary>
             This structure contains all information about damage being done.
+            </summary>
+        </member>
+        <member name="T:VRage.ModAPI.MyTerminalControlListBoxItem">
+            <summary>
+            This is a listbox item in a list box terminal control
+            </summary>
+        </member>
+        <member name="M:VRage.ModAPI.MyTerminalControlListBoxItem.#ctor(VRage.Utils.MyStringId,VRage.Utils.MyStringId,System.Object)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="text"></param>
+            <param name="tooltip"></param>
+            <param name="userData"></param>
+        </member>
+        <member name="P:VRage.ModAPI.MyTerminalControlListBoxItem.Text">
+            <summary>
+            The text that appears for the item
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.MyTerminalControlListBoxItem.Tooltip">
+            <summary>
+            The tooltip that is displayed when the item is hovered over
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.MyTerminalControlListBoxItem.UserData">
+            <summary>
+            User supplied data for the item
             </summary>
         </member>
         <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.RegisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
