@@ -10,7 +10,6 @@ namespace SEModAPIInternal.API.Common
 	using System.Linq;
 	using System.Reflection;
 	using Sandbox;
-	using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.Game.World;
 	using Sandbox.ModAPI;
@@ -926,19 +925,19 @@ namespace SEModAPIInternal.API.Common
 
 		public void KickPlayer(ulong steamId)
 		{
-            MyMultiplayer.Static.KickClient( steamId );
+            SandboxGameAssemblyWrapper.Instance.GameAction(()=>MyMultiplayer.Static.KickClient( steamId ));
 			//ServerNetworkManager.Instance.KickPlayer(steamId);
 		}
 
 		public void BanPlayer(ulong steamId)
 		{
-            MyMultiplayer.Static.BanClient( steamId, true );
+            SandboxGameAssemblyWrapper.Instance.GameAction(()=>MyMultiplayer.Static.BanClient( steamId, true ));
 			//ServerNetworkManager.Instance.SetPlayerBan(steamId, true);
 		}
 
 		public void UnBanPlayer(ulong steamId)
 		{
-            MyMultiplayer.Static.BanClient( steamId, false );
+            SandboxGameAssemblyWrapper.Instance.GameAction(()=>MyMultiplayer.Static.BanClient( steamId, false ));
 			//ServerNetworkManager.Instance.SetPlayerBan(steamId, false);
 		}
 

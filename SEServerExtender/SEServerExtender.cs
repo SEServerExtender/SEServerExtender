@@ -1692,7 +1692,8 @@ namespace SEServerExtender
 			if ( LST_Chat_ConnectedPlayers.SelectedItem != null )
 			{
 				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
-				ChatManager.Instance.SendPublicChatMessage( string.Format( "/kick {0}", item.SteamId ) );
+				//ChatManager.Instance.SendPublicChatMessage( string.Format( "/kick {0}", item.SteamId ) );
+                PlayerManager.Instance.KickPlayer( item.SteamId );
 			}
 		}
 
@@ -1701,7 +1702,8 @@ namespace SEServerExtender
 			if ( LST_Chat_ConnectedPlayers.SelectedItem != null )
 			{
 				ChatUserItem item = (ChatUserItem)LST_Chat_ConnectedPlayers.SelectedItem;
-				ChatManager.Instance.SendPublicChatMessage( string.Format( "/ban {0}", item.SteamId ) );
+                //ChatManager.Instance.SendPublicChatMessage( string.Format( "/ban {0}", item.SteamId ) );
+                PlayerManager.Instance.BanPlayer(item.SteamId );
 			}
 		}
 		#endregion
@@ -1848,13 +1850,14 @@ namespace SEServerExtender
 
 			object linkedObject = e.Node.Tag;
 
+		    if ( linkedObject is MyFactionMember )
+		        BTN_Factions_Delete.Text = "Kick";
+		    else
+		        BTN_Factions_Delete.Text = "Delete";
+            
 			BTN_Factions_Delete.Enabled = true;
 
 			PG_Factions.SelectedObject = linkedObject;
-
-			//DEBUG
-			if ( e.Node.Text.Equals( "Join Requests" ) )
-				BTN_Factions_Delete.Enabled = false;
 		}
 
 		private void BTN_Factions_Delete_Click( object sender, EventArgs e )
