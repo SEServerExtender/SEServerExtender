@@ -1223,6 +1223,11 @@
             Recreates the control GUI.  This allows you to update the Title of some controls.
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.UpdateVisual">
+            <summary>
+            This updates a control that is currently displayed, allowing you to refresh it's state
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.Id">
             <summary>
             Identifier of control
