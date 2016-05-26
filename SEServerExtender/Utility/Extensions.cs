@@ -22,27 +22,24 @@ namespace SEServerExtender.Utility
                 return;
 
             //do this in a new thread so we don't lock up the GUI
-            Task.Run( () =>
-            {
-                foreach ( MySlimBlock block in grid.CubeBlocks )
-                {
-                    if (!block.IsFullIntegrity || block.HasDeformation || block.MaxDeformation > 0.0001f)
-                        block.Repair();
-                }
-            } );
+            Parallel.ForEach( grid.CubeBlocks, ( block ) =>
+                                               {
+                                                   if ( !block.IsFullIntegrity || block.HasDeformation )
+                                                       block.Repair();
+                                               } );
         }
 
          public static void Repair( this MySlimBlock block )
          {
-             if ( block?.CubeGrid?.Physics != null && (!block.IsFullIntegrity || block.HasDeformation || block.MaxDeformation > 0.0001f) )
+             if ( block.CubeGrid?.Physics != null && (!block.IsFullIntegrity || block.HasDeformation ))
              {
 
                  SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-                 {
-                     block.IncreaseMountLevelToDesiredRatio( block.MaxIntegrity, 0 );
-                     block.IncreaseMountLevel( 100f, 0, null, 100f, true );
-                     //block.CubeGrid.ResetBlockSkeleton( block );
-                 } );
+                                                                 {
+                                                                     block.IncreaseMountLevelToDesiredRatio( block.MaxIntegrity, 0, null, 100f, true );
+                                                                     //block.IncreaseMountLevel( 100f, 0, null, 100f, true );
+                                                                     //block.CubeGrid.ResetBlockSkeleton( block );
+                                                                 } );
              }
          }
 

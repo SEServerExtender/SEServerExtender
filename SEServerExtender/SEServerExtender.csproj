@@ -136,7 +136,19 @@
     <Compile Include="CubeBlockDialog.Designer.cs">
       <DependentUpon>CubeBlockDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="EntityWrappers\BagInventoryWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\BatteryWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\CubeBlockWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\GyroWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\ShipToolWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\SlimBlockWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\FunctionalBlockWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\ThrustWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\TurretWrapper.cs" />
+    <Compile Include="EntityWrappers\CharacterWrapper.cs" />
     <Compile Include="EntityWrappers\CubeGridWrapper.cs" />
+    <Compile Include="EntityWrappers\FloatingObjectWrapper.cs" />
+    <Compile Include="EntityWrappers\InventoryItemWrapper.cs" />
     <Compile Include="InventoryItemDialog.cs">
       <SubType>Form</SubType>
     </Compile>

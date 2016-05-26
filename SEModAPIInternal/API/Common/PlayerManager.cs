@@ -221,6 +221,17 @@ namespace SEModAPIInternal.API.Common
 			}
 		}
 
+	    public string GetPlayerNameFromPlayerId(long playerId)
+	    {
+	        if (playerId == 0)
+	            return "nobody";
+
+	        var playerDictionary = InternalGetPlayerDictionary();
+	        if (!playerDictionary.ContainsKey(playerId))
+	            return null;
+	        return playerDictionary[playerId].Name;
+	    }
+
         public string GetPlayerNameFromSteamId(ulong steamId)
         {
 			if (steamId.ToString().StartsWith("9009"))
