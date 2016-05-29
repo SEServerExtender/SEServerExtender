@@ -91,6 +91,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>
     </Reference>
+    <Reference Include="SpaceEngineers.Game, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x64\Release\SpaceEngineers.Game.dll</HintPath>
+    </Reference>
     <Reference Include="SpaceEngineers.ObjectBuilders, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\SpaceEngineers.ObjectBuilders.dll</HintPath>
@@ -138,8 +142,10 @@
     </Compile>
     <Compile Include="EntityWrappers\BagInventoryWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\BatteryWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\ConnectorWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\CubeBlockWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\GyroWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\LandingGearWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\ShipToolWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\SlimBlockWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\FunctionalBlockWrapper.cs" />

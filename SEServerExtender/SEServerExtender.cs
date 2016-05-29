@@ -1081,7 +1081,12 @@ namespace SEServerExtender
             var results = new Dictionary<string, HashSet<MySlimBlock>>();
 
             //process the categories in parallel because there are 14 categories minimum
-		    Parallel.ForEach( categories, ( category ) => results.Add( category.Key, ProcessBlockCategories( cubeGrid, category ) ));
+		    Parallel.ForEach( categories, ( category ) =>
+		                                  {
+                                              var result =  ProcessBlockCategories(cubeGrid, category);
+		                                      lock(results)
+                                                  results.Add( category.Key, result );
+		                                  });
 
             foreach (var result in results)
 		    {

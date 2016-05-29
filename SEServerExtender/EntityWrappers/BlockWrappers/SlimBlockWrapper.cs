@@ -2,6 +2,7 @@
 using Sandbox.Game.Entities;
 using Sandbox.Game.Entities.Cube;
 using Sandbox.Game.Weapons;
+using SpaceEngineers.Game.Entities.Blocks;
 using VRageMath;
 
 namespace SEServerExtender.EntityWrappers.BlockWrappers
@@ -33,6 +34,10 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
                 return new BatteryWrapper(slimBlock);
             if (block is MyShipToolBase)
                 return new ShipToolWrapper(slimBlock);
+            if(block is MyLandingGear)
+                return new LandingGearWrapper( slimBlock );
+            if(block is MyShipConnector)
+                return new ConnectorWrapper( slimBlock );
 
             if (block is MyFunctionalBlock)
                 return new FunctionalBlockWrapper(slimBlock);
