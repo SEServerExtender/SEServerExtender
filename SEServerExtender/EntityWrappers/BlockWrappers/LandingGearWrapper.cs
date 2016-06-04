@@ -32,13 +32,7 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
         public bool Locked
         {
             get { return Block.IsLocked; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-                                                                  {
-                                                                      if ( value )
-                                                                          Block.RequestLandingGearLock();
-                                                                      else
-                                                                          Block.RequestLandingGearUnlock();
-                                                                  } ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Block.RequestLock( value ) ); }
         }
     }
 }

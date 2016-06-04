@@ -954,7 +954,8 @@ namespace SEModAPIInternal.API.Common
 
 		public bool IsUserAdmin(ulong remoteUserId)
 		{
-		    return MyMultiplayer.Static.IsAdmin( remoteUserId );
+		    return MySandboxGame.ConfigDedicated.Administrators.Any( userId => remoteUserId.ToString().Equals( userId ) );
+		    //return MyMultiplayer.Static.IsAdmin( remoteUserId );
 		}
 
 	    public bool IsUserPromoted( ulong remoteUserId )
