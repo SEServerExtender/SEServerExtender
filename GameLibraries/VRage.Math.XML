@@ -2588,7 +2588,7 @@
             <summary>
             The distance of the PlaneD along its normal from the origin.
             Note: Be careful! The distance is signed and is the opposite of what people usually expect.
-                  If you look closely at the plane equation: (n dot P) - D = 0, you'll realize that D = - (n dot P) (that is, negative instead of positive)
+                  If you look closely at the plane equation: (n dot P) + D = 0, you'll realize that D = - (n dot P) (that is, negative instead of positive)
             </summary>
         </member>
         <member name="M:VRageMath.PlaneD.#ctor(System.Double,System.Double,System.Double,System.Double)">

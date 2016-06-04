@@ -1560,10 +1560,12 @@
             If not, it should fall to ControlledObject
             </returns>
         </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.GetDecalRenderData(VRage.Game.ModAPI.MyHitInfo,VRage.Game.ModAPI.Interfaces.MyDecalRenderData@)">
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.AddDecals(VRage.Game.ModAPI.MyHitInfo,VRage.Utils.MyStringHash,System.Object,VRage.Game.ModAPI.Interfaces.IMyDecalHandler)">
             <param name="hitInfo">Hithinfo on world coordinates</param>
-            <param name="renderable">Position and normal on local coordinates for regular actors.
-            World position on voxel maps. NB: To be changed</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalHandler.AddDecal(VRageRender.MyDecalRenderInfo@)">
+            <param name="renderData">Position and normal on local coordinates for regular actors.
+            World position on voxel maps</param>
         </member>
         <member name="P:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.UseDamageSystem">
             <summary>
@@ -1757,9 +1759,20 @@
             That means, if billboard is in the left-up corner of screen, it won't be distorted by perspective. If will look as 2D quad on screen. As I said, it's same as GPU points.
             </summary>
         </member>
-        <member name="M:VRage.Game.MyParticleEffect.Stop(System.Boolean)">
+        <!-- Badly formed XML comment ignored for member "M:VRage.Game.MyParticleEffect.Stop" -->
+        <member name="M:VRage.Game.MyParticleEffect.Play">
             <summary>
-            This methods stops generating any new particles
+            This method restores effect
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MyParticleEffect.Pause">
+            <summary>
+            This methods freezes effect and particles
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MyParticleEffect.StopEmitting">
+            <summary>
+            This method stops generating any new particles
             </summary>
         </member>
         <member name="P:VRage.Game.MyParticleGeneration.Birth">

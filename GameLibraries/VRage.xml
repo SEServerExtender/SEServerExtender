@@ -312,7 +312,7 @@
             The bone absolute transform
             </summary>
         </member>
-        <member name="M:VRage.Animations.MyCharacterBone.#ctor(System.String,VRageMath.Matrix,VRage.Animations.MyCharacterBone)">
+        <member name="M:VRage.Animations.MyCharacterBone.#ctor(System.Int32,System.String,VRageMath.Matrix,VRage.Animations.MyCharacterBone)">
             <summary>
             Constructor for a bone object
             </summary>
@@ -699,34 +699,6 @@
             </summary>
             <param name="vct"></param>
         </member>
-        <member name="M:VRage.ModAPI.IMyControl.GetAnalogState">
-            <summary>
-            Return the analog state between 0 (not pressed at all) and 1 (fully pressed).
-            If a digital button is mapped to an analog control, it can return only 0 or 1.
-            </summary>
-        </member>
-        <member name="M:VRage.Input.MyControl.GetAnalogState">
-            <summary>
-            Return the analog state between 0 (not pressed at all) and 1 (fully pressed).
-            If a digital button is mapped to an analog control, it can return only 0 or 1.
-            </summary>
-        </member>
-        <member name="M:VRage.Input.MyControl.ToString">
-            <summary>
-            Causes allocation. Creates single string with list of assigned controls.
-            </summary>
-        </member>
-        <member name="M:VRage.Input.MyControl.ToStringBuilder(System.String)">
-            <summary>
-            Causes allocation. Creates single StringBuilder with list of assigned controls. Caller
-            takes ownership of returned StringBuilder (it is not stored internally).
-            </summary>
-        </member>
-        <member name="T:VRage.Input.MyKeys">
-            <summary>
-            Enumeration for virtual keys.
-            </summary>
-        </member>
         <member name="M:VRage.MyCompilationSymbols.IsProfilerAttached">
             <summary>
             This is reliable, enforced by .NET documentation.
@@ -800,7 +772,7 @@
             Target window handle
             </summary>
         </member>
-        <member name="M:VRage.MyGameRenderComponent.Start(VRage.Library.Utils.MyGameTimer,VRage.InitHandler,System.Nullable{VRageRender.MyRenderDeviceSettings},VRageRender.MyRenderQualityEnum)">
+        <member name="M:VRage.MyGameRenderComponent.Start(VRage.Library.Utils.MyGameTimer,VRage.InitHandler,System.Nullable{VRageRender.MyRenderDeviceSettings},VRageRender.MyRenderQualityEnum,System.Single)">
             <summary>
             Creates and starts render thread
             </summary>
@@ -1134,13 +1106,15 @@
         </member>
         <member name="F:VRageRender.MyRenderMessageType.Draw">
             <summary>
-            Draw message, skipped when processing multiple updates (only handled in last update before draw)
-            Draw sprite, debug draw...
+            Draw message
+            Skipped when renderer is falling behind and has to process multiple enqueued frames (only handled in last frame before draw)
+            Draw sprite, Draw light
             </summary>
         </member>
         <member name="F:VRageRender.MyRenderMessageType.DebugDraw">
             <summary>
-            Debug Draw message, in render11 this messages are queued internally 
+            Debug Draw message, in render11 these messages are queued internally
+            Skipped when renderer is falling behind and has to process multiple enqueued frames (only handled in last frame before draw)
             Draw sprite, debug draw...
             </summary>
         </member>
