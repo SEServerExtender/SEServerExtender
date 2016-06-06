@@ -1419,7 +1419,7 @@ namespace SEServerExtender
 			        SandboxGameAssemblyWrapper.Instance.GameAction( () => floating.Close() );
 			    }
 
-                var bag = (linkedObject as FloatingObjectWrapper)?.Entity;
+                var bag = (linkedObject as BagInventoryWrapper)?.Entity;
                 if (bag != null)
                 {
                     if (bag.Closed)
@@ -1430,6 +1430,17 @@ namespace SEServerExtender
 
                     SandboxGameAssemblyWrapper.Instance.GameAction( () => bag.Close() );
                 }
+
+			    var grid = (linkedObject as CubeGridWrapper)?.Grid;
+			    if ( grid != null )
+			    {
+			        if ( grid.Closed )
+			        {
+			            ApplicationLog.BaseLog.Info( "Object cannot be deleted." );
+			            return;
+			        }
+			        SandboxGameAssemblyWrapper.Instance.GameAction( () => grid.Close() );
+			    }
 
                 //entities can just be Closed
                 var entity = linkedObject as MyEntity;
