@@ -29,6 +29,13 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
         }
 
         [Category("General")]
+        public bool IdleMovement
+        {
+            get { return ((IMyLargeTurretBase)Block).EnableIdleRotation; }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => ((IMyLargeTurretBase)Block).EnableIdleRotation = value); }
+        }
+
+        [Category("General")]
         public bool TargetMeteors
         {
             get { return Block.TargetMeteors; }
