@@ -78,6 +78,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.1.2\lib\net40\NLog.dll</HintPath>
@@ -93,11 +96,15 @@
     </Reference>
     <Reference Include="SpaceEngineers.Game, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x64\Release\SpaceEngineers.Game.dll</HintPath>
+      <HintPath>..\GameLibraries\SpaceEngineers.Game.dll</HintPath>
     </Reference>
-    <Reference Include="SpaceEngineers.ObjectBuilders, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="SpaceEngineers.ObjectBuilders.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\GameLibraries\SpaceEngineers.ObjectBuilders.dll</HintPath>
+      <HintPath>..\GameLibraries\SpaceEngineers.ObjectBuilders.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="SteamSDK, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\SteamSDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -119,6 +126,10 @@
     <Reference Include="VRage.Game">
       <HintPath>..\GameLibraries\VRage.Game.dll</HintPath>
     </Reference>
+    <Reference Include="VRage.Game.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\VRage.Game.XmlSerializers.dll</HintPath>
+    </Reference>
     <Reference Include="VRage.Library">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\VRage.Library.dll</HintPath>
@@ -126,6 +137,10 @@
     <Reference Include="VRage.Math">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\VRage.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="VRage.Render, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\VRage.Render.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

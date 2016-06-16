@@ -1,6 +1,15 @@
 using System.Collections;
 using System.Management;
+using Sandbox;
+using Sandbox.Engine.Utils;
+using Sandbox.Game;
+using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
+using SpaceEngineers.Game;
+using VRage.FileSystem;
+using VRage.Game.ObjectBuilder;
+using VRage.Plugins;
+using VRage.Utils;
 
 namespace SEServerExtender
 {
@@ -133,16 +142,32 @@ namespace SEServerExtender
 				Start( args );
 			}
 		}
-        
+
+        private static MySandboxGame tmpGame = null;
+        private static void InitSandbox( string contentpath, string instancepath )
+        {
+            if(tmpGame!=null)
+                tmpGame.Exit();
+
+            MyFileSystem.Reset();
+            MyFileSystem.Init(contentpath, instancepath);
+
+            MyLog.Default = MySandboxGame.Log;
+            MySandboxGame.Config = new MyConfig("SpaceEngineers.cfg");
+            MySandboxGame.Config.Load();
+
+            MyFileSystem.InitUserSpecific(null);
+            SpaceEngineersGame.SetupPerGameSettings();
+            SpaceEngineersGame.SetupBasicGameInfo();
+
+            VRageRender.MyRenderProxy.Initialize(new VRageRender.MyNullRender());
+            tmpGame = new MySandboxGame(null, null);
+        }
+
 		private static void Start( string[ ] args )
-		{
-            //register object builder assembly
-            string path = System.IO.Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.ObjectBuilders.DLL" );
-            VRage.Plugins.MyPlugins.RegisterGameObjectBuildersAssemblyFile( path );
-
-            MyObjectBuilderType.RegisterAssemblies( );
-            MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers( );
-
+        {
+            InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+            
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
@@ -368,7 +393,9 @@ namespace SEServerExtender
 				Server.IsWCFEnabled = !extenderArgs.NoWcf;
 				Server.Init( );
 
-				ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
+                InitSandbox(GameInstallationInfo.GamePath, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+
+                ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
 
                 if (!CommandLineArgs.NoConsole)
@@ -437,6 +464,7 @@ namespace SEServerExtender
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
 			}
+
 		}
 
 		private static void ChatManager_ChatMessage( ulong userId, string playerName, string message )

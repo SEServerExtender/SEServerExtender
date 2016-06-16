@@ -209,9 +209,8 @@
     <Reference Include="VRage.Game">
       <HintPath>..\GameLibraries\VRage.Game.dll</HintPath>
     </Reference>
-    <Reference Include="VRage.Input, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SEServerExtender\bin\x64\Release\VRage.Input.dll</HintPath>
+    <Reference Include="VRage.Input">
+      <HintPath>..\GameLibraries\VRage.Input.dll</HintPath>
     </Reference>
     <Reference Include="VRage.Library">
       <HintPath>..\GameLibraries\VRage.Library.dll</HintPath>
