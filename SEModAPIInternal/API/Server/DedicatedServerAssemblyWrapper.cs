@@ -1,6 +1,7 @@
 ﻿using SEModAPI.API;
 using VRage.ObjectBuilders;
 using VRage.Plugins;
+using VRage.Utils;
 
 namespace SEModAPIInternal.API.Server
 {
@@ -34,6 +35,8 @@ namespace SEModAPIInternal.API.Server
 		public const string DedicatedServerNamespace = "VRage.Dedicated";
 		public const string DedicatedServerClass = "DedicatedServer";
 		public const string DedicatedServerRunMainMethod = "RunMain";
+
+	    public static bool IsStable;
 
 		#region "Constructors and Initializers"
 
@@ -189,12 +192,18 @@ namespace SEModAPIInternal.API.Server
 				MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
 				MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
 				MyPerServerSettings.AppId = 0x3bc72;
-                //MyPlugins.Unload();
-                //MyObjectBuilderSerializer.UnregisterAssembliesAndSerializers( );
+
+			    if ( IsStable )
+			    {
+                    //this causes crashes on dev, but is needed for stable
+			        MyObjectBuilderSerializer.UnregisterAssembliesAndSerializers( );
+			    }
+
                 //Start the server
                 MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
 				dedicatedServerRunMainMethod.Invoke( null, methodParams );
-				return true;
+			    ApplicationLog.BaseLog.Info( MyLog.Default.GetFilePath());
+                return true;
 			}
 			catch ( Win32Exception ex )
 			{

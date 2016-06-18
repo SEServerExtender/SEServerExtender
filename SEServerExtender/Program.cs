@@ -3,6 +3,7 @@ using System.Management;
 using Sandbox;
 using Sandbox.Engine.Utils;
 using Sandbox.Game;
+using SEModAPI.API.Utility;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
 using SpaceEngineers.Game;
@@ -41,6 +42,9 @@ namespace SEServerExtender
 		public static readonly Logger ChatLog = LogManager.GetLogger( "ChatLog" );
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
+        public static Version SeVersion;
+        public static readonly int[] StableVersions = new int[] {139};
+
 		public class WindowsService : ServiceBase
 		{
 			public WindowsService( )
@@ -163,10 +167,54 @@ namespace SEServerExtender
             VRageRender.MyRenderProxy.Initialize(new VRageRender.MyNullRender());
             tmpGame = new MySandboxGame(null, null);
         }
+        
 
 		private static void Start( string[ ] args )
         {
-            InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+            // SE_VERSION is a private constant. Need to use reflection to get it. 
+            FieldInfo field = typeof(SpaceEngineersGame).GetField("SE_VERSION", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+            SeVersion = new Version(new MyVersion((int)field.GetValue(null)).FormattedText.ToString().Replace("_", "."));
+
+            ApplicationLog.BaseLog.Info($"SE version: {SeVersion}");
+
+		    if ( StableVersions.Contains( SeVersion.Minor ) )
+		    {
+		        BaseLog.Info( "Detected \"Stable\" build, attempting to load old init method..." );
+
+		        try
+		        {
+		            DedicatedServerAssemblyWrapper.IsStable = true;
+		            //register object builder assembly
+		            MyPlugins.RegisterGameObjectBuildersAssemblyFile( Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.ObjectBuilders.DLL" ) );
+
+		            //use reflection to get these because they don't exist in the dev libraries we compile against
+		            //MyObjectBuilderType.RegisterAssemblies();
+		            //MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers();
+
+		            MethodInfo registerAssembliesMethod = typeof(MyObjectBuilderType).GetMethod( "RegisterAssemblies", BindingFlags.Static | BindingFlags.Public );
+		            registerAssembliesMethod.Invoke( null, null );
+		            MethodInfo registerAssembliesAndLoadSerializersMethod = typeof(MyObjectBuilderSerializer).GetMethod( "RegisterAssembliesAndLoadSerializers", BindingFlags.Static | BindingFlags.Public );
+		            registerAssembliesAndLoadSerializersMethod.Invoke( null, null );
+		        }
+		        catch ( Exception ex )
+		        {
+		            BaseLog.Error( ex, "Failed to load init for stable branch!" );
+		            DialogResult messageResult =
+		                MessageBox.Show( "Failed to initialize SESE for \"Stable\" branch! Execution cannot continue!",
+		                                 "Fatal Error",
+		                                 MessageBoxButtons.OK,
+		                                 MessageBoxIcon.Error );
+
+		            if ( messageResult == DialogResult.OK )
+		                Stop();
+		        }
+		    }
+		    else
+		    {
+                BaseLog.Info( "Dev version found, loading new init..." );
+                InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+		    }
             
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
@@ -393,7 +441,8 @@ namespace SEServerExtender
 				Server.IsWCFEnabled = !extenderArgs.NoWcf;
 				Server.Init( );
 
-                InitSandbox(GameInstallationInfo.GamePath, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+                if(!DedicatedServerAssemblyWrapper.IsStable)
+                    InitSandbox(GameInstallationInfo.GamePath, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
 
                 ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );
