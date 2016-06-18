@@ -42,6 +42,16 @@
             </param>
             <param name="edgeTraversable">This predicate allows to make edges untraversable, blocking the paths through them.</param>
         </member>
+        <member name="T:VRage.Algorithms.MyUnionFind">
+            <summary>
+             Fast representation for disjoint sets.
+            
+            This data structure guarantees virtually constant time operations
+            for union and finding the representative element of disjoint sets.
+            </summary>
+            
+            Still wondering weather the iterator makes sence
+        </member>
         <member name="T:VRage.Library.Algorithms.SequenceIdGenerator">
             <summary>
             Generates IDs sequentially and reuses old IDs which are returned to pool by calling Return method.
@@ -1083,7 +1093,7 @@
             
             The list of indices must be sorted.
         </member>
-        <member name="M:System.Collections.Generic.ListExtensions.BinaryIntervalSearch``1(System.Collections.Generic.List{``0},``0)">
+        <member name="M:System.Collections.Generic.ListExtensions.BinaryIntervalSearch``1(System.Collections.Generic.IList{``0},``0)">
             Do a binary search in an array of interval limits, each member is the interval threshold.
             
             The result is the index of the interval that contains the value searched for.
@@ -1724,6 +1734,16 @@
             <param name="action">The work to execute in parallel.</param>
             <param name="completionCallback">A method which will be called in Parallel.RunCallbacks() once this task has completed.</param>
             <param name="workData">Data to be passed along both the work and the completion callback.</param>
+            <returns>A task which represents one execution of the action.</returns>
+        </member>
+        <member name="M:ParallelTasks.Parallel.ScheduleForThread(System.Action{ParallelTasks.WorkData},ParallelTasks.WorkData,System.Threading.Thread)">
+            <summary>
+            Creates and schedules a task to execute on the given work-tracking thread.
+            If the requested thread that does not execute completion callbacks the callback will never be called.
+            </summary>
+            <param name="action">The work to execute in parallel.</param>
+            <param name="workData">Data to be passed along both the work and the completion callback.</param>
+            <param name="thread">Thread to execute the callback on. If not provided this is the calling thread.</param>
             <returns>A task which represents one execution of the action.</returns>
         </member>
         <member name="M:ParallelTasks.Parallel.StartOnEachWorker(System.Action,System.Boolean)">
@@ -5251,6 +5271,22 @@
             This may not be accurate for large values - double accuracy
             </summary>
         </member>
+        <member name="M:VRage.Library.Utils.MyHashRandomUtils.CreateFloatFromMantissa(System.UInt32)">
+            <summary>
+            Create a [0, 1) float from it's mantissa.
+            </summary>
+            <param name="m">Mantissa bits.</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Library.Utils.MyHashRandomUtils.UniformFloatFromSeed(System.Int32)">
+            <summary>
+            Compute a float in the range [0, 1) created from the the seed.
+            
+            For uniformly distributed seeds this method will produce uniformly distributed values.
+            </summary>
+            <param name="seed">Any integer to be used as a seed. The seed needs not be super uniform since it will be hashed.</param>
+            <returns>A float in the range [0, 1)</returns>
+        </member>
         <member name="M:VRage.Library.Utils.MyInterpolationQueue`1.DiscardOld(VRage.Library.Utils.MyTimeSpan)">
             <summary>
             Discards old samples, keeps at least 2 samples to be able to interpolate or extrapolate.
@@ -5267,6 +5303,17 @@
             Returns interpolator
             There must be at least one sample!
             </summary>
+        </member>
+        <member name="T:VRage.Library.Utils.MyIterableComplementSet`1">
+            Over a given set of elements W this class maintains two subsets A and B such that
+            A ⋂ B = ∅, A ⋃ B = W, with constant time operations for moving elements from one set to the other.
+            
+            Both subsets are individually iterable, as well as the whole W.
+            
+            The order of elements in either set is never preserved.
+            
+            When using this class with value types beware that they will be duplicated internally.
+            Prefer to use class types or some form of lightweight reference with this.
         </member>
         <member name="T:VRage.Library.Utils.MyRandom">
             <summary>

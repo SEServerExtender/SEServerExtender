@@ -20,6 +20,516 @@
             Pre-calculated left directions for given forward (index / 6) and up (index % 6) directions
             </summary>
         </member>
+        <member name="T:VRageMath.BoundingBox2I">
+            <summary>
+            Defines an axis-aligned box-shaped 3D volume.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2I.CornerCount">
+            <summary>
+            Specifies the total number of corners (8) in the BoundingBox2I.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2I.Min">
+            <summary>
+            The minimum point the BoundingBox2I contains.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2I.Max">
+            <summary>
+            The maximum point the BoundingBox2I contains.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.#ctor(VRageMath.Vector2I,VRageMath.Vector2I)">
+            <summary>
+            Creates an instance of BoundingBox2I.
+            </summary>
+            <param name="min">The minimum point the BoundingBox2I includes.</param><param name="max">The maximum point the BoundingBox2I includes.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.op_Equality(VRageMath.BoundingBox2I,VRageMath.BoundingBox2I)">
+            <summary>
+            Determines whether two instances of BoundingBox2I are equal.
+            </summary>
+            <param name="a">BoundingBox2I to compare.</param><param name="b">BoundingBox2I to compare.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.op_Inequality(VRageMath.BoundingBox2I,VRageMath.BoundingBox2I)">
+            <summary>
+            Determines whether two instances of BoundingBox2I are not equal.
+            </summary>
+            <param name="a">The object to the left of the inequality operator.</param><param name="b">The object to the right of the inequality operator.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.GetCorners">
+            <summary>
+            Gets an array of points that make up the corners of the BoundingBox2I.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.GetCorners(VRageMath.Vector2I[])">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox2I.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector2I points where the corners of the BoundingBox2I are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.GetCornersUnsafe(VRageMath.Vector2I*)">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox2I.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector2I points where the corners of the BoundingBox2I are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Equals(VRageMath.BoundingBox2I)">
+            <summary>
+            Determines whether two instances of BoundingBox2I are equal.
+            </summary>
+            <param name="other">The BoundingBox2I to compare with the current BoundingBox2I.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Equals(System.Object)">
+            <summary>
+            Determines whether two instances of BoundingBox2I are equal.
+            </summary>
+            <param name="obj">The Object to compare with the current BoundingBox2I.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.GetHashCode">
+            <summary>
+            Gets the hash code for this instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.ToString">
+            <summary>
+            Returns a String that represents the current BoundingBox2I.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.CreateMerged(VRageMath.BoundingBox2I,VRageMath.BoundingBox2I)">
+            <summary>
+            Creates the smallest BoundingBox2I that contains the two specified BoundingBox2I instances.
+            </summary>
+            <param name="original">One of the BoundingBox2Is to contain.</param><param name="additional">One of the BoundingBox2Is to contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.CreateMerged(VRageMath.BoundingBox2I@,VRageMath.BoundingBox2I@,VRageMath.BoundingBox2I@)">
+            <summary>
+            Creates the smallest BoundingBox2I that contains the two specified BoundingBox2I instances.
+            </summary>
+            <param name="original">One of the BoundingBox2I instances to contain.</param><param name="additional">One of the BoundingBox2I instances to contain.</param><param name="result">[OutAttribute] The created BoundingBox2I.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.CreateFromPoints(System.Collections.Generic.IEnumerable{VRageMath.Vector2I})">
+            <summary>
+            Creates the smallest BoundingBox2I that will contain a group of points.
+            </summary>
+            <param name="points">A list of points the BoundingBox2I should contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Intersect(VRageMath.BoundingBox2I)">
+            <summary>
+            Returns bounding box which is intersection of this and box
+            It's called 'Prunik'
+            Result is invalid box when there's no intersection (Min > Max)
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Intersects(VRageMath.BoundingBox2I)">
+            <summary>
+            Checks whether the current BoundingBox2I intersects another BoundingBox2I.
+            </summary>
+            <param name="box">The BoundingBox2I to check for intersection with.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Intersects(VRageMath.BoundingBox2I@,System.Boolean@)">
+            <summary>
+            Checks whether the current BoundingBox2I intersects another BoundingBox2I.
+            </summary>
+            <param name="box">The BoundingBox2I to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBox2I instances intersect; false otherwise.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Contains(VRageMath.BoundingBox2I)">
+            <summary>
+            Tests whether the BoundingBox2I contains another BoundingBox2I.
+            </summary>
+            <param name="box">The BoundingBox2I to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Contains(VRageMath.BoundingBox2I@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBox2I contains a BoundingBox2I.
+            </summary>
+            <param name="box">The BoundingBox2I to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Contains(VRageMath.Vector2I)">
+            <summary>
+            Tests whether the BoundingBox2I contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Contains(VRageMath.Vector2I@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBox2I contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Translate(VRageMath.Vector2I)">
+            <summary>
+            Translate
+            </summary>
+            <param name="vctTranlsation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Include(VRageMath.Vector2I@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBox2I.Include(VRageMath.BoundingBox2I@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="box"></param>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBox2I.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBox2I.Size">
+            <summary>
+            Size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:VRageMath.BoundingBox2D">
+            <summary>
+            Defines an axis-aligned box-shaped 3D volume.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2D.CornerCount">
+            <summary>
+            Specifies the total number of corners (8) in the BoundingBox2D.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2D.Min">
+            <summary>
+            The minimum point the BoundingBox2D contains.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2D.Max">
+            <summary>
+            The maximum point the BoundingBox2D contains.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.#ctor(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Creates an instance of BoundingBox2D.
+            </summary>
+            <param name="min">The minimum point the BoundingBox2D includes.</param><param name="max">The maximum point the BoundingBox2D includes.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.op_Equality(VRageMath.BoundingBox2D,VRageMath.BoundingBox2D)">
+            <summary>
+            Determines whether two instances of BoundingBox2D are equal.
+            </summary>
+            <param name="a">BoundingBox2D to compare.</param><param name="b">BoundingBox2D to compare.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.op_Inequality(VRageMath.BoundingBox2D,VRageMath.BoundingBox2D)">
+            <summary>
+            Determines whether two instances of BoundingBox2D are not equal.
+            </summary>
+            <param name="a">The object to the left of the inequality operator.</param><param name="b">The object to the right of the inequality operator.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.GetCorners">
+            <summary>
+            Gets an array of points that make up the corners of the BoundingBox2D.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.GetCorners(VRageMath.Vector2D[])">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox2D.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector2D points where the corners of the BoundingBox2D are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.GetCornersUnsafe(VRageMath.Vector2D*)">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox2D.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector2D points where the corners of the BoundingBox2D are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Equals(VRageMath.BoundingBox2D)">
+            <summary>
+            Determines whether two instances of BoundingBox2D are equal.
+            </summary>
+            <param name="other">The BoundingBox2D to compare with the current BoundingBox2D.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Equals(System.Object)">
+            <summary>
+            Determines whether two instances of BoundingBox2D are equal.
+            </summary>
+            <param name="obj">The Object to compare with the current BoundingBox2D.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.GetHashCode">
+            <summary>
+            Gets the hash code for this instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.ToString">
+            <summary>
+            Returns a String that represents the current BoundingBox2D.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.CreateMerged(VRageMath.BoundingBox2D,VRageMath.BoundingBox2D)">
+            <summary>
+            Creates the smallest BoundingBox2D that contains the two specified BoundingBox2D instances.
+            </summary>
+            <param name="original">One of the BoundingBox2Ds to contain.</param><param name="additional">One of the BoundingBox2Ds to contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.CreateMerged(VRageMath.BoundingBox2D@,VRageMath.BoundingBox2D@,VRageMath.BoundingBox2D@)">
+            <summary>
+            Creates the smallest BoundingBox2D that contains the two specified BoundingBox2D instances.
+            </summary>
+            <param name="original">One of the BoundingBox2D instances to contain.</param><param name="additional">One of the BoundingBox2D instances to contain.</param><param name="result">[OutAttribute] The created BoundingBox2D.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.CreateFromPoints(System.Collections.Generic.IEnumerable{VRageMath.Vector2D})">
+            <summary>
+            Creates the smallest BoundingBox2D that will contain a group of points.
+            </summary>
+            <param name="points">A list of points the BoundingBox2D should contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Intersect(VRageMath.BoundingBox2D)">
+            <summary>
+            Returns bounding box which is intersection of this and box
+            It's called 'Prunik'
+            Result is invalid box when there's no intersection (Min > Max)
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Intersects(VRageMath.BoundingBox2D)">
+            <summary>
+            Checks whether the current BoundingBox2D intersects another BoundingBox2D.
+            </summary>
+            <param name="box">The BoundingBox2D to check for intersection with.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Intersects(VRageMath.BoundingBox2D@,System.Boolean@)">
+            <summary>
+            Checks whether the current BoundingBox2D intersects another BoundingBox2D.
+            </summary>
+            <param name="box">The BoundingBox2D to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBox2D instances intersect; false otherwise.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Contains(VRageMath.BoundingBox2D)">
+            <summary>
+            Tests whether the BoundingBox2D contains another BoundingBox2D.
+            </summary>
+            <param name="box">The BoundingBox2D to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Contains(VRageMath.BoundingBox2D@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBox2D contains a BoundingBox2D.
+            </summary>
+            <param name="box">The BoundingBox2D to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Contains(VRageMath.Vector2D)">
+            <summary>
+            Tests whether the BoundingBox2D contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Contains(VRageMath.Vector2D@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBox2D contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Translate(VRageMath.Vector2D)">
+            <summary>
+            Translate
+            </summary>
+            <param name="vctTranlsation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Include(VRageMath.Vector2D@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBox2D.Include(VRageMath.BoundingBox2D@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="box"></param>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBox2D.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBox2D.Size">
+            <summary>
+            Size
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:VRageMath.BoundingBox2">
+            <summary>
+            Defines an axis-aligned box-shaped 3D volume.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2.CornerCount">
+            <summary>
+            Specifies the total number of corners (8) in the BoundingBox2.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2.Min">
+            <summary>
+            The minimum point the BoundingBox2 contains.
+            </summary>
+        </member>
+        <member name="F:VRageMath.BoundingBox2.Max">
+            <summary>
+            The maximum point the BoundingBox2 contains.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.#ctor(VRageMath.Vector2,VRageMath.Vector2)">
+            <summary>
+            Creates an instance of BoundingBox2.
+            </summary>
+            <param name="min">The minimum point the BoundingBox2 includes.</param><param name="max">The maximum point the BoundingBox2 includes.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.op_Equality(VRageMath.BoundingBox2,VRageMath.BoundingBox2)">
+            <summary>
+            Determines whether two instances of BoundingBox2 are equal.
+            </summary>
+            <param name="a">BoundingBox2 to compare.</param><param name="b">BoundingBox2 to compare.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.op_Inequality(VRageMath.BoundingBox2,VRageMath.BoundingBox2)">
+            <summary>
+            Determines whether two instances of BoundingBox2 are not equal.
+            </summary>
+            <param name="a">The object to the left of the inequality operator.</param><param name="b">The object to the right of the inequality operator.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.GetCorners">
+            <summary>
+            Gets an array of points that make up the corners of the BoundingBox2.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.GetCorners(VRageMath.Vector2[])">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox2.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector2 points where the corners of the BoundingBox2 are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.GetCornersUnsafe(VRageMath.Vector2*)">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox2.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector2 points where the corners of the BoundingBox2 are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Equals(VRageMath.BoundingBox2)">
+            <summary>
+            Determines whether two instances of BoundingBox2 are equal.
+            </summary>
+            <param name="other">The BoundingBox2 to compare with the current BoundingBox2.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Equals(System.Object)">
+            <summary>
+            Determines whether two instances of BoundingBox2 are equal.
+            </summary>
+            <param name="obj">The Object to compare with the current BoundingBox2.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.GetHashCode">
+            <summary>
+            Gets the hash code for this instance.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.ToString">
+            <summary>
+            Returns a String that represents the current BoundingBox2.
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.CreateMerged(VRageMath.BoundingBox2,VRageMath.BoundingBox2)">
+            <summary>
+            Creates the smallest BoundingBox2 that contains the two specified BoundingBox2 instances.
+            </summary>
+            <param name="original">One of the BoundingBox2s to contain.</param><param name="additional">One of the BoundingBox2s to contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.CreateMerged(VRageMath.BoundingBox2@,VRageMath.BoundingBox2@,VRageMath.BoundingBox2@)">
+            <summary>
+            Creates the smallest BoundingBox2 that contains the two specified BoundingBox2 instances.
+            </summary>
+            <param name="original">One of the BoundingBox2 instances to contain.</param><param name="additional">One of the BoundingBox2 instances to contain.</param><param name="result">[OutAttribute] The created BoundingBox2.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.CreateFromPoints(System.Collections.Generic.IEnumerable{VRageMath.Vector2})">
+            <summary>
+            Creates the smallest BoundingBox2 that will contain a group of points.
+            </summary>
+            <param name="points">A list of points the BoundingBox2 should contain.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Intersect(VRageMath.BoundingBox2)">
+            <summary>
+            Returns bounding box which is intersection of this and box
+            It's called 'Prunik'
+            Result is invalid box when there's no intersection (Min > Max)
+            </summary>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Intersects(VRageMath.BoundingBox2)">
+            <summary>
+            Checks whether the current BoundingBox2 intersects another BoundingBox2.
+            </summary>
+            <param name="box">The BoundingBox2 to check for intersection with.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Intersects(VRageMath.BoundingBox2@,System.Boolean@)">
+            <summary>
+            Checks whether the current BoundingBox2 intersects another BoundingBox2.
+            </summary>
+            <param name="box">The BoundingBox2 to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingBox2 instances intersect; false otherwise.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Contains(VRageMath.BoundingBox2)">
+            <summary>
+            Tests whether the BoundingBox2 contains another BoundingBox2.
+            </summary>
+            <param name="box">The BoundingBox2 to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Contains(VRageMath.BoundingBox2@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBox2 contains a BoundingBox2.
+            </summary>
+            <param name="box">The BoundingBox2 to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Contains(VRageMath.Vector2)">
+            <summary>
+            Tests whether the BoundingBox2 contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Contains(VRageMath.Vector2@,VRageMath.ContainmentType@)">
+            <summary>
+            Tests whether the BoundingBox2 contains a point.
+            </summary>
+            <param name="point">The point to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Translate(VRageMath.Vector2)">
+            <summary>
+            Translate
+            </summary>
+            <param name="vctTranlsation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Include(VRageMath.Vector2@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRageMath.BoundingBox2.Include(VRageMath.BoundingBox2@)">
+            <summary>
+            return expanded aabb (abb include point)
+            </summary>
+            <param name="box"></param>
+            <returns></returns>
+        </member>
+        <member name="P:VRageMath.BoundingBox2.Center">
+            <summary>
+            Calculates center
+            </summary>
+        </member>
+        <member name="P:VRageMath.BoundingBox2.Size">
+            <summary>
+            Size
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:VRageMath.BoundingBoxI">
             <summary>
             Defines an axis-aligned box-shaped 3D volume.
@@ -1952,6 +2462,37 @@
             </summary>
             <param name="quaternion1">Source QuaternionD.</param><param name="quaternion2">The divisor.</param><param name="result">[OutAttribute] Result of the division.</param>
         </member>
+        <member name="M:VRageMath.SerializableRange.ConvertToCosine">
+            When the range is an angle this method changes it to the cosines of the angle.
+            
+            The angle is expected to be in degrees.
+            
+            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
+            
+        </member>
+        <member name="M:VRageMath.SerializableRange.ConvertToSine">
+            When the range is an angle this method changes it to the sines of the angle.
+            
+            The angle is expected to be in degrees.
+        </member>
+        <member name="T:VRageMath.SymetricSerializableRange">
+            Reflective because it can be reflected to the oposite range.
+            
+            Structs not inheriting from structs is stupid.
+        </member>
+        <member name="M:VRageMath.SymetricSerializableRange.ConvertToCosine">
+            When the range is an angle this method changes it to the cosines of the angle.
+            
+            The angle is expected to be in degrees.
+            
+            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
+            
+        </member>
+        <member name="M:VRageMath.SymetricSerializableRange.ConvertToSine">
+            When the range is an angle this method changes it to the sines of the angle.
+            
+            The angle is expected to be in degrees.
+        </member>
         <member name="M:System.SerializationExtensionsMath.ReadQuaternionNorm(VRage.Library.Collections.BitStream)">
             <summary>
             Serializes normalized quaternion into 52 bits
@@ -2081,6 +2622,459 @@
             May invalidate indices and queries in the same bin.
             To remove values from more queries while ensuring their validity use MyVector3Grid.RemoveTwo(...).
             </summary>
+        </member>
+        <member name="T:VRageMath.Vector2D">
+            <summary>
+            Defines a vector with two components.
+            </summary>
+        </member>
+        <member name="F:VRageMath.Vector2D.X">
+            <summary>
+            Gets or sets the x-component of the vector.
+            </summary>
+        </member>
+        <member name="F:VRageMath.Vector2D.Y">
+            <summary>
+            Gets or sets the y-component of the vector.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of Vector2D.
+            </summary>
+            <param name="x">Initial value for the x-component of the vector.</param><param name="y">Initial value for the y-component of the vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.#ctor(System.Double)">
+            <summary>
+            Creates a new instance of Vector2D.
+            </summary>
+            <param name="value">Value to initialize both components to.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_UnaryNegation(VRageMath.Vector2D)">
+            <summary>
+            Returns a vector pointing in the opposite direction.
+            </summary>
+            <param name="value">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Equality(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Tests vectors for equality.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Inequality(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Tests vectors for inequality.
+            </summary>
+            <param name="value1">Vector to compare.</param><param name="value2">Vector to compare.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Addition(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Adds two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Addition(VRageMath.Vector2D,System.Double)">
+            <summary>
+            Adds double to each component of a vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source double.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Subtraction(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Subtracts a vector from a vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Subtraction(VRageMath.Vector2D,System.Double)">
+            <summary>
+            Subtracts a vector from a vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Multiply(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Multiplies the components of two vectors by each other.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Multiply(VRageMath.Vector2D,System.Double)">
+            <summary>
+            Multiplies a vector by a scalar value.
+            </summary>
+            <param name="value">Source vector.</param><param name="scaleFactor">Scalar value.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Multiply(System.Double,VRageMath.Vector2D)">
+            <summary>
+            Multiplies a vector by a scalar value.
+            </summary>
+            <param name="scaleFactor">Scalar value.</param><param name="value">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Division(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Divides the components of a vector by the components of another vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Divisor vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Division(VRageMath.Vector2D,System.Double)">
+            <summary>
+            Divides a vector by a scalar value.
+            </summary>
+            <param name="value1">Source vector.</param><param name="divider">The divisor.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.op_Division(System.Double,VRageMath.Vector2D)">
+            <summary>
+            Divides a scalar value by a vector.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.ToString">
+            <summary>
+            Retrieves a string representation of the current object.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.Equals(VRageMath.Vector2D)">
+            <summary>
+            Determines whether the specified Object is equal to the Vector2D.
+            </summary>
+            <param name="other">The Object to compare with the current Vector2D.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Equals(System.Object)">
+            <summary>
+            Returns a value that indicates whether the current instance is equal to a specified object.
+            </summary>
+            <param name="obj">Object to make the comparison with.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.GetHashCode">
+            <summary>
+            Gets the hash code of the vector object.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.Length">
+            <summary>
+            Calculates the length of the vector.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.LengthSquared">
+            <summary>
+            Calculates the length of the vector squared.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.Distance(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Calculates the distance between two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Distance(VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double@)">
+            <summary>
+            Calculates the distance between two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The distance between the vectors.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.DistanceSquared(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Calculates the distance between two vectors squared.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.DistanceSquared(VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double@)">
+            <summary>
+            Calculates the distance between two vectors squared.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The distance between the vectors squared.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Dot(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Calculates the dot product of two vectors. If the two vectors are unit vectors, the dot product returns a doubleing point value between -1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Dot(VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double@)">
+            <summary>
+            Calculates the dot product of two vectors and writes the result to a user-specified variable. If the two vectors are unit vectors, the dot product returns a doubleing point value between -1 and 1 that can be used to determine some properties of the angle between two vectors. For example, it can show whether the vectors are orthogonal, parallel, or have an acute or obtuse angle between them.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The dot product of the two vectors.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Normalize">
+            <summary>
+            Turns the current vector into a unit vector. The result is a vector one unit in length pointing in the same direction as the original vector.
+            </summary>
+        </member>
+        <member name="M:VRageMath.Vector2D.Normalize(VRageMath.Vector2D)">
+            <summary>
+            Creates a unit vector from the specified vector. The result is a vector one unit in length pointing in the same direction as the original vector.
+            </summary>
+            <param name="value">Source Vector2D.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Normalize(VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Creates a unit vector from the specified vector, writing the result to a user-specified variable. The result is a vector one unit in length pointing in the same direction as the original vector.
+            </summary>
+            <param name="value">Source vector.</param><param name="result">[OutAttribute] Normalized vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Reflect(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Determines the reflect vector of the given vector and normal.
+            </summary>
+            <param name="vector">Source vector.</param><param name="normal">Normal of vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Reflect(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Determines the reflect vector of the given vector and normal.
+            </summary>
+            <param name="vector">Source vector.</param><param name="normal">Normal of vector.</param><param name="result">[OutAttribute] The created reflect vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Min(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Returns a vector that contains the lowest value from each matching pair of components.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Min(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Returns a vector that contains the lowest value from each matching pair of components.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The minimized vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Max(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Returns a vector that contains the highest value from each matching pair of components.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Max(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Returns a vector that contains the highest value from each matching pair of components.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The maximized vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Clamp(VRageMath.Vector2D,VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Restricts a value to be within a specified range.
+            </summary>
+            <param name="value1">The value to clamp.</param><param name="min">The minimum value.</param><param name="max">The maximum value.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Clamp(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Restricts a value to be within a specified range.
+            </summary>
+            <param name="value1">The value to clamp.</param><param name="min">The minimum value.</param><param name="max">The maximum value.</param><param name="result">[OutAttribute] The clamped value.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Lerp(VRageMath.Vector2D,VRageMath.Vector2D,System.Double)">
+            <summary>
+            Performs a linear interpolation between two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="amount">Value between 0 and 1 indicating the weight of value2.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Lerp(VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Performs a linear interpolation between two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="amount">Value between 0 and 1 indicating the weight of value2.</param><param name="result">[OutAttribute] The result of the interpolation.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Barycentric(VRageMath.Vector2D,VRageMath.Vector2D,VRageMath.Vector2D,System.Double,System.Double)">
+            <summary>
+            Returns a Vector2D containing the 2D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2D triangle.
+            </summary>
+            <param name="value1">A Vector2D containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param><param name="value2">A Vector2D containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param><param name="value3">A Vector2D containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param><param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).</param><param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Barycentric(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Returns a Vector2D containing the 2D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 2D triangle.
+            </summary>
+            <param name="value1">A Vector2D containing the 2D Cartesian coordinates of vertex 1 of the triangle.</param><param name="value2">A Vector2D containing the 2D Cartesian coordinates of vertex 2 of the triangle.</param><param name="value3">A Vector2D containing the 2D Cartesian coordinates of vertex 3 of the triangle.</param><param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).</param><param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).</param><param name="result">[OutAttribute] The 2D Cartesian coordinates of the specified point are placed in this Vector2D on exit.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.SmoothStep(VRageMath.Vector2D,VRageMath.Vector2D,System.Double)">
+            <summary>
+            Interpolates between two values using a cubic equation.
+            </summary>
+            <param name="value1">Source value.</param><param name="value2">Source value.</param><param name="amount">Weighting value.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.SmoothStep(VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Interpolates between two values using a cubic equation.
+            </summary>
+            <param name="value1">Source value.</param><param name="value2">Source value.</param><param name="amount">Weighting value.</param><param name="result">[OutAttribute] The interpolated value.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.CatmullRom(VRageMath.Vector2D,VRageMath.Vector2D,VRageMath.Vector2D,VRageMath.Vector2D,System.Double)">
+            <summary>
+            Performs a Catmull-Rom interpolation using the specified positions.
+            </summary>
+            <param name="value1">The first position in the interpolation.</param><param name="value2">The second position in the interpolation.</param><param name="value3">The third position in the interpolation.</param><param name="value4">The fourth position in the interpolation.</param><param name="amount">Weighting factor.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.CatmullRom(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Performs a Catmull-Rom interpolation using the specified positions.
+            </summary>
+            <param name="value1">The first position in the interpolation.</param><param name="value2">The second position in the interpolation.</param><param name="value3">The third position in the interpolation.</param><param name="value4">The fourth position in the interpolation.</param><param name="amount">Weighting factor.</param><param name="result">[OutAttribute] A vector that is the result of the Catmull-Rom interpolation.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Hermite(VRageMath.Vector2D,VRageMath.Vector2D,VRageMath.Vector2D,VRageMath.Vector2D,System.Double)">
+            <summary>
+            Performs a Hermite spline interpolation.
+            </summary>
+            <param name="value1">Source position vector.</param><param name="tangent1">Source tangent vector.</param><param name="value2">Source position vector.</param><param name="tangent2">Source tangent vector.</param><param name="amount">Weighting factor.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Hermite(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Performs a Hermite spline interpolation.
+            </summary>
+            <param name="value1">Source position vector.</param><param name="tangent1">Source tangent vector.</param><param name="value2">Source position vector.</param><param name="tangent2">Source tangent vector.</param><param name="amount">Weighting factor.</param><param name="result">[OutAttribute] The result of the Hermite spline interpolation.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D,VRageMath.Matrix)">
+            <summary>
+            Transforms the vector (x, y, 0, 1) by the specified matrix.
+            </summary>
+            <param name="position">The source vector.</param><param name="matrix">The transformation matrix.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D@,VRageMath.Matrix@,VRageMath.Vector2D@)">
+            <summary>
+            Transforms a Vector2D by the given Matrix.
+            </summary>
+            <param name="position">The source Vector2D.</param><param name="matrix">The transformation Matrix.</param><param name="result">[OutAttribute] The Vector2D resulting from the transformation.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.TransformNormal(VRageMath.Vector2D,VRageMath.Matrix)">
+            <summary>
+            Transforms a 2D vector normal by a matrix.
+            </summary>
+            <param name="normal">The source vector.</param><param name="matrix">The transformation matrix.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.TransformNormal(VRageMath.Vector2D@,VRageMath.Matrix@,VRageMath.Vector2D@)">
+            <summary>
+            Transforms a vector normal by a matrix.
+            </summary>
+            <param name="normal">The source vector.</param><param name="matrix">The transformation matrix.</param><param name="result">[OutAttribute] The Vector2D resulting from the transformation.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D,VRageMath.Quaternion)">
+            <summary>
+            Transforms a single Vector2D, or the vector normal (x, y, 0, 0), by a specified Quaternion rotation.
+            </summary>
+            <param name="value">The vector to rotate.</param><param name="rotation">The Quaternion rotation to apply.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D@,VRageMath.Quaternion@,VRageMath.Vector2D@)">
+            <summary>
+            Transforms a Vector2D, or the vector normal (x, y, 0, 0), by a specified Quaternion rotation.
+            </summary>
+            <param name="value">The vector to rotate.</param><param name="rotation">The Quaternion rotation to apply.</param><param name="result">[OutAttribute] An existing Vector2D filled in with the result of the rotation.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D[],VRageMath.Matrix@,VRageMath.Vector2D[])">
+            <summary>
+            Transforms an array of Vector2s by a specified Matrix.
+            </summary>
+            <param name="sourceArray">The array of Vector2s to transform.</param><param name="matrix">The transform Matrix to apply.</param><param name="destinationArray">An existing array into which the transformed Vector2s are written.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D[],System.Int32,VRageMath.Matrix@,VRageMath.Vector2D[],System.Int32,System.Int32)">
+            <summary>
+            Transforms a specified range in an array of Vector2s by a specified Matrix and places the results in a specified range in a destination array.
+            </summary>
+            <param name="sourceArray">The source array.</param><param name="sourceIndex">The index of the first Vector2D to transform in the source array.</param><param name="matrix">The Matrix to transform by.</param><param name="destinationArray">The destination array into which the resulting Vector2s will be written.</param><param name="destinationIndex">The index of the position in the destination array where the first result Vector2D should be written.</param><param name="length">The number of Vector2s to be transformed.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.TransformNormal(VRageMath.Vector2D[],VRageMath.Matrix@,VRageMath.Vector2D[])">
+            <summary>
+            Transforms an array of Vector2D vector normals by a specified Matrix.
+            </summary>
+            <param name="sourceArray">The array of vector normals to transform.</param><param name="matrix">The transform Matrix to apply.</param><param name="destinationArray">An existing array into which the transformed vector normals are written.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.TransformNormal(VRageMath.Vector2D[],System.Int32,VRageMath.Matrix@,VRageMath.Vector2D[],System.Int32,System.Int32)">
+            <summary>
+            Transforms a specified range in an array of Vector2D vector normals by a specified Matrix and places the results in a specified range in a destination array.
+            </summary>
+            <param name="sourceArray">The source array.</param><param name="sourceIndex">The index of the first Vector2D to transform in the source array.</param><param name="matrix">The Matrix to apply.</param><param name="destinationArray">The destination array into which the resulting Vector2s are written.</param><param name="destinationIndex">The index of the position in the destination array where the first result Vector2D should be written.</param><param name="length">The number of vector normals to be transformed.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D[],VRageMath.Quaternion@,VRageMath.Vector2D[])">
+            <summary>
+            Transforms an array of Vector2s by a specified Quaternion.
+            </summary>
+            <param name="sourceArray">The array of Vector2s to transform.</param><param name="rotation">The transform Matrix to use.</param><param name="destinationArray">An existing array into which the transformed Vector2s are written.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Transform(VRageMath.Vector2D[],System.Int32,VRageMath.Quaternion@,VRageMath.Vector2D[],System.Int32,System.Int32)">
+            <summary>
+            Transforms a specified range in an array of Vector2s by a specified Quaternion and places the results in a specified range in a destination array.
+            </summary>
+            <param name="sourceArray">The source array.</param><param name="sourceIndex">The index of the first Vector2D to transform in the source array.</param><param name="rotation">The Quaternion rotation to apply.</param><param name="destinationArray">The destination array into which the resulting Vector2s are written.</param><param name="destinationIndex">The index of the position in the destination array where the first result Vector2D should be written.</param><param name="length">The number of Vector2s to be transformed.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Negate(VRageMath.Vector2D)">
+            <summary>
+            Returns a vector pointing in the opposite direction.
+            </summary>
+            <param name="value">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Negate(VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Returns a vector pointing in the opposite direction.
+            </summary>
+            <param name="value">Source vector.</param><param name="result">[OutAttribute] Vector pointing in the opposite direction.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Add(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Adds two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Add(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Adds two vectors.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] Sum of the source vectors.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Subtract(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Subtracts a vector from a vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Subtract(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Subtracts a vector from a vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The result of the subtraction.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Multiply(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Multiplies the components of two vectors by each other.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Multiply(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Multiplies the components of two vectors by each other.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The result of the multiplication.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Multiply(VRageMath.Vector2D,System.Double)">
+            <summary>
+            Multiplies a vector by a scalar value.
+            </summary>
+            <param name="value1">Source vector.</param><param name="scaleFactor">Scalar value.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Multiply(VRageMath.Vector2D@,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Multiplies a vector by a scalar value.
+            </summary>
+            <param name="value1">Source vector.</param><param name="scaleFactor">Scalar value.</param><param name="result">[OutAttribute] The result of the multiplication.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Divide(VRageMath.Vector2D,VRageMath.Vector2D)">
+            <summary>
+            Divides the components of a vector by the components of another vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">Divisor vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Divide(VRageMath.Vector2D@,VRageMath.Vector2D@,VRageMath.Vector2D@)">
+            <summary>
+            Divides the components of a vector by the components of another vector.
+            </summary>
+            <param name="value1">Source vector.</param><param name="value2">The divisor.</param><param name="result">[OutAttribute] The result of the division.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Divide(VRageMath.Vector2D,System.Double)">
+            <summary>
+            Divides a vector by a scalar value.
+            </summary>
+            <param name="value1">Source vector.</param><param name="divider">The divisor.</param>
+        </member>
+        <member name="M:VRageMath.Vector2D.Divide(VRageMath.Vector2D@,System.Double,VRageMath.Vector2D@)">
+            <summary>
+            Divides a vector by a scalar value.
+            </summary>
+            <param name="value1">Source vector.</param><param name="divider">The divisor.</param><param name="result">[OutAttribute] The result of the division.</param>
         </member>
         <member name="T:VRageMath.Vector4D">
             <summary>
@@ -3576,7 +4570,6 @@
             Called when standalone object is removed from cluster
             </summary>
             <param name="userData"></param>
-            <param name="clusterObjectID"></param>
         </member>
         <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.ActivateBatch(System.Object,System.UInt64)">
             <summary>
@@ -3590,7 +4583,6 @@
             Called when multiple objects are removed from cluster.
             </summary>
             <param name="userData"></param>
-            <param name="clusterObjectID"></param>
         </member>
         <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.FinishAddBatch">
             <summary>
@@ -4080,6 +5072,14 @@
             Transforms a Vector3 by the given Matrix.
             </summary>
             <param name="position">The source Vector3.</param><param name="matrix">The transformation Matrix.</param><param name="result">[OutAttribute] The transformed vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector3D.TransformNoProjection(VRageMath.Vector3D@,VRageMath.MatrixD@,VRageMath.Vector3D@)">
+            Transform the provided vector only about the rotation, scale and translation terms of a matrix.
+            
+            This effectively treats the matrix as a 3x4 matrix and the input vector as a 4 dimensional vector with unit W coordinate.
+        </member>
+        <member name="M:VRageMath.Vector3D.RotateAndScale(VRageMath.Vector3D@,VRageMath.MatrixD@,VRageMath.Vector3D@)">
+            Transform the provided vector only about the rotation and scale terms of a matrix.
         </member>
         <member name="M:VRageMath.Vector3D.TransformNormal(VRageMath.Vector3D,VRageMath.Matrix)">
             <summary>
@@ -8606,6 +9606,14 @@
             Transforms a Vector3 by the given Matrix.
             </summary>
             <param name="position">The source Vector3.</param><param name="matrix">The transformation Matrix.</param><param name="result">[OutAttribute] The transformed vector.</param>
+        </member>
+        <member name="M:VRageMath.Vector3.TransformNoProjection(VRageMath.Vector3@,VRageMath.Matrix@,VRageMath.Vector3@)">
+            Transform the provided vector only about the rotation, scale and translation terms of a matrix.
+            
+            This effectively treats the matrix as a 3x4 matrix and the input vector as a 4 dimensional vector with unit W coordinate.
+        </member>
+        <member name="M:VRageMath.Vector3.RotateAndScale(VRageMath.Vector3@,VRageMath.Matrix@,VRageMath.Vector3@)">
+            Transform the provided vector only about the rotation and scale terms of a matrix.
         </member>
         <member name="M:VRageMath.Vector3.TransformNormal(VRageMath.Vector3,VRageMath.Matrix)">
             <summary>

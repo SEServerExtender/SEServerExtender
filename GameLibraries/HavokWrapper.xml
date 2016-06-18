@@ -4,14 +4,6 @@
         "HavokWrapper"
     </assembly>
     <members>
-        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
-
-Make sure that input has set its BreakableBody parent.
-
-</member>
-        <member name="M:hkpSmartListShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
 </member>
@@ -121,45 +113,6 @@ If set to false, a random shape will be chosen for splitting on each recursion l
         <member name="P:Havok.HkdDecomposeFracture.ShiftToSmallerCrossSection">
 The actual position of the split can be shifted towards (or away from) the physics object (out of the two "connected" parts) with the smaller cross-section. See the user guide for more details on this.
 </member>
-        <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Sets the color properties of the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getColors(hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Gets the color properties of the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.addTexture(hkMeshTexture*)">
-Adds a texture to the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getTexture(System.Int32)">
-Interface describing the texture at index
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getNumTextures">
-Number of textures used by the material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.getName">
-Gets the name of the material. Returns HK_NULL if the material is not named.
-</member>
-        <member name="M:Havok.hkdMeshMaterial.setName(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*)">
-Sets the name of the material.
-</member>
-        <member name="M:Havok.hkdMeshMaterial.equals(hkMeshMaterial!System.Runtime.CompilerServices.IsConst*)">
-Tests whether two materials are equal
-</member>
-        <member name="M:Havok.hkdMeshMaterial.isCompatible(hkMeshVertexBuffer!System.Runtime.CompilerServices.IsConst*)">
-Returns true if this vertex buffer is suitable for this material
-</member>
-        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexBuffer(hkMeshVertexBuffer*)">
-Constructs a suitable vertex buffer based on the input.
-If the input is suitable, may return the input ref'd.
-</member>
-        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexFormat(hkVertexFormat!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVertexFormat*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Returns a vertex buffer format that is compatible with this material
-</member>
-        <member name="T:Havok.hkdMeshMaterial">
-
-!! IMPORTANT : Use only its id as identifier to our material !!
-
-</member>
         <member name="M:Havok.HkTriggerVolume.UpdateOverlaps">
 Call this to update the triggerVolume outside the physics step.
 triggerEventCallbacks may be fired with types ENTERED_EVENT and LEFT_EVENT.
@@ -206,11 +159,140 @@ Input value is rounded down to a multiple of 8. Values between 8 and 128 are acc
 Gets shape keys, for debug purposes, allocates!
 </summary>
         </member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
+This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
+
+
+This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
+
+</member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrame(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
+Change velocities of body to move to future(position, orientation) in time deltaTime.
+
+
+Change velocities of body to move to future(position, orientation) in time deltaTime.
+
+</member>
+        <member name="M:Havok.HkKeyFrameUtility.ApplySoftKeyFrame(Havok.HkKeyFrameInfo,Havok.HkAccelerationInfo,System.Single,System.Single,Havok.HkRigidBody)">
+Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
+
+
+Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxAllowedDistance">
+If the distance between object and keyframe gets bigger than the max allowed distance, the object is immediately "warped" to the correct keyframe position / orientation, and corresponding velocities.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxAngularAcceleration">
+The maximum angular accelerations(m / sec2).
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.MaxLinearAcceleration">
+Maximum linear acceleration.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.AngularVelocityFactor">
+This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.LinearVelocityFactor">
+This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.AngularPositionFactor">
+This parameter controls the angular stiffness of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="P:Havok.HkAccelerationInfo.LinearPositionFactor">
+This parameter controls the linear stiffness of applySoftKeyFrame, its units are 1 / Time.
+
+</member>
+        <member name="T:Havok.HkAccelerationInfo">
+Specifies acceleration details for hkpKeyFrameUtility::applySoftKeyFrame()
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.AngularVelocity">
+The current angular velocity.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.LinearVelocity">
+The current velocity.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.Orientation">
+The current orientation.
+
+</member>
+        <member name="P:Havok.HkKeyFrameInfo.Position">
+The current "centre-of-mass" position of a keyframe.
+
+</member>
+        <member name="M:Havok.HkKeyFrameInfo.FastSetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
+Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.Uses approximation of angular velocity.
+
+</member>
+        <member name="M:Havok.HkKeyFrameInfo.SetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
+Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.
+
+</member>
+        <member name="T:Havok.HkKeyFrameInfo">
+Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame. 
+NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
+
+</member>
         <member name="M:hkpUniformGridShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
 </member>
         <member name="M:hkpGridShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:hkpSmartListShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:Havok.HkdBreakableBodyFactory.CreateBreakableBody(Havok.HkdShapeInstanceInfo,Havok.HkdCreateBodyInput)">
+
+Make sure that input has set its BreakableBody parent.
+
+</member>
+        <member name="M:Havok.hkdMeshMaterial.setColors(hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Sets the color properties of the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getColors(hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVector4f*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Gets the color properties of the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.addTexture(hkMeshTexture*)">
+Adds a texture to the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getTexture(System.Int32)">
+Interface describing the texture at index
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getNumTextures">
+Number of textures used by the material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.getName">
+Gets the name of the material. Returns HK_NULL if the material is not named.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.setName(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*)">
+Sets the name of the material.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.equals(hkMeshMaterial!System.Runtime.CompilerServices.IsConst*)">
+Tests whether two materials are equal
+</member>
+        <member name="M:Havok.hkdMeshMaterial.isCompatible(hkMeshVertexBuffer!System.Runtime.CompilerServices.IsConst*)">
+Returns true if this vertex buffer is suitable for this material
+</member>
+        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexBuffer(hkMeshVertexBuffer*)">
+Constructs a suitable vertex buffer based on the input.
+If the input is suitable, may return the input ref'd.
+</member>
+        <member name="M:Havok.hkdMeshMaterial.createCompatibleVertexFormat(hkVertexFormat!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,hkVertexFormat*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Returns a vertex buffer format that is compatible with this material
+</member>
+        <member name="T:Havok.hkdMeshMaterial">
+
+!! IMPORTANT : Use only its id as identifier to our material !!
+
 </member>
         <member name="M:Havok.HkdBreakableBodyListener.afterBreakableBodyControllerOperation(hkdBreakableBody*)">
 Called after the breakable body's controller world operation has executed
@@ -611,86 +693,9 @@ Returns HK_FAILURE if stabilization factor is not supported by this constraint.
         <member name="P:Havok.HkConstraintData.BreachImpulse">
 Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
 </member>
-        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrameAsynchronously(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
-This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
-
-
-This should be used instead of hkpKeyFrameUtility::applyHardKeyFrame() when stepping asynchronously.
-
-</member>
-        <member name="M:Havok.HkKeyFrameUtility.ApplyHardKeyFrame(VRageMath.Vector4@,VRageMath.Quaternion@,System.Single,Havok.HkRigidBody)">
-Change velocities of body to move to future(position, orientation) in time deltaTime.
-
-
-Change velocities of body to move to future(position, orientation) in time deltaTime.
-
-</member>
-        <member name="M:Havok.HkKeyFrameUtility.ApplySoftKeyFrame(Havok.HkKeyFrameInfo,Havok.HkAccelerationInfo,System.Single,System.Single,Havok.HkRigidBody)">
-Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
-
-
-Change velocities of body to move towards keyframe given acceleration guidelines, in time deltaTime.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.MaxAllowedDistance">
-If the distance between object and keyframe gets bigger than the max allowed distance, the object is immediately "warped" to the correct keyframe position / orientation, and corresponding velocities.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.MaxAngularAcceleration">
-The maximum angular accelerations(m / sec2).
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.MaxLinearAcceleration">
-Maximum linear acceleration.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.AngularVelocityFactor">
-This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.LinearVelocityFactor">
-This parameter controls the velocity control of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.AngularPositionFactor">
-This parameter controls the angular stiffness of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="P:Havok.HkAccelerationInfo.LinearPositionFactor">
-This parameter controls the linear stiffness of applySoftKeyFrame, its units are 1 / Time.
-
-</member>
-        <member name="T:Havok.HkAccelerationInfo">
-Specifies acceleration details for hkpKeyFrameUtility::applySoftKeyFrame()
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.AngularVelocity">
-The current angular velocity.
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.LinearVelocity">
-The current velocity.
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.Orientation">
-The current orientation.
-
-</member>
-        <member name="P:Havok.HkKeyFrameInfo.Position">
-The current "centre-of-mass" position of a keyframe.
-
-</member>
-        <member name="M:Havok.HkKeyFrameInfo.FastSetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
-Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.Uses approximation of angular velocity.
-
-</member>
-        <member name="M:Havok.HkKeyFrameInfo.SetUsingPositionOrientationPair(VRageMath.Vector4@,VRageMath.Quaternion@,VRageMath.Vector4@,VRageMath.Quaternion@,System.Single)">
-Convenience function for setting velocities if you only have "centre-of-mass" positions and orientations.
-
-</member>
-        <member name="T:Havok.HkKeyFrameInfo">
-Specifies keyframe details for hkpKeyFrameUtility::applySoftKeyFrame. 
-NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. To convert a Local position to a "centre-of-mass" position, you must add on rb-&gt;getCentreOfMassLocal() rotated by m_orientation. It contains the current keyframe position, orientation, angular velocity, and linear velocity. It also provides functions for calculating the angular and linear velocities if you only have the current and target positions and orientations.
+        <member name="M:Havok.HkRigidBody.OnReaddedToWorld">
+Destruction will sometimes remove entities from world momentarily.
+This method exists to fix stuff up after that.
 
 </member>
         <member name="M:Havok.HkRigidBody.ApplyTorque(System.Single,VRageMath.Vector3)">

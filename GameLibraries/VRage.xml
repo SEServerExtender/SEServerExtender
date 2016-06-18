@@ -1044,6 +1044,11 @@
             </summary>
             <param name="keyframes"></param>
         </member>
+        <member name="T:VRageRender.MyRenderMessageUpdateRenderInstanceBufferRange">
+            This is kinda your universal array operator splice().
+            
+            The only thing is we cannot move elements with this.
+        </member>
         <member name="F:VRageRender.RenderProfilerCommand.Enable">
             <summary>
             Only enables the profiler, used by the developer debug window
@@ -1605,7 +1610,7 @@
             Must be possible to query during startup before render thread and window is created.
             </summary>
         </member>
-        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32[],System.UInt32[],System.Nullable{VRageMath.Color},System.Single,System.UInt64)">
+        <member name="M:VRageRender.MyRenderProxy.UpdateModelHighlight(System.UInt32,System.Int32[],System.UInt32[],System.Nullable{VRageMath.Color},System.Single,System.UInt64,System.Int32)">
             <param name="thickness">Zero or negative to remove highlight</param>
         </member>
         <member name="M:VRageRender.MyRenderProxy.ChangeModel(System.UInt32,System.Int32,System.String,System.Boolean)">
@@ -2305,6 +2310,11 @@
         <member name="M:VRage.Utils.MyDiscreteSampler.Prepare(System.Collections.Generic.IEnumerable{System.Single})">
             The list supplied to the method does not have to add up to 1.0f, that's why it's called "densities" instead of "probabilities"
         </member>
+        <member name="M:VRage.Utils.MyDiscreteSampler.Sample(System.Single)">
+            Beware that Cestmir thinks this can be less precise if you have a billiard numbers.
+            
+            He is probably right. So only use this version if you don't care.
+        </member>
         <member name="T:VRage.Utils.MyStringHash">
             <summary>
             Generates string hashes deterministically and crashes on collisions. When used as key for hash tables (Dictionary or HashSet)
@@ -2862,6 +2872,9 @@
             Functions for transforming to and from various coordinate systems in voxel maps and for computing bounding boxes of various types of cells.
             Note that local and world positions are (and should be) always in the min-corner!
             </summary>
+            
+            TODO: Review this whole class
+            These are half wrong/ don't consider world matrix, beware
         </member>
     </members>
 </doc>

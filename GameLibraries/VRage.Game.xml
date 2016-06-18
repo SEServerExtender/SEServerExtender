@@ -58,7 +58,6 @@
             Indicates whether a session component should be used in current configuration.
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
-            TODO: Make obsolete
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
             <summary>
@@ -148,6 +147,9 @@
             Remove a definition if on the set.
         </member>
         <member name="M:VRage.Game.MyDefinitionSet.GetDefinitionsOfType``1">
+            Get all definitions of a given type.
+        </member>
+        <member name="M:VRage.Game.MyDefinitionSet.GetDefinitionsOfTypeAndSubtypes``1">
             Get all definitions of a given type.
         </member>
         <member name="M:VRage.Game.MyDefinitionSet.OverrideBy(VRage.Game.MyDefinitionSet)">
@@ -423,6 +425,11 @@
         <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.RenderObjectID">
             <summary>
             Render ID of objects 
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.InstanceID">
+            <summary>
+            Instance ID of objects (this should mostly be unused
             </summary>
         </member>
         <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.ShowOverlay">
@@ -1300,6 +1307,15 @@
             <param name="steamId"></param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMySession.SetComponentUpdateOrder(VRage.Game.Components.MySessionComponentBase,VRage.Game.Components.MyUpdateOrder)">
+            <summary>
+            Change the update order of a session component.
+            
+            There is a proxy for this method in the session component itself.
+            </summary>
+            <param name="component">The component to set the update order for</param>
+            <param name="order">The update order</param>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMySession.Config">
             <summary>
             Obtaining values from config is slow and can allocate memory!
@@ -1726,6 +1742,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
+        </member>
         <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
@@ -1817,9 +1838,20 @@
             <param name="lineBuffer"></param>
             <param name="divideRatio"></param>
         </member>
-        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+        <member name="F:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.Static">
             <summary>
-            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            Default type metadata manager.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.RegisterAssembly(System.Reflection.Assembly)">
+            <summary>
+            Register an assembly and it's types metadata.
+            </summary>
+            <param name="assembly">Assembly to register.</param>
+        </member>
+        <member name="M:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.Init">
+            <summary>
+            Initalize the registry with all the defautl game assemblies.
             </summary>
         </member>
         <member name="F:VRage.Game.Utils.MyCamera.CameraShake">
@@ -2446,6 +2478,9 @@
             Allocated new entity ID (won't add to list)
             Entity with this ID should be added immediatelly
             </summary>
+        </member>
+        <member name="M:VRage.MyEntityIdentifier.ConstructIdFromString(VRage.MyEntityIdentifier.ID_OBJECT_TYPE,System.String)">
+            Construct an ID using the hash from a string.
         </member>
         <member name="M:VRage.MyEntityIdentifier.SwapRegisteredEntityId(VRage.ModAPI.IMyEntity,System.Int64,System.Int64)">
             <summary>
@@ -3686,6 +3721,11 @@
         <member name="F:MyCommonTexts.MessageBoxCaptionWarning">
             <summary>
             WARNING
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxModsMismatch">
+            <summary>
+            These mods were created in development version. They could cause issues in game
             </summary>
         </member>
         <member name="F:MyCommonTexts.MessageBoxTextOpenBrowser">
@@ -5046,7 +5086,7 @@
         </member>
         <member name="F:MyCommonTexts.ProgressTextDownloadingMods">
             <summary>
-            Downloading mods ... please wait.
+            Downloading mod 
             </summary>
         </member>
         <member name="F:MyCommonTexts.NotificationClientCannotSave">
@@ -6034,6 +6074,11 @@
             Tonemapping
             </summary>
         </member>
+        <member name="F:MyCommonTexts.WorldSettings_VegetationDistance">
+            <summary>
+            Vegetation View Distance
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.WorldSettings_GrassDensity">
             <summary>
             Grass density
@@ -6476,37 +6521,6 @@
         <member name="T:VRage.Game.MyPlanetMaterialGroup">
             Rule group defines a material mappable set of surface rules.
         </member>
-        <member name="M:VRage.Game.MyRangeValue.ConvertToCosine">
-            When the range is an angle this method changes it to the cosines of the angle.
-            
-            The angle is expected to be in degrees.
-            
-            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
-            
-        </member>
-        <member name="M:VRage.Game.MyRangeValue.ConvertToSine">
-            When the range is an angle this method changes it to the sines of the angle.
-            
-            The angle is expected to be in degrees.
-        </member>
-        <member name="T:VRage.Game.MyReflectiveRangeValue">
-            Reflective because it can be reflected to the oposite range.
-            
-            Structs not inheriting from structs is stupid.
-        </member>
-        <member name="M:VRage.Game.MyReflectiveRangeValue.ConvertToCosine">
-            When the range is an angle this method changes it to the cosines of the angle.
-            
-            The angle is expected to be in degrees.
-            
-            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
-            
-        </member>
-        <member name="M:VRage.Game.MyReflectiveRangeValue.ConvertToSine">
-            When the range is an angle this method changes it to the sines of the angle.
-            
-            The angle is expected to be in degrees.
-        </member>
         <member name="F:VRage.Game.ObjectBuilders.MyComponentBlockEntry.Main">
             <summary>
             Whether the given block should be used when spawning the component which it contains
@@ -6562,12 +6576,6 @@
             [Concrete] Data to be stored/is stored as XML.
             </summary>
         </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers">
-            <summary>
-            Register all object builders in game assemblies and loads serializers. This function must be called after links to assemblies in MyPlugins are set!
-            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
-            </summary>
-        </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.GenerateAssemblyId(System.Type)">
             <summary>Generates an identifier for the assembly of a specified type</summary>
             <remarks>Code copied from the .NET serialization classes - to emulate the same bahavior</remarks>
@@ -6583,12 +6591,6 @@
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
             <summary>
             Can handle old values as well.
-            </summary>
-        </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.RegisterAssemblies">
-            <summary>
-            Register all object builders types from game assemblies. This function must be called after links to assemblies in MyPlugins are set!
-            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
             </summary>
         </member>
         <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">
