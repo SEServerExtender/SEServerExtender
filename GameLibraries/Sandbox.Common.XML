@@ -4,6 +4,128 @@
         <name>Sandbox.Common</name>
     </assembly>
     <members>
+        <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
+            <summary>
+            Raises AppendingCustomInfo so every subscriber can append custom info.
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyTerminalBlock.AppendingCustomInfo">
+            <summary>
+            Event to append custom info.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
+            <summary>
+            Indicates whether door is opened or closed. True when door is opened.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
+            <summary>
+            Door state, zero is fully closed. One is fully opened.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.CanUseBlueprint(VRage.Game.MyDefinitionBase)">
+            <summary>
+            Can this production block produce this blueprint?
+            </summary>
+            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.AddQueueItem(VRage.Game.MyDefinitionBase,VRage.MyFixedPoint)">
+            <summary>
+            Adds a blueprint to the production queue
+            </summary>
+            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.InsertQueueItem(System.Int32,VRage.Game.MyDefinitionBase,VRage.MyFixedPoint)">
+            <summary>
+            Inserts a blueprint into the production queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.GetQueue">
+            <summary>
+            Gets the current production queue
+            </summary>
+            <returns>List of MyProductionQueueItems</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.RemoveQueueItem(System.Int32,VRage.MyFixedPoint)">
+            <summary>
+            Removes an item from the queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="amount">Amount to remove</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.ClearQueue">
+            <summary>
+            Clears the Queue
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetNaturalGravity">
+            <summary>
+            Gets the detected natural gravity vector and power at the current location.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetArtificialGravity">
+            <summary>
+            Gets the detected artificial gravity vector and power at the current location.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetTotalGravity">
+            <summary>
+            Gets the total accumulated gravity vector and power at the current location, 
+            taking both natural and artificial gravity into account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetShipSpeed">
+            <summary>
+            Gets the basic ship speed in meters per second, for when you just need to know how fast you're going.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetShipVelocities">
+            <summary>
+            Determines the linear velocities in meters per second and angular velocities in radians per second. 
+            Provides a more accurate representation of the directions and axis speeds.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.CalculateShipMass">
+            <summary>
+            Gets information about the current mass of the ship.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
+            <summary>
+            Indicates whether a block is locally or remotely controlled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlWheels">
+            <summary>
+            Indicates whether wheels are being controlled by this controller.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlThrusters">
+            <summary>
+            Indicates whether thrusters are being controlled by this controller.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.HandBrake">
+            <summary>
+            Indicates the current state of the handbrake.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.DampenersOverride">
+            <summary>
+            Indicates whether dampeners are currently enabled.
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.IMyGridProgram">
             <summary>
             The interface for the grid program provides extra access for the game and for mods. See <see cref="T:Sandbox.ModAPI.Ingame.MyGridProgram"/> for the class the scripts
@@ -62,14 +184,79 @@
             Determines whether this grid program has a valid Save method.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
+        <member name="T:Sandbox.ModAPI.IMyInventoryBag">
             <summary>
-            Raises AppendingCustomInfo so every subscriber can append custom info.
+            Inventory bag spawned when character died, container breaks, or when entity from other inventory cannot be spawned then bag spawned with the item in its inventory.
             </summary>
         </member>
-        <member name="E:Sandbox.ModAPI.IMyTerminalBlock.AppendingCustomInfo">
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRage.ModAPI.IMyEntity)">
             <summary>
-            Event to append custom info.
+            Tracks entity with enabled position prediction
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRageMath.Vector3D,VRageMath.Vector3)">
+            <summary>
+            Tracks given target with enabled position prediction
+            </summary>
+            <param name="pos"></param>
+            <param name="velocity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRage.ModAPI.IMyEntity)">
+            <summary>
+            Tracks target without position prediction
+            </summary>
+            <param name="Entity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRageMath.Vector3D)">
+            <summary>
+            Targets given position
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncElevation">
+            <summary>
+            method used to sync elevation of turret , you need to call it to sync elevation for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncAzimuth">
+            <summary>
+            method used to sync azimuth, you need to call it to sync azimuth for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncEnableIdleRotation">
+            <summary>
+            method used to sync idle rotation and elevation, you need to call it to sync rotation and elevation for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.ResetTargetingToDefault">
+            <summary>
+            resert targeting to default values
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.IsUnderControl">
+            <summary>
+            Indicates whether a block is locally or remotely controlled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
+            <summary>
+            Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Azimuth">
+            <summary>
+            Sets/gets azimuth of turret, this method is not synced, you need to sync azimuth manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.EnableIdleRotation">
+            <summary>
+            enable/disable idle rotation for turret, this method is not synced, you need to sync manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.AIEnabled">
+            <summary>
+            Checks is AI is enabled for turret
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyLaserAntenna">
@@ -113,14 +300,14 @@
             Flag if antenna requires LoS - for modded antenas
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorRotor.IsAttached">
             <summary>
-            Indicates whether door is opened or closed. True when door is opened.
+            Gets whether the rotor is attached to a stator/suspension block
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
+        <member name="P:Sandbox.ModAPI.IMyMotorRotor.Stator">
             <summary>
-            Door state, zero is fully closed. One is fully opened.
+            Gets the attached stator/suspension block
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Attach">
@@ -259,44 +446,23 @@
             Gets the attached piston block
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.CanUseBlueprint(VRage.Game.MyDefinitionBase)">
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
             <summary>
-            Can this production block produce this blueprint?
+            Attempts to run this programmable block using the given argument. An already running
+            programmable block cannot be run again.
+            This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
             </summary>
-            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
-            <returns></returns>
+            <param name="argument"></param>
+            <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.AddQueueItem(VRage.Game.MyDefinitionBase,VRage.MyFixedPoint)">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.IsRunning">
             <summary>
-            Adds a blueprint to the production queue
+            This programmable block is currently running its program.
             </summary>
-            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
-            <param name="amount">Amount of items</param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.InsertQueueItem(System.Int32,VRage.Game.MyDefinitionBase,VRage.MyFixedPoint)">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TerminalRunArgument">
             <summary>
-            Inserts a blueprint into the production queue
-            </summary>
-            <param name="idx">Index of the item</param>
-            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
-            <param name="amount">Amount of items</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.GetQueue">
-            <summary>
-            Gets the current production queue
-            </summary>
-            <returns>List of MyProductionQueueItems</returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.RemoveQueueItem(System.Int32,VRage.MyFixedPoint)">
-            <summary>
-            Removes an item from the queue
-            </summary>
-            <param name="idx">Index of the item</param>
-            <param name="amount">Amount to remove</param>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.ClearQueue">
-            <summary>
-            Clears the Queue
+            Contains the value of the default terminal argument.
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyProjector.UpdateOffsetAndRotation">
@@ -347,7 +513,7 @@
             <param name="checkHavokIntersections"></param>
             <returns></returns>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyProjector.Build(VRage.Game.ModAPI.IMySlimBlock,System.Int64,System.Int64)">
+        <member name="M:Sandbox.ModAPI.IMyProjector.Build(VRage.Game.ModAPI.IMySlimBlock,System.Int64,System.Int64,System.Boolean)">
             <summary>
             Adds the first component to construction stockpile and creates the block.
             This doesn't remove materials from inventory on its own.
@@ -355,10 +521,31 @@
             <param name="cubeBlock"></param>
             <param name="owner"></param>
             <param name="builder"></param>
+            <param name="requestInstant"></param>
         </member>
         <member name="P:Sandbox.ModAPI.IMyProjector.ProjectedGrid">
             <summary>
             The grid currently being projected. Will return null if there is no active projection.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyRadioAntenna">
+            <summary>
+            Antenna block interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.Radius">
+            <summary>
+            Broadcasting/Receiving range (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.ShowShipName">
+            <summary>
+            Show shipname on hud (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IsBroadcasting">
+            <summary>
+            Returns true if antena is broadcasting (read-only)
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.CurrentOutput">
@@ -371,14 +558,77 @@
             Maximum output of reactor in Megawatts
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorRotor.IsAttached">
+        <member name="T:Sandbox.ModAPI.IMyScriptBlacklistBatch">
             <summary>
-            Gets whether the rotor is attached to a stator/suspension block
+                A handle which enables adding members to the blacklist in a batch. It is highly
+                recommended that you try to group your changes into as few batches as possible.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyMotorRotor.Stator">
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.AddNamespaceOfTypes(System.Type[])">
             <summary>
-            Gets the attached stator/suspension block
+                Adds the entire namespace of one or more given types to the blacklist
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.RemoveNamespaceOfTypes(System.Type[])">
+            <summary>
+                Removes namespaces previously added with <see cref="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.AddNamespaceOfTypes(System.Type[])"/> from the blacklist.
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.AddTypes(System.Type[])">
+            <summary>
+                Adds one or more specific types and all their members to the blacklist.
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.RemoveTypes(System.Type[])">
+            <summary>
+                Removes types previously added with <see cref="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.AddTypes(System.Type[])"/> from the blacklist.
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.AddMembers(System.Type,System.String[])">
+            <summary>
+                Adds only the specified members to the blacklist.
+            </summary>
+            <param name="type"></param>
+            <param name="memberNames"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.RemoveMembers(System.Type,System.String[])">
+            <summary>
+                Removes types previously added with <see cref="M:Sandbox.ModAPI.IMyScriptBlacklistBatch.AddMembers(System.Type,System.String[])"/> to the blacklist.
+            </summary>
+            <param name="type"></param>
+            <param name="memberNames"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.ClearWaypoints">
+            <summary>
+            Removes all existing waypoints.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.GetWaypointInfo(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyWaypointInfo})">
+            <summary>
+            Gets basic information about the currently configured waypoints.
+            </summary>
+            <param name="waypoints"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.AddWaypoint(VRageMath.Vector3D,System.String)">
+            <summary>
+            Adds a new waypoint.
+            </summary>
+            <param name="coords"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.SetAutoPilotEnabled(System.Boolean)">
+            <summary>
+            Enables or disables the autopilot.
+            </summary>
+            <param name="enabled"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRemoteControl.IsAutoPilotEnabled">
+            <summary>
+            Determines whether the autopilot is currently enabled.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
@@ -505,6 +755,21 @@
             or even on specific blocks by entityId)
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyThrust.ThrustOverride">
+            <summary>
+            Gets the override thrust amount, in Newtons (N)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyThrust.MaxThrust">
+            <summary>
+            Gets the maximum thrust amount, in Newtons (N)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyThrust.CurrentThrust">
+            <summary>
+            Gets the current thrust amount, in Newtons (N)
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.IMyUpgradableBlock">
             <summary>
             interface to retrieve upgrade effects from block <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock"/>
@@ -565,158 +830,6 @@
             Gets the current number of method calls.
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyRadioAntenna">
-            <summary>
-            Antenna block interface
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.Radius">
-            <summary>
-            Broadcasting/Receiving range (read-only)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.ShowShipName">
-            <summary>
-            Show shipname on hud (read-only)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IsBroadcasting">
-            <summary>
-            Returns true if antena is broadcasting (read-only)
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetNaturalGravity">
-            <summary>
-            Gets the detected natural gravity vector and power at the current location.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetArtificialGravity">
-            <summary>
-            Gets the detected artificial gravity vector and power at the current location.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetTotalGravity">
-            <summary>
-            Gets the total accumulated gravity vector and power at the current location, 
-            taking both natural and artificial gravity into account.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetShipSpeed">
-            <summary>
-            Gets the basic ship speed in meters per second, for when you just need to know how fast you're going.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetShipVelocities">
-            <summary>
-            Determines the linear velocities in meters per second and angular velocities in radians per second. 
-            Provides a more accurate representation of the directions and axis speeds.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.CalculateShipMass">
-            <summary>
-            Gets information about the current mass of the ship.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
-            <summary>
-            Indicates whether a block is locally or remotely controlled.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlWheels">
-            <summary>
-            Indicates whether wheels are being controlled by this controller.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlThrusters">
-            <summary>
-            Indicates whether thrusters are being controlled by this controller.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.HandBrake">
-            <summary>
-            Indicates the current state of the handbrake.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.DampenersOverride">
-            <summary>
-            Indicates whether dampeners are currently enabled.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRage.ModAPI.IMyEntity)">
-            <summary>
-            Tracks entity with enabled position prediction
-            </summary>
-            <param name="entity"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRageMath.Vector3D,VRageMath.Vector3)">
-            <summary>
-            Tracks given target with enabled position prediction
-            </summary>
-            <param name="pos"></param>
-            <param name="velocity"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRage.ModAPI.IMyEntity)">
-            <summary>
-            Tracks target without position prediction
-            </summary>
-            <param name="Entity"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRageMath.Vector3D)">
-            <summary>
-            Targets given position
-            </summary>
-            <param name="pos"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncElevation">
-            <summary>
-            method used to sync elevation of turret , you need to call it to sync elevation for other clients/server
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncAzimuth">
-            <summary>
-            method used to sync azimuth, you need to call it to sync azimuth for other clients/server
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncEnableIdleRotation">
-            <summary>
-            method used to sync idle rotation and elevation, you need to call it to sync rotation and elevation for other clients/server
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.ResetTargetingToDefault">
-            <summary>
-            resert targeting to default values
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.IsUnderControl">
-            <summary>
-            Indicates whether a block is locally or remotely controlled.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
-            <summary>
-            Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Azimuth">
-            <summary>
-            Sets/gets azimuth of turret, this method is not synced, you need to sync azimuth manually
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.EnableIdleRotation">
-            <summary>
-            enable/disable idle rotation for turret, this method is not synced, you need to sync manually
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.AIEnabled">
-            <summary>
-            Checks is AI is enabled for turret
-            </summary>
-        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
             <summary>
             Wheel's current steering angle
@@ -747,25 +860,6 @@
             Set/get brake applied to the wheel.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
-            <summary>
-            Attempts to run this programmable block using the given argument. An already running
-            programmable block cannot be run again.
-            This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
-            </summary>
-            <param name="argument"></param>
-            <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.IsRunning">
-            <summary>
-            This programmable block is currently running its program.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TerminalRunArgument">
-            <summary>
-            Contains the value of the default terminal argument.
-            </summary>
-        </member>
         <member name="T:Sandbox.ModAPI.Ingame.MyWaypointInfo">
             <summary>
             Provides basic information about a waypoint.
@@ -779,35 +873,6 @@
         <member name="F:Sandbox.ModAPI.Ingame.MyWaypointInfo.Coords">
             <summary>
             The coordinates of this waypoint
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.ClearWaypoints">
-            <summary>
-            Removes all existing waypoints.
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.GetWaypointInfo(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyWaypointInfo})">
-            <summary>
-            Gets basic information about the currently configured waypoints.
-            </summary>
-            <param name="waypoints"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.AddWaypoint(VRageMath.Vector3D,System.String)">
-            <summary>
-            Adds a new waypoint.
-            </summary>
-            <param name="coords"></param>
-            <param name="name"></param>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.SetAutoPilotEnabled(System.Boolean)">
-            <summary>
-            Enables or disables the autopilot.
-            </summary>
-            <param name="enabled"></param>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyRemoteControl.IsAutoPilotEnabled">
-            <summary>
-            Determines whether the autopilot is currently enabled.
             </summary>
         </member>
         <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.BaseMass">
@@ -952,6 +1017,31 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyScriptBlacklist">
+            <summary>
+            Exposes blacklist functionality to allow mods to disallow parts of the scripting API that has been
+            allowed by the system whitelist.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklist.GetWhitelist">
+            <summary>
+            Gets the entries that have been whitelisted by the system. Each entry may represent a whole namespace,
+            a single type and all its members, or a single member of a type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklist.GetBlacklistedIngameEntries">
+            <summary>
+            Gets the entries that have been blacklisted for the ingame scripts.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyScriptBlacklist.OpenIngameBlacklistBatch">
+            <summary>
+            Opens a batch to add or remove members to the blacklist.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Sandbox.ModAPI.Interfaces.ITerminalProperty">
@@ -1478,7 +1568,19 @@
         </member>
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Parallel">
             <summary>
-            IMyParallelTask allows to run tasks on baground threads 
+            IMyParallelTask allows to run tasks on background threads 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Physics">
+            <summary>
+            IMyPhysics contains physics related things (CastRay, etc.)
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.ScriptBlacklist">
+            <summary>
+            Provides the ability for mods to add and remove items from a type and member blacklist,
+            giving the ability to remove even more API for scripts. Intended for server admins to
+            restrict what people are able to do with scripts to keep their simspeed up.
             </summary>
         </member>
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Input">
@@ -1494,6 +1596,31 @@
         <member name="P:Sandbox.ModAPI.MyAPIGateway.Entities">
             <summary>
             IMyEntities represents all objects that currently in world 
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.MyWhitelistTarget">
+            <summary>
+                Determines what target a whitelisting entry does or should support.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyWhitelistTarget.None">
+            <summary>
+                No target. Depending on the context, this may mean no support at all or unrestricted support.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyWhitelistTarget.ModApi">
+            <summary>
+                The entry supports or must support ModAPI level entry.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyWhitelistTarget.Ingame">
+            <summary>
+                The entry supports or must support Ingame level entry.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyWhitelistTarget.Both">
+            <summary>
+                A shortcut flag meaning the entry supports or must support both ModAPI and Ingame level entries.
             </summary>
         </member>
     </members>
