@@ -1341,28 +1341,30 @@ namespace SEModAPI.API.Definitions
             }
         }
 
+        
         /// <summary>
-		/// Get or set the Voxel Support setting.
+		/// Get or set the Convert to Station setting.
 		/// </summary>
 		[DataMember]
         [Browsable( true )]
         [ReadOnly( false )]
-        [Description( "Enables or disables Voxel Support" )]
+        [Description( "Enables or disables Convert Ship to Station button" )]
         [Category( "World Settings" )]
-        [DisplayName( "Enable Station Voxel Support" )]
+        [DisplayName( "Enable Convert to Station" )]
         [DefaultValue( true )]
         public bool EnableVoxelSupport
         {
             get
             {
-                return _definition.SessionSettings.EnableStationVoxelSupport;
+                return _definition.SessionSettings.EnableConvertToStation;
             }
             set
             {
-                _definition.SessionSettings.EnableStationVoxelSupport = value;
+                _definition.SessionSettings.EnableConvertToStation = value;
             }
         }
-
+        
+    
         /// <summary>
 		/// Get or set the Enable 3rd Person View setting.
 		/// </summary>

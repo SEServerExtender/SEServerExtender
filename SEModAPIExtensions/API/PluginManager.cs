@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace SEModAPIExtensions.API
 {
 	using System;
@@ -29,6 +31,7 @@ namespace SEModAPIExtensions.API
 		private double _averageEvents;
 		private List<ulong> _lastConnectedPlayerList;
 		private readonly Dictionary<Guid, string> _pluginPaths;
+	    public static bool IsStable;
 
 		#region "Constructors and Initializers"
 
@@ -498,7 +501,22 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
-				object plugin = Plugins[ key ];
+				IPlugin plugin = Plugins[ key ];
+
+                if ( IsStable && plugin.Name == "Dedicated Server Essentials" && plugin.Version.Revision > 21)
+                { 
+                        ApplicationLog.Error("WARNING: This version of Essentials is NOT compatible with \"stable\" branch! Build 1.13.7.21 is the last compatible version.");
+                        ApplicationLog.Error( "Aborting plugin initialization!" );
+                        if ( SystemInformation.UserInteractive )
+                        {
+                            MessageBox.Show( "WARNING: This version of Essentials is NOT compatible with \"stable\" branch! Build 1.13.7.21 is the last compatible version.\r\n" +
+                                             "Essentials will not load!",
+                                             "FATAL ERROR", MessageBoxButtons.OK );
+                        }
+			            return;
+			        
+			    }
+
 				FieldInfo logField = plugin.GetType( ).GetField( "Log" );
 				if ( logField != null )
 				{

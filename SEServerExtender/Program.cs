@@ -44,6 +44,7 @@ namespace SEServerExtender
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
         public static Version SeVersion;
         public static readonly int[] StableVersions = new int[] {139};
+        public static bool IsStable;
 
 		public class WindowsService : ServiceBase
 		{
@@ -180,6 +181,8 @@ namespace SEServerExtender
 
 		    if ( StableVersions.Contains( SeVersion.Minor ) )
 		    {
+		        IsStable = true;
+		        PluginManager.IsStable = true;
 		        BaseLog.Info( "Detected \"Stable\" build, attempting to load old init method..." );
 
 		        try
@@ -200,13 +203,19 @@ namespace SEServerExtender
 		        catch ( Exception ex )
 		        {
 		            BaseLog.Error( ex, "Failed to load init for stable branch!" );
-		            DialogResult messageResult =
-		                MessageBox.Show( "Failed to initialize SESE for \"Stable\" branch! Execution cannot continue!",
-		                                 "Fatal Error",
-		                                 MessageBoxButtons.OK,
-		                                 MessageBoxIcon.Error );
 
-		            if ( messageResult == DialogResult.OK )
+		            if ( SystemInformation.UserInteractive )
+		            {
+		                DialogResult messageResult =
+		                    MessageBox.Show( "Failed to initialize SESE for \"Stable\" branch! Execution cannot continue!",
+		                                     "Fatal Error",
+		                                     MessageBoxButtons.OK,
+		                                     MessageBoxIcon.Error );
+
+		                if ( messageResult == DialogResult.OK )
+		                    Stop();
+		            }
+                    else
 		                Stop();
 		        }
 		    }

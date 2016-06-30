@@ -128,7 +128,7 @@ namespace SEServerExtender.EntityWrappers
 
                     if (!value)
                         Grid.ConvertToDynamic();
-                    if (value && !MySession.Static.EnableStationVoxelSupport)
+                    if (value)// && !MySession.Static.EnableStationVoxelSupport)
                         Grid.Physics.ConvertToStatic();
                 });
             }
