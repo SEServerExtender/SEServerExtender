@@ -1947,7 +1947,7 @@ namespace SEServerExtender
 				foreach ( Guid key in PluginManager.Instance.Plugins.Keys )
 				{
 					IPlugin plugin = PluginManager.Instance.Plugins[ key ];
-				    if ( PluginManager.IsStable && plugin.Name == "Dedicated Server Essentials" && plugin.Version.Revision > 21 )
+				    if ( PluginManager.IsStable && plugin.Name == "Dedicated Server Essentials" && plugin.Version.Revision > 27 )
 				        continue;
 
 				    LST_Plugins.Items.Add( string.Format( "{0} - {1}", plugin.Name, plugin.Version.ToString( 4 ) ) );

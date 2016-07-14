@@ -503,13 +503,13 @@ namespace SEModAPIExtensions.API
 			{
 				IPlugin plugin = Plugins[ key ];
 
-                if ( IsStable && plugin.Name == "Dedicated Server Essentials" && plugin.Version.Revision > 21)
+                if ( IsStable && plugin.Name == "Dedicated Server Essentials" && plugin.Version.Revision > 27)
                 { 
-                        ApplicationLog.Error("WARNING: This version of Essentials is NOT compatible with \"stable\" branch! Build 1.13.7.21 is the last compatible version.");
+                        ApplicationLog.Error("WARNING: This version of Essentials is NOT compatible with \"stable\" branch! Build 1.13.7.27 is the last compatible version.");
                         ApplicationLog.Error( "Aborting plugin initialization!" );
                         if ( SystemInformation.UserInteractive )
                         {
-                            MessageBox.Show( "WARNING: This version of Essentials is NOT compatible with \"stable\" branch! Build 1.13.7.21 is the last compatible version.\r\n" +
+                            MessageBox.Show( "WARNING: This version of Essentials is NOT compatible with \"stable\" branch! Build 1.13.7.27 is the last compatible version.\r\n" +
                                              "Essentials will not load!",
                                              "FATAL ERROR", MessageBoxButtons.OK );
                         }

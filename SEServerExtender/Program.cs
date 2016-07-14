@@ -43,7 +43,7 @@ namespace SEServerExtender
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
         public static Version SeVersion;
-        public static readonly int[] StableVersions = new int[] {139};
+        public static readonly int[] StableVersions = new int[] {139,144};
         public static bool IsStable;
 
 		public class WindowsService : ServiceBase
@@ -522,7 +522,6 @@ namespace SEServerExtender
 				if ( extenderArgs.NoConsole && extenderArgs.NoGui )
 					throw;
 			}
-
 		}
 
 		private static void ChatManager_ChatMessage( ulong userId, string playerName, string message )
