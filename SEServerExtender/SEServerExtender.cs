@@ -26,7 +26,6 @@ namespace SEServerExtender
 	using System.Windows.Forms;
 	using Sandbox;
 	using Sandbox.Common;
-    using Sandbox.Common.ObjectBuilders;
 	using Sandbox.Definitions;
 	using Sandbox.Game.Multiplayer;
 	using Sandbox.Game.World;
@@ -1947,8 +1946,15 @@ namespace SEServerExtender
 				foreach ( Guid key in PluginManager.Instance.Plugins.Keys )
 				{
 					IPlugin plugin = PluginManager.Instance.Plugins[ key ];
-				    if ( PluginManager.IsStable && plugin.Name == "Dedicated Server Essentials" && plugin.Version.Revision > 27 )
-				        continue;
+				    if ( plugin.Name == "Dedicated Server Essentials" )
+				    {
+				        FieldInfo memberInfo = plugin.GetType().GetField( "StableBuild", BindingFlags.Static | BindingFlags.Public );
+				        bool pluginStable = memberInfo != null && (bool)memberInfo.GetValue( null );
+				        if ( (!pluginStable && PluginManager.IsStable) || (pluginStable && !PluginManager.IsStable) )
+				        {
+				            continue;
+				        }
+				    }
 
 				    LST_Plugins.Items.Add( string.Format( "{0} - {1}", plugin.Name, plugin.Version.ToString( 4 ) ) );
 				}

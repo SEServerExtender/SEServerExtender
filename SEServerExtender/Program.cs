@@ -217,6 +217,7 @@ namespace SEServerExtender
 		            }
                     else
 		                Stop();
+		            return;
 		        }
 		    }
 		    else

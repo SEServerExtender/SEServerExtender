@@ -1,5 +1,8 @@
+using System.Reflection;
+using SpaceEngineers.Game;
 using VRage.Game;
 using VRage.Library.Utils;
+using VRage.Utils;
 
 namespace SEModAPI.API.Definitions
 {
@@ -1341,34 +1344,74 @@ namespace SEModAPI.API.Definitions
             }
         }
 
-        
-        /// <summary>
+	    /// <summary>
 		/// Get or set the Convert to Station setting.
 		/// </summary>
 		[DataMember]
         [Browsable( true )]
         [ReadOnly( false )]
-        [Description( "Enables or disables Convert Ship to Station button" )]
+        [Description( "Enables or disables Convert Ship to Station button. This only works on Dev branch!" )]
         [Category( "World Settings" )]
         [DisplayName( "Enable Convert to Station" )]
         [DefaultValue( true )]
+        public bool EnableConvertToStation
+        {
+            get
+            {
+                //return _definition.SessionSettings.EnableConvertToStation;
+
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo != null)
+                    return (bool)memberInfo.GetValue(_definition.SessionSettings);
+                return false;
+            }
+            set
+            {
+                //_definition.SessionSettings.EnableConvertToStation = value;
+
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo != null)
+                    memberInfo.SetValue(_definition.SessionSettings, value);
+            }
+        }
+
+
+        /// <summary>
+        /// Get or set the Voxel Support setting.
+        /// </summary>
+        [DataMember]
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Description("Enables or disables Voxel Support. This only works on Stable branch!")]
+        [Category("World Settings")]
+        [DisplayName("Enable Station Voxel Support")]
+        [DefaultValue(true)]
         public bool EnableVoxelSupport
         {
             get
             {
-                return _definition.SessionSettings.EnableConvertToStation;
+                //return _definition.SessionSettings.EnableStationVoxelSupport;
+
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableStationVoxelSupport", BindingFlags.Instance | BindingFlags.Public);
+                if ( memberInfo != null )
+                    return (bool)memberInfo.GetValue( _definition.SessionSettings );
+                return false;
             }
             set
             {
-                _definition.SessionSettings.EnableConvertToStation = value;
+                //_definition.SessionSettings.EnableStationVoxelSupport = value;
+
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableStationVoxelSupport", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo != null)
+                    memberInfo.SetValue(_definition.SessionSettings, value);
             }
         }
-        
-    
+
+
         /// <summary>
-		/// Get or set the Enable 3rd Person View setting.
-		/// </summary>
-		[DataMember]
+        /// Get or set the Enable 3rd Person View setting.
+        /// </summary>
+        [DataMember]
         [Browsable( true )]
         [ReadOnly( false )]
         [Description( "Enables or disables 3rd Person View" )]
@@ -1406,6 +1449,37 @@ namespace SEModAPI.API.Definitions
             set
             {
                 _definition.SessionSettings.DestructibleBlocks = value;
+            }
+        }
+
+        /// <summary>
+		/// Get or set the Enable Airtightness setting.
+		/// </summary>
+		[DataMember]
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Description("Enables or disables Airtightness. This only works on Dev branch!")]
+        [Category("World Settings")]
+        [DisplayName("Enable Airtightness")]
+        [DefaultValue(true)]
+        public bool EnableAirtightness
+        {
+            get
+            {
+                //return _definition.SessionSettings.EnableOxygenPressurization;
+
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableOxygenPressurization", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo != null)
+                    return (bool)memberInfo.GetValue(_definition.SessionSettings);
+                return false;
+            }
+            set
+            {
+                //_definition.SessionSettings.EnableOxygenPressurization = value;
+
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableOxygenPressurization", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo != null)
+                    memberInfo.SetValue(_definition.SessionSettings, value);
             }
         }
         #endregion
