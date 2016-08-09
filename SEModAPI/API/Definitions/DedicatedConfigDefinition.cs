@@ -19,8 +19,6 @@ namespace SEModAPI.API.Definitions
 	using System.Xml.Serialization;
 	using global::Sandbox.Common.ObjectBuilders;
 	using VRage.ObjectBuilders;
-    using SEModAPIInternal.Support;
-    using SEModAPIExtensions.API;
 
 	[DataContract]
 	public class DedicatedConfigDefinition
