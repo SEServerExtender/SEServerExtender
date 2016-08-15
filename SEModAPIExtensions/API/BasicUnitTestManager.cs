@@ -34,7 +34,7 @@ namespace SEModAPIExtensions.API
 		public bool Run()
 		{
 			bool result = true;
-			//result &= RunBaseReflectionUnitTests();
+			result &= RunBaseReflectionUnitTests();
 			//result &= RunEntityReflectionUnitTests();
 			//result &= RunCubeBlockReflectionTests();
 
@@ -87,6 +87,7 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn( "WorldManager reflection validation failed!" );
 			}
 
+            /*
 			if (!RadioManager.ReflectionUnitTest())
 			{
 				result = false;
@@ -99,8 +100,7 @@ namespace SEModAPIExtensions.API
 				BaseLog.Warn( "RadioManagerNetworkManager reflection validation failed!" );
 			}
 
-            /*
-			if (!FactionsManager.ReflectionUnitTest())
+            if (!FactionsManager.ReflectionUnitTest())
 			{
 				result = false;
 				BaseLog.Warn( "FactionsManager reflection validation failed!" );

@@ -90,15 +90,21 @@ namespace SEModAPIExtensions.API
 
 				string modsPath = Path.Combine( Server.Instance.Path, "Mods" );
 				ApplicationLog.BaseLog.Info( "Scanning: {0}", modsPath );
-				if ( !Directory.Exists( modsPath ) )
-					return;
+			    if ( !Directory.Exists( modsPath ) )
+			    {
+                    ApplicationLog.BaseLog.Error( "Invalid directory" );
+                    return;
+			    }
 
 				string[ ] files = Directory.GetFiles( modsPath, "*.dll", SearchOption.AllDirectories );
+                if(files.Length==0)
+                    ApplicationLog.BaseLog.Info( "Found no dll files" );
+
 				foreach ( string file in files )
 				{
-
 					try
 					{
+                        ApplicationLog.BaseLog.Info( $"Trying to load {file}" );
 						// Load assembly from file into memory, so we can hotswap it if we want
 						byte[ ] b = File.ReadAllBytes( file );
 						Assembly pluginAssembly = Assembly.Load( b );
@@ -109,7 +115,7 @@ namespace SEModAPIExtensions.API
 							else
 								continue;
 						}
-
+                        ApplicationLog.BaseLog.Info( $"Loaded assembly {pluginAssembly.FullName}" );
 						//Get the assembly GUID
 						GuidAttribute guid = (GuidAttribute)pluginAssembly.GetCustomAttributes( typeof( GuidAttribute ), true )[ 0 ];
 						Guid guidValue = new Guid( guid.Value );

@@ -1535,7 +1535,7 @@ namespace SEServerExtender
 		{
 			try
 			{
-                MyCubeGrid exportGrid = (TRV_Entities.SelectedNode?.Tag as MyCubeGrid);
+                MyCubeGrid exportGrid = (TRV_Entities.SelectedNode?.Tag as CubeGridWrapper)?.Grid;
 			    if ( exportGrid == null )
 			        return;
                 
@@ -1702,8 +1702,8 @@ namespace SEServerExtender
 			string message = TXT_Chat_Message.Text;
 			if ( !string.IsNullOrEmpty( message ) )
 			{
-				ChatManager.Instance.SendPublicChatMessage( message );
-				TXT_Chat_Message.Text = string.Empty;
+                ChatManager.Instance.SendPublicChatMessage(message);
+                TXT_Chat_Message.Text = string.Empty;
 			}
 		}
 

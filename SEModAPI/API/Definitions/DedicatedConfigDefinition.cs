@@ -1,5 +1,8 @@
 using System.Reflection;
+using System.Text;
+using Sandbox.Definitions;
 using SpaceEngineers.Game;
+using SteamSDK;
 using VRage.Game;
 using VRage.Library.Utils;
 using VRage.Utils;
@@ -743,7 +746,7 @@ namespace SEModAPI.API.Definitions
 				_definition.SessionSettings.EnableIngameScripts = value;
 			}
 		}
-
+        /*
 		/// <summary>
 		/// Get or set the Scenario's TypeId
 		/// </summary>
@@ -762,7 +765,7 @@ namespace SEModAPI.API.Definitions
 				_definition.Scenario.TypeId = value;
 			}
 		}
-
+        */
 		/// <summary>
 		/// Get or set the scenario's subtype Id
 		/// </summary>
@@ -777,8 +780,23 @@ namespace SEModAPI.API.Definitions
 			get { return _definition.Scenario.SubtypeId; }
 			set
 			{
-				if ( _definition.Scenario.SubtypeId == value ) return;
-				_definition.Scenario.SubtypeId = value;
+			    if ( MyDefinitionManager.Static.GetScenarioDefinitions().Count == 0 )
+			        MyDefinitionManager.Static.LoadScenarios();
+
+                var sb = new StringBuilder();
+			    foreach ( var scenario in MyDefinitionManager.Static.GetScenarioDefinitions() )
+			    {
+			        if ( !scenario.Public )
+			            continue;
+
+			        sb.AppendLine( scenario.Id.SubtypeName );
+			        if ( scenario.Id.SubtypeName == value )
+			        {
+			            _definition.Scenario = scenario.Id;
+			            return;
+			        }
+			    }
+                throw new ArgumentException($"{value} is not a valid scenario definition type! Try one of these:\r\n{sb}");
 			}
 		}
 
@@ -1532,8 +1550,9 @@ namespace SEModAPI.API.Definitions
 					serializer.Serialize( xmlTextWriter, _definition );
 				}
 			}
-			catch
+			catch(Exception ex)
 			{
+                ApplicationLog.BaseLog.Error( ex );
 				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, fileInfo.FullName );
 			}
 

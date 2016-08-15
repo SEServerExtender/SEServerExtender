@@ -454,7 +454,7 @@ namespace SEModAPIExtensions.API
 					//SandboxGameAssemblyWrapper.InitAPIGateway();
 					_pluginManager.LoadPlugins( );
 					_pluginManager.Init( );
-
+                    ServerNetworkManager.Instance.InitNetworkIntercept();
 					//SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
 
 					AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

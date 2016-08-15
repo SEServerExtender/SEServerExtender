@@ -392,7 +392,7 @@ namespace SEModAPIExtensions.API
                 ApplicationLog.Info( "Unknown data message type: " + item.msgID );
         }
         
-        protected void SendDataMessage( string message, ulong userId = 0 )
+        public void SendDataMessage( string message, ulong userId = 0 )
         {
             ServerMessageItem item = new ServerMessageItem( );
             item.From = Server.Instance.Config.ServerChatName;
@@ -586,7 +586,7 @@ namespace SEModAPIExtensions.API
                 if ( remoteUserId != 0 )
                 {
                     if ( _enableData )
-                        SendDataMessage( message );
+                        SendDataMessage( message, remoteUserId );
 
                     else
                     {

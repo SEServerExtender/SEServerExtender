@@ -178,7 +178,7 @@ namespace SEServerExtender
             SeVersion = new Version(new MyVersion((int)field.GetValue(null)).FormattedText.ToString().Replace("_", "."));
 
             ApplicationLog.BaseLog.Info($"SE version: {SeVersion}");
-
+            ApplicationLog.BaseLog.Info( $"Extender version: {Assembly.GetExecutingAssembly().GetName().Version}" );
 		    if ( StableVersions.Contains( SeVersion.Minor ) )
 		    {
 		        IsStable = true;
@@ -280,7 +280,8 @@ namespace SEServerExtender
 					{
 						if ( argValue[ argValue.Length - 1 ] == '"' )
 							argValue = argValue.Substring( 1, argValue.Length - 2 );
-						extenderArgs.InstanceName = argValue;
+                        //sanitize input because stupid people put full paths for this argument
+						extenderArgs.InstanceName = argValue.Replace( @"\", "-" ).Replace( @":", "-" );
 
 						//Only let this override log path if the log path wasn't already explicitly set
 						if ( !logPathSet )
@@ -288,17 +289,17 @@ namespace SEServerExtender
 							FileTarget baseLogTarget = LogManager.Configuration.FindTargetByName( "BaseLog" ) as FileTarget;
 							if ( baseLogTarget != null )
 							{
-								baseLogTarget.FileName = baseLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } ).Replace( "NoInstance", argValue );
+                                baseLogTarget.FileName = baseLogTarget.FileName.Render(new LogEventInfo { TimeStamp = DateTime.Now }).Replace("NoInstance", argValue.Replace(@"\", "-").Replace(@":", "-"));
 							}
 							FileTarget chatLogTarget = LogManager.Configuration.FindTargetByName( "ChatLog" ) as FileTarget;
 							if ( chatLogTarget != null )
 							{
-								chatLogTarget.FileName = chatLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } ).Replace( "NoInstance", argValue );
+                                chatLogTarget.FileName = chatLogTarget.FileName.Render(new LogEventInfo { TimeStamp = DateTime.Now }).Replace("NoInstance", argValue.Replace(@"\", "-").Replace(@":", "-"));
 							}
 							FileTarget pluginLogTarget = LogManager.Configuration.FindTargetByName( "PluginLog" ) as FileTarget;
 							if ( pluginLogTarget != null )
 							{
-								pluginLogTarget.FileName = pluginLogTarget.FileName.Render( new LogEventInfo { TimeStamp = DateTime.Now } ).Replace( "NoInstance", argValue );
+                                pluginLogTarget.FileName = pluginLogTarget.FileName.Render(new LogEventInfo { TimeStamp = DateTime.Now }).Replace("NoInstance", argValue.Replace(@"\", "-").Replace(@":", "-"));
 							}
 						}
 					}
@@ -452,7 +453,7 @@ namespace SEServerExtender
 				Server.Init( );
 
                 if(!DedicatedServerAssemblyWrapper.IsStable)
-                    InitSandbox(GameInstallationInfo.GamePath, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+                    InitSandbox(Path.Combine( GameInstallationInfo.GamePath, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
 
                 ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );

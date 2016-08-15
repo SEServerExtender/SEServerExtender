@@ -133,6 +133,7 @@
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\ThrustEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\TurretBaseEntity.cs" />
     <Compile Include="API\Entity\Sector\SectorObject\CubeGrid\CubeBlock\VirtualMassEntity.cs" />
+    <Compile Include="API\Server\NetworkHandlerBase.cs" />
     <Compile Include="API\Server\ServerNetworkManager.cs" />
     <Compile Include="API\Utility\Utility.cs" />
     <Compile Include="API\Entity\SectorEntity.cs" />
@@ -171,7 +172,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.1.2\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sandbox.Common">

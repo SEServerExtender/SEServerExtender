@@ -1,3 +1,5 @@
+using SEModAPIInternal.API.Server;
+
 namespace SEModAPIInternal.API.Common
 {
 	using System;
