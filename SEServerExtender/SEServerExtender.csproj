@@ -277,7 +277,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy /s /xo "C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers\Content" $(ProjectDir)$(OutDir)..\Content
+    <PostBuildEvent>copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\NLog.config "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\NLog.dll "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\SEComm.dll "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\SEModAPI.dll "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\SEModAPIExtensions.dll "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\SEModAPIInternal.dll "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\SEServerExtender.exe "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+copy /Y E:\GitHub\SEServerExtender\bin\x64\DedicatedServer64\SEServerExtender.exe.config "C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\DedicatedServer64"
+robocopy /s /xo "C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers\Content" $(ProjectDir)$(OutDir)..\Content
 robocopy "C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers\DedicatedServer64" $(ProjectDir)$(OutDir)
 2&gt;nul 1&gt;nul EXIT 0</PostBuildEvent>
   </PropertyGroup>

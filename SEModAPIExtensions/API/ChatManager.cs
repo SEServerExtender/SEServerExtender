@@ -42,8 +42,10 @@ namespace SEModAPIExtensions.API
     public class ChatManager
     {
         private static bool _enableData;
-        private static DateTime _lastMessageTime = DateTime.Now;
-        private static string _lastMessageString = "";
+        private Random _random = new Random();
+        private List<long> _messageUniqueIds = new List<long>(20);
+        private byte[] _lastMessage;
+        private DateTime _lastReceived = DateTime.Now;
 
         public struct ChatCommand
         {
@@ -337,10 +339,35 @@ namespace SEModAPIExtensions.API
             public string Message { get; set; }
         }
 
-        protected void ReceiveDataMessage( byte[] data )
+        protected void ReceiveDataMessage( byte[] fullData )
         {
             string text;
             MessageRecieveItem item;
+            long uniqueId = BitConverter.ToInt64( fullData, 0 );
+            if ( _messageUniqueIds.Contains( uniqueId ) )
+            {
+                ApplicationLog.BaseLog.Debug( "Received duplicate chat message (hash)." );
+                return;
+            }
+
+            if(_messageUniqueIds.Count>=20)
+                _messageUniqueIds.RemoveAt( 0 );
+
+            _messageUniqueIds.Add(uniqueId);
+
+            byte[] data = new byte[fullData.Length - sizeof(ulong)];
+            Array.Copy( fullData,sizeof(long), data, 0, data.Length );
+
+            if ( DateTime.Now - _lastReceived < TimeSpan.FromMilliseconds( 100 ) && CompareBytes( data, _lastMessage ) )
+                {
+                ApplicationLog.BaseLog.Debug( "Received duplicate chat message (value)." );
+                    _lastReceived = DateTime.Now;
+                    return;
+                }
+
+            _lastReceived = DateTime.Now;
+            _lastMessage = data;
+
             try
             {
                 text = Encoding.UTF8.GetString( data );
@@ -376,45 +403,51 @@ namespace SEModAPIExtensions.API
                     m_resourceLock.ReleaseExclusive();
                 } );
             }
-
-            else if ( item.msgID == 5011 )
-            {
-                //player has loaded in. Do something else with this info. for now we'll send dataReady
-                MyAPIGateway.Multiplayer.SendMessageTo( 5025, data, item.fromID );
-
-                if ( !_enableData )
-                {
-                    _enableData = true;
-                    ApplicationLog.Info( "Found Essentials client mod login, enabling data messages" );
-                }
-            }
             else
                 ApplicationLog.Info( "Unknown data message type: " + item.msgID );
         }
-        
+
+        private static bool CompareBytes(byte[] byteA, byte[] byteB)
+        {
+            if ( byteA == null || byteB == null )
+                return false;
+
+            if (byteA.Length != byteB.Length)
+                return false;
+
+            for (int i = 0; i < byteA.Length; ++i)
+            {
+                if (byteA[i] != byteB[i])
+                    return true;
+            }
+
+            return false;
+        }
+
         public void SendDataMessage( string message, ulong userId = 0 )
         {
             ServerMessageItem item = new ServerMessageItem( );
             item.From = Server.Instance.Config.ServerChatName;
             item.Message = message;
-
+            
             string messageString = MyAPIGateway.Utilities.SerializeToXML( item );
-            /*
-            byte[ ] data = new byte[messageString.Length];
-
-            for ( int r = 0; r < messageString.Length; r++ )
-            {
-                data[r] = (byte)messageString[r];
-            }
-            */
             byte[ ] data = Encoding.UTF8.GetBytes( messageString );
             long msgId = 5003;
 
+            //hash a random long with the current time and outgoing data to make a decent quality guid for each message
+            byte[] randLong = new byte[sizeof(long)];
+            _random.NextBytes(randLong);
+            long uniqueId = 23;
+            uniqueId = uniqueId * 37 + BitConverter.ToInt64(randLong, 0);
+            uniqueId = uniqueId * 37 + DateTime.Now.GetHashCode();
+            uniqueId = uniqueId * 37 + data.GetHashCode();
+
             //this block adds the length and message id to the outside of the message packet
             //so the mod can quickly determine where the message should go
-            byte[] newData = new byte[sizeof(long) + data.Length];
-            BitConverter.GetBytes(msgId).CopyTo(newData, 0);
-            data.CopyTo(newData, sizeof(long));
+            byte[] newData = new byte[sizeof(long)*2 + data.Length];
+            BitConverter.GetBytes( uniqueId ).CopyTo( newData, 0 );
+            BitConverter.GetBytes(msgId).CopyTo(newData, sizeof(long));
+            data.CopyTo(newData, sizeof(long)*2);
 
             SandboxGameAssemblyWrapper.Instance.GameAction(() =>
             {

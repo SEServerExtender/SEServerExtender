@@ -1550,7 +1550,7 @@ namespace SEModAPI.API.Definitions
 			}
 			catch(Exception ex)
 			{
-                ApplicationLog.BaseLog.Error( ex );
+                //ApplicationLog.BaseLog.Error( ex );
 				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, fileInfo.FullName );
 			}
 

@@ -213,12 +213,13 @@ namespace SEModAPIInternal.API.Server
                 }
             }
 
+#if DEBUG
             if ( ExtenderOptions.IsDebugging )
             {
                 if ( !site.MethodInfo.Name.Contains( "SyncPropertyChanged" ) && !site.MethodInfo.Name.Contains( "OnSimulationInfo" ) )
                     ApplicationLog.Error( $"Caught event {site.MethodInfo.Name} from user {PlayerMap.Instance.GetFastPlayerNameFromSteamId( packet.Sender.Value )}:{packet.Sender.Value}" );
             }
-
+#endif
             //we're handling the network live in the game thread, this needs to go as fast as possible
             bool handled = false;
             Parallel.ForEach( _networkHandlers, handler =>
@@ -233,10 +234,10 @@ namespace SEModAPIInternal.API.Server
 
 	    public void RegisterNetworkHandler( NetworkHandlerBase handler )
 	    {
-	        string handlerType = handler.GetType().Name;
+	        string handlerType = handler.GetType().AssemblyQualifiedName;
 	        foreach ( var item in _networkHandlers )
 	        {
-	            if ( item.GetType().Name == handlerType )
+	            if ( item.GetType().AssemblyQualifiedName == handlerType )
 	            {
 	                ApplicationLog.BaseLog.Error( "Network handler already registered! " + handlerType );
 	                return;
