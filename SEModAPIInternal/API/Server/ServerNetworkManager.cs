@@ -235,14 +235,19 @@ namespace SEModAPIInternal.API.Server
 	    public void RegisterNetworkHandler( NetworkHandlerBase handler )
 	    {
 	        string handlerType = handler.GetType().AssemblyQualifiedName;
+            List<NetworkHandlerBase> toRemove = new List<NetworkHandlerBase>();
 	        foreach ( var item in _networkHandlers )
 	        {
 	            if ( item.GetType().AssemblyQualifiedName == handlerType )
 	            {
-	                ApplicationLog.BaseLog.Error( "Network handler already registered! " + handlerType );
-	                return;
+	                if (ExtenderOptions.IsDebugging)
+	                    ApplicationLog.BaseLog.Error("Network handler already registered! " + handlerType);
+	                toRemove.Add(handler);
 	            }
 	        }
+
+	        foreach (var oldHandler in toRemove)
+	            _networkHandlers.Remove(oldHandler);
 
 	        _networkHandlers.Add( handler );
 	    }

@@ -511,32 +511,35 @@ namespace SEModAPIExtensions.API
 			    if ( plugin.Name == "Dedicated Server Essentials" )
 			    {
 			        FieldInfo memberInfo = plugin.GetType().GetField( "StableBuild", BindingFlags.Static | BindingFlags.Public );
-			        bool pluginStable = memberInfo != null && (bool)memberInfo.GetValue( null );
-			        if ( !pluginStable && IsStable)
+			        if (memberInfo != null)
 			        {
-			            ApplicationLog.Error( "WARNING: This version of Essentials is NOT compatible with \"stable\" branch!" );
-			            ApplicationLog.Error( "Aborting plugin initialization!" );
-			            if ( SystemInformation.UserInteractive )
+			            bool pluginStable = (bool)memberInfo.GetValue(null);
+			            if (!pluginStable && IsStable)
 			            {
-			                MessageBox.Show( "WARNING: This version of Essentials is NOT compatible with \"stable\" branch!\r\n" +
-			                                 "Essentials will not load!",
-			                                 "FATAL ERROR", MessageBoxButtons.OK );
+			                ApplicationLog.Error("WARNING: This version of Essentials is NOT compatible with \"stable\" branch!");
+			                ApplicationLog.Error("Aborting plugin initialization!");
+			                if (SystemInformation.UserInteractive)
+			                {
+			                    MessageBox.Show("WARNING: This version of Essentials is NOT compatible with \"stable\" branch!\r\n" +
+			                                    "Essentials will not load!",
+			                                    "FATAL ERROR", MessageBoxButtons.OK);
+			                }
+			                return;
 			            }
-			            return;
+			            else if (pluginStable && !IsStable)
+			            {
+			                ApplicationLog.Error("WARNING: This version of Essentials is NOT compatible with \"dev\" branch!");
+			                ApplicationLog.Error("Aborting plugin initialization!");
+			                if (SystemInformation.UserInteractive)
+			                {
+			                    MessageBox.Show("WARNING: This version of Essentials is NOT compatible with \"dev\" branch!\r\n" +
+			                                    "Essentials will not load!",
+			                                    "FATAL ERROR", MessageBoxButtons.OK);
+			                }
+			                return;
+			            }
 			        }
-                    else if (pluginStable && !IsStable)
-                    {
-                        ApplicationLog.Error("WARNING: This version of Essentials is NOT compatible with \"dev\" branch!");
-                        ApplicationLog.Error("Aborting plugin initialization!");
-                        if (SystemInformation.UserInteractive)
-                        {
-                            MessageBox.Show("WARNING: This version of Essentials is NOT compatible with \"dev\" branch!\r\n" +
-                                             "Essentials will not load!",
-                                             "FATAL ERROR", MessageBoxButtons.OK);
-                        }
-                        return;
-                    }
-                }
+			    }
 
 			    FieldInfo logField = plugin.GetType( ).GetField( "Log" );
 				if ( logField != null )

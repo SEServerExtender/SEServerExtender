@@ -43,7 +43,7 @@ namespace SEServerExtender
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
         public static Version SeVersion;
-        public static readonly int[] StableVersions = new int[] {139,140};
+        public static readonly int[] StableVersions = new int[] {139,140,144};
         public static bool IsStable;
 
 		public class WindowsService : ServiceBase
@@ -179,10 +179,16 @@ namespace SEServerExtender
 
             ApplicationLog.BaseLog.Info($"SE version: {SeVersion}");
             ApplicationLog.BaseLog.Info( $"Extender version: {Assembly.GetExecutingAssembly().GetName().Version}" );
-		    if ( StableVersions.Contains( SeVersion.Minor ) )
+		    if (StableVersions.Contains(SeVersion.Minor))
 		    {
+                BaseLog.Info("Detected \"Stable\" branch!");
 		        IsStable = true;
 		        PluginManager.IsStable = true;
+		    }
+            else
+                BaseLog.Info("Detected \"Development\" branch!");
+            //Init is now the same between the branches
+            /*
 		        BaseLog.Info( "Detected \"Stable\" build, attempting to load old init method..." );
 
 		        try
@@ -219,12 +225,13 @@ namespace SEServerExtender
 		                Stop();
 		            return;
 		        }
-		    }
-		    else
-		    {
-                BaseLog.Info( "Dev version found, loading new init..." );
+                */
+		    //}
+		    //else
+		    //{
+                //BaseLog.Info( "Dev version found, loading new init..." );
                 InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
-		    }
+		    //}
             
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;

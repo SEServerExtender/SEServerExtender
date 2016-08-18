@@ -1949,10 +1949,13 @@ namespace SEServerExtender
 				    if ( plugin.Name == "Dedicated Server Essentials" )
 				    {
 				        FieldInfo memberInfo = plugin.GetType().GetField( "StableBuild", BindingFlags.Static | BindingFlags.Public );
-				        bool pluginStable = memberInfo != null && (bool)memberInfo.GetValue( null );
-				        if ( (!pluginStable && PluginManager.IsStable) || (pluginStable && !PluginManager.IsStable) )
+				        if (memberInfo != null)
 				        {
-				            continue;
+				            bool pluginStable = (bool)memberInfo.GetValue(null);
+				            if (PluginManager.IsStable != pluginStable)
+				            {
+				                continue;
+				            }
 				        }
 				    }
 
