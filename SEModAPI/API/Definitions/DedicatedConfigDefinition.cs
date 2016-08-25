@@ -1203,26 +1203,26 @@ namespace SEModAPI.API.Definitions
 		}
 
         /// <summary>
-		/// Get or set the Cyberhounds setting.
+		/// Get or set the Wolves setting.
 		/// </summary>
 		[DataMember]
         [Browsable( true )]
         [ReadOnly( false )]
-        [Description( "Enables or disables Cyberhounds" )]
+        [Description( "Enables or disables Wolves" )]
         [Category( "World Settings" )]
-        [DisplayName( "Enable Cyberhounds" )]
+        [DisplayName( "Enable Wolves" )]
         [DefaultValue( false )]
         public bool EnableCyberhounds
         {
             get
             {
-                if ( !_definition.SessionSettings.EnableCyberhounds.HasValue )
-                    _definition.SessionSettings.EnableCyberhounds = false;
-                return _definition.SessionSettings.EnableCyberhounds.Value;
+                if ( !_definition.SessionSettings.EnableWolfs.HasValue )
+                    _definition.SessionSettings.EnableWolfs = false;
+                return _definition.SessionSettings.EnableWolfs.Value;
             }
             set
             {
-                    _definition.SessionSettings.EnableCyberhounds = value;
+                _definition.SessionSettings.EnableWolfs = value;
             }
         }
 
@@ -1246,7 +1246,7 @@ namespace SEModAPI.API.Definitions
             }
             set
             {
-                _definition.SessionSettings.EnableCyberhounds = value;
+                _definition.SessionSettings.EnableSpiders = value;
             }
         }
 
@@ -1374,24 +1374,24 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
-                //return _definition.SessionSettings.EnableConvertToStation;
+                return _definition.SessionSettings.EnableConvertToStation;
 
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo != null)
-                    return (bool)memberInfo.GetValue(_definition.SessionSettings);
-                return false;
+                //FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
+                //if (memberInfo != null)
+                //    return (bool)memberInfo.GetValue(_definition.SessionSettings);
+                //return false;
             }
             set
             {
-                //_definition.SessionSettings.EnableConvertToStation = value;
+                _definition.SessionSettings.EnableConvertToStation = value;
 
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo != null)
-                    memberInfo.SetValue(_definition.SessionSettings, value);
+                //FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
+                //if (memberInfo != null)
+                //    memberInfo.SetValue(_definition.SessionSettings, value);
             }
         }
 
-
+        /*
         /// <summary>
         /// Get or set the Voxel Support setting.
         /// </summary>
@@ -1422,7 +1422,7 @@ namespace SEModAPI.API.Definitions
                     memberInfo.SetValue(_definition.SessionSettings, value);
             }
         }
-
+        */
 
         /// <summary>
         /// Get or set the Enable 3rd Person View setting.

@@ -165,7 +165,7 @@ namespace SEServerExtender
             SpaceEngineersGame.SetupPerGameSettings();
             SpaceEngineersGame.SetupBasicGameInfo();
 
-            VRageRender.MyRenderProxy.Initialize(new VRageRender.MyNullRender());
+            //VRageRender.MyRenderProxy.Initialize(new VRageRender.MyNullRender());
             tmpGame = new MySandboxGame(null, null);
         }
         

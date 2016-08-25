@@ -12,6 +12,7 @@ using VRage.Game;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI.Ingame;
 using VRage.Groups;
+using VRageRender.Utils;
 using IMyInventory = VRage.Game.ModAPI.IMyInventory;
 
 namespace SEServerExtender
