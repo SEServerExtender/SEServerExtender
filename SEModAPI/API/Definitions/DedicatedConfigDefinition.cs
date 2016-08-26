@@ -1201,7 +1201,7 @@ namespace SEModAPI.API.Definitions
 					_definition.SessionSettings.PhysicsIterations = value;
 			}
 		}
-
+        
         /// <summary>
 		/// Get or set the Wolves setting.
 		/// </summary>
@@ -1216,16 +1216,31 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
-                if ( !_definition.SessionSettings.EnableWolfs.HasValue )
-                    _definition.SessionSettings.EnableWolfs = false;
-                return _definition.SessionSettings.EnableWolfs.Value;
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableCyberhounds", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo == null)
+                    memberInfo= _definition.SessionSettings.GetType().GetField("EnableWolfs", BindingFlags.Instance | BindingFlags.Public); //yes, Wolfs
+                if (memberInfo == null)
+                    return false;
+
+                var setting = memberInfo.GetValue(_definition.SessionSettings) as bool?;
+
+                if ( !setting.HasValue )
+                    return false;
+                return setting.Value;
             }
             set
             {
-                _definition.SessionSettings.EnableWolfs = value;
+                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableCyberhounds", BindingFlags.Instance | BindingFlags.Public);
+                if (memberInfo == null)
+                    memberInfo = _definition.SessionSettings.GetType().GetField("EnableWolfs", BindingFlags.Instance | BindingFlags.Public); //yes, Wolfs
+                if (memberInfo == null)
+                    return;
+
+                memberInfo.SetValue(_definition.SessionSettings, value);
+                //_definition.SessionSettings.EnableWolfs = value;
             }
         }
-
+        
         /// <summary>
 		/// Get or set the spiders setting.
 		/// </summary>

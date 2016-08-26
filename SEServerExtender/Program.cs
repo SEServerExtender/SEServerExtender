@@ -155,7 +155,16 @@ namespace SEServerExtender
                 tmpGame.Exit();
 
             MyFileSystem.Reset();
-            MyFileSystem.Init(contentpath, instancepath);
+            //MyFileSystem.Init(contentpath, instancepath);
+            //HACK FOR STABLE COMPATABILITY KILL ME PLS
+            var methodInfo = typeof(MyFileSystem).GetMethod("Init", BindingFlags.Public | BindingFlags.Static);
+            if(methodInfo==null)
+                throw new MissingMethodException("MyFileSystem.Init");
+            //BECAUSE LET'S JUST RUIN EVERYTHING IN DEV BRANCH MKAY
+            if (methodInfo.GetParameters().Length == 3)
+                methodInfo.Invoke(null, new object[] {contentpath, instancepath, "Mods"});
+            else
+                methodInfo.Invoke(null, new object[] {contentpath, instancepath, "Mods", null});
 
             MyLog.Default = MySandboxGame.Log;
             MySandboxGame.Config = new MyConfig("SpaceEngineers.cfg");

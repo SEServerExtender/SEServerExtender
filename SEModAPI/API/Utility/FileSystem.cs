@@ -1,4 +1,6 @@
-﻿namespace SEModAPI.API.Utility
+﻿using System.Reflection;
+
+namespace SEModAPI.API.Utility
 {
 	using System;
 	using System.IO;
@@ -30,8 +32,17 @@
 				}
 			}
 
-			MyFileSystem.Init( contentPath, userDataPath );
-			MyFileSystem.InitUserSpecific( null );
+            //MyFileSystem.Init( contentPath, userDataPath );
+            //HACK FOR STABLE COMPATABILITY KILL ME PLS
+            var methodInfo = typeof(MyFileSystem).GetMethod("Init", BindingFlags.Public | BindingFlags.Static);
+            if (methodInfo == null)
+                throw new MissingMethodException("MyFileSystem.Init");
+            //BECAUSE LET'S JUST RUIN EVERYTHING IN DEV BRANCH MKAY
+		    if (methodInfo.GetParameters().Length == 3)
+		        methodInfo.Invoke(null, new object[] {contentPath, userDataPath, "Mods"});
+		    else
+		        methodInfo.Invoke(null, new object[] {contentPath, userDataPath, "Mods", null});
+            MyFileSystem.InitUserSpecific( null );
 
 			ExtenderOptions.InstanceName = instanceName;
 		}

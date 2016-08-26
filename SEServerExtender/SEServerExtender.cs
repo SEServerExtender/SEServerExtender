@@ -12,6 +12,7 @@ using VRage.Game;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI.Ingame;
 using VRage.Groups;
+using VRage.Stats;
 using VRageRender.Utils;
 using IMyInventory = VRage.Game.ModAPI.IMyInventory;
 
@@ -205,17 +206,71 @@ namespace SEServerExtender
 
 		#region "General"
 
+	    private MyStats _genericStats;
+	    private MyStats _networkStats;
+	    private MyStats _timingStats;
+	    private bool _failedReflection;
 		private void StatisticsRefresh( object sender, EventArgs e )
 		{
 			StringBuilder sb = new StringBuilder( );
-			Stats.Generic.WriteTo( sb );
-			Stats.Network.WriteTo( sb );
-			Stats.Timing.WriteTo( sb );
+
+			//Stats.Generic.WriteTo( sb );
+			//Stats.Network.WriteTo( sb );
+			//Stats.Timing.WriteTo( sb );
+
+            //HACK FOR STABLE! HACKS ALL DAY ERRY DAY YEEEEAAAAAA
+		    if (_failedReflection)
+		        return;
+
+		    if (_genericStats == null )
+		    {
+		        Type statsType = FindTypeInAllAssemblies("VRage.Utils.Stats");
+                if(statsType == null)
+                    statsType = FindTypeInAllAssemblies("VRageRender.Utils.Stats");
+		        if (statsType == null)
+		        {
+		            _failedReflection = true;
+		            return;
+		        }
+		        _genericStats = (MyStats)statsType.GetField("Generic", BindingFlags.Public | BindingFlags.Static).GetValue(null);
+                _networkStats = (MyStats)statsType.GetField("Network", BindingFlags.Public | BindingFlags.Static).GetValue(null);
+                _timingStats = (MyStats)statsType.GetField("Timing", BindingFlags.Public | BindingFlags.Static).GetValue(null);
+            }
+
+            _genericStats.WriteTo(sb);
+            _networkStats.WriteTo(sb);
+            _timingStats.WriteTo(sb);
 
 			TB_Statistics.Text = sb.ToString( );
 		}
 
-		private void StatusCheckRefresh( object sender, EventArgs e )
+	    private Type FindTypeInAllAssemblies(string typeName)
+	    {
+	        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+	        foreach (var assembly in assemblies)
+	        {
+	            try
+	            {
+	                var types = assembly.GetTypes();
+	                foreach (var type in types)
+	                {
+	                    if (type.FullName == typeName)
+	                    {
+	                        return type;
+	                    }
+	                }
+	            }
+	            catch (System.Reflection.ReflectionTypeLoadException ex)
+	            {
+	                if (ExtenderOptions.IsDebugging)
+	                    foreach (var excep in ex.LoaderExceptions)
+	                        ApplicationLog.Error(excep, "Reflection error in stats. You can probably safely ignore this.");
+	            }
+	        }
+	        return null;
+	    }
+
+	    private void StatusCheckRefresh( object sender, EventArgs e )
 		{
 			UpdateControls( );
 
