@@ -322,8 +322,11 @@ namespace SEModAPIInternal.API.Common
 		public delegate void GameActionCallback( Object state );
 
 		public bool BeginGameAction( Action action, GameActionCallback callback, Object state )
-		{
-			try
+        {
+            if (m_gameThread == Thread.CurrentThread)
+                throw new ThreadStateException("Invoking action on game thread from inside game thread! This will freeze the server!");
+
+            try
 			{
 				ThreadPool.QueueUserWorkItem( o =>
 				{
@@ -359,6 +362,9 @@ namespace SEModAPIInternal.API.Common
 
 		public bool GameAction( Action action )
 		{
+		    if (m_gameThread == Thread.CurrentThread)
+		        throw new ThreadStateException("Invoking action on game thread from inside game thread! This will freeze the server!");
+
 			try
 			{
 				AutoResetEvent e = new AutoResetEvent( false );
@@ -401,6 +407,8 @@ namespace SEModAPIInternal.API.Common
 
 		public int GetMainGameMilliseconds( )
 		{
+		    return MySandboxGame.TotalGamePlayTimeInMilliseconds;
+            /*
 			try
 			{
 				int gameTimeMillis = (int)BaseObject.InvokeStaticMethod( MainGameType, MainGameGetTimeMillisMethod );
@@ -412,6 +420,7 @@ namespace SEModAPIInternal.API.Common
 				ApplicationLog.BaseLog.Error( ex );
 				return 0;
 			}
+            */
 		}
 
 		#endregion "Methods"

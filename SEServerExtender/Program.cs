@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Management;
 using Sandbox;
+using Sandbox.Engine.Multiplayer;
+using Sandbox.Engine.Platform;
 using Sandbox.Engine.Utils;
 using Sandbox.Game;
 using SEModAPI.API.Utility;
@@ -174,8 +176,16 @@ namespace SEServerExtender
             SpaceEngineersGame.SetupPerGameSettings();
             SpaceEngineersGame.SetupBasicGameInfo();
 
-            //VRageRender.MyRenderProxy.Initialize(new VRageRender.MyNullRender());
-            tmpGame = new MySandboxGame(null, null);
+            Game.IsDedicated = true;
+            try
+            {
+                tmpGame = new MySandboxGame(null, null);
+            }
+            catch
+            {
+                //setting IsDedicated true causes initialization to fail, but Steam won't detect SE running
+                //it still initializes the definition stuff we need, so whatever
+            }
         }
         
 
