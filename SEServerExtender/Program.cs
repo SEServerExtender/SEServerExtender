@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Management;
 using Sandbox;
+using Sandbox.Definitions;
 using Sandbox.Engine.Multiplayer;
 using Sandbox.Engine.Platform;
 using Sandbox.Engine.Utils;
 using Sandbox.Game;
+using Sandbox.Game.World;
 using SEModAPI.API.Utility;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
 using SpaceEngineers.Game;
 using VRage.FileSystem;
+using VRage.Game;
 using VRage.Game.ObjectBuilder;
 using VRage.Plugins;
 using VRage.Utils;
@@ -45,7 +48,7 @@ namespace SEServerExtender
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
         public static Version SeVersion;
-        public static readonly int[] StableVersions = new int[] {139,140,144};
+        public static readonly int[] StableVersions = new int[] {139,140,144,149};
         public static bool IsStable;
 
 		public class WindowsService : ServiceBase
@@ -176,7 +179,8 @@ namespace SEServerExtender
             SpaceEngineersGame.SetupPerGameSettings();
             SpaceEngineersGame.SetupBasicGameInfo();
 
-            Game.IsDedicated = true;
+            //Game.IsDedicated = true;
+            
             try
             {
                 tmpGame = new MySandboxGame(null, null);
@@ -186,6 +190,21 @@ namespace SEServerExtender
                 //setting IsDedicated true causes initialization to fail, but Steam won't detect SE running
                 //it still initializes the definition stuff we need, so whatever
             }
+            /*
+            //just randomly copy crap out of the MySandboxGame ctor because nothing makes sense anymore
+            MyGlobalTypeMetadata.Static.Init();
+            MyDefinitionManager.Static.PreloadDefinitions();
+            MyDefinitionManager.Static.PrepareBaseDefinitions();
+            MyDefinitionManager.Static.LoadScenarios();
+            MyTutorialHelper.Init();
+            MyPlugins.RegisterGameAssemblyFile(MyPerGameSettings.GameModAssembly);
+            if (MyPerGameSettings.GameModBaseObjBuildersAssembly != null)
+                MyPlugins.RegisterBaseGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModBaseObjBuildersAssembly);
+            MyPlugins.RegisterGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModObjBuildersAssembly);
+            MyPlugins.RegisterSandboxAssemblyFile(MyPerGameSettings.SandboxAssembly);
+            MyPlugins.RegisterSandboxGameAssemblyFile(MyPerGameSettings.SandboxGameAssembly);
+            MyPlugins.RegisterFromArgs(null);
+            MyPlugins.Load();*/
         }
         
 
@@ -244,13 +263,15 @@ namespace SEServerExtender
 		                Stop();
 		            return;
 		        }
-                */
-		    //}
-		    //else
-		    //{
-                //BaseLog.Info( "Dev version found, loading new init..." );
-                InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
-		    //}
+		    }
+		    else
+		    {
+              //BaseLog.Info( "Dev version found, loading new init..." );
+              InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+		    }
+            */
+
+            InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
             
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
@@ -258,7 +279,7 @@ namespace SEServerExtender
 			Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
 
 			//AppDomain.CurrentDomain.ClearEventInvocations("_unhandledException");
-
+            
 			BaseLog.Info( "Starting SEServerExtender with {0} arguments: {1}", args.Length, string.Join( "\r\n\t", args ) );
 
 			CommandLineArgs extenderArgs = CommandLineArgs = new CommandLineArgs
@@ -478,8 +499,8 @@ namespace SEServerExtender
 				Server.IsWCFEnabled = !extenderArgs.NoWcf;
 				Server.Init( );
 
-                if(!DedicatedServerAssemblyWrapper.IsStable)
-                    InitSandbox(Path.Combine( GameInstallationInfo.GamePath, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
+                //if(!DedicatedServerAssemblyWrapper.IsStable)
+                //    InitSandbox(Path.Combine( GameInstallationInfo.GamePath, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
 
                 ChatManager.ChatCommand guiCommand = new ChatManager.ChatCommand( "gui", ChatCommand_GUI, false );
 				ChatManager.Instance.RegisterChatCommand( guiCommand );

@@ -1,7 +1,13 @@
 ﻿using System.Threading.Tasks;
+using Sandbox.Game.Entities;
+using Sandbox.Game.Entities.Blocks;
+using Sandbox.Game.Entities.Character;
+using Sandbox.Game.Entities.Cube;
 using Sandbox.Game.Multiplayer;
+using Sandbox.Game.Weapons;
 using Sandbox.Game.World;
 using VRage.Game;
+using VRage.Game.Entity;
 using VRage.Network;
 
 namespace SEModAPIExtensions.API
@@ -149,9 +155,7 @@ namespace SEModAPIExtensions.API
             ChatCommand exportCommand = new ChatCommand( "export", Command_Export, true );
 
             ChatCommand importCommand = new ChatCommand( "import", Command_Import, true );
-
-            ChatCommand spawnCommand = new ChatCommand( "spawn", Command_Spawn, true );
-
+            
             ChatCommand clearCommand = new ChatCommand( "clear", Command_Clear, true );
 
             ChatCommand listCommand = new ChatCommand( "list", Command_List, true );
@@ -178,7 +182,6 @@ namespace SEModAPIExtensions.API
             RegisterChatCommand( ownerCommand );
             RegisterChatCommand( exportCommand );
             RegisterChatCommand( importCommand );
-            RegisterChatCommand( spawnCommand );
             RegisterChatCommand( clearCommand );
             RegisterChatCommand( listCommand );
             RegisterChatCommand( kickCommand );
@@ -807,84 +810,45 @@ namespace SEModAPIExtensions.API
 			ulong remoteUserId = chatEvent.RemoteUserId;
 			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
 			int paramCount = commandParts.Count - 1;
-
+		    MyEntity[] entities = new MyEntity[0];
+		    SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities().ToArray());
+            var toRemove = new HashSet<MyEntity>();
+            
 			//All entities
 			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 			{
 				//All cube grids that have no beacon or only a beacon with no name
 				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
-					foreach ( CubeGridEntity entity in entities )
-					{
-						while ( entity.CubeBlocks.Count == 0 )
-						{
-							Thread.Sleep( 20 );
-						}
-						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						if ( blocks.Count > 0 )
-						{
-							bool foundBeacon = blocks.OfType<BeaconEntity>( ).Any( );
-							if ( !foundBeacon )
-							{
-								entitiesToDispose.Add( entity );
-							}
-						}
-					}
+				    int removeCount = 0;
+				    Parallel.ForEach(MyCubeGridGroups.Static.Logical.Groups, group =>
+				                                                             {
+				                                                                 bool found = false;
+				                                                                 foreach (var node in group.Nodes)
+				                                                                 {
+				                                                                     var grid = node.NodeData;
 
-					foreach ( CubeGridEntity entity in entitiesToDispose )
-					{
-						bool isLinkedShip = false;
-						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						foreach ( CubeBlockEntity cubeBlock in blocks )
-						{
-							if ( cubeBlock is MergeBlockEntity )
-							{
-								MergeBlockEntity block = (MergeBlockEntity)cubeBlock;
-								if ( block.IsAttached )
-								{
-									if ( !entitiesToDispose.Contains( block.AttachedCubeGrid ) )
-									{
-										isLinkedShip = true;
-										break;
-									}
-								}
-							}
-							if ( cubeBlock is PistonEntity )
-							{
-								PistonEntity block = (PistonEntity)cubeBlock;
-								CubeBlockEntity topBlock = block.TopBlock;
-								if ( topBlock != null )
-								{
-									if ( !entitiesToDispose.Contains( topBlock.Parent ) )
-									{
-										isLinkedShip = true;
-										break;
-									}
-								}
-							}
-							if ( cubeBlock is RotorEntity )
-							{
-								RotorEntity block = (RotorEntity)cubeBlock;
-								CubeBlockEntity topBlock = block.TopBlock;
-								if ( topBlock != null )
-								{
-									if ( !entitiesToDispose.Contains( topBlock.Parent ) )
-									{
-										isLinkedShip = true;
-										break;
-									}
-								}
-							}
-						}
-						if ( isLinkedShip )
-							continue;
+				                                                                     if (grid.MarkedForClose || grid.Closed)
+				                                                                         continue;
 
-						entity.Dispose( );
-					}
+				                                                                     if (grid.CubeBlocks.OfType<MyBeacon>().Any())
+				                                                                     {
+				                                                                         found = true;
+				                                                                         break;
+				                                                                     }
+				                                                                 }
 
-					SendPrivateChatMessage( remoteUserId, string.Format( "{0} cube grids have been removed", entitiesToDispose.Count ) );
+				                                                                 if (!found)
+				                                                                     return;
+
+				                                                                 removeCount++;
+				                                                                 foreach (var closeNode in group.Nodes)
+				                                                                 {
+				                                                                     SandboxGameAssemblyWrapper.Instance.BeginGameAction(()=>closeNode.NodeData.Close(), null, null);
+				                                                                 }
+				                                                             });
+
+				    SendPrivateChatMessage(remoteUserId, $"{removeCount} cube grids have been removed");
 				}
 				//All cube grids that have no power
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "nopower" ) )
@@ -902,49 +866,13 @@ namespace SEModAPIExtensions.API
 				}
 				else if ( commandParts[ 2 ].ToLower( ).Equals( "floatingobjects" ) )	//All floating objects
 				{
-                    /*
-					List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>();
-					int floatingObjectCount = entities.Count;
-					foreach (FloatingObject entity in entities)
-					{
-						entity.Dispose();
-					}
-					 */
-
-                    MySandboxGame.Static.Invoke( ( ) =>
-                                                 {
-                                                     int count = 0;
-                                                     HashSet<IMyEntity> entities = new HashSet<IMyEntity>( );
-                                                     MyAPIGateway.Entities.GetEntities( entities );
-                                                     List<IMyEntity> entitiesToRemove = new List<IMyEntity>( );
-
-                                                     foreach ( IMyEntity entity in entities )
-                                                     {
-                                                         MyObjectBuilder_Base objectBuilder;
-                                                         try
-                                                         {
-                                                             objectBuilder = entity.GetObjectBuilder( );
-                                                         }
-                                                         catch
-                                                         {
-                                                             continue;
-                                                         }
-
-                                                         if ( objectBuilder is MyObjectBuilder_FloatingObject )
-                                                             entitiesToRemove.Add( entity );
-                                                     }
-
-                                                     for ( int r = entitiesToRemove.Count - 1; r >= 0; r-- )
-                                                     {
-                                                         IMyEntity entity = entitiesToRemove[r];
-                                                         //MyAPIGateway.Entities.RemoveEntity( entity );
-                                                         entity.Close( );
-                                                         MyMultiplayer.ReplicateImmediatelly( MyExternalReplicable.FindByObject( entity ) );
-                                                         count++;
-                                                     }
-                                                     SendPrivateChatMessage( remoteUserId, count + " floating objects have been removed" );
-                                                 } );
-
+				    int count = 0;
+				    foreach (var floating in entities.Where(e => e is MyFloatingObject))
+				    {
+				        count++;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => floating.Close(), null, null);
+				    }
+                    SendPrivateChatMessage(remoteUserId, $"Removed {count} floating objects");
 
                 }
 				else
@@ -959,19 +887,21 @@ namespace SEModAPIExtensions.API
 					}
 
 					int matchingEntitiesCount = 0;
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-					foreach ( BaseEntity entity in entities )
+					foreach ( var entity in entities )
 					{
+					    if (entity.MarkedForClose || entity.Closed)
+					        continue;
+
 						bool isMatch = Regex.IsMatch( entity.Name, entityName, RegexOptions.IgnoreCase );
 						if ( !isMatch )
 							continue;
 
-						entity.Dispose( );
+					    SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => entity.Close(), null, null);
 
 						matchingEntitiesCount++;
 					}
 
-					SendPrivateChatMessage( remoteUserId, string.Format( "{0} objects have been removed", matchingEntitiesCount ) );
+					SendPrivateChatMessage( remoteUserId, $"{matchingEntitiesCount} objects have been removed");
 				}
 			}
 
@@ -981,78 +911,75 @@ namespace SEModAPIExtensions.API
 				//That have no beacon or only a beacon with no name
 				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
 				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
-					foreach ( CubeGridEntity entity in entities )
-					{
-						//Skip static cube grids
-						if ( entity.IsStatic )
-							continue;
+                    int removeCount = 0;
+                    Parallel.ForEach(MyCubeGridGroups.Static.Logical.Groups, group =>
+                                                                             {
+                                                                                 bool found = false;
+                                                                                 foreach (var node in group.Nodes)
+                                                                                 {
+                                                                                     var grid = node.NodeData;
 
-						if ( entity.Name.Equals( entity.EntityId.ToString( ) ) )
-						{
-							entitiesToDispose.Add( entity );
-							continue;
-						}
+                                                                                     if (grid.MarkedForClose || grid.Closed)
+                                                                                         continue;
 
-						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						if ( blocks.Count > 0 )
-						{
-							bool foundBeacon = entity.CubeBlocks.OfType<BeaconEntity>( ).Any( );
-							if ( !foundBeacon )
-							{
-								entitiesToDispose.Add( entity );
-							}
-						}
-					}
+                                                                                     if (grid.IsStatic)
+                                                                                         continue;
 
-					foreach ( CubeGridEntity entity in entitiesToDispose )
-					{
-						entity.Dispose( );
-					}
+                                                                                     if (grid.CubeBlocks.OfType<MyBeacon>().Any())
+                                                                                     {
+                                                                                         found = true;
+                                                                                         break;
+                                                                                     }
+                                                                                 }
 
-					SendPrivateChatMessage( remoteUserId, string.Format( "{0} ships have been removed", entitiesToDispose.Count ) );
-				}
-			}
+                                                                                 if (!found)
+                                                                                     return;
+
+                                                                                 removeCount++;
+                                                                                 foreach (var closeNode in group.Nodes)
+                                                                                 {
+                                                                                     SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => closeNode.NodeData.Close(), null, null);
+                                                                                 }
+                                                                             });
+
+                    SendPrivateChatMessage(remoteUserId, $"{removeCount} cube grids have been removed");
+                }
 
 			//All static cube grids
 			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "station" ) )
 			{
-				//That have no beacon or only a beacon with no name
-				if ( commandParts[ 2 ].ToLower( ).Equals( "nobeacon" ) )
-				{
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-					List<CubeGridEntity> entitiesToDispose = new List<CubeGridEntity>( );
-					foreach ( CubeGridEntity entity in entities )
-					{
-						//Skip non-static cube grids
-						if ( !entity.IsStatic )
-							continue;
+                    int removeCount = 0;
+                    Parallel.ForEach(MyCubeGridGroups.Static.Logical.Groups, group =>
+                                                                             {
+                                                                                 bool found = false;
+                                                                                 foreach (var node in group.Nodes)
+                                                                                 {
+                                                                                     var grid = node.NodeData;
 
-						if ( entity.Name.Equals( entity.EntityId.ToString( ) ) )
-						{
-							entitiesToDispose.Add( entity );
-							continue;
-						}
+                                                                                     if (grid.MarkedForClose || grid.Closed)
+                                                                                         continue;
 
-						List<CubeBlockEntity> blocks = entity.CubeBlocks;
-						if ( blocks.Count > 0 )
-						{
-							bool foundBeacon = entity.CubeBlocks.OfType<BeaconEntity>( ).Any( );
-							if ( !foundBeacon )
-							{
-								entitiesToDispose.Add( entity );
-							}
-						}
-					}
+                                                                                     if(!grid.IsStatic)
 
-					foreach ( CubeGridEntity entity in entitiesToDispose )
-					{
-						entity.Dispose( );
-					}
+                                                                                     if (grid.CubeBlocks.OfType<MyBeacon>().Any())
+                                                                                     {
+                                                                                         found = true;
+                                                                                         break;
+                                                                                     }
+                                                                                 }
 
-					SendPrivateChatMessage( remoteUserId, entitiesToDispose.Count + " stations have been removed" );
-				}
+                                                                                 if (!found)
+                                                                                     return;
+
+                                                                                 removeCount++;
+                                                                                 foreach (var closeNode in group.Nodes)
+                                                                                 {
+                                                                                     SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => closeNode.NodeData.Close(), null, null);
+                                                                                 }
+                                                                             });
+
+                    SendPrivateChatMessage(remoteUserId, $"{removeCount} cube grids have been removed");
+                }
 			}
 
 			//Prunes defunct player entries in the faction data
@@ -1153,14 +1080,13 @@ namespace SEModAPIExtensions.API
 				try
 				{
 					long entityId = long.Parse( rawEntityId );
-
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-					foreach ( BaseEntity entity in entities )
+                    
+					foreach ( var entity in entities )
 					{
 						if ( entity.EntityId != entityId )
 							continue;
 
-						entity.Dispose( );
+					    SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => entity.Close(), null, null);
 					}
 				}
 				catch ( Exception ex )
@@ -1193,16 +1119,17 @@ namespace SEModAPIExtensions.API
 					float y = float.Parse( rawCoordinateValues[ 1 ] );
 					float z = float.Parse( rawCoordinateValues[ 2 ] );
 
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-					foreach ( BaseEntity entity in entities )
+					var entities = new HashSet<MyEntity>();
+				    SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+					foreach ( var entity in entities )
 					{
 						if ( entity.EntityId != entityId )
 							continue;
 
 						Vector3D newPosition = new Vector3D( x, y, z );
-						entity.Position = newPosition;
+						SandboxGameAssemblyWrapper.Instance.GameAction(()=>entity.PositionComp.SetPosition(newPosition));
 
-						SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' has been moved to '{1}'", entity.EntityId, newPosition ) );
+						SendPrivateChatMessage( remoteUserId, $"Entity '{entity.EntityId}' has been moved to '{newPosition}'");
 					}
 				}
 				catch ( Exception ex )
@@ -1212,91 +1139,89 @@ namespace SEModAPIExtensions.API
 			}
 		}
 
-		protected void Command_Stop( ChatEvent chatEvent )
-		{
-			ulong remoteUserId = chatEvent.RemoteUserId;
-			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
-			int paramCount = commandParts.Count - 1;
+        protected void Command_Stop(ChatEvent chatEvent)
+        {
+            ulong remoteUserId = chatEvent.RemoteUserId;
+            List<string> commandParts = CommandParser.GetCommandParts(chatEvent.Message);
+            int paramCount = commandParts.Count - 1;
 
-			if ( paramCount != 1 )
-				return;
+            if (paramCount != 1)
+                return;
+            long entityId;
+            if (commandParts[1].ToLower().Equals("all"))
+            {
+                int entitiesStoppedCount = 0;
+                HashSet<MyEntity> entities = new HashSet<MyEntity>();
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+                foreach (var entity in entities)
+                {
+                    if (entity.Physics == null)
+                        continue;
 
-			if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
-			{
-				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-				int entitiesStoppedCount = 0;
-				foreach ( BaseEntity entity in entities )
-				{
-					double linear = Math.Round( ( (Vector3)entity.LinearVelocity ).LengthSquared( ), 1 );
-					double angular = Math.Round( ( (Vector3)entity.AngularVelocity ).LengthSquared( ), 1 );
+                    if (Vector3D.IsZero(entity.Physics.LinearVelocity) && Vector3D.IsZero(entity.Physics.AngularVelocity))
+                        continue;
 
-					if ( linear > 0 || angular > 0 )
-					{
-						entity.LinearVelocity = Vector3.Zero;
-						entity.AngularVelocity = Vector3.Zero;
+                    SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => entity.Physics.Clear(), null, null);
+                    entitiesStoppedCount++;
+                }
+                SendPrivateChatMessage(remoteUserId, $"{entitiesStoppedCount} entities are no longer moving or rotating");
+            }
+            else if (long.TryParse(commandParts[1], out entityId))
+            {
+                MyEntity entity = null;
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => entity = MyEntities.GetEntityByIdOrDefault(entityId));
+                if (entity?.Physics == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find entity with ID {entityId}");
+                    return;
+                }
 
-						entitiesStoppedCount++;
-					}
-				}
-				SendPrivateChatMessage( remoteUserId, string.Format( "{0} entities are no longer moving or rotating", entitiesStoppedCount ) );
-			}
-			else
-			{
-				string rawEntityId = commandParts[ 1 ];
+                SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => entity.Physics.Clear(), null, null);
+                SendPrivateChatMessage(remoteUserId, $"Entity '{entity.EntityId}: {entity.DisplayName}' is no longer moving or rotating");
+            }
+            else
+            {
+                HashSet<MyEntity> entities = new HashSet<MyEntity>();
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+                string nameLower = commandParts[1].ToLower();
 
-				try
-				{
-					long entityId = long.Parse( rawEntityId );
+                MyEntity entity = entities.FirstOrDefault((e) => e.DisplayName!=null && e.DisplayName.ToLower().Equals(nameLower));
 
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-					foreach ( BaseEntity entity in entities )
-					{
-						if ( entity.EntityId != entityId )
-							continue;
+                if (entity?.Physics == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find entity named {commandParts[1]}");
+                    return;
+                }
+                SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => entity.Physics.Clear(), null, null);
+                SendPrivateChatMessage(remoteUserId, $"Entity '{entity.EntityId}: {entity.DisplayName}' is no longer moving or rotating");
+            }
+        }
 
-						entity.LinearVelocity = Vector3.Zero;
-						entity.AngularVelocity = Vector3.Zero;
-                        MyMultiplayer.ReplicateImmediatelly( MyExternalReplicable.FindByObject( entity ) );
-                        //added replication here because sometimes the velocity changes don't sync immediately. Shouldn't be necessary, but Keen.
-                        SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' is no longer moving or rotating", entity.EntityId ) );
-					}
-				}
-				catch ( Exception ex )
-				{
-					ApplicationLog.BaseLog.Error( ex );
-				}
-			}
-		}
+        protected void Command_GetId(ChatEvent chatEvent)
+        {
+            ulong remoteUserId = chatEvent.RemoteUserId;
+            List<string> commandParts = CommandParser.GetCommandParts(chatEvent.Message);
+            int paramCount = commandParts.Count - 1;
 
-		protected void Command_GetId( ChatEvent chatEvent )
-		{
-			ulong remoteUserId = chatEvent.RemoteUserId;
-			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
-			int paramCount = commandParts.Count - 1;
+            if (paramCount != 1)
+                return;
+            
+            HashSet<MyEntity> entities = new HashSet<MyEntity>();
+            SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+            string nameLower = commandParts[1].ToLower();
 
-			if ( paramCount > 0 )
-			{
-				string entityName = commandParts[ 1 ];
-				if ( commandParts.Count > 2 )
-				{
-					for ( int i = 2; i < commandParts.Count; i++ )
-					{
-						entityName += string.Format( " {0}", commandParts[ i ] );
-					}
-				}
+            MyEntity entity = entities.FirstOrDefault((e) => e.DisplayName != null && e.DisplayName.ToLower().Equals(nameLower));
 
-				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-				foreach ( BaseEntity entity in entities )
-				{
-					if ( !entity.Name.ToLower( ).Equals( entityName.ToLower( ) ) )
-						continue;
+            if (entity == null)
+            {
+                SendPrivateChatMessage(remoteUserId, $"Couldn't find entity with name {commandParts[1]}");
+                return;
+            }
 
-					SendPrivateChatMessage( remoteUserId, string.Format( "Entity ID is '{0}'", entity.EntityId ) );
-				}
-			}
-		}
+            SendPrivateChatMessage(remoteUserId, $"Entity ID is '{entity.EntityId}'");
+        }
 
-		protected void Command_Save( ChatEvent chatEvent )
+        protected void Command_Save( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
 
@@ -1313,164 +1238,213 @@ namespace SEModAPIExtensions.API
 			SendPrivateChatMessage( remoteUserId, "World has been saved!" );
 		}
 
-		protected void Command_Owner( ChatEvent chatEvent )
+        protected void Command_Owner(ChatEvent chatEvent)
+        {
+            ulong remoteUserId = chatEvent.RemoteUserId;
+            List<string> commandParts = CommandParser.GetCommandParts(chatEvent.Message);
+            int paramCount = commandParts.Count - 1;
+
+            if (paramCount != 2)
+                return;
+
+            long entityId;
+            long ownerId;
+
+            MyEntity entity = null;
+            MyPlayer player;
+            if (!long.TryParse(commandParts[1], out entityId))
+            {
+                HashSet<MyEntity> entities = new HashSet<MyEntity>();
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+                string nameLower = commandParts[1].ToLower();
+
+                entity = entities.FirstOrDefault((e) => e.DisplayName.ToLower().Equals(nameLower));
+
+                if (entity == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find entity with name {commandParts[1]}");
+                    return;
+                }
+            }
+            else
+            {
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => entity = MyEntities.GetEntityByIdOrDefault(entityId));
+                if (entity == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find entity with ID {entityId}");
+                    return;
+                }
+            }
+
+            if (!long.TryParse(commandParts[2], out ownerId))
+            {
+                string nameLower = commandParts[2].ToLower();
+                player = MySession.Static.Players.GetOnlinePlayers().FirstOrDefault((p) => p.DisplayName.ToLower().Equals(nameLower));
+
+                if (player == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find player with name {commandParts[2]}");
+                    return;
+                }
+            }
+            else
+            {
+                player = MySession.Static.Players.GetOnlinePlayers().FirstOrDefault(p => p.Identity.IdentityId == ownerId);
+                if (player == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find player with name {commandParts[2]}");
+                    return;
+                }
+            }
+
+            var grid = entity as MyCubeGrid;
+            if (grid == null)
+            {
+                SendPrivateChatMessage(remoteUserId, "Found an entity, but it isn't a grid!");
+                return;
+            }
+
+            SandboxGameAssemblyWrapper.Instance.GameAction(() => grid.ChangeGridOwner(player.Identity.IdentityId, MyOwnershipShareModeEnum.Faction));
+            SendPrivateChatMessage(remoteUserId, $"Changed ownership of grid {entity.DisplayName} to {player.DisplayName}");
+        }
+
+        protected void Command_Export( ChatEvent chatEvent )
 		{
 			ulong remoteUserId = chatEvent.RemoteUserId;
 			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
 			int paramCount = commandParts.Count - 1;
 
-			if ( paramCount == 2 )
-			{
-				string rawEntityId = commandParts[ 1 ];
-				string rawOwnerId = commandParts[ 2 ];
+            if (paramCount != 1)
+                return;
 
-				try
-				{
-					long entityId = long.Parse( rawEntityId );
-					long ownerId = long.Parse( rawOwnerId );
+            int count = 0;
+            try
+            {
+                HashSet<MyEntity> entities = new HashSet<MyEntity>();
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+                string nameLower = commandParts[1].ToLower();
+                count = 1;
+                MyEntity entity = entities.FirstOrDefault((e) => e?.DisplayName!=null && e.DisplayName.ToLower().Equals(nameLower));
 
-					List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-					foreach ( CubeGridEntity cubeGrid in entities )
-					{
-						if ( cubeGrid.EntityId != entityId )
-							continue;
+                if (entity == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find entity with name {commandParts[1]}");
+                    return;
+                }
+                count = 3;
+                var grid = entity as MyCubeGrid;
+                if (grid == null)
+                {
+                    SendPrivateChatMessage(remoteUserId, "Failed to export grid");
+                    return;
+                }
+                count = 4;
+                string modPath = Path.GetFullPath(Path.Combine(MySession.Static.CurrentPath, @"..\..\Mods"));
+                if (!Directory.Exists(modPath))
+                {
+                    SendPrivateChatMessage(remoteUserId, "Failed to export grid");
+                    return;
+                }
 
-						//Update the owner of the blocks on the cube grid
-						foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks.Where( cubeBlock => cubeBlock.EntityId != 0 ) )
-						{
-							cubeBlock.Owner = ownerId;
-						}
+                string fileName = grid.DisplayName.ToLower();
+                Regex rgx = new Regex("[^a-zA-Z0-9]");
+                string cleanFileName = rgx.Replace(fileName, string.Empty);
+                count = 5;
+                string exportPath = Path.Combine(modPath, "Exports");
+                if (!Directory.Exists(exportPath))
+                    Directory.CreateDirectory(exportPath);
+                FileInfo exportFile = new FileInfo(Path.Combine(exportPath, cleanFileName + ".sbc"));
+                count = 6;
+                MyObjectBuilderSerializer.SerializeXML(exportFile.FullName, false, grid.GetObjectBuilder());
 
-						SendPrivateChatMessage( remoteUserId, string.Format( "CubeGridEntity '{0}' owner has been changed to '{1}'", cubeGrid.EntityId, ownerId ) );
-					}
-				}
-				catch ( Exception ex )
-				{
-					ApplicationLog.BaseLog.Error( ex );
-				}
-			}
-		}
+                SendPrivateChatMessage(remoteUserId, string.Format("Entity '{0}' has been exported to Mods/Exports", entity.EntityId));
 
-		protected void Command_Export( ChatEvent chatEvent )
-		{
-			ulong remoteUserId = chatEvent.RemoteUserId;
-			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
-			int paramCount = commandParts.Count - 1;
-
-			if ( paramCount == 1 )
-			{
-				string rawEntityId = commandParts[ 1 ];
-
-				try
-				{
-					long entityId = long.Parse( rawEntityId );
-
-					List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-					foreach ( BaseEntity entity in entities )
-					{
-						if ( entity.EntityId != entityId )
-							continue;
-
-						string modPath = MyFileSystem.ModsPath;
-						if ( !Directory.Exists( modPath ) )
-							break;
-
-						string fileName = entity.Name.ToLower( );
-						Regex rgx = new Regex( "[^a-zA-Z0-9]" );
-						string cleanFileName = rgx.Replace( fileName, string.Empty );
-
-						string exportPath = Path.Combine( modPath, "Exports" );
-						if ( !Directory.Exists( exportPath ) )
-							Directory.CreateDirectory( exportPath );
-						FileInfo exportFile = new FileInfo( Path.Combine( exportPath, cleanFileName + ".sbc" ) );
-						entity.Export( exportFile );
-
-						SendPrivateChatMessage( remoteUserId, string.Format( "Entity '{0}' has been exported to Mods/Exports", entity.EntityId ) );
-					}
-				}
-				catch ( Exception ex )
-				{
-					ApplicationLog.BaseLog.Error( ex );
-				}
-			}
+            }
+            catch (Exception ex)
+            {
+                ApplicationLog.BaseLog.Warn(count);
+                ApplicationLog.BaseLog.Error(ex);
+            }
 		}
 
 		protected void Command_Import( ChatEvent chatEvent )
-		{
-			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
+        {
+            ulong remoteUserId = chatEvent.RemoteUserId;
+            List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
 			int paramCount = commandParts.Count - 1;
 
-			if ( paramCount == 1 )
-			{
-				try
-				{
-					string fileName = commandParts[ 1 ];
-					Regex rgx = new Regex( "[^a-zA-Z0-9]" );
-					string cleanFileName = rgx.Replace( fileName, string.Empty );
+		    if (paramCount < 1 || paramCount > 2)
+                return;
 
-					string modPath = MyFileSystem.ModsPath;
-					if ( Directory.Exists( modPath ) )
-					{
-						string exportPath = Path.Combine( modPath, "Exports" );
-						if ( Directory.Exists( exportPath ) )
-						{
-							FileInfo importFile = new FileInfo( Path.Combine( exportPath, cleanFileName ) );
-							if ( importFile.Exists )
-							{
-								string objectBuilderTypeName = string.Empty;
-								using ( XmlReader reader = XmlReader.Create( importFile.OpenText( ) ) )
-								{
-									while ( reader.Read( ) )
-									{
-										if ( reader.NodeType == XmlNodeType.XmlDeclaration )
-											continue;
+		    double x = 0;
+		    double y = 0;
+		    double z = 0;
+		    bool validPosition = false;
+            
+		    if (paramCount == 2)
+		    {
+		        string[] splits = commandParts[2].Split(',');
+		        if (splits.Length == 3)
+		        {
+		            validPosition = true;
+		            if (!double.TryParse(splits[0], out x))
+		                validPosition = false;
+		            if (!double.TryParse(splits[1], out y))
+		                validPosition = false;
+		            if (!double.TryParse(splits[2], out z))
+		                validPosition = false;
+		        }
+		    }
 
-										if ( reader.NodeType != XmlNodeType.Element )
-											continue;
+		    try
+		    {
+		        string fileName = commandParts[ 1 ];
+		        Regex rgx = new Regex( "[^a-zA-Z0-9]" );
+		        string cleanFileName = rgx.Replace( fileName, string.Empty );
+                    
+		        string modPath = Path.GetFullPath(Path.Combine(MySession.Static.CurrentPath, @"..\..\Mods"));
+		        if (!Directory.Exists(modPath))
+		        {
+                    SendPrivateChatMessage(remoteUserId,"Couldn't find Mods directory");
+                    return;
+		        }
+		        string exportPath = Path.Combine( modPath, "Exports" );
+		        if (!Directory.Exists(exportPath))
+		        {
+                    SendPrivateChatMessage(remoteUserId, "Couldn't find Mods\\Exports directory");
+                    return;
+		        }
+		        FileInfo importFile = new FileInfo( Path.GetFullPath(Path.Combine( exportPath, cleanFileName + ".sbc" )) );
+		        if (!importFile.Exists)
+		        {
+                    SendPrivateChatMessage(remoteUserId, $"Couldn't find {cleanFileName}.sbc");
+                    return;
+		        }
+		        MyObjectBuilder_CubeGrid builder;
+		        if (!MyObjectBuilderSerializer.DeserializeXML(importFile.FullName, out builder))
+		        {
+                    SendPrivateChatMessage(remoteUserId, "Failed to import grid");
+                    return;
+		        }
+		        MyEntity entity = null;
+		        SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+		                                                       {
+		                                                           MyEntities.RemapObjectBuilder(builder);
+		                                                           entity = MyEntities.CreateFromObjectBuilder(builder);
+		                                                           if (validPosition)
+		                                                           {
+		                                                               var pos=  new Vector3D(x,y,z);
+		                                                               entity.PositionComp.SetPosition(pos);
+		                                                           }
+		                                                           MyEntities.Add(entity);
+		                                                       });
 
-										objectBuilderTypeName = reader.Name;
-										break;
-									}
-								}
-
-								if ( string.IsNullOrEmpty( objectBuilderTypeName ) )
-									return;
-
-                                if ( objectBuilderTypeName == "MyObjectBuilder_CubeGrid" )
-                                {
-                                    CubeGridEntity cubeGrid = new CubeGridEntity( importFile );
-                                    SectorObjectManager.Instance.AddEntity( cubeGrid );
-                                }
-                            }
-						}
-					}
-				}
-				catch ( Exception ex )
-				{
-					ApplicationLog.BaseLog.Error( ex );
-				}
-			}
-		}
-
-		protected void Command_Spawn( ChatEvent chatEvent )
-		{
-			ulong remoteUserId = chatEvent.RemoteUserId;
-			List<string> commandParts = CommandParser.GetCommandParts( chatEvent.Message );
-			int paramCount = commandParts.Count - 1;
-
-			if ( paramCount > 1 && commandParts[ 1 ].ToLower( ).Equals( "ship" ) )
-			{
-				if ( commandParts[ 2 ].ToLower( ).Equals( "all" ) )
-				{
-				}
-				if ( commandParts[ 2 ].ToLower( ).Equals( "exports" ) )
-				{
-				}
-				if ( commandParts[ 2 ].ToLower( ).Equals( "cargo" ) )
-				{
-					CargoShipManager.Instance.SpawnCargoShipGroup( remoteUserId );
-				}
-			}
+		        SendPrivateChatMessage(remoteUserId, $"Imported entity {entity.DisplayName ?? commandParts[1]} at location {entity.PositionComp.GetPosition()}");
+		    }
+		    catch ( Exception ex )
+		    {
+		        ApplicationLog.BaseLog.Error( ex );
+		    }
 		}
 
 		protected void Command_Clear( ChatEvent chatEvent )
@@ -1482,34 +1456,51 @@ namespace SEModAPIExtensions.API
 			if ( paramCount != 1 )
 				return;
 
-			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+		    var entities = new HashSet<MyEntity>();
+		    SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
 			int queueCount = 0;
-			foreach ( var cubeGrid in cubeGrids )
+			foreach ( var entity in entities )
 			{
-				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
+			    var grid = entity as MyCubeGrid;
+			    if (grid == null)
+			        continue;
+
+				foreach ( var slimBlock in grid.CubeBlocks.ToArray() )
 				{
-					if ( commandParts[ 1 ].ToLower( ).Equals( "productionqueue" ) && cubeBlock is ProductionBlockEntity )
+				    var cubeBlock = slimBlock?.FatBlock;
+				    if (cubeBlock == null)
+				        continue;
+
+					if ( commandParts[ 1 ].ToLower( ).Equals( "productionqueue" ) && cubeBlock is MyProductionBlock )
 					{
-						ProductionBlockEntity block = (ProductionBlockEntity)cubeBlock;
+						var block = (MyProductionBlock)cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "refineryqueue" ) && cubeBlock is RefineryEntity )
+					if ( commandParts[ 1 ].ToLower( ).Equals( "refineryqueue" ) && cubeBlock is MyRefinery )
 					{
-						RefineryEntity block = (RefineryEntity)cubeBlock;
+						var block = (MyRefinery)cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "assemblerqueue" ) && cubeBlock is AssemblerEntity )
+					if ( commandParts[ 1 ].ToLower( ).Equals( "assemblerqueue" ) && cubeBlock is MyAssembler)
 					{
-						AssemblerEntity block = (AssemblerEntity)cubeBlock;
+						var block = (MyAssembler)cubeBlock;
 						block.ClearQueue( );
 						queueCount++;
 					}
+				    if (commandParts[1].ToLower().Equals("projection") && cubeBlock is MyProjectorBase)
+				    {
+				        var block = (MyProjectorBase)cubeBlock;
+                        block.SendRemoveProjection();
+				        queueCount++;
+				    }
 				}
 			}
-
-			SendPrivateChatMessage( remoteUserId, "Cleared the production queue of " + queueCount + " blocks" );
+		    if (!commandParts[1].ToLower().Equals("projection"))
+		        SendPrivateChatMessage(remoteUserId, $"Cleared the production queue of {queueCount} blocks");
+		    else
+		        SendPrivateChatMessage(remoteUserId, $"Cleared projection from {queueCount} blocks");
 		}
 
 		protected void Command_List( ChatEvent chatEvent )
@@ -1521,47 +1512,32 @@ namespace SEModAPIExtensions.API
 			if ( paramCount != 1 )
 				return;
 
+            var entities = new HashSet<MyEntity>();
+		    SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities());
+
 			if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
 			{
-				List<BaseEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<BaseEntity>( );
-				ApplicationLog.BaseLog.Info( "Total entities: '" + entities.Count + "'" );
-
 				SendPrivateChatMessage( remoteUserId, "Total entities: '" + entities.Count + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "cubegrid" ) )
 			{
-				List<CubeGridEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-				ApplicationLog.BaseLog.Info( "Cubegrid entities: '" + entities.Count + "'" );
-
-				SendPrivateChatMessage( remoteUserId, "Cubegrid entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, "Cubegrid entities: '" + entities.Count(e => e is MyCubeGrid) + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "character" ) )
 			{
-				List<CharacterEntity> entities = SectorObjectManager.Instance.GetTypedInternalData<CharacterEntity>( );
-				ApplicationLog.BaseLog.Info( "Character entities: '" + entities.Count + "'" );
-
-				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, "Character entities: '" + entities.Count(e => e is MyCharacter) + "'" );
 			}
-			//if ( commandParts[ 1 ].ToLower( ).Equals( "voxelmap" ) )
-			//{
-			//	List<VoxelMap> entities = SectorObjectManager.Instance.GetTypedInternalData<VoxelMap>( );
-			//	ApplicationLog.BaseLog.Info( "Voxelmap entities: '" + entities.Count + "'" );
-
-			//	SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count + "'" );
-			//}
+			if ( commandParts[ 1 ].ToLower( ).Equals( "voxel" ) )
+			{
+				SendPrivateChatMessage( remoteUserId, "Voxelmap entities: '" + entities.Count(e => e is MyVoxelBase) + "'" );
+			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "meteor" ) )
 			{
-				List<Meteor> entities = SectorObjectManager.Instance.GetTypedInternalData<Meteor>( );
-				ApplicationLog.BaseLog.Info( "Meteor entities: '" + entities.Count + "'" );
-
-				SendPrivateChatMessage( remoteUserId, "Meteor entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, "Meteor entities: '" + entities.Count(e => e is MyMeteor) + "'" );
 			}
 			if ( commandParts[ 1 ].ToLower( ).Equals( "floatingobject" ) )
 			{
-				List<FloatingObject> entities = SectorObjectManager.Instance.GetTypedInternalData<FloatingObject>( );
-				ApplicationLog.BaseLog.Info( "Floating object entities: '" + entities.Count + "'" );
-
-				SendPrivateChatMessage( remoteUserId, "Floating object entities: '" + entities.Count + "'" );
+				SendPrivateChatMessage( remoteUserId, "Floating object entities: '" + entities.Count(e => e is MyFloatingObject) + "'" );
 			}
 		}
 
@@ -1574,52 +1550,60 @@ namespace SEModAPIExtensions.API
 			if ( paramCount != 1 )
 				return;
 
-			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
+			MyEntity[] entities = new MyEntity[0];
+		    SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities().ToArray());
 			int poweredOffCount = 0;
-			foreach ( var cubeGrid in cubeGrids )
+			foreach ( var entity in entities )
 			{
-				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
-				{
-					if ( !( cubeBlock is FunctionalBlockEntity ) )
-						continue;
+			    var grid = entity as MyCubeGrid;
+			    if (grid?.Physics == null || grid.MarkedForClose)
+			        continue;
+			    foreach (var cubeBlock in grid.GetFatBlocks())
+			    {
+			        if (!(cubeBlock is MyFunctionalBlock))
+			            continue;
 
-					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
+			        var functionalBlock = (MyFunctionalBlock)cubeBlock;
 
-					if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
-					{
-						functionalBlock.Enabled = false;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "production" ) && cubeBlock is ProductionBlockEntity )
-					{
-						functionalBlock.Enabled = false;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "beacon" ) && cubeBlock is BeaconEntity )
-					{
-						functionalBlock.Enabled = false;
-						BeaconEntity beacon = (BeaconEntity)cubeBlock;
-						beacon.BroadcastRadius = 1;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "tools" ) && ( cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity ) )
-					{
-						functionalBlock.Enabled = false;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "turrets" ) && ( cubeBlock is TurretBaseEntity ) )
-					{
-						functionalBlock.Enabled = false;
-						poweredOffCount++;
-					}
+			        if (commandParts[1].ToLower().Equals("all"))
+			        {
+			            functionalBlock.Enabled = false;
+			            poweredOffCount++;
+			        }
+			        if (commandParts[1].ToLower().Equals("production") && cubeBlock is MyProductionBlock)
+			        {
+			            functionalBlock.Enabled = false;
+			            poweredOffCount++;
+			        }
+			        if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is MyBeacon)
+			        {
+			            functionalBlock.Enabled = false;
+			            //BeaconEntity beacon = (BeaconEntity)cubeBlock;
+			            //beacon.BroadcastRadius = 1;
+			            poweredOffCount++;
+			        }
+			        if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is MyShipToolBase || cubeBlock is MyShipDrill))
+			        {
+			            functionalBlock.Enabled = false;
+			            poweredOffCount++;
+			        }
+			        if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is MyLargeTurretBase))
+			        {
+			            functionalBlock.Enabled = false;
+			            poweredOffCount++;
+			        }
+			        if (commandParts[1].ToLower().Equals("projectors") && (cubeBlock is MyProjectorBase))
+			        {
+			            functionalBlock.Enabled = false;
+			            poweredOffCount++;
+			        }
 
-					if ( commandParts[ 1 ].ToLower( ).Equals( cubeBlock.Id.SubtypeName.ToLower( ) ) )
-					{
-						functionalBlock.Enabled = false;
-						poweredOffCount++;
-					}
-
-				}
+			        if (commandParts[1].ToLower().Equals(cubeBlock.BlockDefinition.Id.SubtypeName.ToLower()))
+			        {
+			            functionalBlock.Enabled = false;
+			            poweredOffCount++;
+			        }
+			    }
 			}
 
 			SendPrivateChatMessage( remoteUserId, "Turned off " + poweredOffCount + " blocks" );
@@ -1634,52 +1618,63 @@ namespace SEModAPIExtensions.API
 			if ( paramCount != 1 )
 				return;
 
-			List<CubeGridEntity> cubeGrids = SectorObjectManager.Instance.GetTypedInternalData<CubeGridEntity>( );
-			int poweredOffCount = 0;
-			foreach ( var cubeGrid in cubeGrids )
-			{
-				foreach ( CubeBlockEntity cubeBlock in cubeGrid.CubeBlocks )
-				{
-					if ( !( cubeBlock is FunctionalBlockEntity ) )
-						continue;
+            MyEntity[] entities = new MyEntity[0];
+            SandboxGameAssemblyWrapper.Instance.GameAction(() => entities = MyEntities.GetEntities().ToArray());
+            int poweredOffCount = 0;
+            foreach (var entity in entities)
+            {
+                var grid = entity as MyCubeGrid;
+                if (grid?.Physics == null || grid.MarkedForClose)
+                    continue;
+                foreach (var cubeBlock in grid.GetFatBlocks())
+                {
+                    if (!(cubeBlock is MyFunctionalBlock))
+                        continue;
 
-					FunctionalBlockEntity functionalBlock = (FunctionalBlockEntity)cubeBlock;
+                    var functionalBlock = (MyFunctionalBlock)cubeBlock;
 
-					if ( commandParts[ 1 ].ToLower( ).Equals( "all" ) )
-					{
-						functionalBlock.Enabled = true;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "production" ) && cubeBlock is ProductionBlockEntity )
-					{
-						functionalBlock.Enabled = true;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "beacon" ) && cubeBlock is BeaconEntity )
-					{
-						functionalBlock.Enabled = true;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "tools" ) && ( cubeBlock is ShipToolBaseEntity || cubeBlock is ShipDrillEntity ) )
-					{
-						functionalBlock.Enabled = true;
-						poweredOffCount++;
-					}
-					if ( commandParts[ 1 ].ToLower( ).Equals( "turrets" ) && ( cubeBlock is TurretBaseEntity ) )
-					{
-						functionalBlock.Enabled = true;
-						poweredOffCount++;
-					}
+                    if (commandParts[1].ToLower().Equals("all"))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("production") && cubeBlock is MyProductionBlock)
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is MyBeacon)
+                    {
+                        functionalBlock.Enabled = true;
+                        //BeaconEntity beacon = (BeaconEntity)cubeBlock;
+                        //beacon.BroadcastRadius = 1;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is MyShipToolBase || cubeBlock is MyShipDrill))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is MyLargeTurretBase))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                    if (commandParts[1].ToLower().Equals("projectors") && (cubeBlock is MyProjectorBase))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
 
-					if ( commandParts[ 1 ].ToLower( ).Equals( cubeBlock.Id.SubtypeName.ToLower( ) ) )
-					{
-						functionalBlock.Enabled = true;
-						poweredOffCount++;
-					}
-				}
-			}
+                    if (commandParts[1].ToLower().Equals(cubeBlock.BlockDefinition.Id.SubtypeName.ToLower()))
+                    {
+                        functionalBlock.Enabled = true;
+                        poweredOffCount++;
+                    }
+                }
+            }
 
-			SendPrivateChatMessage( remoteUserId, "Turned on " + poweredOffCount + " blocks" );
+            SendPrivateChatMessage( remoteUserId, "Turned on " + poweredOffCount + " blocks" );
 		}
 
 		protected void Command_Kick( ChatEvent chatEvent )

@@ -375,6 +375,8 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+        /*
+         * this property is marked obsolete internally
 		/// <summary>
 		/// Determine whether the server will save regularly the sector
 		/// </summary>
@@ -394,6 +396,7 @@ namespace SEModAPI.API.Definitions
 				_definition.SessionSettings.AutoSave = value;
 			}
 		}
+        */
 
 		/// <summary>
 		/// Get or set the minutes between autosaving the world
@@ -408,12 +411,24 @@ namespace SEModAPI.API.Definitions
 		public uint AutoSaveInMinutes
 		{
 			get { return _definition.SessionSettings.AutoSaveInMinutes; }
-			set
-			{
-				if ( _definition.SessionSettings.AutoSaveInMinutes == value ) return;
-				_definition.SessionSettings.AutoSaveInMinutes = value;
-			}
+			set { _definition.SessionSettings.AutoSaveInMinutes = value; }
 		}
+
+        /// <summary>
+        /// Get or set the number of auto-backup
+        /// </summary>
+        [DataMember]
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Description("The max number of automatic backups the server keeps.")]
+        [Category("Server Settings")]
+        [DisplayName("Max Backup Count")]
+        [DefaultValue(5)]
+        public short MaxBackupSaves
+	    {
+	        get { return _definition.SessionSettings.MaxBackupSaves; }
+            set { _definition.SessionSettings.MaxBackupSaves = value; }
+	    }
 
 		/// <summary>
 		/// Determine whether the weapons are functional
@@ -1216,6 +1231,8 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
+                //return _definition.SessionSettings.EnableWolfs ?? false;
+                
                 FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableCyberhounds", BindingFlags.Instance | BindingFlags.Public);
                 if (memberInfo == null)
                     memberInfo= _definition.SessionSettings.GetType().GetField("EnableWolfs", BindingFlags.Instance | BindingFlags.Public); //yes, Wolfs
@@ -1227,9 +1244,12 @@ namespace SEModAPI.API.Definitions
                 if ( !setting.HasValue )
                     return false;
                 return setting.Value;
+                
             }
             set
             {
+                //_definition.SessionSettings.EnableWolfs = value;
+                
                 FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableCyberhounds", BindingFlags.Instance | BindingFlags.Public);
                 if (memberInfo == null)
                     memberInfo = _definition.SessionSettings.GetType().GetField("EnableWolfs", BindingFlags.Instance | BindingFlags.Public); //yes, Wolfs
@@ -1237,7 +1257,7 @@ namespace SEModAPI.API.Definitions
                     return;
 
                 memberInfo.SetValue(_definition.SessionSettings, value);
-                //_definition.SessionSettings.EnableWolfs = value;
+                
             }
         }
         

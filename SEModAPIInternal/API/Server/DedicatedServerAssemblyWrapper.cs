@@ -192,13 +192,7 @@ namespace SEModAPIInternal.API.Server
 				MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
 				MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
 				MyPerServerSettings.AppId = 0x3bc72;
-
-			    if ( IsStable )
-			    {
-                    //this causes crashes on dev, but is needed for stable
-			        MyObjectBuilderSerializer.UnregisterAssembliesAndSerializers( );
-			    }
-
+                
                 //Start the server
                 MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
 				dedicatedServerRunMainMethod.Invoke( null, methodParams );

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Sandbox.Game;
@@ -13,6 +14,7 @@ using VRage.Game.Entity;
 using VRage.Game.ModAPI.Ingame;
 using VRage.Groups;
 using VRage.Stats;
+using VRageRender;
 using VRageRender.Utils;
 using IMyInventory = VRage.Game.ModAPI.IMyInventory;
 
@@ -206,10 +208,7 @@ namespace SEServerExtender
 
 		#region "General"
 
-	    private MyStats _genericStats;
-	    private MyStats _networkStats;
-	    private MyStats _timingStats;
-	    private bool _failedReflection;
+	    private List<MyStats> _stats;
 		private void StatisticsRefresh( object sender, EventArgs e )
 		{
 			StringBuilder sb = new StringBuilder( );
@@ -219,27 +218,44 @@ namespace SEServerExtender
 			//Stats.Timing.WriteTo( sb );
 
             //HACK FOR STABLE! HACKS ALL DAY ERRY DAY YEEEEAAAAAA
-		    if (_failedReflection)
-		        return;
-
-		    if (_genericStats == null )
+		    if (_stats == null )
 		    {
+		        Type renderStatsType = null;
 		        Type statsType = FindTypeInAllAssemblies("VRage.Utils.Stats");
-                if(statsType == null)
-                    statsType = FindTypeInAllAssemblies("VRageRender.Utils.Stats");
 		        if (statsType == null)
 		        {
-		            _failedReflection = true;
-		            return;
+		            statsType = FindTypeInAllAssemblies("VRageRender.Utils.Stats");
+		            renderStatsType = FindTypeInAllAssemblies("VRageRender.Utils.MyRenderStats");
 		        }
-		        _genericStats = (MyStats)statsType.GetField("Generic", BindingFlags.Public | BindingFlags.Static).GetValue(null);
-                _networkStats = (MyStats)statsType.GetField("Network", BindingFlags.Public | BindingFlags.Static).GetValue(null);
-                _timingStats = (MyStats)statsType.GetField("Timing", BindingFlags.Public | BindingFlags.Static).GetValue(null);
-            }
+		        if (statsType == null)
+		            throw new MissingMemberException("Couldn't find stats");
 
-            _genericStats.WriteTo(sb);
-            _networkStats.WriteTo(sb);
-            _timingStats.WriteTo(sb);
+                _stats=new List<MyStats>();
+
+		        if (renderStatsType == null)
+		        {
+		            _stats.Add((MyStats)statsType.GetField("Generic", BindingFlags.Public | BindingFlags.Static).GetValue(null));
+		            _stats.Add((MyStats)statsType.GetField("Network", BindingFlags.Public | BindingFlags.Static).GetValue(null));
+		            _stats.Add((MyStats)statsType.GetField("Timing", BindingFlags.Public | BindingFlags.Static).GetValue(null));
+		        }
+		        else
+		        {
+		            var statinfo = renderStatsType.GetField("m_stats", BindingFlags.Public | BindingFlags.Static);
+                    if(statinfo==null)
+                        throw new MissingMemberException("Couldn't find expanded stats field");
+		            var obj = statinfo.GetValue(null);
+		            var values = obj.GetType().GetProperty("Values").GetValue(obj) as IEnumerable<List<MyStats>>;
+                    if(values == null)
+                        throw new MissingMemberException("Couldn't find expanded stats value");
+                    
+                    foreach (var statlist in values)
+                        foreach (var stat in statlist)
+                            _stats.Add(stat);
+                }
+		    }
+
+            foreach(var stats in _stats)
+                stats.WriteTo(sb);
 
 			TB_Statistics.Text = sb.ToString( );
 		}
@@ -310,10 +326,10 @@ namespace SEServerExtender
 			if ( m_server.Config != null )
 			{
 				//Enforce built-in auto-save being off
-				if ( m_server.Config.AutoSave )
+				if ( m_server.Config.AutoSaveInMinutes > 0 )
 				{
 					ApplicationLog.BaseLog.Warn( "SE built-in autosave was enabled in configuration. It has been disabled to prevent conflicts." );
-					m_server.Config.AutoSave = false;
+					m_server.Config.AutoSaveInMinutes = 0;
 				}
 				m_server.SaveServerConfig( );
 			}
@@ -717,7 +733,7 @@ namespace SEServerExtender
 
 		private string GenerateCubeNodeText( MyCubeGrid item )
 		{
-			string text = item.DisplayName;
+			string text = item.DisplayName??"Ship";
 		        
 			int sortBy = CB_Entity_Sort.SelectedIndex;
 			switch ( sortBy )
@@ -732,7 +748,7 @@ namespace SEServerExtender
 			        text += $" | Blocks: {item.BlocksCount}";
 			        break;
 				case 4:
-					text += $" | Mass: {(item.Physics.IsStatic ? "[Station]" : Math.Floor( item.Physics.Mass ) + "kg")}";
+			        text += $" | Mass: {((item.Physics == null || item.Physics.IsStatic) ? "[Station]" : Math.Floor(item.Physics.Mass) + "kg")}";
 					break;
                 case 5:
 			        text += $" | EntityID: {item.EntityId}";
@@ -750,7 +766,7 @@ namespace SEServerExtender
 
 			if ( sortBy == 0 ) // Display Name
 			{
-				list.Sort( ( x, y ) => x.DisplayName.CompareTo( y.DisplayName ) );
+				list.Sort( ( x, y ) => String.Compare( x.DisplayName, y.DisplayName, StringComparison.CurrentCultureIgnoreCase ) );
 			}
 			else if ( sortBy == 1 ) // Owner Name
 			{
@@ -2306,5 +2322,5 @@ namespace SEServerExtender
 		{
 
 		}
-	}
+    }
 }
