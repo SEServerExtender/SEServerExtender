@@ -145,6 +145,31 @@
             Parallel thread - listener.
             </summary>
         </member>
+        <member name="T:VRage.Game.Core.VRageCore">
+            <summary>
+            Class initializing the (minimal) engine, setting the render properties based on the data.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Core.VRageCore.Init(System.String)">
+            <summary>
+            Initialize minimal engine.
+            </summary>
+            <param name="contentPath">Path to the game content.</param>
+        </member>
+        <member name="M:VRage.Game.Core.VRageCore.Dispose">
+            <summary>
+            Dispose the resources, unload engine.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.MyDefinitionManagerSimple">
+            <summary>
+            Simple definition manager class that allows loading of definitions from files
+            and support type overrides (e.g. for loading subset of EnvironmentDefinition)
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MyDefinitionManagerSimple.AddDefinitionOverride(System.Type,System.String)">
+            <param name="typeOverride">The xst:type atrribute overridden</param>
+        </member>
         <member name="M:VRage.Game.MyDefinitionSet.AddDefinition(VRage.Game.MyDefinitionBase)">
             Add a new definition to the set.
             
@@ -173,6 +198,20 @@
         <member name="F:VRage.Game.Definitions.SessionComponents.MyCubeBuilderDefinition.BuildingSettings">
             <summary>
             Defines settings for building mode.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MySunProperties.BaseSunDirectionNormalized">
+            <summary>Direction TO sun</summary>
+        </member>
+        <member name="F:VRage.Game.MySunProperties.SunDirectionNormalized">
+            <summary>Direction TO sun</summary>
+        </member>
+        <member name="M:VRage.Game.MySunProperties.InterpolateWith(VRage.Game.MySunProperties,System.Single)">
+            <param name="interpolator">0 - use this object, 1 - use other object</param>
+        </member>
+        <member name="T:VRage.Game.MyVisualSettingsDefinition">
+            <summary>
+            Stripped environment definition with only visual settings
             </summary>
         </member>
         <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
@@ -215,7 +254,12 @@
         </member>
         <member name="P:VRage.Game.Components.MyAnimationControllerComponent.CharacterBones">
             <summary>
-            Get or set reference to array of character bones and its contents.
+            Get reference to array of character bones and its contents.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.InverseKinematics">
+            <summary>
+            Get the instance of inverse kinematics.
             </summary>
         </member>
         <member name="F:VRage.Game.Entity.MyInventoryBase.RemoveEntityOnEmpty">
@@ -795,6 +839,11 @@
             Should only be used as read-only
             </summary>
         </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.SlimBlock">
+            <summary>
+            Gets the SlimBlock associated with this block
+            </summary>
+        </member>
         <member name="E:VRage.Game.ModAPI.IMyCubeBlock.OnUpgradeValuesChanged">
             <summary>
             Event called when upgrade values are changed
@@ -1305,6 +1354,36 @@
             </summary>
             <param name="gpsHash"></param>
         </member>
+        <member name="E:VRage.Game.ModAPI.IMyGui.GuiControlCreated">
+            <summary>
+            Event triggered on gui control created.
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyGui.GuiControlRemoved">
+            <summary>
+            Event triggered on gui control removed.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyGui.ActiveGamePlayScreen">
+            <summary>
+            Gets the name of the currently open GUI screen.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyGui.InteractedEntity">
+            <summary>
+            Gets the entity the player is currently interacting with.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyGui.GetCurrentScreen">
+            <summary>
+            Gets an enum describing the currently open GUI screen.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyGui.ChatEntryVisible">
+            <summary>
+            Checks if the chat entry box is visible.
+            </summary>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMyHudNotification.Show">
             <summary>
             Shows the notification on the HUD.
@@ -1570,6 +1649,141 @@
             <param name="callingType"></param>
             <returns></returns>
         </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.AreAllAabbCornersInside(VRageMath.MatrixD,VRageMath.BoundingBoxD)">
+            <summary>
+            Returns true if all corners of a boundingbox are inside a voxel.
+            </summary>
+            <param name="aabbWorldTransform">VoxelMap transform</param>
+            <param name="aabb">Area to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.IsAnyAabbCornerInside(VRageMath.MatrixD,VRageMath.BoundingBoxD)">
+            <summary>
+            Returns true if all corners of a boundingbox are inside a voxel.
+            </summary>
+            <param name="aabbWorldTransform">VoxelMap transform</param>
+            <param name="aabb">Area to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.CountCornersInside(VRageMath.MatrixD,VRageMath.BoundingBoxD)">
+            <summary>
+            Returns the count of how many corners of a boundingbox are inside a voxel.
+            </summary>
+            <param name="aabbWorldTransform">VoxelMap transform</param>
+            <param name="aabb">Area to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.IsOverlapOverThreshold(VRageMath.BoundingBoxD,System.Single)">
+            <summary>
+            Returns <b>true</b> if the bounding box contains at least the specified amount (as a percent) of voxel material.
+            </summary>
+            <param name="worldAabb"></param>
+            <param name="thresholdPercentage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.VoxelCutoutSphere(VRageMath.Vector3D,System.Single,System.Boolean,System.Boolean)">
+            <summary>
+            Cuts out the request volume from the voxel.
+            </summary>
+            <param name="center"></param>
+            <param name="radius"></param>
+            <param name="createDebris"></param>
+            <param name="damage"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.VoxelOperationCapsule(VRageMath.Vector3D,VRageMath.Vector3D,System.Single,VRageMath.MatrixD,System.Byte,VRage.Voxels.OperationType)">
+            <summary>
+            Perform voxel operation using a capsule shape.
+            </summary>
+            <param name="A"></param>
+            <param name="B"></param>
+            <param name="radius"></param>
+            <param name="Transformation"></param>
+            <param name="material"></param>
+            <param name="operation"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.VoxelOperationBox(VRageMath.BoundingBoxD,VRageMath.MatrixD,System.Byte,VRage.Voxels.OperationType)">
+            <summary>
+            Perform voxel operation using a box shape.
+            </summary>
+            <param name="box"></param>
+            <param name="Transformation"></param>
+            <param name="material"></param>
+            <param name="operation"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.VoxelOperationElipsoid(VRageMath.Vector3,VRageMath.MatrixD,System.Byte,VRage.Voxels.OperationType)">
+            <summary>
+            Perform voxel operation using a ellipsoid shape.
+            </summary>
+            <param name="radius"></param>
+            <param name="Transformation"></param>
+            <param name="material"></param>
+            <param name="operation"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.VoxelOperationRamp(VRageMath.BoundingBoxD,VRageMath.Vector3D,System.Double,VRageMath.MatrixD,System.Byte,VRage.Voxels.OperationType)">
+            <summary>
+            Perform voxel operation using a ramp shape.
+            </summary>
+            <param name="box"></param>
+            <param name="rampNormal"></param>
+            <param name="rampNormalW"></param>
+            <param name="Transformation"></param>
+            <param name="material"></param>
+            <param name="operation"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.VoxelOperationSphere(VRageMath.Vector3D,System.Single,System.Byte,VRage.Voxels.OperationType)">
+            <summary>
+            Perform voxel operation using a sphere shape.
+            </summary>
+            <param name="center"></param>
+            <param name="radius"></param>
+            <param name="material"></param>
+            <param name="operation"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyVoxelBase.CreateMeteorCrater(VRageMath.Vector3D,System.Single,VRageMath.Vector3,System.Byte)">
+            <summary>
+            Creates a meteor crater on a voxel, depositing the specified material. Call on server.
+            </summary>
+            <param name="center"></param>
+            <param name="radius"></param>
+            <param name="normal">Direction crater opens (eg. towards meteor source)</param>
+            <param name="materialIdx">Material to deposit.</param>
+        </member>
+        <member name="P:VRage.ModAPI.IMyVoxelBase.PositionLeftBottomCorner">
+            <summary>
+            Position of left/bottom corner of this voxel map, in world space (not relative to sector)
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.IMyVoxelBase.RootVoxel">
+            <summary>
+            Gets root voxel, for asteroids and planets itself.
+            For MyVoxelPhysics, should return owning planet.
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.IMyVoxelBase.Size">
+            <summary>
+            Size of voxel map (in voxels)
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.IMyVoxelBase.SizeInMetres">
+            <summary>
+            Size of voxel map (in metres)
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.GetAllOverlappingWithSphere(VRageMath.BoundingSphereD@,System.Collections.Generic.List{VRage.ModAPI.IMyVoxelBase})">
+            <summary>
+            Gets a list of all voxelmaps that overlap the specified sphere.
+            </summary>
+            <param name="sphere"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.GetAllOverlappingWithSphere(VRageMath.BoundingSphereD@)">
+            <summary>
+            Gets a list of all voxelmaps that overlap the specified sphere.
+            </summary>
+            <param name="sphere"></param>
+            <returns></returns>
+            <remarks>Not thread safe.</remarks>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.CreateVoxelMapFromStorageName(System.String,System.String,VRageMath.Vector3D)">
             <summary>
             Adds a prefab voxel to the game world.
@@ -1601,6 +1815,18 @@
             <param name="voxelMap"></param>
             <param name="voxelShape"></param>
             <param name="materialIdx"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.MakeCrater(VRage.ModAPI.IMyVoxelBase,VRageMath.BoundingSphereD,VRageMath.Vector3,System.Byte)">
+            <summary>
+            Creates a crater in a voxel, and deposits the specifid material.
+            </summary>
+            <param name="voxelMap"></param>
+            <param name="sphere"></param>
+            <param name="normal"></param>
+            <param name="materialIdx"></param>
+            <remarks>Not synced.<br/>
+            Call <see cref="M:VRage.ModAPI.IMyVoxelBase.CreateMeteorCrater(VRageMath.Vector3D,System.Single,VRageMath.Vector3,System.Byte)">IMyVoxelBase.CreateMeteorCrater</see> on the server instead for a synced operation.
+            </remarks>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyVoxelShape.GetWorldBoundary">
             <summary>
@@ -1739,6 +1965,11 @@
             Unregister entity component.
             </summary>
         </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.ReloadMwmTracks">
+            <summary>
+            Reload all mwm tracks while in-game. Mwms from cache are not used. 
+            </summary>
+        </member>
         <member name="T:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNode">
             <summary>
             Base class of all object builders of animation tree nodes.
@@ -1782,6 +2013,11 @@
         <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Interpolate">
             <summary>
             Interpolate between keyframes. If false, track will be played frame by frame.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.SynchronizeWithLayer">
+            <summary>
+            Synchronize time in this track with the specified layer.
             </summary>
         </member>
         <member name="T:VRage.Game.ObjectBuilders.MyParameterAnimTreeNodeMapping">
@@ -1866,6 +2102,11 @@
             refinery or assembler.
             </summary>
         </member>
+        <member name="T:VRage.Game.MyObjectBuilder_VisualSettingsDefinition">
+            <summary>
+            Stripped environment definition with only visual settings
+            </summary>
+        </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilder_EntityBase.Remap(VRage.ModAPI.IMyRemapHelper)">
             <summary>
             Remaps this entity's entityId to a new value.
@@ -1935,14 +2176,24 @@
             Min building distnace for creative mode.
             </summary>
         </member>
-        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistSurvivalCharacter">
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistSmallSurvivalCharacter">
             <summary>
-            Building distance in survival mode when controlling character.
+            Building distance for small grid in survival mode when controlling character.
             </summary>
         </member>
-        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistSurvivalShip">
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistLargeSurvivalCharacter">
             <summary>
-            Building distance in survival mode when controlling ship.
+            Building distance for large grid in survival mode when controlling character.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistSmallSurvivalShip">
+            <summary>
+            Building distance for small grid in survival mode when controlling ship.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistLargeSurvivalShip">
+            <summary>
+            Building distance for large grid in survival mode when controlling ship.
             </summary>
         </member>
         <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingSettings">
@@ -1986,7 +2237,7 @@
             Public members to easy access
             </summary>
         </member>
-        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
             <summary>
             DrawTransparentBox
             </summary>
@@ -2022,6 +2273,11 @@
             <param name="worldMatrix"></param>
             <param name="lineBuffer"></param>
             <param name="divideRatio"></param>
+        </member>
+        <member name="T:VRage.Game.MyDefinitionXmlSerializer">
+            <summary>
+            Custom XmlSerializer for definitions that allows to override the definition type
+            </summary>
         </member>
         <member name="F:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.Static">
             <summary>
@@ -2215,17 +2471,6 @@
             Updates the world matrix (change caused by parent)
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldVolume">
-            <summary>
-            Updates the volume of this entity.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateAABBHr(VRageMath.BoundingBoxD@)">
-            <summary>
-            Update volume hr and of all children.
-            </summary>
-            <param name="volume"></param>
-        </member>
         <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
             <summary>
             Called when [world position changed].
@@ -2255,25 +2500,7 @@
             Gets the world volume.
             </summary>
         </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABBHr">
-            <summary>
-            Gets the hiearchical box in world.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolumeHr">
-            <summary>
-            Gets the hiearchical volume in world.
-            </summary>
-        </member>
         <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABB">
-            <summary>
-            Sets the local aabb.
-            </summary>
-            <value>
-            The local aabb.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABBHr">
             <summary>
             Sets the local aabb.
             </summary>
@@ -2287,14 +2514,6 @@
             </summary>
             <value>
             The local volume.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.MaximalSize">
-            <summary>
-            Gets the maximal size.
-            </summary>
-            <value>
-            The Maximal size.
             </value>
         </member>
         <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolumeOffset">
@@ -2342,19 +2561,89 @@
             Gets compressed voxel data
             </summary>
         </member>
+        <member name="M:VRage.ModAPI.IMyStorage.OverwriteAllMaterials(System.Byte)">
+            <summary>
+            Replaces all materials in range with the specific material
+            </summary>
+            <param name="materialIndex"></param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.Intersect(VRageMath.BoundingBox@,System.Boolean)">
+            <summary>
+            Returns the intersection with the storage region
+            </summary>
+            <param name="box"></param>
+            <param name="lazy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.Intersect(VRageMath.LineD@)">
+            <summary>
+            Returns true if the specific line intersects the storage region
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.PinAndExecute(System.Action)">
+            <summary>
+            Pins the voxel storage to prevent closing, then executes specified action. Unpins when action completes.
+            </summary>
+            <param name="action">Action to execute</param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.PinAndExecute(System.Action{VRage.ModAPI.IMyStorage})">
+            <summary>
+            Pins the voxel storage to prevent closing, then executes specified action. Unpins when action completes.
+            </summary>
+            <param name="action">Action to execute</param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.Reset(VRage.Voxels.MyStorageDataTypeFlags)">
+            <summary>
+            Resets the data specified by flags to values from data provider, or default if no provider is assigned.
+            </summary>
+            <param name="dataToReset"></param>
+        </member>
         <member name="M:VRage.ModAPI.IMyStorage.ReadRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
             </summary>
+            <param name="target"></param>
+            <param name="dataToRead"></param>
+            <param name="lodIndex"></param>
             <param name="lodVoxelRangeMin">Inclusive.</param>
             <param name="lodVoxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="M:VRage.ModAPI.IMyStorage.ReadRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,System.Int32,VRageMath.Vector3I,VRageMath.Vector3I,VRage.Voxels.MyVoxelRequestFlags@)">
+            <summary>
+            Reads range of content and/or materials from specified LOD. If you want to write data back later, you must read LOD0 as that is the only writable one.
+            </summary>
+            <param name="target"></param>
+            <param name="dataToRead"></param>
+            <param name="lodIndex"></param>
+            <param name="lodVoxelRangeMin"></param>
+            <param name="lodVoxelRangeMax"></param>
+            <param name="requestFlags"></param>
         </member>
         <member name="M:VRage.ModAPI.IMyStorage.WriteRange(VRage.Voxels.MyStorageData,VRage.Voxels.MyStorageDataTypeFlags,VRageMath.Vector3I,VRageMath.Vector3I)">
             <summary>
             Writes range of content and/or materials from cache to storage. Note that this can only write to LOD0 (higher LODs must be computed based on that).
             </summary>
+            <param name="source"></param>
+            <param name="dataToWrite"></param>
             <param name="voxelRangeMin">Inclusive.</param>
             <param name="voxelRangeMax">Inclusive.</param>
+        </member>
+        <member name="P:VRage.ModAPI.IMyStorage.Closed">
+            <summary>
+            Returns true if voxel storage was closed
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.IMyStorage.MarkedForClose">
+            <summary>
+            Returns true if the voxel storage is marked for a pending close
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.IMyStorage.Size">
+            <summary>
+            The size of the voxel storage, in voxels
+            </summary>
         </member>
         <member name="T:VRage.ModAPI.MyAPIGatewayShortcuts">
             <summary>
@@ -3870,7 +4159,7 @@
         </member>
         <member name="F:MyCommonTexts.ToolTipVideoOptionsCaptureMouse">
             <summary>
-            Weather the cursor should be captured by the game window (for Windowed and Fullscreen Window modes).
+            Whether the cursor should be captured by the game window (for Windowed and Fullscreen Window modes).
             </summary>
         </member>
         <member name="F:MyCommonTexts.ToolTipVideoOptionsVerticalSync">
@@ -4731,7 +5020,7 @@
         </member>
         <member name="F:MyCommonTexts.MultiplayerError_IncorrectVersion">
             <summary>
-            Server has different version of the game. Your version: {0}; Server version: {1}
+            Server has different version of the game. Your version: {0}; Server version: {1}; You can change the branch, before launching the game, in game properties.
             </summary>
         </member>
         <member name="F:MyCommonTexts.ShowCrosshair">
@@ -5249,6 +5538,11 @@
             Mods
             </summary>
         </member>
+        <member name="F:MyCommonTexts.WorldSettings_Advanced">
+            <summary>
+            Advanced
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ToolTipWorkshopOpenModInWorkshop">
             <summary>
             Open selected mod in Workshop Steam Overlay
@@ -5466,7 +5760,7 @@
         </member>
         <member name="F:MyCommonTexts.DialogTextIncompatibleWorldVersion">
             <summary>
-            This world can not be loaded. It has been created in newer version of the game.
+            This world cannot be loaded. It has been created in a newer version of the game or in a different branch of the game. You can change the branch, before launching the game, in game properties.
             </summary>
         </member>
         <member name="F:MyCommonTexts.MessageBoxTextPublishFailed_AccessDenied">
@@ -6605,6 +6899,31 @@
             Change block variants
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Skin">
+            <summary>
+            Skin
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_SkinWarning">
+            <summary>
+            Note: Not all screens support skin at the moment
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AnimatedRotation">
+            <summary>
+            Animated block preview
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BuildingSizeHint">
+            <summary>
+            Show building size hint
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AudioSettings_ShipSoundsBasedOnSpeed">
+            <summary>
+            Speed based ship sounds
+            </summary>
+        </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
             <summary>
             Amount of item required or produced. For discrete objects this refers to
@@ -6619,6 +6938,31 @@
             Do not write specific values in code, as data comes from XML and if those
             change, code needs to change as well.
             </summary>
+        </member>
+        <member name="M:VRage.Game.MyDefinitionId.FromContent(VRage.ObjectBuilders.MyObjectBuilder_Base)">
+            <summary>
+            Creates a new definition ID from a given content.
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.MyDefinitionId.Parse(System.String)">
+            <summary>
+            Attempts to create a definition ID from a definition string, which has the form (using ores as an example) "MyObjectBuilder_Ore/Iron".
+            The first part must represent an existing type. If it does not, an exception will be thrown. The second (the subtype) is not enforced.
+            See <see cref="M:VRage.Game.MyDefinitionId.TryParse(System.String,VRage.Game.MyDefinitionId@)"/> for a parsing method that does not throw an exception.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.MyDefinitionId.TryParse(System.String,VRage.Game.MyDefinitionId@)">
+            <summary>
+            Attempts to create a definition ID from a definition string, which has the form (using ores as an example) "MyObjectBuilder_Ore/Iron".
+            The first part must represent an existing type, while the second (the subtype) is not enforced.
+            </summary>
+            <param name="id"></param>
+            <param name="definitionId"></param>
+            <returns></returns>
         </member>
         <member name="M:VRage.Game.MyDefinitionId.GetHashCodeLong">
             <summary>
@@ -6667,6 +7011,11 @@
             Name of used animation controller.
             </summary>
         </member>
+        <member name="F:VRage.Game.MyObjectBuilder_CharacterDefinition.RotationToSupport">
+            <summary>
+            Align with the support? 
+            </summary>
+        </member>
         <member name="F:VRage.Game.MyAutorotateMode.OneDirection">
             <summary>
             When block has mount points only on one side, it will autorotate so that side is touching the surface.
@@ -6686,11 +7035,32 @@
             Otherwise, full range of rotations is allowed.
             </summary>
         </member>
+        <member name="T:VRage.Game.MyObjectBuilder_EnvironmentDefinition">
+            <summary>
+            Global (environment) mergeable definitions
+            </summary>
+        </member>
         <member name="T:VRage.Game.MyGlobalEventTypeEnum">
             <summary>
             Defines the event type.
             Each event type has its assigned handler method and data class type.
             Multiple event definitions can have the same event type.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.MyItemPositioningEnum">
+            <summary>
+            Enumeration defining where to get the weapon transform from.
+            This does not include behavior of arms (anim/ik), which is driven separately by variables SimulateLeftHand and SimulateRightHand.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MyItemPositioningEnum.TransformFromData">
+            <summary>
+            Weapon is placed according to sbc data file.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MyItemPositioningEnum.TransformFromAnim">
+            <summary>
+            Weapon is placed according to animation.
             </summary>
         </member>
         <member name="P:VRage.Game.MyPlanetMaterialDefinition.HasLayers">
@@ -6764,38 +7134,17 @@
             Will be removed after correct hierarchy and usage of session settings is made
             </summary>
         </member>
-        <member name="M:VRage.Game.MyAbstractXmlSerializer`1.#ctor">
-            <summary>
-            **DO NOT USE** This is only added to enable XML Serialization.
-            </summary>
-            <remarks>DO NOT USE THIS CONSTRUCTOR</remarks>
-        </member>
-        <member name="M:VRage.Game.MyAbstractXmlSerializer`1.#ctor(`0)">
-            <summary>
-            Initialises the Serializer to work with the given data.
-            </summary>
-            <param name="data">Concrete Object of the AbstractType Specified.</param>
-        </member>
-        <member name="P:VRage.Game.MyAbstractXmlSerializer`1.Data">
-            <summary>
-            [Concrete] Data to be stored/is stored as XML.
-            </summary>
-        </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.GenerateAssemblyId(System.Type)">
-            <summary>Generates an identifier for the assembly of a specified type</summary>
-            <remarks>Code copied from the .NET serialization classes - to emulate the same bahavior</remarks>
-            <param name="type">The type</param>
-            <returns>String identifying the type's assembly</returns>
-        </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.MemberwiseAssignment(VRage.ObjectBuilders.MyObjectBuilder_Base,VRage.ObjectBuilders.MyObjectBuilder_Base)">
-            <summary>
-            Performs shallow copy of data between members of the same name and type from source to target.
-            This method can be slow and inefficient, so use only when needed.
-            </summary>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.DeserializeXML(System.IO.Stream,VRage.ObjectBuilders.MyObjectBuilder_Base@,System.Type,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <param name="typeOverrideMap">Allows override of the type of the definition. Refer to MyDefinitionXmlSerializer</param>
         </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
             <summary>
             Can handle old values as well.
+            </summary>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.RemapType(VRage.ObjectBuilders.SerializableDefinitionId@,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Used for type remapping when overriding definition types
             </summary>
         </member>
         <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">

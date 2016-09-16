@@ -101,6 +101,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.TryGetPlanetPosition(VRageMath.Vector3D@)">
+            <summary>
+            Attempts to get the world position of the nearest planet. This method is only available when a ship is 
+            within the gravity well of a planet.
+            </summary>
+            <param name="position"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.TryGetPlanetElevation(Sandbox.ModAPI.Ingame.MyPlanetElevation,System.Double@)">
+            <summary>
+            Attempts to get the elevation of the ship in relation to the nearest planet. This method is only available
+            when a ship is within the gravity well of a planet.
+            </summary>
+            <param name="detail"></param>
+            <param name="elevation"></param>
+            <returns></returns>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
             <summary>
             Indicates whether a block is locally or remotely controlled.
@@ -124,6 +141,51 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.DampenersOverride">
             <summary>
             Indicates whether dampeners are currently enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.GetFilterList(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})">
+            <summary>
+            Gets the items currently being allowed through or rejected, depending on the <see cref="P:Sandbox.ModAPI.Ingame.IMyConveyorSorter.Mode"/>.
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.AddItem(Sandbox.ModAPI.Ingame.MyInventoryItemFilter)">
+            <summary>
+            Adds a single item to the filter list. See <see cref="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.SetFilter(Sandbox.ModAPI.Ingame.MyConveyorSorterMode,System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})"/> to change the filter mode and/or fill
+            the entire list in one go.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.RemoveItem(Sandbox.ModAPI.Ingame.MyInventoryItemFilter)">
+            <summary>
+            Removes a single item from the filter list. See <see cref="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.SetFilter(Sandbox.ModAPI.Ingame.MyConveyorSorterMode,System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})"/> to change the filter mode and/or clear
+            the entire list in one go.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.IsAllowed(VRage.Game.MyDefinitionId)">
+            <summary>
+            Determines whether a given item type is allowed through the sorter, depending on the filter list (<see cref="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.GetFilterList(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})"/>) and <see cref="P:Sandbox.ModAPI.Ingame.IMyConveyorSorter.Mode"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.SetFilter(Sandbox.ModAPI.Ingame.MyConveyorSorterMode,System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})">
+            <summary>
+            Changes the sorter to desired mode and filters the provided items. You can pass in <c>null</c> to empty the list.
+            </summary>
+            <param name="mode"></param>
+            <param name="items"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyConveyorSorter.DrainAll">
+            <summary>
+            Determines whether the sorter should drain any inventories connected to it and push them to the other side - as long
+            as the items passes the filtering as defined by the filter list (<see cref="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.GetFilterList(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})"/>) and <see cref="P:Sandbox.ModAPI.Ingame.IMyConveyorSorter.Mode"/>.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyConveyorSorter.Mode">
+            <summary>
+            Determines the current mode of this sorter. Use <see cref="!:SetWhitelist"/> or <see cref="!:SetBlacklist"/> to change the mode.
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyGridProgram">
@@ -182,6 +244,13 @@
         <member name="P:Sandbox.ModAPI.IMyGridProgram.HasSaveMethod">
             <summary>
             Determines whether this grid program has a valid Save method.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyIngameScripting.ScriptBlacklist">
+            <summary>
+            Provides the ability for mods to add and remove items from a type and member blacklist,
+            giving the ability to remove even more API for scripts. Intended for server admins to
+            restrict what people are able to do with scripts to keep their simspeed up.
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyInventoryBag">
@@ -830,6 +899,31 @@
             Gets the current number of method calls.
             </summary>
         </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyConveyorSorterMode">
+            <summary>
+            Determines the current mode of a conveyor sorter.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyConveyorSorterMode.Whitelist">
+            <summary>
+            The items in the filter list are the only items allowed through this sorter.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyConveyorSorterMode.Blacklist">
+            <summary>
+            The items in the filter list are not allowed through this sorter.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyInventoryItemFilter.AllSubTypes">
+            <summary>
+            Determines whether all subtypes of the given item ID should pass this filter check.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyInventoryItemFilter.ItemId">
+            <summary>
+            Specifies an item to filter. Set <see cref="F:Sandbox.ModAPI.Ingame.MyInventoryItemFilter.AllSubTypes"/> to true to only check the main type part of this ID.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
             <summary>
             Wheel's current steering angle
@@ -883,6 +977,22 @@
         <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.TotalMass">
             <summary>
             Gets the total mass of the ship, including cargo.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyPlanetElevation">
+            <summary>
+            Describes what detail level to retrieve the planet elevation for.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyPlanetElevation.Sealevel">
+            <summary>
+            Only return the distance to the planetary sealevel.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyPlanetElevation.Surface">
+            <summary>
+            Return the distance to the closest point of the planet. This is the same value
+            displayed in the HUD.
             </summary>
         </member>
         <member name="F:Sandbox.ModAPI.Ingame.MyShipVelocities.LinearVelocity">
@@ -1576,11 +1686,14 @@
             IMyPhysics contains physics related things (CastRay, etc.)
             </summary>
         </member>
-        <member name="F:Sandbox.ModAPI.MyAPIGateway.ScriptBlacklist">
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Gui">
             <summary>
-            Provides the ability for mods to add and remove items from a type and member blacklist,
-            giving the ability to remove even more API for scripts. Intended for server admins to
-            restrict what people are able to do with scripts to keep their simspeed up.
+            IMyGui exposes some useful values from the GUI systems
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.IngameScripting">
+            <summary>
+            Provides mod access to control compilation of ingame scripts
             </summary>
         </member>
         <member name="F:Sandbox.ModAPI.MyAPIGateway.Input">

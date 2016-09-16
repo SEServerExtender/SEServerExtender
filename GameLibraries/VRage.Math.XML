@@ -822,7 +822,7 @@
         </member>
         <member name="M:VRageMath.BoundingBox.GetCorners">
             <summary>
-            Gets an array of points that make up the corners of the BoundingBox.
+            Gets an array of points that make up the corners of the BoundingBox. ALLOCATION!
             </summary>
         </member>
         <member name="M:VRageMath.BoundingBox.GetCorners(VRageMath.Vector3[])">
@@ -992,29 +992,32 @@
             </summary>
             <param name="sphere">The BoundingSphere to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:VRageMath.BoundingBox.Translate(VRageMath.Matrix)" -->
+        <member name="M:VRageMath.BoundingBox.Translate(VRageMath.Matrix)">
+            <summary>
+            Translate
+            </summary>
+            <param name="worldMatrix"></param>
+            <returns></returns>
+        </member>
         <member name="M:VRageMath.BoundingBox.Translate(VRageMath.Vector3)">
             <summary>
             Translate
             </summary>
-            <param name="bbox"></param>
             <param name="vctTranlsation"></param>
             <returns></returns>
         </member>
         <member name="M:VRageMath.BoundingBox.Include(VRageMath.Vector3@)">
             <summary>
-            return expanded aabb (abb include point)
+            return expanded aabb (aabb include point)
             </summary>
-            <param name="bbox"></param>
             <param name="point"></param>
             <returns></returns>
         </member>
         <member name="M:VRageMath.BoundingBox.Include(VRageMath.BoundingBox@)">
             <summary>
-            return expanded aabb (abb include point)
+            return expanded aabb (aabb include aabb)
             </summary>
-            <param name="bbox"></param>
-            <param name="point"></param>
+            <param name="box"></param>
             <returns></returns>
         </member>
         <member name="P:VRageMath.BoundingBox.Center">
@@ -1069,7 +1072,7 @@
         </member>
         <member name="M:VRageMath.BoundingFrustum.GetCorners">
             <summary>
-            Gets an array of points that make up the corners of the BoundingFrustum.
+            Gets an array of points that make up the corners of the BoundingFrustum. ALLOCATION!
             </summary>
         </member>
         <member name="M:VRageMath.BoundingFrustum.GetCorners(VRageMath.Vector3[])">
@@ -1077,6 +1080,12 @@
             Gets an array of points that make up the corners of the BoundingFrustum.
             </summary>
             <param name="corners">An existing array of at least 8 Vector3 points where the corners of the BoundingFrustum are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingFrustum.GetCornersUnsafe(VRageMath.Vector3*)">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector3 points where the corners of the BoundingBox are written.</param>
         </member>
         <member name="M:VRageMath.BoundingFrustum.Equals(VRageMath.BoundingFrustum)">
             <summary>
@@ -1470,7 +1479,7 @@
         </member>
         <member name="M:VRageMath.BoundingBoxD.GetCorners">
             <summary>
-            Gets an array of points that make up the corners of the BoundingBox.
+            Gets an array of points that make up the corners of the BoundingBox. ALLOCATION!
             </summary>
         </member>
         <member name="M:VRageMath.BoundingBoxD.GetCorners(VRageMath.Vector3D[])">
@@ -1640,29 +1649,67 @@
             </summary>
             <param name="sphere">The BoundingSphere to test for overlap.</param><param name="result">[OutAttribute] Enumeration indicating the extent of overlap.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:VRageMath.BoundingBoxD.Translate(VRageMath.MatrixD)" -->
+        <member name="M:VRageMath.BoundingBoxD.Translate(VRageMath.MatrixD)">
+            <summary>
+            Translate
+            </summary>
+            <param name="worldMatrix"></param>
+            <returns></returns>
+        </member>
         <member name="M:VRageMath.BoundingBoxD.Translate(VRageMath.Vector3D)">
             <summary>
             Translate
             </summary>
-            <param name="bbox"></param>
             <param name="vctTranlsation"></param>
             <returns></returns>
         </member>
+        <member name="M:VRageMath.BoundingBoxD.TransformSlow(VRageMath.MatrixD)">
+            <summary>
+            Transform this AABB by matrix.
+            </summary>
+            <param name="m">transformation matrix</param>
+            <returns>transformed aabb</returns>
+        </member>
+        <member name="M:VRageMath.BoundingBoxD.TransformSlow(VRageMath.MatrixD@)">
+            <summary>
+            Transform this AABB by matrix.
+            </summary>
+            <param name="m">transformation matrix</param>
+            <returns>transformed aabb</returns>
+        </member>
+        <member name="M:VRageMath.BoundingBoxD.TransformFast(VRageMath.MatrixD)">
+            <summary>
+            Transform this AABB by matrix. Matrix has to be only rotation and translation.
+            </summary>
+            <param name="m">transformation matrix</param>
+            <returns>transformed aabb</returns>
+        </member>
+        <member name="M:VRageMath.BoundingBoxD.TransformFast(VRageMath.MatrixD@)">
+            <summary>
+            Transform this AABB by matrix. Matrix has to be only rotation and translation.
+            </summary>
+            <param name="m">transformation matrix</param>
+            <returns>transformed aabb</returns>
+        </member>
+        <member name="M:VRageMath.BoundingBoxD.TransformFast(VRageMath.MatrixD@,VRageMath.BoundingBoxD@)">
+            <summary>
+            Transform this AABB by matrix. Matrix has to be only rotation and translation.
+            </summary>
+            <param name="m">transformation matrix</param>
+            <param name="bb">output transformed aabb</param>
+        </member>
         <member name="M:VRageMath.BoundingBoxD.Include(VRageMath.Vector3D@)">
             <summary>
-            return expanded aabb (abb include point)
+            return expanded aabb (aabb include point)
             </summary>
-            <param name="bbox"></param>
             <param name="point"></param>
             <returns></returns>
         </member>
         <member name="M:VRageMath.BoundingBoxD.Include(VRageMath.BoundingBoxD@)">
             <summary>
-            return expanded aabb (abb include point)
+            return expanded aabb (aabb include aabb)
             </summary>
-            <param name="bbox"></param>
-            <param name="point"></param>
+            <param name="box"></param>
             <returns></returns>
         </member>
         <member name="P:VRageMath.BoundingBoxD.Center">
@@ -1892,7 +1939,7 @@
         </member>
         <member name="M:VRageMath.BoundingFrustumD.GetCorners">
             <summary>
-            Gets an array of points that make up the corners of the BoundingFrustumD.
+            Gets an array of points that make up the corners of the BoundingFrustumD. ALLOCATION!
             </summary>
         </member>
         <member name="M:VRageMath.BoundingFrustumD.GetCorners(VRageMath.Vector3D[])">
@@ -1900,6 +1947,12 @@
             Gets an array of points that make up the corners of the BoundingFrustumD.
             </summary>
             <param name="corners">An existing array of at least 8 Vector3D points where the corners of the BoundingFrustumD are written.</param>
+        </member>
+        <member name="M:VRageMath.BoundingFrustumD.GetCornersUnsafe(VRageMath.Vector3D*)">
+            <summary>
+            Gets the array of points that make up the corners of the BoundingBox.
+            </summary>
+            <param name="corners">An existing array of at least 8 Vector3 points where the corners of the BoundingBox are written.</param>
         </member>
         <member name="M:VRageMath.BoundingFrustumD.Equals(VRageMath.BoundingFrustumD)">
             <summary>
@@ -4738,6 +4791,14 @@
             </summary>
             <param name="value1">Vector to compare.</param><param name="value2">Vector to compare.</param>
         </member>
+        <member name="M:VRageMath.Vector3D.op_Modulus(VRageMath.Vector3D,VRageMath.Vector3D)">
+            <summary>
+            Modulo division of two vectors.
+            </summary>
+            <param name="value1"></param>
+            <param name="value2"></param>
+            <returns></returns>
+        </member>
         <member name="M:VRageMath.Vector3D.op_Addition(VRageMath.Vector3D,VRageMath.Vector3D)">
             <summary>
             Adds two vectors.
@@ -4969,6 +5030,13 @@
             </summary>
             <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The maximized vector.</param>
         </member>
+        <member name="M:VRageMath.Vector3D.MinMax(VRageMath.Vector3D@,VRageMath.Vector3D@)">
+            <summary>
+            Separates minimal and maximal values of any two input vectors
+            </summary>
+            <param name="min">minimal values of the two vectors</param>
+            <param name="max">maximal values of the two vectors</param>
+        </member>
         <member name="M:VRageMath.Vector3D.DominantAxisProjection(VRageMath.Vector3D)">
             <summary>
             Returns a vector that is equal to the projection of the input vector to the coordinate axis that corresponds
@@ -5018,6 +5086,13 @@
             Returns a Vector3 containing the 3D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 3D triangle.
             </summary>
             <param name="value1">A Vector3 containing the 3D Cartesian coordinates of vertex 1 of the triangle.</param><param name="value2">A Vector3 containing the 3D Cartesian coordinates of vertex 2 of the triangle.</param><param name="value3">A Vector3 containing the 3D Cartesian coordinates of vertex 3 of the triangle.</param><param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).</param><param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).</param><param name="result">[OutAttribute] The 3D Cartesian coordinates of the specified point are placed in this Vector3 on exit.</param>
+        </member>
+        <member name="M:VRageMath.Vector3D.Barycentric(VRageMath.Vector3D,VRageMath.Vector3D,VRageMath.Vector3D,VRageMath.Vector3D,System.Double@,System.Double@,System.Double@)">
+            <summary>
+            Compute barycentric coordinates (u, v, w) for point p with respect to triangle (a, b, c)
+            From : Real-Time Collision Detection, Christer Ericson, CRC Press
+            3.4 Barycentric Coordinates
+            </summary>
         </member>
         <member name="M:VRageMath.Vector3D.SmoothStep(VRageMath.Vector3D,VRageMath.Vector3D,System.Double)">
             <summary>
@@ -6714,6 +6789,18 @@
             Interpolates between two values using a cubic equation.
             </summary>
             <param name="value1">Source value.</param><param name="value2">Source value.</param><param name="amount">Weighting value.</param>
+        </member>
+        <member name="M:VRageMath.MathHelper.SmoothStepStable(System.Single)">
+            <summary>
+            Interpolates between zero and one using cubic equiation, solved by de Casteljau.
+            </summary>
+            <param name="amount">Weighting value [0..1].</param>
+        </member>
+        <member name="M:VRageMath.MathHelper.SmoothStepStable(System.Double)">
+            <summary>
+            Interpolates between zero and one using cubic equiation, solved by de Casteljau.
+            </summary>
+            <param name="amount">Weighting value [0..1].</param>
         </member>
         <member name="M:VRageMath.MathHelper.CatmullRom(System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
@@ -9503,6 +9590,13 @@
             </summary>
             <param name="value1">Source vector.</param><param name="value2">Source vector.</param><param name="result">[OutAttribute] The maximized vector.</param>
         </member>
+        <member name="M:VRageMath.Vector3.MinMax(VRageMath.Vector3@,VRageMath.Vector3@)">
+            <summary>
+            Separates minimal and maximal values of any two input vectors
+            </summary>
+            <param name="min">minimal values of the two vectors</param>
+            <param name="max">maximal values of the two vectors</param>
+        </member>
         <member name="M:VRageMath.Vector3.DominantAxisProjection(VRageMath.Vector3)">
             <summary>
             Returns a vector that is equal to the projection of the input vector to the coordinate axis that corresponds
@@ -9552,6 +9646,13 @@
             Returns a Vector3 containing the 3D Cartesian coordinates of a point specified in barycentric (areal) coordinates relative to a 3D triangle.
             </summary>
             <param name="value1">A Vector3 containing the 3D Cartesian coordinates of vertex 1 of the triangle.</param><param name="value2">A Vector3 containing the 3D Cartesian coordinates of vertex 2 of the triangle.</param><param name="value3">A Vector3 containing the 3D Cartesian coordinates of vertex 3 of the triangle.</param><param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in value2).</param><param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in value3).</param><param name="result">[OutAttribute] The 3D Cartesian coordinates of the specified point are placed in this Vector3 on exit.</param>
+        </member>
+        <member name="M:VRageMath.Vector3.Barycentric(VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3,VRageMath.Vector3,System.Single@,System.Single@,System.Single@)">
+            <summary>
+            Compute barycentric coordinates (u, v, w) for point p with respect to triangle (a, b, c)
+            From : Real-Time Collision Detection, Christer Ericson, CRC Press
+            3.4 Barycentric Coordinates
+            </summary>
         </member>
         <member name="M:VRageMath.Vector3.SmoothStep(VRageMath.Vector3,VRageMath.Vector3,System.Single)">
             <summary>
