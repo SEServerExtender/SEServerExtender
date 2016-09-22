@@ -1161,7 +1161,17 @@ namespace SEModAPIExtensions.API
                     if (Vector3D.IsZero(entity.Physics.LinearVelocity) && Vector3D.IsZero(entity.Physics.AngularVelocity))
                         continue;
 
-                    SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => entity.Physics.Clear(), null, null);
+                    SandboxGameAssemblyWrapper.Instance.BeginGameAction(() =>
+                                                                        {
+                                                                            try
+                                                                            {
+                                                                                entity.Physics.Clear();
+                                                                            }
+                                                                            catch (Exception ex)
+                                                                            {
+                                                                                ApplicationLog.BaseLog.Info(ex);
+                                                                            }
+                                                                        }, null, null);
                     entitiesStoppedCount++;
                 }
                 SendPrivateChatMessage(remoteUserId, $"{entitiesStoppedCount} entities are no longer moving or rotating");

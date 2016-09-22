@@ -78,6 +78,8 @@
             this.splitContainer9 = new System.Windows.Forms.SplitContainer();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
             this.TRV_Factions = new System.Windows.Forms.TreeView();
+            this.BTN_Factions_Demote = new System.Windows.Forms.Button();
+            this.BTN_Factions_Promote = new System.Windows.Forms.Button();
             this.BTN_Factions_Delete = new System.Windows.Forms.Button();
             this.PG_Factions = new System.Windows.Forms.PropertyGrid();
             this.TAB_Plugins_Page = new System.Windows.Forms.TabPage();
@@ -89,6 +91,8 @@
             this.PG_Plugins = new System.Windows.Forms.PropertyGrid();
             this.TAB_Statistics = new System.Windows.Forms.TabPage();
             this.TB_Statistics = new System.Windows.Forms.TextBox();
+            this.TAB_Profiler = new System.Windows.Forms.TabPage();
+            this.TB_Profiler = new System.Windows.Forms.TextBox();
             this.SS_Bottom = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -149,6 +153,7 @@
             this.splitContainer12.Panel2.SuspendLayout();
             this.splitContainer12.SuspendLayout();
             this.TAB_Statistics.SuspendLayout();
+            this.TAB_Profiler.SuspendLayout();
             this.SS_Bottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -179,8 +184,10 @@
             this.TAB_MainTabs.Controls.Add(this.TAB_Factions_Page);
             this.TAB_MainTabs.Controls.Add(this.TAB_Plugins_Page);
             this.TAB_MainTabs.Controls.Add(this.TAB_Statistics);
+            this.TAB_MainTabs.Controls.Add(this.TAB_Profiler);
             this.TAB_MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TAB_MainTabs.Location = new System.Drawing.Point(0, 0);
+            this.TAB_MainTabs.Multiline = true;
             this.TAB_MainTabs.Name = "TAB_MainTabs";
             this.TAB_MainTabs.SelectedIndex = 0;
             this.TAB_MainTabs.Size = new System.Drawing.Size(951, 569);
@@ -711,6 +718,8 @@
             // 
             // splitContainer10.Panel2
             // 
+            this.splitContainer10.Panel2.Controls.Add(this.BTN_Factions_Demote);
+            this.splitContainer10.Panel2.Controls.Add(this.BTN_Factions_Promote);
             this.splitContainer10.Panel2.Controls.Add(this.BTN_Factions_Delete);
             this.splitContainer10.Size = new System.Drawing.Size(300, 537);
             this.splitContainer10.SplitterDistance = 502;
@@ -725,10 +734,32 @@
             this.TRV_Factions.TabIndex = 0;
             this.TRV_Factions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TRV_Factions_AfterSelect);
             // 
+            // BTN_Factions_Demote
+            // 
+            this.BTN_Factions_Demote.Enabled = false;
+            this.BTN_Factions_Demote.Location = new System.Drawing.Point(5, 4);
+            this.BTN_Factions_Demote.Name = "BTN_Factions_Demote";
+            this.BTN_Factions_Demote.Size = new System.Drawing.Size(75, 23);
+            this.BTN_Factions_Demote.TabIndex = 3;
+            this.BTN_Factions_Demote.Text = "Demote";
+            this.BTN_Factions_Demote.UseVisualStyleBackColor = true;
+            this.BTN_Factions_Demote.Click += new System.EventHandler(this.BTN_Factions_Demote_Click);
+            // 
+            // BTN_Factions_Promote
+            // 
+            this.BTN_Factions_Promote.Enabled = false;
+            this.BTN_Factions_Promote.Location = new System.Drawing.Point(86, 4);
+            this.BTN_Factions_Promote.Name = "BTN_Factions_Promote";
+            this.BTN_Factions_Promote.Size = new System.Drawing.Size(75, 23);
+            this.BTN_Factions_Promote.TabIndex = 2;
+            this.BTN_Factions_Promote.Text = "Promote";
+            this.BTN_Factions_Promote.UseVisualStyleBackColor = true;
+            this.BTN_Factions_Promote.Click += new System.EventHandler(this.BTN_Factions_Promote_Click);
+            // 
             // BTN_Factions_Delete
             // 
             this.BTN_Factions_Delete.Enabled = false;
-            this.BTN_Factions_Delete.Location = new System.Drawing.Point(172, 4);
+            this.BTN_Factions_Delete.Location = new System.Drawing.Point(222, 4);
             this.BTN_Factions_Delete.Name = "BTN_Factions_Delete";
             this.BTN_Factions_Delete.Size = new System.Drawing.Size(75, 23);
             this.BTN_Factions_Delete.TabIndex = 1;
@@ -852,6 +883,27 @@
             this.TB_Statistics.Size = new System.Drawing.Size(937, 537);
             this.TB_Statistics.TabIndex = 0;
             // 
+            // TAB_Profiler
+            // 
+            this.TAB_Profiler.Controls.Add(this.TB_Profiler);
+            this.TAB_Profiler.Location = new System.Drawing.Point(4, 22);
+            this.TAB_Profiler.Name = "TAB_Profiler";
+            this.TAB_Profiler.Padding = new System.Windows.Forms.Padding(3);
+            this.TAB_Profiler.Size = new System.Drawing.Size(943, 543);
+            this.TAB_Profiler.TabIndex = 7;
+            this.TAB_Profiler.Text = "Profiler";
+            this.TAB_Profiler.UseVisualStyleBackColor = true;
+            // 
+            // TB_Profiler
+            // 
+            this.TB_Profiler.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TB_Profiler.Location = new System.Drawing.Point(3, 3);
+            this.TB_Profiler.Multiline = true;
+            this.TB_Profiler.Name = "TB_Profiler";
+            this.TB_Profiler.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TB_Profiler.Size = new System.Drawing.Size(937, 537);
+            this.TB_Profiler.TabIndex = 1;
+            // 
             // SS_Bottom
             // 
             this.SS_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -939,6 +991,8 @@
             this.splitContainer12.ResumeLayout(false);
             this.TAB_Statistics.ResumeLayout(false);
             this.TAB_Statistics.PerformLayout();
+            this.TAB_Profiler.ResumeLayout(false);
+            this.TAB_Profiler.PerformLayout();
             this.SS_Bottom.ResumeLayout(false);
             this.SS_Bottom.PerformLayout();
             this.ResumeLayout(false);
@@ -1005,5 +1059,9 @@
 		private PropertyGrid PG_Plugins;
 		private TabPage TAB_Statistics;
 		private TextBox TB_Statistics;
-	}
+        private TabPage TAB_Profiler;
+        private TextBox TB_Profiler;
+        private Button BTN_Factions_Demote;
+        private Button BTN_Factions_Promote;
+    }
 }

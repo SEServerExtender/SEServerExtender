@@ -34,12 +34,12 @@ namespace SEServerExtender.Utility
              if ( block.CubeGrid?.Physics != null && (!block.IsFullIntegrity || block.HasDeformation ))
              {
 
-                 SandboxGameAssemblyWrapper.Instance.GameAction( () =>
+                 SandboxGameAssemblyWrapper.Instance.BeginGameAction( () =>
                                                                  {
                                                                      block.IncreaseMountLevelToDesiredRatio( block.MaxIntegrity, 0, null, 100f, true );
                                                                      //block.IncreaseMountLevel( 100f, 0, null, 100f, true );
                                                                      //block.CubeGrid.ResetBlockSkeleton( block );
-                                                                 } );
+                                                                 }, null, null );
              }
          }
 

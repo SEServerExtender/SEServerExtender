@@ -1,3 +1,4 @@
+using System.Text;
 using VRage.Game;
 
 namespace SEModAPIExtensions.API
@@ -580,7 +581,7 @@ namespace SEModAPIExtensions.API
 					return;
 				if ( _isServerRunning )
 					return;
-
+                
 				if ( _dedicatedConfigDefinition == null )
 					LoadServerConfig( );
                 
@@ -607,18 +608,43 @@ namespace SEModAPIExtensions.API
 			}
 		}
 
+        private const string endMessage = "Server stopped, press any key to close this window";
+
 		public void StopServer( )
 		{
 			ApplicationLog.BaseLog.Info( "Stopping server" );
-			MySandboxGame.Static.Exit(  );
+            
+		    StringBuilder sb = new StringBuilder();
+            TextWriter tw = new StringWriter(sb);
+		    TextWriter tmp = Console.Out;
 
-		    //SandboxGameAssemblyWrapper.Instance.GameAction( () => MySandboxGame.Static.Exit() );
-            //Thread.Sleep( 30000 );
+            Console.SetOut(tw);
+
+			MySandboxGame.ExitThreadSafe();
 
 			_pluginMainLoop.Stop( );
 			_autosaveTimer.Stop( );
 			_pluginManager.Shutdown( );
 
+            DateTime waitStart = DateTime.Now;
+
+		    while (true)
+		    {
+                if (sb.ToString().Contains("Server stopped, press any key to close this window"))
+		            break;
+		        
+                Thread.Sleep(100);
+
+		        if (DateTime.Now - waitStart > TimeSpan.FromMinutes(5))
+		        {
+                    ApplicationLog.BaseLog.Warn("Server failed to shut down correctly!");
+		            break;
+		        }
+		    }
+
+            Console.SetOut(tmp);
+            Console.Write(sb);
+            
 			//_runServerThread.Interrupt();
 			//_dedicatedServerWrapper.StopServer();
 			//_runServerThread.Abort();

@@ -8,7 +8,9 @@ using Sandbox.Game.Entities.Cube;
 using Sandbox.ModAPI;
 using SEServerExtender.EntityWrappers;
 using SEServerExtender.EntityWrappers.BlockWrappers;
+using SEServerExtender.EntityWrappers.Factions;
 using SEServerExtender.Utility;
+using VRage;
 using VRage.Game;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI.Ingame;
@@ -79,17 +81,18 @@ namespace SEServerExtender
 		private Timer m_pluginManagerRefreshTimer;
 		private Timer m_statusCheckTimer;
 		private Timer m_statisticsTimer;
+	    private Timer m_profilerTimer;
 		private Timer m_playersTimer;
 		private Timer _genericUpdateTimer = new Timer { Interval = 1000 };
 
 		//Utilities Page
 		private int m_floatingObjectsCount;
+        
+        #endregion
 
-		#endregion
+        #region "Constructors and Initializers"
 
-		#region "Constructors and Initializers"
-
-		public SEServerExtender( Server server )
+        public SEServerExtender( Server server )
 		{
 			m_instance = this;
 			m_server = server;
@@ -118,6 +121,9 @@ namespace SEServerExtender
 
 			if ( m_server.IsRunning )
 				_genericUpdateTimer.Start( );
+
+            if (Program.IsStable)
+                TAB_MainTabs.TabPages.Remove(TAB_Profiler);
 		}
 
 		private bool SetupTimers( )
@@ -140,6 +146,9 @@ namespace SEServerExtender
 
 			m_statisticsTimer = new Timer { Interval = 1000 };
 			m_statisticsTimer.Tick += StatisticsRefresh;
+
+		    m_profilerTimer = new Timer {Interval = 3000};
+		    m_profilerTimer.Tick += ProfilerRefresh;
 
 			_genericUpdateTimer.Tick += GenericTimerTick;
 
@@ -193,13 +202,15 @@ namespace SEServerExtender
 
 		private void OnFormClosing( object sender, EventArgs e )
 		{
+            Server.Instance.StopServer();
 			m_entityTreeRefreshTimer.Stop( );
 			m_chatViewRefreshTimer.Stop( );
 			m_factionRefreshTimer.Stop( );
 			m_pluginManagerRefreshTimer.Stop( );
 			m_statusCheckTimer.Stop( );
 			m_statisticsTimer.Stop( );
-			m_playersTimer.Stop( );
+            m_profilerTimer.Stop();
+			//m_playersTimer.Stop( );
 		}
 
 		#endregion
@@ -304,16 +315,181 @@ namespace SEServerExtender
 				if ( !m_statisticsTimer.Enabled )
 					m_statisticsTimer.Start( );
 
+                if(!m_profilerTimer.Enabled && !Program.IsStable && FindTypeInAllAssemblies("VRage.MySimpleProfiler")!=null)
+                    m_profilerTimer.Start();
+
 				if ( PG_Control_Server_Properties.SelectedObject != m_server.Config )
 					PG_Control_Server_Properties.SelectedObject = m_server.Config;
 			}
 		}
 
-		#endregion
+	    private void ProfilerRefresh(object sender, EventArgs e)
+	    {
+	        if (Program.IsStable)
+	        {
+	            m_profilerTimer.Stop();
+	            return;
+	        }
 
-		#region "Control"
+	        var fieldInfo = typeof(MySimpleProfiler).GetField("m_profilingBlocks", BindingFlags.Static | BindingFlags.NonPublic);
+	        if (fieldInfo == null)
+	        {
+	            m_profilerTimer.Stop();
+	            return;
+	        }
 
-		internal void BTN_ServerControl_Start_Click( object sender, EventArgs e )
+	        var blocks = fieldInfo.GetValue(null) as Dictionary<string, MySimpleProfiler.MySimpleProfilingBlock>;
+	        if (blocks == null)
+	        {
+	            m_profilerTimer.Stop();
+	            throw new InvalidCastException();
+	        }
+
+	        var graphicsBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+	        var blockBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+	        var otherBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+	        var unknownBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+	        var systemBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+
+	        foreach (var block in blocks.Values.ToArray())
+	        {
+	            switch (block.type)
+	            {
+	                case MySimpleProfiler.MySimpleProfilingBlock.ProfilingBlockType.GRAPHICS:
+	                    graphicsBlocks.Add(block);
+	                    break;
+
+	                case MySimpleProfiler.MySimpleProfilingBlock.ProfilingBlockType.BLOCK:
+	                    switch (block.Name)
+	                    {
+	                        case "Grid":
+	                            systemBlocks.Add(block);
+	                            break;
+
+	                        case "Oxygen":
+	                            systemBlocks.Add(block);
+	                            break;
+
+	                        case "Conveyor":
+	                            systemBlocks.Add(block);
+	                            break;
+
+	                        case "Blocks":
+	                            systemBlocks.Add(block);
+	                            break;
+
+	                        case "Gyro":
+	                            systemBlocks.Add(block);
+	                            break;
+
+	                        case "Scripts":
+	                            systemBlocks.Add(block);
+	                            break;
+
+	                        default:
+	                            blockBlocks.Add(block);
+	                            break;
+	                    }
+	                    break;
+
+	                case MySimpleProfiler.MySimpleProfilingBlock.ProfilingBlockType.OTHER:
+	                    otherBlocks.Add(block);
+	                    break;
+
+	                default:
+	                    unknownBlocks.Add(block);
+	                    break;
+	            }
+	        }
+
+	        StringBuilder sb = new StringBuilder();
+
+	        graphicsBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+	        blockBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+	        otherBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+	        unknownBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+            systemBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+
+            if (systemBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+	        {
+	            sb.AppendLine("Grid systems");
+
+                foreach(var block in systemBlocks)
+                {
+                    if (!block.Average.IsValid() || block.Average < 0.001)
+                        continue;
+
+                    sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
+                }
+
+                sb.AppendLine();
+            }
+
+            if (blockBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+	        {
+	            sb.AppendLine("Blocks:");
+
+	            foreach (var block in blockBlocks)
+	            {
+	                if (!block.Average.IsValid() || block.Average < 0.001)
+	                    continue;
+
+	                sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
+	            }
+
+	            sb.AppendLine();
+	        }
+
+	        if (otherBlocks.Count( b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+	        {
+	            sb.AppendLine("Other:");
+
+	            foreach (var block in otherBlocks)
+	            {
+	                if (!block.Average.IsValid() || block.Average < 0.001)
+	                    continue;
+
+	                sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
+	            }
+	            sb.AppendLine();
+	        }
+
+            if (graphicsBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+	        {
+	            sb.AppendLine("Graphics:");
+
+	            foreach (var block in graphicsBlocks)
+	            {
+	                if (!block.Average.IsValid() || block.Average < 0.001)
+	                    continue;
+
+	                sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
+	            }
+	            sb.AppendLine();
+	        }
+
+            if (unknownBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+	        {
+	            sb.AppendLine("UNKNOWN:");
+
+	            foreach (var block in unknownBlocks)
+	            {
+	                if (!block.Average.IsValid() || block.Average < 0.001)
+	                    continue;
+
+	                sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
+	            }
+	            sb.AppendLine();
+	        }
+
+	        TB_Profiler.Text = sb.ToString();
+	    }
+
+	    #endregion
+
+        #region "Control"
+
+        internal void BTN_ServerControl_Start_Click( object sender, EventArgs e )
 		{
 			m_chatViewRefreshTimer.Start( );
 			m_factionRefreshTimer.Start( );
@@ -348,8 +524,8 @@ namespace SEServerExtender
 
 			m_server.StopServer( );
 		}
-
-		private void CHK_Control_Debugging_CheckedChanged( object sender, EventArgs e )
+        
+        private void CHK_Control_Debugging_CheckedChanged( object sender, EventArgs e )
 		{
 			ExtenderOptions.IsDebugging = CHK_Control_Debugging.CheckState == CheckState.Checked;
 		}
@@ -1149,7 +1325,7 @@ namespace SEServerExtender
 		private void RenderCubeGridChildNodes( MyCubeGrid cubeGrid, TreeNode blocksNode )
 		{
 		    Dictionary<string, MyGuiBlockCategoryDefinition> categories = MyDefinitionManager.Static.GetCategories();
-            var results = new Dictionary<string, HashSet<MySlimBlock>>();
+            var results = new Dictionary<string, List<MySlimBlock>>();
 
             //process the categories in parallel because there are 14 categories minimum
 		    Parallel.ForEach( categories, ( category ) =>
@@ -1254,15 +1430,26 @@ namespace SEServerExtender
 		    results.Clear();
 		}
 
-	    private HashSet<MySlimBlock> ProcessBlockCategories( MyCubeGrid grid, KeyValuePair<string,MyGuiBlockCategoryDefinition> definition )
+	    private List<MySlimBlock> ProcessBlockCategories( MyCubeGrid grid, KeyValuePair<string,MyGuiBlockCategoryDefinition> definition )
 	    {
-            var blockResult = new HashSet<MySlimBlock>();
+            var blockResult = new List<MySlimBlock>();
 
 	        foreach ( MySlimBlock block in grid.CubeBlocks )
 	        {
 	            if ( definition.Value.HasItem( block.BlockDefinition.Id.ToString() )) 
 	                blockResult.Add( block );
             }
+
+            blockResult.Sort((a, b) =>
+                             {
+                                 if (a.FatBlock != null && b.FatBlock != null)
+                                     return a.FatBlock.DisplayNameText.CompareTo(b.FatBlock.DisplayNameText);
+                                 if (a.FatBlock != null)
+                                     return -1;
+                                 if (b.FatBlock != null)
+                                     return 1;
+                                 return a.BlockDefinition.Id.SubtypeName.CompareTo(b.BlockDefinition.Id.SubtypeName);
+                             });
 
 	        return blockResult;
 	    }
@@ -1838,49 +2025,50 @@ namespace SEServerExtender
 								continue;
 							}
 
-							MyFaction item = (MyFaction)node.Tag;
+							FactionWrapper item = (FactionWrapper)node.Tag;
 							bool foundMatch = false;
 							foreach ( MyFaction faction in list )
 							{
-								if ( faction.FactionId == item.FactionId )
-								{
-									foundMatch = true;
+							    if (faction.FactionId != item.Faction.FactionId)
+							        continue;
 
-									string newNodeText = string.Format( "{0} ({1})", item.Name, item.Members.Count() );
-									node.Text = newNodeText;
+							    var fac = item.Faction;
 
-									TreeNode membersNode = node.Nodes[ 0 ];
-									TreeNode joinRequestsNode = node.Nodes[ 1 ];
+							    foundMatch = true;
 
-									if ( membersNode.Nodes.Count != item.Members.Count() )
-									{
-										membersNode.Nodes.Clear( );
-										foreach ( MyFactionMember member in item.Members.Select( m=>m.Value ) )
-										{
-										    string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId( PlayerMap.Instance.GetSteamIdFromPlayerId( member.PlayerId ) );
+							    string newNodeText = $"{item.Tag}: {item.Name} ({fac.Members.Count()} [{fac.JoinRequests.Count()}])";
 
-                                            TreeNode memberNode = membersNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
-											memberNode.Name = $"{memberName} {member.PlayerId}";
-											memberNode.Tag = member;
-										}
-									}
-									if ( joinRequestsNode.Nodes.Count != item.JoinRequests.Count() )
-									{
-										joinRequestsNode.Nodes.Clear( );
-										foreach ( MyFactionMember member in item.JoinRequests.Select( j=>j.Value ) )
-                                        {
-                                            string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId(PlayerMap.Instance.GetSteamIdFromPlayerId(member.PlayerId));
+                                node.Text = newNodeText;
 
-                                            TreeNode joinRequestNode = joinRequestsNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
-											joinRequestNode.Name = $"{memberName} {member.PlayerId}";
-											joinRequestNode.Tag = member;
-										}
-									}
+							    TreeNode membersNode = node.Nodes[ 0 ];
+							    TreeNode joinRequestsNode = node.Nodes[ 1 ];
 
-									list.Remove( faction );
+							    if ( membersNode.Nodes.Count != fac.Members.Count() )
+							    {
+							        membersNode.Nodes.Clear( );
+							        foreach ( MyFactionMember member in fac.Members.Select( m=>m.Value ) )
+							        {
+                                        var wrapper = new FactionMemberWrapper(member, item);
+							            TreeNode memberNode = membersNode.Nodes.Add(wrapper.Name, wrapper.Name);
+							            memberNode.Name = wrapper.Name;
+							            memberNode.Tag = wrapper;
+							        }
+							    }
+							    if ( joinRequestsNode.Nodes.Count != fac.JoinRequests.Count() )
+							    {
+							        joinRequestsNode.Nodes.Clear( );
+							        foreach ( MyFactionMember member in fac.JoinRequests.Select( j=>j.Value ) )
+							        {
+							            var wrapper = new FactionMemberWrapper(member, item);
+                                        TreeNode joinRequestNode = joinRequestsNode.Nodes.Add(wrapper.Name, wrapper.Name);
+							            joinRequestNode.Name = wrapper.Name;
+							            joinRequestNode.Tag = wrapper;
+							        }
+							    }
 
-									break;
-								}
+							    list.Remove( fac );
+
+							    break;
 							}
 
 							if ( !foundMatch )
@@ -1903,31 +2091,32 @@ namespace SEServerExtender
 							if ( item == null )
 								continue;
 
-							string nodeKey = item.FactionId.ToString( );
+                            var fac = new FactionWrapper(item);
 
-							TreeNode newNode = TRV_Factions.Nodes.Add( nodeKey, string.Format( "{0} ({1})", item.Name, item.Members.Count( ) ) );
-							newNode.Name = item.Name;
-							newNode.Tag = item;
+                            string nodeKey = item.FactionId.ToString( );
+
+							TreeNode newNode = TRV_Factions.Nodes.Add( nodeKey, $"{item.Tag}: {item.Name} ({item.Members.Count()} [{item.JoinRequests.Count()}])");
+
+                            newNode.Name = item.Name;
+						    newNode.Tag = fac;
 
 							TreeNode membersNode = newNode.Nodes.Add( "Members" );
 							TreeNode joinRequestsNode = newNode.Nodes.Add( "Join Requests" );
 
 							foreach ( MyFactionMember member in item.Members.Select( m => m.Value ) )
                             {
-                                string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId(PlayerMap.Instance.GetSteamIdFromPlayerId(member.PlayerId));
-
-                                TreeNode memberNode = membersNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
-								memberNode.Name = $"{memberName} {member.PlayerId}";
-								memberNode.Tag = member;
-							}
+                                var wrapper = new FactionMemberWrapper(member, fac);
+                                TreeNode memberNode = membersNode.Nodes.Add(wrapper.Name, wrapper.Name);
+                                memberNode.Name = wrapper.Name;
+                                memberNode.Tag = wrapper;
+                            }
 							foreach ( MyFactionMember member in item.JoinRequests.Select( j => j.Value ) )
                             {
-                                string memberName = PlayerMap.Instance.GetFastPlayerNameFromSteamId(PlayerMap.Instance.GetSteamIdFromPlayerId(member.PlayerId));
-
-                                TreeNode memberNode = joinRequestsNode.Nodes.Add($"{memberName} {member.PlayerId}", $"{memberName} {member.PlayerId}");
-								memberNode.Name = $"{memberName} {member.PlayerId}";
-								memberNode.Tag = member;
-							}
+                                var wrapper = new FactionMemberWrapper(member, fac);
+                                TreeNode joinRequestNode = joinRequestsNode.Nodes.Add(wrapper.Name, wrapper.Name);
+                                joinRequestNode.Name = wrapper.Name;
+                                joinRequestNode.Tag = wrapper;
+                            }
 						}
 						catch ( Exception ex )
 						{
@@ -1946,45 +2135,61 @@ namespace SEServerExtender
 
 		private void TRV_Factions_AfterSelect( object sender, TreeViewEventArgs e )
 		{
-			BTN_Factions_Delete.Enabled = false;
+            BTN_Factions_Delete.Enabled = false;
+            BTN_Factions_Demote.Enabled = false;
+            BTN_Factions_Promote.Enabled = false;
 
-			if ( e.Node == null )
-				return;
-			if ( e.Node.Tag == null )
+		    if ( e.Node?.Tag == null )
 				return;
 
 			object linkedObject = e.Node.Tag;
 
-		    if ( linkedObject is MyFactionMember )
-		        BTN_Factions_Delete.Text = "Kick";
-		    else
+		    if (linkedObject is FactionWrapper)
+		    {
 		        BTN_Factions_Delete.Text = "Delete";
-            
-			BTN_Factions_Delete.Enabled = true;
+		        BTN_Factions_Delete.Enabled = true;
+		    }
+		    else
+		    {
+		        BTN_Factions_Delete.Text = "Kick";
 
-			PG_Factions.SelectedObject = linkedObject;
+                if (e.Node.Parent.Text == "Join Requests")
+		        {
+		            BTN_Factions_Demote.Text = "Reject";
+		            BTN_Factions_Promote.Text = "Accept";
+		            BTN_Factions_Demote.Enabled = true;
+		            BTN_Factions_Promote.Enabled = true;
+		        }
+		        else
+		        {
+		            BTN_Factions_Demote.Text = "Demote";
+		            BTN_Factions_Promote.Text = "Promote";
+		            BTN_Factions_Demote.Enabled = true;
+		            BTN_Factions_Promote.Enabled = true;
+		            BTN_Factions_Delete.Enabled = true;
+		        }
+		    }
+		    PG_Factions.SelectedObject = linkedObject;
 		}
 
 		private void BTN_Factions_Delete_Click( object sender, EventArgs e )
 		{
 			TreeNode node = TRV_Factions.SelectedNode;
-			if ( node == null )
-				return;
-			if ( node.Tag == null )
+
+		    if ( node?.Tag == null )
 				return;
 
 			object linkedObject = node.Tag;
 
-			MyFaction faction = linkedObject as MyFaction;
+			MyFaction faction = (linkedObject as FactionWrapper)?.Faction;
 			if ( faction != null )
 			{
 				MyFactionCollection.RemoveFaction( faction.FactionId );
 			}
-			if ( linkedObject is MyFactionMember )
+		    var member = linkedObject as FactionMemberWrapper;
+		    if ( member != null )
 			{
-				MyFactionMember factionMember = (MyFactionMember) linkedObject;
-				//MySession.Static.Factions.KickPlayerFromFaction( factionMember.PlayerId );
-                ((MyFaction)node.Parent.Parent.Tag).KickMember( factionMember.PlayerId );
+                ((FactionWrapper)node.Parent.Parent.Tag).Kick( member.PlayerId );
 			}
             
             TreeNode parentNode = TRV_Factions.SelectedNode.Parent;
@@ -1998,11 +2203,47 @@ namespace SEServerExtender
             }
         }
 
-		#endregion
+        private void BTN_Factions_Promote_Click(object sender, EventArgs e)
+        {
+            TreeNode node = TRV_Factions.SelectedNode;
+            
+            var member = node?.Tag as FactionMemberWrapper;
+            if (member == null)
+                return;
 
-		#region "Plugins"
+            var faction = node.Parent?.Parent?.Tag as FactionWrapper;
+            if (faction == null)
+                return;
 
-		private void PluginManagerRefresh( object sender, EventArgs e )
+            if (node.Parent.Text == "Join Requests") //accept the request
+                faction.Accept(member.PlayerId);
+            else //promotion
+                faction.Promote(member.PlayerId);
+        }
+
+        private void BTN_Factions_Demote_Click(object sender, EventArgs e)
+        {
+            TreeNode node = TRV_Factions.SelectedNode;
+
+            var member = node?.Tag as FactionMemberWrapper;
+            if (member == null)
+                return;
+
+            var faction = node.Parent?.Parent?.Tag as FactionWrapper;
+            if (faction == null)
+                return;
+
+            if (node.Parent.Text == "Join Requests") //reject the request
+                faction.Deny(member.PlayerId);
+            else //demotion
+                faction.Demote(member.PlayerId);
+        }
+
+        #endregion
+
+        #region "Plugins"
+
+        private void PluginManagerRefresh( object sender, EventArgs e )
 		{
 			if ( PluginManager.Instance.Initialized )
 			{
@@ -2311,16 +2552,6 @@ namespace SEServerExtender
 			{
 				m_entityTreeRefreshTimer.Stop( );
 			}
-		}
-
-		private void PG_Entities_Details_Click( object s, PropertyValueChangedEventArgs e )
-		{
-
-		}
-
-		private void PG_Entities_Details_Click( object sender, SelectedGridItemChangedEventArgs e )
-		{
-
 		}
     }
 }
