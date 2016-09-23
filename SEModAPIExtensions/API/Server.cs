@@ -1,4 +1,5 @@
 using System.Text;
+using VRage;
 using VRage.Game;
 
 namespace SEModAPIExtensions.API
@@ -32,7 +33,8 @@ namespace SEModAPIExtensions.API
 
     [DataContract]
 	public class Server
-	{
+    {
+        public static bool DisableProfiler;
 		private static Server _instance;
 		private static bool _isInitialized;
 		private static Thread _runServerThread;
@@ -581,8 +583,19 @@ namespace SEModAPIExtensions.API
 					return;
 				if ( _isServerRunning )
 					return;
-                
-				if ( _dedicatedConfigDefinition == null )
+
+			    if (DisableProfiler)
+			    {
+			        var keenStart = typeof(MySimpleProfiler).GetMethod("Begin");
+			        var keenEnd = typeof(MySimpleProfiler).GetMethod("End");
+			        var ourStart = typeof(Server).GetMethod("Begin");
+			        var ourEnd = typeof(Server).GetMethod("End");
+
+			        MethodUtil.ReplaceMethod(ourStart, keenStart);
+			        MethodUtil.ReplaceMethod(ourEnd, keenEnd);
+			    }
+
+			    if ( _dedicatedConfigDefinition == null )
 					LoadServerConfig( );
                 
 				if ( Config.AutoSaveInMinutes > 0 )
@@ -607,6 +620,12 @@ namespace SEModAPIExtensions.API
 				_isServerRunning = false;
 			}
 		}
+        
+        public static void Begin(string key)
+        { }
+
+        public static void End(string Key)
+        { }
 
         private const string endMessage = "Server stopped, press any key to close this window";
 
@@ -773,6 +792,6 @@ namespace SEModAPIExtensions.API
 				_dedicatedConfigDefinition.Save( fileInfo );
 		}
 
-		#endregion
+#endregion
 	}
 }

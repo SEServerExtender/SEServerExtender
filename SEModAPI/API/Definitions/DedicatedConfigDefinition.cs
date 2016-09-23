@@ -1535,25 +1535,12 @@ namespace SEModAPI.API.Definitions
 	    {
 	        get
 	        {
-	            //I'm really tired of doing reflection in here
-	            //return _definition.SessionSettings.EnableBlockLimits;
-
-	            var info = _definition.SessionSettings.GetType().GetField("EnableBlockLimits", BindingFlags.Instance | BindingFlags.Public);
-	            if (info == null)
-	                return false;
-
-	            return (bool)info.GetValue(_definition.SessionSettings);
+                return _definition.SessionSettings.EnableBlockLimits;
 	        }
 
 	        set
 	        {
-                //_definition.SessionSettings.EnableBlockLimits = value;
-
-                var info = _definition.SessionSettings.GetType().GetField("EnableBlockLimits", BindingFlags.Instance | BindingFlags.Public);
-                if (info == null)
-                    return;
-
-                info.SetValue(_definition.SessionSettings, value);
+                _definition.SessionSettings.EnableBlockLimits = value;
             }
 	    }
 
@@ -1568,30 +1555,44 @@ namespace SEModAPI.API.Definitions
 	    {
 	        get
 	        {
-                //return _definition.SessionSettings.EnableRemoteBlockRemoval;
-
-                var info = _definition.SessionSettings.GetType().GetField("EnableRemoteBlockRemoval", BindingFlags.Instance | BindingFlags.Public);
-                if (info == null)
-                    return false;
-
-                return (bool)info.GetValue(_definition.SessionSettings);
+                return _definition.SessionSettings.EnableRemoteBlockRemoval;
             }
 
             set
             {
-                //_definition.SessionSettings.EnableRemoteBlockRemoval = value;
-
-                var info = _definition.SessionSettings.GetType().GetField("EnableRemoteBlockRemoval", BindingFlags.Instance | BindingFlags.Public);
-                if (info == null)
-                    return;
-
-                info.SetValue(_definition.SessionSettings, value);
+                _definition.SessionSettings.EnableRemoteBlockRemoval = value;
             }
         }
 
-	    [Browsable(true)]
+        [DataMember]
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Description("Max number of blocks per player. This only works on Dev branch!")]
+        [Category("Block limits")]
+        [DisplayName("Max Blocks Per Player")]
+        [DefaultValue(true)]
+        public short MaxBlocksPerPlayer
+        {
+            get { return _definition.SessionSettings.MaxBlocksPerPlayer; }
+            set { _definition.SessionSettings.MaxBlocksPerPlayer = value; }
+        }
+
+        [DataMember]
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Description("Max number of blocks per grid. This only works on Dev branch!")]
+        [Category("Block limits")]
+        [DisplayName("Max Blocks Per Grid")]
+        [DefaultValue(true)]
+        public short MaxBlocksPerGrid
+        {
+            get { return _definition.SessionSettings.MaxGridSize; }
+            set { _definition.SessionSettings.MaxGridSize = value; }
+        }
+
+        [Browsable(true)]
 	    [ReadOnly(false)]
-	    [Description("Opens a window to block limits. This only works on Dev branch!")]
+	    [Description("Opens a window to configure block limits. This only works on Dev branch!")]
 	    [Category("Block limits")]
 	    [DisplayName("Block limits")]
 	    [Editor(typeof(LimitEditButton), typeof(UITypeEditor))]

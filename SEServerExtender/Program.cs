@@ -298,6 +298,7 @@ namespace SEServerExtender
 								  InstancePath = string.Empty,
 								  CloseOnCrash = false,
 								  RestartOnCrash = false,
+                                  NoProfiler = false,
 								  Args = string.Join( " ", args.Select( x => string.Format( "\"{0}\"", x ) ) )
 							  };
 
@@ -460,6 +461,11 @@ namespace SEServerExtender
 					{
 						extenderArgs.RestartOnCrash = true;
 					}
+                    else if (lowerCaseArgument.Equals("noprofiler"))
+                    {
+                        extenderArgs.NoProfiler = true;
+                        Server.DisableProfiler = true;
+                    }
                     //these things are legacy and don't work anyway
                     /*
 					else if ( lowerCaseArgument.Equals( "wrr" ) )

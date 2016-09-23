@@ -28,5 +28,9 @@ namespace SEModAPIExtensions.API
 		public bool WorldDataModify;
         public bool WorldVoxelModify;
 		public string Args;
+        /// <summary>
+        /// Disable Keen's terrible profiler
+        /// </summary>
+	    public bool NoProfiler;
 	}
 }
