@@ -5,6 +5,7 @@ using SpaceEngineers.Game;
 using SteamSDK;
 using VRage.Game;
 using VRage.Library.Utils;
+using VRage.Serialization;
 using VRage.Utils;
 
 namespace SEModAPI.API.Definitions
@@ -26,12 +27,16 @@ namespace SEModAPI.API.Definitions
 	[DataContract]
 	public class DedicatedConfigDefinition
 	{
-		private readonly MyConfigDedicatedData<MyObjectBuilder_SessionSettings> _definition;
+        private readonly MyConfigDedicatedData<MyObjectBuilder_SessionSettings> _definition;
+        
+        //this is here only so the block limit config screen can get and set this data
+        [Browsable(false)]
+	    public static Dictionary<string, short> Limits { get; set; }
 
 		public DedicatedConfigDefinition( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> definition )
 		{
 			_definition = definition;
-            
+		    Limits = definition.SessionSettings.BlockTypeLimits.Dictionary;
 		}
 
         #region "Properties"
@@ -44,7 +49,7 @@ namespace SEModAPI.API.Definitions
         [Browsable( true )]
         [ReadOnly( false )]
         [Description( "Chat messages sent by the server will show this name. You MUST have the Essentials client mod installed for this to work. " +
-            "\r\nNote: This value isn't saved between sessions (temporary). This is set separately from Essentials, you may want to change them to match." )]
+            "\r\nNote: This value isn't saved between sessions. This is set separately from Essentials, you may want to change them to match." )]
         [Category( "Extender Settings" )]
         [DisplayName( "Server Chat Name" )]
         public string ServerChatName
@@ -1515,24 +1520,86 @@ namespace SEModAPI.API.Definitions
         [DefaultValue(true)]
         public bool EnableAirtightness
         {
-            get
-            {
-                //return _definition.SessionSettings.EnableOxygenPressurization;
+            get { return _definition.SessionSettings.EnableOxygenPressurization; }
+            set { _definition.SessionSettings.EnableOxygenPressurization = value; }
+        }
 
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableOxygenPressurization", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo != null)
-                    return (bool)memberInfo.GetValue(_definition.SessionSettings);
-                return false;
+	    [DataMember]
+	    [Browsable(true)]
+	    [ReadOnly(false)]
+	    [Description("Enables or disables block limits. This only works on Dev branch!")]
+	    [Category("Block limits")]
+	    [DisplayName("Enable Block limits")]
+	    [DefaultValue(true)]
+	    public bool EnableBLockLimits
+	    {
+	        get
+	        {
+	            //I'm really tired of doing reflection in here
+	            //return _definition.SessionSettings.EnableBlockLimits;
+
+	            var info = _definition.SessionSettings.GetType().GetField("EnableBlockLimits", BindingFlags.Instance | BindingFlags.Public);
+	            if (info == null)
+	                return false;
+
+	            return (bool)info.GetValue(_definition.SessionSettings);
+	        }
+
+	        set
+	        {
+                //_definition.SessionSettings.EnableBlockLimits = value;
+
+                var info = _definition.SessionSettings.GetType().GetField("EnableBlockLimits", BindingFlags.Instance | BindingFlags.Public);
+                if (info == null)
+                    return;
+
+                info.SetValue(_definition.SessionSettings, value);
             }
+	    }
+
+	    [DataMember]
+	    [Browsable(true)]
+	    [ReadOnly(false)]
+	    [Description("Lets players delete blocks they own remotely. This only works on Dev branch!")]
+	    [Category("Block limits")]
+	    [DisplayName("Enable Remote Block Removal")]
+	    [DefaultValue(true)]
+	    public bool EnableRemoval
+	    {
+	        get
+	        {
+                //return _definition.SessionSettings.EnableRemoteBlockRemoval;
+
+                var info = _definition.SessionSettings.GetType().GetField("EnableRemoteBlockRemoval", BindingFlags.Instance | BindingFlags.Public);
+                if (info == null)
+                    return false;
+
+                return (bool)info.GetValue(_definition.SessionSettings);
+            }
+
             set
             {
-                //_definition.SessionSettings.EnableOxygenPressurization = value;
+                //_definition.SessionSettings.EnableRemoteBlockRemoval = value;
 
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableOxygenPressurization", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo != null)
-                    memberInfo.SetValue(_definition.SessionSettings, value);
+                var info = _definition.SessionSettings.GetType().GetField("EnableRemoteBlockRemoval", BindingFlags.Instance | BindingFlags.Public);
+                if (info == null)
+                    return;
+
+                info.SetValue(_definition.SessionSettings, value);
             }
         }
+
+	    [Browsable(true)]
+	    [ReadOnly(false)]
+	    [Description("Opens a window to block limits. This only works on Dev branch!")]
+	    [Category("Block limits")]
+	    [DisplayName("Block limits")]
+	    [Editor(typeof(LimitEditButton), typeof(UITypeEditor))]
+	    public string BlockLimits
+	    {
+	        get { return "Press the button to edit settings ---->"; }
+	    }
+        
         #endregion
 
         #region "Methods"
@@ -1570,6 +1637,9 @@ namespace SEModAPI.API.Definitions
 		public bool Save( FileInfo fileInfo )
 		{
 			if ( fileInfo == null ) return false;
+
+            //hack
+            _definition.SessionSettings.BlockTypeLimits = new SerializableDictionary<string, short>(DedicatedConfigDefinition.Limits);
 
 			//Save the definitions container out to the file
 			try

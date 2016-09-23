@@ -315,7 +315,7 @@ namespace SEServerExtender
 				if ( !m_statisticsTimer.Enabled )
 					m_statisticsTimer.Start( );
 
-                if(!m_profilerTimer.Enabled && !Program.IsStable && FindTypeInAllAssemblies("VRage.MySimpleProfiler")!=null)
+                if(!m_profilerTimer.Enabled && !Program.IsStable)
                     m_profilerTimer.Start();
 
 				if ( PG_Control_Server_Properties.SelectedObject != m_server.Config )

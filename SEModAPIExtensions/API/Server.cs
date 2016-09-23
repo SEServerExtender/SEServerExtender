@@ -612,6 +612,9 @@ namespace SEModAPIExtensions.API
 
 		public void StopServer( )
 		{
+		    if (!_isServerRunning)
+		        return; 
+
 			ApplicationLog.BaseLog.Info( "Stopping server" );
             
 		    StringBuilder sb = new StringBuilder();

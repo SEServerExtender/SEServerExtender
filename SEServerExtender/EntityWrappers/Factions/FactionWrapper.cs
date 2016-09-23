@@ -84,6 +84,14 @@ namespace SEServerExtender.EntityWrappers
             set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Faction.EnableFriendlyFire = value); }
         }
 
+        //no sync for this either
+        [Category("Settings")]
+        public bool AcceptHumans
+        {
+            get { return Faction.AcceptHumans; }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Faction.AcceptHumans = value); }
+        }
+
         public void Accept(long playerId)
         {
             SandboxGameAssemblyWrapper.Instance.GameAction(() => MyFactionCollection.AcceptJoin(Faction.FactionId, playerId));
