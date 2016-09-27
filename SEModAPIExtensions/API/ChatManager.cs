@@ -1568,7 +1568,7 @@ namespace SEModAPIExtensions.API
 			    var grid = entity as MyCubeGrid;
 			    if (grid?.Physics == null || grid.MarkedForClose)
 			        continue;
-			    foreach (var cubeBlock in grid.GetFatBlocks())
+			    foreach (var cubeBlock in grid.GetFatBlocks().ToArray())
 			    {
 			        if (!(cubeBlock is MyFunctionalBlock))
 			            continue;
@@ -1577,40 +1577,40 @@ namespace SEModAPIExtensions.API
 
 			        if (commandParts[1].ToLower().Equals("all"))
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
 			        }
 			        if (commandParts[1].ToLower().Equals("production") && cubeBlock is MyProductionBlock)
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
 			        }
 			        if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is MyBeacon)
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            //BeaconEntity beacon = (BeaconEntity)cubeBlock;
 			            //beacon.BroadcastRadius = 1;
 			            poweredOffCount++;
 			        }
 			        if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is MyShipToolBase || cubeBlock is MyShipDrill))
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
 			        }
 			        if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is MyLargeTurretBase))
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
 			        }
 			        if (commandParts[1].ToLower().Equals("projectors") && (cubeBlock is MyProjectorBase))
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
 			        }
 
 			        if (commandParts[1].ToLower().Equals(cubeBlock.BlockDefinition.Id.SubtypeName.ToLower()))
 			        {
-			            functionalBlock.Enabled = false;
+			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
 			        }
 			    }
@@ -1636,7 +1636,7 @@ namespace SEModAPIExtensions.API
                 var grid = entity as MyCubeGrid;
                 if (grid?.Physics == null || grid.MarkedForClose)
                     continue;
-                foreach (var cubeBlock in grid.GetFatBlocks())
+                foreach (var cubeBlock in grid.GetFatBlocks().ToArray())
                 {
                     if (!(cubeBlock is MyFunctionalBlock))
                         continue;
@@ -1645,40 +1645,40 @@ namespace SEModAPIExtensions.API
 
                     if (commandParts[1].ToLower().Equals("all"))
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         poweredOffCount++;
                     }
                     if (commandParts[1].ToLower().Equals("production") && cubeBlock is MyProductionBlock)
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         poweredOffCount++;
                     }
                     if (commandParts[1].ToLower().Equals("beacon") && cubeBlock is MyBeacon)
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         //BeaconEntity beacon = (BeaconEntity)cubeBlock;
                         //beacon.BroadcastRadius = 1;
                         poweredOffCount++;
                     }
                     if (commandParts[1].ToLower().Equals("tools") && (cubeBlock is MyShipToolBase || cubeBlock is MyShipDrill))
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         poweredOffCount++;
                     }
                     if (commandParts[1].ToLower().Equals("turrets") && (cubeBlock is MyLargeTurretBase))
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         poweredOffCount++;
                     }
                     if (commandParts[1].ToLower().Equals("projectors") && (cubeBlock is MyProjectorBase))
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         poweredOffCount++;
                     }
 
                     if (commandParts[1].ToLower().Equals(cubeBlock.BlockDefinition.Id.SubtypeName.ToLower()))
                     {
-                        functionalBlock.Enabled = true;
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = true, null, null);
                         poweredOffCount++;
                     }
                 }

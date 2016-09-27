@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using System.Management;
 using Sandbox;
 using Sandbox.Definitions;
@@ -7,6 +8,7 @@ using Sandbox.Engine.Platform;
 using Sandbox.Engine.Utils;
 using Sandbox.Game;
 using Sandbox.Game.World;
+using SEModAPI.API.Definitions;
 using SEModAPI.API.Utility;
 using SEModAPIInternal.API.Server;
 using SEModAPIInternal.Support;
@@ -48,7 +50,7 @@ namespace SEServerExtender
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
         public static Version SeVersion;
-        public static readonly int[] StableVersions = new int[] {139,140,144,149};
+        //public static readonly int[] StableVersions = new int[] {139,140,144,149};
         public static bool IsStable;
 
 		public class WindowsService : ServiceBase
@@ -165,6 +167,7 @@ namespace SEServerExtender
             var methodInfo = typeof(MyFileSystem).GetMethod("Init", BindingFlags.Public | BindingFlags.Static);
             if(methodInfo==null)
                 throw new MissingMethodException("MyFileSystem.Init");
+            
             //BECAUSE LET'S JUST RUIN EVERYTHING IN DEV BRANCH MKAY
             if (methodInfo.GetParameters().Length == 3)
                 methodInfo.Invoke(null, new object[] {contentpath, instancepath, "Mods"});
@@ -204,72 +207,60 @@ namespace SEServerExtender
             MyPlugins.RegisterSandboxAssemblyFile(MyPerGameSettings.SandboxAssembly);
             MyPlugins.RegisterSandboxGameAssemblyFile(MyPerGameSettings.SandboxGameAssembly);
             MyPlugins.RegisterFromArgs(null);
-            MyPlugins.Load();*/
+            MyPlugins.Load();
+            */
         }
-        
 
-		private static void Start( string[ ] args )
+        private static void HideConfigs()
+        {
+            var desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["BlockLimits"];
+            var attrib = desc.Attributes[typeof(BrowsableAttribute)];
+            var brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
+            brows.SetValue(attrib, false);
+
+            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["MaxBlocksPerGrid"];
+            attrib = desc.Attributes[typeof(BrowsableAttribute)];
+            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
+            brows.SetValue(attrib, false);
+
+            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["MaxBlocksPerPlayer"];
+            attrib = desc.Attributes[typeof(BrowsableAttribute)];
+            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
+            brows.SetValue(attrib, false);
+
+            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["EnableRemoval"];
+            attrib = desc.Attributes[typeof(BrowsableAttribute)];
+            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
+            brows.SetValue(attrib, false);
+
+            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["EnableBlockLimits"];
+            attrib = desc.Attributes[typeof(BrowsableAttribute)];
+            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
+            brows.SetValue(attrib, false);
+        }
+
+        private static void Start( string[ ] args )
         {
             // SE_VERSION is a private constant. Need to use reflection to get it. 
             FieldInfo field = typeof(SpaceEngineersGame).GetField("SE_VERSION", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 
             SeVersion = new Version(new MyVersion((int)field.GetValue(null)).FormattedText.ToString().Replace("_", "."));
 
+		    bool stableBuild = (bool)typeof(MyFinalBuildConstants).GetField("IS_STABLE").GetValue(null);
+
             ApplicationLog.BaseLog.Info($"SE version: {SeVersion}");
             ApplicationLog.BaseLog.Info( $"Extender version: {Assembly.GetExecutingAssembly().GetName().Version}" );
-		    if (StableVersions.Contains(SeVersion.Minor))
+		    if (stableBuild)
 		    {
                 BaseLog.Info("Detected \"Stable\" branch!");
 		        IsStable = true;
 		        PluginManager.IsStable = true;
+
+                //hide the block limit config, since it will crash in stable
+		        HideConfigs();
 		    }
             else
                 BaseLog.Info("Detected \"Development\" branch!");
-            //Init is now the same between the branches
-            /*
-		        BaseLog.Info( "Detected \"Stable\" build, attempting to load old init method..." );
-
-		        try
-		        {
-		            DedicatedServerAssemblyWrapper.IsStable = true;
-		            //register object builder assembly
-		            MyPlugins.RegisterGameObjectBuildersAssemblyFile( Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "SpaceEngineers.ObjectBuilders.DLL" ) );
-
-		            //use reflection to get these because they don't exist in the dev libraries we compile against
-		            //MyObjectBuilderType.RegisterAssemblies();
-		            //MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers();
-
-		            MethodInfo registerAssembliesMethod = typeof(MyObjectBuilderType).GetMethod( "RegisterAssemblies", BindingFlags.Static | BindingFlags.Public );
-		            registerAssembliesMethod.Invoke( null, null );
-		            MethodInfo registerAssembliesAndLoadSerializersMethod = typeof(MyObjectBuilderSerializer).GetMethod( "RegisterAssembliesAndLoadSerializers", BindingFlags.Static | BindingFlags.Public );
-		            registerAssembliesAndLoadSerializersMethod.Invoke( null, null );
-		        }
-		        catch ( Exception ex )
-		        {
-		            BaseLog.Error( ex, "Failed to load init for stable branch!" );
-
-		            if ( SystemInformation.UserInteractive )
-		            {
-		                DialogResult messageResult =
-		                    MessageBox.Show( "Failed to initialize SESE for \"Stable\" branch! Execution cannot continue!",
-		                                     "Fatal Error",
-		                                     MessageBoxButtons.OK,
-		                                     MessageBoxIcon.Error );
-
-		                if ( messageResult == DialogResult.OK )
-		                    Stop();
-		            }
-                    else
-		                Stop();
-		            return;
-		        }
-		    }
-		    else
-		    {
-              //BaseLog.Info( "Dev version found, loading new init..." );
-              InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
-		    }
-            */
 
             InitSandbox(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
             
@@ -461,7 +452,7 @@ namespace SEServerExtender
 					{
 						extenderArgs.RestartOnCrash = true;
 					}
-                    else if (lowerCaseArgument.Equals("noprofiler"))
+                    else if (lowerCaseArgument.Equals("noprofiler") && !IsStable)
                     {
                         extenderArgs.NoProfiler = true;
                         Server.DisableProfiler = true;

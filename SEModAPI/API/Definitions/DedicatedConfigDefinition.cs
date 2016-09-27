@@ -36,7 +36,9 @@ namespace SEModAPI.API.Definitions
 		public DedicatedConfigDefinition( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> definition )
 		{
 			_definition = definition;
-		    Limits = definition.SessionSettings.BlockTypeLimits.Dictionary;
+            //Limits = definition.SessionSettings.BlockTypeLimits.Dictionary;
+		    var dic = definition.SessionSettings.GetType().GetField("BlockTypeLimits", BindingFlags.Public | BindingFlags.Instance)?.GetValue(definition.SessionSettings) as SerializableDictionary<string, short>;
+		    Limits = dic?.Dictionary;
 		}
 
         #region "Properties"
@@ -1531,7 +1533,7 @@ namespace SEModAPI.API.Definitions
 	    [Category("Block limits")]
 	    [DisplayName("Enable Block limits")]
 	    [DefaultValue(true)]
-	    public bool EnableBLockLimits
+	    public bool EnableBlockLimits
 	    {
 	        get
 	        {
@@ -1571,7 +1573,7 @@ namespace SEModAPI.API.Definitions
         [Category("Block limits")]
         [DisplayName("Max Blocks Per Player")]
         [DefaultValue(true)]
-        public short MaxBlocksPerPlayer
+        public int MaxBlocksPerPlayer
         {
             get { return _definition.SessionSettings.MaxBlocksPerPlayer; }
             set { _definition.SessionSettings.MaxBlocksPerPlayer = value; }
@@ -1584,7 +1586,7 @@ namespace SEModAPI.API.Definitions
         [Category("Block limits")]
         [DisplayName("Max Blocks Per Grid")]
         [DefaultValue(true)]
-        public short MaxBlocksPerGrid
+        public int MaxBlocksPerGrid
         {
             get { return _definition.SessionSettings.MaxGridSize; }
             set { _definition.SessionSettings.MaxGridSize = value; }
@@ -1640,10 +1642,12 @@ namespace SEModAPI.API.Definitions
 			if ( fileInfo == null ) return false;
 
             //hack
-            _definition.SessionSettings.BlockTypeLimits = new SerializableDictionary<string, short>(DedicatedConfigDefinition.Limits);
-
-			//Save the definitions container out to the file
-			try
+            //_definition.SessionSettings.BlockTypeLimits = new SerializableDictionary<string, short>(DedicatedConfigDefinition.Limits);
+		    var dic = _definition.SessionSettings.GetType().GetField("BlockTypeLimits", BindingFlags.Public | BindingFlags.Instance);
+            if(dic!=null)
+                dic.SetValue(_definition.SessionSettings, new SerializableDictionary<string, short>(Limits));
+            //Save the definitions container out to the file
+            try
 			{
 				using ( XmlTextWriter xmlTextWriter = new XmlTextWriter( fileInfo.FullName, null ) )
 				{

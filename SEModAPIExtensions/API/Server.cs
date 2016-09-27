@@ -586,13 +586,7 @@ namespace SEModAPIExtensions.API
 
 			    if (DisableProfiler)
 			    {
-			        var keenStart = typeof(MySimpleProfiler).GetMethod("Begin");
-			        var keenEnd = typeof(MySimpleProfiler).GetMethod("End");
-			        var ourStart = typeof(Server).GetMethod("Begin");
-			        var ourEnd = typeof(Server).GetMethod("End");
-
-			        MethodUtil.ReplaceMethod(ourStart, keenStart);
-			        MethodUtil.ReplaceMethod(ourEnd, keenEnd);
+			        KillProfiler();
 			    }
 
 			    if ( _dedicatedConfigDefinition == null )
@@ -619,16 +613,25 @@ namespace SEModAPIExtensions.API
 				ApplicationLog.BaseLog.Error( ex );
 				_isServerRunning = false;
 			}
-		}
-        
+        }
+
+        private void KillProfiler()
+        {
+            var keenStart = typeof(MySimpleProfiler).GetMethod("Begin");
+            var keenEnd = typeof(MySimpleProfiler).GetMethod("End");
+            var ourStart = typeof(Server).GetMethod("Begin");
+            var ourEnd = typeof(Server).GetMethod("End");
+
+            MethodUtil.ReplaceMethod(ourStart, keenStart);
+            MethodUtil.ReplaceMethod(ourEnd, keenEnd);
+        }
+
         public static void Begin(string key)
         { }
 
         public static void End(string Key)
         { }
-
-        private const string endMessage = "Server stopped, press any key to close this window";
-
+        
 		public void StopServer( )
 		{
 		    if (!_isServerRunning)
