@@ -1408,7 +1408,7 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
         [Browsable( true )]
         [ReadOnly( false )]
-        [Description( "Enables or disables Convert Ship to Station button. This only works on Dev branch!" )]
+        [Description( "Enables or disables Convert Ship to Station button." )]
         [Category( "World Settings" )]
         [DisplayName( "Enable Convert to Station" )]
         [DefaultValue( true )]
@@ -1417,30 +1417,21 @@ namespace SEModAPI.API.Definitions
             get
             {
                 return _definition.SessionSettings.EnableConvertToStation;
-
-                //FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
-                //if (memberInfo != null)
-                //    return (bool)memberInfo.GetValue(_definition.SessionSettings);
-                //return false;
             }
             set
             {
                 _definition.SessionSettings.EnableConvertToStation = value;
-
-                //FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableConvertToStation", BindingFlags.Instance | BindingFlags.Public);
-                //if (memberInfo != null)
-                //    memberInfo.SetValue(_definition.SessionSettings, value);
             }
         }
 
-        /*
+        
         /// <summary>
         /// Get or set the Voxel Support setting.
         /// </summary>
         [DataMember]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Enables or disables Voxel Support. This only works on Stable branch!")]
+        [Description("Enables or disables Voxel Support. This only works on Dev branch!")]
         [Category("World Settings")]
         [DisplayName("Enable Station Voxel Support")]
         [DefaultValue(true)]
@@ -1448,23 +1439,23 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
-                //return _definition.SessionSettings.EnableStationVoxelSupport;
+                return _definition.SessionSettings.StationVoxelSupport;
 
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableStationVoxelSupport", BindingFlags.Instance | BindingFlags.Public);
-                if ( memberInfo != null )
-                    return (bool)memberInfo.GetValue( _definition.SessionSettings );
-                return false;
+                //FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("StationVoxelSupport", BindingFlags.Instance | BindingFlags.Public);
+                //if ( memberInfo != null )
+                //    return (bool)memberInfo.GetValue( _definition.SessionSettings );
+                //return false;
             }
             set
             {
-                //_definition.SessionSettings.EnableStationVoxelSupport = value;
+                _definition.SessionSettings.StationVoxelSupport = value;
 
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableStationVoxelSupport", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo != null)
-                    memberInfo.SetValue(_definition.SessionSettings, value);
+                //FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("StationVoxelSupport", BindingFlags.Instance | BindingFlags.Public);
+                //if (memberInfo != null)
+                //    memberInfo.SetValue(_definition.SessionSettings, value);
             }
         }
-        */
+        
 
         /// <summary>
         /// Get or set the Enable 3rd Person View setting.

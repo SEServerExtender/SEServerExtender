@@ -410,7 +410,7 @@ namespace SEServerExtender
 	        unknownBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
             systemBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
 
-            if (systemBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+            if (systemBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
 	            sb.AppendLine("Grid systems");
 
@@ -425,7 +425,7 @@ namespace SEServerExtender
                 sb.AppendLine();
             }
 
-            if (blockBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+            if (blockBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
 	            sb.AppendLine("Blocks:");
 
@@ -440,7 +440,7 @@ namespace SEServerExtender
 	            sb.AppendLine();
 	        }
 
-	        if (otherBlocks.Count( b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+	        if (otherBlocks.Any( b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
 	            sb.AppendLine("Other:");
 
@@ -454,7 +454,7 @@ namespace SEServerExtender
 	            sb.AppendLine();
 	        }
 
-            if (graphicsBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+            if (graphicsBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
 	            sb.AppendLine("Graphics:");
 
@@ -468,7 +468,7 @@ namespace SEServerExtender
 	            sb.AppendLine();
 	        }
 
-            if (unknownBlocks.Count(b => b.Average.IsValid() && b.Average >= 0.001) > 0)
+            if (unknownBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
 	            sb.AppendLine("UNKNOWN:");
 
@@ -942,7 +942,7 @@ namespace SEServerExtender
 
 			if ( sortBy == 0 ) // Display Name
 			{
-				list.Sort( ( x, y ) => String.Compare( x.DisplayName, y.DisplayName, StringComparison.CurrentCultureIgnoreCase ) );
+				list.Sort( ( x, y ) => string.Compare( x.DisplayName, y.DisplayName, StringComparison.CurrentCultureIgnoreCase ) );
 			}
 			else if ( sortBy == 1 ) // Owner Name
 			{
@@ -950,17 +950,17 @@ namespace SEServerExtender
                {
                    string yOwn = y.GetOwner();
                    string xOwn = x.GetOwner();
-                   if (String.IsNullOrEmpty(yOwn) && !String.IsNullOrEmpty(xOwn))
+                   if (string.IsNullOrEmpty(yOwn) && !string.IsNullOrEmpty(xOwn))
                    {
                        return -1;
                    }
-                   else if (!String.IsNullOrEmpty(yOwn) && String.IsNullOrEmpty(xOwn))
+                   else if (!string.IsNullOrEmpty(yOwn) && string.IsNullOrEmpty(xOwn))
                    {
                        return 1;
                    }
                    else
                    {
-                       return String.Compare(xOwn, yOwn);
+                       return string.Compare(xOwn, yOwn);
                    }
                });
             }
@@ -978,7 +978,7 @@ namespace SEServerExtender
                        if (y == null || y.Closed)
                            return 1;
 
-                       return Vector3D.Distance(x.PositionComp.GetPosition(), Vector3D.Zero).CompareTo(Vector3D.Distance(y.PositionComp.GetPosition(), Vector3D.Zero));
+                       return Vector3D.DistanceSquared(x.PositionComp.GetPosition(), Vector3D.Zero).CompareTo(Vector3D.DistanceSquared(y.PositionComp.GetPosition(), Vector3D.Zero));
                    });
             }
             else if ( sortBy == 4 ) // Weight
@@ -990,7 +990,7 @@ namespace SEServerExtender
                     else if ( x?.Physics != null && y?.Physics == null )
                         return -1;
                     else if ( x?.Physics == null && y?.Physics == null )
-                        return 1;
+                        return 0;
                     else if (x?.Physics!=null && y?.Physics!=null)
                     {
                         if ( x.Physics.IsStatic && !y.Physics.IsStatic )
@@ -998,13 +998,14 @@ namespace SEServerExtender
                         else if ( !x.Physics.IsStatic && y.Physics.IsStatic )
                             return -1;
                         else if ( x.Physics.IsStatic && y.Physics.IsStatic )
-                            return 1;
+                            return 0;
                         else if ( !x.Physics.IsStatic && !y.Physics.IsStatic )
                         {
-                            if ( Math.Floor( x.Physics.Mass ) > Math.Floor( y.Physics.Mass ) )
-                                return 1;
-                            else
-                                return -1;
+                            //if ( Math.Floor( x.Physics.Mass ) > Math.Floor( y.Physics.Mass ) )
+                            //    return 1;
+                            //else
+                            //    return -1;
+                            return x.Physics.Mass.CompareTo(y.Physics.Mass);
                         }
                     }
                     return 1;

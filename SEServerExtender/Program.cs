@@ -213,30 +213,20 @@ namespace SEServerExtender
 
         private static void HideConfigs()
         {
-            var desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["BlockLimits"];
+            SetBrowsable("BlockLimits", false);
+            SetBrowsable("MaxBlocksPerGrid", false);
+            SetBrowsable("MaxBlocksPerPlayer", false);
+            SetBrowsable("EnableRemoval", false);
+            SetBrowsable("EnableBlockLimits", false);
+            SetBrowsable("EnableVoxelSupport", false);
+        }
+
+        private static void SetBrowsable(string name, bool value)
+        {
+            var desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))[name];
             var attrib = desc.Attributes[typeof(BrowsableAttribute)];
             var brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
-            brows.SetValue(attrib, false);
-
-            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["MaxBlocksPerGrid"];
-            attrib = desc.Attributes[typeof(BrowsableAttribute)];
-            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
-            brows.SetValue(attrib, false);
-
-            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["MaxBlocksPerPlayer"];
-            attrib = desc.Attributes[typeof(BrowsableAttribute)];
-            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
-            brows.SetValue(attrib, false);
-
-            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["EnableRemoval"];
-            attrib = desc.Attributes[typeof(BrowsableAttribute)];
-            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
-            brows.SetValue(attrib, false);
-
-            desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))["EnableBlockLimits"];
-            attrib = desc.Attributes[typeof(BrowsableAttribute)];
-            brows = attrib.GetType().GetField("browsable", BindingFlags.NonPublic | BindingFlags.Instance);
-            brows.SetValue(attrib, false);
+            brows.SetValue(attrib, value);
         }
 
         private static void Start( string[ ] args )
