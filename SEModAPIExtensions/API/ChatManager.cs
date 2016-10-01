@@ -1606,9 +1606,14 @@ namespace SEModAPIExtensions.API
 			        {
 			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
-			        }
+                    }
+                    if (commandParts[1].ToLower().Equals("idlerotation") && (cubeBlock is MyLargeTurretBase))
+                    {
+                        SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => ((MyLargeTurretBase)cubeBlock).ChangeIdleRotation(false), null, null);
+                        poweredOffCount++;
+                    }
 
-			        if (commandParts[1].ToLower().Equals(cubeBlock.BlockDefinition.Id.SubtypeName.ToLower()))
+                    if (commandParts[1].ToLower().Equals(cubeBlock.BlockDefinition.Id.SubtypeName.ToLower()))
 			        {
 			            SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => functionalBlock.Enabled = false, null, null);
 			            poweredOffCount++;
