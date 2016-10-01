@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using NLog;
+using Sandbox.Definitions;
 using VRage.Dedicated;
 
 namespace SEModAPI
@@ -11,15 +12,31 @@ namespace SEModAPI
     public partial class BlockLimitConfig : Form
     {
         public Dictionary<string, short> BlockLimits;
-        private string[] blockTypeNames;
+        private List<string> blockTypeNames=new List<string>();
         public BlockLimitConfig( Dictionary<string, short> limits )
         {
             InitializeComponent();
 
             BlockLimits = limits;
-
-            var blockTypeResources = new System.ComponentModel.ComponentResourceManager(typeof(BlockTypeList));
-            blockTypeNames = blockTypeResources.GetString("textBox1.Text").Split(',');
+            
+                var blockTypeResources = new System.ComponentModel.ComponentResourceManager(typeof(BlockTypeList));
+                blockTypeNames=blockTypeResources.GetString("textBox1.Text").Split(',').ToList();
+            
+            if (MyDefinitionManager.Static != null)
+            {
+                foreach (var def in MyDefinitionManager.Static.GetAllDefinitions())
+                {
+                    var cubeDef = def as MyCubeBlockDefinition;
+                    if (cubeDef == null)
+                        continue;
+                    if (!cubeDef.Public)
+                        continue;
+                    string name = cubeDef.BlockPairName;
+                    if (!blockTypeNames.Contains(name))
+                        blockTypeNames.Add(name);
+                }
+            }
+            blockTypeNames.Sort();
             TP_Block_Limits.RowStyles.Clear();
             bool first = true;
             foreach (var entry in BlockLimits.OrderBy( e=>e.Key))
@@ -57,7 +74,7 @@ namespace SEModAPI
 
             blockNames.Width = 190;
             blockNames.Text = name;
-            blockNames.Items.AddRange(blockTypeNames);
+            blockNames.Items.AddRange(blockTypeNames.ToArray());
 
             limitCount.Minimum = 0;
             limitCount.Maximum = short.MaxValue;
