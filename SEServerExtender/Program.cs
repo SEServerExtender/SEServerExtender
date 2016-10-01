@@ -18,6 +18,7 @@ using VRage.Game;
 using VRage.Game.ObjectBuilder;
 using VRage.Plugins;
 using VRage.Utils;
+using Game = Sandbox.Engine.Platform.Game;
 
 namespace SEServerExtender
 {
@@ -181,34 +182,40 @@ namespace SEServerExtender
             MyFileSystem.InitUserSpecific(null);
             SpaceEngineersGame.SetupPerGameSettings();
             SpaceEngineersGame.SetupBasicGameInfo();
-
+            
             //Game.IsDedicated = true;
             
             try
             {
-                tmpGame = new MySandboxGame(null, null);
+              //tmpGame = new MySandboxGame(null, null);
             }
             catch
             {
+                BaseLog.Error("Sandbox init failed successfully!");
                 //setting IsDedicated true causes initialization to fail, but Steam won't detect SE running
                 //it still initializes the definition stuff we need, so whatever
             }
-            /*
+            //tmpGame.Exit();
+            //MyMultiplayer.Static.Dispose();
+            
             //just randomly copy crap out of the MySandboxGame ctor because nothing makes sense anymore
+            //MyPlugins.RegisterGameAssemblyFile(MyPerGameSettings.GameModAssembly);
+            //if (MyPerGameSettings.GameModBaseObjBuildersAssembly != null)
+            //    MyPlugins.RegisterBaseGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModBaseObjBuildersAssembly);
+            //MyPlugins.RegisterGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModObjBuildersAssembly);
+            //MyPlugins.RegisterSandboxAssemblyFile(MyPerGameSettings.SandboxAssembly);
+            //MyPlugins.RegisterSandboxGameAssemblyFile(MyPerGameSettings.SandboxGameAssembly);
+            //MyPlugins.RegisterFromArgs(null);
+            //MyPlugins.Load();
+            
             MyGlobalTypeMetadata.Static.Init();
             MyDefinitionManager.Static.PreloadDefinitions();
-            MyDefinitionManager.Static.PrepareBaseDefinitions();
-            MyDefinitionManager.Static.LoadScenarios();
-            MyTutorialHelper.Init();
-            MyPlugins.RegisterGameAssemblyFile(MyPerGameSettings.GameModAssembly);
-            if (MyPerGameSettings.GameModBaseObjBuildersAssembly != null)
-                MyPlugins.RegisterBaseGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModBaseObjBuildersAssembly);
-            MyPlugins.RegisterGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModObjBuildersAssembly);
-            MyPlugins.RegisterSandboxAssemblyFile(MyPerGameSettings.SandboxAssembly);
-            MyPlugins.RegisterSandboxGameAssemblyFile(MyPerGameSettings.SandboxGameAssembly);
-            MyPlugins.RegisterFromArgs(null);
-            MyPlugins.Load();
-            */
+            //MyDefinitionManager.Static.PrepareBaseDefinitions();
+            //MyDefinitionManager.Static.LoadScenarios();
+            //MyTutorialHelper.Init();
+            //typeof(MySandboxGame).GetMethod("Preallocate", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(MyObjectBuilder_Base).TypeHandle);
+
         }
 
         private static void HideConfigs()
@@ -627,4 +634,89 @@ namespace SEServerExtender
 			Application.Run( ServerExtenderForm );
 		}
 	}
+    /*
+    public class SandboxReflect : MySandboxGame
+    {
+        public SandboxReflect()
+        {
+            
+            MySandboxGame.Log.WriteLine("SandboxReflect.Constructor() - START");
+            MySandboxGame.Log.IncreaseIndent();
+
+            Services = services;
+
+            //SharpDX.Configuration.EnableObjectTracking = MyCompilationSymbols.EnableSharpDxObjectTracking;
+
+            UpdateThread = Thread.CurrentThread;
+            
+
+            MySandboxGame.Log.WriteLine("Game dir: " + MyFileSystem.ExePath);
+            MySandboxGame.Log.WriteLine("Content dir: " + MyFileSystem.ContentPath);
+            
+            Static = this;
+            
+            InitNumberOfCores();
+            
+            //MyLanguage.Init();
+            
+            MyGlobalTypeMetadata.Static.Init();
+            
+            MyDefinitionManager.Static.LoadScenarios();
+            
+            MyTutorialHelper.Init();
+            
+            Preallocate();
+
+            
+            if (!IsDedicated)
+            {
+                GameRenderComponent = new MyGameRenderComponent();
+            }
+            else
+            {
+                MySandboxGame.ConfigDedicated.Load();
+                //ignum
+                //+connect 62.109.134.123:27025
+
+                IPAddress address = MyDedicatedServerOverrides.IpAddress ?? IPAddressExtensions.ParseOrAny(MySandboxGame.ConfigDedicated.IP);
+                ushort port = (ushort)(MyDedicatedServerOverrides.Port ?? MySandboxGame.ConfigDedicated.ServerPort);
+
+                IPEndPoint ep = new IPEndPoint(address, port);
+
+                MyLog.Default.WriteLineAndConsole("Bind IP : " + ep.ToString());
+
+                MyDedicatedServerBase dedicatedServer = null;
+                if (MyFakes.ENABLE_BATTLE_SYSTEM && MySandboxGame.ConfigDedicated.SessionSettings.Battle)
+                    dedicatedServer = new MyDedicatedServerBattle(ep);
+                else
+                    dedicatedServer = new MyDedicatedServer(ep);
+
+                MyMultiplayer.Static = dedicatedServer;
+
+                FatalErrorDuringInit = !dedicatedServer.ServerStarted;
+
+                if (FatalErrorDuringInit && !Environment.UserInteractive)
+                {
+                    var e = new Exception("Fatal error during dedicated server init: " + dedicatedServer.ServerInitError);
+                    e.Data["Silent"] = true;
+                    throw e;
+                }
+            }
+            
+            // Game tags contain game data hash, so they need to be sent after preallocation
+            //if (IsDedicated && !FatalErrorDuringInit)
+            //{
+            //    (MyMultiplayer.Static as MyDedicatedServerBase).SendGameTagsToSteam();
+            //}
+
+            SessionCompatHelper = Activator.CreateInstance(MyPerGameSettings.CompatHelperType) as MySessionCompatHelper;
+            
+            InitMultithreading();
+            
+            //MyMessageLoop.AddMessageHandler(MyWMCodes.GAME_IS_RUNNING_REQUEST, OnToolIsGameRunningMessage);
+
+            MySandboxGame.Log.DecreaseIndent();
+            MySandboxGame.Log.WriteLine("MySandboxGame.Constructor() - END");
+        }
+    }*/
 }
