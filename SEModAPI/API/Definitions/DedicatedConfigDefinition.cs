@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using NLog;
 using Sandbox.Definitions;
 using SpaceEngineers.Game;
 using SteamSDK;
@@ -27,6 +28,7 @@ namespace SEModAPI.API.Definitions
 	[DataContract]
 	public class DedicatedConfigDefinition
 	{
+        public static readonly Logger BaseLog = LogManager.GetLogger("BaseLog");
         private readonly MyConfigDedicatedData<MyObjectBuilder_SessionSettings> _definition;
         
         //this is here only so the block limit config screen can get and set this data
@@ -1651,7 +1653,7 @@ namespace SEModAPI.API.Definitions
 			}
 			catch(Exception ex)
 			{
-                //ApplicationLog.BaseLog.Error( ex );
+                BaseLog.Error( ex );
 				throw new GameInstallationInfoException( GameInstallationInfoExceptionState.ConfigFileCorrupted, fileInfo.FullName );
 			}
 

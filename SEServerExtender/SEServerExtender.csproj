@@ -93,7 +93,10 @@
       <HintPath>..\GameLibraries\Sandbox.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sandbox.Game, Version=0.1.6108.20542, Culture=neutral, processorArchitecture=AMD64" />
+    <Reference Include="Sandbox.Game, Version=0.1.6121.25873, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>
+    </Reference>
     <Reference Include="SpaceEngineers.Game, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GameLibraries\SpaceEngineers.Game.dll</HintPath>

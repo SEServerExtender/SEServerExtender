@@ -91,13 +91,11 @@ namespace SEModAPI
 
             return fp;
         }
-
-        //TODO: dump the debug exceptions
+        
         private void RemoveButton_Click(object sender, EventArgs e)
         {
             var button = (Button)sender;
             var panel = (FlowLayoutPanel)button.Parent;
-            var table = (TableLayoutPanel)panel.Parent;
             
             var cmb = panel.Controls[0] as ComboBox;
             cmb.Text = string.Empty;

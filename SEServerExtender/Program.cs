@@ -7,6 +7,7 @@ using Sandbox.Engine.Multiplayer;
 using Sandbox.Engine.Platform;
 using Sandbox.Engine.Utils;
 using Sandbox.Game;
+using Sandbox.Game.Entities;
 using Sandbox.Game.World;
 using SEModAPI.API.Definitions;
 using SEModAPI.API.Utility;
@@ -72,7 +73,7 @@ namespace SEServerExtender
 			    List<string> listArg = args.ToList();
 			    string serviceName = string.Empty;
                 string gamePath = new DirectoryInfo(PathManager.BasePath).Parent.FullName;
-
+                
                 // Instance autodetect
 			    if (args.All(item => !item.Contains("instance")))
 			    {
@@ -156,19 +157,22 @@ namespace SEServerExtender
 			}
 		}
         
-        private static void InitSandbox(string contentpath, string instancepath)
+        /// <summary>
+        /// Manually initializes definitions and other stuff we need to load the DS config serializer.
+        /// Touch this and die.
+        /// </summary>
+        private static void InitSandbox()
         {
             FileSystem.InitMyFileSystem();
 
             MyLog.Default = MySandboxGame.Log;
             MySandboxGame.Config = new MyConfig("SpaceEngineers.cfg");
             MySandboxGame.Config.Load();
-            BaseLog.Info(MyFileSystem.ExePath);
-            BaseLog.Info(MyFileSystem.ContentPath);
-            //MyFileSystem.InitUserSpecific(null);
             SpaceEngineersGame.SetupPerGameSettings();
             SpaceEngineersGame.SetupBasicGameInfo();
 
+            //all this is basically copied from the MySandboxGame ctor
+            //manually initializing this stuff prevents Steam from detecting SESE as an instance of the game
             MyPlugins.RegisterGameAssemblyFile(MyPerGameSettings.GameModAssembly);
             if (MyPerGameSettings.GameModBaseObjBuildersAssembly != null)
                 MyPlugins.RegisterBaseGameObjectBuildersAssemblyFile(MyPerGameSettings.GameModBaseObjBuildersAssembly);
@@ -183,19 +187,15 @@ namespace SEServerExtender
             MyDefinitionManager.Static.LoadScenarios();
             MyTutorialHelper.Init();
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(MyObjectBuilder_Base).TypeHandle);
-            //typeof(MySandboxGame).GetMethod( "Preallocate", BindingFlags.NonPublic | BindingFlags.Static ).Invoke( null, null );
         }
 
-        private static void HideConfigs()
+        private static void HideConfigs(params string[] names)
         {
-            SetBrowsable("BlockLimits", false);
-            SetBrowsable("MaxBlocksPerGrid", false);
-            SetBrowsable("MaxBlocksPerPlayer", false);
-            SetBrowsable("EnableRemoval", false);
-            SetBrowsable("EnableBlockLimits", false);
-            SetBrowsable("EnableVoxelSupport", false);
+            foreach (var name in names)
+                SetBrowsable(name, false);
         }
 
+        //Shamelessly stolen from StackOverflow
         private static void SetBrowsable(string name, bool value)
         {
             var desc = TypeDescriptor.GetProperties(typeof(DedicatedConfigDefinition))[name];
@@ -222,13 +222,13 @@ namespace SEServerExtender
 		        PluginManager.IsStable = true;
 
                 //hide the block limit config, since it will crash in stable
-		        HideConfigs();
+		        HideConfigs("BlockLimits", "MaxBlocksPerGrid", "MaxBlocksPerPlayer", "EnableRemoval", "EnableBlockLimits", "EnableVoxelSupport");
 		    }
             else
                 BaseLog.Info("Detected \"Development\" branch!");
 
-            InitSandbox(Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + @"..\Content"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SpaceEngineers"));
-            
+            InitSandbox();
+
             //Setup error handling for unmanaged exceptions
             AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
