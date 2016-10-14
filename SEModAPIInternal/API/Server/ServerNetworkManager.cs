@@ -217,7 +217,7 @@ namespace SEModAPIInternal.API.Server
             if ( ExtenderOptions.IsDebugging )
             {
                 if ( !site.MethodInfo.Name.Contains( "SyncPropertyChanged" ) && !site.MethodInfo.Name.Contains( "OnSimulationInfo" ) )
-                    ApplicationLog.Error( $"Caught event {site.MethodInfo.Name} from user {PlayerMap.Instance.GetFastPlayerNameFromSteamId( packet.Sender.Value )}:{packet.Sender.Value}" );
+                    ApplicationLog.Error( $"Caught event {site.MethodInfo.Name} from user {PlayerMap.Instance.GetFastPlayerNameFromSteamId( packet.Sender.Value )}:{packet.Sender.Value}. Length {stream.ByteLength}B" );
             }
 #endif
             //we're handling the network live in the game thread, this needs to go as fast as possible
@@ -234,15 +234,15 @@ namespace SEModAPIInternal.API.Server
 
 	    public void RegisterNetworkHandler( NetworkHandlerBase handler )
 	    {
-	        string handlerType = handler.GetType().AssemblyQualifiedName;
+	        string handlerType = handler.GetType().FullName;
             List<NetworkHandlerBase> toRemove = new List<NetworkHandlerBase>();
 	        foreach ( var item in _networkHandlers )
 	        {
-	            if ( item.GetType().AssemblyQualifiedName == handlerType )
+	            if ( item.GetType().FullName == handlerType )
 	            {
 	                if (ExtenderOptions.IsDebugging)
 	                    ApplicationLog.BaseLog.Error("Network handler already registered! " + handlerType);
-	                toRemove.Add(handler);
+	                toRemove.Add(item);
 	            }
 	        }
 
