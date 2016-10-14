@@ -165,10 +165,13 @@
       <DependentUpon>CubeBlockDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="EntityWrappers\BagInventoryWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\BeaconWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\AntennaWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\BatteryWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\ConnectorWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\CubeBlockWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\GyroWrapper.cs" />
+    <Compile Include="EntityWrappers\BlockWrappers\JumpDriveWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\LandingGearWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\ShipToolWrapper.cs" />
     <Compile Include="EntityWrappers\BlockWrappers\SlimBlockWrapper.cs" />

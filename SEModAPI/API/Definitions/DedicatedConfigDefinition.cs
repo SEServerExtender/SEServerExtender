@@ -1599,6 +1599,8 @@ namespace SEModAPI.API.Definitions
 				{
 					XmlSerializer deserializer = new XmlSerializer( typeof( MyConfigDedicatedData<MyObjectBuilder_SessionSettings> ) );
 					MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = (MyConfigDedicatedData<MyObjectBuilder_SessionSettings>)deserializer.Deserialize( rdr );
+                    if(config == null)
+                        throw new Exception("Unknown Error");
 					return config;
 				}
 			}

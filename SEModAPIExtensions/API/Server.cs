@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using VRage;
 using VRage.Game;
@@ -591,20 +592,27 @@ namespace SEModAPIExtensions.API
 
 			    if ( _dedicatedConfigDefinition == null )
 					LoadServerConfig( );
-                
-				if ( Config.AutoSaveInMinutes > 0 )
-				{
-					Config.AutoSaveInMinutes = 0;
-					SaveServerConfig( );
-				}
 
-				_sessionManager.UpdateSessionSettings( );
+			    if (Config == null)
+			    {
+                    ApplicationLog.BaseLog.Error("NULL CONFIG!");
+			    }
+			    else
+			    {
+			        if (Config.AutoSaveInMinutes > 0)
+			        {
+			            Config.AutoSaveInMinutes = 0;
+			            SaveServerConfig();
+			        }
+			    }
+
+			    _sessionManager.UpdateSessionSettings( );
 				_pluginMainLoop.Start( );
                 _autosaveTimer.Start( );
 
                 _isServerRunning = true;
 				_serverRan = true;
-
+                
 				_runServerThread = new Thread( RunServer ) { IsBackground = true };
                 _runServerThread.Start( );
             }
@@ -701,6 +709,8 @@ namespace SEModAPIExtensions.API
             if ( File.Exists( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) )
             {
                 MyConfigDedicatedData<MyObjectBuilder_SessionSettings> config = DedicatedConfigDefinition.Load( new FileInfo( System.IO.Path.Combine( Path, "SpaceEngineers-Dedicated.cfg" ) ) );
+                if(config==null)
+                    throw new FileLoadException("Failed to load session settings: " + Path);
                 _dedicatedConfigDefinition = new DedicatedConfigDefinition( config );
                 _cfgWatch = new FileSystemWatcher( Path, "*.cfg" );
                 _cfgWatch.Changed += Config_Changed;
@@ -710,11 +720,11 @@ namespace SEModAPIExtensions.API
             }
             else
             {
-                if ( ExtenderOptions.IsDebugging )
-                {
+                //if ( ExtenderOptions.IsDebugging )
+                //{
                     ApplicationLog.BaseLog.Info( "Failed to load session settings" );
                     ApplicationLog.BaseLog.Info( Path );
-                }
+                //}
                 return null;
             }
 

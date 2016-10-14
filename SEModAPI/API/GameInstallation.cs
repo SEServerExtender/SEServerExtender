@@ -21,6 +21,7 @@ namespace SEModAPI.API
 	{
 
 		private static string _gamePath;
+	    public static bool SendLog = true;
 
 		internal static readonly string[ ] CoreSpaceEngineersFiles = 
 		{
@@ -291,7 +292,7 @@ namespace SEModAPI.API
 			if(string.IsNullOrEmpty( MyPerServerSettings.GameDSName ))
 				SpaceEngineersGame.SetupPerGameSettings( );
 			
-			MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
+			MyPerGameSettings.SendLogToKeen = SendLog;
 			MyPerServerSettings.GameName = MyPerGameSettings.GameName;
 			MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
 			MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";

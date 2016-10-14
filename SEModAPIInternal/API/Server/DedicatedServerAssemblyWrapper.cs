@@ -1,4 +1,5 @@
-﻿using SEModAPI.API;
+﻿using System.Linq;
+using SEModAPI.API;
 using VRage.ObjectBuilders;
 using VRage.Plugins;
 using VRage.Utils;
@@ -197,6 +198,7 @@ namespace SEModAPIInternal.API.Server
                 MethodInfo dedicatedServerRunMainMethod = InternalType.GetMethod( DedicatedServerRunMainMethod, BindingFlags.Static | BindingFlags.NonPublic );
 				dedicatedServerRunMainMethod.Invoke( null, methodParams );
 			    ApplicationLog.BaseLog.Info( MyLog.Default.GetFilePath());
+
                 return true;
 			}
 			catch ( Win32Exception ex )

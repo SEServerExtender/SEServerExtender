@@ -52,7 +52,6 @@ namespace SEServerExtender
 		public static readonly Logger BaseLog = LogManager.GetLogger( "BaseLog" );
 		public static readonly Logger PluginLog = LogManager.GetLogger( "PluginLog" );
         public static Version SeVersion;
-        //public static readonly int[] StableVersions = new int[] {139,140,144,149};
         public static bool IsStable;
 
 		public class WindowsService : ServiceBase
