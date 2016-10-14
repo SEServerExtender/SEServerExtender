@@ -1240,33 +1240,11 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
-                //return _definition.SessionSettings.EnableWolfs ?? false;
-                
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableCyberhounds", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo == null)
-                    memberInfo= _definition.SessionSettings.GetType().GetField("EnableWolfs", BindingFlags.Instance | BindingFlags.Public); //yes, Wolfs
-                if (memberInfo == null)
-                    return false;
-
-                var setting = memberInfo.GetValue(_definition.SessionSettings) as bool?;
-
-                if ( !setting.HasValue )
-                    return false;
-                return setting.Value;
-                
+                return _definition.SessionSettings.EnableWolfs ?? false;
             }
             set
             {
-                //_definition.SessionSettings.EnableWolfs = value;
-                
-                FieldInfo memberInfo = _definition.SessionSettings.GetType().GetField("EnableCyberhounds", BindingFlags.Instance | BindingFlags.Public);
-                if (memberInfo == null)
-                    memberInfo = _definition.SessionSettings.GetType().GetField("EnableWolfs", BindingFlags.Instance | BindingFlags.Public); //yes, Wolfs
-                if (memberInfo == null)
-                    return;
-
-                memberInfo.SetValue(_definition.SessionSettings, value);
-                
+                _definition.SessionSettings.EnableWolfs = value;
             }
         }
         

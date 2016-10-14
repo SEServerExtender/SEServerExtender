@@ -219,57 +219,16 @@ namespace SEServerExtender
 
 		#region "General"
 
-	    private List<MyStats> _stats;
-		private void StatisticsRefresh( object sender, EventArgs e )
-		{
-			StringBuilder sb = new StringBuilder( );
+	    private void StatisticsRefresh(object sender, EventArgs e)
+	    {
+	        StringBuilder sb = new StringBuilder();
 
-			//Stats.Generic.WriteTo( sb );
-			//Stats.Network.WriteTo( sb );
-			//Stats.Timing.WriteTo( sb );
+	        foreach (var statlist in MyRenderStats.m_stats.Values)
+	            foreach (var stat in statlist)
+	                stat.WriteTo(sb);
 
-            //HACK FOR STABLE! HACKS ALL DAY ERRY DAY YEEEEAAAAAA
-		    if (_stats == null )
-		    {
-		        Type renderStatsType = null;
-		        Type statsType = FindTypeInAllAssemblies("VRage.Utils.Stats");
-		        if (statsType == null)
-		        {
-		            statsType = FindTypeInAllAssemblies("VRageRender.Utils.Stats");
-		            renderStatsType = FindTypeInAllAssemblies("VRageRender.Utils.MyRenderStats");
-		        }
-		        if (statsType == null)
-		            throw new MissingMemberException("Couldn't find stats");
-
-                _stats=new List<MyStats>();
-
-		        if (renderStatsType == null)
-		        {
-		            _stats.Add((MyStats)statsType.GetField("Generic", BindingFlags.Public | BindingFlags.Static).GetValue(null));
-		            _stats.Add((MyStats)statsType.GetField("Network", BindingFlags.Public | BindingFlags.Static).GetValue(null));
-		            _stats.Add((MyStats)statsType.GetField("Timing", BindingFlags.Public | BindingFlags.Static).GetValue(null));
-		        }
-		        else
-		        {
-		            var statinfo = renderStatsType.GetField("m_stats", BindingFlags.Public | BindingFlags.Static);
-                    if(statinfo==null)
-                        throw new MissingMemberException("Couldn't find expanded stats field");
-		            var obj = statinfo.GetValue(null);
-		            var values = obj.GetType().GetProperty("Values").GetValue(obj) as IEnumerable<List<MyStats>>;
-                    if(values == null)
-                        throw new MissingMemberException("Couldn't find expanded stats value");
-                    
-                    foreach (var statlist in values)
-                        foreach (var stat in statlist)
-                            _stats.Add(stat);
-                }
-		    }
-
-            foreach(var stats in _stats)
-                stats.WriteTo(sb);
-
-			TB_Statistics.Text = sb.ToString( );
-		}
+	        TB_Statistics.Text = sb.ToString();
+	    }
 
 	    private Type FindTypeInAllAssemblies(string typeName)
 	    {
