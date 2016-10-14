@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox.Game.World;
+﻿using System.ComponentModel;
 using SEModAPIInternal.API.Common;
 using VRage.Game;
 
@@ -12,11 +6,12 @@ namespace SEServerExtender.EntityWrappers.Factions
 {
     public class FactionMemberWrapper
     {
-        [Browsable(false)]
-        public readonly MyFactionMember Member;
         private readonly FactionWrapper _faction;
 
-        public FactionMemberWrapper(MyFactionMember member, FactionWrapper faction )
+        [Browsable(false)]
+        public readonly MyFactionMember Member;
+
+        public FactionMemberWrapper(MyFactionMember member, FactionWrapper faction)
         {
             Member = member;
             _faction = faction;
@@ -48,7 +43,7 @@ namespace SEServerExtender.EntityWrappers.Factions
                     _faction.Demote(Member.PlayerId);
             }
         }
-        
+
         [Category("General")]
         [ReadOnly(true)]
         public bool Founder

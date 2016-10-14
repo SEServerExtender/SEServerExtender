@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Sandbox.Game.Multiplayer;
 using Sandbox.Game.World;
 using SEModAPIInternal.API.Common;
@@ -40,7 +35,7 @@ namespace SEServerExtender.EntityWrappers
             get { return Faction.Description; }
             set { SandboxGameAssemblyWrapper.Instance.GameAction(() => MySession.Static.Factions.EditFaction(Faction.FactionId, Tag, Name, value, PrivateInfo)); }
         }
-        
+
         [Category("Details")]
         public string PrivateInfo
         {
@@ -59,22 +54,16 @@ namespace SEServerExtender.EntityWrappers
         public bool AcceptAll
         {
             get { return Faction.AutoAcceptMember; }
-            set
-            {
-                SandboxGameAssemblyWrapper.Instance.GameAction(() => MySession.Static.Factions.ChangeAutoAccept(Faction.FactionId, Faction.FounderId, value, Faction.AutoAcceptPeace));
-            }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => MySession.Static.Factions.ChangeAutoAccept(Faction.FactionId, Faction.FounderId, value, Faction.AutoAcceptPeace)); }
         }
 
         [Category("Settings")]
         public bool AcceptPeace
         {
             get { return Faction.AutoAcceptPeace; }
-            set
-            {
-                SandboxGameAssemblyWrapper.Instance.GameAction(() => MySession.Static.Factions.ChangeAutoAccept(Faction.FactionId, Faction.FounderId, Faction.AutoAcceptMember, value));
-            }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => MySession.Static.Factions.ChangeAutoAccept(Faction.FactionId, Faction.FounderId, Faction.AutoAcceptMember, value)); }
         }
-        
+
         //There doesn't appear to be a sync method for this?
         [Category("Settings")]
         [Description("When this is false, players can't hurt each other with rifles or hand tools. Does not apply to grids.")]

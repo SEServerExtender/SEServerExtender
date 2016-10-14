@@ -7,10 +7,10 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
 {
     public class FunctionalBlockWrapper : CubeBlockWrapper
     {
-        [Browsable( false )]
+        [Browsable(false)]
         private readonly MyFunctionalBlock Block;
 
-        public FunctionalBlockWrapper( MySlimBlock block ) : base( block )
+        public FunctionalBlockWrapper(MySlimBlock block) : base(block)
         {
             Block = (MyFunctionalBlock)block.FatBlock;
         }
@@ -25,18 +25,18 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
             get { return Block.CustomInfo.ToString(); }
         }
 
-        [Category( "Terminal" )]
+        [Category("Terminal")]
         public bool Enabled
         {
             get { return Block.Enabled; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => ( Block as IMyFunctionalBlock ).RequestEnable( value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => (Block as IMyFunctionalBlock).RequestEnable(value)); }
         }
 
-        [Category( "Terminal" )]
+        [Category("Terminal")]
         public bool ShowOnHUD
         {
             get { return Block.ShowOnHUD; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Block.ShowOnHUD = value ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Block.ShowOnHUD = value); }
         }
     }
 }

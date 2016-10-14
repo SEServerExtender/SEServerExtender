@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Sandbox.Definitions;
 using Sandbox.Game.Entities;
-using Sandbox.Game.World;
 using SEModAPIInternal.API.Common;
 using VRage.Game;
 using VRageMath;
@@ -15,30 +14,30 @@ namespace SEServerExtender.EntityWrappers
 {
     public class CubeGridWrapper
     {
-        [Browsable( false )]
+        [Browsable(false)]
         public readonly MyCubeGrid Grid;
 
-        public CubeGridWrapper( MyCubeGrid grid )
+        public CubeGridWrapper(MyCubeGrid grid)
         {
             Grid = grid;
         }
 
-        [Category( "General" )]
-        [Description( "This doesn't check for collisions, use at your own risk." )]
+        [Category("General")]
+        [Description("This doesn't check for collisions, use at your own risk.")]
         public string Position
         {
             get { return Grid.PositionComp.GetPosition().ToString(); }
             set
             {
                 Vector3D val;
-                if ( !Vector3D.TryParse( value, out val ) )
+                if (!Vector3D.TryParse(value, out val))
                     return;
 
-                SandboxGameAssemblyWrapper.Instance.GameAction( () => Grid.PositionComp.SetPosition( val ) );
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => Grid.PositionComp.SetPosition(val));
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public string PositionGPS
         {
             get
@@ -50,210 +49,210 @@ namespace SEServerExtender.EntityWrappers
             set
             {
                 //copied from SE because MyGpsCollection is private
-                foreach ( Match match in Regex.Matches( value, @"GPS:([^:]{0,32}):([\d\.-]*):([\d\.-]*):([\d\.-]*):" ) )
+                foreach (Match match in Regex.Matches(value, @"GPS:([^:]{0,32}):([\d\.-]*):([\d\.-]*):([\d\.-]*):"))
                 {
                     double x, y, z;
                     try
                     {
-                        x = double.Parse( match.Groups[2].Value, CultureInfo.InvariantCulture );
-                        x = Math.Round( x, 2 );
-                        y = double.Parse( match.Groups[3].Value, CultureInfo.InvariantCulture );
-                        y = Math.Round( y, 2 );
-                        z = double.Parse( match.Groups[4].Value, CultureInfo.InvariantCulture );
-                        z = Math.Round( z, 2 );
+                        x = double.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                        x = Math.Round(x, 2);
+                        y = double.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                        y = Math.Round(y, 2);
+                        z = double.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                        z = Math.Round(z, 2);
                     }
-                    catch ( SystemException )
+                    catch (SystemException)
                     {
                         continue;
                     }
 
-                    SandboxGameAssemblyWrapper.Instance.GameAction( () => Grid.PositionComp.SetPosition( new Vector3D( x, y, z ) ) );
+                    SandboxGameAssemblyWrapper.Instance.GameAction(() => Grid.PositionComp.SetPosition(new Vector3D(x, y, z)));
                     return;
                 }
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public int BlockCount
         {
             get { return Grid.BlocksCount; }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Speed
         {
             get
             {
-                if ( Grid.Physics == null || Grid.IsStatic )
+                if (Grid.Physics == null || Grid.IsStatic)
                     return 0;
                 return Grid.Physics.LinearVelocity.Length();
             }
             set
             {
-                if ( Grid.Physics == null || Grid.IsStatic )
+                if (Grid.Physics == null || Grid.IsStatic)
                     return;
 
-                SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-                                                                {
-                                                                    Grid.Physics.SetSpeeds(
-                                                                        Vector3.Normalize( Grid.Physics.LinearVelocity ) * value,
-                                                                        Grid.Physics.AngularVelocity );
-                                                                } );
+                SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+                                                               {
+                                                                   Grid.Physics.SetSpeeds(
+                                                                       Vector3.Normalize(Grid.Physics.LinearVelocity) * value,
+                                                                       Grid.Physics.AngularVelocity);
+                                                               });
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public long EntityId
         {
             get { return Grid.EntityId; }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public string Name
         {
             get { return Grid.DisplayName; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Grid.ChangeDisplayNameRequest( value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Grid.ChangeDisplayNameRequest(value)); }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public bool Static
         {
             get { return Grid.IsStatic; }
             set
             {
                 SandboxGameAssemblyWrapper.Instance.GameAction(() =>
-                {
-                    if (Grid.Physics == null)
-                        return;
+                                                               {
+                                                                   if (Grid.Physics == null)
+                                                                       return;
 
-                    if (!value)
-                        Grid.ConvertToDynamic();
-                    if (value) // && !MySession.Static.EnableStationVoxelSupport)
-                    {
-                        Grid.Physics.ClearSpeed();
-                        Grid.ConvertToStatic();
-                    }
-                });
+                                                                   if (!value)
+                                                                       Grid.ConvertToDynamic();
+                                                                   if (value) // && !MySession.Static.EnableStationVoxelSupport)
+                                                                   {
+                                                                       Grid.Physics.ClearSpeed();
+                                                                       Grid.ConvertToStatic();
+                                                                   }
+                                                               });
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Mass
         {
             get
             {
-                if ( Grid.IsStatic )
+                if (Grid.IsStatic)
                     return 0;
                 return Grid.Physics.Mass;
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public Vector3D Size
         {
             get
             {
                 //get the width of blocks for this grid size
-                float blocksize = MyDefinitionManager.Static.GetCubeSize( Grid.GridSizeEnum );
+                float blocksize = MyDefinitionManager.Static.GetCubeSize(Grid.GridSizeEnum);
 
                 //get the halfextents of the grid, then multiply by block size to get world halfextents
                 //add one so the line sits on the outside edge of the block instead of the center
                 return new Vector3D(
-                    ( Math.Abs( Grid.Max.X - Grid.Min.X ) + 1 ) * blocksize / 2,
-                    ( Math.Abs( Grid.Max.Y - Grid.Min.Y ) + 1 ) * blocksize / 2,
-                    ( Math.Abs( Grid.Max.Z - Grid.Min.Z ) + 1 ) * blocksize / 2 );
+                    (Math.Abs(Grid.Max.X - Grid.Min.X) + 1) * blocksize / 2,
+                    (Math.Abs(Grid.Max.Y - Grid.Min.Y) + 1) * blocksize / 2,
+                    (Math.Abs(Grid.Max.Z - Grid.Min.Z) + 1) * blocksize / 2);
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public MyCubeSize GridSize
         {
             get { return Grid.GridSizeEnum; }
         }
 
-        [Category( "Ownership" )]
-        [Description( "This will set the owner of ALL BLOCKS on the grid to the given playerId" )]
+        [Category("Ownership")]
+        [Description("This will set the owner of ALL BLOCKS on the grid to the given playerId")]
         public long MajorityOwner
         {
             get
             {
-                if ( Grid.BigOwners.Count > 0 )
+                if (Grid.BigOwners.Count > 0)
                     return Grid.BigOwners[0];
                 return 0;
             }
             set
             {
-                if ( value != 0 && !PlayerMap.Instance.GetPlayerIds().Contains( value ) )
-                    throw new Exception( "That is not a valid PlayerID." );
+                if (value != 0 && !PlayerMap.Instance.GetPlayerIds().Contains(value))
+                    throw new Exception("That is not a valid PlayerID.");
 
                 DialogResult messageResult =
                     MessageBox.Show(
-                        $"Are you sure you want to change the owner of ALL BLOCKS on this grid to {PlayerMap.Instance.GetPlayerNameFromPlayerId( value )}?",
+                        $"Are you sure you want to change the owner of ALL BLOCKS on this grid to {PlayerMap.Instance.GetPlayerNameFromPlayerId(value)}?",
                         "Confirm",
-                        MessageBoxButtons.YesNo );
-                if ( messageResult == DialogResult.No )
+                        MessageBoxButtons.YesNo);
+                if (messageResult == DialogResult.No)
                     return;
 
                 SandboxGameAssemblyWrapper.Instance.GameAction(
-                    () => Grid.ChangeGridOwner( value, MyOwnershipShareModeEnum.Faction ) );
+                    () => Grid.ChangeGridOwner(value, MyOwnershipShareModeEnum.Faction));
             }
         }
 
-        [Category( "Ownership" )]
+        [Category("Ownership")]
         public string[] BigOwners
         {
             get
             {
                 var result = new List<string>();
-                foreach ( long ownerId in Grid.BigOwners )
-                    result.Add( $"{PlayerMap.Instance.GetPlayerNameFromPlayerId( ownerId )}: {ownerId}" );
+                foreach (long ownerId in Grid.BigOwners)
+                    result.Add($"{PlayerMap.Instance.GetPlayerNameFromPlayerId(ownerId)}: {ownerId}");
 
                 return result.ToArray();
             }
         }
 
-        [Category( "Ownership" )]
+        [Category("Ownership")]
         public string[] SmallOwners
         {
             get
             {
                 var result = new List<string>();
-                foreach ( long ownerId in Grid.SmallOwners )
+                foreach (long ownerId in Grid.SmallOwners)
                 {
-                    if ( ownerId == 0 )
+                    if (ownerId == 0)
                         continue;
-                    result.Add( $"{PlayerMap.Instance.GetPlayerNameFromPlayerId( ownerId )}: {ownerId}" );
+                    result.Add($"{PlayerMap.Instance.GetPlayerNameFromPlayerId(ownerId)}: {ownerId}");
                 }
 
                 return result.ToArray();
             }
         }
 
-        [Category( "Misc" )]
+        [Category("Misc")]
         public bool MarkedForClose
         {
             get { return Grid.MarkedForClose; }
         }
 
-        [Category( "Misc" )]
+        [Category("Misc")]
         public bool Closed
         {
             get { return Grid.Closed; }
         }
 
-        [Category( "Misc" )]
+        [Category("Misc")]
         public bool InScene
         {
             get { return Grid.InScene; }
         }
 
-        [Category( "Misc" )]
+        [Category("Misc")]
         public Vector3I Max
         {
             get { return Grid.Max; }
         }
 
-        [Category( "Misc" )]
+        [Category("Misc")]
         public Vector3I Min
         {
             get { return Grid.Min; }

@@ -9,29 +9,29 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
 {
     public class ShipToolWrapper : FunctionalBlockWrapper
     {
-        [Browsable( false )]
+        [Browsable(false)]
         public MyShipToolBase Block;
 
-        public ShipToolWrapper( MySlimBlock block ) : base( block )
+        public ShipToolWrapper(MySlimBlock block) : base(block)
         {
             Block = (MyShipToolBase)block.FatBlock;
         }
 
-        [Category( "Terminal" )]
+        [Category("Terminal")]
         public bool UseConveyorSystem
         {
             get { return Block.UseConveyorSystem; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Block.UseConveyorSystem = value ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Block.UseConveyorSystem = value); }
         }
 
-        [Category( "Terminal" )]
+        [Category("Terminal")]
         public bool HelpOthers
         {
-            get { return ( Block as IMyShipWelder )?.HelpOthers ?? false; }
+            get { return (Block as IMyShipWelder)?.HelpOthers ?? false; }
             set
             {
-                if ( Block is IMyShipWelder )
-                    SandboxGameAssemblyWrapper.Instance.GameAction( () => ( Block as IMyShipWelder ).SetValue( "helpOthers", value ) );
+                if (Block is IMyShipWelder)
+                    SandboxGameAssemblyWrapper.Instance.GameAction(() => (Block as IMyShipWelder).SetValue("helpOthers", value));
             }
         }
     }

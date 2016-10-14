@@ -11,48 +11,48 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
     {
         private readonly IMyGyro IBlock;
 
-        [Browsable( false )]
+        [Browsable(false)]
         public MyGyro Block;
 
-        public GyroWrapper( MySlimBlock block ) : base( block )
+        public GyroWrapper(MySlimBlock block) : base(block)
         {
             Block = (MyGyro)block.FatBlock;
             IBlock = Block;
         }
 
-        [Category( "General" )]
+        [Category("Gyro")]
         public float GyroPower
         {
             get { return Block.GyroPower; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Block.GyroPower = value ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Block.GyroPower = value); }
         }
 
-        [Category( "General" )]
+        [Category("Gyro")]
         public bool GyroOverride
         {
             get { return Block.GyroOverride; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => IBlock.SetValueBool( "Override", value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => IBlock.SetValueBool("Override", value)); }
         }
 
-        [Category( "General" )]
+        [Category("Gyro")]
         public float Yaw
         {
             get { return IBlock.Yaw; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => IBlock.SetValue( "Yaw", value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => IBlock.SetValue("Yaw", value)); }
         }
 
-        [Category( "General" )]
+        [Category("Gyro")]
         public float Pitch
         {
             get { return IBlock.Pitch; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => IBlock.SetValue( "Pitch", value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => IBlock.SetValue("Pitch", value)); }
         }
 
-        [Category( "General" )]
+        [Category("Gyro")]
         public float Roll
         {
             get { return IBlock.Roll; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => IBlock.SetValue( "Roll", value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => IBlock.SetValue("Roll", value)); }
         }
     }
 }

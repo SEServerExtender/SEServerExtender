@@ -15,116 +15,116 @@ namespace SEServerExtender.EntityWrappers
 {
     public class CharacterWrapper
     {
-        [Browsable( false )]
+        [Browsable(false)]
         public readonly MyCharacter Character;
 
-        public CharacterWrapper( MyCharacter character )
+        public CharacterWrapper(MyCharacter character)
         {
             Character = character;
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public string Name
         {
             get { return Character.DisplayName; }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public long EntityId
         {
             get { return Character.EntityId; }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public ulong SteamId
         {
             get { return Character.ControllerInfo.Controller.Player.Client.SteamUserId; }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public bool IsAdmin
         {
             get
             {
-                if ( !Character.IsPlayer )
+                if (!Character.IsPlayer)
                     return false;
                 return Character.ControllerInfo.Controller.Player.IsAdmin;
             }
             //TODO: Setter?
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public bool IsPromoted
         {
             get
             {
-                if ( !Character.IsPlayer )
+                if (!Character.IsPlayer)
                     return false;
                 return Character.ControllerInfo.Controller.Player.IsPromoted;
             }
             set
             {
-                if ( value )
-                    MySession.Static.PromotedUsers.Add( SteamId );
+                if (value)
+                    MySession.Static.PromotedUsers.Add(SteamId);
                 else
-                    MySession.Static.PromotedUsers.Remove( SteamId );
+                    MySession.Static.PromotedUsers.Remove(SteamId);
 
                 Character.IsPromoted = value;
 
-                if ( ChatManager.EnableData )
+                if (ChatManager.EnableData)
                 {
-                    if ( value )
-                        ChatManager.Instance.SendPrivateChatMessage( SteamId, "Server admin has promoted you to Space Master" );
+                    if (value)
+                        ChatManager.Instance.SendPrivateChatMessage(SteamId, "Server admin has promoted you to Space Master");
                     else
-                        ChatManager.Instance.SendPrivateChatMessage( SteamId, "Server admin has demoted you" );
+                        ChatManager.Instance.SendPrivateChatMessage(SteamId, "Server admin has demoted you");
                 }
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Mass
         {
             get { return Character.CurrentMass; }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Speed
         {
             get
             {
-                if ( Character.Physics == null )
+                if (Character.Physics == null)
                     return 0;
                 return Character.Physics.LinearVelocity.Length();
             }
             set
             {
-                if ( Character.Physics == null )
+                if (Character.Physics == null)
                     return;
 
-                SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-                                                                {
-                                                                    Character.Physics.SetSpeeds(
-                                                                        Vector3.Normalize( Character.Physics.LinearVelocity ) * value,
-                                                                        Character.Physics.AngularVelocity );
-                                                                } );
+                SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+                                                               {
+                                                                   Character.Physics.SetSpeeds(
+                                                                       Vector3.Normalize(Character.Physics.LinearVelocity) * value,
+                                                                       Character.Physics.AngularVelocity);
+                                                               });
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public string Position
         {
             get { return Character.PositionComp.GetPosition().ToString(); }
             set
             {
                 var val = new Vector3D();
-                if ( !Vector3D.TryParse( value, out val ) )
+                if (!Vector3D.TryParse(value, out val))
                     return;
 
-                SandboxGameAssemblyWrapper.Instance.GameAction( () => Character.PositionComp.SetPosition( val ) );
+                SandboxGameAssemblyWrapper.Instance.GameAction(() => Character.PositionComp.SetPosition(val));
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public string PositionGPS
         {
             get
@@ -136,49 +136,49 @@ namespace SEServerExtender.EntityWrappers
             set
             {
                 //copied from SE because MyGpsCollection is private
-                foreach ( Match match in Regex.Matches( value, @"GPS:([^:]{0,32}):([\d\.-]*):([\d\.-]*):([\d\.-]*):" ) )
+                foreach (Match match in Regex.Matches(value, @"GPS:([^:]{0,32}):([\d\.-]*):([\d\.-]*):([\d\.-]*):"))
                 {
                     double x, y, z;
                     try
                     {
-                        x = double.Parse( match.Groups[2].Value, CultureInfo.InvariantCulture );
-                        x = Math.Round( x, 2 );
-                        y = double.Parse( match.Groups[3].Value, CultureInfo.InvariantCulture );
-                        y = Math.Round( y, 2 );
-                        z = double.Parse( match.Groups[4].Value, CultureInfo.InvariantCulture );
-                        z = Math.Round( z, 2 );
+                        x = double.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                        x = Math.Round(x, 2);
+                        y = double.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                        y = Math.Round(y, 2);
+                        z = double.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                        z = Math.Round(z, 2);
                     }
-                    catch ( SystemException )
+                    catch (SystemException)
                     {
                         continue;
                     }
 
-                    SandboxGameAssemblyWrapper.Instance.GameAction( () => Character.PositionComp.SetPosition( new Vector3D( x, y, z ) ) );
+                    SandboxGameAssemblyWrapper.Instance.GameAction(() => Character.PositionComp.SetPosition(new Vector3D(x, y, z)));
                     return;
                 }
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Battery
         {
             get { return Character.SuitEnergyLevel; }
             set
             {
-                if ( value > 1 )
+                if (value > 1)
                     value = 1;
-                if ( value < 0 )
+                if (value < 0)
                     value = 0;
 
-                SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-                                                                {
-                                                                    Character.SuitBattery.ResourceSource.SetRemainingCapacityByType(
-                                                                        MyResourceDistributorComponent.ElectricityId, value * MyEnergyConstants.BATTERY_MAX_CAPACITY );
-                                                                } );
+                SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+                                                               {
+                                                                   Character.SuitBattery.ResourceSource.SetRemainingCapacityByType(
+                                                                       MyResourceDistributorComponent.ElectricityId, value * MyEnergyConstants.BATTERY_MAX_CAPACITY);
+                                                               });
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Health
         {
             get { return Character.Integrity; }
@@ -208,18 +208,18 @@ namespace SEServerExtender.EntityWrappers
             */
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Oxygen
         {
             get { return Character.OxygenComponent.SuitOxygenLevel; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Character.OxygenComponent.CharacterGasSource.SetRemainingCapacityByType( MyCharacterOxygenComponent.OxygenId, value ) ); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Character.OxygenComponent.CharacterGasSource.SetRemainingCapacityByType(MyCharacterOxygenComponent.OxygenId, value)); }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Hydrogen
         {
-            get { return Character.GetSuitGasFillLevel( MyCharacterOxygenComponent.HydrogenId ); }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction( () => Character.OxygenComponent.CharacterGasSource.SetRemainingCapacityByType( MyCharacterOxygenComponent.HydrogenId, value ) ); }
+            get { return Character.GetSuitGasFillLevel(MyCharacterOxygenComponent.HydrogenId); }
+            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Character.OxygenComponent.CharacterGasSource.SetRemainingCapacityByType(MyCharacterOxygenComponent.HydrogenId, value)); }
         }
     }
 }

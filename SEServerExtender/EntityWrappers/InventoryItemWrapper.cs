@@ -12,44 +12,44 @@ namespace SEServerExtender.EntityWrappers
     {
         private readonly MyInventory Inventory;
 
-        [Browsable( false )]
+        [Browsable(false)]
         public MyPhysicalInventoryItem Item;
 
-        public InventoryItemWrapper( MyPhysicalInventoryItem item, MyInventory inventory )
+        public InventoryItemWrapper(MyPhysicalInventoryItem item, MyInventory inventory)
         {
             Item = item;
             Inventory = inventory;
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public float Amount
         {
             get { return (float)Item.Amount; }
             set
             {
-                SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-                                                                {
-                                                                    if ( value > (float)Item.Amount )
-                                                                    {
-                                                                        var amountThatFits = (float)Inventory.ComputeAmountThatFits( Item.GetDefinitionId() );
-                                                                        if ( value - (float)Item.Amount > amountThatFits )
-                                                                            value = amountThatFits;
+                SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+                                                               {
+                                                                   if (value > (float)Item.Amount)
+                                                                   {
+                                                                       float amountThatFits = (float)Inventory.ComputeAmountThatFits(Item.GetDefinitionId());
+                                                                       if (value - (float)Item.Amount > amountThatFits)
+                                                                           value = amountThatFits;
 
-                                                                        Inventory.Add( Item, (MyFixedPoint)value - Item.Amount );
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        var amount = (MyFixedPoint)( (float)Item.Amount - value );
-                                                                        Inventory.Remove( Item, amount );
-                                                                    }
-                                                                } );
+                                                                       Inventory.Add(Item, (MyFixedPoint)value - Item.Amount);
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                       var amount = (MyFixedPoint)((float)Item.Amount - value);
+                                                                       Inventory.Remove(Item, amount);
+                                                                   }
+                                                               });
             }
         }
 
-        [Category( "General" )]
+        [Category("General")]
         public string Name
         {
-            get { return MyDefinitionManager.Static.GetPhysicalItemDefinition( Item.Content ).DisplayNameText; }
+            get { return MyDefinitionManager.Static.GetPhysicalItemDefinition(Item.Content).DisplayNameText; }
         }
     }
 }
