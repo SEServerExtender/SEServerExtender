@@ -130,38 +130,18 @@ namespace SEModAPIInternal.API.Server
 
 	    public void InitNetworkIntercept()
         {
-            m_typeTable = typeof(MyReplicationLayerBase).GetField("m_typeTable", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(MyMultiplayer.ReplicationLayer) as MyTypeTable;
-
-            if (m_typeTable == null)
-            {
-                ApplicationLog.Error("Failed reflection for m_typeTable in NetworkIntercept!");
-                return;
-            }
-            
-            var info = typeof(MySyncLayer).GetField("TransportLayer", BindingFlags.NonPublic | BindingFlags.Instance);
-            var transportType = info?.FieldType;
-            if (transportType == null)
-            {
-                ApplicationLog.Error("Failed reflection for transportType in NetworkIntercept!");
-                return;
-            }
-            object transportInstance = typeof(MySyncLayer).GetField("TransportLayer", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(MyMultiplayer.Static.SyncLayer);
-            if (transportInstance == null)
-            {
-                ApplicationLog.Error("Failed reflection for transportInstance in NetworkIntercept!");
-                return;
-            }
-            var handlers = transportType.GetField("m_handlers", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(transportInstance) as Dictionary<MyMessageId, Action<MyPacket>>;
-            if (handlers == null)
-            {
-                ApplicationLog.Error("Failed reflection for m_handlers in NetworkIntercept!");
-                return;
-            }
+            m_typeTable = typeof(MyReplicationLayerBase).GetField(TypeTableField, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(MyMultiplayer.ReplicationLayer) as MyTypeTable;
+            //don't bother with nullchecks here, it was all handled in ReflectionUnitTest
+            var transportType = typeof(MySyncLayer).GetField(MyTransportLayerField, BindingFlags.NonPublic | BindingFlags.Instance).FieldType;
+            var transportInstance = typeof(MySyncLayer).GetField(MyTransportLayerField, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(MyMultiplayer.Static.SyncLayer);
+            var handlers = (Dictionary<MyMessageId, Action<MyPacket>>)transportType.GetField(TransportHandlersField, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(transportInstance);
+           
             //remove Keen's network listener
             handlers.Remove(MyMessageId.RPC);
             //replace it with our own
             handlers.Add(MyMessageId.RPC, ProcessEvent);
-	        ApplicationLog.Info("Initialized network intercept!");
+            
+            ApplicationLog.Info("Initialized network intercept!");
         }
 
         private void ProcessEvent( MyPacket packet )
@@ -224,12 +204,32 @@ namespace SEModAPIInternal.API.Server
             bool handled = false;
             Parallel.ForEach( _networkHandlers, handler =>
                                                 {
-                                                    if ( handler.CanHandle( site ) )
-                                                        handled |= handler.Handle( packet.Sender.Value, site, stream, obj );
+                                                    try
+                                                    {
+                                                        if (handler.CanHandle(site))
+                                                            handled |= handler.Handle(packet.Sender.Value, site, stream, obj);
+                                                    }
+                                                    catch(Exception ex)
+                                                    {
+                                                        ApplicationLog.Error(ex.ToString());
+                                                    }
                                                 } );
 
-            if ( !handled )
-                ( (MyReplicationLayer)MyMultiplayer.ReplicationLayer ).ProcessEvent( packet );
+            //one of the handlers wants us to discard this packet
+            if (handled)
+                return;
+
+            //pass the message back to the game server
+            try
+            {
+                ((MyReplicationLayer) MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
+            }
+            catch (Exception ex)
+            {
+                ApplicationLog.Error(ex.ToString());
+                //crash after logging, bad things could happen if we continue on with bad data
+                throw;
+            }
         }
 
 	    public void RegisterNetworkHandler( NetworkHandlerBase handler )
@@ -258,7 +258,13 @@ namespace SEModAPIInternal.API.Server
                 RegisterNetworkHandler( handler );
 	    }
 
-		public override List<ulong> GetConnectedPlayers( )
+        public void RegisterNetworkHandlers(params NetworkHandlerBase[] handlers)
+        {
+            foreach (var handler in handlers)
+                RegisterNetworkHandler(handler);
+        }
+
+        public override List<ulong> GetConnectedPlayers( )
 		{
 			try
 			{
