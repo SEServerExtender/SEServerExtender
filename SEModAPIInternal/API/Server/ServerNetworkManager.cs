@@ -1,3 +1,4 @@
+using System.Text;
 using ParallelTasks;
 using Sandbox.Game.World;
 using SEModAPI.API;
@@ -67,10 +68,10 @@ namespace SEModAPIInternal.API.Server
 
 	    private const string TypeTableField = "m_typeTable";
 	    private const string TransportHandlersField = "m_handlers";
+        
+        #endregion
 
-		#endregion
-
-		#region "Properties"
+        #region "Properties"
 
         public static bool WorldVoxelModify { get; set; }
 
@@ -140,8 +141,60 @@ namespace SEModAPIInternal.API.Server
             handlers.Remove(MyMessageId.RPC);
             //replace it with our own
             handlers.Add(MyMessageId.RPC, ProcessEvent);
-            
+
+            //PrintDebug();
+
             ApplicationLog.Info("Initialized network intercept!");
+        }
+
+        /// <summary>
+        /// Dumps *ALL* registered network events to the log
+        /// </summary>
+        private void PrintDebug()
+        {
+            var sb = new StringBuilder();
+            var methodLookup = (Dictionary<MethodInfo, CallSite>)typeof(MyEventTable).GetField("m_methodInfoLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(m_typeTable.StaticEventTable);
+            sb.Append("###Static events:");
+            foreach (var entry in methodLookup)
+            {
+                sb.Append(entry.Key.DeclaringType?.FullName + "." + entry.Key.Name + "(");
+                var parameters = entry.Key.GetParameters();
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    sb.Append(parameters[i].ParameterType);
+                    if (i < parameters.Length - 1)
+                        sb.Append(", ");
+                }
+                sb.AppendLine(")");
+            }
+
+            var typelookup = (Dictionary<Type, MySynchronizedTypeInfo>)typeof(MyTypeTable).GetField("m_typeLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(m_typeTable);
+            foreach (var entry in typelookup)
+            {
+                var lookup = (Dictionary<MethodInfo, CallSite>)typeof(MyEventTable).GetField("m_methodInfoLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(entry.Value.EventTable);
+                if (!lookup.Any())
+                    continue;
+
+                sb.AppendLine();
+                sb.AppendLine();
+                sb.Append($"###{entry.Key} events:");
+
+                foreach (var ent in lookup)
+                {
+                    sb.AppendLine();
+                    sb.Append(ent.Key.DeclaringType?.FullName + "." + ent.Key.Name + "(");
+                    var parameters = ent.Key.GetParameters();
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        sb.Append(parameters[i].ParameterType);
+                        if (i < parameters.Length - 1)
+                            sb.Append(", ");
+                    }
+                    sb.Append(")");
+                }
+            }
+
+            ApplicationLog.Info(sb.ToString());
         }
 
         private void ProcessEvent( MyPacket packet )
@@ -264,7 +317,132 @@ namespace SEModAPIInternal.API.Server
                 RegisterNetworkHandler(handler);
         }
 
-        public override List<ulong> GetConnectedPlayers( )
+        /// <summary>
+        /// Broadcasts an event to all connected clients
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="obj"></param>
+        /// <param name="args"></param>
+	    public void RaiseEvent(MethodInfo method, object obj, params object[] args)
+        {
+            //default(EndpointId) tells the network to broadcast the message
+            RaiseEvent(method, obj, default(EndpointId), args);
+	    }
+
+        /// <summary>
+        /// Sends an event to one client
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="obj"></param>
+        /// <param name="endpoint"></param>
+        /// <param name="args"></param>
+        public void RaiseEvent(MethodInfo method, object obj, EndpointId endpoint, params object[] args)
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method), "MethodInfo cannot be null!");
+
+            if (args.Length > 6)
+                throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
+
+            //array to hold arguments to pass into DispatchEvent
+            object[] arguments = new object[11];
+
+            arguments[0] = TryGetCallSite(method, obj);
+            arguments[1] = endpoint;
+            arguments[2] = 1f;
+            arguments[3] = (IMyEventOwner)obj;
+
+            //copy supplied arguments into the reflection arguments
+            for (int i = 0; i < args.Length; i++)
+                arguments[i + 4] = args[i];
+
+            //pad the array out with DBNull
+            for (int j = args.Length + 4; j < 10; j++)
+                arguments[j] = e;
+
+            arguments[10] = (IMyEventOwner)null;
+
+            //create an array of Types so we can create a generic method
+            Type[] argTypes = new Type[8];
+
+            for (int k = 3; k < 11; k++)
+                argTypes[k - 3] = arguments[k]?.GetType() ?? typeof(IMyEventOwner);
+
+            //create a generic method of DispatchEvent and invoke to inject our data into the network
+            var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
+            dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments);
+        }
+
+        private static DBNull e = DBNull.Value;
+
+        /// <summary>
+        /// Broadcasts a static event to all connected clients
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="args"></param>
+	    public void RaiseStaticEvent(MethodInfo method, params object[] args)
+	    {
+            //default(EndpointId) tells the network to broadcast the message
+            RaiseStaticEvent(method, default(EndpointId), args);
+	    }
+
+        /// <summary>
+        /// Sends a static event to one client
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="endpoint"></param>
+        /// <param name="args"></param>
+        public void RaiseStaticEvent(MethodInfo method, EndpointId endpoint, params object[] args)
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method), "MethodInfo cannot be null!");
+
+            if (args.Length > 6)
+                throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
+
+            //array to hold arguments to pass into DispatchEvent
+            object[] arguments = new object[11];
+
+            arguments[0] = TryGetStaticCallSite(method);
+            arguments[1] = endpoint;
+            arguments[2] = 1f;
+            arguments[3] = (IMyEventOwner)null;
+
+            //copy supplied arguments into the reflection arguments
+            for (int i = 0; i < args.Length; i++)
+                arguments[i + 4] = args[i];
+
+            //pad the array out with DBNull
+            for (int j = args.Length + 4; j < 10; j++)
+                arguments[j] = e;
+
+            arguments[10] = (IMyEventOwner)null;
+
+            //create an array of Types so we can create a generic method
+            Type[] argTypes = new Type[8];
+
+            for (int k = 3; k < 11; k++)
+                argTypes[k - 3] = arguments[k]?.GetType() ?? typeof(IMyEventOwner);
+
+            //create a generic method of DispatchEvent and invoke to inject our data into the network
+            var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
+            dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments);
+        }
+
+        private CallSite TryGetStaticCallSite(MethodInfo method)
+	    {
+            var methodLookup = (Dictionary<MethodInfo, CallSite>)typeof(MyEventTable).GetField("m_methodInfoLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(m_typeTable.StaticEventTable);
+	        return methodLookup[method];
+	    }
+
+	    private CallSite TryGetCallSite(MethodInfo method, object arg)
+	    {
+	        var typeInfo = m_typeTable.Get(arg.GetType());
+            var methodLookup = (Dictionary<MethodInfo, CallSite>)typeof(MyEventTable).GetField("m_methodInfoLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(typeInfo.EventTable);
+            return methodLookup[method];
+        }
+
+	    public override List<ulong> GetConnectedPlayers( )
 		{
 			try
 			{
