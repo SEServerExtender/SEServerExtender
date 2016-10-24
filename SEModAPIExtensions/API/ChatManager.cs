@@ -626,9 +626,16 @@ namespace SEModAPIExtensions.API
 
                     else
                     {
-                        MyMultiplayer.Static.SendChatMessage( message );
-                        MyMultiplayer.Static.SendChatMessage("Due to a change in SE, all chat from the server is now broadcast publicly. To get private chat, add mod 559202083.");
-                        
+                        ChatMsg msg = new ChatMsg
+                                      {
+                                          Author=Sync.MyId,
+                                          Text = message
+                                      };
+                        var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
+                        ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, new EndpointId(remoteUserId), msg);
+                        //MyMultiplayer.Static.SendChatMessage( message );
+                        //MyMultiplayer.Static.SendChatMessage("Due to a change in SE, all chat from the server is now broadcast publicly. To get private chat, add mod 559202083.");
+
                         /*
                         Object chatMessageStruct = CreateChatMessageStruct( message );
                         ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
