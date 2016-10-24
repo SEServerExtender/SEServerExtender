@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Sandbox.Engine.Multiplayer;
 using Sandbox.Game;
 using Sandbox.Game.Entities;
 using Sandbox.Game.Entities.Character;
@@ -226,6 +227,8 @@ namespace SEServerExtender
 	        foreach (var statlist in MyRenderStats.m_stats.Values)
 	            foreach (var stat in statlist)
 	                stat.WriteTo(sb);
+
+	        sb.AppendLine(MyMultiplayer.GetMultiplayerStats());
 
 	        TB_Statistics.Text = sb.ToString();
 	    }
@@ -1067,7 +1070,7 @@ namespace SEServerExtender
 						{
 							Vector3D rawPosition = item.PositionComp.GetPosition();
 							double distance = Math.Round( rawPosition.Length( ), 0 );
-							string newNodeText = $"{item.AsteroidName} | Dist: {distance}m";
+							string newNodeText = $"{item.StorageName} | Dist: {distance}m";
 							node.Text = newNodeText;
 						}
 						list.Remove( item );
@@ -1096,7 +1099,7 @@ namespace SEServerExtender
 
                     string nodeKey = item.EntityId.ToString( );
 
-					TreeNode newNode = rootNode.Nodes.Add( nodeKey, $"{item.AsteroidName} | Dist: {distance}m");
+					TreeNode newNode = rootNode.Nodes.Add( nodeKey, $"{item.StorageName} | Dist: {distance}m");
 					newNode.Name = item.Name;
 					newNode.Tag = item;
 				}
