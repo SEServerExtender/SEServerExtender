@@ -162,6 +162,7 @@ namespace SEModAPIInternal.API.Server
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     sb.Append(parameters[i].ParameterType);
+                    sb.Append( " " + parameters[i].Name );
                     if (i < parameters.Length - 1)
                         sb.Append(", ");
                 }
@@ -187,6 +188,7 @@ namespace SEModAPIInternal.API.Server
                     for (int i = 0; i < parameters.Length; i++)
                     {
                         sb.Append(parameters[i].ParameterType);
+                        sb.Append(" " + parameters[i].Name);
                         if (i < parameters.Length - 1)
                             sb.Append(", ");
                     }
@@ -285,7 +287,7 @@ namespace SEModAPIInternal.API.Server
             }
         }
 
-	    public void RegisterNetworkHandler( NetworkHandlerBase handler )
+	    private void RegisterNetworkHandler( NetworkHandlerBase handler )
 	    {
 	        string handlerType = handler.GetType().FullName;
             List<NetworkHandlerBase> toRemove = new List<NetworkHandlerBase>();
@@ -305,6 +307,7 @@ namespace SEModAPIInternal.API.Server
 	        _networkHandlers.Add( handler );
 	    }
 
+        [Obsolete("Use the params argument")]
 	    public void RegisterNetworkHandlers( IEnumerable<NetworkHandlerBase> handlers )
 	    {
 	        foreach(var handler in handlers)
@@ -330,6 +333,18 @@ namespace SEModAPIInternal.API.Server
 	    }
 
         /// <summary>
+        /// Sends an event to one client by SteamId
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="obj"></param>
+        /// <param name="steamId"></param>
+        /// <param name="args"></param>
+	    public void RaiseEvent(MethodInfo method, object obj, ulong steamId, params object[] args)
+	    {
+	        RaiseEvent(method,obj,new EndpointId(steamId), args);
+	    }
+
+        /// <summary>
         /// Sends an event to one client
         /// </summary>
         /// <param name="method"></param>
@@ -344,13 +359,20 @@ namespace SEModAPIInternal.API.Server
             if (args.Length > 6)
                 throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
 
+            var owner = obj as IMyEventOwner;
+            if ( owner == null )
+                throw new InvalidCastException( "Provided event target is not of type IMyEventOwner!" );
+
+            if(!method.HasAttribute<EventAttribute>())
+                throw new CustomAttributeFormatException("Provided event target does not have the Event attribute! Replication will not succeed!");
+
             //array to hold arguments to pass into DispatchEvent
             object[] arguments = new object[11];
 
             arguments[0] = TryGetCallSite(method, obj);
             arguments[1] = endpoint;
             arguments[2] = 1f;
-            arguments[3] = (IMyEventOwner)obj;
+            arguments[3] = owner;
 
             //copy supplied arguments into the reflection arguments
             for (int i = 0; i < args.Length; i++)
@@ -387,6 +409,17 @@ namespace SEModAPIInternal.API.Server
 	    }
 
         /// <summary>
+        /// Sends a static event to one client by SteamId
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="steamId"></param>
+        /// <param name="args"></param>
+	    public void RaiseStaticEvent(MethodInfo method, ulong steamId, params object[] args)
+	    {
+	        RaiseStaticEvent(method, new EndpointId(steamId), args);
+	    }
+
+        /// <summary>
         /// Sends a static event to one client
         /// </summary>
         /// <param name="method"></param>
@@ -400,6 +433,9 @@ namespace SEModAPIInternal.API.Server
             if (args.Length > 6)
                 throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
 
+            if (!method.HasAttribute<EventAttribute>())
+                throw new CustomAttributeFormatException("Provided event target does not have the Event attribute! Replication will not succeed!");
+            
             //array to hold arguments to pass into DispatchEvent
             object[] arguments = new object[11];
 
@@ -432,14 +468,20 @@ namespace SEModAPIInternal.API.Server
         private CallSite TryGetStaticCallSite(MethodInfo method)
 	    {
             var methodLookup = (Dictionary<MethodInfo, CallSite>)typeof(MyEventTable).GetField("m_methodInfoLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(m_typeTable.StaticEventTable);
-	        return methodLookup[method];
+	        CallSite result;
+            if(!methodLookup.TryGetValue(method, out result))
+                throw new MissingMemberException("Provided event target not found!");
+            return result;
 	    }
 
 	    private CallSite TryGetCallSite(MethodInfo method, object arg)
 	    {
 	        var typeInfo = m_typeTable.Get(arg.GetType());
             var methodLookup = (Dictionary<MethodInfo, CallSite>)typeof(MyEventTable).GetField("m_methodInfoLookup", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(typeInfo.EventTable);
-            return methodLookup[method];
+            CallSite result;
+            if (!methodLookup.TryGetValue(method, out result))
+                throw new MissingMemberException("Provided event target not found!");
+            return result;
         }
 
 	    public override List<ulong> GetConnectedPlayers( )
