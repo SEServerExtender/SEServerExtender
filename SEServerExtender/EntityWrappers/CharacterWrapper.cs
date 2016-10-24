@@ -1,14 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using Sandbox.Engine.Multiplayer;
 using Sandbox.Game;
 using Sandbox.Game.Entities.Character;
 using Sandbox.Game.Entities.Character.Components;
 using Sandbox.Game.EntityComponents;
+using Sandbox.Game.Gui;
 using Sandbox.Game.World;
 using SEModAPIExtensions.API;
 using SEModAPIInternal.API.Common;
+using SEModAPIInternal.API.Server;
+using SpaceEngineers.Game.World;
+using VRage.Network;
 using VRageMath;
 
 namespace SEServerExtender.EntityWrappers
@@ -64,23 +70,11 @@ namespace SEServerExtender.EntityWrappers
             }
             set
             {
-                if (value)
-                    MySession.Static.PromotedUsers.Add(SteamId);
-                else
-                    MySession.Static.PromotedUsers.Remove(SteamId);
-
-                Character.IsPromoted = value;
-
-                if (ChatManager.EnableData)
-                {
-                    if (value)
-                        ChatManager.Instance.SendPrivateChatMessage(SteamId, "Server admin has promoted you to Space Master");
-                    else
-                        ChatManager.Instance.SendPrivateChatMessage(SteamId, "Server admin has demoted you");
-                }
+                var info = typeof(MyGuiScreenPlayers).GetMethod("Promote", BindingFlags.NonPublic | BindingFlags.Static);
+                ServerNetworkManager.Instance.RaiseStaticEvent(info, SteamId, value);
             }
         }
-
+        
         [Category("General")]
         public float Mass
         {
@@ -116,7 +110,7 @@ namespace SEServerExtender.EntityWrappers
             get { return Character.PositionComp.GetPosition().ToString(); }
             set
             {
-                var val = new Vector3D();
+                Vector3D val;
                 if (!Vector3D.TryParse(value, out val))
                     return;
 
