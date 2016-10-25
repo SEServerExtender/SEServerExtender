@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text;
 using NLog;
 using Sandbox.Definitions;
+using Sandbox.Engine.Multiplayer;
 using SpaceEngineers.Game;
 using SteamSDK;
 using VRage.Game;
@@ -292,7 +293,7 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the maximum number of players" )]
+		[Description( "Get or set the maximum number of players. This can be changed in real time" )]
 		[Category( "Server Settings" )]
 		[DisplayName( "Player Limit" )]
 		public short MaxPlayers
@@ -302,6 +303,9 @@ namespace SEModAPI.API.Definitions
 			{
 				if ( _definition.SessionSettings.MaxPlayers == value ) return;
 				_definition.SessionSettings.MaxPlayers = value;
+
+			    if (MyMultiplayer.Static != null)
+			        MyMultiplayer.Static.MemberLimit = value;
 			}
 		}
 
