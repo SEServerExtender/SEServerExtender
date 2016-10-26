@@ -201,6 +201,7 @@ namespace SEModAPIInternal.API.Server
 
                 return true;
 			}
+            /* these are all redundant
 			catch ( Win32Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
@@ -216,12 +217,13 @@ namespace SEModAPIInternal.API.Server
 			catch ( TargetInvocationException ex )
 			{
                 //Generally, we won't log this, since it will always be thrown on server stop.
-                if ( ExtenderOptions.IsDebugging )
+                //if ( ExtenderOptions.IsDebugging )
                     ApplicationLog.BaseLog.Error( ex );
                 //ApplicationLog.BaseLog.Trace( ex );
 
                 return false;
 			}
+            */
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );
