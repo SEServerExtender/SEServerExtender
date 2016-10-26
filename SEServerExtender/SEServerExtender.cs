@@ -123,6 +123,7 @@ namespace SEServerExtender
 			if ( m_server.IsRunning )
 				_genericUpdateTimer.Start( );
 
+            //TODO: Remove this next stable update
             if (Program.IsStable)
                 TAB_MainTabs.TabPages.Remove(TAB_Profiler);
 		}
@@ -277,6 +278,7 @@ namespace SEServerExtender
 				if ( !m_statisticsTimer.Enabled )
 					m_statisticsTimer.Start( );
 
+                //TODO
                 if(!m_profilerTimer.Enabled && !Program.IsStable)
                     m_profilerTimer.Start();
 
@@ -287,6 +289,7 @@ namespace SEServerExtender
 
 	    private void ProfilerRefresh(object sender, EventArgs e)
 	    {
+            //TODO
 	        if (Program.IsStable)
 	        {
 	            m_profilerTimer.Stop();
@@ -2516,5 +2519,10 @@ namespace SEServerExtender
 				m_entityTreeRefreshTimer.Stop( );
 			}
 		}
+        
+        private void CHK_ProfileBlocks_CheckedChanged(object sender, EventArgs e)
+        {
+            ProfilerInjection.ProfilePerBlock = CHK_ProfileBlocks.Checked;
+        }
     }
 }

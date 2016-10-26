@@ -71,7 +71,7 @@ namespace SEServerExtender.EntityWrappers
             set
             {
                 var info = typeof(MyGuiScreenPlayers).GetMethod("Promote", BindingFlags.NonPublic | BindingFlags.Static);
-                ServerNetworkManager.Instance.RaiseStaticEvent(info, SteamId, value);
+                ServerNetworkManager.Instance.RaiseStaticEvent(info, args: new object[] {SteamId, value});
             }
         }
         
