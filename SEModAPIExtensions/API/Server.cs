@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text;
 using VRage;
 using VRage.Game;
+using VRage.Plugins;
 
 namespace SEModAPIExtensions.API
 {
@@ -36,6 +37,7 @@ namespace SEModAPIExtensions.API
 	public class Server
     {
         public static bool DisableProfiler;
+        public static bool IsStable;
 		private static Server _instance;
 		private static bool _isInitialized;
 		private static Thread _runServerThread;
@@ -585,9 +587,17 @@ namespace SEModAPIExtensions.API
 				if ( _isServerRunning )
 					return;
 
-			    if (DisableProfiler)
+			    //if (DisableProfiler)
+			    //{
+			    //    KillProfiler();
+			    //}
+			    if (!DisableProfiler && !IsStable)
 			    {
-			        KillProfiler();
+                    //profiler injection is timing critical
+                    //create a fake plugin to trick the game into calling our injection init
+                    //at MyPlugins.Init
+			        var pluginslist = (List<IPlugin>)typeof(MyPlugins).GetField("m_plugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			        pluginslist.Add(new ProfilerFakePlugin());
 			    }
 
 			    if ( _dedicatedConfigDefinition == null )
@@ -647,12 +657,15 @@ namespace SEModAPIExtensions.API
 
 			ApplicationLog.BaseLog.Info( "Stopping server" );
             
+            //cache for console output while we're waiting
 		    StringBuilder sb = new StringBuilder();
             TextWriter tw = new StringWriter(sb);
 		    TextWriter tmp = Console.Out;
 
+            //hijack the console so we can listen for the server stopped message
             Console.SetOut(tw);
 
+            //ask the server nicely to stop
 			MySandboxGame.ExitThreadSafe();
 
 			_pluginMainLoop.Stop( );
@@ -668,6 +681,7 @@ namespace SEModAPIExtensions.API
 		        
                 Thread.Sleep(100);
 
+                //the server didn't listen, so kill it forcefully
 		        if (DateTime.Now - waitStart > TimeSpan.FromMinutes(5))
 		        {
                     ApplicationLog.BaseLog.Warn("Server failed to shut down correctly!");
@@ -675,6 +689,7 @@ namespace SEModAPIExtensions.API
 		        }
 		    }
 
+            //return control back to the console and write the cached log back
             Console.SetOut(tmp);
             Console.Write(sb);
             
@@ -806,5 +821,22 @@ namespace SEModAPIExtensions.API
 		}
 
 #endregion
-	}
+
+        class ProfilerFakePlugin : IPlugin
+        {
+            public void Dispose()
+            {
+            }
+
+            public void Init(object gameInstance)
+            {
+                ApplicationLog.BaseLog.Info("Initializing profiler injector");
+                ProfilerInjection.Init();
+            }
+
+            public void Update()
+            {
+            }
+        }
+    }
 }

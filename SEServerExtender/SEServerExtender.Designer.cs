@@ -92,6 +92,7 @@
             this.TAB_Statistics = new System.Windows.Forms.TabPage();
             this.TB_Statistics = new System.Windows.Forms.TextBox();
             this.TAB_Profiler = new System.Windows.Forms.TabPage();
+            this.CHK_ProfileBlocks = new System.Windows.Forms.CheckBox();
             this.TB_Profiler = new System.Windows.Forms.TextBox();
             this.SS_Bottom = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -885,6 +886,7 @@
             // 
             // TAB_Profiler
             // 
+            this.TAB_Profiler.Controls.Add(this.CHK_ProfileBlocks);
             this.TAB_Profiler.Controls.Add(this.TB_Profiler);
             this.TAB_Profiler.Location = new System.Drawing.Point(4, 22);
             this.TAB_Profiler.Name = "TAB_Profiler";
@@ -894,14 +896,28 @@
             this.TAB_Profiler.Text = "Profiler";
             this.TAB_Profiler.UseVisualStyleBackColor = true;
             // 
+            // CHK_ProfileBlocks
+            // 
+            this.CHK_ProfileBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CHK_ProfileBlocks.AutoSize = true;
+            this.CHK_ProfileBlocks.Location = new System.Drawing.Point(8, 518);
+            this.CHK_ProfileBlocks.Name = "CHK_ProfileBlocks";
+            this.CHK_ProfileBlocks.Size = new System.Drawing.Size(90, 17);
+            this.CHK_ProfileBlocks.TabIndex = 2;
+            this.CHK_ProfileBlocks.Text = "Profile Blocks";
+            this.CHK_ProfileBlocks.UseVisualStyleBackColor = true;
+            this.CHK_ProfileBlocks.CheckedChanged += new System.EventHandler(this.CHK_ProfileBlocks_CheckedChanged);
+            // 
             // TB_Profiler
             // 
-            this.TB_Profiler.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TB_Profiler.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_Profiler.Location = new System.Drawing.Point(3, 3);
             this.TB_Profiler.Multiline = true;
             this.TB_Profiler.Name = "TB_Profiler";
             this.TB_Profiler.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TB_Profiler.Size = new System.Drawing.Size(937, 537);
+            this.TB_Profiler.Size = new System.Drawing.Size(937, 509);
             this.TB_Profiler.TabIndex = 1;
             // 
             // SS_Bottom
@@ -1063,5 +1079,6 @@
         private TextBox TB_Profiler;
         private Button BTN_Factions_Demote;
         private Button BTN_Factions_Promote;
+        private CheckBox CHK_ProfileBlocks;
     }
 }

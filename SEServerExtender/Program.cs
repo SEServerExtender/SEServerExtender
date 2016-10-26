@@ -219,6 +219,7 @@ namespace SEServerExtender
                 BaseLog.Info("Detected \"Stable\" branch!");
 		        IsStable = true;
 		        PluginManager.IsStable = true;
+		        Server.IsStable = true;
 
                 //hide the block limit config, since it will crash in stable
 		        HideConfigs("BlockLimits", "MaxBlocksPerGrid", "MaxBlocksPerPlayer", "EnableRemoval", "EnableBlockLimits", "EnableVoxelSupport");
