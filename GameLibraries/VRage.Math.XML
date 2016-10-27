@@ -3803,6 +3803,14 @@
             </summary>
             <param name="sphere">The BoundingSphere to check for intersection with.</param><param name="result">[OutAttribute] An enumeration indicating whether the PlaneD intersects the BoundingSphere.</param>
         </member>
+        <member name="M:VRageMath.PlaneD.Intersection(VRageMath.Vector3D@,VRageMath.Vector3D@)">
+            <summary>
+            Gets intersection point in Plane.
+            </summary>
+            <param name="from">Starting point of a ray.</param>
+            <param name="direction">Ray direction.</param>
+            <returns>Point of intersection.</returns>
+        </member>
         <member name="T:VRageMath.RayD">
             <summary>
             Defines a ray.

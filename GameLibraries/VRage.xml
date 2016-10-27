@@ -86,15 +86,25 @@
         </member>
         <member name="T:VRage.Generics.MyStateMachine">
             <summary>
-            Implementation of generic state machine. Inherit from this class to create your own state machine.
-            Transitions are performed automatically on each update (if conditions of transition are fulfilled).
+            Implementation of generic multistate state machine. Is able to run multiple independent cursors
+            at once updated with every update call. Use cursors as access point to active states.
             </summary>
         </member>
-        <member name="M:VRage.Generics.MyStateMachine.SetState(System.String)">
+        <member name="M:VRage.Generics.MyStateMachine.CreateCursor(System.String)">
+            <summary>
+            Creates new active cursor.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachine.SetState(System.Int32,System.String)">
             <summary>
             Set the current state. Warning - this is not a thing that you would like to normally do, 
             state machine should live its own life (based on transition condition).
             Returns true on success.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachine.Update">
+            <summary>
+            Update the state machine. Transition to new states.
             </summary>
         </member>
         <member name="M:VRage.Generics.MyStateMachine.TriggerAction(VRage.Utils.MyStringId)">
@@ -109,6 +119,13 @@
             Sort the transitions between states according to their priorities.
             </summary>
         </member>
+        <member name="T:VRage.Generics.MySingleStateMachine">
+            <summary>
+            Implementation of generic state machine. Inherit from this class to create your own state machine.
+            Transitions are performed automatically on each update (if conditions of transition are fulfilled).
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VRage.Generics.MySingleStateMachine.SetState(System.String)" -->
         <member name="T:VRage.Generics.StateMachine.MyCondition`1">
             <summary>
             Implementation of generic condition. Immutable class, once set, its parameters cant be changed.
@@ -117,6 +134,26 @@
         <member name="T:VRage.Generics.MyStateMachineNode">
             <summary>
             Node of the state machine.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachineNode.TransitionAddedInternal(VRage.Generics.MyStateMachineTransition)">
+            <summary>
+            Called after Transition is added.
+            Override for custom behavior.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachineNode.TransitionRemovedInternal(VRage.Generics.MyStateMachineTransition)">
+            <summary>
+            Called before Transition remove.
+            Override for custom behavior.
+            </summary>
+        </member>
+        <member name="M:VRage.Generics.MyStateMachineNode.ExpandInternal(VRage.Generics.MyStateMachineCursor,VRage.Collections.MyConcurrentHashSet{VRage.Utils.MyStringId},System.Int32)">
+            <summary>
+            Expands current node with given cursor.
+            First enquedAction is taking place then any valid transition.
+            Cursor is being transitioned to result of expansion.
+            Override this for custom behavior.
             </summary>
         </member>
         <member name="T:VRage.Generics.MyStateMachineTransition">
@@ -143,6 +180,61 @@
         <member name="T:VRage.MyDeltaTransform">
             <summary>
             Transform structure for delta-transforms.
+            </summary>
+        </member>
+        <member name="T:VRage.MySimpleProfiler">
+            <summary>
+            A simple performance profiler intended to show players information about which area of the game is slowing it down
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.Init">
+            <summary>
+            Special settings for profiling blocks should be set here
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.Begin(System.String)">
+            <summary>
+            Begin new profiling block
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.End(System.String)">
+            <summary>
+            End profiling block
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.BeginGPUBlock(System.String)">
+            <summary>
+            Set which GPU profiling block is going to receive timing next
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.EndGPUBlock(VRage.Library.Utils.MyTimeSpan)">
+            <summary>
+            Log timing of currently set GPU block
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.Commit">
+            <summary>
+            Check performance and reset time
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.SetBlockSettings(System.String,System.Int32,System.Int32,System.Boolean,VRage.MySimpleProfiler.MySimpleProfilingBlock.ProfilingBlockType)">
+            <summary>
+            Set special settings for a profiling block
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.CheckPerformance">
+            <summary>
+            Checks performance of each profiling block and sends notifications if above threshold
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.ShowServerPerformanceWarning(System.String)">
+            <summary>
+            Show performance warning received from server
+            </summary>
+        </member>
+        <member name="M:VRage.MySimpleProfiler.FindWorstPerformanceBlock">
+            <summary>
+            Unused, but returns the area which is the most above threshold, null if none is
             </summary>
         </member>
         <member name="M:VRage.Generics.MySparseGrid`2.ClearCells">

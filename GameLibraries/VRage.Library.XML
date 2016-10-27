@@ -1507,9 +1507,9 @@
             Gets options specifying how this work may be executed.
             </summary>
         </member>
-        <member name="T:ParallelTasks.WorkPriority">
+        <member name="T:ParallelTasks.PrioritizedScheduler">
             <summary>
-            These values are indices into array of queues which is searched starting at 0.
+            Sheduler that supports interruption of normal 
             </summary>
         </member>
         <member name="T:ParallelTasks.IWorkScheduler">
@@ -1532,6 +1532,89 @@
             <summary>
             Gets a number of threads.
             This number must be correct, because it's used to run per-thread initialization task on all threads (by using barrier)
+            </summary>
+        </member>
+        <member name="M:ParallelTasks.PrioritizedScheduler.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="threadCount">Number of threads in each worker group.</param>
+        </member>
+        <member name="M:ParallelTasks.PrioritizedScheduler.InitializeWorkerArrays(System.Int32)">
+            <summary>
+            Initialize all worker arrays.
+            </summary>
+            <param name="threadCount">Each array of workers will contain number of threads = threadCount.</param>
+        </member>
+        <member name="P:ParallelTasks.PrioritizedScheduler.ThreadCount">
+            <summary>
+            Reveals only the count of one thread array. This value is intended to be used as a "number of threads that can run in parallel."
+            </summary>
+        </member>
+        <member name="T:ParallelTasks.PrioritizedScheduler.WorkerArray">
+            <summary>
+            Worker array groups workers of the same thread priority.
+            It also contains the queues of tasks belonging to this thread priority.
+            </summary>
+        </member>
+        <member name="F:ParallelTasks.PrioritizedScheduler.WorkerArray.m_prioritizedScheduler">
+            <summary>
+            Reference to the scheduler.
+            </summary>
+        </member>
+        <member name="F:ParallelTasks.PrioritizedScheduler.WorkerArray.m_workerArrayIndex">
+            <summary>
+            Index of this worker array.
+            </summary>
+        </member>
+        <member name="F:ParallelTasks.PrioritizedScheduler.WorkerArray.m_taskQueuesByPriority">
+            <summary>
+            Task queues. Even in one worker group, tasks will be sorted according to their priority.
+            </summary>
+        </member>
+        <member name="F:ParallelTasks.PrioritizedScheduler.WorkerArray.m_scheduledTaskCount">
+            <summary>
+            Total number of tasks inside the queue.
+            </summary>
+        </member>
+        <member name="F:ParallelTasks.PrioritizedScheduler.WorkerArray.m_workers">
+            <summary>
+            Array of worker threads.
+            </summary>
+        </member>
+        <member name="M:ParallelTasks.PrioritizedScheduler.WorkerArray.#ctor(ParallelTasks.PrioritizedScheduler,System.Int32,System.Int32,System.Threading.ThreadPriority)">
+            <summary>
+            Constructor of the worker array.
+            </summary>
+            <param name="prioritizedScheduler">Scheduler, owner of this group.</param>
+        </member>
+        <member name="M:ParallelTasks.PrioritizedScheduler.WorkerArray.TryGetTask(ParallelTasks.Task@)">
+            <summary>
+            Try getting the task from the internal queue.
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ParallelTasks.PrioritizedScheduler.WorkerArray.Schedule(ParallelTasks.Task,ParallelTasks.WorkPriority)">
+            <summary>
+            Schedule the task in this worker array.
+            </summary>
+            <param name="task"></param>
+            <param name="priority"></param>
+        </member>
+        <member name="P:ParallelTasks.PrioritizedScheduler.WorkerArray.Workers">
+            <summary>
+            Array of worker threads.
+            </summary>
+        </member>
+        <member name="T:ParallelTasks.PrioritizedScheduler.Worker">
+            <summary>
+            One worker thread of the prioritized scheduler.
+            </summary>
+        </member>
+        <member name="P:ParallelTasks.PrioritizedScheduler.Worker.Thread">
+            <summary>
+            Get the underlying system thread.
             </summary>
         </member>
         <member name="T:ParallelTasks.Future`1">
@@ -1921,6 +2004,11 @@
             It is advised that the item is reset to a default state before being returned.
             </summary>
             <param name="instance">The instance to return to the pool.</param>
+        </member>
+        <member name="T:ParallelTasks.WorkPriority">
+            <summary>
+            These values are indices into array of queues which is searched starting at 0.
+            </summary>
         </member>
         <member name="T:ParallelTasks.Semaphore">
             <summary>
@@ -5253,6 +5341,11 @@
         <member name="M:VRage.FileSystem.MyFileSystem.CheckFileWriteAccess(System.String)">
             <summary>
             Checks write access for file
+            </summary>
+        </member>
+        <member name="M:VRage.FileSystem.MyFileSystem.MakeRelativePath(System.String,System.String)">
+            <summary>
+            Creates a relative path from one file or folder to another.
             </summary>
         </member>
         <member name="T:VRage.Library.Utils.MyGameTimer">

@@ -19,6 +19,23 @@
             Always implement explicitly, because of Obfuscation
             </summary>
         </member>
+        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
+            <summary>
+            Indicates whether a session component should be used in current configuration.
+            Example: MyDestructionData component returns true only when game uses Havok Destruction
+            </summary>
+        </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.RunningLevelScriptNames">
+            <summary>
+            Array of running level script names.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.FailedLevelScriptExceptionTexts">
+            <summary>
+            Array of exceptions raised when the scripts were running.
+            The name of the script is at the same index. (RunningLevelScriptNames)
+            </summary>
+        </member>
         <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
             <summary>
             Sets the container of this component.
@@ -61,12 +78,6 @@
         <member name="P:VRage.Game.Components.MyEntityComponentBase.ComponentTypeDebugString">
             <summary>
             Name of the base component type for debug purposes (e.g.: "Position")
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
-            <summary>
-            Indicates whether a session component should be used in current configuration.
-            Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
@@ -542,6 +553,152 @@
             Function that checks whether indicator should be drawn.
             Useful when reacting to some player settings.
             </summary>
+        </member>
+        <member name="T:VRage.Game.Localization.MyLocalizationContext">
+            <summary>
+            Class designed around an idea of localization contexts.
+            Context can be game, gui screen, mission, campaign or a task.
+            Consists of a multitude of files stored in content folder.
+            Each context can be modded, same way as created.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalizationContext.Dispose">
+            <summary>
+            Clears all data before shutting down context.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalizationContext.Switch(System.String)">
+            <summary>
+            Tries to switch context to provided language.
+            </summary>
+            <param name="language"></param>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalizationContext.AllocateOrGet(System.String)">
+            <summary>
+            Creates or provides already existing string builder.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalizationContext.Localize(VRage.Utils.MyStringId)">
+            <summary>
+            Retrives the localized content from entry with provided id.
+            </summary>
+            <param name="id">Unique identifier.</param>
+            <returns>Localized builder.</returns>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.Languages">
+            <summary>
+            Defined languages.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.Ids">
+            <summary>
+            All accessible ids from context.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.Name">
+            <summary>
+            Name of this context.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.CurrentLanguage">
+            <summary>
+            Currently selected language.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.TwinContext">
+            <summary>
+            Context of same name. Basicaly connection between
+            non disposable and disposable contexts.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.Item(VRage.Utils.MyStringId)">
+            <summary>
+            Simplified accessor.
+            </summary>
+            <param name="id">Tag to localize.</param>
+            <returns>Localized String Builder.</returns>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalizationContext.Item(System.String)">
+            <summary>
+            Simplified accessor. Preferably use the string id version.
+            </summary>
+            <param name="nameId">Name identifier. (will be converted to MyStringId)</param>
+            <returns>Localized String Builder.</returns>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.Initialize">
+            <summary>
+            Initializes singleton.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.Switch(System.String)">
+            <summary>
+            Switches all contexts to provided language.
+            </summary>
+            <param name="language">Language name.</param>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.DisposeContext(VRage.Utils.MyStringId)">
+            <summary>
+            Tries to dispose disposable context.
+            </summary>
+            <param name="nameId">Name id of context.</param>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.DisposeAll">
+            <summary>
+            Tries to dispose all disposable contexts.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.LoadBundle(VRage.Game.Localization.MyLocalization.MyBundle,System.Collections.Generic.List{VRage.Game.Localization.MyLocalizationContext})">
+            <summary>
+            Loads bundle of files under bundle id.
+            </summary>
+            <param name="bundle">Data bundle.</param>
+            <param name="influencedContexts">Contexts that got some new data in the process.</param>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.UnloadBundle(VRage.Utils.MyStringId)">
+            <summary>
+            Unloads bundle of files from the system by given id.
+            </summary>
+            <param name="bundleId"></param>
+        </member>
+        <member name="M:VRage.Game.Localization.MyLocalization.Get(VRage.Utils.MyStringId,VRage.Utils.MyStringId)">
+            <summary>
+            Returns localization for given context and id.
+            </summary>
+            <param name="contextId">Context name id.</param>
+            <param name="id">Message identifier.</param>
+            <returns>String builder with localization.</returns>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalization.Item(VRage.Utils.MyStringId,VRage.Utils.MyStringId)">
+            <summary>
+            Simplified accessor.
+            </summary>
+            <param name="contextName">Name id of context.</param>
+            <param name="tag">Tag to translate.</param>
+            <returns>Localized String builder.</returns>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalization.Item(System.String,System.String)">
+            <summary>
+            Simplified accessor. Preferably use the string id version.
+            </summary>
+            <param name="contexName">Name of the context.</param>
+            <param name="tag">Name of the tag.</param>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalization.Item(VRage.Utils.MyStringId)">
+            <summary>
+            Simplified accessor.
+            </summary>
+            <param name="contextName">Name id of context.</param>
+            <returns>Context of given name.</returns>
+        </member>
+        <member name="P:VRage.Game.Localization.MyLocalization.Item(System.String)">
+            <summary>
+            Simplified accessor. Preferably use the string id version.
+            </summary>
+            <param name="contextName">Name id of context.</param>
+            <returns>Context of given name.</returns>
         </member>
         <member name="M:VRage.ModAPI.IMyCamera.WorldToScreen(VRageMath.Vector3D@)">
             <summary>
@@ -2086,11 +2243,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
-            <summary>
-            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
-            </summary>
-        </member>
         <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
@@ -2274,6 +2426,11 @@
             <param name="lineBuffer"></param>
             <param name="divideRatio"></param>
         </member>
+        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
+        </member>
         <member name="T:VRage.Game.MyDefinitionXmlSerializer">
             <summary>
             Custom XmlSerializer for definitions that allows to override the definition type
@@ -2316,6 +2473,13 @@
             </summary>
             <param name="worldPos">World position.</param>
             <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
+        <member name="M:VRage.Game.Utils.MyCamera.WorldLineFromScreen(VRageMath.Vector2)">
+            <summary>
+            Gets normalized world space line from screen space coordinates.
+            </summary>
+            <param name="screenCoords"></param>
+            <returns></returns>
         </member>
         <member name="P:VRage.Game.Utils.MyCamera.ViewMatrixAtZero">
             <summary>
@@ -4144,7 +4308,7 @@
         </member>
         <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoAdapter">
             <summary>
-            Select a graphic adapter and/or a monitor
+            Select a graphic adapter and/or a monitor. Changing the adapter requires restart of the game.
             </summary>
         </member>
         <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoMode">
@@ -4170,6 +4334,11 @@
         <member name="F:MyCommonTexts.ToolTipVideoOptionsFieldOfView">
             <summary>
             Horizontal field of view angle
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextRestartNeededAfterAdapterSwitch">
+            <summary>
+            Changing adapter requires restarting the game. Restart now?
             </summary>
         </member>
         <member name="F:MyCommonTexts.ToolTipGameOptionsShowControlsHints">
@@ -5295,7 +5464,7 @@
         </member>
         <member name="F:MyCommonTexts.SpectatorControls_Delta_Desc">
             <summary>
-            Spectator with fixed view vector to controlled object
+            Spectator with fixed position to controlled object
             </summary>
         </member>
         <member name="F:MyCommonTexts.MultiplayerErrorBannedByAdmins">
@@ -5340,7 +5509,7 @@
         </member>
         <member name="F:MyCommonTexts.SpectatorControls_Delta">
             <summary>
-            Delta spectator
+            Orbit spectator
             </summary>
         </member>
         <member name="F:MyCommonTexts.SpectatorControls_Free">
@@ -6899,6 +7068,61 @@
             Change block variants
             </summary>
         </member>
+        <member name="F:MyCommonTexts.MessageBoxLastSessionNotFound">
+            <summary>
+            You have no registered saved games. Your progress cannot be loaded.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NewGame_SelectionLabel">
+            <summary>
+            Campaign
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenCaptionNewGame">
+            <summary>
+            New Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonContinueGame">
+            <summary>
+            Continue Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonCustomGame">
+            <summary>
+            Custom Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonJoinGame">
+            <summary>
+            Join Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonLoadGame">
+            <summary>
+            Load Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonCampaign">
+            <summary>
+            New Game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Created">
+            <summary>
+            Created
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadScreenButtonBackups">
+            <summary>
+            Backups
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.SaveBrowserMissingBackup">
+            <summary>
+            The backup folder of selected saved game is missing.
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ScreenOptionsGame_Skin">
             <summary>
             Skin
@@ -6907,6 +7131,11 @@
         <member name="F:MyCommonTexts.ScreenOptionsGame_SkinWarning">
             <summary>
             Note: Not all screens support skin at the moment
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.LoadingDialogServerIsLoadingWorld">
+            <summary>
+            Server is loading world
             </summary>
         </member>
         <member name="F:MyCommonTexts.AnimatedRotation">
@@ -6922,6 +7151,371 @@
         <member name="F:MyCommonTexts.AudioSettings_ShipSoundsBasedOnSpeed">
             <summary>
             Speed based ship sounds
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenMenuButtonContinue">
+            <summary>
+            Continue
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Void">
+            <summary>
+            Void
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationPerformanceLow">
+            <summary>
+            Game performance is low. Cause: {0}
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaAI">
+            <summary>
+            AI
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaBlocks">
+            <summary>
+            Blocks update
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaConveyor">
+            <summary>
+            Conveyor system
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaGrid">
+            <summary>
+            Grids update
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaGyro">
+            <summary>
+            Gyroscope system
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaOxygen">
+            <summary>
+            Oxygen system
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaPhysics">
+            <summary>
+            Physics
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaRender">
+            <summary>
+            Render (CPU)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaScripts">
+            <summary>
+            Scripts
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaTextures">
+            <summary>
+            Loading mesh/texture
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_EnablePerformanceWarnings">
+            <summary>
+            Show warnings in game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsEnablePerformanceWarnings">
+            <summary>
+            Show a warning whenever the game's performance slows down
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaClearAndGeometryRender">
+            <summary>
+            GPU (geometry)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaLights">
+            <summary>
+            GPU (lights)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaPostProcess">
+            <summary>
+            GPU (postprocessing)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaRenderFoliage">
+            <summary>
+            GPU (foliage)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaShadows">
+            <summary>
+            GPU (shadows)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaSSAO">
+            <summary>
+            GPU (SSAO)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaTransparentPass">
+            <summary>
+            GPU (transparency)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningHeading">
+            <summary>
+            PERFORMANCE WARNINGS Press Ctrl + {0} for more info
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaAIDescription">
+            <summary>
+            Updating AI and pathfinding. Turn off cyberhounds and spiders.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaBlocksDescription">
+            <summary>
+            Update of individual blocks. Too many blocks in the world.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaClearAndGeometryRenderDescription">
+            <summary>
+            Rendering world geometry. Lower your voxel quality.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaConveyorDescription">
+            <summary>
+            Update of conveyors. Too many conveyors or blocks using conveyors in the world.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaGridDescription">
+            <summary>
+            Updating of ship systems other than oxygen, gyroscopes and conveyors.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaGyroDescription">
+            <summary>
+            Update of gyroscope systems. Too many gyroscopes in the world.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaLightsDescription">
+            <summary>
+            Rendering lights. Too many artificial lights in the world.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaOxygenDescription">
+            <summary>
+            Update of oxygen systems. Too many or too large pressurized areas.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaPhysicsDescription">
+            <summary>
+            Update of physics. Too many individual objects interacting with each  other.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaPostProcessDescription">
+            <summary>
+            GPU postprocessing. Includes antialiasing.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaRenderDescription">
+            <summary>
+            CPU preparing world for rendering.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaRenderFoliageDescription">
+            <summary>
+            Rendering foliage (grass). Lower your foliage settings.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaScriptsDescription">
+            <summary>
+            Executing programmable blocks' scripts. Too many or too complicated  scripts.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaShadowsDescription">
+            <summary>
+            Rendering shadows. Lower your shadow quality.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaSSAODescription">
+            <summary>
+            Ambient occlusion.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaTexturesDescription">
+            <summary>
+            Loading of meshes or textures.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningAreaTransparentPassDescription">
+            <summary>
+            Rendering transparent objects and particles.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningHelpHeader">
+            <summary>
+            Performance Warnings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NotificationBlocksLeft">
+            <summary>
+            You can still place {0} blocks
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PlayerMaxBlocks">
+            <summary>
+            Player's block limit
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.BuiltBy">
+            <summary>
+            Built by
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenTerminalInfo_Assign">
+            <summary>
+            Assign
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenTerminalInfo_Blocks">
+            <summary>
+            blocks
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextConfirmAcceptTransferGrid">
+            <summary>
+            Player {0} is transfering ownership of {1} blocks in ship {2} to you. Do you accept?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextConfirmDeleteGrid">
+            <summary>
+            Are you sure you want to delete all your blocks from {0}? The ship may fall apart.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextConfirmTransferGrid">
+            <summary>
+            Are you sure you want to transfer ownership of your blocks from {0} to player {1}?
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextNotEnoughFreeBlocksForTransfer">
+            <summary>
+            Player {0} does not have enough free blocks to accept your part of the ship
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenTerminalInfo_Overview">
+            <summary>
+            Owned blocks overview
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenTerminalInfo_YouBuilt">
+            <summary>
+            You built
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextPlayerNotOnline">
+            <summary>
+            Player {0} is no longer online.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_BlockLimits">
+            <summary>
+            Block limits
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextBlockLimitDisableWarning">
+            <summary>
+            Block limits are set to ensure good performance. Please disable this option only for experimental purposes.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipWorldSettingsBlockLimits">
+            <summary>
+            Use recommended block limits.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningIssuesBlocks">
+            <summary>
+            Blocks issues
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningIssuesGraphics">
+            <summary>
+            Graphics issues
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningIssuesOther">
+            <summary>
+            Other issues
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonGraphics">
+            <summary>
+            Graphics
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningShowAll">
+            <summary>
+            Show all warnings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipPerformanceWarningShowAll">
+            <summary>
+            Off - Only current performance warnings are displayed. On - All performance warnings of this session are displayed.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningLastOccurrence">
+            <summary>
+            Last occurrence
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PerformanceWarningTooManyBlocks">
+            <summary>
+            Too many blocks of this type.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AudioSettings_EnableReverb">
+            <summary>
+            Enable echo
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AmbientOcclusion">
+            <summary>
+            Ambient occlusion
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AmbientOcclusion_HBAO">
+            <summary>
+            HBAO
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AmbientOcclusion_None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToPublishCampaign">
+            <summary>
+            PUBLISH CAMPAIGN
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionCampaignPublished">
+            <summary>
+            CAMPAIGN PUBLISHED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionModCampaignPublishFailed">
+            <summary>
+            CAMPAIGN PUBLISH FAILED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToPublishCampaign">
+            <summary>
+            Are you sure you want to upload and publish selected campaign on Steam Workshop? Note that by submitting this item, you agree to the workshop terms of service (see http://steamcommunity.com/sharedfiles/workshoplegalagreement).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCampaignPublished">
+            <summary>
+            Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
@@ -7157,6 +7751,548 @@
             The distance to check whether missile will collide soon after launch with something.
             For more info, see ticket 3422.
             </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptingProxy.Init">
+            <summary>
+            Loads reflection data.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptingProxy.GetType(System.String)">
+            <summary>
+            Looks for given type using executing assembly.
+            </summary>
+            <param name="typeFullName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptingProxy.GetMethod(System.String)">
+            <summary>
+            Looks for methodInfo about method with given signature.
+            </summary>
+            <param name="signature">Full signature of a method.</param>
+            <returns>null if not found.</returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptingProxy.GetMethods">
+            <summary>
+            All attributed methods from VisualScriptingProxy.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptingProxy.GetField(System.String)">
+            <summary>
+            Returns event field with specified signature.
+            </summary>
+            <param name="signature"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.MyVSCompiler.Compile">
+            <summary>
+            Creates a fresh new compilation of source files.
+            Does not load any assembly.
+            </summary>
+            <returns>Success if no compilation erros were encountered.</returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.MyVSCompiler.LoadAssembly">
+            <summary>
+            Loads assembly.
+            <returns>Loading success.</returns>
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.MyVisualScriptBuilder">
+            <summary>
+            Creates class syntax for provided file.
+            
+            Notes:
+            WorldScripts
+                Consist of Event methods having only input purpose, so they have no output variables and void return value.
+                One event type with same signature can appear on multiple places in the script. Such situaltion mean that 
+                the method body will have multiple sections that will be later evaluated independently without 
+                any order dependency.
+            
+            NormalScripts
+                Should have only one input as entry point of the method and multiple or none Output nodes. Output nodes have
+                parameters defined. Method signature will contain input variables (from input node), output variables (from 
+                outputs - all outputs must have same signature) and bool return value. 
+                Return value tells the system if the output node was reached and whenever we should or should not continue
+                executing the sequence chain.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptBuilder.Load">
+            <summary>
+            Loads the script file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.MyVisualScriptBuilder.Build">
+            <summary>
+            Creates syntax of a class generated out of interactionNodes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Depth">
+            <summary>
+            Depth of the node in the graph.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.SubTreeNodes">
+            <summary>
+            Nodes that got referenced more than once at one syntax level.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Reset">
+            <summary>
+            Resets nodes to state when they are ready for new run of the builder.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.VariableSyntaxName(System.String)">
+            <summary>
+            Unique identifier within class syntax.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.CollectInputExpressions(System.Collections.Generic.List{Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax})">
+            <summary>
+            Returns ordered set of expressions from value suppliers.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.CollectSequenceExpressions(System.Collections.Generic.List{Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax})">
+            <summary>
+            Returns ordered set of all expressions.
+            </summary>
+            <param name="expressions"></param>
+        </member>
+        <member name="F:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.m_objectBuilder">
+            <summary>
+            Data container;
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.#ctor(VRage.Game.MyObjectBuilder_ScriptNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="ob">Should never be a base of _scriptNode.</param>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Preprocess(System.Int32)">
+            <summary>
+            Pre-generation process that loads necessary data in derived nodes
+            and adjusts the internal state of graph to generation ready state.
+            </summary>
+            <param name="currentDepth"></param>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.TryRegisterNode(System.Int32,System.Collections.Generic.List{VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode})">
+            <summary>
+            Tries to put the node of id into collection.
+            </summary>
+            <param name="nodeID">Id of looked for node.</param>
+            <param name="collection">Target collection.</param>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.GetHashCode">
+            <summary>
+            Method that is needed for Hashing purposes.
+            Id should be a unique identifier within a graph.
+            </summary>
+            <returns>Id of node.</returns>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Preprocessed">
+            <summary>
+            Tells if the node was already preprocessed.
+            (default value is false)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.SequenceDependent">
+            <summary>
+            Tells whenever the node has sequence or not.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Collected">
+            <summary>
+            Is getting set to true the first time the syntax from this node is collected.
+            Prevents duplicities in syntax.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.SequenceInputs">
+            <summary>
+            List of sequence input nodes connected to this one.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.SequenceOutputs">
+            <summary>
+            List of sequence output nodes connected to this one.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Outputs">
+            <summary>
+            Output nodes.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Inputs">
+            <summary>
+            Input Nodes.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.ObjectBuilder">
+            <summary>
+            Data container getter.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxNode.Navigator">
+            <summary>
+            Member used for in-graph navigation.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxBuilderNode">
+            <summary>
+            This node does not generate any syntax, but runs the preprocessing
+            part and initializes the collecting of syntax.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxForLoopNode">
+            <summary>
+            Sequence dependent node that creates syntax for For loops
+            with support for custom initial index, increment and last index.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxGetterNode">
+            <summary>
+            This node represents a class variable name getter.
+            Genertes no syntax and only provides other node with
+            variable name.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxInputNode">
+            <summary>
+            Special case of Event node. The logic is the same for both,
+            but on the gui side the logic is different. Thats why I kept
+            it separated also here.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxEventNode">
+            <summary>
+            This node represents a Method signature / entrypoint to method.
+            Contains only general information about the method signature.
+            Generates no syntax.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxKeyEventNode">
+            <summary>
+            Special case of Event node that also generates some syntax.
+            Creates a simple if statement that filters the input to this node.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxInterfaceMethodNode">
+            <summary>
+            Simple method declaration node for implementing the interface methods.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxLogicGateNode">
+            <summary>
+            Sequence independent node that creates syntax for basic 
+            boolean algebra operations. AND OR NOT XOR NAND NOR.
+            It joins all provided values into a change of operations
+            started and ended with parenthesis.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxOutputNode">
+            <summary>
+            Output node that fills in the output values of a method.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxScriptNode">
+            <summary>
+            Represens a method call from local instance of Script class.
+            Contains some data that are used out of the graph generation process.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.ScriptBuilder.Nodes.MyVisualSyntaxScriptNode.InstanceDeclaration">
+            <summary>
+            MyClass m_instanceName = new MyClass();
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsDerivedTypeOf(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Checks symbol history for ancestor of the type.
+            </summary>
+            <param name="derivedType"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsSequenceDependent(Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax)">
+            <summary>
+            Checks for sequnce dependency by Attribute.
+            </summary>
+            <param name="methodSyntax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsStatic(Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax)">
+            <summary>
+            Checks for Static modification in method syntax.
+            </summary>
+            <param name="methodSyntax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.DeclaringClass(Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax)">
+            <summary>
+            Looks class that is the method container.
+            </summary>
+            <param name="methodSyntax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.SerializeToObjectBuilder(Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax)">
+            <summary>
+            Creates string that can be further loaded from string.
+            Full signature with parameters.
+            </summary>
+            <param name="syntax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.SerializeToObjectBuilder(Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Creates string representation of type symbol that can be further
+            reconstructed. Full namespace + name.
+            </summary>
+            <param name="typeSymbol"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsOut(Microsoft.CodeAnalysis.CSharp.Syntax.ParameterSyntax)">
+            <summary>
+            Checks parameter for Out keyword.
+            </summary>
+            <param name="paramSyntax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.LiteComparator(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Comapres two types for equality by theire name.
+            </summary>
+            <param name="current"></param>
+            <param name="another"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsString(Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Is type of string?
+            </summary>
+            <param name="symbol"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsInt(Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Is type of integer?
+            </summary>
+            <param name="symbol"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsFloat(Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Is type of float?
+            </summary>
+            <param name="symbol"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MyRoslynExtensions.IsBool(Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Is type of Bool?
+            </summary>
+            <param name="symbol"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.UsingStatementSyntax(System.String)">
+            <summary>
+            Creates using directive from identifiers "System","Collection".
+            </summary>
+            <param name="identifiers">Separated identifiers.</param>
+            <returns>Null if less than 2 identifiers passed.</returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.GenericFieldDeclaration(System.Type,System.String,System.Nullable{Microsoft.CodeAnalysis.SyntaxTokenList})">
+            <summary>
+            Generic Field declaration creation.
+            </summary>
+            <param name="type">Field type.</param>
+            <param name="fieldVariableName">Name of the field.</param>
+            <param name="modifiers">Modifiers - null creates public modifier list</param>
+            <returns>Complete field declaration syntax.</returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.GenericTypeSyntax(System.Type)">
+            <summary>
+            Generic type syntax creation.
+            </summary>
+            <param name="type">C# type</param>
+            <returns>Type Syntax</returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.GenericObjectCreation(System.Type,System.Collections.Generic.IEnumerable{Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax})">
+            <summary>
+            Creates generic type object creation syntax. new type(argumentExpressions).
+            </summary>
+            <param name="type">Type of created object.</param>
+            <param name="argumentExpressions">Initializer argument expressions.</param>
+            <returns>Object creatation expression.</returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.DelegateAssignment(System.String,System.String)">
+            <summary>
+            deletageIdentifier += methodName;
+            </summary>
+            <param name="deletageIdentifier"></param>
+            <param name="methodName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.DelegateRemoval(System.String,System.String)">
+            <summary>
+            delegateIdentifier -= methodName
+            </summary>
+            <param name="deletageIdentifier"></param>
+            <param name="methodName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.PublicClass(System.String)">
+            <summary>
+            Creates public class with empty body.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.MemberDeclaration(System.String,System.String)">
+            <summary>
+            Creates basic member declaration with provided name and type.
+            </summary>
+            <param name="memberName">Valid name.</param>
+            <param name="memberType">Valid type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.VariableAssignmentExpression(System.String,System.String,Microsoft.CodeAnalysis.CSharp.SyntaxKind)">
+            <summary>
+            Creates assignment expression for given variableName and value.
+            </summary>
+            <param name="variableName"></param>
+            <param name="value"></param>
+            <param name="expressionKind"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.VectorAssignmentExpression(System.String,System.String,System.Double,System.Double,System.Double)">
+            <summary>
+            Creates assignment expression variableName = vectorType(x,y,z);
+            </summary>
+            <param name="variableName"></param>
+            <param name="vectorType"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.ReferenceTypeInstantiation(System.String,System.String,Microsoft.CodeAnalysis.CSharp.Syntax.LiteralExpressionSyntax[])">
+            <summary>
+            Expression of type "var variableName = new type(values....);"
+            </summary>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.VectorArgumentSyntax(System.Double)">
+            <summary>
+            Creates arguments of type NumericLiteral for given value.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.ArithmeticStatement(System.String,System.String,System.String,System.String)">
+            <summary>
+            Craetes expression of type "var resultVariableName = leftSide 'operation' rightSide;"
+            </summary>
+            <param name="resultVariableName"></param>
+            <param name="leftSide"></param>
+            <param name="rightSide"></param>
+            <param name="operation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.IfExpressionSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,System.Collections.Generic.List{Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax},System.Collections.Generic.List{Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax})">
+            <summary>
+            Creates conditional statement with given statements for true/false clauses and condition syntax.
+            </summary>
+            <param name="condition"></param>
+            <param name="statements"></param>
+            <param name="elseStatements"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.IfExpressionSyntax(System.String,System.Collections.Generic.List{Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax},System.Collections.Generic.List{Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax})">
+            <summary>
+            Creates conditional statement with given statements for true/false clauses and condition variable name.
+            </summary>
+            <param name="conditionVariableName"></param>
+            <param name="statements"></param>
+            <param name="elseStatements"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.CastExpression(System.String,System.String,System.String)">
+            <summary>
+            Creates declaration statement for expression of "var varName = (type)castedVariableName;"
+            </summary>
+            <param name="castedVariableName"></param>
+            <param name="type"></param>
+            <param name="resultVariableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.PublicMethodDeclaration(System.String,Microsoft.CodeAnalysis.CSharp.SyntaxKind,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})">
+            <summary>
+            Creates public void methodName(paramType1 paramName1,..,paramTypeN paramNameN) {}.
+            </summary>
+            <param name="methodName"></param>
+            <param name="inputParameterNames"></param>
+            <param name="inputParameterTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.Parameters(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+            Craetes parameter list syntax from given parameterNames.
+            </summary>
+            <param name="parameterNames"></param>
+            <param name="types"></param>
+            <param name="areOutputs">Adds out keyword to every single one.</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.ParameterSyntax(System.String,System.String)">
+            <summary>
+            Creates parameter syntax out of given data.
+            </summary>
+            <param name="name">Unique variable name within script class.</param>
+            <param name="typeSyntaxNode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.LocalVariable(System.String,System.String,Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Creates syntax for output variable declaration.
+            Can be used to create var type.
+            </summary>
+            <param name="typeData"></param>
+            <param name="variableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.MethodInvocation(System.String,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+             Creates syntax of type "Method(arg0,arg1,..);"
+            </summary>
+            <param name="className">Used for static method invocation.</param>
+            <param name="methodName">Name of the method.</param>
+            <param name="orderedVariableNames">Should be the same order as method signature.</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.CreateArgumentSyntax(System.String)">
+            <summary>
+            Craetes simple argument.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.SimpleAssignment(System.String,Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Creates assignment for given variable.
+            variableName = rightSide;
+            </summary>
+            <param name="variableName"></param>
+            <param name="rightSide"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.VisualScripting.Utils.MySyntaxFactory.Constructor(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax)">
+            <summary>
+            Creates corresponding parameterless constructor to passed class.
+            </summary>
+            <param name="classDeclaration"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>
