@@ -184,6 +184,14 @@
       <HintPath>..\GameLibraries\Sandbox.Game.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SharpDX, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameLibraries\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
     <Reference Include="SpaceEngineers.Game">
       <HintPath>..\GameLibraries\SpaceEngineers.Game.dll</HintPath>
       <Private>False</Private>

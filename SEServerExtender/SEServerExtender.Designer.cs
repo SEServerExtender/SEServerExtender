@@ -92,6 +92,7 @@
             this.TAB_Statistics = new System.Windows.Forms.TabPage();
             this.TB_Statistics = new System.Windows.Forms.TextBox();
             this.TAB_Profiler = new System.Windows.Forms.TabPage();
+            this.CHK_PauseProfiler = new System.Windows.Forms.CheckBox();
             this.CHK_ProfileBlocks = new System.Windows.Forms.CheckBox();
             this.TB_Profiler = new System.Windows.Forms.TextBox();
             this.SS_Bottom = new System.Windows.Forms.StatusStrip();
@@ -886,6 +887,7 @@
             // 
             // TAB_Profiler
             // 
+            this.TAB_Profiler.Controls.Add(this.CHK_PauseProfiler);
             this.TAB_Profiler.Controls.Add(this.CHK_ProfileBlocks);
             this.TAB_Profiler.Controls.Add(this.TB_Profiler);
             this.TAB_Profiler.Location = new System.Drawing.Point(4, 22);
@@ -895,6 +897,18 @@
             this.TAB_Profiler.TabIndex = 7;
             this.TAB_Profiler.Text = "Profiler";
             this.TAB_Profiler.UseVisualStyleBackColor = true;
+            // 
+            // CHK_PauseProfiler
+            // 
+            this.CHK_PauseProfiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CHK_PauseProfiler.AutoSize = true;
+            this.CHK_PauseProfiler.Location = new System.Drawing.Point(104, 518);
+            this.CHK_PauseProfiler.Name = "CHK_PauseProfiler";
+            this.CHK_PauseProfiler.Size = new System.Drawing.Size(56, 17);
+            this.CHK_PauseProfiler.TabIndex = 4;
+            this.CHK_PauseProfiler.Text = "Pause";
+            this.CHK_PauseProfiler.UseVisualStyleBackColor = true;
+            this.CHK_PauseProfiler.CheckedChanged += new System.EventHandler(this.CHK_PauseProfiler_CheckedChanged);
             // 
             // CHK_ProfileBlocks
             // 
@@ -1080,5 +1094,6 @@
         private Button BTN_Factions_Demote;
         private Button BTN_Factions_Promote;
         private CheckBox CHK_ProfileBlocks;
+        private CheckBox CHK_PauseProfiler;
     }
 }

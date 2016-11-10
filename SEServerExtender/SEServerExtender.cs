@@ -88,7 +88,9 @@ namespace SEServerExtender
 
 		//Utilities Page
 		private int m_floatingObjectsCount;
-        
+
+	    private bool m_profilerPaused;
+
         #endregion
 
         #region "Constructors and Initializers"
@@ -122,10 +124,6 @@ namespace SEServerExtender
 
 			if ( m_server.IsRunning )
 				_genericUpdateTimer.Start( );
-
-            //TODO: Remove this next stable update
-            if (Program.IsStable)
-                TAB_MainTabs.TabPages.Remove(TAB_Profiler);
 		}
 
 		private bool SetupTimers( )
@@ -149,7 +147,7 @@ namespace SEServerExtender
 			m_statisticsTimer = new Timer { Interval = 1000 };
 			m_statisticsTimer.Tick += StatisticsRefresh;
 
-		    m_profilerTimer = new Timer {Interval = 3000};
+		    m_profilerTimer = new Timer {Interval = 2000};
 		    m_profilerTimer.Tick += ProfilerRefresh;
 
 			_genericUpdateTimer.Tick += GenericTimerTick;
@@ -158,7 +156,7 @@ namespace SEServerExtender
 			m_playersTimer = new Timer { Interval = 2000 };
 			m_playersTimer.Tick += PlayersRefresh;
 			*/
-
+            
 			return true;
 		}
 
@@ -277,9 +275,8 @@ namespace SEServerExtender
 
 				if ( !m_statisticsTimer.Enabled )
 					m_statisticsTimer.Start( );
-
-                //TODO
-                if(!m_profilerTimer.Enabled && !Program.IsStable)
+                
+                if(!m_profilerTimer.Enabled)
                     m_profilerTimer.Start();
 
 				if ( PG_Control_Server_Properties.SelectedObject != m_server.Config )
@@ -289,12 +286,8 @@ namespace SEServerExtender
 
 	    private void ProfilerRefresh(object sender, EventArgs e)
 	    {
-            //TODO
-	        if (Program.IsStable)
-	        {
-	            m_profilerTimer.Stop();
+	        if (m_profilerPaused)
 	            return;
-	        }
 
 	        var fieldInfo = typeof(MySimpleProfiler).GetField("m_profilingBlocks", BindingFlags.Static | BindingFlags.NonPublic);
 	        if (fieldInfo == null)
@@ -315,6 +308,7 @@ namespace SEServerExtender
 	        var otherBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
 	        var unknownBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
 	        var systemBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+	        var characterBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
 
 	        foreach (var block in blocks.Values.ToArray())
 	        {
@@ -352,7 +346,10 @@ namespace SEServerExtender
 	                            break;
 
 	                        default:
-	                            blockBlocks.Add(block);
+                                if(block.Name.StartsWith("Character"))
+                                    characterBlocks.Add(block);
+                                else
+	                                blockBlocks.Add(block);
 	                            break;
 	                    }
 	                    break;
@@ -374,6 +371,7 @@ namespace SEServerExtender
 	        otherBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
 	        unknownBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
             systemBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+            characterBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
 
             if (systemBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
@@ -402,6 +400,19 @@ namespace SEServerExtender
 	                sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
 	            }
 
+	            sb.AppendLine();
+	        }
+
+	        if (characterBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
+	        {
+	            sb.AppendLine("Characters:");
+	            foreach (var block in characterBlocks)
+                {
+                    if (!block.Average.IsValid() || block.Average < 0.001)
+                        continue;
+
+                    sb.AppendLine($"{block.DisplayName}: {block.Average:N6}ms");
+	            }
 	            sb.AppendLine();
 	        }
 
@@ -2523,6 +2534,11 @@ namespace SEServerExtender
         private void CHK_ProfileBlocks_CheckedChanged(object sender, EventArgs e)
         {
             ProfilerInjection.ProfilePerBlock = CHK_ProfileBlocks.Checked;
+        }
+
+        private void CHK_PauseProfiler_CheckedChanged(object sender, EventArgs e)
+        {
+            m_profilerPaused = CHK_PauseProfiler.Checked;
         }
     }
 }

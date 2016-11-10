@@ -213,17 +213,21 @@ namespace SEServerExtender
 		    bool stableBuild = (bool)typeof(MyFinalBuildConstants).GetField("IS_STABLE").GetValue(null);
 
             ApplicationLog.BaseLog.Info($"SE version: {SeVersion}");
-            ApplicationLog.BaseLog.Info( $"Extender version: {Assembly.GetExecutingAssembly().GetName().Version}" );
-		    if (stableBuild)
+
+            string versionMessage = $"Extender version: {Assembly.GetExecutingAssembly().GetName().Version}";
+#if DEBUG
+            //mark debug builds as such
+            versionMessage += " DEBUG";
+#endif
+            ApplicationLog.BaseLog.Info( versionMessage );
+
+            if (stableBuild)
 		    {
                 BaseLog.Info("Detected \"Stable\" branch!");
 		        IsStable = true;
 		        PluginManager.IsStable = true;
 		        Server.IsStable = true;
-
-                //hide the block limit config, since it will crash in stable
-		        HideConfigs("BlockLimits", "MaxBlocksPerGrid", "MaxBlocksPerPlayer", "EnableRemoval", "EnableBlockLimits", "EnableVoxelSupport");
-		    }
+            }
             else
                 BaseLog.Info("Detected \"Development\" branch!");
 

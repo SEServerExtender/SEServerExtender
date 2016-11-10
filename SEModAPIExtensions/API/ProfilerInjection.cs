@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using NLog;
 using Sandbox;
 using Sandbox.Game.Entities;
+using Sandbox.Game.Entities.Character;
 using Sandbox.Game.World;
 using VRage;
 using VRage.Collections;
@@ -74,6 +75,7 @@ namespace SEModAPIExtensions.API
             System.Diagnostics.Debug.Assert(MyEntities.UpdateInProgress == false);
             MyEntities.UpdateInProgress = true;
             MyCubeBlock cubeBlock;
+            MyCharacter character;
 
             {
                 ProfilerShort.Begin("Before first frame");
@@ -85,11 +87,14 @@ namespace SEModAPIExtensions.API
                 {
                     string typeName = entity.GetType().Name;
                     cubeBlock = entity as MyCubeBlock;
+                    character = entity as MyCharacter;
                     if (cubeBlock != null && ProfilePerBlock)
                     {
                         MySimpleProfiler.Begin("Blocks");
                         MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
                     }
+                    else if (character != null)
+                        MySimpleProfiler.Begin("CharactersB");
                     //ProfilerShort.Begin(Partition.Select(entity.GetType().GetHashCode(), "Part1", "Part2", "Part3"));
                     ProfilerShort.Begin(entity.GetType().Name);
                     if (entity.MarkedForClose == false)
@@ -103,6 +108,8 @@ namespace SEModAPIExtensions.API
                         MySimpleProfiler.End("Blocks");
                         MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
                     }
+                    else if (character != null)
+                        MySimpleProfiler.End("CharactersB");
                 }
 
                 ProfilerShort.BeginNextBlock("10th update");
@@ -117,11 +124,14 @@ namespace SEModAPIExtensions.API
 
                         string typeName = entity.GetType().Name;
                         cubeBlock = entity as MyCubeBlock;
+                        character = entity as MyCharacter;
                         if (cubeBlock != null && ProfilePerBlock)
                         {
                             MySimpleProfiler.Begin("Blocks");
                             MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.Begin("CharactersB10");
                         //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
                         ProfilerShort.Begin(typeName);
                         if (entity.MarkedForClose == false)
@@ -135,6 +145,8 @@ namespace SEModAPIExtensions.API
                             MySimpleProfiler.End("Blocks");
                             MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.End("CharactersB10");
                     }
                 }
 
@@ -150,11 +162,14 @@ namespace SEModAPIExtensions.API
 
                         string typeName = entity.GetType().Name;
                         cubeBlock = entity as MyCubeBlock;
+                        character = entity as MyCharacter;
                         if (cubeBlock != null && ProfilePerBlock)
                         {
                             MySimpleProfiler.Begin("Blocks");
                             MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.Begin("CharactersB100");
                         //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
                         ProfilerShort.Begin(typeName);
                         if (entity.MarkedForClose == false)
@@ -168,6 +183,8 @@ namespace SEModAPIExtensions.API
                             MySimpleProfiler.End("Blocks");
                             MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.End("CharactersB100");
                     }
                 }
                 ProfilerShort.End();
@@ -190,6 +207,7 @@ namespace SEModAPIExtensions.API
                 System.Diagnostics.Debug.Assert(MyEntities.UpdateInProgress == false);
                 MyEntities.UpdateInProgress = true;
                 MyCubeBlock cubeBlock;
+                MyCharacter character;
 
                 ProfilerShort.Begin("UpdateAfter1");
                 m_entitiesForUpdate.ApplyChanges();
@@ -199,11 +217,14 @@ namespace SEModAPIExtensions.API
 
                     string typeName = entity.GetType().Name;
                     cubeBlock = entity as MyCubeBlock;
+                    character = entity as MyCharacter;
                     if (cubeBlock != null && ProfilePerBlock)
                     {
                         MySimpleProfiler.Begin("Blocks");
                         MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
                     }
+                    else if (character != null)
+                        MySimpleProfiler.Begin("CharactersA");
                     //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
                     ProfilerShort.Begin(typeName);
                     if (entity.MarkedForClose == false)
@@ -217,6 +238,8 @@ namespace SEModAPIExtensions.API
                         MySimpleProfiler.End("Blocks");
                         MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
                     }
+                    else if(character!=null)
+                        MySimpleProfiler.End("CharactersA");
                 }
 
                 ProfilerShort.End();
@@ -231,11 +254,14 @@ namespace SEModAPIExtensions.API
 
                         string typeName = entity.GetType().Name;
                         cubeBlock = entity as MyCubeBlock;
+                        character = entity as MyCharacter;
                         if (cubeBlock != null && ProfilePerBlock)
                         {
                             MySimpleProfiler.Begin("Blocks");
                             MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.Begin("CharactersA10");
                         //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
                         ProfilerShort.Begin(typeName);
                         if (entity.MarkedForClose == false)
@@ -249,6 +275,8 @@ namespace SEModAPIExtensions.API
                             MySimpleProfiler.End("Blocks");
                             MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.End("CharactersA10");
                     }
                 }
                 ProfilerShort.End();
@@ -263,11 +291,14 @@ namespace SEModAPIExtensions.API
 
                         string typeName = entity.GetType().Name;
                         cubeBlock = entity as MyCubeBlock;
+                        character = entity as MyCharacter;
                         if (cubeBlock != null && ProfilePerBlock)
                         {
                             MySimpleProfiler.Begin("Blocks");
                             MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.Begin("CharactersA100");
                         //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
                         ProfilerShort.Begin(typeName);
                         if (entity.MarkedForClose == false)
@@ -281,6 +312,8 @@ namespace SEModAPIExtensions.API
                             MySimpleProfiler.End("Blocks");
                             MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
                         }
+                        else if (character != null)
+                            MySimpleProfiler.End("CharactersA100");
                     }
                 }
                 ProfilerShort.End();
