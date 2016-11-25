@@ -691,40 +691,44 @@ namespace SEServerExtender
 		{
 			m_entityTreeRefreshTimer.Enabled = false;
 
-			try
-			{
-				if ( !MySandboxGameWrapper.IsGameStarted )
-					return;
+		    try
+		    {
+		        if (!MySandboxGameWrapper.IsGameStarted)
+		            return;
 
-				if ( TAB_MainTabs.SelectedTab != TAB_Entities_Page )
-					return;
+		        if (TAB_MainTabs.SelectedTab != TAB_Entities_Page)
+		            return;
 
-				TRV_Entities.BeginUpdate( );
+		        TRV_Entities.BeginUpdate();
 
-				TreeNode sectorObjectsNode;
-				//TreeNode sectorEventsNode;
+		        TreeNode sectorObjectsNode;
+		        //TreeNode sectorEventsNode;
 
-				if ( TRV_Entities.Nodes.Count < 1 )
-				{
-					sectorObjectsNode = TRV_Entities.Nodes.Add( "Sector Objects" );
-					//sectorEventsNode = TRV_Entities.Nodes.Add( "Sector Events" );
+		        if (TRV_Entities.Nodes.Count < 1)
+		        {
+		            sectorObjectsNode = TRV_Entities.Nodes.Add("Sector Objects");
+		            //sectorEventsNode = TRV_Entities.Nodes.Add( "Sector Events" );
 
-					sectorObjectsNode.Name = sectorObjectsNode.Text;
-					//sectorEventsNode.Name = sectorEventsNode.Text;
-				}
-				else
-				{
-					sectorObjectsNode = TRV_Entities.Nodes[ 0 ];
-					//sectorEventsNode = TRV_Entities.Nodes[ 1 ];
-				}
+		            sectorObjectsNode.Name = sectorObjectsNode.Text;
+		            //sectorEventsNode.Name = sectorEventsNode.Text;
+		        }
+		        else
+		        {
+		            sectorObjectsNode = TRV_Entities.Nodes[0];
+		            //sectorEventsNode = TRV_Entities.Nodes[ 1 ];
+		        }
 
-				RenderSectorObjectChildNodes( sectorObjectsNode );
-				sectorObjectsNode.Text = $"{sectorObjectsNode.Name} ({m_sectorEntities.Count})";
-				sectorObjectsNode.Tag = SectorObjectManager.Instance;
+		        RenderSectorObjectChildNodes(sectorObjectsNode);
+		        sectorObjectsNode.Text = $"{sectorObjectsNode.Name} ({m_sectorEntities.Count})";
+		        sectorObjectsNode.Tag = SectorObjectManager.Instance;
 
 
-				TRV_Entities.EndUpdate( );
-			}
+		        TRV_Entities.EndUpdate();
+		    }
+		    catch (Exception ex)
+		    {
+		        ApplicationLog.BaseLog.Error(ex);
+		    }
 			finally
 			{
 				m_entityTreeRefreshTimer.Interval = 500;
@@ -1419,13 +1423,13 @@ namespace SEServerExtender
 
             blockResult.Sort((a, b) =>
                              {
-                                 if (a.FatBlock != null && b.FatBlock != null)
-                                     return a.FatBlock.DisplayNameText.CompareTo(b.FatBlock.DisplayNameText);
-                                 if (a.FatBlock != null)
-                                     return -1;
-                                 if (b.FatBlock != null)
+                                 if (a?.FatBlock?.DisplayNameText == null)
                                      return 1;
-                                 return a.BlockDefinition.Id.SubtypeName.CompareTo(b.BlockDefinition.Id.SubtypeName);
+                                 if (b?.FatBlock?.DisplayNameText == null)
+                                     return -1;
+                                 if (a.FatBlock != null && b.FatBlock != null)
+                                     return string.Compare(a.FatBlock.DisplayNameText, b.FatBlock.DisplayNameText, StringComparison.CurrentCultureIgnoreCase);
+                                 return string.Compare(a.BlockDefinition.Id.SubtypeName, b.BlockDefinition.Id.SubtypeName, StringComparison.CurrentCultureIgnoreCase);
                              });
 
 	        return blockResult;

@@ -587,11 +587,11 @@ namespace SEModAPIExtensions.API
 				if ( _isServerRunning )
 					return;
 
-			    //if (DisableProfiler)
-			    //{
-			    //    KillProfiler();
-			    //}
-			    if (!DisableProfiler && !IsStable)
+			    if (DisableProfiler)
+			    {
+			        KillProfiler();
+			    }
+			    else
 			    {
                     //profiler injection is timing critical
                     //create a fake plugin to trick the game into calling our injection init

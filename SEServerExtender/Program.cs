@@ -184,7 +184,7 @@ namespace SEServerExtender
             MyDefinitionManager.Static.PreloadDefinitions();
             MyDefinitionManager.Static.PrepareBaseDefinitions();
             MyDefinitionManager.Static.LoadScenarios();
-            MyTutorialHelper.Init();
+            //MyTutorialHelper.Init();
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(MyObjectBuilder_Base).TypeHandle);
         }
 

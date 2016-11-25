@@ -199,93 +199,103 @@ namespace SEModAPIInternal.API.Server
             ApplicationLog.Info(sb.ToString());
         }
 
-        private void ProcessEvent( MyPacket packet )
-        {
-            if ( _networkHandlers.Count == 0 )
-            {
-                ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
-                return;
-            }
+	    private void ProcessEvent(MyPacket packet)
+	    {
+	        if (_networkHandlers.Count == 0)
+	        {
+	            //pass the message back to the game server
+	            try
+	            {
+	                ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
+	            }
+	            catch (Exception ex)
+	            {
+	                ApplicationLog.Error(ex, "~Error processing event!");
+	                //crash after logging, bad things could happen if we continue on with bad data
+	                throw;
+	            }
+	            return;
+	        }
 
-            //magic: DO NOT TOUCH
-            BitStream stream = new BitStream();
-            stream.ResetRead( packet );
+	        //magic: DO NOT TOUCH
+	        BitStream stream = new BitStream();
+	        stream.ResetRead(packet);
 
-            NetworkId networkId = stream.ReadNetworkId();
-            //this value is unused, but removing this line corrupts the rest of the stream
-            NetworkId blockedNetworkId = stream.ReadNetworkId();
-            uint eventId = (uint)stream.ReadByte();
+	        NetworkId networkId = stream.ReadNetworkId();
+	        //this value is unused, but removing this line corrupts the rest of the stream
+	        NetworkId blockedNetworkId = stream.ReadNetworkId();
+	        uint eventId = (uint)stream.ReadByte();
 
 
-            CallSite site;
-            IMyNetObject sendAs;
-            object obj;
-            if ( networkId.IsInvalid ) // Static event
-            {
-                site = m_typeTable.StaticEventTable.Get( eventId );
-                sendAs = null;
-                obj = null;
-            }
-            else // Instance event
-            {
-                sendAs = ( (MyReplicationLayer)MyMultiplayer.ReplicationLayer ).GetObjectByNetworkId( networkId );
-                if ( sendAs == null )
-                {
-                    return;
-                }
-                var typeInfo = m_typeTable.Get( sendAs.GetType() );
-                int eventCount = typeInfo.EventTable.Count;
-                if ( eventId < eventCount ) // Directly
-                {
-                    obj = sendAs;
-                    site = typeInfo.EventTable.Get( eventId );
-                }
-                else // Through proxy
-                {
-                    obj = ( (IMyProxyTarget)sendAs ).Target;
-                    typeInfo = m_typeTable.Get( obj.GetType() );
-                    site = typeInfo.EventTable.Get( eventId - (uint)eventCount ); // Subtract max id of Proxy
-                }
-            }
+	        CallSite site;
+	        IMyNetObject sendAs;
+	        object obj;
+	        if (networkId.IsInvalid) // Static event
+	        {
+	            site = m_typeTable.StaticEventTable.Get(eventId);
+	            sendAs = null;
+	            obj = null;
+	        }
+	        else // Instance event
+	        {
+	            sendAs = ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).GetObjectByNetworkId(networkId);
+	            if (sendAs == null)
+	            {
+	                return;
+	            }
+	            var typeInfo = m_typeTable.Get(sendAs.GetType());
+	            int eventCount = typeInfo.EventTable.Count;
+	            if (eventId < eventCount) // Directly
+	            {
+	                obj = sendAs;
+	                site = typeInfo.EventTable.Get(eventId);
+	            }
+	            else // Through proxy
+	            {
+	                obj = ((IMyProxyTarget)sendAs).Target;
+	                typeInfo = m_typeTable.Get(obj.GetType());
+	                site = typeInfo.EventTable.Get(eventId - (uint)eventCount); // Subtract max id of Proxy
+	            }
+	        }
 
 #if DEBUG
             if ( ExtenderOptions.IsDebugging )
             {
-                if ( !site.MethodInfo.Name.Contains( "SyncPropertyChanged" ) && !site.MethodInfo.Name.Contains( "OnSimulationInfo" ) )
+                if ( !site.MethodInfo.Name.Contains( "SyncPropertyChanged" ) )// && !site.MethodInfo.Name.Contains( "OnSimulationInfo" ) )
                     ApplicationLog.Error( $"Caught event {site.MethodInfo.Name} from user {PlayerMap.Instance.GetFastPlayerNameFromSteamId( packet.Sender.Value )}:{packet.Sender.Value}. Length {stream.ByteLength}B" );
             }
 #endif
-            //we're handling the network live in the game thread, this needs to go as fast as possible
-            bool handled = false;
-            Parallel.ForEach( _networkHandlers, handler =>
-                                                {
-                                                    try
-                                                    {
-                                                        if (handler.CanHandle(site))
-                                                            handled |= handler.Handle(packet.Sender.Value, site, stream, obj);
-                                                    }
-                                                    catch(Exception ex)
-                                                    {
-                                                        ApplicationLog.Error(ex.ToString());
-                                                    }
-                                                } );
+	        //we're handling the network live in the game thread, this needs to go as fast as possible
+	        bool handled = false;
+	        Parallel.ForEach(_networkHandlers, handler =>
+	                                           {
+	                                               try
+	                                               {
+	                                                   if (handler.CanHandle(site))
+	                                                       handled |= handler.Handle(packet.Sender.Value, site, stream, obj);
+	                                               }
+	                                               catch (Exception ex)
+	                                               {
+	                                                   ApplicationLog.Error(ex.ToString());
+	                                               }
+	                                           });
 
-            //one of the handlers wants us to discard this packet
-            if (handled)
-                return;
+	        //one of the handlers wants us to discard this packet
+	        if (handled)
+	            return;
 
-            //pass the message back to the game server
-            try
-            {
-                ((MyReplicationLayer) MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
-            }
-            catch (Exception ex)
-            {
-                ApplicationLog.Error(ex.ToString());
-                //crash after logging, bad things could happen if we continue on with bad data
-                throw;
-            }
-        }
+	        //pass the message back to the game server
+	        try
+	        {
+	            ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
+	        }
+	        catch (Exception ex)
+	        {
+	            ApplicationLog.Error(ex, "Error when returning control to game server!");
+	            //crash after logging, bad things could happen if we continue on with bad data
+	            throw;
+	        }
+	    }
 
 	    private void RegisterNetworkHandler( NetworkHandlerBase handler )
 	    {

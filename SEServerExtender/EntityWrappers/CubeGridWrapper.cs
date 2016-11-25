@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Sandbox.Definitions;
 using Sandbox.Game.Entities;
+using Sandbox.Game.Entities.Cube;
 using SEModAPIInternal.API.Common;
 using VRage.Game;
 using VRageMath;
@@ -225,6 +227,39 @@ namespace SEServerExtender.EntityWrappers
                 }
 
                 return result.ToArray();
+            }
+        }
+
+        [Category("Ownership")]
+        [Description("Sets the author of ALL BLOCKS on the grid to the given player. Ignore the value displayed, it will always be 0")]
+        public long SetFullAuthor
+        {
+            get { return 0; }
+            set
+            {
+                if (value != 0 && !PlayerMap.Instance.GetPlayerIds().Contains(value))
+                    throw new Exception("That is not a valid PlayerID.");
+
+                DialogResult messageResult =
+                    MessageBox.Show(
+                        $"Are you sure you want to change the author of ALL BLOCKS on this grid to {PlayerMap.Instance.GetPlayerNameFromPlayerId(value)}?",
+                        "Confirm",
+                        MessageBoxButtons.YesNo);
+                if (messageResult == DialogResult.No)
+                    return;
+
+                SandboxGameAssemblyWrapper.Instance.GameAction(() =>
+                                                               {
+                                                                   FieldInfo builtBy = typeof(MySlimBlock).GetField("m_builtByID", BindingFlags.NonPublic|BindingFlags.Instance);
+                                                                   foreach (var block in Grid.GetBlocks())
+                                                                   {
+                                                                       if(block==null)
+                                                                           continue;
+                                                                       block.RemoveAuthorship();
+                                                                       builtBy.SetValue(block, value);
+                                                                       block.AddAuthorship();
+                                                                   }
+                                                               });
             }
         }
 
