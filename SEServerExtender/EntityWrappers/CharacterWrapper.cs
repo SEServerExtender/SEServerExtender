@@ -14,6 +14,7 @@ using SEModAPIExtensions.API;
 using SEModAPIInternal.API.Common;
 using SEModAPIInternal.API.Server;
 using SpaceEngineers.Game.World;
+using VRage.Game.ModAPI;
 using VRage.Network;
 using VRageMath;
 
@@ -59,6 +60,7 @@ namespace SEServerExtender.EntityWrappers
             //TODO: Setter?
         }
 
+        /*
         [Category("General")]
         public bool IsPromoted
         {
@@ -73,6 +75,14 @@ namespace SEServerExtender.EntityWrappers
                 var info = typeof(MyGuiScreenPlayers).GetMethod("Promote", BindingFlags.NonPublic | BindingFlags.Static);
                 ServerNetworkManager.Instance.RaiseStaticEvent(info, args: new object[] {SteamId, value});
             }
+        }
+        */
+
+        [Category("General")]
+        public MyPromoteLevel PromoteLevel
+        {
+            get { return MySession.Static.GetUserPromoteLevel(SteamId); }
+            set { SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => MySession.Static.PromotedUsers[SteamId] = value, null, null); }
         }
         
         [Category("General")]

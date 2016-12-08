@@ -952,15 +952,18 @@ namespace SEModAPIInternal.API.Common
 			//ServerNetworkManager.Instance.SetPlayerBan(steamId, false);
 		}
 
+        [Obsolete("Use MySession.Static.IsUserAdmin")]
 		public bool IsUserAdmin(ulong remoteUserId)
 		{
 		    return MySandboxGame.ConfigDedicated.Administrators.Any( userId => remoteUserId.ToString().Equals( userId ) );
 		    //return MyMultiplayer.Static.IsAdmin( remoteUserId );
 		}
 
+        [Obsolete("User MySession.Static.IsUserSpaceMaster")]
 	    public bool IsUserPromoted( ulong remoteUserId )
 	    {
-	        return MySession.Static.IsUserPromoted( remoteUserId );
+	        //return MySession.Static.IsUserPromoted( remoteUserId );
+	        return MySession.Static.IsUserSpaceMaster(remoteUserId);
 	    }
 
 		#endregion

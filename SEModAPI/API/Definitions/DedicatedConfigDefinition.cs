@@ -594,6 +594,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
 
+        /*
 		/// <summary>
 		/// Get or set whether the server will automatically remove debris
 		/// </summary>
@@ -613,6 +614,7 @@ namespace SEModAPI.API.Definitions
 				_definition.SessionSettings.RemoveTrash = value;
 			}
 		}
+        */
 
 		/// <summary>
 		/// Get or set the world borders. Ships and players cannot go further than this
@@ -1112,22 +1114,22 @@ namespace SEModAPI.API.Definitions
 		}
 
 		/// <summary>
-		/// Get or set the DisableRespawnShips setting.
+		/// Get or set the EnableRespawnShips setting.
 		/// </summary>
 		[DataMember]
 		[Browsable( true )]
 		[ReadOnly( false )]
-		[Description( "Get or set the DisableRespawnShips setting." )]
+		[Description( "Get or set the EnableRespawnShips setting." )]
 		[Category( "World Settings" )]
-		[DisplayName( "Disable Respawn Ships" )]
+		[DisplayName( "Enable Respawn Ships" )]
 		[DefaultValue( false )]
 		public bool DisableRespawnShips
 		{
-			get { return _definition.SessionSettings.DisableRespawnShips; }
+			get { return _definition.SessionSettings.EnableRespawnShips; }
 			set
 			{
-				if ( _definition.SessionSettings.DisableRespawnShips != value )
-					_definition.SessionSettings.DisableRespawnShips = value;
+				if ( _definition.SessionSettings.EnableRespawnShips != value )
+					_definition.SessionSettings.EnableRespawnShips = value;
 			}
 		}
 

@@ -40,6 +40,8 @@ namespace SEModAPIExtensions.API
 
         public static void Init()
         {
+            BaseLog.Warn("ProfilerInjector disabled on this build!");
+            return;
             var entType = typeof(MyEntities);
             m_entitiesForUpdate = (CachingList<MyEntity>)entType.GetField("m_entitiesForUpdate", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             m_entitiesForUpdate10 = (CachingList<MyEntity>)entType.GetField("m_entitiesForUpdate10", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
