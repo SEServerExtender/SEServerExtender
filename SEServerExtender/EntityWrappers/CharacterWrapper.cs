@@ -48,43 +48,13 @@ namespace SEServerExtender.EntityWrappers
             get { return Character.ControllerInfo.Controller.Player.Client.SteamUserId; }
         }
 
-        [Category("General")]
-        public bool IsAdmin
-        {
-            get
-            {
-                if (!Character.IsPlayer)
-                    return false;
-                return Character.ControllerInfo.Controller.Player.IsAdmin;
-            }
-            //TODO: Setter?
-        }
-
-        /*
-        [Category("General")]
-        public bool IsPromoted
-        {
-            get
-            {
-                if (!Character.IsPlayer)
-                    return false;
-                return Character.ControllerInfo.Controller.Player.IsPromoted;
-            }
-            set
-            {
-                var info = typeof(MyGuiScreenPlayers).GetMethod("Promote", BindingFlags.NonPublic | BindingFlags.Static);
-                ServerNetworkManager.Instance.RaiseStaticEvent(info, args: new object[] {SteamId, value});
-            }
-        }
-        */
-
-        [Category("General")]
+        [Category( "General" )]
         public MyPromoteLevel PromoteLevel
         {
-            get { return MySession.Static.GetUserPromoteLevel(SteamId); }
-            set { SandboxGameAssemblyWrapper.Instance.BeginGameAction(() => MySession.Static.PromotedUsers[SteamId] = value, null, null); }
+            get { return MySession.Static.GetUserPromoteLevel( SteamId ); }
+            set { SandboxGameAssemblyWrapper.Instance.BeginGameAction( () => MySession.Static.SetUserPromoteLevel( SteamId, value ), null, null ); }
         }
-        
+
         [Category("General")]
         public float Mass
         {
