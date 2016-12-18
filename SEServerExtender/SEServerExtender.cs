@@ -309,6 +309,7 @@ namespace SEServerExtender
 	        var unknownBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
 	        var systemBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
 	        var characterBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
+	        var gridBlocks = new List<MySimpleProfiler.MySimpleProfilingBlock>();
 
 	        foreach (var block in blocks.Values.ToArray())
 	        {
@@ -348,6 +349,8 @@ namespace SEServerExtender
 	                        default:
                                 if(block.Name.StartsWith("Character"))
                                     characterBlocks.Add(block);
+                                else if ( block.Name.StartsWith( "&&GRID&&" ) )
+                                    gridBlocks.Add( block );
                                 else
 	                                blockBlocks.Add(block);
 	                            break;
@@ -372,6 +375,7 @@ namespace SEServerExtender
 	        unknownBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
             systemBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
             characterBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
+            gridBlocks.Sort((a, b) => b.Average.CompareTo(a.Average));
 
             if (systemBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
 	        {
@@ -383,6 +387,21 @@ namespace SEServerExtender
                         continue;
 
                     sb.AppendLine($"{block.DisplayName}: {block.Average:N3}ms");
+                }
+
+                sb.AppendLine();
+            }
+
+            if (gridBlocks.Any(b => b.Average.IsValid() && b.Average >= 0.001))
+            {
+                sb.AppendLine("Grids:");
+
+                foreach (var block in gridBlocks)
+                {
+                    if (!block.Average.IsValid() || block.Average < 0.001)
+                        continue;
+
+                    sb.AppendLine($"{block.DisplayName.Substring(8)}: {block.Average:N3}ms");
                 }
 
                 sb.AppendLine();
@@ -790,6 +809,16 @@ namespace SEServerExtender
                 else if (entity is IMyMeteor)
                     m_meteorEntities.Add(entity);
 			}
+
+		    foreach ( var player in MySession.Static.Players.GetOnlinePlayers() )
+		    {
+		        var character = player?.Character;
+		        if ( character == null )
+		            continue;
+
+		        if ( !m_characterEntities.Contains( character ) )
+		            m_characterEntities.Add( character );
+		    }
 
 			RenderCubeGridNodes( cubeGridsNode );
 			RenderCharacterNodes( charactersNode );
@@ -2543,6 +2572,11 @@ namespace SEServerExtender
         private void CHK_PauseProfiler_CheckedChanged(object sender, EventArgs e)
         {
             m_profilerPaused = CHK_PauseProfiler.Checked;
+        }
+
+        private void CHK_ProfileGrids_CheckedChanged(object sender, EventArgs e)
+        {
+            ProfilerInjection.ProfilePerGrid = CHK_ProfileBlocks.Checked;
         }
     }
 }

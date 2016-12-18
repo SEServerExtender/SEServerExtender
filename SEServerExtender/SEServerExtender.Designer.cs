@@ -92,6 +92,7 @@
             this.TAB_Statistics = new System.Windows.Forms.TabPage();
             this.TB_Statistics = new System.Windows.Forms.TextBox();
             this.TAB_Profiler = new System.Windows.Forms.TabPage();
+            this.CHK_ProfileGrids = new System.Windows.Forms.CheckBox();
             this.CHK_PauseProfiler = new System.Windows.Forms.CheckBox();
             this.CHK_ProfileBlocks = new System.Windows.Forms.CheckBox();
             this.TB_Profiler = new System.Windows.Forms.TextBox();
@@ -887,6 +888,7 @@
             // 
             // TAB_Profiler
             // 
+            this.TAB_Profiler.Controls.Add(this.CHK_ProfileGrids);
             this.TAB_Profiler.Controls.Add(this.CHK_PauseProfiler);
             this.TAB_Profiler.Controls.Add(this.CHK_ProfileBlocks);
             this.TAB_Profiler.Controls.Add(this.TB_Profiler);
@@ -898,11 +900,23 @@
             this.TAB_Profiler.Text = "Profiler";
             this.TAB_Profiler.UseVisualStyleBackColor = true;
             // 
+            // CHK_ProfileGrids
+            // 
+            this.CHK_ProfileGrids.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CHK_ProfileGrids.AutoSize = true;
+            this.CHK_ProfileGrids.Location = new System.Drawing.Point(104, 518);
+            this.CHK_ProfileGrids.Name = "CHK_ProfileGrids";
+            this.CHK_ProfileGrids.Size = new System.Drawing.Size(82, 17);
+            this.CHK_ProfileGrids.TabIndex = 5;
+            this.CHK_ProfileGrids.Text = "Profile Grids";
+            this.CHK_ProfileGrids.UseVisualStyleBackColor = true;
+            this.CHK_ProfileGrids.CheckedChanged += new System.EventHandler(this.CHK_ProfileGrids_CheckedChanged);
+            // 
             // CHK_PauseProfiler
             // 
             this.CHK_PauseProfiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CHK_PauseProfiler.AutoSize = true;
-            this.CHK_PauseProfiler.Location = new System.Drawing.Point(104, 518);
+            this.CHK_PauseProfiler.Location = new System.Drawing.Point(192, 518);
             this.CHK_PauseProfiler.Name = "CHK_PauseProfiler";
             this.CHK_PauseProfiler.Size = new System.Drawing.Size(56, 17);
             this.CHK_PauseProfiler.TabIndex = 4;
@@ -1095,5 +1109,6 @@
         private Button BTN_Factions_Promote;
         private CheckBox CHK_ProfileBlocks;
         private CheckBox CHK_PauseProfiler;
+        private CheckBox CHK_ProfileGrids;
     }
 }
