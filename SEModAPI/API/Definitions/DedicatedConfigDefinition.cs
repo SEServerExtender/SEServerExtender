@@ -1417,7 +1417,7 @@ namespace SEModAPI.API.Definitions
         [DataMember]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Enables or disables Voxel Support. This only works on Dev branch!")]
+        [Description("Enables or disables Voxel Support.")]
         [Category("World Settings")]
         [DisplayName("Enable Station Voxel Support")]
         [DefaultValue(true)]
@@ -1493,7 +1493,7 @@ namespace SEModAPI.API.Definitions
 		[DataMember]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Enables or disables Airtightness. This only works on Dev branch!")]
+        [Description("Enables or disables Airtightness.")]
         [Category("World Settings")]
         [DisplayName("Enable Airtightness")]
         [DefaultValue(true)]
@@ -1506,7 +1506,7 @@ namespace SEModAPI.API.Definitions
 	    [DataMember]
 	    [Browsable(true)]
 	    [ReadOnly(false)]
-	    [Description("Enables or disables block limits. This only works on Dev branch!")]
+	    [Description("Enables or disables block limits.")]
 	    [Category("Block limits")]
 	    [DisplayName("Enable Block limits")]
 	    [DefaultValue(true)]
@@ -1526,7 +1526,7 @@ namespace SEModAPI.API.Definitions
 	    [DataMember]
 	    [Browsable(true)]
 	    [ReadOnly(false)]
-	    [Description("Lets players delete blocks they own remotely. This only works on Dev branch!")]
+	    [Description("Lets players delete blocks they own remotely.")]
 	    [Category("Block limits")]
 	    [DisplayName("Enable Remote Block Removal")]
 	    [DefaultValue(true)]
@@ -1546,7 +1546,7 @@ namespace SEModAPI.API.Definitions
         [DataMember]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Max number of blocks per player. This only works on Dev branch!")]
+        [Description("Max number of blocks per player.")]
         [Category("Block limits")]
         [DisplayName("Max Blocks Per Player")]
         [DefaultValue(true)]
@@ -1559,7 +1559,7 @@ namespace SEModAPI.API.Definitions
         [DataMember]
         [Browsable(true)]
         [ReadOnly(false)]
-        [Description("Max number of blocks per grid. This only works on Dev branch!")]
+        [Description("Max number of blocks per grid.")]
         [Category("Block limits")]
         [DisplayName("Max Blocks Per Grid")]
         [DefaultValue(true)]
@@ -1571,7 +1571,7 @@ namespace SEModAPI.API.Definitions
 
         [Browsable(true)]
 	    [ReadOnly(false)]
-	    [Description("Opens a window to configure block limits. This only works on Dev branch!")]
+	    [Description("Opens a window to configure block limits.")]
 	    [Category("Block limits")]
 	    [DisplayName("Block limits")]
 	    [Editor(typeof(LimitEditButton), typeof(UITypeEditor))]
@@ -1579,8 +1579,22 @@ namespace SEModAPI.API.Definitions
 	    {
 	        get { return "Press the button to edit settings ---->"; }
 	    }
-        
-        #endregion
+
+	    [DataMember]
+	    [Browsable(true)]
+	    [ReadOnly(false)]
+	    [Description("Enables or disables the scripter role")]
+	    [Category("World Settings")]
+	    [DisplayName("Enable Scripter Role")]
+	    [DefaultValue(true)]
+	    public bool EnableScripterRole
+	    {
+	        get { return _definition.SessionSettings.EnableScripterRole; }
+
+	        set { _definition.SessionSettings.EnableScripterRole = value; }
+	    }
+
+	    #endregion
 
         #region "Methods"
         /// <summary>
