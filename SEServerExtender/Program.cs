@@ -222,26 +222,26 @@ namespace SEServerExtender
             ApplicationLog.BaseLog.Info( versionMessage );
 
             if (stableBuild)
-		    {
+            {
                 BaseLog.Info("Detected \"Stable\" branch!");
-                BaseLog.Error("WARNING: THIS BUILD OF SESE IS NOT COMPATIBLE WITH STABLE BRANCH");
-		        if (SystemInformation.UserInteractive)
-		        {
-		            var result = MessageBox.Show("This build of SESE is not compatible with stable branch!",
-		                                         "Fatal Error",
-		                                         MessageBoxButtons.OK,
-		                                         MessageBoxIcon.Error);
-		            if (result == DialogResult.OK)
-		            {
-		                Stop();
-		                return;
-		            }
-		        }
-		        else
-		        {
-		            Stop();
-		            return;
-		        }
+                //BaseLog.Error("WARNING: THIS BUILD OF SESE IS NOT COMPATIBLE WITH STABLE BRANCH");
+		        //if (SystemInformation.UserInteractive)
+		        //{
+		        //    var result = MessageBox.Show("This build of SESE is not compatible with stable branch!",
+		        //                                 "Fatal Error",
+		        //                                 MessageBoxButtons.OK,
+		        //                                 MessageBoxIcon.Error);
+		        //    if (result == DialogResult.OK)
+		        //    {
+		        //        Stop();
+		        //        return;
+		        //    }
+		        //}
+		        //else
+		        //{
+		        //    Stop();
+		        //    return;
+		        //}
 		        IsStable = true;
 		        PluginManager.IsStable = true;
 		        Server.IsStable = true;
