@@ -830,8 +830,8 @@ namespace SEModAPIExtensions.API
 
             public void Init(object gameInstance)
             {
-                //ApplicationLog.BaseLog.Info("Initializing profiler injector");
-                //ProfilerInjection.Init();
+                ApplicationLog.BaseLog.Info("Initializing profiler injector");
+                ProfilerInjection.Init();
             }
 
             public void Update()

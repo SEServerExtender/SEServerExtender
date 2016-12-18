@@ -28,24 +28,25 @@ namespace SEModAPIExtensions.API
     {
         private static readonly Logger BaseLog = LogManager.GetLogger("BaseLog");
         //Entities updated each frame
-        static CachingList<MyEntity> m_entitiesForUpdate;
+        static MyDistributedUpdater<CachingList<MyEntity>, MyEntity> m_entitiesForUpdate;
 
         //Entities updated each 10th frame
-        static CachingList<MyEntity> m_entitiesForUpdate10;
+        static MyDistributedUpdater<CachingList<MyEntity>, MyEntity> m_entitiesForUpdate10;
 
         //Entities updated each 100th frame
-        static CachingList<MyEntity> m_entitiesForUpdate100;
+        static MyDistributedUpdater<CachingList<MyEntity>, MyEntity> m_entitiesForUpdate100;
+
         static MyEntityCreationThread m_creationThread;
+
         public static bool ProfilePerBlock = false;
+        public static bool ProfilePerGrid = false;
 
         public static void Init()
         {
-            BaseLog.Warn("ProfilerInjector disabled on this build!");
-            return;
             var entType = typeof(MyEntities);
-            m_entitiesForUpdate = (CachingList<MyEntity>)entType.GetField("m_entitiesForUpdate", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-            m_entitiesForUpdate10 = (CachingList<MyEntity>)entType.GetField("m_entitiesForUpdate10", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-            m_entitiesForUpdate100 = (CachingList<MyEntity>)entType.GetField("m_entitiesForUpdate100", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            m_entitiesForUpdate = (MyDistributedUpdater<CachingList<MyEntity>, MyEntity>)entType.GetField("m_entitiesForUpdate", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            m_entitiesForUpdate10 = (MyDistributedUpdater<CachingList<MyEntity>, MyEntity>)entType.GetField("m_entitiesForUpdate10", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            m_entitiesForUpdate100 = (MyDistributedUpdater<CachingList<MyEntity>, MyEntity>)entType.GetField("m_entitiesForUpdate100", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             m_creationThread = (MyEntityCreationThread)entType.GetField("m_creationThread", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
             var keenBefore = entType.GetMethod("UpdateBeforeSimulation");
@@ -65,7 +66,7 @@ namespace SEModAPIExtensions.API
         static int m_update100Index = 0;
         static float m_update10Count = 0;
         static float m_update100Count = 0;
-   
+
         public static void UpdateBeforeSimulation()
         {
             if (MySandboxGame.IsGameReady == false)
@@ -76,121 +77,157 @@ namespace SEModAPIExtensions.API
             ProfilerShort.Begin("MyEntities.UpdateBeforeSimulation");
             System.Diagnostics.Debug.Assert(MyEntities.UpdateInProgress == false);
             MyEntities.UpdateInProgress = true;
-            MyCubeBlock cubeBlock;
-            MyCharacter character;
 
             {
                 ProfilerShort.Begin("Before first frame");
                 MyEntities.UpdateOnceBeforeFrame();
 
                 ProfilerShort.BeginNextBlock("Each update");
-                m_entitiesForUpdate.ApplyChanges();
-                foreach (MyEntity entity in m_entitiesForUpdate)
+                m_entitiesForUpdate.List.ApplyChanges();
+                m_entitiesForUpdate.Update();
+                MySimpleProfiler.Begin("Blocks");
+                m_entitiesForUpdate.Iterate((x) =>
                 {
-                    string typeName = entity.GetType().Name;
-                    cubeBlock = entity as MyCubeBlock;
-                    character = entity as MyCharacter;
-                    if (cubeBlock != null && ProfilePerBlock)
+                    ProfilerShort.Begin(x.GetType().Name);
+                    if (x.MarkedForClose == false)
                     {
-                        MySimpleProfiler.Begin("Blocks");
-                        MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
-                    }
-                    else if (character != null)
-                        MySimpleProfiler.Begin("CharactersB");
-                    //ProfilerShort.Begin(Partition.Select(entity.GetType().GetHashCode(), "Part1", "Part2", "Part3"));
-                    ProfilerShort.Begin(entity.GetType().Name);
-                    if (entity.MarkedForClose == false)
-                    {
-                        entity.UpdateBeforeSimulation();
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.Begin(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.Begin("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
+                        }
+
+                        x.UpdateBeforeSimulation();
+
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.End(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.End("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.End("&&GRID&&" + grid.DisplayName);
+                        }
                     }
                     ProfilerShort.End();
-                    //ProfilerShort.End();
-                    if (cubeBlock != null && ProfilePerBlock)
-                    {
-                        MySimpleProfiler.End("Blocks");
-                        MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
-                    }
-                    else if (character != null)
-                        MySimpleProfiler.End("CharactersB");
-                }
+                });
 
                 ProfilerShort.BeginNextBlock("10th update");
-                m_entitiesForUpdate10.ApplyChanges();
-                if (m_entitiesForUpdate10.Count > 0)
+                m_entitiesForUpdate10.List.ApplyChanges();
+                m_entitiesForUpdate10.Update();
+                m_entitiesForUpdate10.Iterate((x) => 
                 {
-                    ++m_update10Index;
-                    m_update10Index %= 10;
-                    for (int i = m_update10Index; i < m_entitiesForUpdate10.Count; i += 10)
+                    ProfilerShort.Begin(x.GetType().Name);
+                    if (x.MarkedForClose == false)
                     {
-                        var entity = m_entitiesForUpdate10[i];
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.Begin(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.Begin("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
+                        }
 
-                        string typeName = entity.GetType().Name;
-                        cubeBlock = entity as MyCubeBlock;
-                        character = entity as MyCharacter;
-                        if (cubeBlock != null && ProfilePerBlock)
+                        x.UpdateBeforeSimulation10();
+
+                        if (ProfilePerBlock)
                         {
-                            MySimpleProfiler.Begin("Blocks");
-                            MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.End(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.End("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
                         }
-                        else if (character != null)
-                            MySimpleProfiler.Begin("CharactersB10");
-                        //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
-                        ProfilerShort.Begin(typeName);
-                        if (entity.MarkedForClose == false)
+                        if (ProfilePerGrid)
                         {
-                            entity.UpdateBeforeSimulation10();
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.End("&&GRID&&" + grid.DisplayName);
                         }
-                        ProfilerShort.End();
-                        //ProfilerShort.End();
-                        if (cubeBlock != null && ProfilePerBlock)
-                        {
-                            MySimpleProfiler.End("Blocks");
-                            MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
-                        }
-                        else if (character != null)
-                            MySimpleProfiler.End("CharactersB10");
                     }
-                }
+                    ProfilerShort.End();
+                });
 
+                
                 ProfilerShort.BeginNextBlock("100th update");
-                m_entitiesForUpdate100.ApplyChanges();
-                if (m_entitiesForUpdate100.Count > 0)
+                m_entitiesForUpdate100.List.ApplyChanges();
+                m_entitiesForUpdate100.Update();
+                m_entitiesForUpdate100.Iterate((x) =>
                 {
-                    ++m_update100Index;
-                    m_update100Index %= 100;
-                    for (int i = m_update100Index; i < m_entitiesForUpdate100.Count; i += 100)
+                    ProfilerShort.Begin(x.GetType().Name);
+                    if (x.MarkedForClose == false)
                     {
-                        var entity = m_entitiesForUpdate100[i];
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.Begin(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.Begin("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
+                        }
 
-                        string typeName = entity.GetType().Name;
-                        cubeBlock = entity as MyCubeBlock;
-                        character = entity as MyCharacter;
-                        if (cubeBlock != null && ProfilePerBlock)
+                        x.UpdateBeforeSimulation100();
+
+                        if (ProfilePerBlock)
                         {
-                            MySimpleProfiler.Begin("Blocks");
-                            MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.End(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.End("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
                         }
-                        else if (character != null)
-                            MySimpleProfiler.Begin("CharactersB100");
-                        //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
-                        ProfilerShort.Begin(typeName);
-                        if (entity.MarkedForClose == false)
+                        if (ProfilePerGrid)
                         {
-                            entity.UpdateBeforeSimulation100();
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
                         }
-                        ProfilerShort.End();
-                        //ProfilerShort.End();
-                        if (cubeBlock != null && ProfilePerBlock)
-                        {
-                            MySimpleProfiler.End("Blocks");
-                            MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
-                        }
-                        else if (character != null)
-                            MySimpleProfiler.End("CharactersB100");
                     }
-                }
+                    ProfilerShort.End();
+                });
+
                 ProfilerShort.End();
             }
+            MySimpleProfiler.End("Blocks");
 
             MyEntities.UpdateInProgress = false;
 
@@ -208,117 +245,149 @@ namespace SEModAPIExtensions.API
             {
                 System.Diagnostics.Debug.Assert(MyEntities.UpdateInProgress == false);
                 MyEntities.UpdateInProgress = true;
-                MyCubeBlock cubeBlock;
-                MyCharacter character;
 
                 ProfilerShort.Begin("UpdateAfter1");
-                m_entitiesForUpdate.ApplyChanges();
-                for (int i = 0; i < m_entitiesForUpdate.Count; i++)
+                m_entitiesForUpdate.List.ApplyChanges();
+                MySimpleProfiler.Begin("Blocks");
+                m_entitiesForUpdate.Iterate((x) =>
                 {
-                    MyEntity entity = m_entitiesForUpdate[i];
+                    ProfilerShort.Begin(x.GetType().Name);
+                    if (x.MarkedForClose == false)
+                    {
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.Begin(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.Begin("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
+                        }
 
-                    string typeName = entity.GetType().Name;
-                    cubeBlock = entity as MyCubeBlock;
-                    character = entity as MyCharacter;
-                    if (cubeBlock != null && ProfilePerBlock)
-                    {
-                        MySimpleProfiler.Begin("Blocks");
-                        MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
-                    }
-                    else if (character != null)
-                        MySimpleProfiler.Begin("CharactersA");
-                    //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
-                    ProfilerShort.Begin(typeName);
-                    if (entity.MarkedForClose == false)
-                    {
-                        entity.UpdateAfterSimulation();
+                        x.UpdateAfterSimulation();
+
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.End(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.End("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.End("&&GRID&&" + grid.DisplayName);
+                        }
                     }
                     ProfilerShort.End();
-                    //ProfilerShort.End();
-                    if (cubeBlock != null && ProfilePerBlock)
-                    {
-                        MySimpleProfiler.End("Blocks");
-                        MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
-                    }
-                    else if(character!=null)
-                        MySimpleProfiler.End("CharactersA");
-                }
-
+                });
                 ProfilerShort.End();
 
                 ProfilerShort.Begin("UpdateAfter10");
-                m_entitiesForUpdate10.ApplyChanges();
-                if (m_entitiesForUpdate10.Count > 0)
-                {
-                    for (int i = m_update10Index; i < m_entitiesForUpdate10.Count; i += 10)
+                m_entitiesForUpdate10.List.ApplyChanges();
+                m_entitiesForUpdate10.Iterate((x) =>
                     {
-                        MyEntity entity = m_entitiesForUpdate10[i];
+                        ProfilerShort.Begin(x.GetType().Name);
+                        if (x.MarkedForClose == false)
+                        {
+                            if (ProfilePerBlock)
+                            {
+                                MyCubeBlock block = x as MyCubeBlock;
+                                if (block != null)
+                                {
+                                    MySimpleProfiler.Begin(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                    if (ProfilePerGrid)
+                                        MySimpleProfiler.Begin("&&GRID&&" + block.CubeGrid.DisplayName);
+                                }
+                            }
+                            if (ProfilePerGrid)
+                            {
+                                MyCubeGrid grid = x as MyCubeGrid;
+                                if (grid != null)
+                                    MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
+                            }
 
-                        string typeName = entity.GetType().Name;
-                        cubeBlock = entity as MyCubeBlock;
-                        character = entity as MyCharacter;
-                        if (cubeBlock != null && ProfilePerBlock)
-                        {
-                            MySimpleProfiler.Begin("Blocks");
-                            MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
-                        }
-                        else if (character != null)
-                            MySimpleProfiler.Begin("CharactersA10");
-                        //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
-                        ProfilerShort.Begin(typeName);
-                        if (entity.MarkedForClose == false)
-                        {
-                            entity.UpdateAfterSimulation10();
+                            x.UpdateAfterSimulation10();
+
+                            if (ProfilePerBlock)
+                            {
+                                MyCubeBlock block = x as MyCubeBlock;
+                                if (block != null)
+                                {
+                                    MySimpleProfiler.End(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                    if (ProfilePerGrid)
+                                        MySimpleProfiler.End("&&GRID&&" + block.CubeGrid.DisplayName);
+                                }
+                            }
+                            if (ProfilePerGrid)
+                            {
+                                MyCubeGrid grid = x as MyCubeGrid;
+                                if (grid != null)
+                                    MySimpleProfiler.End("&&GRID&&" + grid.DisplayName);
+                            }
                         }
                         ProfilerShort.End();
-                        //ProfilerShort.End();
-                        if (cubeBlock != null && ProfilePerBlock)
-                        {
-                            MySimpleProfiler.End("Blocks");
-                            MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
-                        }
-                        else if (character != null)
-                            MySimpleProfiler.End("CharactersA10");
-                    }
-                }
+                    });
                 ProfilerShort.End();
 
                 ProfilerShort.Begin("UpdateAfter100");
-                m_entitiesForUpdate100.ApplyChanges();
-                if (m_entitiesForUpdate100.Count > 0)
+                m_entitiesForUpdate100.List.ApplyChanges();
+                m_entitiesForUpdate100.Iterate((x) =>
                 {
-                    for (int i = m_update100Index; i < m_entitiesForUpdate100.Count; i += 100)
+                    ProfilerShort.Begin(x.GetType().Name);
+                    if (x.MarkedForClose == false)
                     {
-                        MyEntity entity = m_entitiesForUpdate100[i];
+                        if (ProfilePerBlock)
+                        {
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.Begin(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.Begin("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
+                        }
+                        if (ProfilePerGrid)
+                        {
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.Begin("&&GRID&&" + grid.DisplayName);
+                        }
 
-                        string typeName = entity.GetType().Name;
-                        cubeBlock = entity as MyCubeBlock;
-                        character = entity as MyCharacter;
-                        if (cubeBlock != null && ProfilePerBlock)
+                        x.UpdateAfterSimulation100();
+
+                        if (ProfilePerBlock)
                         {
-                            MySimpleProfiler.Begin("Blocks");
-                            MySimpleProfiler.Begin(cubeBlock.DefinitionDisplayNameText);
+                            MyCubeBlock block = x as MyCubeBlock;
+                            if (block != null)
+                            {
+                                MySimpleProfiler.End(block.DefinitionDisplayNameText + (ProfilePerGrid ? $" - {block.CubeGrid.DisplayName}" : string.Empty));
+                                if (ProfilePerGrid)
+                                    MySimpleProfiler.End("&&GRID&&" + block.CubeGrid.DisplayName);
+                            }
                         }
-                        else if (character != null)
-                            MySimpleProfiler.Begin("CharactersA100");
-                        //ProfilerShort.Begin(Partition.Select(typeName.GetHashCode(), "Part1", "Part2", "Part3"));
-                        ProfilerShort.Begin(typeName);
-                        if (entity.MarkedForClose == false)
+                        if (ProfilePerGrid)
                         {
-                            entity.UpdateAfterSimulation100();
+                            MyCubeGrid grid = x as MyCubeGrid;
+                            if (grid != null)
+                                MySimpleProfiler.End("&&GRID&&" + grid.DisplayName);
                         }
-                        ProfilerShort.End();
-                        //ProfilerShort.End();
-                        if (cubeBlock != null && ProfilePerBlock)
-                        {
-                            MySimpleProfiler.End("Blocks");
-                            MySimpleProfiler.End(cubeBlock.DefinitionDisplayNameText);
-                        }
-                        else if (character != null)
-                            MySimpleProfiler.End("CharactersA100");
                     }
-                }
+                    ProfilerShort.End();
+                });
                 ProfilerShort.End();
+                MySimpleProfiler.End("Blocks");
 
                 MyEntities.UpdateInProgress = false;
 
