@@ -6,6 +6,7 @@ using Sandbox.Game.Entities.Cube;
 using Sandbox.Game.Multiplayer;
 using Sandbox.Game.Weapons;
 using Sandbox.Game.World;
+using SEModAPI.API.Definitions;
 using VRage.Game;
 using VRage.Game.Entity;
 using VRage.Network;
@@ -49,7 +50,7 @@ namespace SEModAPIExtensions.API
     {
         private static bool _enableData;
         private Random _random = new Random();
-        private List<long> _messageUniqueIds = new List<long>(20);
+        private List<Guid> _messageUniqueIds = new List<Guid>(50);
         private byte[] _lastMessage;
         private DateTime _lastReceived = DateTime.Now;
 
@@ -344,70 +345,104 @@ namespace SEModAPIExtensions.API
 
         protected void ReceiveDataMessage( byte[] fullData )
         {
-            string text;
-            MessageRecieveItem item;
-            long uniqueId = BitConverter.ToInt64( fullData, 0 );
-            if ( _messageUniqueIds.Contains( uniqueId ) )
-            {
-                ApplicationLog.BaseLog.Debug( "Received duplicate chat message (hash)." );
-                return;
-            }
+            Task.Run(() =>
+                     {
+                         string text;
+                         MessageRecieveItem item;
+                         byte[] guidBytes = new byte[16];
+                         Array.Copy(fullData, guidBytes, 16);
 
-            if(_messageUniqueIds.Count>=20)
-                _messageUniqueIds.RemoveAt( 0 );
+                         Guid uniqueId = new Guid(guidBytes);
 
-            _messageUniqueIds.Add(uniqueId);
+                         if (_messageUniqueIds.Contains(uniqueId))
+                         {
+                             ApplicationLog.BaseLog.Debug("Received duplicate chat message (hash).");
+                             return;
+                         }
 
-            byte[] data = new byte[fullData.Length - sizeof(ulong)];
-            Array.Copy( fullData,sizeof(long), data, 0, data.Length );
+                         if (_messageUniqueIds.Count >= 50)
+                             _messageUniqueIds.RemoveAt(0);
 
-            if ( DateTime.Now - _lastReceived < TimeSpan.FromMilliseconds( 100 ) && CompareBytes( data, _lastMessage ) )
-                {
-                ApplicationLog.BaseLog.Debug( "Received duplicate chat message (value)." );
-                    _lastReceived = DateTime.Now;
-                    return;
-                }
+                         _messageUniqueIds.Add(uniqueId);
 
-            _lastReceived = DateTime.Now;
-            _lastMessage = data;
+                         byte[] data = new byte[fullData.Length - 16];
+                         Array.Copy(fullData, 16, data, 0, data.Length);
 
-            try
-            {
-                text = Encoding.UTF8.GetString( data );
+                         if (DateTime.Now - _lastReceived < TimeSpan.FromMilliseconds(100) && CompareBytes(data, _lastMessage))
+                         {
+                             ApplicationLog.BaseLog.Debug("Received duplicate chat message (value).");
+                             _lastReceived = DateTime.Now;
+                             return;
+                         }
 
-                item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>( text );
-            }
-            catch ( Exception ex )
-            {
-                ApplicationLog.BaseLog.Error( ex, "Failed to deserialize data message." );
-                return;
-            }
+                         _lastReceived = DateTime.Now;
+                         _lastMessage = data;
 
-            if ( ExtenderOptions.IsDebugging )
-                ApplicationLog.BaseLog.Debug( text );
-            
-            if ( item.msgID == 5010 )
-            {
-                Task.Run( () =>
-                {
-                    string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId( item.fromID );
+                         try
+                         {
+                             text = Encoding.UTF8.GetString(data);
 
-                    bool commandParsed = ParseChatCommands( item.message, item.fromID );
+                             item = MyAPIGateway.Utilities.SerializeFromXML<MessageRecieveItem>(text);
+                         }
+                         catch (Exception ex)
+                         {
+                             ApplicationLog.BaseLog.Error(ex, "Failed to deserialize data message.");
+                             return;
+                         }
 
-                    m_chatMessages.Add( string.Format( "{0}: {1}", playerName, item.message ) );
-                    ApplicationLog.ChatLog.Info( "Chat - Client '{0}': {1}", playerName, item.message );
+                         if (ExtenderOptions.IsDebugging)
+                             ApplicationLog.BaseLog.Debug(text);
 
-                    ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0 );
-                    if ( !commandParsed )
-                        Instance.AddEvent( chatEvent );
+                         if (item.msgID == 5010)
+                         {
+                             string playerName = PlayerMap.Instance.GetPlayerNameFromSteamId(item.fromID);
 
-                    m_resourceLock.AcquireExclusive();
-                    m_chatHistory.Add( chatEvent );
-                    m_resourceLock.ReleaseExclusive();
-                } );
-            }
-            else
-                ApplicationLog.Info( "Unknown data message type: " + item.msgID );
+                             bool commandParsed = ParseChatCommands(item.message, item.fromID);
+
+                             m_chatMessages.Add(string.Format("{0}: {1}", playerName, item.message));
+                             ApplicationLog.ChatLog.Info("Chat - Client '{0}': {1}", playerName, item.message);
+
+                             ChatEvent chatEvent = new ChatEvent(ChatEventType.OnChatReceived, DateTime.Now, item.fromID, 0, item.message, 0);
+                             if (!commandParsed)
+                                 Instance.AddEvent(chatEvent);
+
+                             m_resourceLock.AcquireExclusive();
+                             m_chatHistory.Add(chatEvent);
+                             m_resourceLock.ReleaseExclusive();
+                         }
+                         else if (item.msgID == 5011)
+                         {
+                             ApplicationLog.Info($"Sending chat override to {item.fromID}");
+                             SendDataMessage(new byte[0], 5007, item.fromID);
+                         }
+                         else if (item.msgID == 6000)
+                         {
+                             if (MySession.Static.IsUserAdmin(item.fromID))
+                             {
+                                 ScriptedChatMsg msg = new ScriptedChatMsg
+                                                       {
+                                                           Author = PlayerMap.Instance.GetPlayerNameFromSteamId(item.fromID),
+                                                           Font = MyFontEnum.Green,
+                                                           Text = item.message,
+                                                       };
+
+                                 var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnScriptedChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
+                                 ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, msg);
+                             }
+                             else
+                             {
+                                 ChatMsg msg = new ChatMsg
+                                               {
+                                                   Author = item.fromID,
+                                                   Text = item.message
+                                               };
+                                 var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
+                                 ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, msg);
+                             }
+                         }
+                         else
+                             ApplicationLog.Info("Unknown data message type: " + item.msgID);
+                     });
         }
 
         private static bool CompareBytes(byte[] byteA, byte[] byteB)
@@ -437,155 +472,44 @@ namespace SEModAPIExtensions.API
             byte[ ] data = Encoding.UTF8.GetBytes( messageString );
             long msgId = 5003;
 
-            //hash a random long with the current time and outgoing data to make a decent quality guid for each message
-            byte[] randLong = new byte[sizeof(long)];
-            _random.NextBytes(randLong);
-            long uniqueId = 23;
-            uniqueId = uniqueId * 37 + BitConverter.ToInt64(randLong, 0);
-            uniqueId = uniqueId * 37 + DateTime.Now.GetHashCode();
-            uniqueId = uniqueId * 37 + data.GetHashCode();
+            byte[] guidBytes = Guid.NewGuid().ToByteArray();
 
             //this block adds the length and message id to the outside of the message packet
             //so the mod can quickly determine where the message should go
-            byte[] newData = new byte[sizeof(long)*2 + data.Length];
-            BitConverter.GetBytes( uniqueId ).CopyTo( newData, 0 );
-            BitConverter.GetBytes(msgId).CopyTo(newData, sizeof(long));
-            data.CopyTo(newData, sizeof(long)*2);
+            byte[] newData = new byte[sizeof(long) + data.Length + guidBytes.Length];
+            guidBytes.CopyTo(newData, 0);
+            BitConverter.GetBytes(msgId).CopyTo(newData, guidBytes.Length);
+            data.CopyTo(newData, sizeof(long) + guidBytes.Length);
 
             SandboxGameAssemblyWrapper.Instance.GameAction(() =>
             {
-                if ( userId == 0 )
-                    MyAPIGateway.Multiplayer.SendMessageToOthers( 9000, newData );
+                if (userId == 0)
+                    ServerNetworkManager.Instance.BroadcastModMessage(9000, newData);
                 else
-                {
-                    if ( newData.Length > 4096 )
-                    {
-                        SendMessagePartsTo( userId, newData );
-                        return;
-                    }
-                    MyAPIGateway.Multiplayer.SendMessageTo( 9000, newData, userId );
-                }
+                    ServerNetworkManager.Instance.SendModMessageTo(9000, newData, userId);
             });
         }
 
-        public static void SendMessagePartsTo(ulong steamId, byte[] data)
+        public void SendDataMessage(byte[] data, long msgId, ulong userId)
         {
-            foreach (var packet in Segment(data))
-                MyAPIGateway.Multiplayer.SendMessageTo(9006, packet, steamId);
-        }
+            byte[] guidBytes = Guid.NewGuid().ToByteArray();
 
-        private static Dictionary<int, PartialMessage> messages = new Dictionary<int, PartialMessage>();
-        private const int PACKET_SIZE = 4096;
-        private const int META_SIZE = sizeof(int) * 2;
-        private const int DATA_LENGTH = PACKET_SIZE - META_SIZE;
+            //this block adds the length and message id to the outside of the message packet
+            //so the mod can quickly determine where the message should go
+            byte[] newData = new byte[sizeof(long) + data.Length + guidBytes.Length];
+            guidBytes.CopyTo(newData, 0);
+            BitConverter.GetBytes(msgId).CopyTo(newData, guidBytes.Length);
+            data.CopyTo(newData, sizeof(long) + guidBytes.Length);
 
-        /// <summary>
-        /// Segments a byte array.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static List<byte[]> Segment(byte[] message)
-        {
-            var hash = BitConverter.GetBytes(message.GetHashCode());
-            var packets = new List<byte[]>();
-            int msgIndex = 0;
-
-            int packetId = message.Length / DATA_LENGTH;
-
-            while (packetId >= 0)
+            SandboxGameAssemblyWrapper.Instance.GameAction(() =>
             {
-                var id = BitConverter.GetBytes(packetId);
-                byte[] segment;
-
-                if (message.Length - msgIndex > DATA_LENGTH)
-                {
-                    segment = new byte[PACKET_SIZE];
-                }
+                if (userId == 0)
+                    ServerNetworkManager.Instance.BroadcastModMessage(9000, newData);
                 else
-                {
-                    segment = new byte[META_SIZE + message.Length - msgIndex];
-                }
-
-                //Copy packet "header" data.
-                Array.Copy(hash, segment, hash.Length);
-                Array.Copy(id, 0, segment, hash.Length, id.Length);
-
-                //Copy segment of original message.
-                Array.Copy(message, msgIndex, segment, META_SIZE, segment.Length - META_SIZE);
-
-                packets.Add(segment);
-                msgIndex += DATA_LENGTH;
-                packetId--;
-            }
-
-            return packets;
+                    ServerNetworkManager.Instance.SendModMessageTo(9000, newData, userId);
+            });
         }
-
-        /// <summary>
-        /// Reassembles a segmented byte array.
-        /// </summary>
-        /// <param name="packet">Array segment.</param>
-        /// <param name="message">Full array, null if incomplete.</param>
-        /// <returns>Message fully desegmented, "message" is assigned.</returns>
-        public static byte[] Desegment(byte[] packet)
-        {
-            int hash = BitConverter.ToInt32(packet, 0);
-            int packetId = BitConverter.ToInt32(packet, sizeof(int));
-            byte[] dataBytes = new byte[packet.Length - META_SIZE];
-            Array.Copy(packet, META_SIZE, dataBytes, 0, packet.Length - META_SIZE);
-
-            if (!messages.ContainsKey(hash))
-            {
-                if (packetId == 0)
-                {
-                    return dataBytes;
-                }
-                else
-                {
-                    messages.Add(hash, new PartialMessage(packetId));
-                }
-            }
-
-            var message = messages[hash];
-            message.WritePart(packetId, dataBytes);
-
-            if (message.IsComplete)
-            {
-                messages.Remove(hash);
-                return message.Data;
-            }
-
-            return null;
-        }
-
-        private class PartialMessage
-        {
-            public byte[] Data;
-            private HashSet<int> receivedPackets = new HashSet<int>();
-            private readonly int MaxId;
-            public bool IsComplete { get { return receivedPackets.Count == MaxId + 1; } }
-
-
-            public PartialMessage(int startId)
-            {
-                MaxId = startId;
-                Data = new byte[0];
-            }
-
-            public void WritePart(int id, byte[] data)
-            {
-                int index = MaxId - id;
-                int requiredLength = (index * DATA_LENGTH) + data.Length;
-
-                if (Data.Length < requiredLength)
-                {
-                    Array.Resize(ref Data, requiredLength);
-                }
-
-                Array.Copy(data, 0, Data, index * DATA_LENGTH, data.Length);
-                receivedPackets.Add(id);
-            }
-        }
+        
         protected void ReceiveChatMessage( ulong remoteUserId, string message, ChatEntryTypeEnum entryType )
         {
             Task.Run( () =>
@@ -619,31 +543,20 @@ namespace SEModAPIExtensions.API
 
 			try
 			{
-                if ( remoteUserId != 0 )
-                {
-                    if ( _enableData )
-                        SendDataMessage( message, remoteUserId );
+			    if (remoteUserId != 0)
+			    {
+			        ScriptedChatMsg msg = new ScriptedChatMsg
+			                              {
+			                                  Author = Server.Instance.Config.ServerChatName,
+			                                  Font = MyFontEnum.Red,
+			                                  Text = message,
+			                              };
 
-                    else
-                    {
-                        ChatMsg msg = new ChatMsg
-                                      {
-                                          Author=Sync.MyId,
-                                          Text = message
-                                      };
-                        var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
-                        ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, new EndpointId(remoteUserId), msg);
-                        //MyMultiplayer.Static.SendChatMessage( message );
-                        //MyMultiplayer.Static.SendChatMessage("Due to a change in SE, all chat from the server is now broadcast publicly. To get private chat, add mod 559202083.");
+			        var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnScriptedChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
+			        ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, remoteUserId, msg);
+			    }
 
-                        /*
-                        Object chatMessageStruct = CreateChatMessageStruct( message );
-                        ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
-                        */
-                    }
-                }
-
-				m_chatMessages.Add( string.Format( "Server: {0}", message ) );
+			    m_chatMessages.Add( string.Format( "Server: {0}", message ) );
 
 				ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
 
@@ -674,27 +587,15 @@ namespace SEModAPIExtensions.API
 			{
                 if ( !commandParsed && message[0] != '/' )
                 {
-                    if ( _enableData )
-                        SendDataMessage( message );
-
-                    else
+                    ScriptedChatMsg msg = new ScriptedChatMsg
                     {
-                        MyMultiplayer.Static.SendChatMessage( message );
-                        /*
-                        Object chatMessageStruct = CreateChatMessageStruct( message );
-                        List<ulong> connectedPlayers = PlayerManager.Instance.ConnectedPlayers;
-                        foreach ( ulong remoteUserId in connectedPlayers )
-                        {
-                            if ( !remoteUserId.ToString( ).StartsWith( "9009" ) )
-                                ServerNetworkManager.Instance.SendStruct( remoteUserId, chatMessageStruct, chatMessageStruct.GetType( ) );
+                        Author = Server.Instance.Config.ServerChatName,
+                        Font = MyFontEnum.Red,
+                        Text = message,
+                    };
 
-                            ChatEvent chatEvent = new ChatEvent( ChatEventType.OnChatSent, DateTime.Now, 0, remoteUserId, message, 0 );
-                            Instance.AddEvent( chatEvent );
-                        }
-                        */
-                        m_chatMessages.Add( string.Format( "Server: {0}", message ) );
-                        ApplicationLog.ChatLog.Info( string.Format( "Chat - Server: {0}", message ) );
-                    }
+                    var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnScriptedChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
+                    ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, msg);
                 }
 
 				//Send a loopback chat event for server-sent messages

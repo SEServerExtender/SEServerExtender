@@ -1,4 +1,5 @@
 using System.Text;
+using System.Windows.Forms;
 using ParallelTasks;
 using Sandbox.Game.World;
 using SEModAPI.API;
@@ -494,7 +495,35 @@ namespace SEModAPIInternal.API.Server
             return result;
         }
 
-	    public override List<ulong> GetConnectedPlayers( )
+	    public void SendModMessageTo( ushort id, byte[] message, ulong recipient, bool reliable = true )
+	    {
+	        if ( reliable )
+	        {
+	            var method = typeof(MyModAPIHelper.MyMultiplayer).GetMethod( "ModMessageClientReliable", BindingFlags.NonPublic | BindingFlags.Static );
+	            RaiseStaticEvent( method, recipient, id, message, recipient );
+	        }
+            else
+            {
+                var method = typeof(MyModAPIHelper.MyMultiplayer).GetMethod("ModMessageClientUneliable", BindingFlags.NonPublic | BindingFlags.Static);
+                RaiseStaticEvent(method, recipient, id, message, recipient);
+            }
+        }
+
+        public void BroadcastModMessage(ushort id, byte[] message, bool reliable = true)
+        {
+            if (reliable)
+            {
+                var method = typeof(MyModAPIHelper.MyMultiplayer).GetMethod("ModMessageBroadcastReliable", BindingFlags.NonPublic | BindingFlags.Static);
+                RaiseStaticEvent(method, id, message);
+            }
+            else
+            {
+                var method = typeof(MyModAPIHelper.MyMultiplayer).GetMethod("ModMessageBroadcastUneliable", BindingFlags.NonPublic | BindingFlags.Static);
+                RaiseStaticEvent(method, id, message);
+            }
+        }
+
+        public override List<ulong> GetConnectedPlayers( )
 		{
 			try
 			{
