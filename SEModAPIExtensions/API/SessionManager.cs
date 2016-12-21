@@ -66,7 +66,7 @@ namespace SEModAPIExtensions.API
 					return;
 
 				m_checkPoint.Settings = config.SessionSettings;
-				m_checkPoint.Scenario = config.Scenario;
+				//m_checkPoint.Scenario = config.Scenario;
 
 				m_checkPoint.Mods.Clear( );
 				foreach ( ulong modid in config.Mods )

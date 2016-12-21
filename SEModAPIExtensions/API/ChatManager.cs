@@ -4,6 +4,7 @@ using Sandbox.Game.Entities.Blocks;
 using Sandbox.Game.Entities.Character;
 using Sandbox.Game.Entities.Cube;
 using Sandbox.Game.Multiplayer;
+using Sandbox.Game.Screens.Helpers;
 using Sandbox.Game.Weapons;
 using Sandbox.Game.World;
 using SEModAPI.API.Definitions;
@@ -550,10 +551,13 @@ namespace SEModAPIExtensions.API
 			                                  Author = Server.Instance.Config.ServerChatName,
 			                                  Font = MyFontEnum.Red,
 			                                  Text = message,
+			                                  Target = PlayerMap.Instance.GetFastPlayerIdFromSteamId(remoteUserId),
 			                              };
 
 			        var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnScriptedChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
 			        ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, remoteUserId, msg);
+
+			        ScanGPSAndAdd(message, msg.Target);
 			    }
 
 			    m_chatMessages.Add( string.Format( "Server: {0}", message ) );
@@ -596,6 +600,8 @@ namespace SEModAPIExtensions.API
 
                     var messageMethod = typeof(MyMultiplayerBase).GetMethod("OnScriptedChatMessageRecieved", BindingFlags.NonPublic | BindingFlags.Static);
                     ServerNetworkManager.Instance.RaiseStaticEvent(messageMethod, msg);
+
+                    ScanGPSAndAdd(message);
                 }
 
 				//Send a loopback chat event for server-sent messages
@@ -612,6 +618,48 @@ namespace SEModAPIExtensions.API
 				ApplicationLog.BaseLog.Error( ex );
 			}
 		}
+
+        public int ScanGPSAndAdd(string input, long playerId = -1)
+        {
+            int count = 0;
+            foreach (Match match in Regex.Matches(input, @"GPS:([^:]{0,32}):([\d\.-]*):([\d\.-]*):([\d\.-]*):"))
+            {
+                String name = match.Groups[1].Value;
+                double x, y, z;
+                try
+                {
+                    x = double.Parse(match.Groups[2].Value, System.Globalization.CultureInfo.InvariantCulture);
+                    x = Math.Round(x, 2);
+                    y = double.Parse(match.Groups[3].Value, System.Globalization.CultureInfo.InvariantCulture);
+                    y = Math.Round(y, 2);
+                    z = double.Parse(match.Groups[4].Value, System.Globalization.CultureInfo.InvariantCulture);
+                    z = Math.Round(z, 2);
+                }
+                catch (SystemException)
+                {
+                    continue;//search for next GPS in the input
+                }
+
+                MyGps newGps = new MyGps()
+                {
+                    Name = name,
+                    Description = null,
+                    Coords = new Vector3D(x, y, z),
+                    ShowOnHud = false
+                };
+                newGps.UpdateHash();
+                if (playerId > -1)
+                    MyAPIGateway.Session.GPS.AddGps(playerId, newGps);
+                else
+                {
+                    foreach(var player in MySession.Static.Players.GetOnlinePlayers())
+                        MyAPIGateway.Session.GPS.AddGps(player.Identity.IdentityId, newGps);
+                }
+                //MySession.Static.Gpss.SendAddGps(MySession.Static.LocalPlayerId, ref newGps);
+                ++count;
+            }
+            return count;
+        }
 
 		protected bool ParseChatCommands( string message, ulong remoteUserId = 0 )
 		{

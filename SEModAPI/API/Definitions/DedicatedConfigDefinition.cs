@@ -794,6 +794,7 @@ namespace SEModAPI.API.Definitions
 			}
 		}
         */
+        /*
 		/// <summary>
 		/// Get or set the scenario's subtype Id
 		/// </summary>
@@ -827,7 +828,7 @@ namespace SEModAPI.API.Definitions
                 throw new ArgumentException($"{value} is not a valid scenario definition type! Try one of these:\r\n{sb}");
 			}
 		}
-
+        */
 		/// <summary>
 		/// Get or set the path of the world to load
 		/// </summary>
