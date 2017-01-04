@@ -403,7 +403,7 @@ namespace SEModAPIInternal.API.Server
 
             //create a generic method of DispatchEvent and invoke to inject our data into the network
             var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
-            dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments);
+            MySandboxGame.Static.Invoke(()=>dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments));
         }
 
         private static DBNull e = DBNull.Value;
@@ -473,7 +473,7 @@ namespace SEModAPIInternal.API.Server
 
             //create a generic method of DispatchEvent and invoke to inject our data into the network
             var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
-            dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments);
+            MySandboxGame.Static.Invoke(()=>dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments));
         }
 
         private CallSite TryGetStaticCallSite(MethodInfo method)
