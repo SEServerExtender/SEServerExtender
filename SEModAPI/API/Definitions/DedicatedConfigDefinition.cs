@@ -1247,7 +1247,7 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
-                return _definition.SessionSettings.EnableWolfs ?? false;
+                return _definition.SessionSettings.EnableWolfs;
             }
             set
             {
@@ -1269,9 +1269,7 @@ namespace SEModAPI.API.Definitions
         {
             get
             {
-                if ( !_definition.SessionSettings.EnableSpiders.HasValue )
-                    _definition.SessionSettings.EnableSpiders = true;
-                return _definition.SessionSettings.EnableSpiders.Value;
+                return _definition.SessionSettings.EnableSpiders;
             }
             set
             {

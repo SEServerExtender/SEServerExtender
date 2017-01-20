@@ -164,6 +164,9 @@ namespace SEServerExtender
         {
             FileSystem.InitMyFileSystem();
 
+            //Infinario should be disabled on DS
+            MyFakes.ENABLE_INFINARIO = false;
+
             MyLog.Default = MySandboxGame.Log;
             MySandboxGame.Config = new MyConfig("SpaceEngineers.cfg");
             MySandboxGame.Config.Load();
