@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,7 +55,28 @@ namespace SEModAPIExtensions.API
             var keenAfter = entType.GetMethod("UpdateAfterSimulation");
             var ourAfter = typeof(ProfilerInjection).GetMethod("UpdateAfterSimulation");
 
+            //using (var md5 = MD5.Create())
+            //{
+            //    var body = keenBefore.GetMethodBody().GetILAsByteArray();
+            //    var hash = md5.ComputeHash(body);
+            //    string compStr = Convert.ToBase64String(hash).ToUpper();
+            //    if (compStr!= "YXXKWK+W+OHP+LNOGGM32A==" || body.Length != 238)
+            //    {
+            //        BaseLog.Warn("UpdateBeforeSimulation signature has changed! Cannot load profiler injector!");
+            //        BaseLog.Error($"{compStr}:{body.Length}");
+            //        return;
+            //    }
 
+            //    body = keenAfter.GetMethodBody().GetILAsByteArray();
+            //    hash = md5.ComputeHash(body);
+            //    compStr = Convert.ToBase64String(hash).ToUpper();
+            //    if (compStr!= "7ZKFYWZRON9U3G43AV4QRA==" || body.Length != 220)
+            //    {
+            //        BaseLog.Warn("UpdateAfterSimulation signature has changed! Cannot load profiler injector!");
+            //        BaseLog.Error($"{compStr}:{body.Length}");
+            //        return;
+            //    }
+            //}
             BaseLog.Info("Replacing UpdateBeforeSimulation");
             MethodUtil.ReplaceMethod(ourBefore, keenBefore);
             BaseLog.Info("Replacing UpdateAfterSimulation");
@@ -394,6 +416,7 @@ namespace SEModAPIExtensions.API
                 MyEntities.DeleteRememberedEntities();
             }
 
+            if(m_creationThread!=null)
             while (m_creationThread.ConsumeResult()) ; // Add entities created asynchronously
 
             VRageRender.MyRenderProxy.GetRenderProfiler().EndProfilingBlock();

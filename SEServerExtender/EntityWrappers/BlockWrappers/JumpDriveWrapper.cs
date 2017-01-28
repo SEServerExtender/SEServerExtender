@@ -21,7 +21,7 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
         [Description("Percentage")]
         public float StoredPower
         {
-            get { return 100 * ((Sync<float>)typeof(MyJumpDrive).GetField("m_storedPower", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Block)).Value / Block.BlockDefinition.PowerNeededForJump; }
+            get { return 100 * ((Sync<float, SyncDirection.BothWays>)typeof(MyJumpDrive).GetField("m_storedPower", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Block)).Value / Block.BlockDefinition.PowerNeededForJump; }
             set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Block.SetStoredPower(value / 100)); }
         }
     }
