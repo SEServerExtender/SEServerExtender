@@ -213,7 +213,7 @@ namespace SEServerExtender
 
             SeVersion = new Version(new MyVersion((int)field.GetValue(null)).FormattedText.ToString().Replace("_", "."));
 
-		    bool stableBuild = (bool)typeof(MyFinalBuildConstants).GetField("IS_STABLE").GetValue(null);
+		    //bool stableBuild = (bool)typeof(MyFinalBuildConstants).GetField("IS_STABLE").GetValue(null);
 
             ApplicationLog.BaseLog.Info($"SE version: {SeVersion}");
 
@@ -224,6 +224,7 @@ namespace SEServerExtender
 #endif
             ApplicationLog.BaseLog.Info( versionMessage );
 
+            /*
             if (stableBuild)
             {
                 BaseLog.Info("Detected \"Stable\" branch!");
@@ -251,7 +252,7 @@ namespace SEServerExtender
             }
             else
                 BaseLog.Info("Detected \"Development\" branch!");
-
+                */
             InitSandbox();
 
             //Setup error handling for unmanaged exceptions

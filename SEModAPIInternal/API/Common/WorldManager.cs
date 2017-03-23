@@ -270,42 +270,66 @@ namespace SEModAPIInternal.API.Common
 			{
 				DateTime saveStartTime = DateTime.Now;
                 ApplicationLog.BaseLog.Info( "Asynchronous save started" );
-				Task.Factory.StartNew( ( ) =>
+				Task.Run( ( ) =>
 				                       {
-				                           SandboxGameAssemblyWrapper.Instance.GameAction( () =>
-				                                                                           {
-				                                                                               MyAsyncSaving.Start( () => ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms",
-				                                                                                                                                       (DateTime.Now - saveStartTime)
-				                                                                                                                                           .TotalMilliseconds ) );
-				                                                                           } );
+                                           if (MySandboxGame.IsGameReady && !MyAsyncSaving.InProgress)
+                                           {
+                                               using (var e = new AutoResetEvent(false))
+                                               {
+                                                   MyAsyncSaving.Start(() =>
+                                                                       {
+                                                                           MySector.ResetEyeAdaptation = true;
+                                                                           e.Set();
+                                                                       });
 
-					                       // Autosave can fail to complete sometimes; alert the admin when this happens
-					                       DateTime start = DateTime.Now;
-					                       FastResourceLock saveLock = InternalGetResourceLock( );
-					                       while ( !saveLock.Owned )
-					                       {
-					                           if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
-					                           {
-                                                   ApplicationLog.BaseLog.Warn( "Autosave failed to start!" );
-                                                   return;
-					                           }
 
-						                       Thread.Sleep( 1 );
-					                       }
+                                                   if (!e.WaitOne(120000))
+                                                   {
+                                                       ApplicationLog.BaseLog.Warn("Autosave has ran for 120 seconds--something is wrong! The save will most likely not complete!");
+                                                       MyAPIGateway.Utilities.SendMessage("Warning: SESE Autosave failed! Alert the server admin!");
+                                                       return;
+                                                   }
+                                               }
+                                           }
+                                           else
+                                           {
+                                               ApplicationLog.BaseLog.Warn("Autosave failed to start!");
+                                               return;
+                                           }
+                                           //   SandboxGameAssemblyWrapper.Instance.GameAction( () =>
+                                           //                                                   {
+                                           //                                                       MyAsyncSaving.Start( () => ApplicationLog.BaseLog.Info( "Asynchronous Save Setup Started: {0}ms",
+                                           //                                                                                                               (DateTime.Now - saveStartTime)
+                                           //                                                                                                                   .TotalMilliseconds ) );
+                                           //                                                   } );
 
-					                       while ( saveLock.Owned )
-					                       {
-					                           if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 120000 ) )
-					                           {
-                                                   ApplicationLog.BaseLog.Warn( "Autosave has ran for 120 seconds--something is wrong! The save will most likely not complete!" );
-                                                   MyAPIGateway.Utilities.SendMessage( "Warning: SESE Autosave failed! Alert the server admin!" );
-                                                   return;
-					                           }
+                                           //// Autosave can fail to complete sometimes; alert the admin when this happens
+                                           //DateTime start = DateTime.Now;
+                                           //FastResourceLock saveLock = InternalGetResourceLock( );
+                                           //while ( !saveLock.Owned )
+                                           //{
+                                           //    if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 20000 ) )
+                                           //    {
+                                           //                       ApplicationLog.BaseLog.Warn( "Autosave failed to start!" );
+                                           //                       return;
+                                           //    }
 
-						                       Thread.Sleep( 1 );
-					                       }
+                                           // Thread.Sleep( 1 );
+                                           //}
 
-				                           ApplicationLog.BaseLog.Info( $"Asynchronous Save Completed: {(DateTime.Now - saveStartTime).TotalMilliseconds}ms" );
+                                           //while ( saveLock.Owned )
+                                           //{
+                                           //    if ( DateTime.Now - start > TimeSpan.FromMilliseconds( 120000 ) )
+                                           //    {
+                                           //                       ApplicationLog.BaseLog.Warn( "Autosave has ran for 120 seconds--something is wrong! The save will most likely not complete!" );
+                                           //                       MyAPIGateway.Utilities.SendMessage( "Warning: SESE Autosave failed! Alert the server admin!" );
+                                           //                       return;
+                                           //    }
+
+                                           // Thread.Sleep( 1 );
+                                           //}
+
+                                           ApplicationLog.BaseLog.Info( $"Asynchronous Save Completed: {(DateTime.Now - saveStartTime).TotalMilliseconds}ms" );
 					                       OnWorldSaved( );
 					                       EntityEventManager.EntityEvent newEvent = new EntityEventManager.EntityEvent
 					                                                                 {

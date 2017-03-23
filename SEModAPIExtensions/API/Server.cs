@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using SteamSDK;
 using VRage;
 using VRage.Game;
 using VRage.Plugins;
@@ -461,9 +462,11 @@ namespace SEModAPIExtensions.API
 					_pluginManager.LoadPlugins( );
 					_pluginManager.Init( );
                     ServerNetworkManager.Instance.InitNetworkIntercept();
-					//SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
+                    //SandboxGameAssemblyWrapper.Instance.GameAction( ( ) => AppDomain.CurrentDomain.ClearEventInvocations( "_unhandledException" ) );
 
-					AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+				    SteamServerAPI.Instance.GameServer.SetKeyValue("SM", "SE Server Extender");
+
+                    AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					//AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 					Application.ThreadException += Application_ThreadException;
 					Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
@@ -625,7 +628,7 @@ namespace SEModAPIExtensions.API
                 
 				_runServerThread = new Thread( RunServer ) { IsBackground = true };
                 _runServerThread.Start( );
-            }
+			}
 			catch ( Exception ex )
 			{
 				ApplicationLog.BaseLog.Error( ex );

@@ -364,46 +364,63 @@ namespace SEModAPIInternal.API.Server
         /// <param name="args"></param>
         public void RaiseEvent(MethodInfo method, object obj, EndpointId endpoint, params object[] args)
         {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method), "MethodInfo cannot be null!");
+            try
+            {
+                if (method == null)
+                    throw new ArgumentNullException(nameof(method), "MethodInfo cannot be null!");
 
-            if (args.Length > 6)
-                throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
+                if (args.Length > 6)
+                    throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
 
-            var owner = obj as IMyEventOwner;
-            if ( owner == null )
-                throw new InvalidCastException( "Provided event target is not of type IMyEventOwner!" );
+                var owner = obj as IMyEventOwner;
+                if (owner == null)
+                    throw new InvalidCastException("Provided event target is not of type IMyEventOwner!");
 
-            if(!method.HasAttribute<EventAttribute>())
-                throw new CustomAttributeFormatException("Provided event target does not have the Event attribute! Replication will not succeed!");
+                if (!method.HasAttribute<EventAttribute>())
+                    throw new CustomAttributeFormatException("Provided event target does not have the Event attribute! Replication will not succeed!");
 
-            //array to hold arguments to pass into DispatchEvent
-            object[] arguments = new object[11];
+                //array to hold arguments to pass into DispatchEvent
+                object[] arguments = new object[11];
 
-            arguments[0] = TryGetCallSite(method, obj);
-            arguments[1] = endpoint;
-            arguments[2] = 1f;
-            arguments[3] = owner;
+                arguments[0] = TryGetCallSite(method, obj);
+                arguments[1] = endpoint;
+                arguments[2] = 1f;
+                arguments[3] = owner;
 
-            //copy supplied arguments into the reflection arguments
-            for (int i = 0; i < args.Length; i++)
-                arguments[i + 4] = args[i];
+                //copy supplied arguments into the reflection arguments
+                for (int i = 0; i < args.Length; i++)
+                    arguments[i + 4] = args[i];
 
-            //pad the array out with DBNull
-            for (int j = args.Length + 4; j < 10; j++)
-                arguments[j] = e;
+                //pad the array out with DBNull
+                for (int j = args.Length + 4; j < 10; j++)
+                    arguments[j] = e;
 
-            arguments[10] = (IMyEventOwner)null;
+                arguments[10] = (IMyEventOwner)null;
 
-            //create an array of Types so we can create a generic method
-            Type[] argTypes = new Type[8];
+                //create an array of Types so we can create a generic method
+                Type[] argTypes = new Type[8];
 
-            for (int k = 3; k < 11; k++)
-                argTypes[k - 3] = arguments[k]?.GetType() ?? typeof(IMyEventOwner);
+                for (int k = 3; k < 11; k++)
+                    argTypes[k - 3] = arguments[k]?.GetType() ?? typeof(IMyEventOwner);
 
-            //create a generic method of DispatchEvent and invoke to inject our data into the network
-            var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
-            MySandboxGame.Static.Invoke(()=>dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments));
+                //create a generic method of DispatchEvent and invoke to inject our data into the network
+                var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
+                MySandboxGame.Static.Invoke(() =>
+                                            {
+                                                try
+                                                {
+                                                    dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments);
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    ApplicationLog.BaseLog.Error(ex);
+                                                }
+                                            });
+            }
+            catch (Exception ex)
+            {
+                ApplicationLog.BaseLog.Error(ex);
+            }
         }
 
         private static DBNull e = DBNull.Value;
@@ -438,42 +455,59 @@ namespace SEModAPIInternal.API.Server
         /// <param name="args"></param>
         public void RaiseStaticEvent(MethodInfo method, EndpointId endpoint, params object[] args)
         {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method), "MethodInfo cannot be null!");
+            try
+            {
+                if (method == null)
+                    throw new ArgumentNullException(nameof(method), "MethodInfo cannot be null!");
 
-            if (args.Length > 6)
-                throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
+                if (args.Length > 6)
+                    throw new ArgumentOutOfRangeException(nameof(args), "Cannot pass more than 6 arguments!");
 
-            if (!method.HasAttribute<EventAttribute>())
-                throw new CustomAttributeFormatException("Provided event target does not have the Event attribute! Replication will not succeed!");
-            
-            //array to hold arguments to pass into DispatchEvent
-            object[] arguments = new object[11];
+                if (!method.HasAttribute<EventAttribute>())
+                    throw new CustomAttributeFormatException("Provided event target does not have the Event attribute! Replication will not succeed!");
 
-            arguments[0] = TryGetStaticCallSite(method);
-            arguments[1] = endpoint;
-            arguments[2] = 1f;
-            arguments[3] = (IMyEventOwner)null;
+                //array to hold arguments to pass into DispatchEvent
+                object[] arguments = new object[11];
 
-            //copy supplied arguments into the reflection arguments
-            for (int i = 0; i < args.Length; i++)
-                arguments[i + 4] = args[i];
+                arguments[0] = TryGetStaticCallSite(method);
+                arguments[1] = endpoint;
+                arguments[2] = 1f;
+                arguments[3] = (IMyEventOwner)null;
 
-            //pad the array out with DBNull
-            for (int j = args.Length + 4; j < 10; j++)
-                arguments[j] = e;
+                //copy supplied arguments into the reflection arguments
+                for (int i = 0; i < args.Length; i++)
+                    arguments[i + 4] = args[i];
 
-            arguments[10] = (IMyEventOwner)null;
+                //pad the array out with DBNull
+                for (int j = args.Length + 4; j < 10; j++)
+                    arguments[j] = e;
 
-            //create an array of Types so we can create a generic method
-            Type[] argTypes = new Type[8];
+                arguments[10] = (IMyEventOwner)null;
 
-            for (int k = 3; k < 11; k++)
-                argTypes[k - 3] = arguments[k]?.GetType() ?? typeof(IMyEventOwner);
+                //create an array of Types so we can create a generic method
+                Type[] argTypes = new Type[8];
 
-            //create a generic method of DispatchEvent and invoke to inject our data into the network
-            var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
-            MySandboxGame.Static.Invoke(()=>dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments));
+                for (int k = 3; k < 11; k++)
+                    argTypes[k - 3] = arguments[k]?.GetType() ?? typeof(IMyEventOwner);
+
+                //create a generic method of DispatchEvent and invoke to inject our data into the network
+                var dispatch = typeof(MyReplicationLayerBase).GetMethod("DispatchEvent", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(argTypes);
+                MySandboxGame.Static.Invoke(() =>
+                                            {
+                                                try
+                                                {
+                                                    dispatch.Invoke(MyMultiplayer.ReplicationLayer, arguments);
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    ApplicationLog.BaseLog.Error(ex);
+                                                }
+                                            });
+            }
+            catch (Exception ex)
+            {
+                ApplicationLog.BaseLog.Error(ex);
+            }
         }
 
         private CallSite TryGetStaticCallSite(MethodInfo method)

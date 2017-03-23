@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using SteamSDK;
 
 namespace SEModAPIExtensions.API
 {
@@ -214,7 +215,7 @@ namespace SEModAPIExtensions.API
 		public void Init( )
 		{
 			ApplicationLog.BaseLog.Info( "Initializing plugins ..." );
-			Initialized = true;
+            Initialized = true;
 
 			foreach ( Guid key in Plugins.Keys )
 			{
