@@ -1,6 +1,7 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Management;
+using System.Threading.Tasks;
 using Sandbox;
 using Sandbox.Definitions;
 using Sandbox.Engine.Multiplayer;
@@ -223,6 +224,27 @@ namespace SEServerExtender
             versionMessage += " DEBUG";
 #endif
             ApplicationLog.BaseLog.Info( versionMessage );
+
+
+            //warn users about SESE EOL and Torch migration
+            if (SystemInformation.UserInteractive)
+            {
+                Task.Run(() =>
+                         {
+                             MessageBox.Show("Support for SESE is ENDING. Ongoing compatability is not guaranteed. All servers should migrate to" +
+                                             "Torch (SESE2) when it becomes available. Join our discord server to stay updated on Torch's status: " +
+                                             "https://discord.gg/JPrcsWt or check regularly at https://github.com/TorchAPI/Torch",
+                                             "SESE EOL",
+                                             MessageBoxButtons.OK,
+                                             MessageBoxIcon.Exclamation);
+                         });
+            }
+            BaseLog.Warn("Support for SESE is ENDING. Ongoing compatability is not guaranteed. All servers should migrate to" +
+                                             "Torch (SESE2) when it becomes available. Join our discord server to stay updated on Torch's status: " +
+                                             "https://discord.gg/JPrcsWt or check regularly at https://github.com/TorchAPI/Torch");
+
+
+
 
             /*
             if (stableBuild)

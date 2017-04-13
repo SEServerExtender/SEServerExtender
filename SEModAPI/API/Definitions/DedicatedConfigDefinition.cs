@@ -1593,7 +1593,24 @@ namespace SEModAPI.API.Definitions
 	        set { _definition.SessionSettings.EnableScripterRole = value; }
 	    }
 
-	    #endregion
+        // <summary>
+        /// Get or set the server's description
+        /// </summary>
+        [DataMember]
+        [Browsable(true)]
+        [ReadOnly(false)]
+        [Description("Get or set the server description shown in server browser")]
+        [Category("Server Settings")]
+        [DisplayName("Server Description")]
+        public string ServerDescription
+        {
+            get { return _definition.ServerDescription; }
+            set
+            {
+                _definition.ServerDescription = value;
+            }
+        }
+        #endregion
 
         #region "Methods"
         /// <summary>

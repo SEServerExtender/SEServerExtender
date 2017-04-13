@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using SEModAPI.API;
+using VRage.Game;
 using VRage.ObjectBuilders;
 using VRage.Plugins;
 using VRage.Utils;
@@ -31,7 +32,7 @@ namespace SEModAPIInternal.API.Server
 	public class DedicatedServerAssemblyWrapper
 	{
 		private static DedicatedServerAssemblyWrapper _instance;
-		private static Assembly _assembly;
+		//private static Assembly _assembly;
 
 		public const string DedicatedServerNamespace = "VRage.Dedicated";
 		public const string DedicatedServerClass = "DedicatedServer";
@@ -45,8 +46,8 @@ namespace SEModAPIInternal.API.Server
 		{
 			_instance = this;
 
-			string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "VRage.Dedicated.dll" );
-			_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
+			//string assemblyPath = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "VRage.Dedicated.dll" );
+			//_assembly = Assembly.UnsafeLoadFrom( assemblyPath );
 
 			ApplicationLog.BaseLog.Info( "Finished loading DedicatedServerAssemblyWrapper" );
 		}
@@ -187,7 +188,9 @@ namespace SEModAPIInternal.API.Server
 				//Initialize config
 				SpaceEngineersGame.SetupPerGameSettings();
 			    SpaceEngineersGame.SetupBasicGameInfo();
-				MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
+                if(MyFinalBuildConstants.APP_VERSION == null) //KEEN WHAT THE FUCK
+                    MyFinalBuildConstants.APP_VERSION = MyPerGameSettings.BasicGameInfo.GameVersion; 
+                MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
 				MyPerServerSettings.GameName = MyPerGameSettings.GameName;
 				MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
 				MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";

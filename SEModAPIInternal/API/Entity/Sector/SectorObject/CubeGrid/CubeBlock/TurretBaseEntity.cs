@@ -59,7 +59,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 			m_targetMeteors = definition.TargetMeteors;
 			m_targetMissiles = definition.TargetMissiles;
-			m_targetMoving = definition.TargetMoving;
 		}
 
 		public TurretBaseEntity( CubeGridEntity parent, MyObjectBuilder_TurretBase definition, Object backingObject )
@@ -73,7 +72,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 
 			m_targetMeteors = definition.TargetMeteors;
 			m_targetMissiles = definition.TargetMissiles;
-			m_targetMoving = definition.TargetMoving;
 		}
 
 		#endregion "Constructors and Intializers"
@@ -234,8 +232,6 @@ namespace SEModAPIInternal.API.Entity.Sector.SectorObject.CubeGrid.CubeBlock
 		{
 			get
 			{
-				if ( BackingObject == null || ActualObject == null )
-					return ObjectBuilder.TargetMoving;
 
 				return GetTargetMoving( );
 			}

@@ -225,7 +225,7 @@ namespace SEModAPIInternal.API.Server
 	        NetworkId networkId = stream.ReadNetworkId();
 	        //this value is unused, but removing this line corrupts the rest of the stream
 	        NetworkId blockedNetworkId = stream.ReadNetworkId();
-	        uint eventId = (uint)stream.ReadByte();
+	        uint eventId = (uint)stream.ReadUInt16();
 
 
 	        CallSite site;

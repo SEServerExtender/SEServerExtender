@@ -36,14 +36,7 @@ namespace SEServerExtender.EntityWrappers.BlockWrappers
             get { return Block.TargetMeteors; }
             set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Block.TargetMeteors = value); }
         }
-
-        [Category("Turret")]
-        public bool TargetMoving
-        {
-            get { return Block.TargetMoving; }
-            set { SandboxGameAssemblyWrapper.Instance.GameAction(() => Block.TargetMoving = value); }
-        }
-
+        
         [Category("Turret")]
         public bool TargetSmallGrids
         {

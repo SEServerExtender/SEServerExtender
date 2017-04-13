@@ -8,9 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using Sandbox;
+using Sandbox.Engine.Multiplayer;
 using Sandbox.Game.Entities;
 using Sandbox.Game.Entities.Character;
 using Sandbox.Game.World;
+using SEModAPIInternal.Support;
 using VRage;
 using VRage.Collections;
 using VRage.Game.Components;
@@ -44,6 +46,8 @@ namespace SEModAPIExtensions.API
 
         public static void Init()
         {
+            //ApplicationLog.BaseLog.Warn("Skipping profiler init");
+            //return;
             var entType = typeof(MyEntities);
             m_entitiesForUpdate = (MyDistributedUpdater<CachingList<MyEntity>, MyEntity>)entType.GetField("m_entitiesForUpdate", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             m_entitiesForUpdate10 = (MyDistributedUpdater<CachingList<MyEntity>, MyEntity>)entType.GetField("m_entitiesForUpdate10", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
@@ -415,10 +419,9 @@ namespace SEModAPIExtensions.API
 
                 MyEntities.DeleteRememberedEntities();
             }
-
-            if(m_creationThread!=null)
-            while (m_creationThread.ConsumeResult()) ; // Add entities created asynchronously
-
+            
+                if (m_creationThread!= null && MyMultiplayer.Static != null)
+                    while (m_creationThread.ConsumeResult(MyMultiplayer.Static.ReplicationLayer.GetSimulationUpdateTime())); // Add entities created asynchronously            
             VRageRender.MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
         }
     }
