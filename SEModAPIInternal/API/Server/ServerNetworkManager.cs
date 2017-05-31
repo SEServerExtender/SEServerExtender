@@ -207,7 +207,7 @@ namespace SEModAPIInternal.API.Server
 	            //pass the message back to the game server
 	            try
 	            {
-	                ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
+	                ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).OnEvent(packet);
 	            }
 	            catch (Exception ex)
 	            {
@@ -263,7 +263,7 @@ namespace SEModAPIInternal.API.Server
             if ( ExtenderOptions.IsDebugging )
             {
                 if ( !site.MethodInfo.Name.Contains( "SyncPropertyChanged" ) )// && !site.MethodInfo.Name.Contains( "OnSimulationInfo" ) )
-                    ApplicationLog.Error( $"Caught event {site.MethodInfo.Name} from user {PlayerMap.Instance.GetFastPlayerNameFromSteamId( packet.Sender.Value )}:{packet.Sender.Value}. Length {stream.ByteLength}B" );
+                    ApplicationLog.Error( $"Caught event {site.MethodInfo.Name} from user {PlayerMap.Instance.GetFastPlayerNameFromSteamId( packet.Sender.Id.Value )}:{packet.Sender.Id.Value}. Length {stream.ByteLength}B" );
             }
 #endif
 	        //we're handling the network live in the game thread, this needs to go as fast as possible
@@ -273,7 +273,7 @@ namespace SEModAPIInternal.API.Server
 	                                               try
 	                                               {
 	                                                   if (handler.CanHandle(site))
-	                                                       handled |= handler.Handle(packet.Sender.Value, site, stream, obj);
+	                                                       handled |= handler.Handle(packet.Sender.Id.Value, site, stream, obj);
 	                                               }
 	                                               catch (Exception ex)
 	                                               {
@@ -288,7 +288,7 @@ namespace SEModAPIInternal.API.Server
 	        //pass the message back to the game server
 	        try
 	        {
-	            ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).ProcessEvent(packet);
+	            ((MyReplicationLayer)MyMultiplayer.ReplicationLayer).OnEvent(packet);
 	        }
 	        catch (Exception ex)
 	        {
