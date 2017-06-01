@@ -561,14 +561,9 @@ namespace SEModAPIInternal.API.Server
 		{
 			try
 			{
-				Object steamServerManager = GetNetworkManager( );
-				if ( steamServerManager == null )
-					return new List<ulong>( );
-
-				FieldInfo connectedPlayersField = steamServerManager.GetType( ).GetField( ServerNetworkManagerConnectedPlayersField, BindingFlags.NonPublic | BindingFlags.Instance );
-				List<ulong> connectedPlayers = (List<ulong>)connectedPlayersField.GetValue( steamServerManager );
-
-				return connectedPlayers;
+                if(MyMultiplayer.Static == null)
+                    return new List<ulong>();
+                return (List<ulong>)typeof(MyDedicatedServerBase).GetField("m_members", BindingFlags.NonPublic|BindingFlags.Instance).GetValue(MyMultiplayer.Static) ?? new List<ulong>();
 			}
 			catch ( Exception ex )
 			{
